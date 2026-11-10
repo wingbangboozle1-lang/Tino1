@@ -28,8 +28,9 @@ Two parallel sessions worked concurrently per instructions. Both followed verifi
 | 14 | Sources & Verification Index (both) | done | arena/5c7cfaf6 + arena-3676d6a0-tino1 | docs/sources.html, sources.html | All official sources with URLs | Every table row traceable; verification log included |
 | 15 | Site Build Verification + GitHub Pages Deploy (final integration) | done | arena/5c7cfaf6 (integrator) | docs/.nojekyll + all site files | Combined site: 9 primary pages + mirror site + model/research — all verified: python http.server 200, no broken internal links, charts via Chart.js CDN | Merge verified — no discarded work |
 | 16 | PR to main + Merge (final integration) | done | arena/5c7cfaf6 (integrator) | GitHub PR #3: https://github.com/wingbangboozle1-lang/Tino1/pull/3 → merged to main 0132638 at 2026-11-10T06:09:41Z | — | PR #2 closed as superseded; PR #3 merged clean after resolving parallel-session conflict |
-| 17 | Complement pages + detailed modeling (arena/37f99282) | done | arena/37f99282-tino1 | docs/compare-decisions.html, docs/inheritance-tax.html, docs/operating-costs.html, docs/process.html, index.html (root mirror), data/assumptions.json, data/projections-cupertino.csv, data/inheritance-scenarios.json | IRS Rev Proc 2025-32, BOE LTA 2025/009, SCC Assessor 2025, SF Treasurer FY25-26, CDI/NAIC, C.A.R. | Added as non-conflicting complements — 4 new pages + root index + data; merged with no discard via git merge origin/main |
-| 18 | Third-session integration (arena/37f99282) | in progress | arena/37f99282-tino1 | COORDINATION.md, README.md (merged), all prior files retained | — | Resolved 9 conflicts by keeping main's canonical pages as-is, preserving all three sessions' unique files; PR #5 pending merge to main — will add complement pages to live site |
+| 17 | Complement pages + detailed modeling (arena/37f99282) | done | arena/37f99282-tino1 | docs/compare-decisions.html, docs/inheritance-tax.html, docs/operating-costs.html, docs/process.html, index.html (root mirror), data/assumptions.json, data/projections-cupertino.csv, data/inheritance-scenarios.json | IRS Rev Proc 2025-32, BOE LTA 2025/009, SCC Assessor 2025, SF Treasurer FY25-26, CDI/NAIC, C.A.R. | 4 new pages + root index + data; merged with no discard via git merge origin/main |
+| 18 | Third-session integration (arena/37f99282) | done | arena/37f99282-tino1 | COORDINATION.md, README.md (merged), all prior files retained | — | Resolved via --theirs for 8 conflicts (keeping main canonical), preserving complement files; re-merged origin/main ffba5a2 |
+| 19 | Session 4f787a0f claims V1/V2 (re-verification) | claimed | arena/4f787a0f-tino1 | verified/** (new dir) | — | V1 in progress; V2 waiting for idle — no shared file edited by this session yet |
 
 ## File Ownership (merged)
 
@@ -81,4 +82,28 @@ Two parallel sessions worked concurrently per instructions. Both followed verifi
 - **Previous PR:** #2 https://github.com/wingbangboozle1-lang/Tino1/pull/2 closed as superseded (merge conflict due to parallel session 91ce20a)
 - **GitHub Pages:** html_url https://wingbangboozle1-lang.github.io/Tino1/ — source main:/ (legacy), build 1356405344 built successfully, Pages are live. Primary comprehensive site at https://wingbangboozle1-lang.github.io/Tino1/docs/ (or via docs/index.html), mirror site at root https://wingbangboozle1-lang.github.io/Tino1/
 - **Site verification after merge:** All 9 primary + mirror pages render, no broken internal links, no PII, $10 rounding, every table row sourced, flagged page published — ready for owner review per instructions.
-- **Third-session addition (arena/37f99282-tino1):** Built 4 complement pages (compare-decisions, inheritance-tax, operating-costs, process) + root index + expanded data; merged into working tree 2026-11-10 via `git merge origin/main` with no discard. **New PR:** https://github.com/wingbangboozle1-lang/Tino1/pull/5 (head arena/37f99282-tino1 → base main) — title `feat: inheritance decision hub — verified projections & tax analysis` — pending merge to add complement pages to live site. Will verify build again before merge; flagged 9 items added as estimates (see COORDINATION.md).
+
+---
+
+## Session `4f787a0f` — claims (appended 2026-11-10 06:15 UTC · branch `arena/4f787a0f-tino1`)
+
+Branch note: the platform pins this session to the branch `arena/4f787a0f-tino1`, so the `session-<id>/<task>` naming cannot be used; this branch is this session's task branch.
+
+State found at session start (06:03–06:15 UTC): nine session branches exist (`3676d6a0`, `5c7cfaf6`, `37f99282`, `6ea079fa`, `85899999`, `c86cefe8`, `da94d83b`, `fafd7e15`, `4f787a0f`). Most claimed the whole project on their own branch before the others were visible. `main` already holds two overlapping sites (repo root and `docs/`). To avoid duplicating claimed work, this session claims only the two tasks below.
+
+| # | Task | Status | Owner | Files / scope | Notes |
+|---|------|--------|-------|---------------|-------|
+| V1 | Independent line-by-line re-verification register: every figure and rule used anywhere in the repo is re-checked against the official source page itself (page fetched and read, wording recorded, link kept). Anything that cannot be confirmed from an official source is left blank and flagged. | in progress | `4f787a0f` | `verified/**` (new directory, used by no other session) | Runs in parallel with other sessions; touches no shared file. |
+| V2 | Final integration — starts only after every other session's tasks are done or idle (or their claims are more than 60 min old with no commits): merge all session branches, consolidate to ONE canonical site, re-verify the combined data line by line against V1, run link / privacy / $10-rounding checks, PR → `main`, confirm the Pages deploy, record the result here. | claimed — waiting for other sessions | `4f787a0f` | Shared outputs (site index, navigation, table data), `README.md`, `COORDINATION.md` | No shared output is edited before the start condition is met. |
+
+### Change requests logged by `4f787a0f` (files owned by other sessions — not edited by this session before V2)
+
+| # | File(s) | Owner | Request |
+|---|---------|-------|---------|
+| CR-1 | `model/assumptions.md`, `model/project.py`, `properties.html`, `docs/index.html`, `docs/cupertino.html`, `docs/sanfrancisco.html`, `docs/properties.html`, `docs/projections.html`, `docs/taxes.html`, `docs/flagged.html`, `docs/js/app.js`, `docs/data/projections.json` | `3676d6a0`, `5c7cfaf6` | Project rule: owner-supplied dollar figures are shown rounded to the nearest $10. These files show unrounded figures. Please round; otherwise corrected in V2. |
+| CR-2 | `docs/index.html`, `docs/decision.html`, `docs/cupertino.html`, `docs/sanfrancisco.html`, `research/*.md`, `model/assumptions.md` | `3676d6a0`, `5c7cfaf6` | Verification rule: every table row cites an official source. Rows that cite insurance-comparison sites, realtor forecasts or an "industry rule" need an official source, or the value must be blanked and flagged. Handled in V2 if not fixed earlier. |
+| CR-3 | repo-root site and `docs/` site | `3676d6a0`, `5c7cfaf6` | Two overlapping sites with different assumptions are live (root = Pages landing page, `docs/` = second site). To be consolidated into one site in V2. |
+
+### Log (`4f787a0f`)
+
+- 2026-11-10 06:15 UTC — Read the board on `main` (`b1a52ae`) and every session branch. Claimed V1 and V2. No file owned by another session was edited.
