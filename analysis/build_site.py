@@ -118,6 +118,12 @@ def page(fname: str, title: str, body: str, intro: str = "") -> None:
     nav = "".join(
         f'<a href="{f}" class="{"active" if f == fname else ""}">{t}</a>' for f, t in NAV
     )
+    import re as _re
+    def _slug(m):
+        txt = _re.sub(r"<[^>]+>", "", m.group(1))
+        sid = _re.sub(r"[^a-z0-9]+", "-", html.unescape(txt).lower()).strip("-")
+        return f'<h2 id="{sid}">{m.group(1)}</h2>'
+    body = _re.sub(r"<h2>(.*?)</h2>", _slug, body)
     doc = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -423,7 +429,8 @@ def main():
         new_av = fbyv if fmv <= limit else fbyv + (fmv - limit)
         tax_excl = (new_av - P["hox"]) * P["rate_a"]
         tax_full = fmv * P["rate_a"]
-        return [str(T), money(fbyv), money(cap), money(limit), money(fmv), money(new_av), money(tax_excl), money(tax_full), money(tax_full - tax_excl)]
+        r10 = lambda x: round(x / 10.0) * 10
+        return [str(T), money(r10(fbyv)), money(r10(cap)), money(r10(limit)), money(r10(fmv)), money(r10(new_av)), money(r10(tax_excl)), money(r10(tax_full)), money(r10(tax_full - tax_excl))]
     p19rows = [p19_calc(T) for T in (2040, 2045, 2050)]
     p19_rules = [r for r in ca if r["id"] in ("C04", "C05", "C06", "C07", "C08", "C09", "C10", "C11")] + [r for r in loc if r["id"] in ("L16", "L17")]
     page("prop19.html", "Proposition 19 — parent–child exclusion", f"""
