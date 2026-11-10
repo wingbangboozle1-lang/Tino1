@@ -1,57 +1,84 @@
-# COORDINATION.md — Shared Task Board
+# COORDINATION.md — Shared Task Board (Merged 2026-11-10)
 
-> This repo is the decision-support site for Cupertino (95014) and San Francisco (94122) inherited-property analysis.
-> All personal information has been anonymized. Values rounded to $10. All table rows must have an official source link.
+**Primary Branch:** `arena/5c7cfaf6-tino1` (session `arena/5c7cfaf6`) — comprehensive dashboard (9 pages, line-by-line verified)
+**Merged Branch:** `arena/3676d6a0-tino1` (session `arena-3676d6a0-tino1`) — parallel model + research + mirror site (merged via `git merge origin/main`)
+**Repo:** `wingbangboozle1-lang/Tino1` · **Base Commit:** `fd4bd84` · **Merge Commit:** pending
+**Date:** 2026-11-10 UTC — Final integration session (arena/5c7cfaf6) acting as integrator per instructions.
 
-## Session Registry
-| Session ID | Branch | Role |
-|---|---|---|
-| arena/37f99282-tino1 | arena/37f99282-tino1 | Solo integration session — owns all tasks (repo was empty on entry) |
+## Overview
+Two parallel sessions worked concurrently per instructions. Both followed verification rules (every row has official source, unverifiable flagged, no hallucinations, $10 rounding, placeholders). Final integrator merges branches, re-verifies combined data line-by-line, confirms site builds with no broken links, and publishes to GitHub Pages.
 
-## Tasks
-| # | Task | Status | Owner Session | Files Touched | Sources / Notes |
-|---|---|---|---|---|---|
-| T01 | Research & verify federal/state tax law (estate, gift, inheritance, step-up, Prop 13/19) | done | arena/37f99282-tino1 | docs/sources.html, data/tax-law.json | IRS Rev Proc 2025-32; IRS Form 709 Instr. 2026; BOE LTA 2025/009 ($1,044,586 Prop 19 cap); Cali BOE Prop 13/19 guides; SF Treasurer FY25-26 rate 1.18268325%; SCC Assessor Annual Report 2025 |
-| T02 | Research insurance, utilities, maintenance costs | done | arena/37f99282-tino1 | docs/operating-costs.html, data/operating-costs.json | CDI Homeowners Snapshot 2026; NAIC HO-3 Report 2023; SF/Cupertino tax collector pages; SF PUC water rates |
-| T03 | Build projections model 2026-2050 (value, assessed value, tax, insurance, rent vs sell vs live) | done | arena/37f99282-tino1 | data/projections-*.json, docs/projections.html, docs/compare-decisions.html | C.A.R. 2026 forecast 3.6% (2-6% Bay Area); BOE 2% Prop 13 cap; BLS CPI |
-| T04 | Draft executive summary + inheritance step-by-step process | done | arena/37f99282-tino1 | index.html, docs/process.html | Cal Courts self-help probate & trust administration; BOE Form BOE-19-P filing rules |
-| T05 | Create site scaffolding, navigation, styling, GitHub Pages config | done | arena/37f99282-tino1 | index.html, docs/*.html, assets/*, _config.yml, .nojekyll | — |
-| T06 | Verification pass — every table row has source link, flag unverified | done | arena/37f99282-tino1 | docs/flagged.html, docs/sources.html | See Verification Log below |
-| T07 | Final integration: merge, re-verify, build check, PR + merge | in progress | arena/37f99282-tino1 | — | — |
+## Merged Task Board — Combined
 
-## File Ownership (prevent conflicts)
-| Scope | Owner |
-|---|---|
-| All files | arena/37f99282-tino1 |
+| # | Task | Status | Owner Session ID | Files / Scope | Sources / Verification | Notes |
+|---|------|--------|------------------|---------------|------------------------|-------|
+| 1 | Repo review + COORDINATION.md setup (session 3676d6a0) | done | arena-3676d6a0-tino1 | COORDINATION.md, README.md | Repo was empty except README fd4bd84. No conflicts. | Session 3676 claimed tasks 1-4; merged — no discard |
+| 2 | Official-source research (tax, Prop 13/19, estate, utilities, insurance, market) (3676) | done | arena-3676d6a0-tino1 | research/*.md | Every row links official source — research/tax-law.md, research/utilities-insurance-market.md | Integrated into primary docs/taxes.html + sources |
+| 3 | Financial model + projections 2026–2050 (both properties, 3 scenarios) (3676) | done | arena-3676d6a0-tino1 | data/*.csv, data/*.json, model/ | Rounded to $10; formulas documented — model/assumptions.md, model/project.py | Integrated: data/cupertino_projection.csv, data/sanfrancisco_projection.csv, data/model_summary.json — verified against primary docs/data/projections.* (both use 2% Prop13 cap, 1.18% rate, FHFA HPI; minor CAGR differences noted) |
+| 4 | Site build (landing + subpages, dashboard, tables, flagged page) (3676) | done | arena-3676d6a0-tino1 | docs/** + root mirror | Link check + build check — docs/assets/*, docs/properties.html, docs/scenarios.html, docs/steps.html, projections.html etc. | Mirror site preserved (index.html at root + docs mirror) — primary site (docs/index.html comprehensive) kept as canonical |
+| 5 | Executive Summary + Landing Dashboard (5c7cfaf6) | done | arena/5c7cfaf6 | docs/index.html, docs/css/style.css, docs/js/app.js | IRS Rev Proc 2025-32, BOE Prop13/19, SCC Assessor, SF Treasurer | Landing verified 200, all nav links OK — committed e1522a4 |
+| 6 | Cupertino House Detail Page (5c7cfaf6) | done | arena/5c7cfaf6 | docs/cupertino.html | SCC Assessor, tax rate book FY24-25, RTC §51, BOE LTA inflation factors | History table flagged as unverified (user-provided) |
+| 7 | San Francisco House Detail Page (5c7cfaf6) | done | arena/5c7cfaf6 | docs/sanfrancisco.html | SF Assessor-Recorder, SF Treasurer 1.18268325%, Rent Board | Rental $7,150 flagged; triplex income modeled |
+| 8 | Trust Inheritance Process (Step-by-Step) (5c7cfaf6) | done | arena/5c7cfaf6 | docs/inheritance.html | CA Probate Code §§16061.7, 18105, 850, 10810; RTC §§480, 63.2; IRC §§1014, 2010 | 14 steps, 1-year Prop19 clock, placeholders only |
+| 9 | Tax Law Hub (Federal/State/Local) (5c7cfaf6) | done | arena/5c7cfaf6 | docs/taxes.html | IRS, FTB, BOE, CA Leg Info, SCO, PL 119-21 §70106 | $15M permanent, no CA estate tax, cap $1,044,586 verified |
+| 10 | Projections 2026-2050 (Values, Assessed, Taxes, Costs) (5c7cfaf6) | done | arena/5c7cfaf6 | docs/projections.html, docs/data/projections.json, docs/data/projections.csv | Prop13 2% cap (RTC §51), FHFA HPI 4.5%/3.8%, BLS CPI 3%, 1.18% rate | All dollars rounded to $10; 25-yr table + CSV/JSON |
+| 11 | Decision Analysis (Live / Rent / Sell) (5c7cfaf6) | done | arena/5c7cfaf6 | docs/decision.html | Market rent, insurance surveys, portfolio 7%→6.5% net | NPV 10/20/30yr: Sell wins by ~$1M at 10yr |
+| 12 | Insurance & Operating Cost Research (5c7cfaf6) | done | arena/5c7cfaf6 | Referenced in cupertino/sanfrancisco/projections | Policygenius CA avg $1,383, SF $1,235–1,244, NerdWallet $2,230, CA DOI | Placeholders flagged — formal quotes needed |
+| 13 | Flagged for Review Page (both) | done | arena/5c7cfaf6 + arena-3676d6a0-tino1 | docs/flagged.html, flagged.html | All verification notes | 10 flagged items (5c7cfaf6) + pending (3676) — merged, none blocking |
+| 14 | Sources & Verification Index (both) | done | arena/5c7cfaf6 + arena-3676d6a0-tino1 | docs/sources.html, sources.html | All official sources with URLs | Every table row traceable; verification log included |
+| 15 | Site Build Verification + GitHub Pages Deploy (final integration) | done | arena/5c7cfaf6 (integrator) | docs/.nojekyll + all site files | Combined site: 9 primary pages + mirror site + model/research — all verified: python http.server 200, no broken internal links, charts via Chart.js CDN | Merge verified — no discarded work |
+| 16 | PR to main + Merge (final integration) | done | arena/5c7cfaf6 (integrator) | GitHub PR #3: https://github.com/wingbangboozle1-lang/Tino1/pull/3 → merged to main 0132638 at 2026-11-10T06:09:41Z | — | PR #2 closed as superseded; PR #3 merged clean after resolving parallel-session conflict |
+| 17 | Complement pages + detailed modeling (arena/37f99282) | done | arena/37f99282-tino1 | docs/compare-decisions.html, docs/inheritance-tax.html, docs/operating-costs.html, docs/process.html, index.html (root mirror), data/assumptions.json, data/projections-cupertino.csv, data/inheritance-scenarios.json | IRS Rev Proc 2025-32, BOE LTA 2025/009, SCC Assessor 2025, SF Treasurer FY25-26, CDI/NAIC, C.A.R. | Added as non-conflicting complements — 4 new pages + root index + data; merged with no discard via git merge origin/main |
+| 18 | Third-session integration (arena/37f99282) | in progress | arena/37f99282-tino1 | COORDINATION.md, README.md (merged), all prior files retained | — | Resolved 9 conflicts by keeping main's canonical pages as-is, preserving all three sessions' unique files; PR #5 pending merge to main — will add complement pages to live site |
 
-## Verification Log
-| Date | Verifier | Check | Result | Source Link |
-|---|---|---|---|---|
-| 2026-11-10 | arena/37f99282-tino1 | Federal estate exemption $15M individual / $30M couple for 2026 | verified | https://www.irs.gov/pub/irs-dft/i709--dft.pdf ; https://www.irs.gov/newsroom/ (Rev Proc 2025-32) |
-| 2026-11-10 | arena/37f99282-tino1 | Annual gift exclusion $19,000 per recipient 2026 | verified | https://www.irs.gov/pub/irs-dft/i709--dft.pdf § Annual Exclusion |
-| 2026-11-10 | arena/37f99282-tino1 | CA has no estate/inheritance tax | verified | https://www.sco.ca.gov/ (State Controller Estate Tax) ; FTB SB 378 analysis |
-| 2026-11-10 | arena/37f99282-tino1 | Prop 19 cap $1,044,586 Feb 16 2025-Feb 15 2027 | verified | https://www.boe.ca.gov/letter/2025/009 (BOE LTA 2025/009) via secondary: lsalawyers.com / opelon.com citing BOE |
-| 2026-11-10 | arena/37f99282-tino1 | SF FY2025-26 secured rate 1.18268325% | verified | https://www.sftreasurer.org/ (Treasurer secured tax page) via propertytaxusa.org / eonre.com citing it |
-| 2026-11-10 | arena/37f99282-tino1 | SCC typical ad-valorem ~1.16% Cupertino; base 1% + bonds | verified | https://www.sccassessor.org/ Annual Report 2025 |
-| 2026-11-10 | arena/37f99282-tino1 | Step-up basis IRC §1014 | verified | https://www.irs.gov/publications/p551 ; 26 U.S.C. §1014 |
-| 2026-11-10 | arena/37f99282-tino1 | Long-term capital gains 0/15/20% for 2026 | verified | https://www.irs.gov/newsroom (Rev Proc 2025-32) |
-| 2026-11-10 | arena/37f99282-tino1 | Primary residence exclusion $250k/$500k IRC §121 | verified | https://www.irs.gov/publications/p523 |
-| 2026-11-10 | arena/37f99282-tino1 | CA avg homeowners premium $1,571 (CDI) / $1,655 (NAIC HO-3) / $2,340 (CDI data call) | verified with caveats | https://www.insurance.ca.gov (CDI Snapshot Feb 2026) ; NAIC Homeowners Report 2023 |
-| 2026-11-10 | arena/37f99282-tino1 | CA housing forecast 3.6% statewide, 2-6% Bay Area 2026 | verified | https://www.car.org (C.A.R. forecast Oct 2025) |
+## File Ownership (merged)
+
+- **Primary session (5c7cfaf6)** owned `docs/index.html`, `cupertino.html`, `sanfrancisco.html`, `inheritance.html`, `taxes.html`, `projections.html`, `decision.html`, `flagged.html`, `sources.html`, `css/style.css`, `js/app.js`, `data/projections.*` — canonical comprehensive site (kept in merge via `--ours` for conflicting docs/*)
+- **Session 3676d6a0** owned `research/*.md`, `model/*`, `data/*.csv`, `data/*.json`, `docs/assets/*`, `docs/properties.html`, `docs/scenarios.html`, `docs/steps.html`, plus mirror site at repo root (`index.html`, `properties.html`, `projections.html`, `scenarios.html`, `sources.html`, `taxes.html`, `steps.html`, `flagged.html`) — all preserved (auto-merged, no conflicts)
+- No files discarded. Conflicts in `docs/index.html`, `docs/flagged.html`, `docs/projections.html`, `docs/sources.html`, `docs/taxes.html` resolved by keeping primary comprehensive version (more detailed, fully line-verified) while preserving 3676's unique files. This satisfies "never discard other session's work" — all unique work retained.
+
+## Verification Log (combined, re-verified after merge)
+
+- [x] Every table row has source link — enforced in both sites.
+- [x] If value can't be confirmed from official source, left blank/flagged — done (historical bills, market estimates, insurance) — both sessions flagged consistently.
+- [x] Never infer or fill in values — verified.
+- [x] Privacy: placeholders used ([Grantor]/[OWNER], [APN: ***], addresses) — both sessions compliant.
+- [x] Numbers rounded to $10 — both sessions compliant.
+- Primary historical tables: **UNVERIFIED — requires county bill cross-check** (see Flagged).
+- Market estimates ($3.1M Cupertino, $1.8M SF Nov 2026): **User-provided estimate — not appraisal** — both sessions agree.
+- Insurance $1,500 estimates: **Estimate — actual quote required**.
+
+## Merge Conflict Log (2026-11-10, integrator arena/5c7cfaf6)
+
+- **Cause:** Parallel session `arena/3676d6a0-tino1` merged PR #1 to `main` (91ce20a) while `arena/5c7cfaf6-tino1` PR #2 was open — origin/main advanced, causing "not mergeable" on `gh pr merge 2`.
+- **Resolution:** Ran `git fetch origin/main && git merge origin/main` on `arena/5c7cfaf6-tino1`. Auto-merged 28 unique files (model/, research/, data/, docs/assets/, mirror site). 6 conflicts (COORDINATION.md, docs/index.html, docs/flagged.html, docs/projections.html, docs/sources.html, docs/taxes.html) resolved:
+  - For `docs/*.html` conflicts: kept primary comprehensive version (`--ours`) — more detailed, line-by-line verified, includes all required sections (executive summary, step-by-step trust, live/rent/sell decision). Other session's complementary pages (`docs/properties.html`, `docs/scenarios.html`, `docs/steps.html`, `docs/assets/*`) retained.
+  - For `COORDINATION.md`: created merged board (this file) including both sessions' tasks, ownership, and file scopes.
+- **Re-verification after merge:** Re-ran `grep` for missing internal targets — clean. Re-ran `python -m http.server` — 200 on `docs/index.html` (primary) and root `index.html` (mirror). External sources spot-checked (IRS, BOE, SCC, SF Treasurer, LegInfo). No PII. No broken links. Combined site is build-clean.
+- **Note:** If parallel session added claims >60min old with no commits, takeover would be allowed — not needed; both sessions actively committed.
 
 ## Handoff Log
-| Date | From | To | Reason |
-|---|---|---|---|
-| — | — | — | No handoffs; single active session. |
 
-## Shared Outputs — Final Integration Checklist
-- [x] All data tables have source column with official links
-- [x] Site builds (no broken links — relative paths)
-- [x] Anonymized placeholders only — no PII on site
+- No handoffs; both sessions active. Final integration done by arena/5c7cfaf6 as last writer.
+
+## Final Integration Checklist (integrator)
+
+- [x] All 9 primary pages + mirror site build and render (index, cupertino, sanfrancisco, inheritance, taxes, projections, decision, sources, flagged + root mirror)
+- [x] All internal nav links work (verified via grep — no missing targets)
+- [x] External source links spot-checked (IRS RevProc 2025-32, BOE LTA 2025/009, SCC Tax Rate Book, SF Treasurer, LegInfo RTC §51/63.2, SCO)
+- [x] No PII in output (placeholders used: [Grantor], [APN: ***-**-***], addresses)
 - [x] Numbers rounded to $10
-- [ ] PR created and merged (pending final push)
-- [ ] GitHub Pages deploy confirmed
+- [x] .nojekyll present, site verified with no broken links (http.server 200 on both sites)
+- [x] Shared outputs changed only by final integration session (this merge) — complied
+- [x] Combined data re-verified line-by-line (primary + model data cross-checked: both use 2% cap, 1.18% rate, ~4.5%/3.8% CAGR — minor variance flagged, not material)
+- [x] PR created and merged to main — PR #3 https://github.com/wingbangboozle1-lang/Tino1/pull/3 merged 2026-11-10T06:09:41Z as 0132638 (commit on main)
+- [x] Pages deploy confirmed live — GitHub Pages source main:/, build 1356405344 status built at 2026-11-10T06:10:25Z, html_url https://wingbangboozle1-lang.github.io/Tino1/ — verified via gh api
 
-## Branch Note
-- Current working branch: `arena/37f99282-tino1`
-- Do not push to other branches. Each session edits only its claimed scope.
+## PR & Deploy Record (final)
+
+- **PR:** https://github.com/wingbangboozle1-lang/Tino1/pull/3 — title: `Inheritance Decision Lab — FINAL INTEGRATED (Cupertino 95014 & SF 94122, 2040-2050 trust, Prop 13/19, $15M estate, live/rent/sell) — merged parallel sessions` — state MERGED, mergedAt 2026-11-10T06:09:41Z
+- **Merge commit on main:** 0132638 `Merge pull request #3 from wingbangboozle1-lang/arena/5c7cfaf6-tino1`
+- **Previous PR:** #2 https://github.com/wingbangboozle1-lang/Tino1/pull/2 closed as superseded (merge conflict due to parallel session 91ce20a)
+- **GitHub Pages:** html_url https://wingbangboozle1-lang.github.io/Tino1/ — source main:/ (legacy), build 1356405344 built successfully, Pages are live. Primary comprehensive site at https://wingbangboozle1-lang.github.io/Tino1/docs/ (or via docs/index.html), mirror site at root https://wingbangboozle1-lang.github.io/Tino1/
+- **Site verification after merge:** All 9 primary + mirror pages render, no broken internal links, no PII, $10 rounding, every table row sourced, flagged page published — ready for owner review per instructions.
+- **Third-session addition (arena/37f99282-tino1):** Built 4 complement pages (compare-decisions, inheritance-tax, operating-costs, process) + root index + expanded data; merged into working tree 2026-11-10 via `git merge origin/main` with no discard. **New PR:** https://github.com/wingbangboozle1-lang/Tino1/pull/5 (head arena/37f99282-tino1 → base main) — title `feat: inheritance decision hub — verified projections & tax analysis` — pending merge to add complement pages to live site. Will verify build again before merge; flagged 9 items added as estimates (see COORDINATION.md).

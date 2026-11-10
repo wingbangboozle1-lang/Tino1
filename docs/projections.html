@@ -1,111 +1,161 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Projections 2026–2050 — Value, Assessed, Tax, Net Wealth</title><link rel="stylesheet" href="../assets/style.css"></head><body>
-<header class="topbar"><div class="container inner">
-  <div class="brand"><span class="dot"></span> TINO · Inheritance Decision Hub</div>
-  <nav class="nav">
-    <a href="../index.html">Executive Summary</a><a href="cupertino.html">Cupertino 95014</a><a href="sanfrancisco.html">San Francisco 94122</a><a href="compare-decisions.html">Decision Model</a><a href="process.html">How Inheritance Works</a><a href="inheritance-tax.html">Tax Law</a><a class="active" href="projections.html">Projections 2026–2050</a><a href="operating-costs.html">Operating Costs</a><a href="sources.html">Sources</a><a href="flagged.html">Flagged for Review</a>
-  </nav>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Projections 2026–2050 | Tino1 Decision Lab</title>
+<link rel="stylesheet" href="css/style.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
+<script defer src="js/app.js"></script>
+</head>
+<body>
+<header class="topbar"><div class="topbar-inner">
+  <a href="index.html" class="brand" style="color:#fff;text-decoration:none"><span class="brand-badge">T1</span> Tino1 Inheritance Decision Lab</a>
+  <nav class="nav"><a href="index.html">Executive Summary</a><a href="cupertino.html">Cupertino 95014</a><a href="sanfrancisco.html">SF 94122</a><a href="inheritance.html">Trust Process</a><a href="taxes.html">Tax Laws</a><a href="projections.html">Projections 2026-2050</a><a href="decision.html">Live / Rent / Sell</a><a href="sources.html">Sources</a><a href="flagged.html">Flagged for Review</a></nav>
 </div></header>
-<main class="container">
-<section class="hero"><span class="kicker"><i></i> Model v1.0 — rounded to $10 — sensitivity below</span>
-<h1>Projections 2026–2050 — what the houses and taxes do by year</h1>
-<p class="lead">Method: market value grows at 3.5%/yr (mid-point of C.A.R. 2026 forecast 3.6% statewide, 2–6% Bay Area). Assessed value grows at Prop 13 2%/yr until death, then resets per Prop 19 (cap $1,044,586 for Feb 16 2025–Feb 15 2027, adjusted biennially — we model cap inflating at 2%/yr). Property tax = assessed × composite rate (Cupertino ~1.33% billed / ~1.16% ad-valorem baseline; SF ~2.1% effective / 1.1827% base). Insurance +5%/yr, water/electric +3%, maintenance +3%, rent +3%. Inheritance illustrated at 2045 (midpoint); 2040 and 2050 sensitivities provided.</p></section>
+<div class="container">
+  <div class="hero" style="padding:22px">
+    <h1>📈 Projections 2026–2050 — Market Value, Assessed Value, Property Tax &amp; Operating Costs</h1>
+    <p>All dollars rounded to nearest <strong>$10</strong>. Market appreciation: Cupertino <strong>4.5%</strong> CAGR, SF <strong>3.8%</strong> CAGR. Assessed value grows at Prop 13 cap: <strong>2% max/yr</strong> (or CA CPI if lower). Property tax: <strong>1.18%</strong> effective (Cupertino 1.15–1.22% per SCC Tax Rate Book; SF 1.18268325% per SF Treasurer FY25-26). Operating costs inflated at <strong>3%/yr</strong> (BLS CPI long-run). Sensitivity bands ±1.5% on market.</p>
+    <div class="hero-meta"><span class="pill">Download: <a href="data/projections.csv" style="color:#fff;text-decoration:underline">projections.csv (all years)</a> · <a href="data/projections.json" style="color:#fff;text-decoration:underline">projections.json</a></span><span class="pill">Method: RTC §51 (2% cap) + FHFA HPI for Cupertino 4.5% / SF 3.8% · BLS CPI for costs</span></div>
+  </div>
 
-<div class="card">
-  <h3>Assumptions table (every projection depends on this)</h3>
-  <div class="table-wrap"><table>
-    <thead><tr><th>Input</th><th>Value assumed</th><th>Official basis / source</th></tr></thead>
-    <tbody>
-      <tr><td>Market appreciation (both houses)</td><td class="num">3.50% / yr</td><td><a href="sources.html#car">C.A.R. 2026: 3.6% statewide; Bay Area 2–6% (NAR/Lawrence Yun)</a></td></tr>
-      <tr><td>Prop 13 assessed growth</td><td class="num">2.00% / yr</td><td><a href="sources.html#prop13">Cal Const Art XIIIA</a></td></tr>
-      <tr><td>Prop 19 cap (Feb 16 2025–Feb 15 2027)</td><td class="num">$1,044,586</td><td><a href="sources.html#prop19">BOE LTA 2025/009</a></td></tr>
-      <tr><td>Future cap inflation</td><td class="num">2.00% / yr (biennial adjustment via FHFA CA HPI)</td><td><a href="sources.html#prop19">RTC §63.2 / BOE</a></td></tr>
-      <tr><td>Property tax rate — Cupertino</td><td class="num">1.33% of assessed (billed composite)</td><td><a href="sources.html#scc">User bills calc; SCC typical 1.16% ad-valorem</a></td></tr>
-      <tr><td>Property tax rate — SF</td><td class="num">1.1827% base (Treasurer) / ~2.1% effective with add-ons</td><td><a href="sources.html#sf">SF Treasurer FY25-26</a></td></tr>
-      <tr><td>Insurance inflation</td><td class="num">5.00% / yr</td><td><a href="sources.html#ins">CDI rate filings; Insurify +21%/+16% outlook</a></td></tr>
-      <tr><td>Rent growth (SF)</td><td class="num">3.00% / yr</td><td><a href="sources.html#car">HUD/CPI shelter; Bay Area rent trends</a></td></tr>
-      <tr><td>Portfolio (reinvestment) nominal return</td><td class="num">6.50% (70/30)</td><td><a href="sources.html#markets">Vanguard CMM / Shiller — flagged</a></td></tr>
-    </tbody>
-  </table></div>
-</div>
-
-<div class="grid" style="margin-top:16px">
-  <div class="card" style="grid-column:span 6">
-    <h3>Cupertino 95014 — projected value & assessed (selected years)</h3>
+  <div class="section">
+    <h2>Cupertino 95014 — If Parents Retain Until Death (No Reassessment Yet)</h2>
+    <p class="section-desc">Shows how the Prop 13 gap widens while parents own. At inheritance, county reassesses — see next table for the jump. Parent-assessed column uses 2026 base $550,537 from user-provided roll (verified pattern, flagged as unverified bill). Market column uses $3,100,000 Nov 2026 user estimate (flagged).</p>
     <div class="table-wrap"><table>
-      <thead><tr><th>Year</th><th>Est. market value</th><th>Assessed (pre-inheritance)</th><th>Property tax (status quo)</th><th>Source</th></tr></thead>
+      <thead><tr><th>Year (Jan 1 lien)</th><th>Market Value (4.5%)</th><th>Assessed Value (2% cap)</th><th>Assessed as % of Market</th><th>Parent Property Tax if Retained (1.18%)</th><th>Source</th></tr></thead>
       <tbody>
-        <tr><td>2026</td><td class="num">$3,100,000</td><td class="num">$550,540</td><td class="num">$7,320</td><td>base — <a href="sources.html#scc">SCC</a></td></tr>
-        <tr><td>2030</td><td class="num">$3,558,760</td><td class="num">$595,520</td><td class="num">$7,920</td><td>3.5% / 2% — <a href="sources.html#car">C.A.R.</a></td></tr>
-        <tr><td>2035</td><td class="num">$4,228,230</td><td class="num">$657,180</td><td class="num">$8,740</td><td>model</td></tr>
-        <tr><td>2040</td><td class="num">$5,023,810</td><td class="num">$725,230</td><td class="num">$9,640</td><td>model</td></tr>
-        <tr><td>2045 (inherit)</td><td class="num">$5,929,230</td><td class="num">$800,250</td><td class="num">$10,640</td><td>model</td></tr>
-        <tr><td>2050</td><td class="num">$7,045,670</td><td class="num">$883,760</td><td class="num">$11,750</td><td>model</td></tr>
+        <tr><td>2026</td><td class="num">$3,100,000</td><td class="num">$550,540</td><td class="num">17.8%</td><td class="num">$6,500</td><td class="source"><a href="https://www.sccassessor.org" target="_blank">SCC Assessor (assessed)</a> · <a href="https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=RTC&sectionNum=51." target="_blank">RTC §51</a></td></tr>
+        <tr><td>2027</td><td class="num">$3,239,500</td><td class="num">$561,550</td><td class="num">17.3%</td><td class="num">$6,630</td><td class="source">Projected 2% cap · 4.5% FHFA HPI</td></tr>
+        <tr><td>2028</td><td class="num">$3,385,280</td><td class="num">$572,780</td><td class="num">16.9%</td><td class="num">$6,760</td><td class="source">Same</td></tr>
+        <tr><td>2029</td><td class="num">$3,537,620</td><td class="num">$584,230</td><td class="num">16.5%</td><td class="num">$6,890</td><td class="source">Same</td></tr>
+        <tr><td>2030</td><td class="num">$3,696,810</td><td class="num">$595,920</td><td class="num">16.1%</td><td class="num">$7,030</td><td class="source">Same</td></tr>
+        <tr><td>2031</td><td class="num">$3,863,160</td><td class="num">$607,840</td><td class="num">15.7%</td><td class="num">$7,170</td><td class="source">Same</td></tr>
+        <tr><td>2032</td><td class="num">$4,037,010</td><td class="num">$619,990</td><td class="num">15.4%</td><td class="num">$7,320</td><td class="source">Same</td></tr>
+        <tr><td>2033</td><td class="num">$4,218,670</td><td class="num">$632,390</td><td class="num">15.0%</td><td class="num">$7,460</td><td class="source">Same</td></tr>
+        <tr><td>2034</td><td class="num">$4,408,510</td><td class="num">$645,040</td><td class="num">14.6%</td><td class="num">$7,610</td><td class="source">Same</td></tr>
+        <tr><td>2035</td><td class="num">$4,606,900</td><td class="num">$657,940</td><td class="num">14.3%</td><td class="num">$7,760</td><td class="source">Same</td></tr>
+        <tr><td>2036</td><td class="num">$4,814,210</td><td class="num">$671,100</td><td class="num">13.9%</td><td class="num">$7,920</td><td class="source">Same</td></tr>
+        <tr><td>2037</td><td class="num">$5,030,840</td><td class="num">$684,520</td><td class="num">13.6%</td><td class="num">$8,080</td><td class="source">Same</td></tr>
+        <tr><td>2038</td><td class="num">$5,257,230</td><td class="num">$698,210</td><td class="num">13.3%</td><td class="num">$8,240</td><td class="source">Same</td></tr>
+        <tr><td>2039</td><td class="num">$5,493,810</td><td class="num">$712,180</td><td class="num">13.0%</td><td class="num">$8,400</td><td class="source">Same</td></tr>
+        <tr><td>2040</td><td class="num">$5,741,030</td><td class="num">$726,420</td><td class="num">12.7%</td><td class="num">$8,570</td><td class="source">Same</td></tr>
+        <tr><td>2041</td><td class="num">$5,999,380</td><td class="num">$740,950</td><td class="num">12.4%</td><td class="num">$8,740</td><td class="source">Same</td></tr>
+        <tr><td>2042</td><td class="num">$6,269,350</td><td class="num">$755,770</td><td class="num">12.1%</td><td class="num">$8,920</td><td class="source">Same</td></tr>
+        <tr><td>2043</td><td class="num">$6,551,470</td><td class="num">$770,890</td><td class="num">11.8%</td><td class="num">$9,100</td><td class="source">Same</td></tr>
+        <tr><td>2044</td><td class="num">$6,846,280</td><td class="num">$786,300</td><td class="num">11.5%</td><td class="num">$9,280</td><td class="source">Same</td></tr>
+        <tr><td>2045</td><td class="num">$7,154,370</td><td class="num">$802,030</td><td class="num">11.2%</td><td class="num">$9,460</td><td class="source">Same</td></tr>
+        <tr><td>2046</td><td class="num">$7,476,310</td><td class="num">$818,070</td><td class="num">10.9%</td><td class="num">$9,650</td><td class="source">Same</td></tr>
+        <tr><td>2047</td><td class="num">$7,812,750</td><td class="num">$834,430</td><td class="num">10.7%</td><td class="num">$9,850</td><td class="source">Same</td></tr>
+        <tr><td>2048</td><td class="num">$8,164,320</td><td class="num">$851,120</td><td class="num">10.4%</td><td class="num">$10,040</td><td class="source">Same</td></tr>
+        <tr><td>2049</td><td class="num">$8,531,720</td><td class="num">$868,140</td><td class="num">10.2%</td><td class="num">$10,240</td><td class="source">Same</td></tr>
+        <tr><td>2050</td><td class="num">$8,915,640</td><td class="num">$885,510</td><td class="num">9.9%</td><td class="num">$10,450</td><td class="source">Same</td></tr>
       </tbody>
     </table></div>
-    <p class="small">Status-quo tax = old base grown 2% × 1.33% — only for reference. After death, tax resets per Prop 19 — next tables.</p>
+    <p class="figure">Parent tax at 1.18% is the county avg ad valorem. Actual billed (with bonds + direct charges) was ~1.34% historically — if your bill shows $7,210 in 2025, that column would be ~$1,000 higher. Verify against <a href="https://payments.sccgov.org/propertytax" target="_blank">SCC bill detail</a>.</p>
   </div>
-  <div class="card" style="grid-column:span 6">
-    <h3>SF 94122 — projected value & assessed (selected years)</h3>
+
+  <div class="section">
+    <h2>Cupertino — What Happens at Inheritance (2040 vs 2050 Scenarios)</h2>
     <div class="table-wrap"><table>
-      <thead><tr><th>Year</th><th>Est. market value</th><th>Assessed</th><th>Property tax (effective ~2.1%)</th><th>Source</th></tr></thead>
+      <thead><tr><th>Inheritance Year</th><th>Market Value at Death</th><th>Parent Base at Death (2%)</th><th>If You Live In (Prop 19: FMV − $1,044,590*)</th><th>Tax Live-In (1.18%)</th><th>If You Rent (Full FMV)</th><th>Tax Full (1.18%)</th><th>Prop 19 Saving</th><th>Source</th></tr></thead>
       <tbody>
-        <tr><td>2026</td><td class="num">$1,800,000</td><td class="num">$116,530</td><td class="num">$2,590</td><td>base — <a href="sources.html#sf">SF</a></td></tr>
-        <tr><td>2030</td><td class="num">$2,066,460</td><td class="num">$126,020</td><td class="num">$2,800</td><td>model</td></tr>
-        <tr><td>2035</td><td class="num">$2,455,250</td><td class="num">$139,070</td><td class="num">$3,090</td><td>model</td></tr>
-        <tr><td>2040</td><td class="num">$2,917,180</td><td class="num">$153,470</td><td class="num">$3,410</td><td>model</td></tr>
-        <tr><td>2045</td><td class="num">$3,466,470</td><td class="num">$169,370</td><td class="num">$3,760</td><td>model</td></tr>
-        <tr><td>2050</td><td class="num">$4,119,210</td><td class="num">$186,910</td><td class="num">$4,150</td><td>model</td></tr>
+        <tr><td>If inherited 2026 (illustrative)</td><td class="num">$3,100,000</td><td class="num">$550,540</td><td class="num">$2,055,410</td><td class="num">$24,250</td><td class="num">$3,100,000</td><td class="num">$36,580</td><td class="num">$12,330</td><td class="source"><a href="https://www.boe.ca.gov/prop19/" target="_blank">BOE RTC §63.2</a></td></tr>
+        <tr><td>If inherited 2030</td><td class="num">$3,696,810</td><td class="num">$595,920</td><td class="num">$2,652,220</td><td class="num">$31,300</td><td class="num">$3,696,810</td><td class="num">$43,620</td><td class="num">$12,330</td><td class="source">Same; cap $1,044,586 thru 2/15/2027, then FHFA-adjusted — figure held constant for illustration</td></tr>
+        <tr><td>If inherited 2035</td><td class="num">$4,606,900</td><td class="num">$657,940</td><td class="num">$3,562,310</td><td class="num">$42,040</td><td class="num">$4,606,900</td><td class="num">$54,360</td><td class="num">$12,330</td><td class="source">Same</td></tr>
+        <tr><td><strong>If inherited 2040</strong></td><td class="num">$5,741,030</td><td class="num">$726,420</td><td class="num">$4,696,440</td><td class="num">$55,420</td><td class="num">$5,741,030</td><td class="num">$67,740</td><td class="num">$12,330</td><td class="source">Same — cap assumed constant; actual FY40 cap will be higher per FHFA</td></tr>
+        <tr><td>If inherited 2045</td><td class="num">$7,154,370</td><td class="num">$802,030</td><td class="num">$6,109,780</td><td class="num">$72,100</td><td class="num">$7,154,370</td><td class="num">$84,420</td><td class="num">$12,330</td><td class="source">Same</td></tr>
+        <tr><td><strong>If inherited 2050</strong></td><td class="num">$8,915,640</td><td class="num">$885,510</td><td class="num">$7,871,050</td><td class="num">$92,880</td><td class="num">$8,915,640</td><td class="num">$105,200</td><td class="num">$12,330</td><td class="source">Same</td></tr>
       </tbody>
     </table></div>
-    <p class="small">SF triplex assessed +2%/yr; tax uses ~2.1% effective (includes parcel taxes). If reassessed at sale/market, SF rate base is 1.1827% on market.</p>
+    <p class="figure">*Cap $1,044,586 is current (2/16/2025–2/15/2027 per <a href="https://www.boe.ca.gov/proptaxes/pdf/lta2025-009.pdf" target="_blank">BOE LTA 2025/009</a>). Future caps adjust by FHFA HPI; if housing inflates ~4%/yr, cap by 2040 could be ~$1.7M — increasing the saving proportionally. Model conservatively holds cap flat; actual saving may be larger.</p>
+    <div class="callout"><strong>Read this:</strong> Even the “discounted” live-in tax is huge by 2040–2050. That is why the decision is not just “what’s the tax this year?” but “what’s the present value of 30 years of this tax plus maintenance while the equity could be in a diversified portfolio?” — see <a href="decision.html">Live / Rent / Sell</a>.</div>
   </div>
-</div>
 
-<div class="card" style="margin-top:16px">
-  <h3>At inheritance — Prop 19 math by inheritance year</h3>
-  <p class="muted">Cap = $1,044,586 in 2025-27, inflating 2%/yr → $1,157,000 in 2040, $1,548,000 in 2050. New assessed = FMV − cap (live-in) vs FMV (rent-out).</p>
-  <div class="table-wrap"><table>
-    <thead><tr><th>If inherited in …</th><th>Cupertino FMV (3.5%)</th><th>Parent base at death (2%)</th><th>Cap then</th><th>Path A: Live-in assessed</th><th>Path A tax @1.33%</th><th>Path B: Rental assessed</th><th>Path B tax @1.33%</th><th>Source</th></tr></thead>
-    <tbody>
-      <tr><td><strong>2040</strong></td><td class="num">$5,023,810</td><td class="num">$725,230</td><td class="num">$1,284,070</td><td class="num">$3,739,740</td><td class="num">$49,740</td><td class="num">$5,023,810</td><td class="num">$66,820</td><td><a href="sources.html#prop19">BOE formula</a></td></tr>
-      <tr><td><strong>2045</strong></td><td class="num">$5,929,230</td><td class="num">$800,250</td><td class="num">$1,416,640</td><td class="num">$4,512,590</td><td class="num">$60,020</td><td class="num">$5,929,230</td><td class="num">$78,860</td><td><a href="sources.html#prop19">BOE</a></td></tr>
-      <tr><td><strong>2050</strong></td><td class="num">$7,045,670</td><td class="num">$883,760</td><td class="num">$1,562,870</td><td class="num">$5,482,800</td><td class="num">$72,920</td><td class="num">$7,045,670</td><td class="num">$93,710</td><td><a href="sources.html#prop19">BOE</a></td></tr>
-    </tbody>
-  </table></div>
-  <p class="small">Tax drag is enormous: compare pre-death tax ~$10k to post-death $50k–$94k. That's why renting out fails unless you get the live-in exclusion. Rates rounded; actual composite varies by TRA.</p>
-</div>
+  <div class="section">
+    <h2>San Francisco 94122 — Parallel Projection (Market 3.8% CAGR)</h2>
+    <p class="section-desc">Assessed base 2025 $114,248 (user; flagged) → 2026 factored to $116,530. Rent not included in assessed growth — Prop 13 applies regardless of rental use. SF effective rate 1.18268325% (Treasurer FY25-26).</p>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Year</th><th>Market Value (3.8%)</th><th>Assessed Value (2%)</th><th>Parent Tax if Retained (1.18%)</th><th>If Inherited &amp; Live-In (FMV−cap)</th><th>Tax Live-In</th><th>If Inherited &amp; Rented (Full FMV)</th><th>Tax Full</th></tr></thead>
+      <tbody>
+        <tr><td>2026</td><td class="num">$1,800,000</td><td class="num">$116,530</td><td class="num">$1,380</td><td class="num">$755,410</td><td class="num">$8,920</td><td class="num">$1,800,000</td><td class="num">$21,280</td></tr>
+        <tr><td>2030</td><td class="num">$2,089,590</td><td class="num">$126,140</td><td class="num">$1,490</td><td class="num">$1,045,000</td><td class="num">$12,330</td><td class="num">$2,089,590</td><td class="num">$24,660</td></tr>
+        <tr><td>2035</td><td class="num">$2,517,960</td><td class="num">$139,270</td><td class="num">$1,640</td><td class="num">$1,473,370</td><td class="num">$17,390</td><td class="num">$2,517,960</td><td class="num">$29,710</td></tr>
+        <tr><td>2040</td><td class="num">$3,034,140</td><td class="num">$153,760</td><td class="num">$1,810</td><td class="num">$1,989,550</td><td class="num">$23,480</td><td class="num">$3,034,140</td><td class="num">$35,800</td></tr>
+        <tr><td>2045</td><td class="num">$3,656,130</td><td class="num">$169,770</td><td class="num">$2,000</td><td class="num">$2,611,540</td><td class="num">$30,820</td><td class="num">$3,656,130</td><td class="num">$43,140</td></tr>
+        <tr><td>2050</td><td class="num">$4,405,640</td><td class="num">$187,440</td><td class="num">$2,210</td><td class="num">$3,361,050</td><td class="num">$39,660</td><td class="num">$4,405,640</td><td class="num">$51,990</td></tr>
+      </tbody>
+    </table></div>
+    <p class="figure">Full yearly table in CSV. Abbreviated here for readability. SF’s lower appreciation (3.8% vs 4.5%) reflects Sunset vs Silicon Valley dynamics (FHFA HPI + local supply).</p>
+  </div>
 
-<div class="card" style="margin-top:16px">
-  <h3>Full-year projection (annually, rounded to $10)</h3>
-  <p class="muted">Download <a href="../data/projections-cupertino.csv">CSV — Cupertino</a> · <a href="../data/projections-sanfrancisco.csv">CSV — San Francisco</a> · assumptions in <a href="../data/assumptions.json">assumptions.json</a>. Below is a compact 5-year view; full 2026–2050 table is in CSV.</p>
-  <div class="table-wrap"><table>
-    <thead><tr><th>Year</th><th>CUP market</th><th>CUP assessed (status quo)</th><th>CUP tax (status quo)</th><th>SF market</th><th>SF assessed</th><th>SF tax</th><th>SF rent (gross)</th><th>Source</th></tr></thead>
-    <tbody>
-      <tr><td>2026</td><td class="num">$3,100,000</td><td class="num">$550,540</td><td class="num">$7,320</td><td class="num">$1,800,000</td><td class="num">$116,530</td><td class="num">$2,590</td><td class="num">$85,800</td><td>base</td></tr>
-      <tr><td>2030</td><td class="num">$3,558,760</td><td class="num">$595,520</td><td class="num">$7,920</td><td class="num">$2,066,460</td><td class="num">$126,020</td><td class="num">$2,800</td><td class="num">$96,490</td><td>model — <a href="sources.html#car">C.A.R.</a></td></tr>
-      <tr><td>2035</td><td class="num">$4,228,230</td><td class="num">$657,180</td><td class="num">$8,740</td><td class="num">$2,455,250</td><td class="num">$139,070</td><td class="num">$3,090</td><td class="num">$111,860</td><td>model</td></tr>
-      <tr><td>2040</td><td class="num">$5,023,810</td><td class="num">$725,230</td><td class="num">$9,640</td><td class="num">$2,917,180</td><td class="num">$153,470</td><td class="num">$3,410</td><td class="num">$129,700</td><td>model</td></tr>
-      <tr><td>2045</td><td class="num">$5,929,230</td><td class="num">$800,250</td><td class="num">$10,640</td><td class="num">$3,466,470</td><td class="num">$169,370</td><td class="num">$3,760</td><td class="num">$150,380</td><td>model</td></tr>
-      <tr><td>2050</td><td class="num">$7,045,670</td><td class="num">$883,760</td><td class="num">$11,750</td><td class="num">$4,119,210</td><td class="num">$186,910</td><td class="num">$4,150</td><td class="num">$174,350</td><td>model</td></tr>
-    </tbody>
-  </table></div>
-</div>
+  <div class="section">
+    <h2>Operating Costs Inflated at 3%/yr (2026 $ → Future $)</h2>
+    <div class="grid grid-2">
+      <div class="card">
+        <h3>Cupertino annual costs (rounded)</h3>
+        <div class="table-wrap"><table>
+          <thead><tr><th>Year</th><th>Water $1,500 base</th><th>Electric −$180 base (credit)</th><th>Insurance $1,500 base</th><th>Maintenance $6,000 base</th><th>Operating subtotal (ex-tax)</th><th>Source</th></tr></thead>
+          <tbody>
+            <tr><td>2026</td><td class="num">$1,500</td><td class="num">-$180</td><td class="num">$1,500</td><td class="num">$6,000</td><td class="num">$8,820</td><td class="source"><a href="https://www.bls.gov/cpi/" target="_blank">BLS CPI</a> 3% assumption</td></tr>
+            <tr><td>2030</td><td class="num">$1,690</td><td class="num">-$200</td><td class="num">$1,690</td><td class="num">$6,760</td><td class="num">$9,940</td><td class="source">3% CAGR</td></tr>
+            <tr><td>2035</td><td class="num">$1,960</td><td class="num">-$240</td><td class="num">$1,960</td><td class="num">$7,820</td><td class="num">$11,500</td><td class="source">3%</td></tr>
+            <tr><td>2040</td><td class="num">$2,270</td><td class="num">-$270</td><td class="num">$2,270</td><td class="num">$9,080</td><td class="num">$13,350</td><td class="source">3%</td></tr>
+            <tr><td>2045</td><td class="num">$2,630</td><td class="num">-$320</td><td class="num">$2,630</td><td class="num">$10,520</td><td class="num">$15,460</td><td class="source">3%</td></tr>
+            <tr><td>2050</td><td class="num">$3,050</td><td class="num">-$370</td><td class="num">$3,050</td><td class="num">$12,200</td><td class="num">$17,930</td><td class="source">3%</td></tr>
+          </tbody>
+        </table></div>
+        <p class="figure">Add property tax from table above to get total carry. Example 2040 live-in total = $55,420 tax + $13,350 operating = <strong>$68,770/yr</strong>. Solar credit: verify NEM 2.0 vs 3.0 grandfathering — credit may shrink after transfer (<a href="https://www.pge.com/tariffs/nem.html" target="_blank">PG&E NEM</a>).</p>
+      </div>
+      <div class="card">
+        <h3>San Francisco annual costs (rounded, 3-unit building)</h3>
+        <div class="table-wrap"><table>
+          <thead><tr><th>Year</th><th>Water $4,380 base</th><th>Electric $600 base</th><th>Insurance $2,200 base</th><th>Maintenance $9,000 base</th><th>Operating subtotal (ex-tax, ex-vacancy)</th></tr></thead>
+          <tbody>
+            <tr><td>2026</td><td class="num">$4,380</td><td class="num">$600</td><td class="num">$2,200</td><td class="num">$9,000</td><td class="num">$16,180</td></tr>
+            <tr><td>2030</td><td class="num">$4,930</td><td class="num">$680</td><td class="num">$2,480</td><td class="num">$10,130</td><td class="num">$18,220</td></tr>
+            <tr><td>2035</td><td class="num">$5,710</td><td class="num">$790</td><td class="num">$2,870</td><td class="num">$11,740</td><td class="num">$21,110</td></tr>
+            <tr><td>2040</td><td class="num">$6,620</td><td class="num">$910</td><td class="num">$3,320</td><td class="num">$13,610</td><td class="num">$24,460</td></tr>
+            <tr><td>2045</td><td class="num">$7,680</td><td class="num">$1,060</td><td class="num">$3,850</td><td class="num">$15,770</td><td class="num">$28,360</td></tr>
+            <tr><td>2050</td><td class="num">$8,900</td><td class="num">$1,220</td><td class="num">$4,460</td><td class="num">$18,270</td><td class="num">$32,850</td></tr>
+          </tbody>
+        </table></div>
+        <p class="figure">Insurance at 3% is conservative — CA market has risen 6–11%/yr recently; actual may be higher. See <a href="https://www.insurance.ca.gov" target="_blank">CA DOI rate filings</a>. Full year table in CSV includes vacancy assumption.</p>
+      </div>
+    </div>
+  </div>
 
-<div class="card" style="margin-top:16px">
-  <h3>Sensitivity — what changes the answer</h3>
-  <div class="table-wrap"><table>
-    <thead><tr><th>Variable</th><th>Low (bear)</th><th>Base</th><th>High (bull)</th><th>Effect on decision</th><th>Source</th></tr></thead>
-    <tbody>
-      <tr><td>Home appreciation</td><td class="num">2.0%</td><td class="num">3.5%</td><td class="num">5.0%</td><td>Bull → sell & reinvest even stronger (compounding beats housing)</td><td><a href="sources.html#car">C.A.R. 2–6%</a></td></tr>
-      <tr><td>Prop 19 cap inflation</td><td class="num">1%</td><td class="num">2%</td><td class="num">3%</td><td>Higher cap helps live-in path modestly</td><td><a href="sources.html#prop19">FHFA HPI</a></td></tr>
-      <tr><td>Portfolio return (post-tax sale)</td><td class="num">5.0%</td><td class="num">6.5%</td><td class="num">8.0%</td><td>Low return → living in Cupertino more competitive</td><td><a href="sources.html#markets">Flagged</a></td></tr>
-      <tr><td>Rent growth</td><td class="num">1%</td><td class="num">3%</td><td class="num">5%</td><td>5%+ rent growth could make renting Cupertino viable — but CA rent caps limit it</td><td><a href="sources.html#sf">SF Rent Board</a></td></tr>
-      <tr><td>Property tax bonds</td><td class="num">+0%</td><td class="num">+0.05%/yr</td><td class="num">+0.10%/yr</td><td>Pushes sell case; see county rate books</td><td><a href="sources.html#scc">SCC Auditor</a></td></tr>
-    </tbody>
-  </table></div>
-</div>
+  <div class="section">
+    <h2>Sensitivity — What if Appreciation Is Different?</h2>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Scenario (Cupertino FMV in 2040)</th><th>3% CAGR (pessimistic)</th><th>4.5% CAGR (base)</th><th>6% CAGR (optimistic)</th><th>Source</th></tr></thead>
+      <tbody>
+        <tr><td>Market value 2040</td><td class="num">$4,690,000</td><td class="num">$5,741,030</td><td class="num">$7,007,770</td><td class="source">FHFA HPI sensitivity</td></tr>
+        <tr><td>New assessed if live-in (FMV−cap)</td><td class="num">$3,645,410</td><td class="num">$4,696,440</td><td class="num">$5,963,180</td><td class="source"><a href="https://www.boe.ca.gov/prop19/" target="_blank">BOE</a></td></tr>
+        <tr><td>Tax live-in 2040 @1.18%</td><td class="num">$43,020</td><td class="num">$55,420</td><td class="num">$70,370</td><td class="source">Projected</td></tr>
+        <tr><td>Tax full 2040</td><td class="num">$55,340</td><td class="num">$67,740</td><td class="num">$82,690</td><td class="source">Projected</td></tr>
+      </tbody>
+    </table></div>
+    <p class="figure">Even in the pessimistic 3% case, 2040 live-in tax is $43k/yr. Sensitivity analysis confirms conclusion is robust: Cupertino carry is high regardless of appreciation path.</p>
+  </div>
 
-<footer class="footer"><p><a href="../index.html">← Back to Executive Summary</a> · All projections are estimates — not guarantees. Review annually.</p></footer>
-</main></body></html>
+  <div class="section">
+    <h2>How These Projections Were Built (Verifiable)</h2>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Input</th><th>Assumption / Formula</th><th>Justification / Source</th></tr></thead>
+      <tbody>
+        <tr><td>Starting market value</td><td>Cupertino $3,100,000; SF $1,800,000 (Nov 2026 user estimate)</td><td class="source">User estimate — flagged. Verify via appraisal / <a href="https://www.sccassessor.org" target="_blank">SCC Assessor sales</a></td></tr>
+        <tr><td>Market CAGR</td><td>Cupertino 4.5%; SF 3.8% (3%/6% bands)</td><td class="source">Long-run Bay Area FHFA HPI + local studies; conservative vs 43% 2019-24 spike (<a href="https://www.fhfa.gov/DataTools/Downloads/Pages/House-Price-Index.aspx" target="_blank">FHFA HPI</a>)</td></tr>
+        <tr><td>Assessed CAGR</td><td>2% max (RTC §51) — min(2%, CA CPI). Modeled as 2% since CPI averages above 2% long-run.</td><td class="source"><a href="https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=RTC&sectionNum=51." target="_blank">RTC §51</a> · <a href="https://www.boe.ca.gov/proptaxes/pdf/CCPP500P3.pdf" target="_blank">BOE historical factors</a></td></tr>
+        <tr><td>Property tax rate</td><td>1.18% (Cupertino 1.15–1.22% SCC Tax Rate Book; SF 1.18268325% Treasurer FY25-26)</td><td class="source"><a href="https://files.santaclaracounty.gov/exjcpb1531/2024-11/tax-rate-book-2024-2025-final.pdf" target="_blank">SCC Tax Rate Book [PDF]</a> · <a href="https://sftreasurer.org/property-taxes" target="_blank">SF Treasurer</a></td></tr>
+        <tr><td>Prop 19 cap</td><td>$1,044,586 current; held flat in model (conservative — actual adjusts via FHFA HPI every 2 yrs)</td><td class="source"><a href="https://www.boe.ca.gov/proptaxes/pdf/lta2025-009.pdf" target="_blank">BOE LTA 2025/009</a></td></tr>
+        <tr><td>Operating cost inflation</td><td>3.0% annually</td><td class="source"><a href="https://www.bls.gov/cpi/" target="_blank">BLS CPI long-run ~3%</a></td></tr>
+        <tr><td>All dollars</td><td>Rounded to nearest $10 per user instruction</td><td></td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <footer class="footer"><div><a href="taxes.html">← Tax Laws</a> · <a href="decision.html">Decision Analysis →</a> · <a href="data/projections.csv" download>Download CSV</a> · <a href="sources.html">All Sources</a></div></footer>
+</div>
+</body>
+</html>

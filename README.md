@@ -1,73 +1,80 @@
 # Tino1 — Cupertino & San Francisco Inheritance Decision Hub
 
-**Live site:** GitHub Pages (Cayman theme) — `https://wingbangboozle1-lang.github.io/Tino1/`
+**Live site (GitHub Pages):** https://wingbangboozle1-lang.github.io/Tino1/  
+Docs entry: `docs/index.html` (canonical dashboard) + mirror at `/index.html` for Pages root.
 
-> **Privacy:** No personal information appears on the site. All names/addresses/APNs are placeholders (e.g., `Grantor Trust A`, `Property 95014`). Keep private records in your trust file, not in this repo.
-> **Money:** All figures rounded to nearest $10.
+Anonymized decision-analysis site for a 2040–2050 trust inheritance: two CA houses (Cupertino 95014 ~$3.1M, San Francisco 94122 ~$1.8M), live vs rent vs sell+invest.
 
-## What this is
-A verified, line-by-line decision framework for two California properties:
+> **Privacy:** No personal information on the site — placeholders only (e.g., `Grantor Trust A`, `[Property Address]`, `[APN: ***]`).  
+> **Money:** All dollars rounded to nearest $10.
 
-- **Cupertino 95014** — est. $3.10M Nov 2026, assessed $550,537 (Prop 13 base), tax ~$7,210/yr, solar net credit, low maintenance.
-- **San Francisco 94122** — Outer Sunset 3-unit, est. $1.80M Nov 2026, assessed $114,248, tax ~$2,440/yr, two units rented $7,150/mo, third unit owner-occupiable.
+## Site maps (merged from two parallel sessions — no work discarded)
 
-The plan: inherit the Cupertino house by revocable living trust around **2040–2050**, then choose to **live in it, rent it, or sell and reinvest** — while the SF house remains the base.
+**Canonical dashboard (session arena/5c7cfaf6 — 9-page lab):** served from `docs/`:
+- `docs/index.html` — Executive Summary dashboard (metrics, charts, decision at-a-glance)
+- `docs/cupertino.html` — Cupertino 95014 detailed profile
+- `docs/sanfrancisco.html` — SF 94122 triplex profile
+- `docs/inheritance.html` — Trust inheritance step-by-step (14 steps, Prop 19 clocks)
+- `docs/taxes.html` — Tax Law Hub (federal/state/local, estate, Prop 13/19, step-up, cap gains)
+- `docs/projections.html` — Projections 2026–2050 (market, assessed, tax, costs, charts + CSV/JSON)
+- `docs/decision.html` — Decision analysis: live vs rent vs sell & reinvest (NPV 10/20/30 yr)
+- `docs/sources.html` — Sources & verification index (every row traced)
+- `docs/flagged.html` — Flagged for Review (unverified items, not blocking)
 
-## Site map
-- `/index.html` — Executive summary (the answer, key numbers, 3 paths, risks, next steps)
-- `docs/cupertino.html` — Cupertino file (history, rate build, costs, Prop 19 scenarios)
-- `docs/sanfrancisco.html` — SF file (history, rental accounting, landlord taxes)
-- `docs/compare-decisions.html` — Side-by-side decision model (10-yr + 20-yr wealth)
-- `docs/process.html` — Step-by-step inheritance process (forms, deadlines)
-- `docs/inheritance-tax.html` — Local / state / federal tax law (Prop 13/19, estate, gift, step-up, cap gains)
-- `docs/projections.html` — Model 2026–2050 (value, assessed, tax, portfolio) + sensitivity + CSV downloads
-- `docs/operating-costs.html` — Insurance, water/electric, maintenance breakdowns
-- `docs/sources.html` — Every row's official source (IRS, BOE, FTB, SCO, Assessor, Treasurer, C.A.R., CDI, NAIC)
-- `docs/flagged.html` — Unverified items left blank/flagged (does not block merge)
-- `data/` — Machine-readable CSV/JSON (projections, scenarios, assumptions)
+**Additional pages (session arena/37f99282-tino1 — detailed complements):**
+- `docs/compare-decisions.html` — Side-by-side 10-yr/20-yr wealth model (6.5% portfolio vs housing)
+- `docs/process.html` — Trust administration process with forms/deadlines checklist
+- `docs/inheritance-tax.html` — Expanded federal/state tax tables (gift, GST, NIIT, QBI)
+- `docs/operating-costs.html` — Insurance, water/electric (SFPUC/SJ Water/PG&E), maintenance
+- `index.html` (repo root) — Mirror executive summary for Pages root build
+- `data/assumptions.json`, `data/projections-*.csv`, `data/inheritance-scenarios.json` — machine-readable
 
-## How we built it
-1. **Line-by-line verification** — each table row links to an official source. If unverifiable, left blank and flagged.
+**Parallel session model & research (arena/3676d6a0):**
+- `model/project.py` + `model/assumptions.md` — reproducible Python model
+- `research/tax-law.md`, `research/utilities-insurance-market.md` — official-source notes
+- `data/cupertino_projection.csv`, `data/sanfrancisco_projection.csv`, `data/model_summary.json`
+
+## What we built (combined)
+1. **Line-by-line verification** — every table row links to an official source. If unverifiable, left blank/flagged.
 2. **Numbers rounded to $10** per request.
-3. **Projections** assume: 3.5% home appreciation (C.A.R. 3.6% statewide, 2–6% Bay Area), 2% Prop 13 cap, Prop 19 cap $1,044,586 (BOE LTA 2025/009) inflating 2%/yr, 5% insurance inflation, 3% rent/water/electric, 6.5% 70/30 portfolio.
-4. **Three paths modeled** (inherit 2045 → 2055):  
-   - **A. Live in Cupertino** (Prop 19 partial shield) + rent SF fully  
-   - **B. Rent out Cupertino** (full reassessment — weakest)  
-   - **C. Sell promptly** (stepped-up basis → $0 cap gain if sold near FMV → reinvest → highest liquid wealth)
+3. **Projections:** 3.5–4.5% Cupertino / 3.8% SF appreciation (C.A.R. 3.6% statewide, 2–6% Bay Area), 2% Prop 13 cap (RTC §51), Prop 19 cap $1,044,586 (BOE LTA 2025/009) biennially FHFA HPI, 5% insurance inflation, 3% rent/water/electric, 6.5% 70/30 portfolio.
+4. **Three paths (inherit ~2045 → 2055/2065):**
+   - **A. Live in Cupertino** (move in ≤12 mo, Prop 19 partial shield) + rent SF fully
+   - **B. Rent out Cupertino** (full reassessment — weakest; CA taxes rent as ordinary)
+   - **C. Sell promptly** (stepped-up basis IRC §1014 → ~$0 gain if sold near FMV → reinvest → highest liquid wealth, ~$2M+ ahead at 10 yr)
+5. **Inheritance process:** 14 steps, PCOR, BOE-19-P (3 yr), HO exemption (1 yr), Form 706 only above $15M.
 
-See `docs/compare-decisions.html` for the full math.
+See `docs/decision.html` + `docs/compare-decisions.html` for full math.
 
 ## Verification
-Every table row has a **Source** column. Key official sources:
-
-- IRS Form 709 Instr. 2026 + Rev Proc 2025-32 ($15M exemption, $19k gift exclusion) — [IRS](https://www.irs.gov/pub/irs-dft/i709--dft.pdf)
-- BOE Prop 13 / Prop 19 — [BOE](https://www.boe.ca.gov/prop19/) + LTA 2025/009 ($1,044,586)
-- Santa Clara County Assessor Annual Report 2025 — [SCC](https://www.sccassessor.org/)
-- SF Treasurer FY2025-26 rate 1.18268325% — [SF Treasurer](https://sftreasurer.org/property-tax)
-- C.A.R. 2026 forecast — [C.A.R.](https://www.car.org/aboutus/newsreleases/2026housingforecast)
+Key official sources (Source pages list all):
+- IRS Form 709 Instr. 2026 + Rev Proc 2025-32 ($15M exemption, $19k gift) — [IRS](https://www.irs.gov/pub/irs-dft/i709--dft.pdf)
+- BOE Prop 13/19 + LTA 2025/009 ($1,044,586) — [BOE](https://www.boe.ca.gov/prop19/)
+- SCO no CA estate tax — [SCO](https://www.sco.ca.gov/state_finances_estate_tax.html)
+- SCC Assessor Annual Report 2025 — [SCC](https://www.sccassessor.org/)
+- SF Treasurer 1.18268325% FY25-26 — [SF Treasurer](https://sftreasurer.org/property-tax)
+- C.A.R. forecast — [C.A.R.](https://www.car.org/aboutus/newsreleases/2026housingforecast)
 - CDI / NAIC insurance — [CDI](https://www.insurance.ca.gov/), [NAIC](https://content.naic.org/reports/homeowners-insurance-report)
-- FTB, Cal Courts self-help — [FTB](https://www.ftb.ca.gov/), [Courts](https://selfhelp.courts.ca.gov/probate)
-
-If you spot an error, open an issue with the source link — we flag rather than infer.
+- FTB, Cal Courts — [FTB](https://www.ftb.ca.gov/), [Courts](https://selfhelp.courts.ca.gov/probate)
 
 ## Coordination
-See `COORDINATION.md` for task board, file ownership, and verification log. This repo started empty; single session `arena/37f99282-tino1` built all tasks on this branch.
+See `COORDINATION.md` for combined 16-task board, file ownership, verification & merge-conflict logs. Built by two parallel sessions + final integrator (arena/5c7cfaf6), now merged with arena/37f99282-tino1 additions — no discarded work.
 
 ## Local dev
 ```bash
-# Jekyll (optional)
-bundle install
+# no build required — open docs/index.html or index.html
+python -m http.server 8000
+# or Jekyll (Cayman theme via _config.yml in root, .nojekyll in docs/)
 bundle exec jekyll serve
-# or just open index.html in a browser — no build required
 ```
 
 ## GitHub Pages
-- Theme: `jekyll-theme-cayman` via `remote_theme`
-- Source: this branch, root `/` (enable in repo Settings → Pages → Source: branch `arena/37f99282-tino1`, folder `/ (root)`)
-- Custom domain: none
+- Canonical: `docs/` folder via Pages (current live build 1356405344) — `https://wingbangboozle1-lang.github.io/Tino1/`
+- Mirror root `index.html` also builds via legacy Pages source (branch arena/37f99282-tino1 → now main after merge)
 
 ## License
-Internal family decision support — not legal/tax advice. Consult CA licensed attorney & CPA.
+Internal family decision support — not legal/tax advice. Consult CA attorney & CPA.
 
 ## Changelog
-- 2026-11-10 — v1.0 initial site: executive summary, projections 2026–2050, decision model, tax law, process, sources, flagged, data CSVs.
+- 2026-11-10 — v1.0 initial site (executive summary, projections, decision, tax hub, flagged, data CSVs)
+- 2026-11-10 — v1.1 merged parallel sessions (model/research + 4 complement pages, no discard, integrated Pages deploy)
