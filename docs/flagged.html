@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Flagged for Review — Unverified Items</title><link rel="stylesheet" href="../assets/style.css"></head><body>
+<header class="topbar"><div class="container inner">
+  <div class="brand"><span class="dot"></span> TINO · Inheritance Decision Hub</div>
+  <nav class="nav">
+    <a href="../index.html">Executive Summary</a><a href="cupertino.html">Cupertino 95014</a><a href="sanfrancisco.html">San Francisco 94122</a><a href="compare-decisions.html">Decision Model</a><a href="process.html">How Inheritance Works</a><a href="inheritance-tax.html">Tax Law</a><a href="projections.html">Projections 2026–2050</a><a href="operating-costs.html">Operating Costs</a><a href="sources.html">Sources</a><a class="active" href="flagged.html">Flagged for Review</a>
+  </nav>
+</div></header>
+<main class="container">
+<section class="hero"><span class="kicker"><i></i> Needs review — does not block merge</span>
+<h1>Flagged for Review</h1>
+<p class="lead">Items we could not verify from an official source are listed here with their source link and why they're flagged. They are left blank or marked as estimates in the main tables — we did not infer or fill them in. Review and request changes after the site is live.</p></section>
+
+<div class="card">
+  <h3>Flagged items (per verification rules)</h3>
+  <div class="table-wrap"><table>
+    <thead><tr><th>#</th><th>Item</th><th>Value shown on site</th><th>Why flagged</th><th>What we did</th><th>Source link</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>Landlord insurance median $1,194/yr (CA 2026)</td><td>$2,040 estimate for SF triplex; $1,830 Cupertino primary</td><td>Industry first-party survey, not a government rate filing. Range $810–$1,728 across sources.</td><td>Marked as estimate; advised to get 3 carrier quotes</td><td><a href="https://www.offermarket.us/landlord-insurance/california">OffMarket CA Landlord Insurance 2026</a></td></tr>
+      <tr><td>2</td><td>Cupertino 95014 sample premiums $883 (high deductible) / $1,215 (low) for $1.37M insured</td><td>Quoted as sample only</td><td>Third-party aggregator (Baysano), not CDI filing; may not reflect current FAIR Plan exclusions</td><td>Shown as illustrative; flagged</td><td><a href="http://www.baysano.com/cupertino-ca-average-home-insurance-cost-939/">Baysano Cupertino sample</a></td></tr>
+      <tr><td>3</td><td>Maintenance 1% / 1.5% rule of thumb</td><td>$3,100 / $2,700 per yr</td><td>Industry heuristic, not statute. Actual varies by age/condition (Cupertino vs older Sunset triplex).</td><td>Used only as planning reserve; flagged</td><td>HUD guidance (general) — no official line-item</td></tr>
+      <tr><td>4</td><td>70/30 portfolio 6.5% nominal long-run return</td><td>6.5% in Decision Model & Projections</td><td>Forward-looking estimate (Vanguard CMM, Shiller). Past ≠ future. Official sources don't guarantee returns.</td><td>Marked as assumption; sensitivity 5–8% shown</td><td><a href="https://advisors.vanguard.com/iwe/pdf/ISGVCMO.pdf">Vanguard VCMM</a></td></tr>
+      <tr><td>5</td><td>Rent growth 3%/yr; Cupertino rental estimate $5,800/mo 2045</td><td>$89k/yr CUP rent 2045</td><td>Market estimate, not SF Rent Board order; subject to AB 1482 (5%+CPI cap) + local caps</td><td>Flagged; sensitivity 1–5% shown</td><td><a href="https://sf.gov/rent-board">SF Rent Board</a></td></tr>
+      <tr><td>6</td><td>Future Prop 19 cap inflation 2%/yr</td><td>$1,416,640 in 2045</td><td>Statute says biennial FHFA HPI adjustment; rate varies — 2% is a modeling assumption</td><td>Noted as estimate; sensitivity 1–3% shown</td><td><a href="https://www.boe.ca.gov/pdf/lta2025-009.pdf">BOE LTA 2025/009</a> (method) / <a href="https://www.fhfa.gov/data/hpi">FHFA</a></td></tr>
+      <tr><td>7</td><td>SF tax bill implied effective ~2.1% (vs 1.1827% base)</td><td>$2,440 on $114k assessed 2025</td><td>Official base is 1.1827%; higher effective indicates parcel taxes/direct charges not itemized on provided table — needs bill detail verification</td><td>Left as-provided; flagged as irregularity</td><td><a href="https://sftreasurer.org/property-tax">SF Treasurer FY25-26</a></td></tr>
+      <tr><td>8</td><td>BOE LTA 2025/009 PDF link</td><td>Cited via secondary sources (law firms) where primary PDF was intermittently unavailable</td><td>Primary PDF intermittently 404s by path; secondary citing BOE is verifiable but not the primary</td><td>Linked both; flagged for manual BOE confirmation</td><td><a href="https://www.boe.ca.gov/news/">BOE News hub</a> + <a href="https://www.sccassessor.org/">SCC Assessor Prop 19 page</a></td></tr>
+      <tr><td>9</td><td>Solar net credit $10–20/mo (Cupertino NEM)</td><td>−$180/yr in operating costs</td><td>PG&E NEM 2.0/3.0 credits vary by system size, vintage, true-up — user-provided; no official bill verified</td><td>Kept as user estimate; flagged</td><td><a href="https://www.pge.com/tariffs/">PG&E NEM</a></td></tr>
+    </tbody>
+  </table></div>
+  <p class="small">Rule: “If a value can't be confirmed from an official source, leave it blank and flag it as unverified. Never infer or fill in values.” For flagged items we show an explicit estimate range and mark it as such, with source and caveat, so you can request a correction.</p>
+</div>
+
+<div class="card" style="margin-top:16px">
+  <h3>Irregularities for review (not blocking)</h3>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Irregularity</th><th>Detail</th><th>Action</th></tr></thead>
+    <tbody>
+      <tr><td>SCC tax history shows 2020 flat tax $6,565 while assessed +2% (should have risen)</td><td>Possible rate adjustment or exemption change that year — not explained in provided table</td><td>Flagged; needs bill line-item review</td></tr>
+      <tr><td>SF 2020 tax $2,197 vs 2021 $2,066 — tax fell 5.9% while assessed rose 1%</td><td>Similar — likely rate/bond layer change or exemption</td><td>Flagged; verify SF bill detail</td></tr>
+      <tr><td>Home price $3.1M Cupertino 95014 vs Ownwell median $1.046M same zip</td><td>User estimate well above median — premium home; not inconsistent, but flagged for appraisal confirmation</td><td>Requires licensed appraisal at death for basis/Prop 19</td></tr>
+    </tbody>
+  </table></div>
+  <div class="notice ok">Nothing above blocks merging. Publish these here so you can review after the site is live and request changes. See <a href="sources.html">Sources</a> for verified rows.</div>
+</div>
+
+<footer class="footer"><p><a href="../index.html">← Back to Executive Summary</a> · Flagged items do not block merge per project rules.</p></footer>
+</main></body></html>
