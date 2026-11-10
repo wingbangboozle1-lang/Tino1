@@ -32,3 +32,11 @@ Status key: `unclaimed` · `in progress` · `done` · `needs review` (published 
 - PR: (pending)
 - Merge result: (pending)
 - Pages deploy: (pending)
+
+## Final integration record (2026-11-10)
+- PR: https://github.com/wingbangboozle1-lang/Tino1/pull/1 — MERGED (91ce20a)
+- Merge result: success, no conflicts
+- Pages deploy: built (main, /) — https://wingbangboozle1-lang.github.io/Tino1/
+- Verification: all 8 pages + assets HTTP 200 locally; internal links resolve; model rerun reproduces CSVs.
+- Note: Pages source is main:/ (API cannot change to /docs, 403) — site mirrored to root; docs/ kept as canonical copy.
+- Flagged items F1–F8 published on Flagged for Review page (non-blocking).
