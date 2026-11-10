@@ -1,19 +1,60 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Flagged for Review — Inheritance Dashboard</title><link rel="stylesheet" href="assets/style.css"></head>
-<body><header><span class="brand">🏠 Inheritance Decision Dashboard</span>
-<nav><a href="index.html">Overview</a><a href="properties.html">Properties</a><a href="taxes.html">Tax &amp; Law</a><a href="projections.html">Projections 2026–2050</a><a href="scenarios.html">Scenarios</a><a href="steps.html">Inheritance Steps</a><a href="sources.html">Sources</a><a class="on" href="flagged.html">⚠ Flagged for Review</a></nav></header>
-<main><h1>⚠ Flagged for Review</h1>
-<p class="note">Unverified / irregular items. These do not block the site — review and request changes after launch. Blank = not confirmed from an official source.</p>
-<div class="card"><table>
-<tr><th>#</th><th>Item</th><th>Status</th><th>Action</th></tr>
-<tr><td>F1</td><td>SF implied tax rate 2.13% vs typical 1.18–1.25%</td><td><span class="tag warn">Irregular — verify TRA/bonds</span></td><td>Pull SF tax bill; confirm Mello-Roos/CFD. Projections use parcel rate.</td></tr>
-<tr><td>F2</td><td>Cupertino solar: NEM 2.0 vs NEM 3.0</td><td><span class="tag warn">Unverified — interconnection date unknown</span></td><td>Check PG&amp;E bill / interconnection agreement. Credit −$20/mo assumes NEM 2.0; NEM 3.0 ≈ +$50/mo.</td></tr>
-<tr><td>F3</td><td>Home insurance ($2,800 / $3,200)</td><td><span class="tag warn">Estimate — no quotes</span></td><td>Get 3 quotes each (primary vs landlord). Owner $1,500 guess likely low.</td></tr>
-<tr><td>F4</td><td>Cupertino rent $7,500/mo (2026)</td><td><span class="tag warn">Placeholder — no BPO</span></td><td>Broker price opinion for 95014 SFR. Drives Scenario B.</td></tr>
-<tr><td>F5</td><td>Maintenance allowances ($8k / $12k)</td><td><span class="tag warn">Planning allowance</span></td><td>Review 5-yr repair history; adjust.</td></tr>
-<tr><td>F6</td><td>Prop 19 cap beyond 2027</td><td><span class="tag warn">Projected — biennial index unknown</span></td><td>Model assumes ~2.15%/2yr. BOE updates Feb 2027.</td></tr>
-<tr><td>F7</td><td>“Considerable money” in estate</td><td><span class="tag bad">Blank — amount unknown</span></td><td>Provide total estate range to test $15M threshold. Houses alone ($4.9M) are well under.</td></tr>
-<tr><td>F8</td><td>House market values ($3.1M / $1.8M)</td><td><span class="tag warn">Owner estimate — no appraisal</span></td><td>Licensed appraisal for basis + planning.</td></tr>
-</table></div>
-</main><footer>Planning tool, not tax/legal advice.</footer>
-<script src="assets/data.js"></script><script src="assets/app.js"></script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Flagged for Review — Tino1 Decision Lab</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="topbar"><div class="topbar-inner">
+  <a href="index.html" class="brand" style="color:#fff;text-decoration:none"><span class="brand-badge">T1</span> Tino1 Inheritance Decision Lab</a>
+  <nav class="nav"><a href="index.html">Executive Summary</a><a href="cupertino.html">Cupertino 95014</a><a href="sanfrancisco.html">SF 94122</a><a href="inheritance.html">Trust Process</a><a href="taxes.html">Tax Laws</a><a href="projections.html">Projections 2026-2050</a><a href="decision.html">Live / Rent / Sell</a><a href="sources.html">Sources</a><a href="flagged.html">Flagged for Review</a></nav>
+</div></header>
+<div class="container">
+  <div class="hero" style="padding:22px;background:linear-gradient(135deg,#7f1d1d 0%, #a16207 100%)">
+    <h1>⚠️ Flagged for Review — Unverified, Irregular, or Needs Your Input</h1>
+    <p>Flagged items do <strong>not</strong> block decisions — they are published here transparently per instructions. Unverified cells were left blank or marked as estimates; never inferred. Review these and request changes after the site is live.</p>
+  </div>
+
+  <div class="section">
+    <h2>How to Use This Page</h2>
+    <div class="callout callout-warn"><p style="margin:0">This page is the <strong>official task board</strong> for issues that can’t be auto-verified. For each item: see <em>Why flagged</em>, <em>What to do</em>, and <em>Source to check</em>. When you resolve an item, update <code>COORDINATION.md</code> and mark it <code>done</code> — or open a GitHub issue.</p></div>
+  </div>
+
+  <div class="section">
+    <h2>Critical Flags — Must Resolve Before Financial Commitments</h2>
+    <div class="table-wrap"><table>
+      <thead><tr><th>#</th><th>Item</th><th>Why flagged</th><th>What to do</th><th>Source to verify</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Cupertino historical property tax &amp; assessment table (2014–2026)</td><td>User-provided; no bill image or APN provided to cross-check. Effective rates 1.32–1.41% are at top of Cupertino range — suggests direct charges not itemized.</td><td>Upload redacted 2023–2025 secured bills (hide APN/name) or check <a href="https://payments.sccgov.org/propertytax" target="_blank">SCC DTAC lookup</a> and reconcile: 1% + each bond + each flat. Confirm whether Mello-Roos/CFD present. If 2026 assessed $550,537 is wrong, all inheritance projections shift.</td><td class="source"><a href="https://payments.sccgov.org/propertytax" target="_blank">SCC DTAC</a> · <a href="https://files.santaclaracounty.gov/exjcpb1531/2024-11/tax-rate-book-2024-2025-final.pdf" target="_blank">SCC Tax Rate Book [PDF]</a></td><td><span class="badge badge-warn">Needs review</span></td></tr>
+        <tr><td>2</td><td>SF historical property tax &amp; assessment table (2016–2025)</td><td>User-provided; 2.13% effective 2025 is high — flagged as including flat parcel taxes, but not confirmed.</td><td>Check <a href="https://sftreasurer.org/property-taxes" target="_blank">SF Treasurer secured lookup</a> for line-item detail. Verify $7,150/mo rent against leases + SF Rent Board registration.</td><td class="source"><a href="https://sftreasurer.org/property-taxes" target="_blank">SF Treasurer</a> · <a href="https://sf.gov/rent-board" target="_blank">SF Rent Board</a></td><td><span class="badge badge-warn">Needs review</span></td></tr>
+        <tr><td>3</td><td>Market value estimates: Cupertino $3,100,000 &amp; SF $1,800,000 (Nov 2026)</td><td>Owner estimates, not licensed appraisals or broker price opinions. Zillow/Redfin 95014 median $2.4–2.7M; 94122 triplex $1.4–1.9M — estimates plausible but unverified.</td><td>Order formal appraisal (Cupertino) + BPO for SF triplex (with rent roll) before 2040 decisions. Until then, all models carry ±15% market-value uncertainty.</td><td class="source"><a href="https://www.sccassessor.org" target="_blank">SCC Assessor — comps</a> (secondary)</td><td><span class="badge badge-warn">Estimate — not appraisal</span></td></tr>
+        <tr><td>4</td><td>Home insurance: Cupertino $1,500/yr; SF $1,500 (owner) vs $2,200 (our model)</td><td>$1,500 is within CA ranges but not a binding quote. CA market hardening: some carriers non-renewing, premiums +6–11%/yr.</td><td>Get 3 quotes: (a) Cupertino primary (HO-3), (b) Cupertino landlord (DP-3), (c) SF 2-3 unit landlord + loss-of-rents. Confirm earthquake (CEA) and flood exclusions separately.</td><td class="source"><a href="https://www.insurance.ca.gov" target="_blank">CA DOI</a> · <a href="https://www.policygenius.com/homeowners-insurance/california/average-cost/" target="_blank">Policygenius</a></td><td><span class="badge badge-warn">Estimate — needs quote</span></td></tr>
+        <tr><td>5</td><td>Solar NEM credit $10–20/mo profit (Cupertino)</td><td>Owner-reported; depends on NEM 2.0 vs 3.0 and true-up. After transfer to heir, NEM 2.0 grandfathering may reset to NEM 3.0 (CPUC rule), reducing credit.</td><td>Pull PG&amp;E NEM agreement + interconnection date; confirm with installer whether heir transfer triggers NEM 3.0. See <a href="https://www.pge.com/tariffs/nem.html" target="_blank">PG&E NEM tariff</a>.</td><td class="source"><a href="https://www.pge.com/tariffs/nem.html" target="_blank">PG&E NEM</a> · <a href="https://www.cpuc.ca.gov" target="_blank">CPUC</a></td><td><span class="badge badge-warn">Needs verification</span></td></tr>
+        <tr><td>6</td><td>SF rent $7,150/mo — rent control &amp; tenant protection</td><td>SF has citywide rent control (SF Rent Board) + statewide AB 1482 (5%+CPI cap 10%). Owner-occupancy eviction rules constrain future rent/moves.</td><td>Verify units’ rent-control status, year built, and registration. Check whether 3rd-unit occupancy affects eviction rights.</td><td class="source"><a href="https://sf.gov/rent-board" target="_blank">SF Rent Board</a> · <a href="https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1946.2." target="_blank">Civil Code §1946.2</a></td><td><span class="badge badge-warn">Needs review</span></td></tr>
+        <tr><td>7</td><td>“Considerable amount of money” in trust — amount not disclosed</td><td>Cannot model estate-tax threshold without at least a range. Federal exemption is $15M per person — but if trust cash is e.g. $20M+, tax matters.</td><td>Internally (privately) estimate total estate (all assets + prior gifts) vs $15M/$30M and confirm portability plan. Do not publish amount here — keep internal.</td><td class="source"><a href="https://www.irs.gov/businesses/small-businesses-self-employed/estate-and-gift-taxes" target="_blank">IRS Estate &amp; Gift</a></td><td><span class="badge badge-neutral">Internal only</span></td></tr>
+        <tr><td>8</td><td>Prop 19 cap held flat at $1,044,586 in 2040/2050 projections</td><td>Conservative simplification; actual cap adjusts every 2 yrs by FHFA HPI and will likely be higher by 2040 (~$1.6–1.8M at 4% HPI growth), increasing live-in saving.</td><td>Model flagged as conservative — actual inheritance tax may be ~$5k–8k/yr lower than shown if cap inflates. Re-run with updated BOE LTA at decision time.</td><td class="source"><a href="https://www.boe.ca.gov/proptaxes/pdf/lta2025-009.pdf" target="_blank">BOE LTA 2025/009</a></td><td><span class="badge badge-warn">Conservative assumption</span></td></tr>
+        <tr><td>9</td><td>Earthquake insurance not in operating costs</td><td>Standard HO-3 excludes earthquake; CEA policy often $1,500–6,000/yr in Bay Area. Wildfire not excluded for these Zips but EQ is material risk.</td><td>Quote CEA dwelling + loss-of-use for both houses; decide to self-insure vs carry.</td><td class="source"><a href="https://www.earthquakeauthority.com" target="_blank">CEA</a></td><td><span class="badge badge-warn">Excluded — needs decision</span></td></tr>
+        <tr><td>10</td><td>Rental comps &amp; vacancy/management assumptions</td><td>Market rent $4,800/mo Cupertino (base) + 8% vacancy + 6% management are regional averages, not a signed lease comparable.</td><td>Pull 5 closed MLS comps in 95014 within 1 mi &amp; 1 yr for Cupertino; get property-manager fee quotes. Re-run rent scenario.</td><td class="source"><a href="https://www.rentometer.com" target="_blank">Rentometer</a> (secondary)</td><td><span class="badge badge-warn">Estimate</span></td></tr>
+      </tbody>
+    </table></div>
+    <p class="figure">Irregularities flagged per instruction: “If a value can't be confirmed from an official source, leave it blank and flag it as unverified. Never infer.” — We flagged, not filled.</p>
+  </div>
+
+  <div class="section">
+    <h2>How to Submit a Correction</h2>
+    <div class="card">
+      <p style="font-size:13.5px">This site is a GitHub Pages site from the <code>docs/</code> folder on branch <code>arena/5c7cfaf6-tino1</code>. To request a change:</p>
+      <ol style="font-size:13.5px;margin:8px 0 0 18px">
+        <li>Open the repo on GitHub → <strong>Issues → New issue</strong> with title <code>Flagged #X correction</code> and attach a redacted bill/quote (hide APN, name, address).</li>
+        <li>Or edit <code>docs/</code> directly and open a PR to <code>main</code> — the site will redeploy on merge.</li>
+        <li>Update <code>COORDINATION.md</code> — change <code>needs review</code> → <code>done</code> and link the source for manual review.</li>
+      </ol>
+      <p style="font-size:12px;color:var(--muted);margin-top:8px">Privacy reminder: never upload unredacted documents containing personal identifiers to a public repo. Redact APN, owner name, street number, account numbers before sharing.</p>
+    </div>
+  </div>
+
+  <footer class="footer"><div><a href="sources.html">← Sources</a> · <a href="index.html">Executive Summary</a> · <a href="https://github.com/wingbangboozle1-lang/Tino1" target="_blank">GitHub Repo</a></div></footer>
+</div>
+</body>
+</html>
