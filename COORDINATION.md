@@ -28,6 +28,9 @@ Two parallel sessions worked concurrently per instructions. Both followed verifi
 | 14 | Sources & Verification Index (both) | done | arena/5c7cfaf6 + arena-3676d6a0-tino1 | docs/sources.html, sources.html | All official sources with URLs | Every table row traceable; verification log included |
 | 15 | Site Build Verification + GitHub Pages Deploy (final integration) | done | arena/5c7cfaf6 (integrator) | docs/.nojekyll + all site files | Combined site: 9 primary pages + mirror site + model/research — all verified: python http.server 200, no broken internal links, charts via Chart.js CDN | Merge verified — no discarded work |
 | 16 | PR to main + Merge (final integration) | done | arena/5c7cfaf6 (integrator) | GitHub PR #3: https://github.com/wingbangboozle1-lang/Tino1/pull/3 → merged to main 0132638 at 2026-11-10T06:09:41Z | — | PR #2 closed as superseded; PR #3 merged clean after resolving parallel-session conflict |
+| 17 | Complement pages + detailed modeling (arena/37f99282) | done | arena/37f99282-tino1 | docs/compare-decisions.html, docs/inheritance-tax.html, docs/operating-costs.html, docs/process.html, index.html (root mirror), data/assumptions.json, data/projections-cupertino.csv, data/inheritance-scenarios.json | IRS Rev Proc 2025-32, BOE LTA 2025/009, SCC Assessor 2025, SF Treasurer FY25-26, CDI/NAIC, C.A.R. | 4 new pages + root index + data; merged with no discard via git merge origin/main |
+| 18 | Third-session integration (arena/37f99282) | done | arena/37f99282-tino1 | COORDINATION.md, README.md (merged), all prior files retained | — | Resolved via --theirs for 8 conflicts (keeping main canonical), preserving complement files; re-merged origin/main ffba5a2 |
+| 19 | Session 4f787a0f claims V1/V2 (re-verification) | claimed | arena/4f787a0f-tino1 | verified/** (new dir) | — | V1 in progress; V2 waiting for idle — no shared file edited by this session yet |
 
 ## File Ownership (merged)
 
