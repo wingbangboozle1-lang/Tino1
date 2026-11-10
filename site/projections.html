@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>2026–2050 Projections — CA Trust Inheritance Decision Suite</title>
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="index.html">
+        <span class="brand-mark">CA</span>
+        <span>Trust Inheritance Decision Suite (95014 &amp; 94122)</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary Navigation">
+        <a href="index.html" class="">Executive Summary</a><a href="properties.html" class="">Properties & Costs</a><a href="projections.html" class="active ">2026–2050 Projections</a><a href="scenarios.html" class="">Live vs. Rent vs. Sell</a><a href="estate-tax.html" class="">Estate & Tax Laws</a><a href="inheritance-guide.html" class="">Step-by-Step Guide</a><a href="flagged-review.html" class="nav-flag">Flagged for Review</a><a href="sources.html" class="">Official Sources</a>
+      </nav>
+    </div>
+  </header>
+  <div class="privacy-strip">
+    <div class="privacy-strip-inner">
+      <span><strong>Privacy Mandate Active:</strong> All personal names, street addresses, APNs, and trust identifiers are strictly anonymized using placeholders (<code>[Property A]</code>, <code>[Property B]</code>, <code>[Grantor]</code>, <code>[Beneficiary]</code>).</span>
+      <span><strong>Precision Standard:</strong> All dollar figures rounded to nearest <code>$10</code> · 100% official <code>.gov</code> / utility sources</span>
+    </div>
+  </div>
+  <main class="container">
+    <section class="page-header">
+      <span class="eyebrow">25-Year Financial & Tax Trajectory</span>
+      <h1>Year-by-Year Property Value, Assessment, Tax & Utility Projections (2026–2050)</h1>
+      <p>Every figure is rounded to the nearest $10 increment and anchored to CA BOE Prop 13/19 rules, Santa Clara & SF ad valorem schedules, CPUC/SFPUC tariffs, CDI insurance data, and FHFA/CBO benchmarks.</p>
+    </section>
+    
+    <div class="card">
+      <h2>Visual Trajectory: Property Market Values &amp; Cupertino Tax Regimes (2026–2050)</h2>
+      <p>Interactive SVG projection comparing <code>[Property A — Cupertino 95014]</code> and <code>[Property B — San Francisco 94122]</code> valuations alongside the Prop 13 vs. Prop 19 vs. Full Reassessment property tax cliff upon inheritance (2040–2050 shaded).</p>
+      <div class="grid-2">
+        <div class="chart-box">
+          <h3>Projected Market Value vs. Prop 13 Assessed Base (2026–2050)</h3>
+          <div class="chart-legend">
+            <span><span class="legend-dot" style="background:#0284c7"></span>Cupertino FMV (4.2%/yr)</span>
+            <span><span class="legend-dot" style="background:#059669"></span>SF 3-Unit FMV (3.5%/yr)</span>
+            <span><span class="legend-dot" style="background:#64748b"></span>Cupertino Prop 13 Base (2.0%/yr)</span>
+          </div>
+          <div id="chart-values"></div>
+        </div>
+        <div class="chart-box">
+          <h3>Cupertino Annual Property Tax: Prop 13 vs. Prop 19 Live-In vs. Rental</h3>
+          <div class="chart-legend">
+            <span><span class="legend-dot" style="background:#dc2626"></span>If Rented (Full FMV Tax)</span>
+            <span><span class="legend-dot" style="background:#d97706"></span>If Lived In (Prop 19 Partial)</span>
+            <span><span class="legend-dot" style="background:#059669"></span>Pre-Inheritance Prop 13</span>
+          </div>
+          <div id="chart-taxes"></div>
+        </div>
+      </div>
+      <div style="display:flex;gap:0.75rem;flex-wrap:wrap;align-items:center">
+        <button type="button" class="btn btn-primary" id="btn-download-csv">Download Full 2026–2050 Projections CSV ($10 Rounded)</button>
+        <span style="font-size:0.82rem;color:var(--text-muted)">Note: Cupertino electricity flips from net solar credit (<code>-$240/yr</code>) to net cost (<code>+$960/yr</code>+) in 2038 upon modeled 20-year CPUC NEM 2.0 sunset + mandatory fixed charge.</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>[Property A — Cupertino 95014] Year-by-Year Projections (2026–2050 · Rounded to $10)</h2>
+      <p>Columns <em>Tax (Inherit Live)</em> and <em>Tax (Inherit Rent)</em> show the Year-1 property tax that locks in if trust transfer occurs in that specific year.</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Year</th>
+              <th class="num">Est. Market Value</th>
+              <th class="num">Prop 13 Base</th>
+              <th class="num">Prop 13 Tax</th>
+              <th class="num">Prop 19 Cap</th>
+              <th class="num">Tax (Inherit Live)</th>
+              <th class="num">Tax (Inherit Rent)</th>
+              <th class="num">Water</th>
+              <th class="num">Solar/Elec</th>
+              <th class="num">HO-3 Ins.</th>
+              <th class="num">Maint.</th>
+              <th class="num">Total Cost (If Live)</th>
+              <th>Official Sources</th>
+            </tr>
+          </thead>
+          <tbody>
+            
+        <tr>
+          <td><strong>2026</strong></td>
+          <td class="num">$3,100,000</td>
+          <td class="num">$550,540</td>
+          <td class="num">$7,270</td>
+          <td class="num">$1,044,590</td>
+          <td class="num"><strong>$24,790</strong></td>
+          <td class="num">$37,020</td>
+          <td class="num">$1,560</td>
+          <td class="num">-$240</td>
+          <td class="num">$2,600</td>
+          <td class="num">$7,800</td>
+          <td class="num"><strong>$36,510</strong></td>
+          <td><a href="https://www.boe.ca.gov/pdf/pub801.pdf" target="_blank" rel="noopener noreferrer">BOE Prop 19</a> · <a href="https://controller.santaclaracounty.gov/property-tax-distribution/property-tax-rate-book" target="_blank" rel="noopener noreferrer">SCC 1.1636%</a> · <a href="https://www.fhfa.gov/document/d/hpi/fhfa-house-price-index-report-2026q2" target="_blank" rel="noopener noreferrer">FHFA</a></td>
+        </tr>
+        <tr>
+          <td><strong>2027</strong></td>
+          <td class="num">$3,230,200</td>
+          <td class="num">$561,550</td>
+          <td class="num">$7,420</td>
+          <td class="num">$1,118,990</td>
+          <td class="num"><strong>$25,450</strong></td>
+          <td class="num">$38,560</td>
+          <td class="num">$1,610</td>
+          <td class="num">-$240</td>
+          <td class="num">$2,700</td>
+          <td class="num">$8,020</td>
+          <td class="num"><strong>$37,550</strong></td>
+          <td><a href="https://www.boe.ca.gov/pdf/pub801.pdf" target="_blank" rel="noopener noreferrer">BOE Prop 19</a> · <a href="https://controller.santaclaracounty.gov/property-tax-distribution/property-tax-rate-book" target="_blank" rel="noopener noreferrer">SCC 1.1636%</a> · <a href="https://www.fhfa.gov/document/d/hpi/fhfa-house-price-index-report-2026q2" target="_blank" rel="noopener noreferrer">FHFA</a></td>
+        </tr>
+        <tr>
+          <td><strong>2028</strong></td>
+          <td class="num">$3,365,870</td>
+          <td class="num">$572,780</td>
+          <td class="num">$7,570</td>
+          <td class="num">$1,118,990</td>
+          <td class="num"><strong>$27,050</strong></td>
+          <td class="num">$40,150</td>
+          <td class="num">$1,660</td>
+          <td class="num">-$240</td>
+          <td class="num">$2,810</td>
+          <td class="num">$8,240</td>
+          <td class="num"><strong>$39,530</strong></td>
+          <td><a href="https://www.boe.ca.gov/pdf/pub801.pdf" target="_blank" rel="noopener noreferrer">BOE Prop 19</a> · <a href="https://controller.santaclaracounty.gov/property-tax-distribution/property-tax-rate-book" target="_blank" rel="noopener noreferrer">SCC 1.1636%</a> · <a href="https://www.fhfa.gov/document/d/hpi/fhfa-house-price-index-report-2026q2" target="_blank" rel="noopener noreferrer">FHFA</a></td>
+        </tr>
+        <tr>
+          <td><strong>2029</strong></td>
+          <td class="num">$3,507,230</td>
+          <td class="num">$584,230</td>
+          <td class="num">$7,720</td>
+          <td class="num">$1,198,690</td>
+          <td class="num"><strong>$27,790</strong></td>
+          <td class="num">$41,820</td>
+          <td class="num">$1,710</td>
+          <td class="num">-$240</td>
+          <td class="num">$2,920</td>
+          <td class="num">$8,470</td>
+          <td class="num"><strong>$40,670</strong></td>
+          <td><a href="https://www.boe.ca.gov/pdf/pub801.pdf" target="_blank" rel="noopener noreferrer">BOE Prop 19</a> · <a href="https://controller.santaclaracounty.gov/property-tax-distribution/property-tax-rate-book" target="_blank" rel="noopener noreferrer">SCC 1.1636%</a> · <a href="https://www.fhfa.gov/document/d/hpi/fhfa-house-price-index-report-2026q2" target="_blank" rel="noopener noreferrer">FHFA</a></td>
+        </tr>
+        <tr>
+          <td><strong>2030</strong></td>
+          <td class="num">$3,654,540</td>
+          <td class="num">$595,920</td>
+          <td class="num">$7,880</td>
+          <td class="num">$1,198,690</td>
+          <td class="num"><strong>$29,520</strong></td>
+          <td class="num">$43,550</td>
+          <td class="num">$1,770</td>
+          <td class="num">-$240</td>
+          <td class="num">$3,040</td>
+          <td class="num">$8,710</td>
+          <td class="num"><strong>$42,810</strong></td>
+          <td><a href="https://www.boe.ca.gov/pdf/pub801.pdf" target="_blank" rel="noopener noreferrer">BOE Prop 19</a> · <a href="https://controller.santaclaracounty.gov/property-tax-distribution/property-tax-rate-book" target="_blank" rel="noopener noreferrer">SCC 1.1636%</a> · <a href="https://www.fhfa.gov/document/d/hpi/fhfa-house-price-index-report-2026q2" target="_blank" rel="noopener noreferrer">FHFA</a></td>
+        </tr>
+        <tr>
+          <td><strong>2031</strong></td>
+          <td class="num">$3,808,030</td>
+          <td class="num">$607,840</td>
+          <td class="num">$8,040</td>
+          <td class="num">$1,284,060</td>
+          <td class="num"><strong>$30,340</strong></td>
+          <td class="num">$45,360</td>
+          <td class="num">$1,830</td>
+          <td class="num">-$230</td>
+          <td class="num">$3,160</td>
+          <td class="num">$8,950</td>
+          <td class="num"><strong>$44,050</strong></td>
+          <td><a href="https://www.boe.ca.gov/pdf/pub801.pdf" target="_blank" rel="noopener noreferrer">BOE Prop 19</a> · <a href="https://controller.santaclaracounty.gov/property-tax-distribution/property-tax-rate-book" target="_blank" rel="noopener noreferrer">SCC 1.1636%</a> · <a href="https://www.fhfa.gov/document/d/hpi/fhfa-house-price-index-report-2026q2" target="_blank" rel="noopener noreferrer">FHFA</a></td>
+        </tr>
+        <tr>
+          <td><strong>2032</strong></td>
+          <td class="num">$3,967,970</td>
+          <td class="num">$619,990</td>
+          <td class="num">$8,200</td>
+          <td class="num">$1,284,060</td>
+          <td class="num"><strong>$32,220</strong></td>
+          <td class="num">$47,240</td>
+          <td class="num">$1,880</td>
+          <td class="num">-$230</td>
+          <td class="num">$3,290</td>
+          <td class="num">$9,210</td>
+          <td class="num"><strong>$46,370</strong></td>
+          <td><a href="https://www.boe.ca.gov/pdf/pub801.pdf" target="_blank" rel="noopener noreferrer">BOE Prop 19</a> · <a href="https://controller.santaclaracounty.gov/property-tax-distribution/property-tax-rate-book" target="_blank" rel="noopener noreferrer">SCC 1.1636%</a> · <a href="https://www.fhfa.gov/document/d/hpi/fhfa-house-price-index-report-2026q2" target="_blank" rel="noopener noreferrer">FHFA</a></td>
+        </tr>
+        <tr>
+          <td><strong>2033</strong></td>
+          <td class="num">$4,134,620</td>
+          <td class="num">$632,390</td>
+          <td class="num">$8,370</td>
+          <td class="num">$1,375,520</td>
+          <td class="num"><strong>$33,110</strong></td>
+          <td class="num">$49,200</td>
+          <td class="num">$1,940</td>
+          <td class="num">-$230</td>
+          <td class="num">$3,420</td>
+          <td class="num">$9,460</td>
+          <td class="num"><strong>$47,710</strong></td>
+          <td><a href="https://www.boe.ca.gov/pdf/pub801.pdf" target="_blank" rel="noopener noreferrer">BOE Prop 19</a> · <a href="https://controller.santaclaracounty.gov/property-tax-distribution/property-tax-rate-book" target="_blank" rel="noopener noreferrer">SCC 1.1636%</a> · <a href="https://www.fhfa.gov/document/d/hpi/fhfa-house-price-index-report-2026q2" target="_blank" rel="noopener noreferrer">FHFA</a></td>
+        </tr>
+        <tr>
+          <td><strong>2034</strong></td>
+          <td class="num">$4,308,280</td>
+          <td class="num">$645,040</td>
+          <td class="num">$8,540</td>
+          <td class="num">$1,375,520</td>
+          <td class="num"><strong>$35,160</strong></td>
+          <td class="num">$51,240</td>
+          <td class="num">$2,010</td>
+          <td class="num">-$230</td>
+          <td class="num">$3,560</td>
+          <td class="num">$9,730</td>
+          <td class="num"><strong>$50,220</strong></td>
+          <td><a href="https://www.boe.ca.gov/pdf/pub801.pdf" target="_blank" rel="noopener noreferrer">BOE Prop 19</a> · <a href="https://controller.santaclaracounty.gov/property-tax-distribution/property-tax-rate-book" target="_blank" rel="noopener noreferrer">SCC 1.1636%</a> · <a href="https://www.fhfa.gov/document/d/hpi/fhfa-house-price-index-report-2026q2" target="_blank" rel="noopener noreferrer">FHFA</a></td>
+        </tr>
+        <tr>
+          <td><strong>2035</strong></td>
+          <td class="num">$4,489,220</td>
+          <td class="num">$657,940</td>
+          <td class="num">$8,710</td>
+          <td class="num">$1,473,490</td>
+          <td class="num"><strong>$36,140</strong></td>
+          <td class="num">$53,370</td>
+          <td class="num">$2,070</td>
+          <td class="num">-$230</td>
+          <td class="num">$3,700</td>
+          <td class="num">$10,000</td>
+          <td class="num"><strong>$51,690</strong></td>
+          <td><a href="https://www.boe.ca.gov/pdf/pub801.pdf" target="_blank" rel="noopener noreferrer">BOE Prop 19</a> · <a href="https://controller.santaclaracounty.gov/property-tax-distribution/property-tax-rate-book" target="_blank" rel="noopener noreferrer">SCC 1.1636%</a> · <a href="https://www.fhfa.gov/document/d/hpi/fhfa-house-price-index-report-2026q2" target="_blank" rel="noopener noreferrer">FHFA</a></td>
+        </tr>
+        <tr>
+          <td><strong>2036</strong></td>
+          <td class="num">$4,677,770</td>
+          <td class="num">$671,100</td>
+          <td class="num">$8,890</td>
+          <td class="num">$1,473,490</td>
+          <td class="num"><strong>$38,360</strong></td>
+          <td class="num">$55,590</td>
+          <td class="num">$2,140</td>
+          <td class="num">-$230</td>
+          <td class="num">$3,850</td>
+          <td class="num">$10,280</td>
+          <td class="num"><strong>$54,400</strong></td>
+          <td><a href="https://www.boe.ca.gov/pdf/pub801.pdf" target="_blank" rel="noopener noreferrer">BOE Prop 19</a> · <a href="https://controller.santaclaracounty.gov/property-tax-distribution/property-tax-rate-book" target="_blank" rel="noopener noreferrer">SCC 1.1636%</a> · <a href="https://www.fhfa.gov/document/d/hpi/fhfa-house-price-index-report-2026q2" target="_blank" rel="noopener noreferrer">FHFA</a></td>
+        </tr>
+        <tr>
+          <td><strong>2037</strong></td>
+          <td class="num">$4,874,240</td>
+          <td class="num">$684,520</td>
+          <td class="num">$9,060</td>
+          <td class="num">$1,578,440</td>
+          <td class="num"><strong>$39,450</strong></td>
+          <td class="num">$57,900</td>
+          <td class="num">$2,210</td>
+          <td class="num">-$230</td>
+          <td class="num">$4,000</td>
+          <td class="num">$10,570</td>
+          <td class="num"><strong>$56,000</strong></td>
+          <td><a href="https://www.boe.ca.gov/pdf/pub801.pdf" target="_blank" rel="noopener noreferrer">BOE Prop 19</a> · <a href="https://controller.santaclaracounty.gov/property-tax-distribution/property-tax-rate-book" target="_blank" rel="noopener noreferrer">SCC 1.1636%</a> · <a href="https://www.fhfa.gov/document/d/hpi/fhfa-house-price-index-report-2026q2" target="_blank" rel="noopener noreferrer">FHFA</a></td>
+        </tr>
+        <tr>
+          <td><strong>2038</strong></td>
+          <td class="num">$5,078,950</td>
+          <td class="num">$698,210</td>
+          <td class="num">$9,250</td>
+          <td class="num">$1,578,440</td>
+          <td class="num"><strong>$41,860</strong></td>
+          <td class="num">$60,300</td>
+          <td class="num">$2,280</td>
+          <td class="num">$1,000</td>
+          <td class="num">$4,160</td>
+          <td class="num">$10,860</td>
+          <td class="num"><strong>$60,160</strong></td>
+          <td><a href="https://www.boe.ca.gov/pdf/pub801.pdf" target="_blank" rel="noopener noreferrer">BOE Prop 19</a> · <a href="https://controller.santaclaracounty.gov/property-tax-distribution/property-tax-rate-book" target="_blank" rel="noopener noreferrer">SCC 1.1636%</a> · <a href="https://www.fhfa.gov/document/d/hpi/fhfa-house-price-index-report-2026q2" target="_blank" rel="noopener noreferrer">FHFA</a></td>
+        </tr>
+        <tr>
+          <td><strong>2039</strong></td>
+          <td class="num">$5,292,270</td>
+          <td class="num">$712,180</td>
+          <td class="num">$9,430</td>
+          <td class="num">$1,690,870</td>
+          <td class="num"><strong>$43,050</strong></td>
+          <td class="num">$62,810</td>
+          <td class="num">$2,350</td>
+          <td class="num">$1,030</td>
+          <td class="num">$4,330</td>
+          <td class="num">$11,170</td>
+          <td class="num"><strong>$61,930</strong></td>
+          <td><a href="https://www.boe.ca.gov/pdf/pub801.pdf" target="_blank" rel="noopener noreferrer">BOE Prop 19</a> · <a href="https://controller.santaclaracounty.gov/property-tax-distribution/property-tax-rate-book" target="_blank" rel="noopener noreferrer">SCC 1.1636%</a> · <a href="https://www.fhfa.gov/document/d/hpi/fhfa-house-price-index-report-2026q2" target="_blank" rel="noopener noreferrer">FHFA</a></td>
+        </tr>
+        <tr style='background:#f0f9ff'>
+          <td><strong>2040</strong> <span class='badge badge-projected'>Target Window</span></td>
+          <td class="num">$5,514,550</td>
+          <td class="num">$726,420</td>
+          <td class="num">$9,620</td>
+          <td class="num">$1,690,870</td>
+          <td class="num"><strong>$45,660</strong></td>
+          <td class="num">$65,420</td>
+          <td class="num">$2,420</td>
+          <td class="num">$1,070</td>
+          <td class="num">$4,500</td>
+          <td class="num">$11,480</td>
+          <td class="num"><strong>$65,140</strong></td>
+          <td><a href="https://www.boe.ca.gov/pdf/pub801.pdf" target="_blank" rel="noopener noreferrer">BOE Prop 19</a> · <a href="https://controller.santaclaracounty.gov/property-tax-distribution/property-tax-rate-book" target="_blank" rel="noopener noreferrer">SCC 1.1636%</a> · <a href="https://www.fhfa.gov/document/d/hpi/fhfa-house-price-index-report-2026q2" target="_blank" rel="noopener noreferrer">FHFA</a></td>
+        </tr>
+        <tr style='background:#f0f9ff'>
+          <td><strong>2041</strong></td>
+          <td class="num">$5,746,160</td>
+          <td class="num">$740,950</td>
+          <td class="num">$9,820</td>
+          <td class="num">$1,811,300</td>
+          <td class="num"><strong>$46,980</strong></td>
+          <td class="num">$68,140</td>
+          <td class="num">$2,500</td>
+          <td class="num">$1,110</td>
+          <td class="num">$4,680</td>
+          <td class="num">$11,800</td>
+          <td class="num"><strong>$67,080</strong></td>
+          <td><a href="https://www.boe.ca.gov/pdf/pub801.pdf" target="_blank" rel="noopener noreferrer">BOE Prop 19</a> · <a href="https://controller.santaclaracounty.gov/property-tax-distribution/property-tax-rate-book" target="_blank" rel="noopener noreferrer">SCC 1.1636%</a> · <a href="https://www.fhfa.gov/document/d/hpi/fhfa-house-price-index-report-2026q2" target="_blank" rel="noopener noreferrer">FHFA</a></td>
+        </tr>
+        <tr style='background:#f0f9ff'>
+          <td><strong>2042</strong></td>
+          <td class="num">$5,987,500</td>
+          <td class="num">$755,770</td>
+          <td class="num">$10,020</td>
+          <td class="num">$1,811,300</td>
+          <td class="num"><strong>$49,820</strong></td>
+          <td class="num">$70,970</td>
+          <td class="num">$2,580</td>
+          <td class="num">$1,140</td>
+          <td class="num">$4,870</td>
+          <td class="num">$12,130</td>
+          <td class="num"><strong>$70,550</strong></td>
+          <td><a href="https://www.boe.ca.gov/pdf/pub801.pdf" target="_blank" rel="noopener noreferrer">BOE Prop 19</a> · <a href="https://controller.santaclaracounty.gov/property-tax-distribution/property-tax-rate-book" target="_blank" rel="noopener noreferrer">SCC 1.1636%</a> · <a href="https://www.fhfa.gov/document/d/hpi/fhfa-house-price-index-report-2026q2" target="_blank" rel="noopener noreferrer">FHFA</a></td>
+        </tr>
+        <tr style='background:#f0f9ff'>
+          <td><strong>2043</strong></td>
+          <td class="num">$6,238,970</td>
+          <td class="num">$770,880</td>
+          <td class="num">$10,220</td>
+          <td class="num">$1,940,310</td>
+          <td class="num"><strong>$51,270</strong></td>
+          <td class="num">$73,930</td>
+          <td class="num">$2,660</td>
+          <td class="num">$1,180</td>
+          <td class="num">$5,060</td>
+          <td class="num">$12,470</td>
+          <td class="num"><strong>$72,660</strong></td>
+          <td><a href="https://www.boe.ca.gov/pdf/pub801.pdf" target="_blank" rel="noopener noreferrer">BOE Prop 19</a> · <a href="https://controller.santaclaracounty.gov/property-tax-distribution/property-tax-rate-book" target="_blank" rel="noopener noreferrer">SCC 1.1636%</a> · <a href="https://www.fhfa.gov/document/d/hpi/fhfa-house-price-index-report-2026q2" target="_blank" rel="noopener noreferrer">FHFA</a></td>
+        </tr>
+        <tr style='background:#f0f9ff'>
+          <td><strong>2044</strong></td>
+          <td class="num">$6,501,010</td>
+          <td class="num">$786,300</td>
+          <td class="num">$10,420</td>
+          <td class="num">$1,940,310</td>
+          <td class="num"><strong>$54,340</strong></td>
+          <td class="num">$77,000</td>
+          <td class="num">$2,750</td>
+          <td class="num">$1,230</td>
+          <td class="num">$5,270</td>
+          <td class="num">$12,820</td>
+          <td class="num"><strong>$76,410</strong></td>
+          <td><a href="https://www.boe.ca.gov/pdf/pub801.pdf" target="_blank" rel="noopener noreferrer">BOE Prop 19</a> · <a href="https://controller.santaclaracounty.gov/property-tax-distribution/property-tax-rate-book" target="_blank" rel="noopener noreferrer">SCC 1.1636%</a> · <a href="https://www.fhfa.gov/document/d/hpi/fhfa-house-price-index-report-2026q2" target="_blank" rel="noopener noreferrer">FHFA</a></td>
+        </tr>
+        <tr style='background:#f0f9ff'>
+          <td><strong>2045</strong> <span class='badge badge-projected'>Target Window</span></td>
+          <td class="num">$6,774,050</td>
+          <td class="num">$802,030</td>
+          <td class="num">$10,630</td>
+          <td class="num">$2,078,510</td>
+          <td class="num"><strong>$55,940</strong></td>
+          <td class="num">$80,210</td>
+          <td class="num">$2,840</td>
+          <td class="num">$1,270</td>
+          <td class="num">$5,480</td>
+          <td class="num">$13,180</td>
+          <td class="num"><strong>$78,710</strong></td>
+          <td><a href="https://www.boe.ca.gov/pdf/pub801.pdf" target="_blank" rel="noopener noreferrer">BOE Prop 19</a> · <a href="https://controller.santaclaracounty.gov/property-tax-distribution/property-tax-rate-book" target="_blank" rel="noopener noreferrer">SCC 1.1636%</a> · <a href="https://www.fhfa.gov/document/d/hpi/fhfa-house-price-index-report-2026q2" target="_blank" rel="noopener noreferrer">FHFA</a></td>
+        </tr>
+        <tr style='background:#f0f9ff'>
+          <td><strong>2046</strong></td>
+          <td class="num">$7,058,560</td>
+          <td class="num">$818,070</td>
+          <td class="num">$10,850</td>
+          <td class="num">$2,078,510</td>
+          <td class="num"><strong>$59,280</strong></td>
+          <td class="num">$83,550</td>
+          <td class="num">$2,930</td>
+          <td class="num">$1,310</td>
+          <td class="num">$5,700</td>
+          <td class="num">$13,550</td>
+          <td class="num"><strong>$82,770</strong></td>
+          <td><a href="https://www.boe.ca.gov/pdf/pub801.pdf" target="_blank" rel="noopener noreferrer">BOE Prop 19</a> · <a href="https://controller.santaclaracounty.gov/property-tax-distribution/property-tax-rate-book" target="_blank" rel="noopener noreferrer">SCC 1.1636%</a> · <a href="https://www.fhfa.gov/document/d/hpi/fhfa-house-price-index-report-2026q2" target="_blank" rel="noopener noreferrer">FHFA</a></td>
+        </tr>
+        <tr style='background:#f0f9ff'>
+          <td><strong>2047</strong></td>
+          <td class="num">$7,355,020</td>
+          <td class="num">$834,430</td>
+          <td class="num">$11,070</td>
+          <td class="num">$2,226,550</td>
+          <td class="num"><strong>$61,030</strong></td>
+          <td class="num">$87,020</td>
+          <td class="num">$3,020</td>
+          <td class="num">$1,360</td>
+          <td class="num">$5,920</td>
+          <td class="num">$13,930</td>
+          <td class="num"><strong>$85,270</strong></td>
+          <td><a href="https://www.boe.ca.gov/pdf/pub801.pdf" target="_blank" rel="noopener noreferrer">BOE Prop 19</a> · <a href="https://controller.santaclaracounty.gov/property-tax-distribution/property-tax-rate-book" target="_blank" rel="noopener noreferrer">SCC 1.1636%</a> · <a href="https://www.fhfa.gov/document/d/hpi/fhfa-house-price-index-report-2026q2" target="_blank" rel="noopener noreferrer">FHFA</a></td>
+        </tr>
+        <tr style='background:#f0f9ff'>
+          <td><strong>2048</strong></td>
+          <td class="num">$7,663,930</td>
+          <td class="num">$851,120</td>
+          <td class="num">$11,290</td>
+          <td class="num">$2,226,550</td>
+          <td class="num"><strong>$64,660</strong></td>
+          <td class="num">$90,650</td>
+          <td class="num">$3,120</td>
+          <td class="num">$1,410</td>
+          <td class="num">$6,160</td>
+          <td class="num">$14,320</td>
+          <td class="num"><strong>$89,660</strong></td>
+          <td><a href="https://www.boe.ca.gov/pdf/pub801.pdf" target="_blank" rel="noopener noreferrer">BOE Prop 19</a> · <a href="https://controller.santaclaracounty.gov/property-tax-distribution/property-tax-rate-book" target="_blank" rel="noopener noreferrer">SCC 1.1636%</a> · <a href="https://www.fhfa.gov/document/d/hpi/fhfa-house-price-index-report-2026q2" target="_blank" rel="noopener noreferrer">FHFA</a></td>
+        </tr>
+        <tr style='background:#f0f9ff'>
+          <td><strong>2049</strong></td>
+          <td class="num">$7,985,810</td>
+          <td class="num">$868,140</td>
+          <td class="num">$11,520</td>
+          <td class="num">$2,385,130</td>
+          <td class="num"><strong>$66,590</strong></td>
+          <td class="num">$94,420</td>
+          <td class="num">$3,220</td>
+          <td class="num">$1,460</td>
+          <td class="num">$6,410</td>
+          <td class="num">$14,720</td>
+          <td class="num"><strong>$92,390</strong></td>
+          <td><a href="https://www.boe.ca.gov/pdf/pub801.pdf" target="_blank" rel="noopener noreferrer">BOE Prop 19</a> · <a href="https://controller.santaclaracounty.gov/property-tax-distribution/property-tax-rate-book" target="_blank" rel="noopener noreferrer">SCC 1.1636%</a> · <a href="https://www.fhfa.gov/document/d/hpi/fhfa-house-price-index-report-2026q2" target="_blank" rel="noopener noreferrer">FHFA</a></td>
+        </tr>
+        <tr style='background:#f0f9ff'>
+          <td><strong>2050</strong> <span class='badge badge-projected'>Target Window</span></td>
+          <td class="num">$8,321,220</td>
+          <td class="num">$885,500</td>
+          <td class="num">$11,750</td>
+          <td class="num">$2,385,130</td>
+          <td class="num"><strong>$70,520</strong></td>
+          <td class="num">$98,350</td>
+          <td class="num">$3,320</td>
+          <td class="num">$1,510</td>
+          <td class="num">$6,660</td>
+          <td class="num">$15,130</td>
+          <td class="num"><strong>$97,150</strong></td>
+          <td><a href="https://www.boe.ca.gov/pdf/pub801.pdf" target="_blank" rel="noopener noreferrer">BOE Prop 19</a> · <a href="https://controller.santaclaracounty.gov/property-tax-distribution/property-tax-rate-book" target="_blank" rel="noopener noreferrer">SCC 1.1636%</a> · <a href="https://www.fhfa.gov/document/d/hpi/fhfa-house-price-index-report-2026q2" target="_blank" rel="noopener noreferrer">FHFA</a></td>
+        </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>[Property B — San Francisco 94122] Year-by-Year Projections (2026–2050 · Rounded to $10)</h2>
+      <p>Assumes existing Prop 13 base continues while 2 units remain rented and 1 livable unit remains available for primary residence occupancy (if <code>[Property B]</code> were also inherited via parent-child transfer, 2/3 rental share would reassess to FMV per <code>BOE LTA 2026/026</code> — e.g., <strong>$29,460/yr</strong> tax in 2045).</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Year</th>
+              <th class="num">Est. Market Value</th>
+              <th class="num">Prop 13 Base</th>
+              <th class="num">Prop 13 Tax</th>
+              <th class="num">Water &amp; Sewer</th>
+              <th class="num">Electric</th>
+              <th class="num">3-Unit Ins.</th>
+              <th class="num">Maint.</th>
+              <th class="num">Total OpEx (incl. RB Fee)</th>
+              <th class="num">2-Unit Gross Rent</th>
+              <th class="num">Pre-Tax Net Cash Flow</th>
+              <th>Official Sources</th>
+            </tr>
+          </thead>
+          <tbody>
+            
+        <tr>
+          <td><strong>2026</strong></td>
+          <td class="num">$1,800,000</td>
+          <td class="num">$116,530</td>
+          <td class="num">$2,400</td>
+          <td class="num">$4,440</td>
+          <td class="num">$600</td>
+          <td class="num">$3,600</td>
+          <td class="num">$12,600</td>
+          <td class="num">$23,730</td>
+          <td class="num">$85,800</td>
+          <td class="num"><strong>$62,070</strong></td>
+          <td><a href="https://sftreasurer.org/property/secured-property-taxes" target="_blank" rel="noopener noreferrer">SF 1.1816%</a> · <a href="https://www.sfpuc.gov/accounts-services/water-power-sewer-rates/proposed-water-sewer-rates-2026/proposition-218-notice" target="_blank" rel="noopener noreferrer">SFPUC</a> · <a href="https://www.sf.gov/reports--current-rates-including-rent-increase-relocation-sec-deposit" target="_blank" rel="noopener noreferrer">SF Rent Board</a></td>
+        </tr>
+        <tr>
+          <td><strong>2027</strong></td>
+          <td class="num">$1,863,000</td>
+          <td class="num">$118,860</td>
+          <td class="num">$2,450</td>
+          <td class="num">$4,640</td>
+          <td class="num">$620</td>
+          <td class="num">$3,740</td>
+          <td class="num">$12,950</td>
+          <td class="num">$24,500</td>
+          <td class="num">$88,200</td>
+          <td class="num"><strong>$63,700</strong></td>
+          <td><a href="https://sftreasurer.org/property/secured-property-taxes" target="_blank" rel="noopener noreferrer">SF 1.1816%</a> · <a href="https://www.sfpuc.gov/accounts-services/water-power-sewer-rates/proposed-water-sewer-rates-2026/proposition-218-notice" target="_blank" rel="noopener noreferrer">SFPUC</a> · <a href="https://www.sf.gov/reports--current-rates-including-rent-increase-relocation-sec-deposit" target="_blank" rel="noopener noreferrer">SF Rent Board</a></td>
+        </tr>
+        <tr>
+          <td><strong>2028</strong></td>
+          <td class="num">$1,928,200</td>
+          <td class="num">$121,240</td>
+          <td class="num">$2,500</td>
+          <td class="num">$4,850</td>
+          <td class="num">$640</td>
+          <td class="num">$3,890</td>
+          <td class="num">$13,320</td>
+          <td class="num">$25,300</td>
+          <td class="num">$90,670</td>
+          <td class="num"><strong>$65,370</strong></td>
+          <td><a href="https://sftreasurer.org/property/secured-property-taxes" target="_blank" rel="noopener noreferrer">SF 1.1816%</a> · <a href="https://www.sfpuc.gov/accounts-services/water-power-sewer-rates/proposed-water-sewer-rates-2026/proposition-218-notice" target="_blank" rel="noopener noreferrer">SFPUC</a> · <a href="https://www.sf.gov/reports--current-rates-including-rent-increase-relocation-sec-deposit" target="_blank" rel="noopener noreferrer">SF Rent Board</a></td>
+        </tr>
+        <tr>
+          <td><strong>2029</strong></td>
+          <td class="num">$1,995,690</td>
+          <td class="num">$123,670</td>
+          <td class="num">$2,560</td>
+          <td class="num">$5,070</td>
+          <td class="num">$670</td>
+          <td class="num">$4,050</td>
+          <td class="num">$13,690</td>
+          <td class="num">$26,120</td>
+          <td class="num">$93,210</td>
+          <td class="num"><strong>$67,090</strong></td>
+          <td><a href="https://sftreasurer.org/property/secured-property-taxes" target="_blank" rel="noopener noreferrer">SF 1.1816%</a> · <a href="https://www.sfpuc.gov/accounts-services/water-power-sewer-rates/proposed-water-sewer-rates-2026/proposition-218-notice" target="_blank" rel="noopener noreferrer">SFPUC</a> · <a href="https://www.sf.gov/reports--current-rates-including-rent-increase-relocation-sec-deposit" target="_blank" rel="noopener noreferrer">SF Rent Board</a></td>
+        </tr>
+        <tr>
+          <td><strong>2030</strong></td>
+          <td class="num">$2,065,540</td>
+          <td class="num">$126,140</td>
+          <td class="num">$2,610</td>
+          <td class="num">$5,290</td>
+          <td class="num">$690</td>
+          <td class="num">$4,210</td>
+          <td class="num">$14,070</td>
+          <td class="num">$26,970</td>
+          <td class="num">$95,820</td>
+          <td class="num"><strong>$68,850</strong></td>
+          <td><a href="https://sftreasurer.org/property/secured-property-taxes" target="_blank" rel="noopener noreferrer">SF 1.1816%</a> · <a href="https://www.sfpuc.gov/accounts-services/water-power-sewer-rates/proposed-water-sewer-rates-2026/proposition-218-notice" target="_blank" rel="noopener noreferrer">SFPUC</a> · <a href="https://www.sf.gov/reports--current-rates-including-rent-increase-relocation-sec-deposit" target="_blank" rel="noopener noreferrer">SF Rent Board</a></td>
+        </tr>
+        <tr>
+          <td><strong>2031</strong></td>
+          <td class="num">$2,137,840</td>
+          <td class="num">$128,660</td>
+          <td class="num">$2,660</td>
+          <td class="num">$5,530</td>
+          <td class="num">$710</td>
+          <td class="num">$4,380</td>
+          <td class="num">$14,470</td>
+          <td class="num">$27,850</td>
+          <td class="num">$98,500</td>
+          <td class="num"><strong>$70,650</strong></td>
+          <td><a href="https://sftreasurer.org/property/secured-property-taxes" target="_blank" rel="noopener noreferrer">SF 1.1816%</a> · <a href="https://www.sfpuc.gov/accounts-services/water-power-sewer-rates/proposed-water-sewer-rates-2026/proposition-218-notice" target="_blank" rel="noopener noreferrer">SFPUC</a> · <a href="https://www.sf.gov/reports--current-rates-including-rent-increase-relocation-sec-deposit" target="_blank" rel="noopener noreferrer">SF Rent Board</a></td>
+        </tr>
+        <tr>
+          <td><strong>2032</strong></td>
+          <td class="num">$2,212,660</td>
+          <td class="num">$131,240</td>
+          <td class="num">$2,720</td>
+          <td class="num">$5,780</td>
+          <td class="num">$740</td>
+          <td class="num">$4,560</td>
+          <td class="num">$14,870</td>
+          <td class="num">$28,760</td>
+          <td class="num">$101,260</td>
+          <td class="num"><strong>$72,500</strong></td>
+          <td><a href="https://sftreasurer.org/property/secured-property-taxes" target="_blank" rel="noopener noreferrer">SF 1.1816%</a> · <a href="https://www.sfpuc.gov/accounts-services/water-power-sewer-rates/proposed-water-sewer-rates-2026/proposition-218-notice" target="_blank" rel="noopener noreferrer">SFPUC</a> · <a href="https://www.sf.gov/reports--current-rates-including-rent-increase-relocation-sec-deposit" target="_blank" rel="noopener noreferrer">SF Rent Board</a></td>
+        </tr>
+        <tr>
+          <td><strong>2033</strong></td>
+          <td class="num">$2,290,100</td>
+          <td class="num">$133,860</td>
+          <td class="num">$2,770</td>
+          <td class="num">$6,040</td>
+          <td class="num">$760</td>
+          <td class="num">$4,740</td>
+          <td class="num">$15,290</td>
+          <td class="num">$29,710</td>
+          <td class="num">$104,100</td>
+          <td class="num"><strong>$74,390</strong></td>
+          <td><a href="https://sftreasurer.org/property/secured-property-taxes" target="_blank" rel="noopener noreferrer">SF 1.1816%</a> · <a href="https://www.sfpuc.gov/accounts-services/water-power-sewer-rates/proposed-water-sewer-rates-2026/proposition-218-notice" target="_blank" rel="noopener noreferrer">SFPUC</a> · <a href="https://www.sf.gov/reports--current-rates-including-rent-increase-relocation-sec-deposit" target="_blank" rel="noopener noreferrer">SF Rent Board</a></td>
+        </tr>
+        <tr>
+          <td><strong>2034</strong></td>
+          <td class="num">$2,370,260</td>
+          <td class="num">$136,540</td>
+          <td class="num">$2,830</td>
+          <td class="num">$6,310</td>
+          <td class="num">$790</td>
+          <td class="num">$4,930</td>
+          <td class="num">$15,720</td>
+          <td class="num">$30,680</td>
+          <td class="num">$107,010</td>
+          <td class="num"><strong>$76,330</strong></td>
+          <td><a href="https://sftreasurer.org/property/secured-property-taxes" target="_blank" rel="noopener noreferrer">SF 1.1816%</a> · <a href="https://www.sfpuc.gov/accounts-services/water-power-sewer-rates/proposed-water-sewer-rates-2026/proposition-218-notice" target="_blank" rel="noopener noreferrer">SFPUC</a> · <a href="https://www.sf.gov/reports--current-rates-including-rent-increase-relocation-sec-deposit" target="_blank" rel="noopener noreferrer">SF Rent Board</a></td>
+        </tr>
+        <tr>
+          <td><strong>2035</strong></td>
+          <td class="num">$2,453,220</td>
+          <td class="num">$139,270</td>
+          <td class="num">$2,890</td>
+          <td class="num">$6,600</td>
+          <td class="num">$820</td>
+          <td class="num">$5,120</td>
+          <td class="num">$16,160</td>
+          <td class="num">$31,690</td>
+          <td class="num">$110,010</td>
+          <td class="num"><strong>$78,320</strong></td>
+          <td><a href="https://sftreasurer.org/property/secured-property-taxes" target="_blank" rel="noopener noreferrer">SF 1.1816%</a> · <a href="https://www.sfpuc.gov/accounts-services/water-power-sewer-rates/proposed-water-sewer-rates-2026/proposition-218-notice" target="_blank" rel="noopener noreferrer">SFPUC</a> · <a href="https://www.sf.gov/reports--current-rates-including-rent-increase-relocation-sec-deposit" target="_blank" rel="noopener noreferrer">SF Rent Board</a></td>
+        </tr>
+        <tr>
+          <td><strong>2036</strong></td>
+          <td class="num">$2,539,080</td>
+          <td class="num">$142,050</td>
+          <td class="num">$2,950</td>
+          <td class="num">$6,900</td>
+          <td class="num">$850</td>
+          <td class="num">$5,330</td>
+          <td class="num">$16,610</td>
+          <td class="num">$32,740</td>
+          <td class="num">$113,090</td>
+          <td class="num"><strong>$80,350</strong></td>
+          <td><a href="https://sftreasurer.org/property/secured-property-taxes" target="_blank" rel="noopener noreferrer">SF 1.1816%</a> · <a href="https://www.sfpuc.gov/accounts-services/water-power-sewer-rates/proposed-water-sewer-rates-2026/proposition-218-notice" target="_blank" rel="noopener noreferrer">SFPUC</a> · <a href="https://www.sf.gov/reports--current-rates-including-rent-increase-relocation-sec-deposit" target="_blank" rel="noopener noreferrer">SF Rent Board</a></td>
+        </tr>
+        <tr>
+          <td><strong>2037</strong></td>
+          <td class="num">$2,627,950</td>
+          <td class="num">$144,890</td>
+          <td class="num">$3,010</td>
+          <td class="num">$7,210</td>
+          <td class="num">$880</td>
+          <td class="num">$5,540</td>
+          <td class="num">$17,070</td>
+          <td class="num">$33,820</td>
+          <td class="num">$116,250</td>
+          <td class="num"><strong>$82,440</strong></td>
+          <td><a href="https://sftreasurer.org/property/secured-property-taxes" target="_blank" rel="noopener noreferrer">SF 1.1816%</a> · <a href="https://www.sfpuc.gov/accounts-services/water-power-sewer-rates/proposed-water-sewer-rates-2026/proposition-218-notice" target="_blank" rel="noopener noreferrer">SFPUC</a> · <a href="https://www.sf.gov/reports--current-rates-including-rent-increase-relocation-sec-deposit" target="_blank" rel="noopener noreferrer">SF Rent Board</a></td>
+        </tr>
+        <tr>
+          <td><strong>2038</strong></td>
+          <td class="num">$2,719,920</td>
+          <td class="num">$147,790</td>
+          <td class="num">$3,070</td>
+          <td class="num">$7,530</td>
+          <td class="num">$910</td>
+          <td class="num">$5,760</td>
+          <td class="num">$17,550</td>
+          <td class="num">$34,940</td>
+          <td class="num">$119,510</td>
+          <td class="num"><strong>$84,570</strong></td>
+          <td><a href="https://sftreasurer.org/property/secured-property-taxes" target="_blank" rel="noopener noreferrer">SF 1.1816%</a> · <a href="https://www.sfpuc.gov/accounts-services/water-power-sewer-rates/proposed-water-sewer-rates-2026/proposition-218-notice" target="_blank" rel="noopener noreferrer">SFPUC</a> · <a href="https://www.sf.gov/reports--current-rates-including-rent-increase-relocation-sec-deposit" target="_blank" rel="noopener noreferrer">SF Rent Board</a></td>
+        </tr>
+        <tr>
+          <td><strong>2039</strong></td>
+          <td class="num">$2,815,120</td>
+          <td class="num">$150,750</td>
+          <td class="num">$3,130</td>
+          <td class="num">$7,870</td>
+          <td class="num">$940</td>
+          <td class="num">$5,990</td>
+          <td class="num">$18,040</td>
+          <td class="num">$36,090</td>
+          <td class="num">$122,860</td>
+          <td class="num"><strong>$86,760</strong></td>
+          <td><a href="https://sftreasurer.org/property/secured-property-taxes" target="_blank" rel="noopener noreferrer">SF 1.1816%</a> · <a href="https://www.sfpuc.gov/accounts-services/water-power-sewer-rates/proposed-water-sewer-rates-2026/proposition-218-notice" target="_blank" rel="noopener noreferrer">SFPUC</a> · <a href="https://www.sf.gov/reports--current-rates-including-rent-increase-relocation-sec-deposit" target="_blank" rel="noopener noreferrer">SF Rent Board</a></td>
+        </tr>
+        <tr style='background:#f0f9ff'>
+          <td><strong>2040</strong> <span class='badge badge-projected'>Target Window</span></td>
+          <td class="num">$2,913,650</td>
+          <td class="num">$153,760</td>
+          <td class="num">$3,200</td>
+          <td class="num">$8,220</td>
+          <td class="num">$970</td>
+          <td class="num">$6,230</td>
+          <td class="num">$18,550</td>
+          <td class="num">$37,290</td>
+          <td class="num">$126,300</td>
+          <td class="num"><strong>$89,000</strong></td>
+          <td><a href="https://sftreasurer.org/property/secured-property-taxes" target="_blank" rel="noopener noreferrer">SF 1.1816%</a> · <a href="https://www.sfpuc.gov/accounts-services/water-power-sewer-rates/proposed-water-sewer-rates-2026/proposition-218-notice" target="_blank" rel="noopener noreferrer">SFPUC</a> · <a href="https://www.sf.gov/reports--current-rates-including-rent-increase-relocation-sec-deposit" target="_blank" rel="noopener noreferrer">SF Rent Board</a></td>
+        </tr>
+        <tr style='background:#f0f9ff'>
+          <td><strong>2041</strong></td>
+          <td class="num">$3,015,630</td>
+          <td class="num">$156,840</td>
+          <td class="num">$3,260</td>
+          <td class="num">$8,590</td>
+          <td class="num">$1,010</td>
+          <td class="num">$6,480</td>
+          <td class="num">$19,070</td>
+          <td class="num">$38,530</td>
+          <td class="num">$129,830</td>
+          <td class="num"><strong>$91,300</strong></td>
+          <td><a href="https://sftreasurer.org/property/secured-property-taxes" target="_blank" rel="noopener noreferrer">SF 1.1816%</a> · <a href="https://www.sfpuc.gov/accounts-services/water-power-sewer-rates/proposed-water-sewer-rates-2026/proposition-218-notice" target="_blank" rel="noopener noreferrer">SFPUC</a> · <a href="https://www.sf.gov/reports--current-rates-including-rent-increase-relocation-sec-deposit" target="_blank" rel="noopener noreferrer">SF Rent Board</a></td>
+        </tr>
+        <tr style='background:#f0f9ff'>
+          <td><strong>2042</strong></td>
+          <td class="num">$3,121,170</td>
+          <td class="num">$159,970</td>
+          <td class="num">$3,330</td>
+          <td class="num">$8,980</td>
+          <td class="num">$1,040</td>
+          <td class="num">$6,740</td>
+          <td class="num">$19,600</td>
+          <td class="num">$39,820</td>
+          <td class="num">$133,470</td>
+          <td class="num"><strong>$93,650</strong></td>
+          <td><a href="https://sftreasurer.org/property/secured-property-taxes" target="_blank" rel="noopener noreferrer">SF 1.1816%</a> · <a href="https://www.sfpuc.gov/accounts-services/water-power-sewer-rates/proposed-water-sewer-rates-2026/proposition-218-notice" target="_blank" rel="noopener noreferrer">SFPUC</a> · <a href="https://www.sf.gov/reports--current-rates-including-rent-increase-relocation-sec-deposit" target="_blank" rel="noopener noreferrer">SF Rent Board</a></td>
+        </tr>
+        <tr style='background:#f0f9ff'>
+          <td><strong>2043</strong></td>
+          <td class="num">$3,230,420</td>
+          <td class="num">$163,170</td>
+          <td class="num">$3,400</td>
+          <td class="num">$9,380</td>
+          <td class="num">$1,080</td>
+          <td class="num">$7,010</td>
+          <td class="num">$20,150</td>
+          <td class="num">$41,150</td>
+          <td class="num">$137,210</td>
+          <td class="num"><strong>$96,060</strong></td>
+          <td><a href="https://sftreasurer.org/property/secured-property-taxes" target="_blank" rel="noopener noreferrer">SF 1.1816%</a> · <a href="https://www.sfpuc.gov/accounts-services/water-power-sewer-rates/proposed-water-sewer-rates-2026/proposition-218-notice" target="_blank" rel="noopener noreferrer">SFPUC</a> · <a href="https://www.sf.gov/reports--current-rates-including-rent-increase-relocation-sec-deposit" target="_blank" rel="noopener noreferrer">SF Rent Board</a></td>
+        </tr>
+        <tr style='background:#f0f9ff'>
+          <td><strong>2044</strong></td>
+          <td class="num">$3,343,480</td>
+          <td class="num">$166,440</td>
+          <td class="num">$3,470</td>
+          <td class="num">$9,810</td>
+          <td class="num">$1,110</td>
+          <td class="num">$7,290</td>
+          <td class="num">$20,710</td>
+          <td class="num">$42,520</td>
+          <td class="num">$141,050</td>
+          <td class="num"><strong>$98,520</strong></td>
+          <td><a href="https://sftreasurer.org/property/secured-property-taxes" target="_blank" rel="noopener noreferrer">SF 1.1816%</a> · <a href="https://www.sfpuc.gov/accounts-services/water-power-sewer-rates/proposed-water-sewer-rates-2026/proposition-218-notice" target="_blank" rel="noopener noreferrer">SFPUC</a> · <a href="https://www.sf.gov/reports--current-rates-including-rent-increase-relocation-sec-deposit" target="_blank" rel="noopener noreferrer">SF Rent Board</a></td>
+        </tr>
+        <tr style='background:#f0f9ff'>
+          <td><strong>2045</strong> <span class='badge badge-projected'>Target Window</span></td>
+          <td class="num">$3,460,500</td>
+          <td class="num">$169,770</td>
+          <td class="num">$3,540</td>
+          <td class="num">$10,250</td>
+          <td class="num">$1,150</td>
+          <td class="num">$7,580</td>
+          <td class="num">$21,290</td>
+          <td class="num">$43,950</td>
+          <td class="num">$145,000</td>
+          <td class="num"><strong>$101,050</strong></td>
+          <td><a href="https://sftreasurer.org/property/secured-property-taxes" target="_blank" rel="noopener noreferrer">SF 1.1816%</a> · <a href="https://www.sfpuc.gov/accounts-services/water-power-sewer-rates/proposed-water-sewer-rates-2026/proposition-218-notice" target="_blank" rel="noopener noreferrer">SFPUC</a> · <a href="https://www.sf.gov/reports--current-rates-including-rent-increase-relocation-sec-deposit" target="_blank" rel="noopener noreferrer">SF Rent Board</a></td>
+        </tr>
+        <tr style='background:#f0f9ff'>
+          <td><strong>2046</strong></td>
+          <td class="num">$3,581,620</td>
+          <td class="num">$173,160</td>
+          <td class="num">$3,610</td>
+          <td class="num">$10,710</td>
+          <td class="num">$1,190</td>
+          <td class="num">$7,890</td>
+          <td class="num">$21,890</td>
+          <td class="num">$45,430</td>
+          <td class="num">$149,060</td>
+          <td class="num"><strong>$103,630</strong></td>
+          <td><a href="https://sftreasurer.org/property/secured-property-taxes" target="_blank" rel="noopener noreferrer">SF 1.1816%</a> · <a href="https://www.sfpuc.gov/accounts-services/water-power-sewer-rates/proposed-water-sewer-rates-2026/proposition-218-notice" target="_blank" rel="noopener noreferrer">SFPUC</a> · <a href="https://www.sf.gov/reports--current-rates-including-rent-increase-relocation-sec-deposit" target="_blank" rel="noopener noreferrer">SF Rent Board</a></td>
+        </tr>
+        <tr style='background:#f0f9ff'>
+          <td><strong>2047</strong></td>
+          <td class="num">$3,706,980</td>
+          <td class="num">$176,630</td>
+          <td class="num">$3,690</td>
+          <td class="num">$11,190</td>
+          <td class="num">$1,240</td>
+          <td class="num">$8,200</td>
+          <td class="num">$22,500</td>
+          <td class="num">$46,950</td>
+          <td class="num">$153,230</td>
+          <td class="num"><strong>$106,280</strong></td>
+          <td><a href="https://sftreasurer.org/property/secured-property-taxes" target="_blank" rel="noopener noreferrer">SF 1.1816%</a> · <a href="https://www.sfpuc.gov/accounts-services/water-power-sewer-rates/proposed-water-sewer-rates-2026/proposition-218-notice" target="_blank" rel="noopener noreferrer">SFPUC</a> · <a href="https://www.sf.gov/reports--current-rates-including-rent-increase-relocation-sec-deposit" target="_blank" rel="noopener noreferrer">SF Rent Board</a></td>
+        </tr>
+        <tr style='background:#f0f9ff'>
+          <td><strong>2048</strong></td>
+          <td class="num">$3,836,720</td>
+          <td class="num">$180,160</td>
+          <td class="num">$3,760</td>
+          <td class="num">$11,690</td>
+          <td class="num">$1,280</td>
+          <td class="num">$8,530</td>
+          <td class="num">$23,130</td>
+          <td class="num">$48,540</td>
+          <td class="num">$157,520</td>
+          <td class="num"><strong>$108,980</strong></td>
+          <td><a href="https://sftreasurer.org/property/secured-property-taxes" target="_blank" rel="noopener noreferrer">SF 1.1816%</a> · <a href="https://www.sfpuc.gov/accounts-services/water-power-sewer-rates/proposed-water-sewer-rates-2026/proposition-218-notice" target="_blank" rel="noopener noreferrer">SFPUC</a> · <a href="https://www.sf.gov/reports--current-rates-including-rent-increase-relocation-sec-deposit" target="_blank" rel="noopener noreferrer">SF Rent Board</a></td>
+        </tr>
+        <tr style='background:#f0f9ff'>
+          <td><strong>2049</strong></td>
+          <td class="num">$3,971,010</td>
+          <td class="num">$183,760</td>
+          <td class="num">$3,840</td>
+          <td class="num">$12,220</td>
+          <td class="num">$1,320</td>
+          <td class="num">$8,870</td>
+          <td class="num">$23,780</td>
+          <td class="num">$50,180</td>
+          <td class="num">$161,930</td>
+          <td class="num"><strong>$111,750</strong></td>
+          <td><a href="https://sftreasurer.org/property/secured-property-taxes" target="_blank" rel="noopener noreferrer">SF 1.1816%</a> · <a href="https://www.sfpuc.gov/accounts-services/water-power-sewer-rates/proposed-water-sewer-rates-2026/proposition-218-notice" target="_blank" rel="noopener noreferrer">SFPUC</a> · <a href="https://www.sf.gov/reports--current-rates-including-rent-increase-relocation-sec-deposit" target="_blank" rel="noopener noreferrer">SF Rent Board</a></td>
+        </tr>
+        <tr style='background:#f0f9ff'>
+          <td><strong>2050</strong> <span class='badge badge-projected'>Target Window</span></td>
+          <td class="num">$4,109,990</td>
+          <td class="num">$187,440</td>
+          <td class="num">$3,920</td>
+          <td class="num">$12,770</td>
+          <td class="num">$1,370</td>
+          <td class="num">$9,230</td>
+          <td class="num">$24,450</td>
+          <td class="num">$51,880</td>
+          <td class="num">$166,460</td>
+          <td class="num"><strong>$114,590</strong></td>
+          <td><a href="https://sftreasurer.org/property/secured-property-taxes" target="_blank" rel="noopener noreferrer">SF 1.1816%</a> · <a href="https://www.sfpuc.gov/accounts-services/water-power-sewer-rates/proposed-water-sewer-rates-2026/proposition-218-notice" target="_blank" rel="noopener noreferrer">SFPUC</a> · <a href="https://www.sf.gov/reports--current-rates-including-rent-increase-relocation-sec-deposit" target="_blank" rel="noopener noreferrer">SF Rent Board</a></td>
+        </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    
+  </main>
+  <footer class="site-footer">
+    <div class="site-footer-inner">
+      <span>Educational &amp; analytical decision-support framework verified as of November 2026. Consult a California Certified Specialist in Estate Planning, Trust &amp; Probate Law and a CPA prior to executing trust distributions or tax filings.</span>
+      <span><a href="flagged-review.html">Review Flagged Items</a> · <a href="sources.html">Official Source Registry</a></span>
+    </div>
+  </footer>
+  <script src="assets/data.js"></script>
+  <script src="assets/app.js"></script>
+</body>
+</html>
