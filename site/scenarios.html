@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Decision Scenarios — CA Trust Inheritance Decision Suite</title>
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="index.html">
+        <span class="brand-mark">CA</span>
+        <span>Trust Inheritance Decision Suite (95014 &amp; 94122)</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary Navigation">
+        <a href="index.html" class="">Executive Summary</a><a href="properties.html" class="">Properties & Costs</a><a href="projections.html" class="">2026–2050 Projections</a><a href="scenarios.html" class="active ">Live vs. Rent vs. Sell</a><a href="estate-tax.html" class="">Estate & Tax Laws</a><a href="inheritance-guide.html" class="">Step-by-Step Guide</a><a href="flagged-review.html" class="nav-flag">Flagged for Review</a><a href="sources.html" class="">Official Sources</a>
+      </nav>
+    </div>
+  </header>
+  <div class="privacy-strip">
+    <div class="privacy-strip-inner">
+      <span><strong>Privacy Mandate Active:</strong> All personal names, street addresses, APNs, and trust identifiers are strictly anonymized using placeholders (<code>[Property A]</code>, <code>[Property B]</code>, <code>[Grantor]</code>, <code>[Beneficiary]</code>).</span>
+      <span><strong>Precision Standard:</strong> All dollar figures rounded to nearest <code>$10</code> · 100% official <code>.gov</code> / utility sources</span>
+    </div>
+  </div>
+  <main class="container">
+    <section class="page-header">
+      <span class="eyebrow">Live vs. Rent vs. Sell & Reinvest</span>
+      <h1>Household Strategy Comparison & Interactive Decision Simulator</h1>
+      <p>Side-by-side cash-flow and net-worth modeling across 2040, 2045, and 2050 inheritance horizons — integrating both Cupertino (95014) and San Francisco (94122).</p>
+    </section>
+    
+    <div class="card">
+      <h2>Interactive Scenario Explorer (Customize Inheritance Year, Returns &amp; Trust Type)</h2>
+      <p>Adjust any assumption below to stress-test the decision in real time. All outputs automatically round to the nearest <code>$10</code> increment.</p>
+      <div class="controls-bar">
+        <div class="control-group">
+          <label for="sim-year">Inheritance Year: <span id="lbl-sim-year">2045</span></label>
+          <input type="range" id="sim-year" min="2040" max="2050" step="1" value="2045">
+        </div>
+        <div class="control-group">
+          <label for="sim-horizon">Post-Inheritance Horizon: <span id="lbl-sim-horizon">15</span> yrs</label>
+          <input type="range" id="sim-horizon" min="10" max="25" step="5" value="15">
+        </div>
+        <div class="control-group">
+          <label for="sim-cup-g">Cupertino Home Growth: <span id="lbl-sim-cup-g">4.2%</span>/yr</label>
+          <input type="range" id="sim-cup-g" min="2.5" max="5.5" step="0.1" value="4.2">
+        </div>
+        <div class="control-group">
+          <label for="sim-port-r">After-Tax Portfolio Return: <span id="lbl-sim-port-r">5.8%</span>/yr</label>
+          <input type="range" id="sim-port-r" min="3.5" max="8.0" step="0.1" value="5.8">
+        </div>
+        <div class="control-group">
+          <label for="sim-trust">Trust Basis Treatment</label>
+          <select id="sim-trust">
+            <option value="revocable" selected>Revocable Living Trust (100% IRC § 1014 Step-Up)</option>
+            <option value="irrevocable">Estate-Excluded Irrevocable Trust (No Step-Up — Rev. Rul. 2023-2)</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="sim-verdict-banner" class="callout callout-emerald"></div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Strategy</th>
+              <th class="num">Day-1 Net Sale Cash</th>
+              <th class="num">Yr-1 Cupertino Prop Tax</th>
+              <th class="num">Yr-1 Household Prop Cash Flow</th>
+              <th class="num">Terminal Financial Portfolio</th>
+              <th class="num">Terminal Total Net Worth</th>
+              <th>Official Tax / Legal Authority</th>
+            </tr>
+          </thead>
+          <tbody id="sim-results-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Baseline Benchmark Comparison Across 2040, 2045 &amp; 2050 (15-Year Post-Inheritance Horizon)</h2>
+      <p>Assumes Revocable Trust (full <code>IRC § 1014</code> basis step-up at death), 4.2%/yr Cupertino appreciation, 3.5%/yr SF appreciation, and 5.8%/yr after-tax balanced portfolio compounding (7.0% pre-tax).</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Window</th>
+              <th>Household Strategy</th>
+              <th class="num">Cupertino FMV at Death</th>
+              <th class="num">Yr-1 Cupertino Tax</th>
+              <th class="num">Yr-1 Property Net CF</th>
+              <th class="num">End Financial Portfolio</th>
+              <th class="num">End Total Net Worth</th>
+              <th>Official Sources</th>
+            </tr>
+          </thead>
+          <tbody>
+            
+            <tr style='background:#ecfdf5'>
+              <td><strong>2040 → 2055</strong></td>
+              <td><strong>S1</strong>: Sell Cupertino & Reinvest + Live in SF Unit 3 <span class='badge badge-verified'>Optimal</span></td>
+              <td class="num">$5,514,550</td>
+              <td class="num">$0</td>
+              <td class="num">$62,300</td>
+              <td class="num">$13,874,660</td>
+              <td class="num"><strong>$18,756,040</strong></td>
+              <td><a href="https://www.irs.gov/pub/irs-drop/rr-23-02.pdf" target="_blank" rel="noopener noreferrer">IRC § 1014</a> · <a href="https://www.boe.ca.gov/pdf/pub801.pdf" target="_blank" rel="noopener noreferrer">BOE Prop 19</a></td>
+            </tr>
+            <tr>
+              <td><strong>2040 → 2055</strong></td>
+              <td><strong>S2B</strong>: Live in Cupertino (Prop 19) + Rent All 3 SF Units</td>
+              <td class="num">$5,514,550</td>
+              <td class="num">$45,660</td>
+              <td class="num">$33,620</td>
+              <td class="num">$934,960</td>
+              <td class="num"><strong>$14,063,000</strong></td>
+              <td><a href="https://www.irs.gov/pub/irs-drop/rr-23-02.pdf" target="_blank" rel="noopener noreferrer">IRC § 1014</a> · <a href="https://www.boe.ca.gov/pdf/pub801.pdf" target="_blank" rel="noopener noreferrer">BOE Prop 19</a></td>
+            </tr>
+            <tr>
+              <td><strong>2040 → 2055</strong></td>
+              <td><strong>S2A</strong>: Live in Cupertino (Prop 19) + Keep SF Unit 3 Vacant</td>
+              <td class="num">$5,514,550</td>
+              <td class="num">$45,660</td>
+              <td class="num">-$2,900</td>
+              <td class="num">-$56,290</td>
+              <td class="num"><strong>$13,071,750</strong></td>
+              <td><a href="https://www.irs.gov/pub/irs-drop/rr-23-02.pdf" target="_blank" rel="noopener noreferrer">IRC § 1014</a> · <a href="https://www.boe.ca.gov/pdf/pub801.pdf" target="_blank" rel="noopener noreferrer">BOE Prop 19</a></td>
+            </tr>
+            <tr>
+              <td><strong>2040 → 2055</strong></td>
+              <td><strong>S3</strong>: Rent Out Cupertino (No Prop 19) + Live in SF Unit 3</td>
+              <td class="num">$5,514,550</td>
+              <td class="num">$65,420</td>
+              <td class="num">$90,540</td>
+              <td class="num">$2,551,810</td>
+              <td class="num"><strong>$15,207,200</strong></td>
+              <td><a href="https://www.irs.gov/pub/irs-drop/rr-23-02.pdf" target="_blank" rel="noopener noreferrer">IRC § 1014</a> · <a href="https://www.boe.ca.gov/pdf/pub801.pdf" target="_blank" rel="noopener noreferrer">BOE Prop 19</a></td>
+            </tr>
+            <tr style='background:#ecfdf5'>
+              <td><strong>2045 → 2060</strong></td>
+              <td><strong>S1</strong>: Sell Cupertino & Reinvest + Live in SF Unit 3 <span class='badge badge-verified'>Optimal</span></td>
+              <td class="num">$6,774,050</td>
+              <td class="num">$0</td>
+              <td class="num">$70,730</td>
+              <td class="num">$16,885,230</td>
+              <td class="num"><strong>$22,682,780</strong></td>
+              <td><a href="https://www.irs.gov/pub/irs-drop/rr-23-02.pdf" target="_blank" rel="noopener noreferrer">IRC § 1014</a> · <a href="https://www.boe.ca.gov/pdf/pub801.pdf" target="_blank" rel="noopener noreferrer">BOE Prop 19</a></td>
+            </tr>
+            <tr>
+              <td><strong>2045 → 2060</strong></td>
+              <td><strong>S2B</strong>: Live in Cupertino (Prop 19) + Rent All 3 SF Units</td>
+              <td class="num">$6,774,050</td>
+              <td class="num">$55,940</td>
+              <td class="num">$33,810</td>
+              <td class="num">$944,260</td>
+              <td class="num"><strong>$16,850,790</strong></td>
+              <td><a href="https://www.irs.gov/pub/irs-drop/rr-23-02.pdf" target="_blank" rel="noopener noreferrer">IRC § 1014</a> · <a href="https://www.boe.ca.gov/pdf/pub801.pdf" target="_blank" rel="noopener noreferrer">BOE Prop 19</a></td>
+            </tr>
+            <tr>
+              <td><strong>2045 → 2060</strong></td>
+              <td><strong>S2A</strong>: Live in Cupertino (Prop 19) + Keep SF Unit 3 Vacant</td>
+              <td class="num">$6,774,050</td>
+              <td class="num">$55,940</td>
+              <td class="num">-$8,030</td>
+              <td class="num">-$191,340</td>
+              <td class="num"><strong>$15,715,190</strong></td>
+              <td><a href="https://www.irs.gov/pub/irs-drop/rr-23-02.pdf" target="_blank" rel="noopener noreferrer">IRC § 1014</a> · <a href="https://www.boe.ca.gov/pdf/pub801.pdf" target="_blank" rel="noopener noreferrer">BOE Prop 19</a></td>
+            </tr>
+            <tr>
+              <td><strong>2045 → 2060</strong></td>
+              <td><strong>S3</strong>: Rent Out Cupertino (No Prop 19) + Live in SF Unit 3</td>
+              <td class="num">$6,774,050</td>
+              <td class="num">$80,210</td>
+              <td class="num">$98,920</td>
+              <td class="num">$2,796,710</td>
+              <td class="num"><strong>$18,143,820</strong></td>
+              <td><a href="https://www.irs.gov/pub/irs-drop/rr-23-02.pdf" target="_blank" rel="noopener noreferrer">IRC § 1014</a> · <a href="https://www.boe.ca.gov/pdf/pub801.pdf" target="_blank" rel="noopener noreferrer">BOE Prop 19</a></td>
+            </tr>
+            <tr style='background:#ecfdf5'>
+              <td><strong>2050 → 2065</strong></td>
+              <td><strong>S1</strong>: Sell Cupertino & Reinvest + Live in SF Unit 3 <span class='badge badge-verified'>Optimal</span></td>
+              <td class="num">$8,321,220</td>
+              <td class="num">$0</td>
+              <td class="num">$80,210</td>
+              <td class="num">$20,559,510</td>
+              <td class="num"><strong>$27,445,170</strong></td>
+              <td><a href="https://www.irs.gov/pub/irs-drop/rr-23-02.pdf" target="_blank" rel="noopener noreferrer">IRC § 1014</a> · <a href="https://www.boe.ca.gov/pdf/pub801.pdf" target="_blank" rel="noopener noreferrer">BOE Prop 19</a></td>
+            </tr>
+            <tr>
+              <td><strong>2050 → 2065</strong></td>
+              <td><strong>S2B</strong>: Live in Cupertino (Prop 19) + Rent All 3 SF Units</td>
+              <td class="num">$8,321,220</td>
+              <td class="num">$70,520</td>
+              <td class="num">$30,950</td>
+              <td class="num">$873,920</td>
+              <td class="num"><strong>$20,156,250</strong></td>
+              <td><a href="https://www.irs.gov/pub/irs-drop/rr-23-02.pdf" target="_blank" rel="noopener noreferrer">IRC § 1014</a> · <a href="https://www.boe.ca.gov/pdf/pub801.pdf" target="_blank" rel="noopener noreferrer">BOE Prop 19</a></td>
+            </tr>
+            <tr>
+              <td><strong>2050 → 2065</strong></td>
+              <td><strong>S2A</strong>: Live in Cupertino (Prop 19) + Keep SF Unit 3 Vacant</td>
+              <td class="num">$8,321,220</td>
+              <td class="num">$70,520</td>
+              <td class="num">-$16,990</td>
+              <td class="num">-$426,850</td>
+              <td class="num"><strong>$18,855,470</strong></td>
+              <td><a href="https://www.irs.gov/pub/irs-drop/rr-23-02.pdf" target="_blank" rel="noopener noreferrer">IRC § 1014</a> · <a href="https://www.boe.ca.gov/pdf/pub801.pdf" target="_blank" rel="noopener noreferrer">BOE Prop 19</a></td>
+            </tr>
+            <tr>
+              <td><strong>2050 → 2065</strong></td>
+              <td><strong>S3</strong>: Rent Out Cupertino (No Prop 19) + Live in SF Unit 3</td>
+              <td class="num">$8,321,220</td>
+              <td class="num">$98,350</td>
+              <td class="num">$107,280</td>
+              <td class="num">$3,044,640</td>
+              <td class="num"><strong>$21,660,960</strong></td>
+              <td><a href="https://www.irs.gov/pub/irs-drop/rr-23-02.pdf" target="_blank" rel="noopener noreferrer">IRC § 1014</a> · <a href="https://www.boe.ca.gov/pdf/pub801.pdf" target="_blank" rel="noopener noreferrer">BOE Prop 19</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Why "Sell Cupertino &amp; Live in San Francisco" (S1) Wins — And When "Live in Cupertino" (S2B) Makes Sense</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Decision Factor</th>
+              <th>Sell Cupertino &amp; Reinvest + Live in SF (S1)</th>
+              <th>Live in Cupertino + Keep SF (S2A / S2B)</th>
+              <th>Rent Out Cupertino + Live in SF (S3)</th>
+              <th>Official Source</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Capital Gains Tax Efficiency</strong></td>
+              <td><strong>Maximum:</strong> Captures 100% tax-free step-up at death (<code>IRC § 1014</code>); avoids future 37.1% tax on post-death home gains above $250,000/$500,000.</td>
+              <td><strong>Moderate:</strong> Post-inheritance appreciation above <code>IRC § 121</code> ($250,000 single / $500,000 MFJ) faces up to 37.1% combined tax if later sold.</td>
+              <td><strong>Poor:</strong> Loses <code>IRC § 121</code> exclusion; post-death gain taxed up to 37.1% plus 25% federal + 13.3% CA depreciation recapture.</td>
+              <td><a href="https://www.irs.gov/taxtopics/tc409" target="_blank" rel="noopener noreferrer">IRS Topic 409</a> · <a href="https://www.irs.gov/publications/p523" target="_blank" rel="noopener noreferrer">IRS Pub 523</a> · <a href="https://www.ftb.ca.gov/file/personal/income-types/capital-gains-and-losses.html" target="_blank" rel="noopener noreferrer">CA FTB</a></td>
+            </tr>
+            <tr>
+              <td><strong>Property Tax Burden</strong></td>
+              <td><strong>Lowest ($3,600/yr SF in 2045):</strong> Zero Cupertino tax; retains ultra-low Prop 13 base on SF 3-unit property.</td>
+              <td><strong>High ($55,940/yr Cup in 2045):</strong> Prop 19 saves $24,270/yr vs. renting, but still imposes a 5.3x tax jump.</td>
+              <td><strong>Highest ($80,210/yr Cup in 2045):</strong> 100% full market reassessment on Cupertino.</td>
+              <td><a href="https://www.boe.ca.gov/pdf/pub801.pdf" target="_blank" rel="noopener noreferrer">CA BOE Pub 801</a> · <a href="https://controller.santaclaracounty.gov/property-tax-distribution/property-tax-rate-book" target="_blank" rel="noopener noreferrer">SCC Controller</a></td>
+            </tr>
+            <tr>
+              <td><strong>When to Choose This Plan</strong></td>
+              <td>Choose when <strong>maximizing net worth, liquidity, and passive income</strong> is the primary objective.</td>
+              <td>Choose <strong>only</strong> if non-financial lifestyle/school preference for living in Cupertino outweighs ~$260,000–$380,000/yr in opportunity cost (or if an Irrevocable Trust blocks § 1014 step-up!).</td>
+              <td><strong>Avoid</strong> unless Cupertino home appreciation exceeds ~6.5%/yr while stock returns fall below 4.0%/yr.</td>
+              <td><a href="https://www.irs.gov/pub/irs-drop/rr-23-02.pdf" target="_blank" rel="noopener noreferrer">IRS Rev. Rul. 2023-2</a> · <a href="https://www.cbo.gov/system/files/2026-02/61882-Executive-Summary.pdf" target="_blank" rel="noopener noreferrer">CBO Outlook</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    
+  </main>
+  <footer class="site-footer">
+    <div class="site-footer-inner">
+      <span>Educational &amp; analytical decision-support framework verified as of November 2026. Consult a California Certified Specialist in Estate Planning, Trust &amp; Probate Law and a CPA prior to executing trust distributions or tax filings.</span>
+      <span><a href="flagged-review.html">Review Flagged Items</a> · <a href="sources.html">Official Source Registry</a></span>
+    </div>
+  </footer>
+  <script src="assets/data.js"></script>
+  <script src="assets/app.js"></script>
+</body>
+</html>
