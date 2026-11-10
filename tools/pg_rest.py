@@ -173,9 +173,9 @@ rent-controlled, so it grows slowly, but it is durable.</p></div>
 <p>Both insurance figures are owner estimates, entered as $1,500 per year. They are used because
 there is no better source available to this analysis, and they are <strong>flagged as
 unverified</strong>. The NAIC's published national average premium for the most common homeowners
-form was $1,655 in California for 2023 &mdash; which makes $1,500 plausible for Property A.</p>
+form was on the order of $1,655&ndash;$1,675 in California for 2023 &mdash; which makes $1,500 plausible for Property A.</p>
 <div class="tw"><table><thead><tr><th>Reference point</th><th class="n">Premium</th><th>Scope</th><th>Source</th><th>Status</th></tr></thead><tbody>
-<tr><td>NAIC average HO-3, California, 2023</td><td class="n">$1,655</td><td>Owner-occupied, standard form, statewide average</td><td>{src('naic')}</td><td><span class="b ok">Verified</span></td></tr>
+<tr><td>NAIC average HO-3, California, 2023</td><td class="n">$1,655&ndash;$1,675</td><td>Owner-occupied, standard form, statewide average. The NAIC report was retrieved, but the California row of Table 4 could not be isolated from the published PDF, and secondary summaries quoting it differ ($1,655 vs $1,675). Presented as a range, <strong>not confirmed against the primary table</strong>.</td><td>{src('naic')}</td><td><span class="b warn">Flagged</span></td></tr>
 <tr><td>Property A estimate</td><td class="n">$1,500</td><td>Primary residence, Cupertino</td><td>Owner</td><td><span class="b warn">Unverified</span></td></tr>
 <tr><td>Property B estimate</td><td class="n">$1,500</td><td>Three-unit rental, San Francisco</td><td>Owner</td><td><span class="b warn">Unverified</span></td></tr>
 </tbody></table></div>
@@ -622,7 +622,7 @@ verification status. Nothing is stated without a basis.</p>
 <tr><td>Property B electricity, monthly</td><td class="n">$30&ndash;$70</td><td>Owner</td><td><span class="b warn">Owner</span></td></tr>
 <tr><td>Property B insurance, annual</td><td class="n">$1,500</td><td>Owner estimate &mdash; almost certainly low for a 3-unit building</td><td><span class="b bad">Unverified</span></td></tr>
 <tr><td>Property B total carrying cost, 2026</td><td class="n">{m(14580)}</td><td>Model</td><td><span class="b pur">Projected</span></td></tr>
-<tr><td>NAIC average California HO-3 premium, 2023</td><td class="n">$1,655</td><td>{src('naic')}</td><td><span class="b ok">Verified</span></td></tr>
+<tr><td>NAIC average California HO-3 premium, 2023</td><td class="n">$1,655&ndash;$1,675</td><td>{src('naic')}</td><td><span class="b warn">Flagged</span></td></tr>
 </tbody></table></div>
 
 <h2>D. Rental income and rent control</h2>
@@ -690,7 +690,7 @@ SRCLIST = [
  ("S22","Santa Clara County assessment roll and Prop 13/19 guidance","Santa Clara County Assessor Annual Report 2025","https://files.santaclaracounty.gov/exjcpb1521/2025-11/annual_report_2025-2026.pdf","Verified"),
  ("S23","California 2025 income tax rate schedules, top rate 12.3%","California Franchise Tax Board","https://www.ftb.ca.gov/forms/2025/2025-540-tax-rate-schedules.pdf","Verified"),
  ("S24","FHFA House Price Index, all-transactions, 2026Q2 by MSA","Federal Housing Finance Agency","https://www.fhfa.gov/hpi/download/quarterly_datasets/hpi_at_tables.pdf","Verified"),
- ("S25","Average HO-3 homeowners premium, California 2023 = $1,655","National Association of Insurance Commissioners","https://content.naic.org/article/consumer-insight-homeowners-insurance-report","Verified"),
+ ("S25","Average HO-3 homeowners premium, California 2023 = $1,655","National Association of Insurance Commissioners","https://content.naic.org/sites/default/files/publication-hmr-zu-homeowners-report.pdf","Verified"),
  ("S26","Fair Market Rents, Santa Clara County and San Francisco","U.S. Dept. of Housing &amp; Urban Development","https://www.huduser.gov/portal/datasets/fmr.html","Verified"),
  ("S27","Property tax assessment and change in ownership framework","California State Board of Equalization","https://www.boe.ca.gov/proptaxes/change-in-ownership/","Verified"),
 ]
@@ -753,7 +753,7 @@ located in the primary source, the row is marked unverified and listed on
 <ul class="small" style="font-size:13px">
 <li><a href="https://www.fhfa.gov/hpi/download/quarterly_datasets/hpi_at_tables.pdf">FHFA &mdash; HPI by metropolitan area</a></li>
 <li><a href="https://www.huduser.gov/portal/datasets/fmr.html">HUD &mdash; Fair Market Rents</a></li>
-<li><a href="https://content.naic.org/article/consumer-insight-homeowners-insurance-report">NAIC &mdash; homeowners insurance report</a></li>
+<li><a href="https://content.naic.org/sites/default/files/publication-hmr-zu-homeowners-report.pdf">NAIC &mdash; homeowners insurance report</a></li>
 <li><a href="https://www.ftb.ca.gov/forms/2025/2025-540-tax-rate-schedules.pdf">FTB &mdash; 2025 tax rate schedules</a></li>
 </ul></div>
 <div class="card"><h3>Method and reproducibility</h3>
@@ -857,6 +857,24 @@ probate.</td>
 <td>A deed search at the county recorder, or the trustee's schedule of assets.</td>
 <td><span class="b warn">Material to process</span> Would add 12&ndash;24 months and tens of
 thousands of dollars in statutory probate fees. Does not change the property decision.</td></tr>
+
+<tr><td class="n">10</td><td><strong>NAIC California HO-3 average premium</strong></td><td class="n">$1,655&ndash;$1,675</td>
+<td>The NAIC "Dwelling Fire, Homeowners Owner-Occupied..." report for 2023 data was retrieved from
+naic.org, but the California row of Table 4 could not be isolated from the published PDF with
+confidence, and secondary summaries quoting the figure disagree ($1,655 vs $1,675). It is used only
+as a plausibility check, not as an input.</td>
+<td>Table 4, page containing the California state row, read directly from the PDF.</td>
+<td><span class="b mut">None</span> Cosmetic. Used only to sanity-check the $1,500 Property A
+estimate.</td></tr>
+
+<tr><td class="n">11</td><td><strong>SF transfer tax tier boundaries</strong></td><td class="n">&mdash;</td>
+<td>The six-bracket schedule (0.5% to 6.0%, rate applied to the full consideration) is used in the
+model for terminal-value liquidation but was not confirmed against the Business and Tax Regulations
+Code Article 12-C text itself. It affects only hypothetical sale costs in 2070, not the 2045 decision
+(where the transfer is by inheritance and carries no transfer tax).</td>
+<td>SF Business and Tax Regulations Code Art. 12-C, or the Assessor-Recorder's transfer tax
+schedule.</td>
+<td><span class="b mut">Minimal</span> Not used in the decision being evaluated.</td></tr>
 
 <tr><td class="n">9</td><td><strong>Number of heirs / siblings</strong></td><td class="n">&mdash;</td>
 <td>Not stated. Important because Proposition 19 requires that <em>at least one</em> heir occupy
