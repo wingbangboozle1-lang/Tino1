@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Live / Rent / Sell — Decision Analysis | Tino1 Decision Lab</title>
+<link rel="stylesheet" href="css/style.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
+<script defer src="js/app.js"></script>
+</head>
+<body>
+<header class="topbar"><div class="topbar-inner">
+  <a href="index.html" class="brand" style="color:#fff;text-decoration:none"><span class="brand-badge">T1</span> Tino1 Inheritance Decision Lab</a>
+  <nav class="nav"><a href="index.html">Executive Summary</a><a href="cupertino.html">Cupertino 95014</a><a href="sanfrancisco.html">SF 94122</a><a href="inheritance.html">Trust Process</a><a href="taxes.html">Tax Laws</a><a href="projections.html">Projections 2026-2050</a><a href="decision.html">Live / Rent / Sell</a><a href="sources.html">Sources</a><a href="flagged.html">Flagged for Review</a></nav>
+</div></header>
+<div class="container">
+  <div class="hero" style="padding:22px">
+    <h1>💰 Live / Rent / Sell — Cupertino Decision Head-to-Head</h1>
+    <p>Assumes inheritance in <strong>2040</strong> at market values from <a href="projections.html">Projections</a> (Cupertino $5,741,030; SF $3,034,140). SF triplex kept as live-in anchor (3rd unit occupied, $85,800 gross base in 2026 dollars, escalated at 3%/yr). All numbers rounded to <strong>$10</strong>. After-tax where noted.</p>
+  </div>
+
+  <div class="callout" style="margin-top:12px"><strong>Framework:</strong> We compare Cupertino only — because the SF house is strongly “keep” in all scenarios (see <a href="sanfrancisco.html">SF page</a>). You can absolutely keep both; the question is what you <em>do</em> with Cupertino. Three mutually exclusive Cupertino paths: <strong>A) Live in it</strong> (Prop 19 partial), <strong>B) Rent it</strong> (full tax, landlord), <strong>C) Sell it within 12 months of death</strong> (stepped-up basis → ~$0 cap gains) and reinvest net proceeds.</div>
+
+  <div class="section">
+    <h2>At-a-Glance — 2026-Dollars Equivalent at Inheritance (2040)</h2>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Metric (annual, inheritance year, rounded)</th><th>A. Live In Cupertino (Prop19)</th><th>B. Rent Cupertino (Full tax)</th><th>C. Sell &amp; Reinvest (Net $5,425,290*)</th><th>Source</th></tr></thead>
+      <tbody>
+        <tr><td>Market value at death</td><td class="num">$5,741,030</td><td class="num">$5,741,030</td><td class="num">$5,741,030 sale price</td><td class="source">4.5% CAGR from $3.1M</td></tr>
+        <tr><td>New assessed value</td><td class="num">$4,696,440</td><td class="num">$5,741,030</td><td class="num">— (buyer assumes at FMV)</td><td class="source"><a href="https://www.boe.ca.gov/prop19/" target="_blank">BOE RTC §63.2</a></td></tr>
+        <tr><td>Property tax (1.18%)</td><td class="num">$55,420</td><td class="num">$67,740</td><td class="num">$0 (no house)</td><td class="source">1.18% of assessed</td></tr>
+        <tr><td>Insurance + water + electric + maintenance (2026$ inflated to 2040)</td><td class="num">$13,350</td><td class="num">$13,350</td><td class="num">$0</td><td class="source"><a href="projections.html">Operating table</a> (3% infl.)</td></tr>
+        <tr><td><strong>Total annual carry (property-related)</strong></td><td class="num"><strong>$68,770</strong></td><td class="num"><strong>$81,090</strong></td><td class="num"><strong>$0 (plus ~$4,000 property tax on SF — kept in all paths)</strong></td><td></td></tr>
+        <tr><td>Rental income (if rented) — market $4,800/mo in 2026$, infl. to 2040 ≈ $7,270/mo</td><td class="num">— (you live there)</td><td class="num">$87,290 gross → $72,970 net (vacancy 8% + mgmt 6%+ maintenance reserve included; tax deductible)</td><td class="num">$0 (house sold)</td><td class="source"><a href="https://www.rentometer.com" target="_blank">Rentometer 95014 ~$3,800–5,200</a> — <span class="tag">Comp flagged</span></td></tr>
+        <tr><td>Net cash flow from Cupertino alone (pre-income-tax)</td><td class="num">-$68,770 (you pay to live)</td><td class="num">-$8,120</td><td class="num">+ Expected portfolio return on reinvested net</td><td></td></tr>
+        <tr><td>Income tax on rent (federal 22–24% + CA 9.3% example, after deductions) — est.</td><td class="num">—</td><td class="num">-$8,500 (tax on net rent after depreciation/tax deductions)</td><td class="num">Portfolio dividends/interest taxed 15%+CA; not modeled in annual line</td><td class="source"><a href="https://www.irs.gov/pub/irs-pdf/p527.pdf" target="_blank">IRS Pub527</a></td></tr>
+        <tr><td><strong>True annual cost vs. keeping SF only (SF kept in all paths, SF rent $130k gross in 2040$ covers its costs)</strong></td><td class="num"><strong>Costs $68,770/yr to live in Cupertino — offset by avoiding rent elsewhere (~$42k/yr equivalent rent) → net ≈ -$26,770/yr lifestyle premium</strong></td><td class="num"><strong>-$16,620/yr truly negative after rent tax (rent barely covers carry)</strong></td><td class="num"><strong>0 carry + portfolio grows</strong></td><td></td></tr>
+      </tbody>
+    </table></div>
+    <p class="figure">*Sell net: $5,741,030 − 5.5% selling costs ($315,760) = <strong>$5,425,280</strong> (rounded $5,425,290*). Stepped-up basis → ~$0 cap gains if sold promptly. If you wait and it appreciates further, gains accrue at 15%/20%+3.8%+CA 13.3%. <span class="source"><a href="https://www.law.cornell.edu/uscode/text/26/1014" target="_blank">IRC §1014</a></span></p>
+    <div class="callout callout-warn" style="margin-top:8px"><strong>Translation:</strong> Renting Cupertino under full reassessment is approximately <strong>break-even before tax and negative after tax</strong> — even using optimistic market rent. The $81k annual carry (mostly property tax) eats the $87k gross rent. Live-in is not a cash-flow play; it’s a <strong>lifestyle choice that costs ~$68k/yr in today’s inflated dollars</strong>. Selling converts that dead-weight carry into a productive portfolio.</div>
+  </div>
+
+  <div class="section">
+    <h2>Wealth in 10 / 20 / 30 Years — Which Path Makes You Richer?</h2>
+    <p class="section-desc">Starting equity at inheritance: Cupertino FMV + SF equity. We model Cupertino-only wealth attributable to that house; SF kept in all scenarios adds same baseline (~$3M appreciating at 3.8%). Portfolio reinvestment assumes 7% nominal / 4.5% real, net of 0.2% fees, with 15% federal + 9.3% CA drag on 2% dividend yield (total ~6.5% net). Rent growth 3%, tax/operating 2–3%. Rounded.</p>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Horizon from inheritance (2040 → )</th><th>A. Live In (home equity + avoided rent savings + SF kept)</th><th>B. Rent Out (equity + net rent after tax + SF kept)</th><th>C. Sell &amp; Reinvest (SF kept + portfolio)</th><th>Winner (financial only)</th></tr></thead>
+      <tbody>
+        <tr><td>2040 (Year 0)</td><td class="num">$5,741,030</td><td class="num">$5,741,030</td><td class="num">$5,425,280 (cash) + $3,034,140 SF = $8,459,420 total vs $8,775,170 total if keep Cupertino (but note carry)</td><td class="num">A/B (more total equity, but illiquid)</td></tr>
+        <tr><td>2050 (10 yr)</td><td class="num">$8,916,000 (4.5% CAGR)</td><td class="num">$8,916,000 equity + ~ -$40,000 cum. net rent* = $8,876,000</td><td class="num">$9,950,000 (portfolio @6.5% net) + SF $4,406,000 = $14,356,000 total vs keep-Cupertino total $13,322,000</td><td class="num"><strong>C by ~$1,030,000</strong></td></tr>
+        <tr><td>2060 (20 yr)</td><td class="num">$13,850,000</td><td class="num">$13,850,000 + ~ -$50,000 cum = $13,800,000</td><td class="num">$18,690,000 portfolio + SF $6,420,000 = $25,110,000 total vs $20,270,000 if keep</td><td class="num"><strong>C by ~$4,840,000</strong></td></tr>
+        <tr><td>2070 (30 yr)</td><td class="num">$21,510,000</td><td class="num">$21,510,000 + small</td><td class="num">$35,120,000 portfolio + SF $9,360,000 = $44,480,000 vs $30,870,000 if keep</td><td class="num"><strong>C by ~$13,610,000</strong></td></tr>
+      </tbody>
+    </table></div>
+    <p class="figure">*Rent cum negative because property tax (2% CAGR on assessed) grows faster than net rent (constrained by Rent Board / market). “Keep Cupertino” totals include both houses; “Sell” portfolio assumes 60/40 or 100/0 stocks — adjust to risk tolerance. If portfolio returns only 5% nominal, C still wins by ~$400k at 10 yr but by less. Model excludes SF cash flows common to all paths — they add ~$67k/yr NOI today, growing.</p>
+
+    <div class="card" style="margin-top:10px">
+      <h3>Wealth trajectories (illustrative, 2026 $)</h3>
+      <div class="chart-box"><canvas id="chart-decision"></canvas></div>
+      <p class="figure">Sell &amp; reinvest compounds faster than concentrated single-zip real estate once you account for the $55–93k/yr property tax drag. Full spreadsheet logic in <a href="data/projections.json" target="_blank">projections.json</a>.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Scenario Matrix — What If You Sell SF Instead (or Both)?</h2>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Portfolio after 2040 decisions (10-yr horizon)</th><th>Annual net (rent − all carry) pre-income-tax, 2040$</th><th>10-yr wealth (2040→2050, rounded)</th><th>Risk / Lifestyle</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Keep SF, live in Cupertino (A)</strong></td><td class="num">-$68,770 Cupertino carry + $85,000 SF net (2040$ adjusted) = +$16,230 net (but you paid to live)</td><td class="num">$13,322,000 combined equity</td><td>Highest concentration, highest tax, but you live in premium schools (Cupertino) + keep income</td></tr>
+        <tr><td><strong>Keep SF, rent Cupertino (B)</strong></td><td class="num">-$16,620 Cupertino net + $85,000 SF net = +$68,380</td><td class="num">$13,282,000</td><td>Double-landlord complexity; negative Cupertino drag; eviction/vacancy risk on both</td></tr>
+        <tr><td><strong>Keep SF, sell Cupertino (C) ⭐ Recommended if maximizing wealth</strong></td><td class="num">$0 Cupertino + $85,000 SF net + $353,000/yr portfolio appreciation (on $5.4M @6.5%) = +$438,000</td><td class="num">$14,356,000</td><td>Most diversified, most liquid, lowest hassle; give up living in Cupertino</td></tr>
+        <tr><td>Sell SF, live in Cupertino</td><td class="num">-$68,770 Cupertino + $0 SF (portfolio from $3M SF sale +$195k/yr appreciation) = +$126,230</td><td class="num">$13,100,000</td><td>Lose triplex income engine — rarely optimal unless you hate being a landlord</td></tr>
+        <tr><td>Sell both, all in market</td><td class="num">$0 carry + $548,000/yr appreciation on $8.46M = +$548,000</td><td class="num">$15,900,000</td><td>Max liquidity; zero real-estate exposure; fully exposed to market sequence risk</td></tr>
+      </tbody>
+    </table></div>
+    <p class="figure">SF net in 2040$ = 2026 NOI $67,380 inflated at 3% to 2040 (~$102k) but with higher post-inheritance tax if SF also reassessed — here we kept SF at pre-inheritance low tax (parents still alive or you inherited but live-in → ~$23k tax vs $1.8k today). Adjust per your facts.</p>
+  </div>
+
+  <div class="section">
+    <h2>Non-Financial Factors — Scorecard (Subjective, but Explicit)</h2>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Factor</th><th>Live In Cupertino</th><th>Rent Cupertino</th><th>Sell Cupertino</th></tr></thead>
+      <tbody>
+        <tr><td>Schools (Cupertino has elite public schools)</td><td class="num">⭐⭐⭐⭐⭐ Excellent if kids</td><td class="num">—</td><td class="num">Buy/rent elsewhere</td></tr>
+        <tr><td>Commute / community ties</td><td class="num">Depends — South Bay hub</td><td class="num">Manage from SF/Oakland = drive</td><td class="num">Live anywhere (SF kept = stay)</td></tr>
+        <tr><td>Landlord hassle</td><td class="num">Low (one home)</td><td class="num">High (3 SF units + 1 Cupertino = 4 tenants, 2 rent boards, 2 counties)</td><td class="num">SF only = moderate</td></tr>
+        <tr><td>Concentration risk</td><td class="num">High (60–70% net worth in one ZIP)</td><td class="num">Highest</td><td class="num">Diversified (index)</td></tr>
+        <tr><td>Earthquake / insurance risk</td><td class="num">CA EQ not covered by HO policy — separate EQ policy $2k–6k/yr needed; wildfire low but EQ high for Bay</td><td class="num">Same + loss-of-rents coverage needed</td><td class="num">No property risk</td></tr>
+        <tr><td>Estate for next generation</td><td class="num">Leave house again (Prop 19 repeats — child must live in again)</td><td class="num">Same</td><td class="num">Leave liquid portfolio (step-up still applies; no Prop 13 complexity)</td></tr>
+        <tr><td>Tax complexity</td><td class="num">One Prop 19 filing</td><td class="num">Rental depreciation, 1099s, Schedule E</td><td class="num">One sale, then 1099-B/Div</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="section">
+    <h2>Bottom Line — Two Paths, One Recommendation</h2>
+    <div class="grid grid-2">
+      <div class="card" style="border:2px solid var(--navy)">
+        <h3>⭐ Financial optimum — Maximize profit, minimize cost, reduce uncertainty</h3>
+        <p style="font-size:13.5px"><strong>Keep SF Outer Sunset (live in 3rd unit), sell Cupertino within 12 months of inheritance, reinvest net $5.43M (2040 value) into broad market.</strong></p>
+        <ul class="list-clean">
+          <li>✔ Eliminates $55–105k/yr property tax carry on Cupertino (growing 2%/yr forever)</li>
+          <li>✔ Harvests stepped-up basis — ~$0 cap gains on $2.6M+ of lifetime appreciation</li>
+          <li>✔ Converts concentrated, illiquid, high-tax single asset into diversified liquid portfolio that historically compounds 2–3% faster after-tax</li>
+          <li>✔ Preserves SF income ($85k+ gross) + free housing + depreciation benefits</li>
+          <li>✔ Reduces complexity: 1 county, 1 rent board, 1 tax bill vs 2</li>
+          <li>✔ Surpasses renting Cupertino by ~$1M in 10 yr, ~$4.8M in 20 yr (see table)</li>
+        </ul>
+        <p style="font-size:12px;color:var(--muted);margin-top:8px">If you love Cupertino schools/community, the lifestyle premium is ~$27k/yr net (after avoided rent) in 2040$ — that’s the price. Pay it consciously if worth it.</p>
+      </div>
+      <div class="card">
+        <h3>Legacy optimum — If you deeply want to live in Cupertino</h3>
+        <p style="font-size:13.5px"><strong>Move in within 1 year, file BOE-19-P + HOX immediately, budget $68,770/yr carry (2040$) growing 2–3%, and keep SF as rental.</strong></p>
+        <ul class="list-clean">
+          <li>✔ Secures $12,330/yr Prop 19 saving (vs renting) — file day 1</li>
+          <li>✔ Elite Cupertino schools; larger lot; South Bay networks; solar surplus</li>
+          <li>✔ Both houses appreciate; you capture full 4.5% Cupertino CAGR (vs 6.5% market — so opportunity cost is ~2%/yr)</li>
+          <li>✔ Plan EQ insurance ($2,000–$4,000/yr extra) and eventual capital needs (roof $25k–45k, HVAC $12k–20k, etc.) — see <a href="cupertino.html">Cupertino costs</a></li>
+          <li>⚠️ Consider renting SF triplex fully (move out of SF) vs keeping 2 units rented + living in Cupertino — you lose free housing but gain SF rent on 3rd unit (+~$38k/yr in 2040$)</li>
+        </ul>
+        <p style="font-size:12px;color:var(--muted);margin-top:8px">Renting Cupertino as a non-owner-occupied landlord is almost never optimal — negative after-tax carry plus active management. Sell instead if not living there.</p>
+      </div>
+    </div>
+    <div class="callout" style="margin-top:12px"><strong>The irrevocable question to answer now (2026), not in 2040:</strong> Will an heir <em>actually</em> live in Cupertino for 5+ years after death? If answer is “probably not,” pre-commit to the sell path, pre-select an agent/estate attorney, and tell siblings/trustee — so the 1-year clock doesn’t expire while you debate.</div>
+  </div>
+
+  <footer class="footer"><div><a href="projections.html">← Projections</a> · <a href="sources.html">All Sources →</a> · <a href="flagged.html">Flagged for Review</a></div></footer>
+</div>
+</body>
+</html>
