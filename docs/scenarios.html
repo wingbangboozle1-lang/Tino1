@@ -1,0 +1,17 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Scenarios — Inheritance Dashboard</title><link rel="stylesheet" href="assets/style.css"></head>
+<body><header><span class="brand">🏠 Inheritance Decision Dashboard</span>
+<nav><a href="index.html">Overview</a><a href="properties.html">Properties</a><a href="taxes.html">Tax &amp; Law</a><a href="projections.html">Projections 2026–2050</a><a class="on" href="scenarios.html">Scenarios</a><a href="steps.html">Inheritance Steps</a><a href="sources.html">Sources</a><a href="flagged.html">⚠ Flagged for Review</a></nav></header>
+<main><h1>Live vs rent vs sell+invest (Cupertino at inheritance)</h1>
+<p class="note">SF property kept in all scenarios (income engine). Cupertino rent estimate $7,500/mo (2026) is a planning placeholder — get a broker price opinion. Investment return 7%/yr conservative (historical ~10% nominal).</p>
+<div class="card"><table id="tb-scen"></table></div>
+
+<div class="card"><h2>Reading the table (2045 midpoint)</h2>
+<table><tr><th>Option</th><th>What happens</th><th>Verdict</th></tr>
+<tr><td><strong>A. Live in Cupertino</strong></td><td>Prop 19 partial: tax ~$55,690/yr. No rent income; you get imputed rent (housing value) + lifestyle. SF rent continues.</td><td>Best if you want to live there; worst pure-return. Tax jump is unavoidable either way.</td></tr>
+<tr><td><strong>B. Rent Cupertino, live in SF</strong></td><td>Full reassessment: tax ~$72,580/yr. Net ~$40,880/yr on $5.44M equity (~0.8% yield) + landlord hassle + SF/Cupertino rent law.</td><td>Weakest financially. Only if you want to keep the asset for family use later.</td></tr>
+<tr><td><strong>C. Sell Cupertino, invest</strong></td><td>Net ~$5,109,720 (6% costs, ~$0 gain via step-up). @7% → ~$10,051,590 in 10 yrs vs ~$7,305,350 kept-home equity.</td><td><strong>Best pure return</strong> (+~$2.75M over 10 yrs). Caveats: market risk, investment taxes, loss of family home.</td></tr></table>
+<div class="callout"><strong>Recommendation:</strong> Default to <strong>C (sell + invest)</strong> for maximum profit; choose <strong>A (live)</strong> only if the non-financial value of living in the family home exceeds ~$275k/yr (the 10-yr return gap annualized). Avoid <strong>B (rent)</strong> unless you have a specific reason to hold. Keep SF in all cases.</div>
+<p class="small">Sensitivities: at 4% home growth / 5% stock return the gap narrows but C still leads; at 2% home growth C leads by more. §121 exclusion ($500k MFJ) can shelter part of the gain if you live there 2 yrs before selling. Investment gains taxed annually (dividends) + at sale — model assumes pre-tax 7%; after-tax ~6% still beats 3% home growth.</p></div>
+</main><footer>Planning tool, not tax/legal advice.</footer>
+<script src="assets/data.js"></script><script src="assets/app.js"></script></body></html>
