@@ -1,0 +1,22 @@
+:root{--bg:#f6f7f9;--card:#fff;--ink:#1a2233;--mut:#5b6577;--line:#e2e6ee;--acc:#0f6cbd;--ok:#0a7a42;--warn:#b45309;--bad:#b91c1c;--r:12px}
+*{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55}
+a{color:var(--acc)}header{background:#0b1f3a;color:#fff;padding:14px 20px;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+header .brand{font-weight:700;font-size:18px}header nav{display:flex;gap:4px;flex-wrap:wrap}
+header nav a{color:#cfe0f5;text-decoration:none;padding:6px 10px;border-radius:8px;font-size:14px}
+header nav a:hover,header nav a.on{background:#1d3a63;color:#fff}
+main{max-width:1080px;margin:0 auto;padding:20px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:18px;margin:14px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px}
+.kpi .v{font-size:24px;font-weight:800}.kpi .l{color:var(--mut);font-size:13px}
+table{width:100%;border-collapse:collapse;font-size:14px}th,td{border-bottom:1px solid var(--line);padding:7px 8px;text-align:right}
+th:first-child,td:first-child{text-align:left}th{background:#f0f3f8}tr:hover td{background:#f8fafc}
+.tag{display:inline-block;font-size:12px;padding:2px 8px;border-radius:99px;border:1px solid var(--line)}
+.tag.ok{color:var(--ok);border-color:#bfe6d2;background:#eefaf3}.tag.warn{color:var(--warn);border-color:#f3ddb8;background:#fff8ec}.tag.bad{color:var(--bad);border-color:#f3c2c2;background:#fff1f1}
+.note{color:var(--mut);font-size:13px}.small{font-size:13px}
+canvas.chart{width:100%;height:260px;background:#fff;border:1px solid var(--line);border-radius:var(--r)}
+footer{color:var(--mut);font-size:13px;text-align:center;padding:24px}
+h1{font-size:26px;margin:6px 0}h2{font-size:19px;margin:18px 0 8px}
+ol.steps li{margin:6px 0}.callout{border-left:4px solid var(--acc);background:#eef4fc;padding:10px 14px;border-radius:0 8px 8px 0}
+.callout.warn{border-color:var(--warn);background:#fff8ec}
+@media(max-width:640px){main{padding:12px}.kpi .v{font-size:20px}}

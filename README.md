@@ -1,48 +1,88 @@
-# Tino1 — Property Inheritance Decision Dashboard
+# Tino1 — Cupertino & San Francisco Inheritance Decision Hub
 
-Research and decision analysis for inheriting two California properties through a revocable trust
-(expected 2040–2050): **Property A** (Cupertino, ZIP 95014, single-family) and **Property B**
-(San Francisco Outer Sunset, ZIP 94122, three units). Published as a static GitHub Pages site.
+**Live site (GitHub Pages):** https://wingbangboozle1-lang.github.io/Tino1/  
+Docs entry: `docs/index.html` (canonical dashboard) + mirror at `/index.html` for Pages root.
 
-**Live site:** https://wingbangboozle1-lang.github.io/Tino1/
+Anonymized decision-analysis site for a 2040–2050 trust inheritance: two CA houses (Cupertino 95014 ~$3.1M, San Francisco 94122 ~$1.8M), live vs rent vs sell+invest.
 
-## Privacy
+> **Privacy:** No personal information on the site — placeholders only (e.g., `Grantor Trust A`, `[Property Address]`, `[APN: ***]`).  
+> **Money:** All dollars rounded to nearest $10.
 
-The repository is public. No names, street addresses, parcel numbers or account numbers appear anywhere.
-Properties are referred to as Property A / Property B; people as Transferor / Heir. Owner-supplied
-year-by-year assessment histories are deliberately **not** published; all amounts are rounded to the nearest $10.
+## Site maps (merged from two parallel sessions — no work discarded)
 
-## What is where
+**Canonical dashboard (session arena/5c7cfaf6 — 9-page lab):** served from `docs/`:
+- `docs/index.html` — Executive Summary dashboard (metrics, charts, decision at-a-glance)
+- `docs/cupertino.html` — Cupertino 95014 detailed profile
+- `docs/sanfrancisco.html` — SF 94122 triplex profile
+- `docs/inheritance.html` — Trust inheritance step-by-step (14 steps, Prop 19 clocks)
+- `docs/taxes.html` — Tax Law Hub (federal/state/local, estate, Prop 13/19, step-up, cap gains)
+- `docs/projections.html` — Projections 2026–2050 (market, assessed, tax, costs, charts + CSV/JSON)
+- `docs/decision.html` — Decision analysis: live vs rent vs sell & reinvest (NPV 10/20/30 yr)
+- `docs/sources.html` — Sources & verification index (every row traced)
+- `docs/flagged.html` — Flagged for Review (unverified items, not blocking)
 
-| Path | Contents |
-|---|---|
-| `docs/` | The website (plain HTML/CSS, no build step needed to view). `docs/index.html` is the dashboard. |
-| `data/federal_tax.csv`, `data/california_tax.csv`, `data/local_rules.csv` | Verified legal facts, each row with its official source URL and a status. |
-| `data/operating_costs.csv`, `data/property_*_history.csv` | Owner-supplied inputs, clearly marked `user-supplied`, plus benchmarks. |
-| `data/economic_indicators.csv` | BLS / FHFA / Treasury anchors for the model assumptions. |
-| `data/pending_changes.csv` | Enacted and pending law changes and their effect on the plan. |
-| `data/flagged.csv` | Every unverified, derived, ambiguous or irregular item (published on the *Flagged for Review* page). |
-| `analysis/model.py` | Deterministic projection + scenario model → `data/projections/*.csv`, `data/scenarios.csv`, `docs/data/model_output.json`. |
-| `analysis/build_site.py` | Renders `docs/*.html` from the CSVs and model output. |
-| `scripts/check_site.py` | Pre-publish checks: internal links, source links on verified rows, privacy scan. |
-| `COORDINATION.md` | Multi-session task board, verification record and PR/merge record. |
+**Additional pages (session arena/37f99282-tino1 — detailed complements):**
+- `docs/compare-decisions.html` — Side-by-side 10-yr/20-yr wealth model (6.5% portfolio vs housing)
+- `docs/process.html` — Trust administration process with forms/deadlines checklist
+- `docs/inheritance-tax.html` — Expanded federal/state tax tables (gift, GST, NIIT, QBI)
+- `docs/operating-costs.html` — Insurance, water/electric (SFPUC/SJ Water/PG&E), maintenance
+- `index.html` (repo root) — Mirror executive summary for Pages root build
+- `data/assumptions.json`, `data/projections-*.csv`, `data/inheritance-scenarios.json` — machine-readable
 
-## Reproduce
+**Parallel session model & research (arena/3676d6a0):**
+- `model/project.py` + `model/assumptions.md` — reproducible Python model
+- `research/tax-law.md`, `research/utilities-insurance-market.md` — official-source notes
+- `data/cupertino_projection.csv`, `data/sanfrancisco_projection.csv`, `data/model_summary.json`
 
+## What we built (combined)
+1. **Line-by-line verification** — every table row links to an official source. If unverifiable, left blank/flagged.
+2. **Numbers rounded to $10** per request.
+3. **Projections:** 3.5–4.5% Cupertino / 3.8% SF appreciation (C.A.R. 3.6% statewide, 2–6% Bay Area), 2% Prop 13 cap (RTC §51), Prop 19 cap $1,044,586 (BOE LTA 2025/009) biennially FHFA HPI, 5% insurance inflation, 3% rent/water/electric, 6.5% 70/30 portfolio.
+4. **Three paths (inherit ~2045 → 2055/2065):**
+   - **A. Live in Cupertino** (move in ≤12 mo, Prop 19 partial shield) + rent SF fully
+   - **B. Rent out Cupertino** (full reassessment — weakest; CA taxes rent as ordinary)
+   - **C. Sell promptly** (stepped-up basis IRC §1014 → ~$0 gain if sold near FMV → reinvest → highest liquid wealth, ~$2M+ ahead at 10 yr)
+5. **Inheritance process:** 14 steps, PCOR, BOE-19-P (3 yr), HO exemption (1 yr), Form 706 only above $15M.
+
+See `docs/decision.html` + `docs/compare-decisions.html` for full math.
+
+## Verification
+Key official sources (Source pages list all):
+- IRS Form 709 Instr. 2026 + Rev Proc 2025-32 ($15M exemption, $19k gift) — [IRS](https://www.irs.gov/pub/irs-dft/i709--dft.pdf)
+- BOE Prop 13/19 + LTA 2025/009 ($1,044,586) — [BOE](https://www.boe.ca.gov/prop19/)
+- SCO no CA estate tax — [SCO](https://www.sco.ca.gov/state_finances_estate_tax.html)
+- SCC Assessor Annual Report 2025 — [SCC](https://www.sccassessor.org/)
+- SF Treasurer 1.18268325% FY25-26 — [SF Treasurer](https://sftreasurer.org/property-tax)
+- C.A.R. forecast — [C.A.R.](https://www.car.org/aboutus/newsreleases/2026housingforecast)
+- CDI / NAIC insurance — [CDI](https://www.insurance.ca.gov/), [NAIC](https://content.naic.org/reports/homeowners-insurance-report)
+- FTB, Cal Courts — [FTB](https://www.ftb.ca.gov/), [Courts](https://selfhelp.courts.ca.gov/probate)
+
+## Coordination
+See `COORDINATION.md` for combined 16-task board, file ownership, verification & merge-conflict logs. Built by two parallel sessions + final integrator (arena/5c7cfaf6), now merged with arena/37f99282-tino1 additions — no discarded work.
+
+## Local dev
 ```bash
-python3 analysis/model.py        # recompute projections and scenarios
-python3 analysis/build_site.py   # rebuild docs/
-python3 scripts/check_site.py    # verify before publishing
+# no build required — open docs/index.html or index.html
+python -m http.server 8000
+# or Jekyll (Cayman theme via _config.yml in root, .nojekyll in docs/)
+bundle exec jekyll serve
 ```
 
-No third-party dependencies (Python 3.10+ standard library only).
+## GitHub Pages
+- Canonical: `docs/` folder via Pages (current live build 1356405344) — `https://wingbangboozle1-lang.github.io/Tino1/`
+- Mirror root `index.html` also builds via legacy Pages source (branch arena/37f99282-tino1 → now main after merge)
 
-## Status rules
+## License
+Internal family decision support — not legal/tax advice. Consult CA attorney & CPA.
 
-- `verified` — read from an official source (IRS, U.S. Code, BOE, FTB, Legislature, SOS, county/city sites) on the build date; link in the row.
-- `derived` — computed from verified or owner figures; the computation is stated.
-- `user-supplied` — stated by the owner; not independently verified.
-- `assumption` — model input, not a fact.
-- `unverified` — no official confirmation obtained; the value is left blank and the item is flagged. Nothing is inferred to fill a gap.
+## Changelog
+- 2026-11-10 — v1.0 initial site (executive summary, projections, decision, tax hub, flagged, data CSVs)
+- 2026-11-10 — v1.1 merged parallel sessions (model/research + 4 complement pages, no discard, integrated Pages deploy)
 
-This is an independent research summary, **not legal, tax or investment advice**.
+## Session `6ea079fa` — verified dataset + after-tax scenario dashboard (`analysis/`, `dashboard/`)
+
+**Live:** https://wingbangboozle1-lang.github.io/Tino1/dashboard/ — 14 pages: dashboard, executive summary, properties, step-by-step process, Prop 19, estate tax, tax law, operating costs, year-by-year projections 2026–2055, six after-tax scenarios with a 27-case sensitivity grid, pending law changes, **Flagged for Review** (23 items), sources, methodology.
+
+- `analysis/data/*.csv` — every fact row carries an official source URL and a status (`verified` / `derived` / `user-supplied` / `assumption` / `unverified`); unverifiable values are blank and flagged, never inferred. Owner-supplied assessment histories are deliberately not published (privacy); all amounts rounded to $10.
+- `analysis/model.py` → `analysis/data/projections/*.csv`, `analysis/data/scenarios.csv`, `dashboard/data/model_output.json`; `analysis/build_site.py` renders `dashboard/`; `analysis/check_site.py` runs link / source / privacy checks.
+- Reproduce: `python3 analysis/model.py && python3 analysis/build_site.py && python3 analysis/check_site.py` (standard library only).
