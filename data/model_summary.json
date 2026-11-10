@@ -1,0 +1,48 @@
+{
+  "cup_rate": 0.01335,
+  "sf_rate": 0.02135,
+  "scenarios": [
+    {
+      "year": 2040,
+      "market": 4689030,
+      "factored_base": 726420,
+      "cap": 1212310,
+      "live_assessed": 3476720,
+      "live_tax": 46420,
+      "full_tax": 62610,
+      "gross_rent": 136130,
+      "rent_scenario_net": 35820,
+      "sell_net": 4407690,
+      "invest_10yr": 8670590,
+      "keep_home_10yr": 6301660
+    },
+    {
+      "year": 2045,
+      "market": 5435870,
+      "factored_base": 802030,
+      "cap": 1265000,
+      "live_assessed": 4170870,
+      "live_tax": 55690,
+      "full_tax": 72580,
+      "gross_rent": 157820,
+      "rent_scenario_net": 40880,
+      "sell_net": 5109720,
+      "invest_10yr": 10051590,
+      "keep_home_10yr": 7305350
+    },
+    {
+      "year": 2050,
+      "market": 6301660,
+      "factored_base": 885500,
+      "cap": 1348360,
+      "live_assessed": 4953310,
+      "live_tax": 66140,
+      "full_tax": 84140,
+      "gross_rent": 182950,
+      "rent_scenario_net": 46560,
+      "sell_net": 5923560,
+      "invest_10yr": 11652540,
+      "keep_home_10yr": 8468910
+    }
+  ]
+}
