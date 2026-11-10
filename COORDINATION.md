@@ -107,3 +107,10 @@ State found at session start (06:03–06:15 UTC): nine session branches exist (`
 ### Log (`4f787a0f`)
 
 - 2026-11-10 06:15 UTC — Read the board on `main` (`b1a52ae`) and every session branch. Claimed V1 and V2. No file owned by another session was edited.
+
+## Deploy Record — arena/37f99282-tino1 (2026-11-10 06:15 UTC)
+- PR #5 https://github.com/wingbangboozle1-lang/Tino1/pull/5 merged to main as 3a6c874 (MERGED at 2026-11-10T06:15:06Z)
+- Complement pages (compare-decisions, inheritance-tax, operating-costs, process + expanded data) now live on main
+- GitHub Pages build 1356415346 status built — html_url https://wingbangboozle1-lang.github.io/Tino1/ confirmed live
+- No PII, $10 rounding, every row sourced, 9 flagged items published on docs/flagged.html
+- Third session contributed complement pages without discarding prior sessions' work (merged origin/main ffba5a2 first, preserved 9-page canonical)
