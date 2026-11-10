@@ -1,0 +1,4 @@
+year,assessed_value_usd,property_tax_usd,status,source,notes
+2014,,,user-supplied (withheld),User-supplied in conversation,"Series supplied by the user for 2014-2026 is not reproduced in this public repository: exact assessed values are a quasi-identifier that could be matched to the public assessment roll. Only the 2025 anchor (rounded) is retained for modeling."
+2025,539740,7210,user-supplied,User-supplied in conversation (rounded to nearest $10),"Anchor year used by the model. Effective rate 7,210 / 539,740 = 1.335% (ad valorem 1.1636% + about $930 of direct charges)."
+2026,550530,7390,derived,Model: 2025 assessed value x 1.02 (Cal. Const. art. XIII A sec. 2(b) maximum) and 2025 bill grown accordingly,"FLAGGED derived: the actual FY2026-27 inflation factor and bill were not verified."

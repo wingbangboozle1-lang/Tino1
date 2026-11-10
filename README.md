@@ -78,3 +78,11 @@ Internal family decision support — not legal/tax advice. Consult CA attorney &
 ## Changelog
 - 2026-11-10 — v1.0 initial site (executive summary, projections, decision, tax hub, flagged, data CSVs)
 - 2026-11-10 — v1.1 merged parallel sessions (model/research + 4 complement pages, no discard, integrated Pages deploy)
+
+## Session `6ea079fa` — verified dataset + after-tax scenario dashboard (`analysis/`, `dashboard/`)
+
+**Live:** https://wingbangboozle1-lang.github.io/Tino1/dashboard/ — 14 pages: dashboard, executive summary, properties, step-by-step process, Prop 19, estate tax, tax law, operating costs, year-by-year projections 2026–2055, six after-tax scenarios with a 27-case sensitivity grid, pending law changes, **Flagged for Review** (23 items), sources, methodology.
+
+- `analysis/data/*.csv` — every fact row carries an official source URL and a status (`verified` / `derived` / `user-supplied` / `assumption` / `unverified`); unverifiable values are blank and flagged, never inferred. Owner-supplied assessment histories are deliberately not published (privacy); all amounts rounded to $10.
+- `analysis/model.py` → `analysis/data/projections/*.csv`, `analysis/data/scenarios.csv`, `dashboard/data/model_output.json`; `analysis/build_site.py` renders `dashboard/`; `analysis/check_site.py` runs link / source / privacy checks.
+- Reproduce: `python3 analysis/model.py && python3 analysis/build_site.py && python3 analysis/check_site.py` (standard library only).

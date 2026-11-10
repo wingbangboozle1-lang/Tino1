@@ -1,0 +1,7 @@
+key,name,inherit_year,horizon_year,value_a_at_inheritance,value_b_at_inheritance,assessed_a_year1,assessed_b_year1,prop19_tax_saving_year1,year1_net_cash,year1_housing_value_consumed,year1_property_tax_a,year1_property_tax_b,cumulative_net_cash,portfolio_end_pre_tax,portfolio_end_after_tax,property_liquidation_after_tax,terminal_wealth_after_tax,terminal_wealth_2026_dollars
+S1,"Live in A, keep B as a 3-unit rental",2045,2055,6531230,3156310,4979030,3156310,18060,10510,134460,59240,38750,73240,106870,96780,11688800,11785580,5759150
+S2,"Live in A, sell B at inheritance and invest",2045,2055,6531230,3156310,4979030,,18060,-75780,134460,59240,,-841780,4703620,3932450,8286150,12218600,5970760
+S3,"Live in B's vacant unit, rent A at market",2045,2055,6531230,3156310,6531230,3156310,0,53420,73650,77380,38670,588810,803930,739390,11104720,11844110,5787760
+S4,"Live in B's vacant unit, sell A and invest",2045,2055,6531230,3156310,,3156310,0,27680,73650,,38670,257310,12550470,10721770,3496990,14218760,6948160
+S5,"Keep both as rentals, live elsewhere",2045,2055,6531230,3156310,6531230,3156310,0,17350,94690,77380,38750,161010,224680,205580,11010370,11215950,5480800
+S6,"Sell both at inheritance, invest, rent elsewhere",2045,2055,6531230,3156310,,,0,-94690,94690,,,-1085510,16567980,14023630,0,14023630,6852800

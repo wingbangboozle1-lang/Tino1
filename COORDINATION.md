@@ -141,3 +141,48 @@ State found at session start (06:03–06:15 UTC): nine session branches exist (`
 | `CR-85-4` | `properties.html`, `docs/properties.html`, `docs/cupertino.html`, `docs/sanfrancisco.html`, `docs/index.html`, `model/assumptions.md` | `3676d6a0`, `5c7cfaf6` | Round all reported parcel/analysis dollar amounts to the nearest `$10` increment (`$550,537` -> `$550,540`, `$7,207` -> `$7,210`, `$114,248` -> `$114,250`, `$2,439` -> `$2,440`) to satisfy `$10` clarity rule and prevent county tax-roll reverse identification; keep 2026 Cupertino actual tax cell blank/flagged. |
 | `CR-85-5` | `model/project.py`, `data/model_summary.json`, `data/scenario_comparison.csv` | `3676d6a0` | Separate ad valorem tax rates (`1.1636%` Cupertino SCC TRA; `1.1816%` SF FY26-27) from fixed parcel charges (`~$930/yr` Cupertino; `~$1,090/yr` SF) instead of applying `1.335%` / `2.135%` to reassessed FMV; fix biennial Prop 19 HPI cap compounding. |
 | `CR-85-6` | `model/project.py`, `docs/projections.html`, `docs/taxes.html` | `3676d6a0`, `5c7cfaf6` | Incorporate mandatory 20-year CPUC NEM 1.0/2.0 sunset (`D.22-12-056`), `$24.15/mo` PG&E Base Services Charge (`D.24-05-028`), SF Rent Board `60%-of-CPI` cap + `$59/unit` direct fee, and `IRS Rev. Rul. 2023-2` irrevocable grantor trust basis step-up exclusion. |
+
+---
+
+## Session `6ea079fa` (`arena/6ea079fa-tino1`) — Independent verified dataset, after-tax scenario model and self-contained dashboard (`analysis/**`, `dashboard/**`)
+
+**Branch:** `arena/6ea079fa-tino1` (platform-fixed name) · **Started:** 2026-11-10 06:03 UTC · **Synced with `origin/main`:** `674fec8` (PR #9)
+
+### Scope statement (non-overlapping)
+This session started from `fd4bd84` when the repository held only `README.md` and no other branch or PR existed; it created a task board (`19a3db2`) and claimed T0–T12 before any other work was visible. By the time its PR (#10) was opened, sessions `3676d6a0`, `5c7cfaf6`, `37f99282`, `4f787a0f` and `85899999` had merged PRs #1–#9 with sites at `/`, `/docs/` and `/site/`. To honour the board rule "edit only files in your claimed scope / never discard other sessions' work", **all of this session's outputs were moved into two new directories that no other session uses** — `analysis/**` (data CSVs, model, site generator, checker) and `dashboard/**` (14-page site, live at `https://wingbangboozle1-lang.github.io/Tino1/dashboard/`). No file owned by another session was modified; `README.md` and this file only received appended sections. The site is self-contained and can be adopted as the canonical site by the V2 integrator (`4f787a0f`) or linked from it.
+
+### Task board (`6ea079fa`)
+
+| # | Task | Status | Owner | File scope | Verification |
+|---|---|---|---|---|---|
+| T0 | Repo review, irregularities | done | `6ea079fa` | `COORDINATION.md` (append), `analysis/data/flagged.csv` X18 | Found: Pages served an empty README page at start; later, three overlapping sites with different assumptions (`/`, `/docs/`, `/site/`) — logged as X18 and CR-6E-1. |
+| T1 | Federal estate/gift/income-tax rules | done | `6ea079fa` | `analysis/data/federal_tax.csv`, `dashboard/inheritance-tax.html` | Rev. Proc. 2025-32; IRS estate-tax page, What's New, FAQs; Topics 409/559/701/704; IRS deceased-person page; 26 U.S.C. §§1014, 2001 (GovInfo). |
+| T2 | California rules | done | `6ea079fa` | `analysis/data/california_tax.csv`, `dashboard/prop19.html`, `dashboard/tax-law.html` | SCO estate-tax page; Cal. Const. art. XIII A; BOE Prop 19 page; BOE LTA 2025/009, 2026/026; BOE HOX page; FTB 2025 schedules; R&TC §§480, 11911, 11930, 17043; Prob. Code §16061.7; Civ. Code §1947.12; SOS measures + unofficial results. |
+| T3 | Local rules (SCC/Cupertino, SF) | done | `6ea079fa` | `analysis/data/local_rules.csv` | SF TTX secured-tax page (1.18162182% FY26-27); SF Assessor fee schedule; SF TTX Empty Homes Tax page (Court of Appeal 2026-09-11); sf.gov rent-increase notice (1.6%) + rental-laws page; SCC FY2025-26 Tax Rate Book pp. A-4–A-6 (components summed → 1.1636%, TRA unreadable → X01); SCC Assessor Prop 19 page; SF Assessor Prop 19 fact sheet; HUD FY2026 FMR/SAFMR (95014, 94122). |
+| T4 | Operating costs | done | `6ea079fa` | `analysis/data/operating_costs.csv`, `dashboard/costs.html` | CDI guide + comparison tool (interactive, unreadable → insurance left user-supplied, X04); SFPUC landing page (no figures → X20); BLS CPI Sept 2026. |
+| T5 | User-supplied property data | done | `6ea079fa` | `analysis/data/property_a_history.csv`, `property_b_history.csv`, `dashboard/properties.html` | Privacy decision: year-by-year assessment series withheld (quasi-identifier); 2025 anchor rounded to $10 (A) and derived ratio (B) only — X09. |
+| T6–T7 | Projection model + after-tax decision analysis | done | `6ea079fa` | `analysis/model.py`, `analysis/data/projections/*.csv`, `analysis/data/scenarios.csv`, `dashboard/projections.html`, `dashboard/scenarios.html` | 2026–2060 projections; 6 scenarios; 27-case sensitivity (death year × appreciation × return); estate-tax exposure grid; anchors: FHFA 2026Q2, BLS CPI, Treasury 2026-11-09, BOE LTA 2025/009. |
+| T8 | Step-by-step process | done | `6ea079fa` | `dashboard/process.html` | Deadlines read from Prob. Code §16061.7 (60 d), R&TC §480 (150 d), BOE LTA 2026/026 (1 yr), IRS FAQs (9 mo), BOE Prop 19 page (3 yr). |
+| T9 | Pending law changes | done | `6ea079fa` | `analysis/data/pending_changes.csv`, `dashboard/pending-legislation.html` | OBBBA §70106; SOS measure pages/results (Props 3, 40, 42 unofficial); HJTA initiative failed to qualify (news-sourced counts → X11); EHT litigation. |
+| T10–T11 | Executive summary; Flagged for Review | done | `6ea079fa` | `dashboard/executive-summary.html`, `dashboard/index.html`, `dashboard/flagged.html`, `analysis/data/flagged.csv` | 23 flagged items published; summary numbers generated from the model (no hand-typed figures). |
+| T12 | Integration of this session's work | done (PR #10) | `6ea079fa` | `analysis/check_site.py`, `README.md` (appended section), `COORDINATION.md` (this section) | `python3 analysis/check_site.py`: 14 pages, 0 broken internal links, every `verified` row has a source link, privacy scan clean in `analysis/**` + `dashboard/**`. |
+
+### Change requests logged by `6ea079fa` (files owned by other sessions — not edited)
+
+| # | File(s) | Owner | Request |
+|---|---|---|---|
+| CR-6E-1 | `index.html` (root), `docs/index.html`, `site/index.html` | `3676d6a0`, `5c7cfaf6`, `85899999`, V2 (`4f787a0f`) | Three sites with different assumptions are live simultaneously; consolidate to one canonical landing page (V2) and link or fold in `dashboard/` (fully sourced, 23 flagged items, after-tax scenario grid). |
+| CR-6E-2 | `README.md` (sections by other sessions) | `5c7cfaf6`, `37f99282` | "SCO no CA estate tax" link points to `sco.ca.gov/state_finances_estate_tax.html`; the page read by this session is `https://www.sco.ca.gov/ardtax_estate_tax.html`. "SF Treasurer" link `sftreasurer.org/property-tax` — page read by this session is `https://sftreasurer.org/property/secured-property-taxes` (FY2026-27 rate 1.18162182%). Please re-check both URLs. |
+| CR-6E-3 | `docs/projections.html`, `data/model_summary.json` | `5c7cfaf6`, `3676d6a0` | Cross-check: this session's Prop 19 arithmetic for Property A at 2045 (FBYV ≈ $802,030 + cap ≈ $1,552,200 vs FMV ≈ $6,531,230 → new taxable value ≈ $4,979,030; tax ≈ $59,240/yr incl. ≈ $1,380 direct charges) — the other sites should agree within the difference of their appreciation assumptions; if not, reconcile. |
+
+### Log (`6ea079fa`)
+
+- 2026-11-10 06:03 UTC — Started on `fd4bd84` (README only). Pages enabled from `main:/` → empty page (X18). Created board, claimed T0–T12 (`19a3db2`, pushed 06:06).
+- 2026-11-10 06:06–06:25 UTC — Research from official pages only (list above). Facts → `analysis/data/*.csv` with URL + status per row; unverifiable → blank + flagged.
+- 2026-11-10 06:25–06:30 UTC — Model, site generator, checker written; built; checks pass (`ba9482d`, `136db7a`).
+- 2026-11-10 06:30 UTC — Opened PR #10; found `origin/main` had advanced to `674fec8` (PRs #1–#9 by five other sessions) → PR conflicting.
+- 2026-11-10 06:35 UTC — Moved all outputs to `analysis/**` and `dashboard/**` (no overlap); merged `origin/main` into the branch keeping every other session's file unchanged; `COORDINATION.md`/`README.md` conflicts resolved by taking `main` and appending this section.
+
+### Pull request / merge record (`6ea079fa`)
+
+- PR #10 — `https://github.com/wingbangboozle1-lang/Tino1/pull/10` — `arena/6ea079fa-tino1` → `main`. Merge result and Pages build: _recorded below after merge._
