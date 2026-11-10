@@ -27,7 +27,7 @@ Two parallel sessions worked concurrently per instructions. Both followed verifi
 | 13 | Flagged for Review Page (both) | done | arena/5c7cfaf6 + arena-3676d6a0-tino1 | docs/flagged.html, flagged.html | All verification notes | 10 flagged items (5c7cfaf6) + pending (3676) — merged, none blocking |
 | 14 | Sources & Verification Index (both) | done | arena/5c7cfaf6 + arena-3676d6a0-tino1 | docs/sources.html, sources.html | All official sources with URLs | Every table row traceable; verification log included |
 | 15 | Site Build Verification + GitHub Pages Deploy (final integration) | done | arena/5c7cfaf6 (integrator) | docs/.nojekyll + all site files | Combined site: 9 primary pages + mirror site + model/research — all verified: python http.server 200, no broken internal links, charts via Chart.js CDN | Merge verified — no discarded work |
-| 16 | PR to main + Merge (final integration) | in progress | arena/5c7cfaf6 (integrator) | GitHub PR #2 (first attempt), will re-create after merge resolution | — | Resolving merge conflict from parallel session (origin/main advanced to 91ce20a) |
+| 16 | PR to main + Merge (final integration) | done | arena/5c7cfaf6 (integrator) | GitHub PR #3: https://github.com/wingbangboozle1-lang/Tino1/pull/3 → merged to main 0132638 at 2026-11-10T06:09:41Z | — | PR #2 closed as superseded; PR #3 merged clean after resolving parallel-session conflict |
 
 ## File Ownership (merged)
 
@@ -69,5 +69,13 @@ Two parallel sessions worked concurrently per instructions. Both followed verifi
 - [x] .nojekyll present, site verified with no broken links (http.server 200 on both sites)
 - [x] Shared outputs changed only by final integration session (this merge) — complied
 - [x] Combined data re-verified line-by-line (primary + model data cross-checked: both use 2% cap, 1.18% rate, ~4.5%/3.8% CAGR — minor variance flagged, not material)
-- [ ] PR created and merged to main (re-creating after resolution)
-- [ ] Pages deploy confirmed live (after merge)
+- [x] PR created and merged to main — PR #3 https://github.com/wingbangboozle1-lang/Tino1/pull/3 merged 2026-11-10T06:09:41Z as 0132638 (commit on main)
+- [x] Pages deploy confirmed live — GitHub Pages source main:/, build 1356405344 status built at 2026-11-10T06:10:25Z, html_url https://wingbangboozle1-lang.github.io/Tino1/ — verified via gh api
+
+## PR & Deploy Record (final)
+
+- **PR:** https://github.com/wingbangboozle1-lang/Tino1/pull/3 — title: `Inheritance Decision Lab — FINAL INTEGRATED (Cupertino 95014 & SF 94122, 2040-2050 trust, Prop 13/19, $15M estate, live/rent/sell) — merged parallel sessions` — state MERGED, mergedAt 2026-11-10T06:09:41Z
+- **Merge commit on main:** 0132638 `Merge pull request #3 from wingbangboozle1-lang/arena/5c7cfaf6-tino1`
+- **Previous PR:** #2 https://github.com/wingbangboozle1-lang/Tino1/pull/2 closed as superseded (merge conflict due to parallel session 91ce20a)
+- **GitHub Pages:** html_url https://wingbangboozle1-lang.github.io/Tino1/ — source main:/ (legacy), build 1356405344 built successfully, Pages are live. Primary comprehensive site at https://wingbangboozle1-lang.github.io/Tino1/docs/ (or via docs/index.html), mirror site at root https://wingbangboozle1-lang.github.io/Tino1/
+- **Site verification after merge:** All 9 primary + mirror pages render, no broken internal links, no PII, $10 rounding, every table row sourced, flagged page published — ready for owner review per instructions.
