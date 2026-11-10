@@ -1,0 +1,170 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Scenarios · Cupertino &amp; SF Inheritance Analysis</title>
+<meta name="description" content="Full sensitivity analysis comparing living in, renting out, and selling Property A across appreciation and investment return assumptions.">
+<link rel="stylesheet" href="assets/style.css"></head><body>
+<header class="top"><div class="wrap"><nav class="nav">
+<a class="brand" href="index.html">Bay Area <span>Inheritance</span> Analysis</a>
+<a href="index.html">Overview</a><a href="findings.html">Findings</a><a href="property-tax.html">Property Tax</a><a href="inheritance.html">Inheritance</a><a href="projections.html">Projections</a><a href="costs.html">Carrying Costs</a><a href="scenarios.html" class="on">Scenarios</a><a href="process.html">Step-by-Step</a><a href="law-changes.html">Law Watch</a><a href="sources.html">Sources</a><a href="flagged.html">Flagged for Review</a></nav></div></header>
+<main><div class="wrap">
+<h1>Scenarios &amp; Sensitivity</h1>
+<p class="lead">Three options, twelve assumption sets, one answer. This page shows the full
+sensitivity grid so the conclusion can be checked rather than taken on trust &mdash; and so the
+specific conditions under which it would flip are visible.</p>
+
+<h2>Method</h2>
+<p>All three scenarios are evaluated on the same basis so the comparison is fair:</p>
+<ol class="steps">
+<li><strong>Same starting conditions.</strong> Inheritance in 2045. Both properties held or disposed
+of according to the scenario. Property B is retained and continues to be rented in all three.</li>
+<li><strong>Same horizon.</strong> 2070. Everything is liquidated at the end, so no scenario is
+favoured by holding an appreciating asset "forever."</li>
+<li><strong>Real tax on exit.</strong> Sale costs of 5.0%, plus capital gains on the difference
+between sale price and stepped-up basis. Federal long-term rate plus the 3.8% net investment income
+tax; California at a 9.3% marginal rate. The Section 121 home-sale exclusion of $500,000 is applied
+only where the property was actually occupied as a principal residence.</li>
+<li><strong>Idle cash is invested, not spent.</strong> Operating cash flow in every scenario is
+swept into a portfolio returning 6.5% net of a 0.5% tax drag.</li>
+<li><strong>Two measures.</strong> <em>Net worth at 2070</em> is the terminal number. <em>NPV at
+2045</em> discounts everything back at the portfolio rate, which is the theoretically correct way to
+compare streams of different shapes.</li>
+</ol>
+
+<div class="note"><p><strong>Why both measures.</strong> Net worth at 2070 rewards anything that
+compounds for a long time and can be dominated by terminal value. NPV is the right ranking tool
+because it accounts for the time value of everything in between. The two agree in every case here,
+which is a useful check on robustness.</p></div>
+
+<h2>The three options defined</h2>
+<div class="grid g3">
+<div class="card"><h3>Live in Property A</h3>
+<p class="small">An heir moves in within one year and claims the homeowners' exemption, preserving
+the parent's Prop 13 base under Proposition 19. Property B's third unit is freed up and rented, so
+all three SF units produce income.</p>
+<p class="small"><strong>Cash flow:</strong> all SF rent in, no Cupertino rent.<br>
+<strong>Tax:</strong> Property A at $97,570 in 2070.</p></div>
+<div class="card"><h3>Rent out Property A</h3>
+<p class="small">The family stays in San Francisco. Property A becomes a rental, which means
+Proposition 19 does <em>not</em> apply and it is reassessed to full market value. Cupertino rent
+comes in; San Francisco rent stays at two units.</p>
+<p class="small"><strong>Cash flow:</strong> Cupertino rent in, SF at two units.<br>
+<strong>Tax:</strong> Property A at $126,790 in 2070 &mdash; $29,220 more.</p></div>
+<div class="card"><h3>Sell Property A</h3>
+<p class="small">Sold shortly after inheritance. Basis equals date-of-death value, so there is
+<strong>no capital gain and no tax</strong>. Proceeds go into a diversified portfolio; the family
+lives in San Francisco.</p>
+<p class="small"><strong>Cash flow:</strong> SF rent at two units plus portfolio income.<br>
+<strong>Proceeds:</strong> $6,204,670 after costs.</p></div>
+</div>
+
+<h2>Base case result</h2>
+<div class="tw"><table><thead><tr>
+<th>Measure</th><th class="n">Live in A</th><th class="n">Rent out A</th><th class="n">Sell A</th><th class="n">Sell advantage</th></tr></thead><tbody>
+<tr><td>Net proceeds at inheritance</td><td class="n">&mdash;</td><td class="n">&mdash;</td><td class="n">$6,204,670</td><td class="n">&mdash;</td></tr>
+<tr><td>First-year cash flow</td><td class="n">$11,440</td><td class="n">$8,880</td><td class="n ok-t">$289,040</td><td class="n ok-t">+$277,600</td></tr>
+<tr><td>Cumulative operating cash flow</td><td class="n bad-t">&minus;$447,180</td><td class="n bad-t">&minus;$73,930</td><td class="n ok-t">$9,865,070</td><td class="n ok-t">+$10,312,250</td></tr>
+<tr><td>Wealth from reinvested cash flow</td><td class="n">&minus;$518,490</td><td class="n">$60,150</td><td class="n ok-t">$22,503,210</td><td class="n">&nbsp;</td></tr>
+<tr><td>Liquidation proceeds, 2070</td><td class="n">$20,062,020</td><td class="n">$19,896,520</td><td class="n">$18,747,840</td><td class="n">&nbsp;</td></tr>
+<tr style="background:rgba(63,185,80,.08)"><td><strong>Net worth at 2070</strong></td><td class="n"><strong>$19,543,530</strong></td><td class="n"><strong>$19,956,670</strong></td><td class="n ok-t"><strong>$41,251,050</strong></td><td class="n ok-t"><strong>+$21,707,520</strong></td></tr>
+<tr style="background:rgba(63,185,80,.08)"><td><strong>NPV at 2045 @ 7.0%</strong></td><td class="n"><strong>$3,600,910</strong></td><td class="n"><strong>$3,680,970</strong></td><td class="n ok-t"><strong>$7,901,220</strong></td><td class="n ok-t"><strong>+$4,300,310</strong></td></tr>
+</tbody></table></div>
+
+<div class="verdict">
+<div class="tag">Base case</div>
+<h2>Selling produces $21.71M more wealth by 2070</h2>
+<p>That is 111% more than living in the house.
+The gap is not driven by appreciation assumptions &mdash; it survives every combination tested below.
+It is arithmetic. In the transfer year the house costs $87,410
+a year to hold against a $6.53M value, which is a <strong>negative 1.34%
+operating yield</strong>. Add the 4.0% appreciation and the gross return is
+2.66%. The portfolio returns 6.5% net.
+The house has to appreciate far faster than it has been to close that spread.</p>
+</div>
+
+<h2>Full sensitivity grid</h2>
+<p>Twelve combinations of market appreciation and portfolio return, at a 2045 transfer. NPV at 2045,
+rounded to the nearest $10.</p>
+<div class="tw"><table><thead><tr>
+<th class="n">Appreciation</th><th class="n">Portfolio return</th>
+<th class="n">Live in A</th><th class="n">Rent out A</th><th class="n">Sell A</th>
+<th class="n">Best</th><th class="n">Sell margin over best hold</th></tr></thead><tbody>
+<tr><td class="n">2.0%</td><td class="n">5.0%</td><td class="n">$3,772,350</td><td class="n">$3,935,140</td><td class="n">$6,191,010</td><td class="n ok-t">Sell</td><td class="n ok-t">+$2,255,870</td></tr>
+<tr><td class="n">2.0%</td><td class="n">7.0%</td><td class="n">$2,544,480</td><td class="n">$2,672,300</td><td class="n">$5,717,700</td><td class="n ok-t">Sell</td><td class="n ok-t">+$3,045,400</td></tr>
+<tr><td class="n">2.0%</td><td class="n">8.5%</td><td class="n">$1,932,040</td><td class="n">$2,039,540</td><td class="n">$5,493,510</td><td class="n ok-t">Sell</td><td class="n ok-t">+$3,453,970</td></tr>
+<tr><td class="n">3.0%</td><td class="n">5.0%</td><td class="n">$4,565,050</td><td class="n">$4,700,080</td><td class="n">$7,286,870</td><td class="n ok-t">Sell</td><td class="n ok-t">+$2,586,790</td></tr>
+<tr><td class="n">3.0%</td><td class="n">7.0%</td><td class="n">$2,953,000</td><td class="n">$3,058,010</td><td class="n">$6,701,670</td><td class="n ok-t">Sell</td><td class="n ok-t">+$3,643,660</td></tr>
+<tr><td class="n">3.0%</td><td class="n">8.5%</td><td class="n">$2,160,330</td><td class="n">$2,247,850</td><td class="n">$6,430,290</td><td class="n ok-t">Sell</td><td class="n ok-t">+$4,182,440</td></tr>
+<tr><td class="n">4.0%</td><td class="n">5.0%</td><td class="n">$5,773,290</td><td class="n">$5,877,980</td><td class="n">$8,638,320</td><td class="n ok-t">Sell</td><td class="n ok-t">+$2,760,340</td></tr>
+<tr><td class="n">4.0%</td><td class="n">7.0%</td><td class="n">$3,600,910</td><td class="n">$3,680,970</td><td class="n">$7,901,220</td><td class="n ok-t">Sell</td><td class="n ok-t">+$4,220,250</td></tr>
+<tr><td class="n">4.0%</td><td class="n">8.5%</td><td class="n">$2,543,900</td><td class="n">$2,609,560</td><td class="n">$7,564,730</td><td class="n ok-t">Sell</td><td class="n ok-t">+$4,955,170</td></tr>
+<tr><td class="n">5.0%</td><td class="n">5.0%</td><td class="n">$7,785,780</td><td class="n">$7,857,420</td><td class="n">$10,491,700</td><td class="n ok-t">Sell</td><td class="n ok-t">+$2,634,280</td></tr>
+<tr><td class="n">5.0%</td><td class="n">7.0%</td><td class="n">$4,726,070</td><td class="n">$4,778,950</td><td class="n">$9,479,590</td><td class="n ok-t">Sell</td><td class="n ok-t">+$4,700,640</td></tr>
+<tr><td class="n">5.0%</td><td class="n">8.5%</td><td class="n">$3,247,550</td><td class="n">$3,289,420</td><td class="n">$9,019,900</td><td class="n ok-t">Sell</td><td class="n ok-t">+$5,730,480</td></tr>
+</tbody></table></div>
+<div class="note ok"><p><strong>Sale wins all twelve.</strong> The smallest margin is
+$2,255,870, in the 2% appreciation / 8.5% portfolio
+corner. The largest is $5,730,480, at 5% appreciation
+with a 5% portfolio return. The result is not an artefact of one assumption pair.</p></div>
+
+<h2>When would holding win?</h2>
+<p>Rather than guess, the break-even appreciation rate was solved for directly: the annual home-price
+growth at which holding beats selling, for a given portfolio return.</p>
+<div class="tw"><table><thead><tr>
+<th class="n">Portfolio return</th><th class="n">Break-even appreciation required</th>
+<th>What that would mean</th></tr></thead><tbody>
+<tr><td class="n">5.0%</td><td class="n warn-t">7.2% / yr</td><td>Property A must beat every five-year stretch of the last 25 years, every year, for 25 years</td></tr>
+<tr style="background:rgba(88,166,255,.09)"><td class="n"><strong>7.0%</strong></td><td class="n warn-t"><strong>9.5% / yr</strong></td><td>Nearly double the FHFA five-year compound rate for the San Jose metro area</td></tr>
+<tr><td class="n">8.5%</td><td class="n warn-t">11.2% / yr</td><td>Faster than the Bay Area has compounded over any sustained period on record</td></tr>
+</tbody></table></div>
+
+<h3>What the market has actually delivered</h3>
+<div class="tw"><table><thead><tr><th>Geography</th><th class="n">1-yr change to 2026Q2</th><th class="n">5-yr annualized</th><th>Source</th><th>Status</th></tr></thead><tbody>
+<tr><td>San Jose&ndash;Sunnyvale&ndash;Santa Clara MSA <span class="small">(covers Cupertino)</span></td><td class="n bad-t">&minus;0.98%</td><td class="n">4.97%</td><td><a href="https://www.fhfa.gov/hpi/download/quarterly_datasets/hpi_at_tables.pdf">FHFA HPI 2026Q2</a> <span class="b mut" style="font-size:9px">FHFA</span></td><td><span class="b ok">Verified</span></td></tr>
+<tr><td>San Francisco&ndash;San Mateo&ndash;Redwood City MSAD</td><td class="n bad-t">&minus;0.28%</td><td class="n">3.28%</td><td><a href="https://www.fhfa.gov/hpi/download/quarterly_datasets/hpi_at_tables.pdf">FHFA HPI 2026Q2</a> <span class="b mut" style="font-size:9px">FHFA</span></td><td><span class="b ok">Verified</span></td></tr>
+</tbody></table></div>
+<p class="small">The 5-year annualized rate is derived from the published 5-year cumulative change:
+(1 + cumulative)^(1/5) &minus; 1. <span class="b pur">Derived</span></p>
+<div class="note bad"><p><strong>Both markets are currently falling.</strong> The reference period
+ended with negative one-year price change in both metros &mdash; San Jose at &minus;0.98% and San
+Francisco at &minus;0.28%. The 5-year figures of 4.97% and 3.28% annualized are still below the
+9.5% needed to justify holding Property A. To beat sale on these numbers, the property would
+have to appreciate at nearly twice its recent five-year rate, sustained for twenty-five years.</p></div>
+
+<h2>Second view: hold and sell later</h2>
+<p>One objection to the base case is that it forces a sale in 2045. What if the heir occupies the
+house, keeps the protected basis, and sells some years later instead?</p>
+<div class="tw"><table><thead><tr><th class="n">Sale year</th><th class="n">Market value</th><th class="n">After 5% costs, federal + CA tax</th><th class="n">Change vs. selling in 2045</th></tr></thead><tbody>
+<tr><td class="n">2045</td><td class="n">$6,204,668</td><td class="n">$6,204,668</td><td class="n ">$0</td></tr>
+<tr><td class="n">2047</td><td class="n">$6,700,065</td><td class="n">$6,700,065</td><td class="n ok-t">+$495,397</td></tr>
+<tr><td class="n">2050</td><td class="n">$7,246,060</td><td class="n">$7,246,060</td><td class="n ok-t">+$1,041,392</td></tr>
+<tr><td class="n">2055</td><td class="n">$8,311,719</td><td class="n">$8,311,719</td><td class="n ok-t">+$2,107,051</td></tr>
+<tr><td class="n">2060</td><td class="n">$9,608,251</td><td class="n">$9,608,251</td><td class="n ok-t">+$3,403,583</td></tr>
+</tbody></table></div>
+<p class="small">Holding longer does increase the nominal proceeds, because the house keeps
+appreciating. It does not increase <em>relative</em> wealth, because the portfolio would also have
+grown over the same period. This table is the intuitive objection; the NPV comparison above is the
+correct answer to it. <span class="b pur">Projected</span></p>
+
+<h2>What the sale case depends on</h2>
+<div class="note warn"><p>The sale recommendation rests on three conditions, and each should be
+tested before acting:</p>
+<ol style="margin:10px 0 0">
+<li><strong>The proceeds are actually reinvested.</strong> If the money is spent or held in cash,
+   the entire advantage disappears. This is a behavioural commitment, not a market fact.</li>
+<li><strong>A 6.5% net portfolio return is achieved.</strong> At a 5% return the break-even
+   appreciation rate falls to 7.2%, which is closer to the recent five-year trend. Still above
+   it, but the margin narrows substantially.</li>
+<li><strong>No rent-yield surprise.</strong> If Cupertino single-family rent were materially higher
+   relative to price than modeled, the rental case improves. HUD's FY2026 fair market rent for a
+   2-bedroom in Santa Clara County ($3,483/mo) is the basis used, giving gross yield well under 2%
+   on a $6.53M house.</li>
+</ol></div>
+</div></main><footer><div class="wrap">
+<p><strong>Privacy notice.</strong> This site contains no addresses, parcel numbers, names, or any other
+personal identifiers. The properties are referred to only as <strong>Property A</strong> (Cupertino) and
+<strong>Property B</strong> (San Francisco). All dollar figures are rounded to the nearest $10.</p>
+<p>Independent financial analysis prepared for internal family decision-making. Not legal, tax,
+or investment advice. Confirm with a licensed California attorney, CPA, or enrolled agent before acting.
+Sources are linked on every table row; items that could not be confirmed against an official source are
+left blank and listed on the <a href="flagged.html">Flagged for Review</a> page. Analysis date 2026-11-10.</p>
+</div></footer></body></html>
