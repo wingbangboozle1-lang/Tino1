@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build the static GitHub Pages site in docs/ from data/*.csv and the model output.
+"""Build the static GitHub Pages site in dashboard/ from analysis/data/*.csv and the model output.
 
 Run after analysis/model.py:  python3 analysis/build_site.py
 No external dependencies. Every table row that states a fact carries a source link
@@ -14,8 +14,8 @@ import os
 from datetime import date
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DATA = os.path.join(ROOT, "data")
-DOCS = os.path.join(ROOT, "docs")
+DATA = os.path.join(ROOT, "analysis", "data")
+DOCS = os.path.join(ROOT, "dashboard")
 os.makedirs(os.path.join(DOCS, "assets"), exist_ok=True)
 
 BUILD_DATE = "2026-11-10"
@@ -149,7 +149,7 @@ def page(fname: str, title: str, body: str, intro: str = "") -> None:
   <p><strong>Status legend:</strong> {badge('verified')} read from an official source on {BUILD_DATE} ·
   {badge('derived')} computed from verified or user figures · {badge('user-supplied')} stated by the owner, not independently verified ·
   {badge('assumption')} model input, not a fact · {badge('unverified')} no official confirmation obtained (left blank where a value would be a guess).</p>
-  <p>All amounts are rounded to the nearest $10. No names, addresses or parcel numbers appear anywhere on this site. This is an independent research summary, <strong>not legal, tax or investment advice</strong>; confirm every item with a California estate attorney and CPA before acting. Built {BUILD_DATE}. <a href="https://github.com/wingbangboozle1-lang/Tino1" target="_blank" rel="noopener">Repository</a> · <a href="flagged.html">Flagged for Review</a>.</p>
+  <p>All amounts are rounded to the nearest $10. No names, addresses or parcel numbers appear anywhere on this site. This is an independent research summary, <strong>not legal, tax or investment advice</strong>; confirm every item with a California estate attorney and CPA before acting. Built {BUILD_DATE}. <a href="https://github.com/wingbangboozle1-lang/Tino1" target="_blank" rel="noopener">Repository</a> · <a href="../" >Other sessions' sites</a> · <a href="flagged.html">Flagged for Review</a>.</p>
 </footer>
 </body>
 </html>
@@ -514,7 +514,7 @@ def main():
 {table(pcols, proj_rows(proj_b), 'num')}
 <h2>Rent paths used by the model (per year)</h2>
 {table(["Year", "B: two existing units (rent-controlled, +1.6%/yr)", "B: two units if re-let at market (+3%/yr)", "B: third unit at market", "A: market rent (HUD 4BR SAFMR base)"], rent_rows, 'num')}
-<p class="small">Raw CSVs: <code>data/projections/</code> in the repository.</p>
+<p class="small">Raw CSVs: <code>analysis/data/projections/</code> in the repository.</p>
 """, "Market value, assessed value, property tax, insurance, water, electricity and maintenance for each property, every year.")
 
     # -------------------------------------------------------------- scenarios
@@ -643,8 +643,8 @@ def main():
     page("methodology.html", "Methodology, parameters and privacy", f"""
 <h2>How the numbers are produced</h2>
 <ol>
-<li><code>data/*.csv</code> hold every verified fact with its official URL and a status.</li>
-<li><code>analysis/model.py</code> projects values, assessed values, taxes and costs year by year (2026–2060), runs the six scenarios and the 27-case sensitivity grid, and writes <code>data/projections/*.csv</code>, <code>data/scenarios.csv</code> and <code>docs/data/model_output.json</code>.</li>
+<li><code>analysis/data/*.csv</code> hold every verified fact with its official URL and a status.</li>
+<li><code>analysis/model.py</code> projects values, assessed values, taxes and costs year by year (2026–2060), runs the six scenarios and the 27-case sensitivity grid, and writes <code>analysis/data/projections/*.csv</code>, <code>analysis/data/scenarios.csv</code> and <code>dashboard/data/model_output.json</code>.</li>
 <li><code>analysis/build_site.py</code> renders this site from those files. Re-run both scripts after changing any parameter.</li>
 </ol>
 <h2>Core formulas</h2>

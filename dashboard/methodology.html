@@ -20,8 +20,8 @@
 
 <h2 id="how-the-numbers-are-produced">How the numbers are produced</h2>
 <ol>
-<li><code>data/*.csv</code> hold every verified fact with its official URL and a status.</li>
-<li><code>analysis/model.py</code> projects values, assessed values, taxes and costs year by year (2026–2060), runs the six scenarios and the 27-case sensitivity grid, and writes <code>data/projections/*.csv</code>, <code>data/scenarios.csv</code> and <code>docs/data/model_output.json</code>.</li>
+<li><code>analysis/data/*.csv</code> hold every verified fact with its official URL and a status.</li>
+<li><code>analysis/model.py</code> projects values, assessed values, taxes and costs year by year (2026–2060), runs the six scenarios and the 27-case sensitivity grid, and writes <code>analysis/data/projections/*.csv</code>, <code>analysis/data/scenarios.csv</code> and <code>dashboard/data/model_output.json</code>.</li>
 <li><code>analysis/build_site.py</code> renders this site from those files. Re-run both scripts after changing any parameter.</li>
 </ol>
 <h2 id="core-formulas">Core formulas</h2>
@@ -58,7 +58,7 @@
   <p><strong>Status legend:</strong> <span class="badge ok">verified</span> read from an official source on 2026-11-10 ·
   <span class="badge warn">derived</span> computed from verified or user figures · <span class="badge info">user-supplied</span> stated by the owner, not independently verified ·
   <span class="badge muted">assumption</span> model input, not a fact · <span class="badge bad">unverified</span> no official confirmation obtained (left blank where a value would be a guess).</p>
-  <p>All amounts are rounded to the nearest $10. No names, addresses or parcel numbers appear anywhere on this site. This is an independent research summary, <strong>not legal, tax or investment advice</strong>; confirm every item with a California estate attorney and CPA before acting. Built 2026-11-10. <a href="https://github.com/wingbangboozle1-lang/Tino1" target="_blank" rel="noopener">Repository</a> · <a href="flagged.html">Flagged for Review</a>.</p>
+  <p>All amounts are rounded to the nearest $10. No names, addresses or parcel numbers appear anywhere on this site. This is an independent research summary, <strong>not legal, tax or investment advice</strong>; confirm every item with a California estate attorney and CPA before acting. Built 2026-11-10. <a href="https://github.com/wingbangboozle1-lang/Tino1" target="_blank" rel="noopener">Repository</a> · <a href="../" >Other sessions' sites</a> · <a href="flagged.html">Flagged for Review</a>.</p>
 </footer>
 </body>
 </html>

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Pre-publish checks for docs/: internal links resolve, every page has the nav,
+"""Pre-publish checks for dashboard/: internal links resolve, every page has the nav,
 fact-table rows carry a source link or a non-verified status, and no personal
 identifiers (emails, street addresses, APN-like numbers) slipped in.
 Exit code 1 on failure.  External URLs are listed (they were read manually on the
@@ -10,7 +10,7 @@ import sys
 from html.parser import HTMLParser
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DOCS = os.path.join(ROOT, "docs")
+DOCS = os.path.join(ROOT, "dashboard")
 errors = []
 external = set()
 
@@ -33,9 +33,9 @@ class LinkParser(HTMLParser):
 
 pages = sorted(f for f in os.listdir(DOCS) if f.endswith(".html"))
 if "index.html" not in pages:
-    errors.append("docs/index.html missing")
+    errors.append("dashboard/index.html missing")
 if not os.path.exists(os.path.join(DOCS, ".nojekyll")):
-    errors.append("docs/.nojekyll missing")
+    errors.append("dashboard/.nojekyll missing")
 
 pii_patterns = [
     (re.compile(r"[\w.+-]+@[\w-]+\.[\w.]+"), "email address"),
@@ -72,17 +72,26 @@ for f in pages:
             if is_verified and not has_link:
                 errors.append(f"{f}: a row marked verified has no source link: {re.sub('<[^>]+>', ' ', row)[:80]}")
 
-# Repository-level privacy scan (text files)
+# Repository-level privacy scan (text files). Files in this session's namespace fail the
+# check; files owned by other sessions are reported as warnings only (protocol: do not edit them).
+MINE = ("analysis/", "dashboard/")
+warnings = []
 for dirpath, dirnames, filenames in os.walk(ROOT):
     dirnames[:] = [d for d in dirnames if d not in (".git", "node_modules", "__pycache__")]
     for fn in filenames:
-        if fn.endswith((".csv", ".md", ".py", ".html", ".json", ".css")):
+        if fn.endswith((".csv", ".md", ".py", ".html", ".json", ".css", ".js")):
+            rel = os.path.relpath(os.path.join(dirpath, fn), ROOT)
             txt = open(os.path.join(dirpath, fn), encoding="utf-8", errors="ignore").read()
             for rx, label in pii_patterns:
                 for m in rx.finditer(txt):
                     if m.group(0) in allow_pii:
                         continue
-                    errors.append(f"{os.path.relpath(os.path.join(dirpath, fn), ROOT)}: possible {label}: {m.group(0)}")
+                    msg = f"{rel}: possible {label}: {m.group(0)}"
+                    (errors if rel.startswith(MINE) else warnings).append(msg)
+if warnings:
+    print("WARNINGS (files owned by other sessions; not edited — see COORDINATION.md change requests):")
+    for w in sorted(set(warnings))[:40]:
+        print(" -", w)
 
 print(f"Checked {len(pages)} pages; {len(external)} distinct external URLs.")
 if errors:

@@ -3,10 +3,10 @@
 and Property B (San Francisco Outer Sunset 94122).
 
 Everything here is a MODEL. Verified legal parameters are listed in
-data/*.csv with their official sources; items marked "assumption" or
+analysis/data/*.csv with their official sources; items marked "assumption" or
 "user-supplied" are not verified facts. All dollar outputs are rounded to the
 nearest $10 (project rule). Run:  python3 analysis/model.py
-Outputs: data/projections/*.csv, data/scenarios.csv, docs/data/model_output.json
+Outputs: analysis/data/projections/*.csv, analysis/data/scenarios.csv, dashboard/data/model_output.json
 """
 from __future__ import annotations
 
@@ -16,8 +16,8 @@ import os
 from dataclasses import dataclass, asdict, field
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-OUT_DIR = os.path.join(ROOT, "data", "projections")
-DOCS_DATA = os.path.join(ROOT, "docs", "data")
+OUT_DIR = os.path.join(ROOT, "analysis", "data", "projections")
+DOCS_DATA = os.path.join(ROOT, "dashboard", "data")
 os.makedirs(OUT_DIR, exist_ok=True)
 os.makedirs(DOCS_DATA, exist_ok=True)
 
@@ -441,7 +441,7 @@ def main():
         scen_rows.append({k: v for k, v in res.items() if k not in ("yearly", "details", "description",
                                                                    "sale_at_inheritance_a", "sale_at_inheritance_b")})
         write_csv(os.path.join(OUT_DIR, f"scenario_{s.key}_yearly.csv"), res["yearly"])
-    write_csv(os.path.join(ROOT, "data", "scenarios.csv"), scen_rows)
+    write_csv(os.path.join(ROOT, "analysis", "data", "scenarios.csv"), scen_rows)
 
     # Sensitivity: inheritance year x appreciation x portfolio return
     for T in (2040, 2045, 2050):
