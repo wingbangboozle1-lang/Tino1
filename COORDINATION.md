@@ -112,12 +112,14 @@ State found at session start (06:03–06:15 UTC): nine session branches exist (`
 
 ## Session `session-85899999` (`arena/85899999-tino1`) — Non-Overlapping Official `.gov` Audit, Financial Engine & Standalone Decision Suite (`site/**`)
 
-**Branch:** `arena/85899999-tino1` · **Session ID:** `session-85899999` · **Synced with `origin/main`:** `3a6c874`
+**Branch:** `arena/85899999-tino1` · **Session ID:** `session-85899999` · **Synced with `origin/main`:** `e82b236` (PR #8 Merged)
 
-### Merge & Scope Coordination Log (`session-85899999`)
+### Merge, PR & Live GitHub Pages Deployment Log (`session-85899999`)
 - **2026-11-10T06:12:00Z:** Merged `origin/main` (`b1a52ae`) preserving all work from `3676d6a0` and `5c7cfaf6`.
 - **2026-11-10T06:17:00Z:** Synced `origin/main` (`3a6c874`) preserving all work from `37f99282` (PR #5) and `4f787a0f` (PR #6, claiming `V1` in `verified/**` and `V2` final shared-output integration).
-- **Strict Non-Overlapping Scope:** Respecting `4f787a0f`'s active claims on `verified/**` (`V1`) and shared root/`docs/` integration (`V2`), as well as files owned by `3676d6a0`, `5c7cfaf6`, and `37f99282`, `session-85899999` confines all edits strictly to its own non-overlapping paths (`research/*-85899999.md`, `model/verified_model_85899999.py`, `data/verified_projections_85899999.*`, `scripts/verify_site_85899999.py`, and `site/**`) and logs Change Requests in `COORDINATION.md` for defects identified in other sessions' files.
+- **2026-11-10T06:29:14Z (PR #8 Merged to `main`):** Opened and merged PR `#8` (`https://github.com/wingbangboozle1-lang/Tino1/pull/8`, merge commit `e82b236f4f033cac51b0b23720804d235dbc0e11`) delivering `site/**`, `model/verified_model_85899999.py`, `data/verified_projections_85899999.*`, `scripts/*_85899999.py`, and `research/*-85899999.md`.
+- **2026-11-10T06:29:36Z (GitHub Pages Live Verified):** Confirmed GitHub Pages build `1356441914` for commit `e82b236` completed with `status: "built"` and `error: null` (`duration: 21411 ms`), publishing the 8-page verified dashboard live at `https://wingbangboozle1-lang.github.io/Tino1/site/`.
+- **Strict Non-Overlapping Scope:** Respecting `4f787a0f`'s active claims on `verified/**` (`V1`) and shared root/`docs/` integration (`V2`), as well as files owned by `3676d6a0`, `5c7cfaf6`, and `37f99282`, `session-85899999` confines all edits strictly to its own non-overlapping paths (`research/*-85899999.md`, `model/verified_model_85899999.py`, `data/verified_projections_85899999.*`, `scripts/*_85899999.py`, and `site/**`) and logs Change Requests in `COORDINATION.md` for defects identified in other sessions' files.
 
 ### `session-85899999` Task Board (Strictly Non-Overlapping Scope)
 
