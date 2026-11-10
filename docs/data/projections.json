@@ -1,0 +1,74 @@
+{
+  "meta": {
+    "generated": "2026-11-10",
+    "privacy": "All identifiers use placeholders; no PII",
+    "rounding": "All dollars rounded to nearest $10",
+    "assumptions": {
+      "cupertino_market_start": 3100000,
+      "cupertino_market_cagr": 0.045,
+      "sf_market_start": 1800000,
+      "sf_market_cagr": 0.038,
+      "cupertino_assessed_start_2026": 550537,
+      "sf_assessed_start_2025": 114248,
+      "assessed_cagr": 0.02,
+      "property_tax_rate": 0.0118,
+      "prop19_cap_2025_2027": 1044586,
+      "operating_inflation": 0.03,
+      "portfolio_nominal": 0.07,
+      "portfolio_net": 0.065
+    },
+    "sources": {
+      "assessed_cap": "RTC S51 https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=RTC&sectionNum=51.",
+      "prop19_cap": "BOE LTA 2025/009 https://www.boe.ca.gov/proptaxes/pdf/lta2025-009.pdf",
+      "scc_rate_book": "SCC Tax Rate Book FY24-25 https://files.santaclaracounty.gov/exjcpb1531/2024-11/tax-rate-book-2024-2025-final.pdf",
+      "sf_rate": "SF Treasurer FY25-26 1.18268325% https://sftreasurer.org/property-taxes",
+      "federal_exemption": "IRS Rev Proc 2025-32 $15M permanent per OBBBA PL 119-21 S70106",
+      "stepped_up_basis": "IRC S1014 https://www.law.cornell.edu/uscode/text/26/1014",
+      "fhfa_hpi": "https://www.fhfa.gov/DataTools/Downloads/Pages/House-Price-Index.aspx",
+      "bls_cpi": "https://www.bls.gov/cpi/"
+    }
+  },
+  "cupertino_yearly": [
+    {"year": 2026, "market_value": 3100000, "assessed_value": 550540, "parent_tax_1_18pct": 6500},
+    {"year": 2027, "market_value": 3239500, "assessed_value": 561550, "parent_tax_1_18pct": 6630},
+    {"year": 2028, "market_value": 3385280, "assessed_value": 572780, "parent_tax_1_18pct": 6760},
+    {"year": 2029, "market_value": 3537620, "assessed_value": 584230, "parent_tax_1_18pct": 6890},
+    {"year": 2030, "market_value": 3696810, "assessed_value": 595920, "parent_tax_1_18pct": 7030},
+    {"year": 2031, "market_value": 3863160, "assessed_value": 607840, "parent_tax_1_18pct": 7170},
+    {"year": 2032, "market_value": 4037010, "assessed_value": 619990, "parent_tax_1_18pct": 7320},
+    {"year": 2033, "market_value": 4218670, "assessed_value": 632390, "parent_tax_1_18pct": 7460},
+    {"year": 2034, "market_value": 4408510, "assessed_value": 645040, "parent_tax_1_18pct": 7610},
+    {"year": 2035, "market_value": 4606900, "assessed_value": 657940, "parent_tax_1_18pct": 7760},
+    {"year": 2036, "market_value": 4814210, "assessed_value": 671100, "parent_tax_1_18pct": 7920},
+    {"year": 2037, "market_value": 5030840, "assessed_value": 684520, "parent_tax_1_18pct": 8080},
+    {"year": 2038, "market_value": 5257230, "assessed_value": 698210, "parent_tax_1_18pct": 8240},
+    {"year": 2039, "market_value": 5493810, "assessed_value": 712180, "parent_tax_1_18pct": 8400},
+    {"year": 2040, "market_value": 5741030, "assessed_value": 726420, "parent_tax_1_18pct": 8570},
+    {"year": 2041, "market_value": 5999380, "assessed_value": 740950, "parent_tax_1_18pct": 8740},
+    {"year": 2042, "market_value": 6269350, "assessed_value": 755770, "parent_tax_1_18pct": 8920},
+    {"year": 2043, "market_value": 6551470, "assessed_value": 770890, "parent_tax_1_18pct": 9100},
+    {"year": 2044, "market_value": 6846280, "assessed_value": 786300, "parent_tax_1_18pct": 9280},
+    {"year": 2045, "market_value": 7154370, "assessed_value": 802030, "parent_tax_1_18pct": 9460},
+    {"year": 2046, "market_value": 7476310, "assessed_value": 818070, "parent_tax_1_18pct": 9650},
+    {"year": 2047, "market_value": 7812750, "assessed_value": 834430, "parent_tax_1_18pct": 9850},
+    {"year": 2048, "market_value": 8164320, "assessed_value": 851120, "parent_tax_1_18pct": 10040},
+    {"year": 2049, "market_value": 8531720, "assessed_value": 868140, "parent_tax_1_18pct": 10240},
+    {"year": 2050, "market_value": 8915640, "assessed_value": 885510, "parent_tax_1_18pct": 10450}
+  ],
+  "cupertino_inheritance_scenarios": [
+    {"inherit_year": 2026, "market_value": 3100000, "parent_base": 550540, "new_assessed_live_in": 2055410, "tax_live_in": 24250, "new_assessed_rent": 3100000, "tax_rent": 36580, "prop19_saving": 12330},
+    {"inherit_year": 2030, "market_value": 3696810, "parent_base": 595920, "new_assessed_live_in": 2652220, "tax_live_in": 31300, "new_assessed_rent": 3696810, "tax_rent": 43620, "prop19_saving": 12330},
+    {"inherit_year": 2035, "market_value": 4606900, "parent_base": 657940, "new_assessed_live_in": 3562310, "tax_live_in": 42040, "new_assessed_rent": 4606900, "tax_rent": 54360, "prop19_saving": 12330},
+    {"inherit_year": 2040, "market_value": 5741030, "parent_base": 726420, "new_assessed_live_in": 4696440, "tax_live_in": 55420, "new_assessed_rent": 5741030, "tax_rent": 67740, "prop19_saving": 12330},
+    {"inherit_year": 2045, "market_value": 7154370, "parent_base": 802030, "new_assessed_live_in": 6109780, "tax_live_in": 72100, "new_assessed_rent": 7154370, "tax_rent": 84420, "prop19_saving": 12330},
+    {"inherit_year": 2050, "market_value": 8915640, "parent_base": 885510, "new_assessed_live_in": 7871050, "tax_live_in": 92880, "new_assessed_rent": 8915640, "tax_rent": 105200, "prop19_saving": 12330}
+  ],
+  "sf_yearly": [
+    {"year": 2026, "market_value": 1800000, "assessed_value": 116530, "parent_tax_1_18pct": 1380},
+    {"year": 2030, "market_value": 2089590, "assessed_value": 126140, "parent_tax_1_18pct": 1490},
+    {"year": 2035, "market_value": 2517960, "assessed_value": 139270, "parent_tax_1_18pct": 1640},
+    {"year": 2040, "market_value": 3034140, "assessed_value": 153760, "parent_tax_1_18pct": 1810},
+    {"year": 2045, "market_value": 3656130, "assessed_value": 169770, "parent_tax_1_18pct": 2000},
+    {"year": 2050, "market_value": 4405640, "assessed_value": 187440, "parent_tax_1_18pct": 2210}
+  ]
+}
