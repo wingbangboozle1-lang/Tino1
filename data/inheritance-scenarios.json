@@ -1,0 +1,32 @@
+[
+  {
+    "inherit_year": 2040,
+    "fmv": 5017950,
+    "base_at_death": 726420,
+    "cap": 1378310,
+    "live_assessed": 3639640,
+    "live_tax": 48410,
+    "rent_assessed": 5017950,
+    "rent_tax": 66740
+  },
+  {
+    "inherit_year": 2045,
+    "fmv": 5959750,
+    "base_at_death": 802030,
+    "cap": 1521760,
+    "live_assessed": 4437990,
+    "live_tax": 59030,
+    "rent_assessed": 5959750,
+    "rent_tax": 79260
+  },
+  {
+    "inherit_year": 2050,
+    "fmv": 7078320,
+    "base_at_death": 885500,
+    "cap": 1680150,
+    "live_assessed": 5398170,
+    "live_tax": 71800,
+    "rent_assessed": 7078320,
+    "rent_tax": 94140
+  }
+]

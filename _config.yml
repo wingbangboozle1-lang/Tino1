@@ -1,0 +1,9 @@
+title: "Cupertino & San Francisco Inheritance Decision Hub"
+description: "Anonymized, verified decision framework for a two-property California inheritance (projected 2040–2050). Every figure links to an official source."
+theme: jekyll-theme-cayman
+plugins:
+  - jekyll-remote-theme
+remote_theme: pages-themes/cayman@v0.2.0
+exclude:
+  - "*.log"
+  - "Unselected files"
