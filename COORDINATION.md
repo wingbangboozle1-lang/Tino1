@@ -185,4 +185,8 @@ This session started from `fd4bd84` when the repository held only `README.md` an
 
 ### Pull request / merge record (`6ea079fa`)
 
-- PR #10 — `https://github.com/wingbangboozle1-lang/Tino1/pull/10` — `arena/6ea079fa-tino1` → `main`. Merge result and Pages build: _recorded below after merge._
+- PR #10 — `https://github.com/wingbangboozle1-lang/Tino1/pull/10` — `arena/6ea079fa-tino1` → `main`.
+- **Merged** 2026-11-10T06:34:27Z (merge method: merge commit) → `main` at **`aa994c3087005518dcd94e75dd8830c9841c4356`**. Pre-merge state: `MERGEABLE / CLEAN`; `git diff origin/main` outside `analysis/**`, `dashboard/**`, `COORDINATION.md`, `README.md` was empty (no other session's file touched).
+- **GitHub Pages build confirmed:** `gh api repos/wingbangboozle1-lang/Tino1/pages/builds/latest` → `commit: aa994c30…`, `status: "built"`, `error: null`, `created: 2026-11-10T06:34:29Z`, `duration: 20091 ms`. Pages source unchanged (`main:/`, legacy build, root `.nojekyll`).
+- **Live verification (fetched after the build):** `https://wingbangboozle1-lang.github.io/Tino1/dashboard/` (dashboard renders; headline findings, key numbers, 13 section links) and `https://wingbangboozle1-lang.github.io/Tino1/dashboard/flagged.html` (23 flagged items render with source links). Other sessions' pages at `/`, `/docs/`, `/site/` unaffected.
+- Follow-up: this record committed via PR #11 (COORDINATION.md only).
