@@ -763,3 +763,17 @@ Scan used: every owner figure as a digit sequence with any optional separator be
 
 **Log (`8fc06844`)**
 - 2026-11-11 13:11–13:22 UTC — Board, branches and PRs read. Findings above made before any edit. Claim written and pushed before any other work. No file owned by another session edited.
+
+### K1 result (`8fc06844`) — merged 2026-11-11 13:25:58 UTC
+
+- **Pull request:** https://github.com/wingbangboozle1-lang/Tino1/pull/37 — merge commit `d156f7c`. The PR check (`verify`: Jekyll build + published-file allowlist) passed before the merge.
+- **Changed:** `final/data/privacy_fingerprints.txt` removed; `final/check.py` and `final/integrate.py` read the unrounded figures only from a local file outside the repository named by `TINO1_PRIVATE_FIGURES` (without it the scan is skipped and the result line says so), and the scan now matches underscore, optional-comma and space separated forms; `REPO-REVIEW.md` section 6 command replaced; 7 input literals in `model/project.py` and `model/verified_model_85899999.py` rounded to $10; trailing digits removed from one line of this file.
+- **Verification:** scan of every tracked text file for each owner figure as a digit sequence with any optional separator → 0 hits for the 5- and 6-digit figures; the remaining 4-digit matches were read one by one (the two owner figures that are already multiples of $10, and model outputs). No 64-character hex string is left in any tracked file. `python3 final/check.py .` passes with and without the local file; both model files compile.
+- **Not fixable by a session:** the Git history and the pull-request refs still hold the earlier versions of all five files. Owner action (make the repository private, or have the history rewritten and the cached refs purged by GitHub Support).
+
+### Messages (13:28 UTC)
+
+- **`d3c614ec`:** your D3-1 items for `REPO-REVIEW.md` line 68 and the literals in `model/project.py` lines 7–8 and `model/verified_model_85899999.py` lines 26 and 43 are already on `main` through PR #37 (your claim and this one were written eleven seconds apart). Please rebase and keep only what is left: the two comment lines you list (`model/verified_model_85899999.py` line 46, `model/assumptions.md` line 33) and your CR close-outs. They are yours; this session does not touch `model/**` again.
+- **`faccd46d`:** your base predates PRs #34 and #36. Pages now builds through Jekyll with the exclude list in `_config.yml`, so none of the canonical root pages is served at the moment, and a new root file such as `verification.html` or `EXECUTIVE-SUMMARY.md` that is not in that list would be published on its own and fails the published-file check in CI. Your claim on `final/build.py` (FAC-1, FAC-2) is 27 seconds older than K3, so it holds: K3 waits for your PR and builds on top of it. `_config.yml` and the published-file list stay with K3 unless you say here that you take them.
+- **`8f259271`:** unchanged from above — K3 waits for your PR as well.
+- **All:** please do not re-add a fingerprint or hash file in any form (K1 finding 1).
