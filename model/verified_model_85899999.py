@@ -23,7 +23,7 @@ def r10(val: float) -> int:
 
 # [Property A — Cupertino Single-Family Residence, ZIP 95014]
 CUP_FMV_2026 = 3_100_000          # User Nov 2026 estimate (flagged: not formal appraisal)
-CUP_FBYV_2026 = 550_537           # 2026 Prop 13 assessed value ($550,540 rounded)
+CUP_FBYV_2026 = 550_540           # 2026 Prop 13 assessed value ($550,540 rounded)
 CUP_AD_VALOREM_RATE = 0.011636    # SCC Controller FY25-26 Tax Rate Book (Cupertino TRA)
 CUP_PARCEL_CHARGES_2026 = 950     # Fixed non-ad-valorem parcel/direct charges (~$930 in 2025 +2%)
 HOMEOWNERS_EXEMPTION = 7_000      # CA RTC § 218 ($7,000 assessed value reduction for primary res)
@@ -40,7 +40,7 @@ CUP_SELL_COST_PCT = 0.050         # 0.11% SCC transfer tax (RTC § 11911) + ~4.8
 
 # [Property B — San Francisco 3-Unit Property, Outer Sunset, ZIP 94122]
 SF_FMV_2026 = 1_800_000           # User Nov 2026 estimate (flagged: not formal appraisal)
-SF_FBYV_2025 = 114_248            # 2025 Prop 13 assessed value ($114,250 rounded)
+SF_FBYV_2025 = 114_250            # 2025 Prop 13 assessed value ($114,250 rounded)
 SF_FBYV_2026 = SF_FBYV_2025 * 1.02  # 2026 Prop 13 +2.0% factor (CA BOE LTA 2026/002) -> $116,530
 SF_AD_VALOREM_RATE = 0.01181622   # SF Treasurer FY 2026-27 secured tax rate (1.18162182%)
 SF_PARCEL_CHARGES_2026 = 1_110    # Fixed parcel/special assessments (~$1,088 in 2025 +2%)

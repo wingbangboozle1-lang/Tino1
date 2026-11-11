@@ -166,8 +166,12 @@ def step6_repair(broken):
 def step7_fingerprints():
     """An owner-supplied figure that was already a multiple of $10 survives $10 rounding unchanged.
     Wherever its fingerprint appears outside final/, show it to the nearest $100 (pages) or withhold it (logs)."""
-    import hashlib
-    fp = set(open(os.path.join(HERE, 'data', 'privacy_fingerprints.txt')).read().split())
+    # No fingerprint file any more: a hash of a small number is reversible (session 8fc06844, K1). The unrounded figures
+    # are read from a local file outside the repository named by TINO1_PRIVATE_FIGURES; without it this step does nothing.
+    pf = os.environ.get('TINO1_PRIVATE_FIGURES', '')
+    fp = set(re.sub(r'\D', '', x) for x in open(pf).read().split()) - {''} if pf and os.path.isfile(pf) else set()
+    if not fp:
+        return []
     rx = re.compile(r'(?<![\d,.])\d{1,3}(?:,\d{3})+(?![\d,])|(?<![\d.])\d{5,7}(?![\d])')
     changed = []
     for base, dirs, files in os.walk(ROOT):
@@ -180,7 +184,7 @@ def step7_fingerprints():
 
             def rep(m):
                 tok = m.group(0)
-                if hashlib.sha256(('tino1:' + tok).encode()).hexdigest() not in fp:
+                if tok.replace(',', '') not in fp:
                     return tok
                 if f.endswith('.md'):
                     return '[figure withheld]'

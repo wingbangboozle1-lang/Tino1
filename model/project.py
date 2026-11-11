@@ -4,8 +4,8 @@ import csv, json, pathlib
 def r10(x): return int(round(x/10.0)*10)
 
 # --- Inputs (owner records + official anchors) ---
-CUP = dict(value2026=3_100_000, assessed2026=550_537, tax2025=7_207, assessed2025=539_743)
-SF  = dict(value2026=1_800_000, assessed2025=114_248, tax2025=2_439)
+CUP = dict(value2026=3_100_000, assessed2026=550_540, tax2025=7_210, assessed2025=539_740)
+SF  = dict(value2026=1_800_000, assessed2025=114_250, tax2025=2_440)
 CUP_RATE = CUP['tax2025']/CUP['assessed2025']   # ~1.335%
 SF_RATE  = SF['tax2025']/SF['assessed2025']     # ~2.135% (flagged)
 SF_ASSESSED2026 = SF['assessed2025']*1.02
