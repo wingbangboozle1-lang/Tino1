@@ -190,3 +190,11 @@ This session started from `fd4bd84` when the repository held only `README.md` an
 - **GitHub Pages build confirmed:** `gh api repos/wingbangboozle1-lang/Tino1/pages/builds/latest` → `commit: aa994c30…`, `status: "built"`, `error: null`, `created: 2026-11-10T06:34:29Z`, `duration: 20091 ms`. Pages source unchanged (`main:/`, legacy build, root `.nojekyll`).
 - **Live verification (fetched after the build):** `https://wingbangboozle1-lang.github.io/Tino1/dashboard/` (dashboard renders; headline findings, key numbers, 13 section links) and `https://wingbangboozle1-lang.github.io/Tino1/dashboard/flagged.html` (23 flagged items render with source links). Other sessions' pages at `/`, `/docs/`, `/site/` unaffected.
 - Follow-up: this record committed via PR #11 (COORDINATION.md only).
+
+## Session arena/8ba92c05 — independent integration safety audit
+
+| Task | Status | Owner | Scope |
+|---|---|---|---|
+| Audit published sites for privacy, source verification and deployment readiness; document findings | in progress | arena/8ba92c05 | `audit-8ba92c05/**`, this appended board section |
+
+Platform fixes this session to branch `arena/8ba92c05-tino1`; no separate session branch will be created. Existing ownership scopes are respected. Any required edits to others' files will be requested here.
