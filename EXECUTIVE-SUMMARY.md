@@ -1,6 +1,11 @@
 # Executive summary — two-home inheritance decision analysis
 
-**Live site:** https://wingbangboozle1-lang.github.io/Tino1/ · built from [`final/`](final/) · every figure rounded to $10 · people are placeholders ("the Transferor", "the Inheritor") · prepared 2026-11-11
+**Where things stand (2026-11-11):** the numeric pages of this analysis live in this repository (root
+`*.html`, generated from [`final/`](final/)) with every figure rounded to $10 and people as placeholders
+("the Transferor", "the Inheritor"). The public Pages deployment currently serves an interim
+*privacy-first guide without household figures* (session `cab26ebb`, PRs #34/#36); the front-door
+reconciliation (session `8fc06844`, task K3) will republish the full numeric site on an exact allowlist.
+Links below point at the repository pages; they become live-site links when K3 lands.
 
 This is a decision analysis, not legal or tax advice. It prepares questions for a licensed estate attorney
 and tax adviser. Forecasts are conditional scenarios on labelled assumptions ([Flagged for Review](https://wingbangboozle1-lang.github.io/Tino1/flagged.html)), not verified predictions.

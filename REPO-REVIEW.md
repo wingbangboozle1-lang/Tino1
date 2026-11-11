@@ -64,9 +64,11 @@ Spot-checks not repeated for every link on legacy pages — legacy pages are sup
 ## 6. Re-run the audits
 
 ```bash
-# privacy gate: exact user parcel figures anywhere?
-grep -rEn '550,?537|539,?743|529,?161|518,?786|508,?614|498,?642|493,?530|483,?854|474,?368|465,?067|455,?949|449,?101|440,?305|114,?248|112,?008|109,?814|107,?662|105,?595|104,?513|102,?465|100,?456|98,?488|96,?557' .
-# expect: no output
+# privacy gate: unrounded owner figures anywhere?
+# The search pattern that stood here listed the unrounded figures themselves and was removed on 2026-11-11
+# (session 8fc06844, K1). List the figures one per line in a file OUTSIDE the repository and run:
+TINO1_PRIVATE_FIGURES=/path/outside/the/repository/figures.txt python3 final/check.py .
+# expect: "unrounded owner figures: none found"
 # every canonical HTML page reachable:
 python3 -m http.server 8080  # then open /, /flagged.html, /black-swan.html, …
 ```

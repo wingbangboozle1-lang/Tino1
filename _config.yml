@@ -1,9 +1,49 @@
-title: "Cupertino & San Francisco Inheritance Decision Hub"
-description: "Anonymized, verified decision framework for a two-property California inheritance (projected 2040–2050). Every figure links to an official source."
-theme: jekyll-theme-cayman
-plugins:
-  - jekyll-remote-theme
-remote_theme: pages-themes/cayman@v0.2.0
+title: Inheritance decision guide
 exclude:
-  - "*.log"
-  - "Unselected files"
+  - '.gitignore'
+  - 'COORDINATION.md'
+  - 'README.md'
+  - 'REPO-REVIEW.md'
+  - 'analysis'
+  - 'app.js'
+  - 'archive'
+  - 'assets'
+  - 'black-swan.html'
+  - 'costs.html'
+  - 'dashboard'
+  - 'data'
+  - 'decision.html'
+  - 'docs'
+  - 'downloads'
+  - 'estate-cash.html'
+  - 'estate-tax.html'
+  - 'EXECUTIVE-SUMMARY.md'
+  - 'final'
+  - 'flagged.html'
+  - 'integrated'
+  - 'law.html'
+  - 'legacy95'
+  - 'methodology.html'
+  - 'mirror-archived-2026-11-10.html'
+  - 'model'
+  - 'pending-changes.html'
+  - 'process.html'
+  - 'projections.html'
+  - 'properties.html'
+  - 'requirements.html'
+  - 'research'
+  - 'review.html'
+  - 'scenarios.html'
+  - 'scripts'
+  - 'session-faccd46d'
+  - 'site'
+  - 'sources.html'
+  - 'steps.html'
+  - 'style.css'
+  - 'taxes.html'
+  - 'verify-4395771d'
+  - 'versions.html'
+  - 'verification.html'
+  - 'privacy-site/build.py'
+  - 'privacy-site/check.py'
+  - 'privacy-site/check_published.py'
