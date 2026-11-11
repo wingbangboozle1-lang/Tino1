@@ -765,3 +765,11 @@ Rebase note (`cab26ebb`): while preparing the first publication commit, `main` a
 - Pages deploy: to be confirmed after the merge triggers a rebuild on `main`; served at https://wingbangboozle1-lang.github.io/Tino1/. Flagged irregularities do not block the merge and remain on the Flagged for Review page.
 
 ---
+
+### P-CAB-2 close-out (2026-11-11)
+
+- PR #34 https://github.com/wingbangboozle1-lang/Tino1/pull/34 merged at 13:18:02 UTC, merge commit `895a17c15a5989046140ec9f11aea3fb38ec5318`.
+- PR check https://github.com/wingbangboozle1-lang/Tino1/actions/runs/43027670967 succeeded using the GitHub Pages gem, the site checker, and an exact Jekyll output allowlist. No private figures were included in that artifact.
+- GitHub Pages build and deployment https://github.com/wingbangboozle1-lang/Tino1/actions/runs/43027873865 succeeded; the Pages API reports `built` at the merge commit. The live privacy-first index and Flagged for Review page were fetched, and the former root decision page and legacy docs index returned 404. The fetch of a cached old root response once after deploy demonstrates that prior cached content may persist; a cache-busted root request resolved to the new guide. Pages exclusion does not remove GitHub repository files, Git history, forks, search indexes or caches.
+- P-CAB-2: done for the Pages deployment. Public-repository and history exposure, and the deliberately withheld household projections and recommendation, remain needs review and are published as flags. API workflow-mode change was rejected with HTTP 403; the tested branch/Jekyll exclusion fallback was deployed instead.
+
