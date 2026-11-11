@@ -557,3 +557,59 @@ State found: PR #22 (F4, `07a57a05`) is merged and is the last commit on `main`;
 4. PRs #7, #17 and #23 are open and unmerged; left for their owners (R15).
 
 **Pull request, merge and deploy:** recorded below.
+
+---
+
+## Session `arena/1a7fa860` — claim and result (2026-11-11)
+
+**Branch:** `arena/1a7fa860-tino1`, branched from `main` @ `245529a` (PR #22 merged). **Session ID:** `arena/1a7fa860`.
+
+### Claim
+
+| # | Task | Status | Owner | Files / scope | Notes |
+|---|---|---|---|---|---|
+| T20 | Requirements traceability + independent re-verification pass on the live edition | in progress | `arena/1a7fa860` | `final/build.py`, `final/integrate.py`, root `requirements.html` and the regenerated root site, `README.md`, `COORDINATION.md` | New scope: `final/**` is not claimed by any open task; no other session has an active claim on `main` after F4 (PR #22 merged 05:16 UTC). Nothing outside `final/**`, the generated root pages, `README.md` and this file is touched. |
+
+### What was found before starting
+
+`python3 final/model.py && python3 final/build.py && python3 final/check.py .` on the branch tip reproduced the published edition: 20 pages, 628 sourced table rows, 2,065 rounded dollar figures, clean privacy scan. So the site on `main` was sound; this pass adds the one artefact the brief asks for that the site did not have (a line-by-line requirements list) and re-reads eleven official pages independently rather than trusting the earlier register.
+
+### Re-verification performed (pages fetched and read on 2026-11-11, this session)
+
+| Fact | Read on the official page | Result |
+|---|---|---|
+| 2026 federal estate-tax filing threshold | IRS, Estate tax (table by year of death) | $15,000,000 — matches |
+| 2027 basic exclusion | IRS Rev. Proc. 2026-35 §3.44 | $15,480,000 — matches |
+| California estate tax | State Controller, California Estate Tax | no return required for deaths on or after 2005-01-01 — matches |
+| Prop 19 §1m allowance | BOE LTA 2025/009 | $1,044,586 for transfers 2025-02-16 to 2027-02-15 — matches |
+| Prop 19 mechanics / trusts | BOE LTA 2026/026 | excluded amount = FBYV + $1m (adjusted); transfers "within or outside a trust"; continual-use rule — matches |
+| Basis reset in a non-includible grantor trust | IRS IRB 2023-16, Rev. Rul. 2023-2 | §1014 adjustment generally does not apply — matches |
+| Home-sale exclusion | IRS Topic 701 | $250,000 / $500,000; 24 of the last 60 months — matches |
+| SF secured rate FY2026-27 | SF Treasurer, Secured Property Taxes | 1.18162182% — matches |
+| Santa Clara rates FY2025-26 | SCC Controller-Treasurer Tax Rate Book, pp. A-4 to A-6 | components read; sum for a Cupertino address 1.16360 per $100, reproduces the rounded current bill — matches |
+| HUD fair market rents, 95014 and 94122 | HUD FY2026 SAFMR calculation pages | 95014: 2BR $4,440 / 3BR $5,870 / 4BR $6,390; 94122: 2BR $3,310 / 3BR $4,230 / 4BR $4,380 — matches |
+| FHFA San Jose index | FHFA via FRED, ATNHPIUS41940Q | Q4 2025 560.05; Q2 2025 564.26; Q2 2026 558.75 (−1.0% y/y) — matches |
+
+No figure on the site changed as a result of these reads. Two residual limits are unchanged and remain on the flag list: the exact tax rate area of Property A was deliberately not looked up (U03, privacy), and the tax-rate book is a two-column layout whose line pairings are inferred — the inference is corroborated by the fact that the resulting total reproduces the rounded current bill.
+
+### Irregularities noted (none blocking, none new to the data)
+
+- `docs/js/app.js` still carries the syntax error recorded as CR-43-1. `docs/` is a superseded edition with a notice and is not linked from the front door; not fixed here to keep this session's scope to the current edition.
+- CR-07-5 (rows without official links in `dashboard/`, `docs/`, `site/` and the archived root), CR-07-7 and CR-1/CR-2 remain open on superseded material only.
+- The repository is public and its Git history predates the $10 rounding (P02). Only the owner can fix that.
+
+### Result
+
+| # | Task | Status | Owner | Files / scope | Verification |
+|---|---|---|---|---|---|
+| T20 | Requirements traceability + independent re-verification pass | done | `arena/1a7fa860` | `final/build.py` (+181 lines: `build_requirements()`), `final/integrate.py` (staging redirect list), root `requirements.html`, nav and Summary card on every page, `README.md`, `COORDINATION.md` | 11 official pages re-read (table above); `final/check.py .` on the merged tree (after `main` moved to `77d3d4d`) → 21 pages, 668 table rows each with an official link, 1,654 links, 2,101 rounded dollar figures, privacy scan clean, model self-tests passed on 51 paths; `final/integrate.py` → 1,990 internal links across every HTML file in the repository, 0 broken; every root page served 200 from a local server; HTML well-formedness parse of all 21 root pages, no unclosed or mismatched tags. |
+
+**What the new page contains.** `requirements.html` splits the owner's brief into 23 numbered requirements, each with the page that answers it, a status (met / partly met / assumption) and the official page it rests on; then the nine owner figures and assumptions that have no official source, each linked to its flag; then the internal rules the site is held to (privacy, $10 rounding, no manual input, one row one source, responsive dashboard, one front door, nothing published until it builds); then the eleven official pages re-read for this pass. It adds no figures of its own: every number is produced by `final/model.py` or quoted from a linked official page, so it cannot drift from the rest of the site.
+
+**Sources added to the register by this pass:** none — the eleven pages re-read were already in `final/sources.py`; this pass confirmed them and changed no value.
+
+**Irregularities:** two IRS pages still disagree on the earlier estate-tax closing-letter fee (S01); the SCC tax rate book is a two-column layout and its line pairings are inferred, corroborated by reproducing the rounded current bill; `docs/js/app.js` still has the CR-43-1 syntax error on a superseded, unlinked edition. All remain on the Flagged for Review page and none blocks the merge.
+
+### Conflict during the final push, and how it was resolved
+
+`git pull --rebase origin main` hit one conflict, in this file only. `main` had moved from `245529a` to `77d3d4d` (PR #24 from `95ca0c0b`, PR #25 from `abd204be`) while this session was working, and both sessions appended a section at the end of `COORDINATION.md`. Nothing was discarded: both sections are kept, `95ca0c0b`'s first (as it landed on `main` first) and this one after it, with the conflict markers removed. The code merged without a conflict, and the combined tree was rebuilt and re-checked before the pull request: `final/build.py` holds both `95ca0c0b`'s review-status changes and this session's `build_requirements()`, and `final/model.py` keeps `abd204be`'s fix that the home-sale exclusion applies from the second anniversary (R12). No published figure moved in either direction.
