@@ -1,8 +1,8 @@
 # Model assumptions (all $ rounded to nearest $10 in outputs)
 
 ## User-provided inputs (internal use only — anonymized on site)
-- Cupertino (95014): market value $3,100,000 (Nov 2026); assessed 2026 $550,537; tax history 2014–2025 as provided.
-- San Francisco (94122): market value $1,800,000 (Nov 2026); assessed 2025 $114,248; tax history 2016–2025 as provided.
+- Cupertino (95014): market value $3,100,000 (Nov 2026); assessed 2026 $550,540; tax history 2014–2025 as provided.
+- San Francisco (94122): market value $1,800,000 (Nov 2026); assessed 2025 $114,250; tax history 2016–2025 as provided.
 - SF rent: $7,150/mo for 2 units; 3rd unit owner-occupied (no rent lost).
 - Cupertino water ~$100–$150/mo; solar net credit ~$10–$20/mo; insurance ~$1,500/yr (owner guess).
 - SF water $330–$400/mo (3 units); electric $30–$70/mo; insurance ~$1,500/yr (owner guess).
@@ -21,8 +21,8 @@
 - Mortgage (for buy-vs-rent context): ~6.3–6.7% 30-yr fixed 2026 (Freddie Mac PMMS; Fannie Mae).
 
 ## Derived parcel effective tax rates (owner records)
-- Cupertino: 2025 tax $7,207 ÷ assessed $539,743 = 1.34% (held constant in projections).
-- SF: 2025 tax $2,439 ÷ assessed $114,248 = 2.13% (held constant; FLAGGED — above typical SF 1.18–1.25%; verify TRA/bonds).
+- Cupertino: 2025 tax $7,210 ÷ assessed $539,740 = 1.34% (held constant in projections).
+- SF: 2025 tax $2,440 ÷ assessed $114,250 = 2.13% (held constant; FLAGGED — above typical SF 1.18–1.25%; verify TRA/bonds).
 
 ## Utilities / insurance planning values (2026, rounded $10)
 - Cupertino water: $130/mo (SJ Water avg residential ~$120/mo CPUC GRC; owner range $100–$150).
@@ -35,7 +35,7 @@
 - SF maintenance: $12,000/yr allowance.
 
 ## Prop 19 worked example (Cupertino, transfer 2045)
-- Factored base 2045: $550,537 × 1.02^19 ≈ $801,000.
+- Factored base 2045: $550,540 × 1.02^19 ≈ $801,000.
 - Market 2045: $3,100,000 × 1.03^19 ≈ $5,430,000.
 - Cap allowance ~$1,200,000 (indexed from $1,044,586; planning estimate).
 - Live-in heir: new assessed ≈ $801,000 + ($5,430,000 − $801,000 − $1,200,000) ≈ $4,230,000 → tax ≈ $56,500/yr.

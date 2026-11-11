@@ -18,7 +18,7 @@ DATA = os.path.join(ROOT, "analysis", "data")
 DOCS = os.path.join(ROOT, "dashboard")
 os.makedirs(os.path.join(DOCS, "assets"), exist_ok=True)
 
-BUILD_DATE = "2026-11-10"
+BUILD_DATE = "2026-11-11"
 SITE_TITLE = "Property Inheritance Decision Dashboard"
 
 NAV = [
@@ -32,6 +32,7 @@ NAV = [
     ("costs.html", "Operating costs"),
     ("projections.html", "Projections"),
     ("scenarios.html", "Scenarios & plan"),
+    ("black-swan.html", "Black swan"),
     ("pending-legislation.html", "Pending changes"),
     ("flagged.html", "Flagged for Review"),
     ("sources.html", "Sources"),
@@ -259,6 +260,7 @@ def main():
         ("Property A tax: 2044 → 2045 (base case)", f"{money(pa_2044['property_tax'])} → {money(pa_2045['property_tax'])}", "even with the Prop 19 exclusion, because value far exceeds base + cap. <a href='projections.html'>Projections →</a>"),
         ("Property B tax after reassessment (2045)", money(pb_2045["property_tax"]), "all rental units reassessed to market value. <a href='projections.html'>Projections →</a>"),
         ("Best plan (base case, after tax, 2055)", f"{ranked[0]['key']}: {money(ranked[0]['terminal_wealth_after_tax'])}", f"{esc(ranked[0]['name'])}. <a href='scenarios.html'>Scenarios →</a>"),
+        ("Black swan stress test", "Sell wins 12 / 18", "6 economic paths × 3 inheritance years (2040/2045/2050); 'live in it' wins the boom cells. <a href='black-swan.html'>Black swan →</a>"),
         ("Flagged items", str(len(flagged)), "unverified, derived or irregular items listed openly. <a href='flagged.html'>Flagged for Review →</a>"),
         ("Official sources cited", str(len({r['source_url'] for r in fed + ca + loc + econ + pend if r.get('source_url')})), f"read on {BUILD_DATE}. <a href='sources.html'>Sources →</a>"),
     ]
@@ -275,6 +277,7 @@ def main():
             "Insurance, water, electricity, maintenance and property tax — what is verified and what is not.",
             "Year-by-year 2026–2055 tables: value, assessed value, property tax and carrying costs.",
             "Live in / rent / sell-and-invest compared after tax, with sensitivity analysis and the recommended plan.",
+            "Real-world economic stress paths — stagflation, a Bay Area crash, deflation and a pandemic shock — over 50 variable years (2026–2076).",
             "Enacted and pending law changes at the federal, state and city level, and what they do to the plan.",
             "Every unverified, derived, ambiguous or irregular item, with what would resolve it.",
             "All official sources used, grouped by authority.",
@@ -289,6 +292,7 @@ def main():
 <li><strong>Prop 19 helps far less than most people expect.</strong> Only the transferor's principal residence qualifies, the heir must move in within one year, and the excluded amount is capped at the factored base value plus about $1.04–1.6 million. For Property A (base case, 2045) the assessed value still jumps from about {money(pa_2044['assessed_value'])} to {money(pa_2045['assessed_value'])} and the tax bill from {money(pa_2044['property_tax'])} to {money(pa_2045['property_tax'])} per year. Property B's rental units get no exclusion at all and are reassessed to full market value ({money(pb_2045['property_tax'])}/yr in 2045).</li>
 <li><strong>Keeping a reassessed $6–7 million house is expensive:</strong> about {money(S('S2','year1_net_cash')*-1)} per year of carrying cost in 2045 for Property A alone. Selling it at the stepped-up basis (little or no capital-gains tax) and investing the proceeds produces the highest after-tax wealth in {best_counts.get('S4',0)+best_counts.get('S6',0)} of {len(sens)} sensitivity cases; keeping both properties wins only when appreciation is high (≥6%/yr) <em>and</em> investment returns are low (≤5%).</li>
 <li><strong>Recommended plan (base case):</strong> {esc(ranked[0]['name'])} — after-tax wealth of {money(ranked[0]['terminal_wealth_after_tax'])} in 2055 versus {money(scen['S1']['terminal_wealth_after_tax'])} for living in A and keeping B. The lifestyle difference (a 2-bedroom flat vs a large Cupertino house) is real and is priced in the <a href="scenarios.html">scenario page</a>; if the heir wants to live in Property A, the next-best plan is to live in A and sell B (S2).</li>
+<li><strong>The recommendation survives black swan economics.</strong> Re-running the decision under six economic paths built from real history (1970s stagflation, the 2006–12 Bay Area crash of −23% to −35%, a Japan-style deflation tail, and the 2020–23 whiplash) over 50 variable years, selling at inheritance wins 12 of 18 stress cells and "live in it" wins only the housing-boom/replay cells — see the <a href="black-swan.html">Black swan section</a>.</li>
 </ol></div>"""
     page("index.html", "Dashboard", f"""
 {headline}
