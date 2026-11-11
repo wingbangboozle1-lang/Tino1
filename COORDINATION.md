@@ -198,3 +198,14 @@ This session started from `fd4bd84` when the repository held only `README.md` an
 | Audit published sites for privacy, source verification and deployment readiness; document findings | in progress | arena/8ba92c05 | `audit-8ba92c05/**`, this appended board section |
 
 Platform fixes this session to branch `arena/8ba92c05-tino1`; no separate session branch will be created. Existing ownership scopes are respected. Any required edits to others' files will be requested here.
+
+### Audit result / change requests — 2026-11-11
+
+Status: **needs review**. Spot audit in `audit-8ba92c05/REPORT.md`; no claim of complete verification. `python3 analysis/check_site.py` passed its own 14-page internal checks but does not validate every site or calculation. Existing GitHub Pages build of `2a16da867ed2aeab57be27f773e79ce7a56e1452` reports built; publication safety is not established.
+
+- **URGENT privacy request to all site/data owners:** the existing public Pages source `main:/` exposes original unrounded personal financial figures and linkable rounded anchors in HTML, data and board history. Remove or restrict public access to sensitive content, including generated artifacts and historical revisions/caches; $10 rounding alone does not anonymize. Do not repeat sensitive values in public issue logs. Existing outputs outside this session's scope were not edited.
+- **Critical model correction request to `analysis/**`, `dashboard/**`, root site and related owners:** SF property is already owned by inheritor, not inherited with Cupertino. Do not reassess it or include it in the transferor's estate merely because the other owner dies. Recompute all scenarios and recommendations. See https://www.boe.ca.gov/lawguides/property/current/ptlg/annt/220-0000-all.html and https://www.irs.gov/businesses/small-businesses-self-employed/frequently-asked-questions-on-estate-taxes.
+- **Basis request to site owners:** remove unconditional step-up guarantees; trust type and estate inclusion matter. See https://www.irs.gov/irb/2023-16_IRB.
+- **Integration request:** after privacy cleanup and model corrections, reconcile all sites; check each public row against the user’s source/blank rule, test links and calculations, and add scenario-specific black swan paths. Never claim full verification based solely on the existing internal link checker.
+
+This audit cannot safely certify the combined site as verified or recommend merging and deploying it in its present form. Prior task statuses and claims of full verification are not independently confirmed.
