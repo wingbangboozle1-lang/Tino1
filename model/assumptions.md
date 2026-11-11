@@ -1,43 +1,31 @@
-# Model assumptions (all $ rounded to nearest $10 in outputs)
+# Model assumptions (all owner/modeled $ figures rounded to nearest $10; exact parcel figures withheld)
 
-## User-provided inputs (internal use only — anonymized on site)
-- Cupertino (95014): market value $3,100,000 (Nov 2026); assessed 2026 $550,540; tax history 2014–2025 as provided.
-- San Francisco (94122): market value $1,800,000 (Nov 2026); assessed 2025 $114,250; tax history 2016–2025 as provided.
-- SF rent: $7,150/mo for 2 units; 3rd unit owner-occupied (no rent lost).
-- Cupertino water ~$100–$150/mo; solar net credit ~$10–$20/mo; insurance ~$1,500/yr (owner guess).
-- SF water $330–$400/mo (3 units); electric $30–$70/mo; insurance ~$1,500/yr (owner guess).
-- Inheritance horizon: 2040–2050 via trust; midpoint 2045 used for scenario comparison.
+_Remediated in session `arena/d3c614ec-tino1` (2026-11-11) to close `CR-43-3`, `CR-85-5`, `CR-85-6`, and `legacy95/REPORT.md` §§3.2–3.3._
 
-## Official-source anchors
-- Prop 13: assessed +2%/yr max; base levy 1% + bonds → parcel effective rates derived from owner records.
-- Prop 19 cap: $1,044,586 (Feb 16 2025–Feb 15 2027), BOE; indexed biennially (FHFA HPI).
-- Federal estate exemption: $15,000,000/person 2026 (OBBBA P.L. 119-21 §70106; IRS Rev. Proc. 2025-32); indexed from 2027; top rate 40%.
-- CA estate/inheritance tax: $0 (R&TC §13301; FTB).
-- Step-up basis: IRC §1014 (FMV at death; CA community-property double step-up §1014(b)(6)).
-- CA capital gains: ordinary income 1%–13.3% (FTB); federal LTCG 0/15/20% + 3.8% NIIT.
-- Home-price growth base: 3.0%/yr (CAR 2026 forecast +3.6% median; long-run CA ~3%).
-- Inflation / cost growth: 2.5%/yr general; insurance 5%/yr; SF water/sewer 4%/yr; rent 3%/yr.
-- Stocks: 7%/yr nominal conservative (historical ~10% nominal / ~7% real); savings 4%/yr.
-- Mortgage (for buy-vs-rent context): ~6.3–6.7% 30-yr fixed 2026 (Freddie Mac PMMS; Fannie Mae).
+## Anonymized property inputs (`$10`-rounded; personal identifiers excluded)
+- **Property A — Cupertino (`95014`, to be inherited via trust ~2040–2050):** Owner Nov 2026 market estimate `$3,100,000` (flagged unverified: not a formal appraisal); 2026 Prop 13 assessed value `$550,540` (`$10`-rounded); 2025 property tax `$7,210` (`$10`-rounded) on `$539,740` (`$10`-rounded) assessed value; 2026 tax bill `--` (blank/not yet finalized at prompt).
+- **Property B — San Francisco Outer Sunset (`94122`, ALREADY OWNED by the Inheritor — NOT inherited):** Owner Nov 2026 market estimate `$1,800,000` (flagged unverified: not a formal appraisal); 2025 Prop 13 assessed value `$114,250` (`$10`-rounded; 2026 `$116,540` at `+2%` per `CA R&TC § 51`); 2025 property tax `$2,440` (`$10`-rounded). Three livable units: 2 rented (`$7,150/mo` = `$85,800/yr` combined), 1 vacant unit the Inheritor can live in without losing rental income.
+- **Operating-cost inputs (owner ranges, `$10`-rounded):**
+  - Property A (`95014`): water `$100–$150/mo`; solar net electricity credit `-$10` to `-$20/mo` (`$0` net bill while grandfathered under CPUC NEM legacy window); primary residence insurance owner guess `$1,500/yr` (flagged unverified).
+  - Property B (`94122`): water/sewer `$330–$400/mo` (3 units); electricity `$30–$70/mo`; rental insurance owner guess `$1,500/yr` (flagged unverified).
 
-## Derived parcel effective tax rates (owner records)
-- Cupertino: 2025 tax $7,210 ÷ assessed $539,740 = 1.34% (held constant in projections).
-- SF: 2025 tax $2,440 ÷ assessed $114,250 = 2.13% (held constant; FLAGGED — above typical SF 1.18–1.25%; verify TRA/bonds).
-
-## Utilities / insurance planning values (2026, rounded $10)
-- Cupertino water: $130/mo (SJ Water avg residential ~$120/mo CPUC GRC; owner range $100–$150).
-- Cupertino electric: −$20/mo net credit IF grandfathered NEM 2.0; +$50/mo if NEM 3.0 (verify interconnection date).
-- Cupertino insurance: $2,800/yr (CA avg ~$1,570 CDI for typical home; scaled for $3.1M rebuild cost; owner $1,500 guess likely low).
-- Cupertino maintenance: $8,000/yr allowance.
-- SF water+sewer: $360/mo (SFPUC avg single-family ~$189/mo 2026; 3-unit master-metered; owner $330–$400).
-- SF electric: $50/mo (PG&E ~$0.34/kWh; owner $30–$70).
-- SF insurance (rental, 3 units): $3,200/yr.
-- SF maintenance: $12,000/yr allowance.
-
-## Prop 19 worked example (Cupertino, transfer 2045)
-- Factored base 2045: $550,540 × 1.02^19 ≈ $801,000.
-- Market 2045: $3,100,000 × 1.03^19 ≈ $5,430,000.
-- Cap allowance ~$1,200,000 (indexed from $1,044,586; planning estimate).
-- Live-in heir: new assessed ≈ $801,000 + ($5,430,000 − $801,000 − $1,200,000) ≈ $4,230,000 → tax ≈ $56,500/yr.
-- Rent/sell heir (no exclusion): new assessed = $5,430,000 → tax ≈ $72,500/yr.
-- SF rental at transfer: full reassessment to market (no Prop 19 exclusion for rentals).
+## Official-source statutory & macro anchors
+- **Ownership & Reassessment Distinction (`CA R&TC §§ 51, 60, 63.2`; `BOE Rule 462.260`):**
+  - Property A (`95014`) changes ownership on the Transferor's date of death (`BOE Rule 462.260(d)(1)` for revocable trusts). Under `Prop 19` (`CA Const. art. XIII A § 2.1(c)`, `R&TC § 63.2`, `BOE LTA 2026/026`), if rented out or left vacant it is reassessed to 100% of fair market value; if the Inheritor moves in within 1 year (`BOE-266`) and files `BOE-19-P` within 3 years, new taxable value = `FBYV + max(0, FMV - (FBYV + Cap))`.
+  - Property B (`94122`) is **already owned by the Inheritor**: **zero** change in ownership occurs at the Transferor's death, **zero** Prop 19 reassessment applies, **zero** `IRC § 1014` basis step-up applies, and it is **not** part of the Transferor's gross estate (`CR-43-3` closed).
+- **Prop 19 Intergenerational Exclusion Cap (`BOE LTA 2025/009`):** `$1,044,586` statutory figure for transfers `2025-02-16` through `2027-02-15` (adjusted biennially every odd February 16 by prior-year CA FHFA HPI change; `+2.15%` for 2024).
+- **Ad Valorem Tax Rates vs. Fixed Parcel Charges (`CR-85-5` closed):**
+  - Cupertino (`95014`): `1.16360%` ad valorem rate (`Santa Clara County FY2025-26 Compilation of Tax Rates & Information`, pp. A-4–A-6: `1.00000%` base + `0.05200%` County/Library/VMC/Housing + `0.03350%` Cupertino Union Elem + `0.04170%` Fremont Union High + `0.03110%` Foothill-De Anza CCD + `0.00390%` SCVWD + `0.00140%` Midpeninsula Open Space; exact parcel TRA withheld for privacy and flagged) plus `~$950/yr` (`$10`-rounded) non-ad-valorem parcel/direct charges, less `$7,000` Homeowners' Exemption (`BOE-266`) when owner-occupied.
+  - San Francisco (`94122`): `1.18162182%` FY2026-27 secured property tax rate (`SF Treasurer & Tax Collector`) plus `~$1,110/yr` (`$10`-rounded) non-ad-valorem parcel taxes/special assessments, explaining why `$2,440` total 2025 bill exceeds `1.18% × $114,250` without inflating future ad valorem marginal rates.
+- **Federal, State & Local Estate/Transfer Taxes:**
+  - Federal basic exclusion: `$15,000,000` in 2026 (`P.L. 119-21` § 70106, IRS Estate Tax page) and `$15,480,000` in 2027 (`IRS Rev. Proc. 2026-35` § 3.44); `40%` top marginal rate (`IRC § 2001(c)`, `Form 706` Table A); DSUE portability via timely `Form 706` within 9 months (`Form 4768` +6 months; `Rev. Proc. 2022-32` 5-year late relief when below filing threshold).
+  - California estate/inheritance tax: `$0` for deaths on or after `2005-01-01` (`CA State Controller`).
+  - Documentary transfer tax at death/trust inheritance: `$0` (`CA R&TC § 11930`); on subsequent sale in Cupertino, `$0.55` per `$500` (`0.11%`, `Santa Clara County Clerk-Recorder`, `R&TC § 11911`).
+- **Income-Tax Basis & Trust Sensitivity (`IRC § 1014`, `IRS Rev. Rul. 2023-2`, `CR-85-6` closed):**
+  - If Property A is held in a revocable living trust included in the Transferor's gross estate (`IRC § 2036`/`§ 2038`), basis resets to date-of-death FMV (`IRC § 1014`).
+  - Under `IRS Rev. Rul. 2023-2` (`2023-16 I.R.B. 658`), assets in an irrevocable grantor trust **not** included in the deceased grantor's gross estate receive **no** `§ 1014` step-up — modeled explicitly as a sensitivity and flagged on Flagged for Review.
+- **Utilities, Rent Regulation & Insurance (`CR-85-6` closed):**
+  - Solar (`CPUC D.14-03-041` / `D.22-12-056` / `D.24-05-028` / `Res. E-5354`): NEM 1.0/2.0 retail export credits sunset 20 years after original interconnection (interconnection year unverified/flagged; `2038` midpoint modeled), transitioning to Net Billing Tariff (`NBT`) plus PG&E Tier 3 `$24.15/mo` (`~$290/yr`, `$10`-rounded) residential fixed charge.
+  - San Francisco Rent Ordinance (`sf.gov`): `1.6%` allowable annual increase for `2026-03-01` through `2027-02-28` (`60%` of Bay Area CPI-U); initial rent on a vacant unit is uncapped (`Costa-Hawkins`); pending Board of Supervisors File No. `261020` (`2026-11-09` notice, not enacted) flagged.
+  - HUD FY2026 Small Area Fair Market Rents (`huduser.gov`): `95014` 3BR `$5,870/mo`, 4BR `$6,390/mo`; `94122` 2BR `$3,310/mo`, 3BR `$4,230/mo`.
+  - Insurance (`CDI`): Statewide 2023 residential earned premium averaged `~$1,130` (`CDI SB 824` report; `2008–2023` pooled homeowners `$1,180` `$10`-rounded); ZIP-specific `95014` primary HO-3 and `94122` 3-unit rental quotes cannot be verified without interactive insurer underwriting and are left blank in verified tables and flagged, with `$2,600/yr` and `$3,600/yr` modeled only as labeled planning sensitivities alongside the owner's `$1,500/yr` guess. Standard policies exclude earthquake and flood (`CDI Earthquake Guide`).

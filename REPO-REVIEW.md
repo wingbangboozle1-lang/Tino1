@@ -68,8 +68,11 @@ Spot-checks not repeated for every link on legacy pages — legacy pages are sup
 # The search pattern that stood here listed the unrounded figures themselves and was removed on 2026-11-11
 # (session 8fc06844, K1). List the figures one per line in a file OUTSIDE the repository and run:
 TINO1_PRIVATE_FIGURES=/path/outside/the/repository/figures.txt python3 final/check.py .
-# expect: "unrounded owner figures: none found"
-# every canonical HTML page reachable:
+TINO1_PRIVATE_FIGURES=/path/outside/the/repository/figures.txt python3 _d3c614ec/verify_all.py
+# expect: "unrounded owner figures: none found" and zero 64-hex fingerprint hashes in-repo
+# canonical & isolated Pages gates:
+python3 privacy-site/check.py
+python3 legacy95/check_legacy.py
 python3 -m http.server 8080  # then open /, /flagged.html, /black-swan.html, …
 ```
 
@@ -80,8 +83,21 @@ python3 -m http.server 8080  # then open /, /flagged.html, /black-swan.html, …
 3. P09/P03/P07/P08/P16 — appraisals, insurance quotes, utility bills, NEM status, itemized tax bills (owner documents only).
 4. P21 — marital status of the transferor (determines portability; single estates: no DSUE).
 5. PR #7 disposition (merge/close) — if merged, diff vs canonical before adopting.
-6. Which property carries the transferor’s Homeowners’ Exemption (determines which property Prop 19 can protect).
+6. Confirmation that the Transferor holds/qualifies for the Homeowners’ Exemption on Property A (Cupertino), since Property B (San Francisco) is already owned by the Inheritor and does not transfer at death.
 
 ## 8. Bottom line
 
 The repository contained real, good work — four parallel builds that mostly agreed on the law (step-up, Prop 19, $15M, no CA tax) and disagreed on tone and arithmetic. It also contained a live privacy breach (B1) now closed, and a broken-links patchwork now catalogued. The canonical site is self-consistent, privacy-clean, source-linked, regime-tested, and honest about what it cannot verify — which is the whole assignment.
+
+---
+
+## 9. Follow-up whole-tree audit (2026-11-11, session `arena/d3c614ec-tino1` & `8fc06844`)
+
+1. **Exact-figure & hash-table remediation (`8fc06844` PR #37 + `d3c614ec` `D3-1`):** `REPO-REVIEW.md` §6's literal regex, `final/data/privacy_fingerprints.txt` (reversible brute-forceable SHA-256 hashes over small integers), and 7 Python underscore-formatted literals in `model/project.py` and `model/verified_model_85899999.py` were removed/rounded to `$10`, and remaining non-`$10` comments in `model/verified_model_85899999.py` and `model/assumptions.md` were rounded. Zero hashes or encodings of owner figures are stored in `_d3c614ec/verify_all.py`.
+2. **`model/**` Change-Request close-out (`d3c614ec` `D3-1`):** `model/project.py` and `model/assumptions.md` now close **CR-43-3** (San Francisco 3-unit Property B is already owned by the Inheritor and is never reassessed or stepped up at the Transferor's death), **CR-85-5** (ad valorem tax rate separated from fixed parcel charges + `$7,000` Homeowners' Exemption), and **CR-85-6** (CPUC 20-year NEM legacy period under `D.14-03-041` / `D.22-12-056`, PG&E `$24.15/mo` residential fixed charge under `D.24-05-028` / `Res. E-5354`, SF Rent Board `60%-of-CPI` cap, and `IRS Rev. Rul. 2023-2` irrevocable-trust basis sensitivity).
+3. **Updated primary `.gov` checks (`2026-11-11`):**
+   - **BLS CPI (`https://www.bls.gov/news.release/cpi.nr0.htm`):** Updated on `2026-11-10` (`USDL-26-1685`) to October 2026 (`CPI-U = 337.511`, `+0.4%` SA m/m; 12-month percent change omitted by BLS because October 2025 survey data were not collected during the 2025 appropriations lapse).
+   - **IRS `Rev. Proc. 2026-35` (`https://www.irs.gov/pub/irs-drop/rp-26-35.pdf`):** Confirms 2027 basic exclusion `$15,480,000` (§ 3.44), 2027 annual gift exclusion `$20,000` (§ 3.46), and 2027 capital-gains / ordinary-income brackets (§§ 3.01, 3.03).
+   - **SF Rent Board (`https://www.sf.gov/learn-about-rent-increases-san-francisco/`):** Confirms `1.6%` allowable increase (`2026-03-01` to `2027-02-28`) and flags the `2026-11-09` notice on pending Board of Supervisors File No. `261020` (proposed temporary `10%/yr` cap on combined banked + capital-improvement increases; not yet enacted).
+   - **Santa Clara County Assessor (`https://asr.santaclaracounty.gov/tax-savings/transferring-your-assessed-value/parent-to-child-2`):** Official page contains a stale post-2021 copy-paste irregularity under its Prop 19 parent-child bullets referencing age-55 replacement-home rules (`R&TC § 69.6`) and stating "adjusted annually" rather than biennially (`CA Const. art. XIII A § 2.1(c)(4)`, `BOE LTA 2025/009`); governing constitutional/statutory text controls and is flagged in `_d3c614ec/VERIFICATION-LEDGER.md`.
+   - **Historical Git commits (`B2`):** Remains a repository-owner action (`git filter-repo` + force-push or setting repository visibility to private), as branch commits cannot rewrite merged `main` history without rewriting history.

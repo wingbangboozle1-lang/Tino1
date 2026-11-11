@@ -23,34 +23,34 @@ def r10(val: float) -> int:
 
 # [Property A — Cupertino Single-Family Residence, ZIP 95014]
 CUP_FMV_2026 = 3_100_000          # User Nov 2026 estimate (flagged: not formal appraisal)
-CUP_FBYV_2026 = 550_540           # 2026 Prop 13 assessed value ($550,540 rounded)
+CUP_FBYV_2026 = 550_540           # 2026 Prop 13 assessed value ($10-rounded; exact value withheld for privacy)
 CUP_AD_VALOREM_RATE = 0.011636    # SCC Controller FY25-26 Tax Rate Book (Cupertino TRA)
-CUP_PARCEL_CHARGES_2026 = 950     # Fixed non-ad-valorem parcel/direct charges (~$930 in 2025 +2%)
+CUP_PARCEL_CHARGES_2026 = 950     # Fixed non-ad-valorem parcel/direct charges (~$930 in 2025 +2%, rounded to $10)
 HOMEOWNERS_EXEMPTION = 7_000      # CA RTC § 218 ($7,000 assessed value reduction for primary res)
 
-CUP_WATER_2026 = 1_560            # $130/mo ($100-$150/mo user range; CPUC D.24-12-077 SJW)
+CUP_WATER_2026 = 1_560            # $130/mo ($100-$150/mo user range)
 CUP_SOLAR_CREDIT_2026 = -240      # -$20/mo net credit while NEM 1.0/2.0 legacy active
-CUP_NEM_SUNSET_YEAR = 2038        # Pre-2026 solar hits 20-yr CPUC NEM sunset (D.22-12-056) <=2046; 2038 midpoint
-CUP_POST_NEM_ELEC_2026_EQ = 660   # Post-NEM NBT + CPUC D.24-05-028 $24.15/mo ($290/yr) fixed charge + net usage (2026$)
-CUP_INS_PRIMARY_2026 = 2_600      # HO-3 primary res rebuild coverage (CDI $1,571 avg scaled to SV structure)
-CUP_INS_LANDLORD_2026 = 3_120     # DP-3 landlord policy (+20% over HO-3) if rented out
+CUP_NEM_SUNSET_YEAR = 2038        # Pre-2026 solar hits 20-yr CPUC NEM sunset (D.14-03-041 / D.22-12-056) <=2046; 2038 midpoint
+CUP_POST_NEM_ELEC_2026_EQ = 660   # Post-NEM NBT + CPUC D.24-05-028 / Res. E-5354 $24.15/mo (~$290/yr) fixed charge + net usage (2026$)
+CUP_INS_PRIMARY_2026 = 2_600      # Planning sensitivity above owner $1,500 guess (CDI SB 824 statewide avg ~$1,130; ZIP 95014 quote unverified)
+CUP_INS_LANDLORD_2026 = 3_120     # DP-3 landlord policy (+20% over HO-3) if rented out (unverified planning sensitivity)
 CUP_MAINT_2026 = 7_800            # Annual structure maintenance & solar/roof capex reserve (lower than SF 3-unit)
-CUP_MARKET_RENT_MO_2026 = 7_000   # 95014 SFR benchmark (HUD FY26 SAFMR / Metro 4BR $5,659 * ~1.24 ZIP factor)
+CUP_MARKET_RENT_MO_2026 = 6_390   # Official HUD FY2026 SAFMR ZIP 95014 4BR ($6,390/mo; 3BR is $5,870/mo)
 CUP_SELL_COST_PCT = 0.050         # 0.11% SCC transfer tax (RTC § 11911) + ~4.89% brokerage/escrow/prep
 
-# [Property B — San Francisco 3-Unit Property, Outer Sunset, ZIP 94122]
+# [Property B — San Francisco 3-Unit Property, Outer Sunset, ZIP 94122 — ALREADY OWNED BY INHERITOR]
 SF_FMV_2026 = 1_800_000           # User Nov 2026 estimate (flagged: not formal appraisal)
-SF_FBYV_2025 = 114_250            # 2025 Prop 13 assessed value ($114,250 rounded)
-SF_FBYV_2026 = SF_FBYV_2025 * 1.02  # 2026 Prop 13 +2.0% factor (CA BOE LTA 2026/002) -> $116,530
+SF_FBYV_2025 = 114_250            # 2025 Prop 13 assessed value ($10-rounded; exact value withheld for privacy)
+SF_FBYV_2026 = r10(SF_FBYV_2025 * 1.02)  # 2026 Prop 13 +2.0% factor (CA R&TC § 51) -> $116,540
 SF_AD_VALOREM_RATE = 0.01181622   # SF Treasurer FY 2026-27 secured tax rate (1.18162182%)
-SF_PARCEL_CHARGES_2026 = 1_110    # Fixed parcel/special assessments (~$1,088 in 2025 +2%)
-SF_RENT_BOARD_FEE_NET_2026 = 90   # SF Rent Board $59/unit * 3 = $177 gross, net ~$90 after 50% tenant banking
+SF_PARCEL_CHARGES_2026 = 1_110    # Fixed parcel/special assessments (~$1,090 in 2025 +2%, rounded to $10)
+SF_RENT_BOARD_FEE_NET_2026 = 90   # Net annual Rent Board fee allowance ($10-rounded)
 
-SF_RENT_2UNITS_MO_2026 = 7_150    # User actual 2 rented units ($85,800/yr; matches HUD FY26 SF 2BR FMR $3,604*2)
-SF_UNIT3_MARKET_MO_2026 = 3_600   # HUD FY26 SF HMFA 2BR FMR ($3,604/mo rounded to $3,600) if Unit 3 rented
+SF_RENT_2UNITS_MO_2026 = 7_150    # User actual 2 rented units ($85,800/yr; cf. HUD FY2026 SAFMR 94122 2BR $3,310 / 3BR $4,230)
+SF_UNIT3_MARKET_MO_2026 = 3_310   # Official HUD FY2026 SAFMR ZIP 94122 2BR ($3,310/mo) if Unit 3 rented
 SF_WATER_2026 = 4_440             # $370/mo ($330-$400/mo user range; SFPUC FY26-28 multi-family water+sewer)
 SF_ELEC_2026 = 600                # $50/mo ($30-$70/mo user range; PG&E common/owner electric)
-SF_INS_LANDLORD_2026 = 3_600      # 3-unit habitational/landlord DP-3 + loss-of-rents (CDI guidance)
+SF_INS_LANDLORD_2026 = 3_600      # 3-unit habitational/landlord DP-3 planning sensitivity above owner $1,500 guess (unverified)
 SF_MAINT_2026 = 12_600            # 3-unit older coastal salt-fog structure maintenance & capex reserve
 
 # Statutory Tax & Macro Escalation Parameters
@@ -424,8 +424,8 @@ def main():
         "estate_tax_thresholds": estate_rows,
     }
 
-    out_dir = Path("data")
-    out_dir.mkdir(exist_ok=True)
+    out_dir = Path("_d3c614ec/out/legacy_85")
+    out_dir.mkdir(parents=True, exist_ok=True)
     json_path = out_dir / "verified_projections_85899999.json"
     csv_path = out_dir / "verified_projections_85899999.csv"
 
