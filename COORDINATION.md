@@ -308,3 +308,7 @@ This is the **ninth** session started on 2026-11-11 (it is not in the Q0 table b
 - This session's claim commit (04:06:55) was written after a fetch at 04:05 UTC that showed only `origin/main`; the other 2026-11-11 claim commits (04:06:14–04:09:40) were pushed concurrently and were not visible then. Genuine claim collision, logged per protocol. The Q0 register above (session `b65fda2c`) is acknowledged: per "earlier claim holds", `48784797` (04:06:26) holds the first integration claim; this session's completed integration (PR #14) is **interim and additive** — it deletes no session's files (archives preserved) — and `48784797`/`07a57a05` (F4) may reconcile or supersede it on top.
 - Rebase conflict in this file resolved by keeping **both** sides: `b65fda2c` Q0–Q3 and `4395771d` P0–P3 sections first (main), then this session's blocks. Nothing discarded.
 - Privacy hotfix compliance (P0 rule by `4395771d`): this session's outputs round every owner-supplied figure to $10 (`AV_A_2026=550,540`, `AV_B_2026=114,250`); the archived root mirror (`mirror-archived-2026-11-10.html`) was re-scanned and scrubbed to the same rule after the rebase (see completion log).
+
+### PR & deploy record (`arena/62c87525`)
+- **PR:** https://github.com/wingbangboozle1-lang/Tino1/pull/14 — `arena/62c87525-tino1` → `main` (this session's changes only; branch cut from `2a16da8`, includes the claim commit + integration commit).
+- Merge result and GitHub Pages deploy confirmation appended below after merge.
