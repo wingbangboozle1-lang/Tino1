@@ -1,0 +1,359 @@
+{
+  "generated_utc": "2026-11-11",
+  "session": "arena/d3c614ec-tino1",
+  "policy": "Every entry below was directly fetched and read in session arena/d3c614ec-tino1 on 2026-11-11 UTC via fetch_page. Unconfirmable household or interactive-only ZIP values are left blank and flagged on flagged.html.",
+  "sources": {
+    "IRS-ESTATE": {
+      "label": "IRS Estate Tax",
+      "agency": "Internal Revenue Service",
+      "title": "Estate tax — Filing threshold for year of death (2011–2026)",
+      "url": "https://www.irs.gov/businesses/small-businesses-self-employed/estate-tax",
+      "how": "fetched_in_session",
+      "verified_facts": "Filing threshold per decedent: $13,990,000 for 2025; $15,000,000 for 2026. Gross estate uses fair market value at date of death; portability of unused exemption to surviving spouse requires a timely filed Form 706."
+    },
+    "IRS-NEW": {
+      "label": "IRS What's New (P.L. 119-21)",
+      "agency": "Internal Revenue Service",
+      "title": "What's new — Estate and gift tax (Public Law 119-21 & TD 10055)",
+      "url": "https://www.irs.gov/businesses/small-businesses-self-employed/whats-new-estate-and-gift-tax",
+      "how": "fetched_in_session",
+      "verified_facts": "Public Law 119-21 (signed July 4, 2025) amends IRC § 2010(c)(3) to increase the basic exclusion amount to $15,000,000 for calendar year 2026. Treasury Decision 10055 raises the Form 706 Estate Tax Closing Letter user fee from $56 to $76 effective October 26, 2026; IRS account transcripts remain a free alternative. TD 9991 implements IRC § 6035 consistent-basis reporting (Form 8971)."
+    },
+    "RP-2026-35": {
+      "label": "IRS Rev. Proc. 2026-35",
+      "agency": "Internal Revenue Service",
+      "title": "Revenue Procedure 2026-35 — 2027 Inflation-Adjusted Tax Items",
+      "url": "https://www.irs.gov/pub/irs-drop/rp-26-35.pdf",
+      "how": "fetched_in_session",
+      "verified_facts": "§ 3.44: 2027 estate & gift basic exclusion amount under IRC § 2010(c)(3) is $15,480,000. § 3.46: 2027 annual gift exclusion under IRC § 2503(b) is $20,000. § 3.01: 2027 top 37% ordinary rate starts at $661,375 (single), $793,650 (joint), $16,500 (estates/trusts). § 3.03: 2027 0%/15%/20% capital-gains thresholds are $51,050 / $563,200 (single) and $102,100 / $633,600 (joint)."
+    },
+    "IRS-FAQ-ESTATE": {
+      "label": "IRS Estate Tax FAQ",
+      "agency": "Internal Revenue Service",
+      "title": "Frequently asked questions on estate taxes (Form 706, Form 4768, Rev. Proc. 2022-32)",
+      "url": "https://www.irs.gov/businesses/small-businesses-self-employed/frequently-asked-questions-on-estate-taxes",
+      "how": "fetched_in_session",
+      "verified_facts": "Form 706 is due 9 months after death; Form 4768 grants an automatic 6-month filing extension (to 15 months). Estates below the § 6018(a) filing threshold may make a late DSUE portability election up to the 5th anniversary of death under Rev. Proc. 2022-32."
+    },
+    "IRS-I706": {
+      "label": "IRS Form 706 Instructions",
+      "agency": "Internal Revenue Service",
+      "title": "Instructions for Form 706 (Rev. 07/2026)",
+      "url": "https://www.irs.gov/instructions/i706",
+      "how": "fetched_in_session",
+      "verified_facts": "Confirms $15,000,000 filing threshold for 2026 decedents, gross-estate inclusion rules (Schedules A–I), 9-month filing deadline, 40% top marginal unified estate tax rate above $1,000,000 taxable threshold, and Rev. Proc. 2022-32 5-year portability relief."
+    },
+    "IRS-INHERIT": {
+      "label": "IRS Inherited Property Basis FAQ",
+      "agency": "Internal Revenue Service",
+      "title": "Gifts & inheritances — Is money received from the sale of inherited property considered taxable income?",
+      "url": "https://www.irs.gov/faqs/interest-dividends-other-types-of-income/gifts-inheritances/gifts-inheritances",
+      "how": "fetched_in_session",
+      "verified_facts": "Basis of property inherited from a decedent is generally fair market value (FMV) on the date of death (or alternate valuation date if elected on Form 706), whether or not Form 706 is filed; Schedule A to Form 8971 governs consistent-basis reporting."
+    },
+    "RR-2023-2": {
+      "label": "IRS Rev. Rul. 2023-2",
+      "agency": "Internal Revenue Service",
+      "title": "Internal Revenue Bulletin 2023-16 — Revenue Ruling 2023-2 (26 CFR 1.1014-1)",
+      "url": "https://www.irs.gov/irb/2023-16_IRB",
+      "how": "fetched_in_session",
+      "verified_facts": "Confirms that the IRC § 1014 basis adjustment to fair market value at death generally does NOT apply to assets held in an irrevocable grantor trust that are not included in the deceased grantor's gross estate for federal estate tax purposes."
+    },
+    "IRS-TC409": {
+      "label": "IRS Topic 409",
+      "agency": "Internal Revenue Service",
+      "title": "Topic no. 409 — Capital gains and losses",
+      "url": "https://www.irs.gov/taxtopics/tc409",
+      "how": "fetched_in_session",
+      "verified_facts": "Long-term capital gains are taxed at 0%, 15%, or 20% depending on taxable income; unrecaptured IRC § 1250 real-property depreciation gain is taxed up to 25%; inherited property qualifies for long-term treatment regardless of actual holding period."
+    },
+    "IRS-TC701": {
+      "label": "IRS Topic 701",
+      "agency": "Internal Revenue Service",
+      "title": "Topic no. 701 — Sale of your home (IRC § 121)",
+      "url": "https://www.irs.gov/taxtopics/tc701",
+      "how": "fetched_in_session",
+      "verified_facts": "Up to $250,000 ($500,000 married filing jointly) of capital gain on a principal residence may be excluded if the owner meets both the 24-month ownership test and 24-month residence use test within the 5 years preceding the sale."
+    },
+    "IRS-TC559": {
+      "label": "IRS Topic 559",
+      "agency": "Internal Revenue Service",
+      "title": "Topic no. 559 — Net Investment Income Tax (IRC § 1411)",
+      "url": "https://www.irs.gov/taxtopics/tc559",
+      "how": "fetched_in_session",
+      "verified_facts": "3.8% NIIT applies to the lesser of net investment income (including passive rents, dividends, taxable interest, and net capital gains) or MAGI above unindexed statutory thresholds ($200,000 single, $250,000 joint)."
+    },
+    "SCO-ESTATE": {
+      "label": "CA State Controller",
+      "agency": "California State Controller's Office",
+      "title": "California Estate Tax, Inheritance Tax, and Gift Tax",
+      "url": "https://www.sco.ca.gov/ardtax_estate_tax.html",
+      "how": "fetched_in_session",
+      "verified_facts": "For decedents dying on or after January 1, 2005, there is no requirement to file a California Estate Tax Return and no California estate or GST tax; California's inheritance and gift taxes were repealed for transfers on or after June 8, 1982."
+    },
+    "RTC-51": {
+      "label": "CA R&TC § 51",
+      "agency": "California Legislature",
+      "title": "Revenue and Taxation Code § 51 — Proposition 13 2% Cap & Proposition 8 Decline-in-Value",
+      "url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=51.&lawCode=RTC",
+      "how": "fetched_in_session",
+      "verified_facts": "Taxable value on each January 1 lien date is the lesser of (1) factored base year value compounded by California CPI not to exceed 2% per year, or (2) current full cash (market) value under Proposition 8 decline-in-value rules."
+    },
+    "RTC-63.2": {
+      "label": "CA R&TC § 63.2",
+      "agency": "California Legislature",
+      "title": "Revenue and Taxation Code § 63.2 — Proposition 19 Intergenerational Family Home Exclusion",
+      "url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=63.2.&lawCode=RTC",
+      "how": "fetched_in_session",
+      "verified_facts": "Applies to transfers on/after February 16, 2021 of the transferor's principal residence that becomes the eligible transferee's principal residence within 1 year, with Homeowners'/Disabled Veterans' Exemption filed within 1 year; removal of continual residency restores the date-of-transfer market base year value compounded forward."
+    },
+    "RTC-480": {
+      "label": "CA R&TC § 480",
+      "agency": "California Legislature",
+      "title": "Revenue and Taxation Code § 480(b) — Death Change-in-Ownership Reporting",
+      "url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=480.&lawCode=RTC",
+      "how": "fetched_in_session",
+      "verified_facts": "For real property transferred by reason of death, including through a trust, the trustee or transferee must file a Change in Ownership Statement with the county assessor/recorder within 150 days after the date of death."
+    },
+    "RTC-11930": {
+      "label": "CA R&TC § 11930",
+      "agency": "California Legislature",
+      "title": "Revenue and Taxation Code § 11930 — Documentary Transfer Tax Exemption at Death/Gift",
+      "url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=11930.&lawCode=RTC",
+      "how": "fetched_in_session",
+      "verified_facts": "Documentary transfer tax does not apply to any deed or instrument transferring realty outright or in trust by reason of inter vivos gift or the death of any person."
+    },
+    "PROB-16061.7": {
+      "label": "CA Prob. Code § 16061.7",
+      "agency": "California Legislature",
+      "title": "Probate Code § 16061.7 — Mandatory 60-Day Notification by Trustee",
+      "url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=16061.7.&lawCode=PROB",
+      "how": "fetched_in_session",
+      "verified_facts": "When a revocable trust becomes irrevocable upon a settlor's death, the trustee must serve statutory notification on every beneficiary and heir within 60 days after death."
+    },
+    "SB-974": {
+      "label": "CA SB 974 (Ch. 665)",
+      "agency": "California Legislature",
+      "title": "Senate Bill 974 (Statutes of 2026, Ch. 665, approved Sept. 27, 2026) — Special Needs Trusts",
+      "url": "https://leginfo.legislature.ca.gov/faces/billTextClient.xhtml?bill_id=202520260SB974",
+      "how": "fetched_in_session",
+      "verified_facts": "Amends CA R&TC § 63.2 to confirm that qualifying special needs trusts are an eligible medium of transfer for the Proposition 19 intergenerational exclusion."
+    },
+    "BOE-P19": {
+      "label": "BOE Prop 19",
+      "agency": "California State Board of Equalization",
+      "title": "Proposition 19 Overview & Comparison Charts",
+      "url": "https://www.boe.ca.gov/prop19/",
+      "how": "fetched_in_session",
+      "verified_facts": "Eliminates the former $1M non-principal-residence exclusion (Prop 58/193); restricts parent-child relief to principal residences occupied within 1 year (Homeowners' Exemption within 1 year; BOE-19-P claim within 3 years or prior to third-party sale for retroactive relief)."
+    },
+    "BOE-LTA-2025-009": {
+      "label": "BOE LTA 2025/009",
+      "agency": "California State Board of Equalization",
+      "title": "Letter to Assessors No. 2025/009 — Adjustment of the $1 Million Amount",
+      "url": "https://www.boe.ca.gov/proptaxes/pdf/lta25009.pdf",
+      "how": "fetched_in_session",
+      "verified_facts": "Sets the Proposition 19 excluded-value cap addition at $1,044,586 for transfers occurring February 16, 2025 through February 15, 2027 (up from $1,000,000 in 2021–2023 and $1,022,600 in 2023–2025, reflecting +2.15% 2024 CA FHFA HPI); next adjustment February 16, 2027."
+    },
+    "BOE-LTA-2026-026": {
+      "label": "BOE LTA 2026/026",
+      "agency": "California State Board of Equalization",
+      "title": "Letter to Assessors No. 2026/026 (Aug. 3, 2026) — Prop 19 Intergenerational Exclusion FAQ",
+      "url": "https://www.boe.ca.gov/proptaxes/pdf/lta26026.pdf",
+      "how": "fetched_in_session",
+      "verified_facts": "Defines Excluded Amount = FBYV + adjusted $1M cap, Excess Amount = FMV - Excluded Amount, and New Taxable Value = FBYV + max(0, Excess Amount); covers trust transfers and enforces continual family-home occupancy."
+    },
+    "BOE-RULE-462.260": {
+      "label": "BOE Rule 462.260",
+      "agency": "California State Board of Equalization",
+      "title": "Property Tax Rule 462.260 — Date of Change in Ownership",
+      "url": "https://boe.ca.gov/proptaxes/pdf/rules/Rule462_260.pdf",
+      "how": "fetched_in_session",
+      "verified_facts": "Rule 462.260(d)(1): for an inter vivos revocable trust that becomes irrevocable upon the settlor's death, the change-in-ownership date is the date of death. Property already owned by the beneficiary experiences no change in ownership."
+    },
+    "BOE-HOX": {
+      "label": "BOE Homeowners' Exemption",
+      "agency": "California State Board of Equalization",
+      "title": "Homeowners' Exemption (Form BOE-266)",
+      "url": "https://www.boe.ca.gov/proptaxes/homeowners_exemption.htm",
+      "how": "fetched_in_session",
+      "verified_facts": "Provides a $7,000 taxable-value reduction for an owner-occupied principal residence; file Form BOE-266 with the county assessor (by February 15 for full annual exemption, and within 1 year of transfer for Prop 19 eligibility)."
+    },
+    "FTB-RATES": {
+      "label": "CA FTB Tax Schedules",
+      "agency": "California Franchise Tax Board",
+      "title": "2025 California Tax Rate Schedules (Form 540)",
+      "url": "https://www.ftb.ca.gov/forms/2025/2025-540-tax-rate-schedules.pdf",
+      "how": "fetched_in_session",
+      "verified_facts": "California taxes capital gains as ordinary income: Schedule X (single) brackets reach 9.3% over $72,724, 10.3% over $371,479, 11.3% over $445,771, and 12.3% over $742,953 (plus 1% Mental Health Services Tax above $1,000,000 under R&TC § 17043)."
+    },
+    "SOS-2026": {
+      "label": "CA SOS Nov 2026 Ballot",
+      "agency": "California Secretary of State",
+      "title": "2026 General Election — State Ballot Measures Unofficial Returns (as of Nov. 10, 2026)",
+      "url": "https://electionresults.sos.ca.gov/returns/ballot-measures",
+      "how": "fetched_in_session",
+      "verified_facts": "Unofficial returns (certification due Dec. 11, 2026): Prop 3 (permanent high-income tax extension) Yes 60.6%; Prop 40 (one-time wealth/taxpayer tax) No 52.6%; Prop 42 (prohibits new state personal property & certain retroactive taxes) Yes 51.5%; Prop 43 No 57.4%. No Prop 13/19 repeal appeared on the Nov. 2026 ballot."
+    },
+    "SCC-RATES": {
+      "label": "Santa Clara Tax Rate Book",
+      "agency": "County of Santa Clara Controller-Treasurer",
+      "title": "Compilation of Tax Rates & Information, Fiscal Year 2025-2026",
+      "url": "https://files.santaclaracounty.gov/exjcpb1531/2025-11/tax-rate-book-2025-2026.pdf?VersionId=HHMZ1VmGwFXqVvpM36xuptkIcV2V8ctE",
+      "how": "fetched_in_session",
+      "verified_facts": "Pages A-4 to A-6 component rates per $100 assessed value: 1.00000 (1% base) + 0.03880 (County Retirement) + 0.00240 (County Library) + 0.00520 (VMC 2008) + 0.00560 (County Housing 2016) + 0.03350 (Cupertino Union Elem: 0.00010 + 0.01650 + 0.01690) + 0.04170 (Fremont Union High: 0.01040 + 0.00880 + 0.01070 + 0.01180) + 0.03110 (Foothill-De Anza CCD: 0.01010 + 0.01350 + 0.00750) + 0.00140 (Midpeninsula Open Space) + 0.00390 (SCVWD State Water Project) = 1.16360%."
+    },
+    "SCC-P19": {
+      "label": "Santa Clara Assessor Prop 19",
+      "agency": "County of Santa Clara Office of the Assessor",
+      "title": "Parent-Child Transfer (Proposition 19) & Worked Example",
+      "url": "https://asr.santaclaracounty.gov/tax-savings/transferring-your-assessed-value/parent-to-child-2",
+      "how": "fetched_in_session",
+      "verified_facts": "Publishes worked Prop 19 formula ($200k FBYV + $1M cap = $1.2M limit; $1.8M FMV - $1.2M = $600k excess; new value = $800k) and BOE-19-P filing instructions. Contains a stale post-2021 bullet conflating age-55 rules and saying 'annually' instead of biennially — flagged."
+    },
+    "SCC-DTT": {
+      "label": "Santa Clara Clerk-Recorder",
+      "agency": "County of Santa Clara Clerk-Recorder",
+      "title": "Recording real estate — Documentary Transfer Tax & PCOR",
+      "url": "https://clerkrecorder.santaclaracounty.gov/recording-documents/recording-real-estate",
+      "how": "fetched_in_session",
+      "verified_facts": "County documentary transfer tax on sales is $0.55 per $500 ($1.10 per $1,000 = 0.11%); Cupertino has no extra city conveyance tax (city add-on applies only in San Jose, Palo Alto, and Mountain View)."
+    },
+    "SF-TAX": {
+      "label": "SF Treasurer Property Tax",
+      "agency": "San Francisco Office of the Treasurer & Tax Collector",
+      "title": "Secured Property Taxes (FY 2026-27)",
+      "url": "https://sftreasurer.org/property/secured-property-taxes",
+      "how": "fetched_in_session",
+      "verified_facts": "Fiscal Year 2026-27 secured ad valorem property tax rate is 1.18162182%; installments are delinquent after December 10 and April 10."
+    },
+    "SF-EHT": {
+      "label": "SF Empty Homes Tax",
+      "agency": "San Francisco Office of the Treasurer & Tax Collector",
+      "title": "Empty Homes Tax (EHT) Enforcement Suspension Notice",
+      "url": "https://sftreasurer.org/business/taxes-fees/empty-homes-tax-eht",
+      "how": "fetched_in_session",
+      "verified_facts": "California Court of Appeal affirmed on September 11, 2026 (Case No. A172067) that San Francisco's Empty Homes Tax is preempted by state law; the Treasurer & Tax Collector has halted all collection and filing requirements unless reversed."
+    },
+    "SF-RENT": {
+      "label": "SF Rent Board",
+      "agency": "San Francisco Rent Board",
+      "title": "Learn about rent increases in San Francisco (2026–2027 & File No. 261020)",
+      "url": "https://www.sf.gov/learn-about-rent-increases-san-francisco/",
+      "how": "fetched_in_session",
+      "verified_facts": "Allowable annual rent increase for covered rent-controlled units is 1.6% effective March 1, 2026 through February 28, 2027 (60% of Bay Area CPI-U); initial rent on a vacant unit is uncapped. Flags Nov. 9, 2026 notice on pending Board of Supervisors File No. 261020 (proposed temporary 10%/yr cap on banked + capital improvement increases; not yet enacted)."
+    },
+    "CPUC-NEM": {
+      "label": "CPUC NEM & Net Billing",
+      "agency": "California Public Utilities Commission",
+      "title": "Net Energy Metering and Net Billing (D.14-03-041 & D.22-12-056)",
+      "url": "https://www.cpuc.ca.gov/industries-and-topics/electrical-energy/demand-side-management/customer-generation/net-energy-metering-and-net-billing",
+      "how": "fetched_in_session",
+      "verified_facts": "NEM 1.0/2.0 customers remain on retail-export net metering for 20 years from original interconnection (D.14-03-041), then transition to the Net Billing Tariff (D.22-12-056, avoided-cost export credits); annual net surplus compensation (AB 920) is ~$0.02–$0.03/kWh."
+    },
+    "CPUC-IGFC": {
+      "label": "CPUC Res. E-5354 (PG&E Fixed Charge)",
+      "agency": "California Public Utilities Commission",
+      "title": "Resolution E-5354 — Implementation of PG&E Income-Graduated Fixed Charges (D.24-05-028)",
+      "url": "https://docs.cpuc.ca.gov/PublishedDocs/Published/G000/M555/K816/555816677.pdf",
+      "how": "fetched_in_session",
+      "verified_facts": "Approves PG&E's residential fixed charge effective Q1 2026: Tier 3 (non-CARE/non-FERA) customers pay $24.15/month (~$290/yr, $10-rounded), paired with lower volumetric per-kWh rates."
+    },
+    "CDI-SURVEY": {
+      "label": "CDI Premium Comparison",
+      "agency": "California Department of Insurance",
+      "title": "Compare Insurance Premiums (2026 Homeowners Survey)",
+      "url": "https://www.insurance.ca.gov/01-consumers/105-type/9-compare-prem/index.cfm",
+      "how": "fetched_in_session",
+      "verified_facts": "CDI states survey figures are NOT quotes and omit property-specific discounts/wildfire surcharges; interactive ZIP queries cannot substitute for underwriting quotes on a $3.1M 95014 SFR or $1.8M 94122 3-unit rental."
+    },
+    "CDI-SB824": {
+      "label": "CDI SB 824 Data",
+      "agency": "California Department of Insurance",
+      "title": "Wildfire Risk Information Reporting (CA Ins. Code § 929)",
+      "url": "https://www.insurance.ca.gov/01-consumers/200-wrr/WildfireRiskInfoRpt.cfm",
+      "how": "fetched_in_session",
+      "verified_facts": "Official statewide residential property insurance dataset reporting earned premiums, exposures, Coverage A amounts, and wildfire risk; used only as statewide context (~$1,130/policy across all residential forms in 2023) while flagging 95014/94122 quotes as unverified."
+    },
+    "CDI-EQ": {
+      "label": "CDI Earthquake Guide",
+      "agency": "California Department of Insurance",
+      "title": "Earthquake Insurance Consumer Guide",
+      "url": "https://www.insurance.ca.gov/01-consumers/105-type/95-guides/03-res/eq-ins.cfm",
+      "how": "fetched_in_session",
+      "verified_facts": "Standard homeowners, renters, and landlord policies exclude earthquake, flood, and landslide damage (except fire following earthquake); CEA policies for homes >$1M or pre-1980 unretrofitted raised foundations have a minimum 15% dwelling deductible."
+    },
+    "HUD-95014": {
+      "label": "HUD FY2026 SAFMR 95014",
+      "agency": "U.S. Department of Housing and Urban Development",
+      "title": "FY 2026 Small Area Fair Market Rents — ZIP Code 95014 (Cupertino)",
+      "url": "https://www.huduser.gov/portal/datasets/fmr/fmrs/FY2026_code/2026zip_code_calc.odn?zcta=95014&metro_code=METRO41940M41940&year=2026",
+      "how": "fetched_in_session",
+      "verified_facts": "FY2026 40th-percentile gross rent benchmarks for ZIP 95014: Efficiency $3,340; 1BR $3,800; 2BR $4,440; 3BR $5,870; 4BR $6,390 per month."
+    },
+    "HUD-94122": {
+      "label": "HUD FY2026 SAFMR 94122",
+      "agency": "U.S. Department of Housing and Urban Development",
+      "title": "FY 2026 Small Area Fair Market Rents — ZIP Code 94122 (Outer Sunset, SF)",
+      "url": "https://www.huduser.gov/portal/datasets/fmr/fmrs/FY2026_code/2026zip_code_calc.odn?zcta=94122&metro_code=METRO41860MM7360&year=2026",
+      "how": "fetched_in_session",
+      "verified_facts": "FY2026 40th-percentile gross rent benchmarks for ZIP 94122: Efficiency $2,280; 1BR $2,730; 2BR $3,310; 3BR $4,230; 4BR $4,380 per month."
+    },
+    "FHFA-SJ": {
+      "label": "FHFA HPI San Jose (FRED)",
+      "agency": "Federal Housing Finance Agency / Federal Reserve Bank of St. Louis",
+      "title": "All-Transactions House Price Index for San Jose-Sunnyvale-Santa Clara, CA MSA (ATNHPIUS41940Q)",
+      "url": "https://fred.stlouisfed.org/series/ATNHPIUS41940Q",
+      "how": "fetched_in_session",
+      "verified_facts": "Quarterly index (1995:Q1=100): 1976–2026Q2; Q4 2025 = 560.05, Q1 2026 = 566.96, Q2 2026 = 558.75 (vs. Q2 2025 = 564.26, -0.98% y/y); 50-year 1976–2025 annual series used in historical sequence replays."
+    },
+    "FHFA-SF": {
+      "label": "FHFA HPI San Francisco (FRED)",
+      "agency": "Federal Housing Finance Agency / Federal Reserve Bank of St. Louis",
+      "title": "All-Transactions House Price Index for San Francisco-San Mateo-Redwood City, CA MSAD (ATNHPIUS41884Q)",
+      "url": "https://fred.stlouisfed.org/series/ATNHPIUS41884Q",
+      "how": "fetched_in_session",
+      "verified_facts": "Quarterly index (1995:Q1=100): 1975–2026Q2; Q4 2025 = 512.99, Q1 2026 = 510.36, Q2 2026 = 506.53 (vs. Q2 2025 = 507.95, -0.28% y/y)."
+    },
+    "BLS-CPI": {
+      "label": "BLS Oct 2026 CPI Release",
+      "agency": "U.S. Bureau of Labor Statistics",
+      "title": "Consumer Price Index Summary — October 2026 (USDL-26-1685, Nov. 10, 2026)",
+      "url": "https://www.bls.gov/news.release/cpi.nr0.htm",
+      "how": "fetched_in_session",
+      "verified_facts": "October 2026 CPI-U rose 0.4% m/m SA (index 337.511 NSA, 1982-84=100) after +0.6% in September; 12-month October change is not published by BLS because October 2025 survey data were not collected during the 2025 lapse in appropriations."
+    },
+    "TREASURY": {
+      "label": "U.S. Treasury Yield Curve",
+      "agency": "U.S. Department of the Treasury",
+      "title": "Daily Treasury Par Yield Curve Rates — November 2026",
+      "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve&field_tdr_date_value_month=202611",
+      "how": "fetched_in_session",
+      "verified_facts": "As of November 10, 2026: 1-month 4.05%, 3-month 4.30%, 1-year 4.56%, 2-year 4.73%, 10-year 4.98%, 30-year 5.35%."
+    },
+    "FOMC-2026": {
+      "label": "Federal Reserve FOMC",
+      "agency": "Board of Governors of the Federal Reserve System",
+      "title": "FOMC Statement — October 28, 2026",
+      "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20261028a.htm",
+      "how": "fetched_in_session",
+      "verified_facts": "Maintained federal funds target range at 3.75%–4.00% (10–2 vote; two dissents preferred +25 bps), noting resilient domestic spending and elevated inflation."
+    },
+    "CBO-2026": {
+      "label": "CBO Outlook 2026–2036",
+      "agency": "Congressional Budget Office",
+      "title": "The Budget and Economic Outlook: 2026 to 2036 (Feb. 2026)",
+      "url": "https://www.cbo.gov/publication/62105",
+      "how": "fetched_in_session",
+      "verified_facts": "Projects PCE inflation slowing from 2.7% in 2026 to ~2.0% by 2030, with federal debt held by the public rising from 101% of GDP in 2026 to 120% in 2036 (fiscal-risk driver for future federal tax/estate legislation)."
+    },
+    "NBER-CYCLES": {
+      "label": "NBER Business Cycles",
+      "agency": "National Bureau of Economic Research",
+      "title": "US Business Cycle Expansions and Contractions",
+      "url": "https://www.nber.org/research/data/us-business-cycle-expansions-and-contractions",
+      "how": "fetched_in_session",
+      "verified_facts": "Official US recession peak-to-trough dates anchoring the Black Swan regimes: Aug 1929–Mar 1933 (43 mos), Nov 1973–Mar 1975 (16 mos), Jul 1981–Nov 1982 (16 mos), Mar–Nov 2001 (8 mos), Dec 2007–Jun 2009 (18 mos), Feb–Apr 2020 (2 mos)."
+    }
+  }
+}

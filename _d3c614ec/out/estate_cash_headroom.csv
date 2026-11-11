@@ -1,0 +1,8 @@
+year,status,fed_exclusion_single,fed_exclusion_married_dsue,fed_exclusion_50pct_cut_stress,cupertino_fmv_in_estate,sf_property_in_estate,tax_free_cash_headroom_single,tax_free_cash_headroom_married_dsue,tax_free_cash_headroom_50pct_cut,ca_estate_inheritance_tax
+2026,Verified statutory (P.L. 119-21 § 70106),15000000,30000000,7500000,3100000,0,11900000,26900000,4400000,0
+2027,Verified IRS inflation adjustment (Rev. Proc. 2026-35 § 3.44),15480000,30960000,7740000,3224000,0,12256000,27736000,4516000,0
+2030,Model CPI-indexed projection (unverified future law — flagged F-07/F-13),16621520,33243050,8310760,3626560,0,12994960,29616490,4684200,0
+2035,Model CPI-indexed projection (unverified future law — flagged F-07/F-13),18714170,37428340,9357090,4412270,0,14301910,33016080,4944820,0
+2040,Model CPI-indexed projection (unverified future law — flagged F-07/F-13),21070280,42140570,10535140,5368200,0,15702090,36772370,5166950,0
+2045,Model CPI-indexed projection (unverified future law — flagged F-07/F-13),23723030,47446060,11861520,6531230,0,17191800,40914830,5330280,0
+2050,Model CPI-indexed projection (unverified future law — flagged F-07/F-13),26709760,53419520,13354880,7946240,0,18763520,45473270,5408640,0
