@@ -701,3 +701,13 @@ No figure changed. No new irregularities found. F12-1 done; F12-2 PR→merge→d
 - PR #32: https://github.com/wingbangboozle1-lang/Tino1/pull/32 — merged to `main` at `ef94247a9b8a44cb7247c2a3e4490a142859a5c1` on 2026-11-11 13:13:59 UTC.
 - GitHub Pages build for the merged commit completed successfully: `built` at 2026-11-11 13:14:34 UTC; no build error.
 - F12-1 final verification and F12-2 publication are complete. Site generation and integration gates are green; no new irregularities found. The already-listed flagged items remain non-blocking.
+
+---
+## Session `arena/cab26ebb-tino1` — privacy-first publication audit (2026-11-11)
+
+Prior open claims in the merged board are more than 60 minutes old with no subsequent commits, and earlier integration work is merged. The platform fixes the branch name; this session cannot create or switch branches. This session takes over the final-publication lane without editing another live session's scope.
+
+| Task | Status | Owner | Scope | Notes |
+|---|---|---|---|---|
+| P-CAB-1 | Audit privacy, claims and public deployment; build a separate public-safe site and verify it | in progress | `arena/cab26ebb-tino1` | `privacy-site/**`, `.github/workflows/privacy-pages.yml`, `COORDINATION.md` (append) | Existing public Git history and legacy files may expose private figures; rounded data is not anonymous. No private property data or derived values in the new publication. |
+| P-CAB-2 | Integrate, PR, merge and verify Pages | in progress | `arena/cab26ebb-tino1` | `COORDINATION.md` (append), Pages publishing configuration | Prior claims last activity over 60 minutes ago; no other branches will be modified. |
