@@ -23,7 +23,7 @@
       "scc_rate_book": "SCC Tax Rate Book FY24-25 https://files.santaclaracounty.gov/exjcpb1531/2024-11/tax-rate-book-2024-2025-final.pdf",
       "sf_rate": "SF Treasurer FY25-26 1.18268325% https://sftreasurer.org/property-taxes",
       "federal_exemption": "IRS Rev Proc 2025-32 $15M permanent per OBBBA PL 119-21 S70106",
-      "stepped_up_basis": "IRC S1014 https://www.law.cornell.edu/uscode/text/26/1014",
+      "stepped_up_basis": "IRC S1014 https://www.govinfo.gov/content/pkg/USCODE-2023-title26/html/USCODE-2023-title26-subtitleA-chap1-subchapO-partII-sec1014.htm",
       "fhfa_hpi": "https://www.fhfa.gov/DataTools/Downloads/Pages/House-Price-Index.aspx",
       "bls_cpi": "https://www.bls.gov/cpi/"
     }
