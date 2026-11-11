@@ -8,8 +8,8 @@
 | T4 | Prop 13 | Assessed +2%/yr max; base levy 1% + voter bonds; reassess on sale/new construction | https://www.boe.ca.gov/proptaxes/property-tax-assessment/ |
 | T5 | Prop 19 parent-child | Primary residence only; heir must occupy within 1 yr + homeowner exemption; BOE-19-P within 3 yrs; cap $1,044,586 (2/16/2025–2/15/2027) | https://www.boe.ca.gov/prop19/ |
 | T6 | Prop 19 rentals | No exclusion for rental/investment property → full reassessment | https://www.boe.ca.gov/prop19/ (same) |
-| T7 | Step-up basis | Basis = FMV at death (IRC §1014); CA community-property double step-up §1014(b)(6) | https://www.law.cornell.edu/uscode/text/26/1014 |
-| T8 | CA capital gains | Ordinary income 1%–13.3% (incl. 1% MHSA >$1M); no LT preference | https://www.ftb.ca.gov/file/personal/income-types/capital-gains.html |
+| T7 | Step-up basis | Basis = FMV at death (IRC §1014); CA community-property double step-up §1014(b)(6) | https://www.govinfo.gov/content/pkg/USCODE-2023-title26/html/USCODE-2023-title26-subtitleA-chap1-subchapO-partII-sec1014.htm |
+| T8 | CA capital gains | Ordinary income 1%–13.3% (incl. 1% MHSA >$1M); no LT preference | https://www.ftb.ca.gov/file/personal/income-types/capital-gains-and-losses.html |
 | T9 | Federal LTCG / NIIT | 0/15/20% + 3.8% NIIT (MAGI >$200k/$250k) | https://www.irs.gov/taxtopics/tc409 |
 | T10 | §121 exclusion | $250k single / $500k MFJ if 2-of-5-yr use | https://www.irs.gov/publications/p523 |
 | T11 | AB 1482 rent cap | 5% + regional CPI, max 10%; SF 2026–27: 8.8% | https://www.sf.gov/reports--california-tenant-protection-act-2019-ab-1482 |

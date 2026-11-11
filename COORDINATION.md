@@ -624,3 +624,46 @@ No figure on the site changed as a result of these reads. Two residual limits ar
 - **Pull request:** https://github.com/wingbangboozle1-lang/Tino1/pull/26 - opened and merged 2026-11-11T07:49:26Z, merge commit `22c28b2`.
 - **Pages build:** run `42982315445`, build for commit `22c28b2`, status `built` (2026-11-11T07:49:27Z), 46 s.
 - **Live check:** `https://wingbangboozle1-lang.github.io/Tino1/requirements.html` served and read after the deploy; the page is linked from the navigation on every page and from a card on the Summary page. The site is live with 21 pages and no broken internal links.
+
+---
+
+## Session `95383689` (`arena/95383689-tino1`) — superseded-edition integrity close-out (claimed 2026-11-11 07:58 UTC)
+
+**Branch:** `arena/95383689-tino1` (platform-fixed name; the `session-<id>/<task>` pattern cannot be used). **Base:** `main` @ `245529a` at session start; re-synced to `7502ba0` (PRs #24–#29) before any content work.
+
+**State found at 07:43–07:58 UTC (all remote branches fetched):** the canonical root site (`final/` → root, 21 pages) is live and passes `final/check.py .`; sessions `84ad24ba` (S84-1 line-by-line front-door re-read, S84-2/S84-3 claimed), `ad120b45` (PR #27 open), `95ca0c0b` (V-95 done, PR #24 merged), `abd204be` (A1/A2 done, PRs #25/#29 merged), `1a7fa860` (T20 requirements.html, PR #26 merged), `5d8f7074` (PR #23 draft), `7bac5c33` (audit done) hold the front door, verification, QA, requirements and audit lanes. Every one of them explicitly excludes the legacy editions from its scope. **This session claims only the lane they all left open: the superseded editions and the named open change requests that live in them.**
+
+| # | Task | Status | Owner | File scope | Notes |
+|---|------|--------|-------|------------|-------|
+| L95-0 | Claim + scope (this section) | done (this commit) | `arena/95383689-tino1` | `COORDINATION.md` (append only) | Claim pushed before any content work |
+| L95-1 | Close-out of the open change requests on superseded material: **CR-07-5** (table rows without an official source link in `dashboard/`, `docs/`, `site/`, `archive/root-site-2026-11-11/`), **CR-07-7** (`analysis/data/federal_tax.csv` F06 note), **CR-43-1** (`docs/js/app.js` — re-test), **CR-85-1/2/3/4** (non-official citations, wrong/404 source links, unsourced rows, $10-rounding re-audit) on those trees and `research/` | claimed | `arena/95383689-tino1` | `docs/**`, `site/**`, `dashboard/**`, `archive/**`, `analysis/**`, `research/**`, `legacy95/**` (new directory, used by no other session) | Rule applied: a row gets an official link only after that official page has been read in this session; a value with no official source stays as-is, is labelled an owner figure or model output and flagged — never re-sourced, never inferred. Handover noted: owners `6ea079fa`, `5c7cfaf6`, `3676d6a0`, `85899999`, `944a92cd` are all stale (>60 min, no commits). |
+| L95-2 | `legacy95/` report + checker: counts before/after, every URL used, verification performed, irregularities that remain | claimed | `arena/95383689-tino1` | `legacy95/**` | Additive; touches no shared front-door file |
+| L95-3 | PR → `main`, merge, confirm the Pages deploy, record it here | claimed | `arena/95383689-tino1` | `COORDINATION.md` | A broken build is not merged; flagged items do not block |
+
+**Not in scope / not touched:** `final/**`, root `*.html`, `README.md`, other sessions' audit directories, open PRs #7, #17, #23, #27 (left to their owners), any other session's branch. `legacy95/` is new; no front-door file is edited.
+
+**To sessions active in parallel:** `84ad24ba` S84-2, `ad120b45`, `95ca0c0b`: this session edits only the legacy trees above and does not touch the front door; nothing here blocks your PRs. `5d8f7074` / `7bac5c33`: your privacy findings are noted; this session makes no privacy claim beyond the existing $10-rounding and label rules.
+
+**Log (`95383689`)**
+- 2026-11-11 07:43–07:58 UTC — Board read in full; all remote branches fetched; PRs #1–#29 read; canonical checker run (`OK - 20 pages, 628 rows with official links` at base, `21 pages / 668 rows` after re-sync); `node --check docs/js/app.js` and `site/assets/app.js` both exit 0 (CR-43-1 no longer reproduces — will be evidenced in L95-1). No file owned by another session edited.
+- 2026-11-11 07:58 UTC — Claim written and pushed before any other work.
+
+## Session `arena/95383689-tino1` — L95-1..2 close-out record (2026-11-11)
+
+**Change requests closed by session 95383689** (evidence `legacy95/REPORT.md`, gate `legacy95/check_legacy.py`):
+
+- **CR-07-5** — CLOSED. All superseded-edition table rows now carry an official source link or an explicit unverified/assumption/model-output label: `dashboard/** docs/** site/** archive/root-site-2026-11-11/**` = **1,490 rows: 1,207 official link / 283 flagged label / 0 work**. Links/labels were appended into the existing last `<td>` (no columns; row counts identical to `HEAD` for all 34 changed HTML files). Rows were linked only to official pages fetched in this session or carried in `final/sources.py` (re-read 2026-11-11 by `07a57a05`); values with no official source were labelled, never re-sourced. Label taxonomy and mechanics: `legacy95/REPORT.md` §2.
+- **CR-07-7** — CLOSED. `analysis/data/federal_tax.csv` F06 + `dashboard/inheritance-tax.html` closing-letter row corrected to "previously **$56**" per the IRS "What's new — estate and gift tax" page fetched in this session (TD 10055 raised the ETCL fee $56 → $76, eff. 2026-10-26). Earlier "$67" note logged as source disagreement (REPORT §3.1).
+- **CR-43-1** — CLOSED (re-verified, no edit needed): `node --check docs/js/app.js` exit 0, `site/assets/app.js` exit 0. T20/F4 listings of it as open were stale.
+- **CR-85-1** — CLOSED. Commercial/mirror citations in `docs/*.html` unlinked (origin text retained, marked non-official) with official context links (insurance.ca.gov / huduser / FRED-FHFA / sos.ca.gov); `law.cornell.edu` hrefs swapped to official publishers (govinfo §1014/§2001 read this session; IRS Topic 559 / Pub 523 / gift-tax / what's-new for §1411/§121/§2503/§2010; §401 unlinked, companion official link kept). `research/*.md` keeps origin URLs visible with an explicit non-official marker + official context — figures never re-attributed. Banned-host scan across the four trees: **0**.
+- **CR-85-2** — CLOSED. IRS newsroom link → `https://www.irs.gov/pub/irs-drop/rp-25-32.pdf` (9 anchors); FTB capital-gains 404 → `capital-gains-and-losses.html`; Fed SEP URL → `https://www.cbo.gov/publication/62105`.
+- **CR-85-3** — CLOSED. `docs/**`/`site/**` rows covered by the CR-07-5 pass; root copies already satisfy `final/check.py` (668/668 sourced).
+- **CR-85-4** — CLOSED (re-audit). Owner/analysis figures across the four trees + `properties.html` + `data/*.json|csv` are $10-clean after this session's fixes (rent-midpoint rows, derived index figures, exec-summary figure, `$2,045` year typo); statutory constants and published official/quoted commercial figures kept exact with reasons (REPORT §1). Cupertino 2026 actual-tax cell remains blank + flagged in `site/properties.html`.
+- **CR-85-5** — CLOSED by reference to the canonical engine (no legacy rework): `final/model.py:40` `dc_cup=930, dc_sf=1_090` separates fixed parcel charges from ad valorem `rate × value` (used line 228) — the separation the CR asked for.
+- **CR-85-6** — DOCS-SIDE CLOSED (NEM/D.22-12-056 context in 9 legacy files, SF rent-cap + fixed-fee coverage in `dashboard/*`, Rev. Rul. 2023-2 row now links IRS IRB 2023-16); **`model/project.py` code remainder FLAGGED for owner** — file outside L95-1's claimed scope (`model/**` owned elsewhere), non-blocking per owner rule. See REPORT §3.2.
+
+**Gates (all green at commit):** `legacy95/check_legacy.py` PASS; `final/check.py .` OK (21 pages, 668 sourced rows, 2,101 rounded dollar figures, privacy fingerprints clean, model self-tests 51/51); `final/integrate.py` 1,990 internal links / 0 broken; `node --check` both app.js exit 0; `docs/data/projections.json` valid.
+
+**Official pages fetched in this session (read, not inferred):** IRS what's-new estate/gift (TD 10055 fee; §2010(c)(3) $15M for 2026), CA RTC §51 (leginfo, 2 % cap), IRS Pub 551 / Pub 523 / Pub 946, FTB home, govinfo 26 USC §1014 and §2001 (full section text), sfassessor.org → sf.gov Assessor-Recorder, sccassessor.org → asr.santaclaracounty.gov, selfhelp.courts.ca.gov, NBER business-cycle chronology. Redirect/404 findings and failed URL patterns recorded in REPORT §3.6 (do not retry).
+
+**L95 status:** L95-1 done, L95-2 done (`legacy95/rowrule.py`, `legacy95/source_rows.py`, `legacy95/check_legacy.py`, `legacy95/REPORT.md`), L95-3 PR→main→Pages→this record: in progress.

@@ -8,8 +8,8 @@
 | U4 | PG&E electric E-1 | Tier 1 $0.326/kWh, Tier 2 $0.407/kWh (6/1/2026); avg ~$0.34/kWh | https://www.pge.com/en/account/rate-plans.html |
 | U5 | CA solar Net Billing (NEM 3.0) | D.22-12-056; applies to applications ≥4/15/2023; exports at avoided-cost (~75% below NEM 2.0) | https://www.cpuc.ca.gov/industries-and-topics/electrical-energy/electric-power-procurement-and-generation/net-billing-tariff |
 | U6 | CA homeowners insurance avg | ~$1,571/yr (CDI Feb 2026); national $1,512 | https://www.insurance.ca.gov/ |
-| U7 | CA median home price forecast | +3.6% to $905,000 in 2026 (CAR) | https://www.car.org/aboutus/mediacenter/newsreleases/2025releases/2026forecast |
-| U8 | Fed inflation target | 2% longer-run; 2026 SEP ~3.6% headline (elevated) | https://www.federalreserve.gov/monetarypolicy/fomcprojtabl20260617.htm |
+| U7 | CA median home price forecast | +3.6% to $905,000 in 2026 (CAR) | https://www.car.org/aboutus/mediacenter/newsreleases/2025releases/2026forecast (commercial estimate - non-official; official context official FHFA HPI: https://fred.stlouisfed.org/series/ATNHPIUS41940Q) |
+| U8 | Fed inflation target | 2% longer-run; 2026 SEP ~3.6% headline (elevated) | https://www.cbo.gov/publication/62105 |
 | U9 | Mortgage 30-yr fixed | ~6.2–6.7% 2026 (Freddie Mac PMMS; Fannie Mae ~6.4% Q4) | https://www.freddiemac.com/pmms |
 | U10 | S&P 500 long-run return | ~10% nominal / ~7% real since 1928 (NYU Stern Damodaran) | https://pages.stern.nyu.edu/~adamodar/New_Home_Page/data.html |
 
