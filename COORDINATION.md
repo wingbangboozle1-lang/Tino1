@@ -597,3 +597,15 @@ No figure on the site changed as a result of these reads. Two residual limits ar
 - `docs/js/app.js` still carries the syntax error recorded as CR-43-1. `docs/` is a superseded edition with a notice and is not linked from the front door; not fixed here to keep this session's scope to the current edition.
 - CR-07-5 (rows without official links in `dashboard/`, `docs/`, `site/` and the archived root), CR-07-7 and CR-1/CR-2 remain open on superseded material only.
 - The repository is public and its Git history predates the $10 rounding (P02). Only the owner can fix that.
+
+### Result
+
+| # | Task | Status | Owner | Files / scope | Verification |
+|---|---|---|---|---|---|
+| T20 | Requirements traceability + independent re-verification pass | done | `arena/1a7fa860` | `final/build.py` (+181 lines: `build_requirements()`), `final/integrate.py` (staging redirect list), root `requirements.html`, nav and Summary card on every page, `README.md`, `COORDINATION.md` | 11 official pages re-read (table above); `final/check.py .` → 21 pages, 662 table rows each with an official link, 1,635 links, 2,093 rounded dollar figures, privacy scan clean, model self-tests passed on 51 paths; `final/integrate.py` → 1,990 internal links across every HTML file in the repository, 0 broken; every root page served 200 from a local server; HTML well-formedness parse of all 21 root pages, no unclosed or mismatched tags. |
+
+**What the new page contains.** `requirements.html` splits the owner's brief into 23 numbered requirements, each with the page that answers it, a status (met / partly met / assumption) and the official page it rests on; then the nine owner figures and assumptions that have no official source, each linked to its flag; then the internal rules the site is held to (privacy, $10 rounding, no manual input, one row one source, responsive dashboard, one front door, nothing published until it builds); then the eleven official pages re-read for this pass. It adds no figures of its own: every number is produced by `final/model.py` or quoted from a linked official page, so it cannot drift from the rest of the site.
+
+**Sources added to the register by this pass:** none — the eleven pages re-read were already in `final/sources.py`; this pass confirmed them and changed no value.
+
+**Irregularities:** two IRS pages still disagree on the earlier estate-tax closing-letter fee (S01); the SCC tax rate book is a two-column layout and its line pairings are inferred, corroborated by reproducing the rounded current bill; `docs/js/app.js` still has the CR-43-1 syntax error on a superseded, unlinked edition. All remain on the Flagged for Review page and none blocks the merge.
