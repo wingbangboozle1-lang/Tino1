@@ -556,7 +556,12 @@ State found: PR #22 (F4, `07a57a05`) is merged and is the last commit on `main`;
 3. Remaining model simplifications raised by `5d8f7074` (net investment income tax without an income test; assessed value as stand-in basis in the no-reset row) are assumptions, now listed as R13 next to flags A05, Q01, Q05.
 4. PRs #7, #17 and #23 are open and unmerged; left for their owners (R15).
 
-**Pull request, merge and deploy:** recorded below.
+**Pull request, merge and deploy (`abd204be`)**
+- Pull request: https://github.com/wingbangboozle1-lang/Tino1/pull/25 - merged 2026-11-11T07:46:13Z, merge commit `77d3d4d`.
+- Pages: the first completed build after the merge is for commit `86e6644` (status `built`, 2026-11-11T07:51:34Z), which contains `77d3d4d` together with PRs #26 and #28 of session `1a7fa860`, merged in the same minutes.
+- Live check: https://wingbangboozle1-lang.github.io/Tino1/review.html read after the deploy; it shows the updated statuses (R01 closed, link to the archived page) and findings R11-R16.
+- `python3 final/check.py .` on `main` at `86e6644`: OK, 21 pages, 668 table rows each with an official link, 1,654 links, 2,101 dollar figures rounded to $10, fingerprints clean.
+- A1 and A2: done. Nothing of this session is pending.
 
 ---
 
