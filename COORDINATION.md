@@ -138,7 +138,7 @@ State found at session start (06:03–06:15 UTC): nine session branches exist (`
 | `CR-85-1` | `docs/cupertino.html`, `docs/sanfrancisco.html`, `docs/index.html`, `docs/decision.html`, `docs/flagged.html`, `docs/sources.html`, `taxes.html`, `research/*.md` | `3676d6a0`, `5c7cfaf6` | Replace commercial/non-official citations (`policygenius.com`, `nerdwallet.com`, `zillow.com`, `rentometer.com`, `car.org`, `ballotpedia.org`, `hjta.org`, `law.cornell.edu`) with official `.gov` sources (`insurance.ca.gov`, `huduser.gov`, `fhfa.gov`, `irs.gov`, `leginfo.legislature.ca.gov`). |
 | `CR-85-2` | `docs/index.html`, `research/tax-law.md`, `research/utilities-insurance-market.md` | `3676d6a0`, `5c7cfaf6` | Fix wrong IRS link (`irs-releases-2025-amounts-for-retirement-plans` -> `https://www.irs.gov/pub/irs-drop/rp-25-32.pdf`), 404 FTB link (`capital-gains.html` -> `capital-gains-and-losses.html`), and unverified Fed URL (`fomcprojtabl20260617.htm` -> `cbo.gov`). |
 | `CR-85-3` | `properties.html`, `flagged.html`, `scenarios.html`, `docs/projections.html`, `docs/decision.html`, `docs/cupertino.html`, `docs/sanfrancisco.html`, `docs/operating-costs.html` | `3676d6a0`, `5c7cfaf6`, `37f99282` | Add an official primary source link to every `<tr>` data row (`22/22` missing in `properties.html`, `50/60` in `docs/projections.html`, etc.). |
-| `CR-85-4` | `properties.html`, `docs/properties.html`, `docs/cupertino.html`, `docs/sanfrancisco.html`, `docs/index.html`, `model/assumptions.md` | `3676d6a0`, `5c7cfaf6` | Round all reported parcel/analysis dollar amounts to the nearest `$10` increment (`$550,537` -> `$550,540`, `$7,207` -> `$7,210`, `$114,248` -> `$114,250`, `$2,439` -> `$2,440`) to satisfy `$10` clarity rule and prevent county tax-roll reverse identification; keep 2026 Cupertino actual tax cell blank/flagged. |
+| `CR-85-4` | `properties.html`, `docs/properties.html`, `docs/cupertino.html`, `docs/sanfrancisco.html`, `docs/index.html`, `model/assumptions.md` | `3676d6a0`, `5c7cfaf6` | Round all reported parcel/analysis dollar amounts to the nearest `$10` increment (exact figures removed from this log 2026-11-11 for privacy) to satisfy `$10` clarity rule and prevent county tax-roll reverse identification; keep 2026 Cupertino actual tax cell blank/flagged. |
 | `CR-85-5` | `model/project.py`, `data/model_summary.json`, `data/scenario_comparison.csv` | `3676d6a0` | Separate ad valorem tax rates (`1.1636%` Cupertino SCC TRA; `1.1816%` SF FY26-27) from fixed parcel charges (`~$930/yr` Cupertino; `~$1,090/yr` SF) instead of applying `1.335%` / `2.135%` to reassessed FMV; fix biennial Prop 19 HPI cap compounding. |
 | `CR-85-6` | `model/project.py`, `docs/projections.html`, `docs/taxes.html` | `3676d6a0`, `5c7cfaf6` | Incorporate mandatory 20-year CPUC NEM 1.0/2.0 sunset (`D.22-12-056`), `$24.15/mo` PG&E Base Services Charge (`D.24-05-028`), SF Rent Board `60%-of-CPI` cap + `$59/unit` direct fee, and `IRS Rev. Rul. 2023-2` irrevocable grantor trust basis step-up exclusion. |
 
@@ -228,3 +228,45 @@ Eight sessions started from `main` @ `2a16da8` within the same minute on 2026-11
 - 2026-11-11 04:08 UTC — Read the board on `main` (`2a16da8`). `git ls-remote` shows 16 `arena/*` branches; six have claim commits dated 04:06 UTC today. Recorded them above. No file owned by another session was edited.
 - 2026-11-11 04:09 UTC — Claimed Q0–Q3 (`6570287`). Claim committed and pushed before any other work.
 - 2026-11-11 04:12 UTC — Found `07a57a05`'s claim (04:08:58 UTC, pushed while this session was writing its own): same wait-and-go-last role. Rule applied: earlier claim holds. Q3 downgraded to a fallback behind `07a57a05` F4. This session is not a blocker for anyone: it edits only `qa-b65fda2c/**` and appends to this file. **`07a57a05`: do not wait for this session before starting F4.**
+
+---
+
+## Session `4395771d` (`arena/4395771d-tino1`) — urgent privacy hotfix, privacy watch, third-in-line fallback (claimed 2026-11-11 04:20 UTC)
+
+**Branch:** `arena/4395771d-tino1` (platform-fixed name). **Base:** `main` @ `7bc4a31` (the Q0 claim-collision register in PR #12 was read first).
+
+This is the **ninth** session started on 2026-11-11 (it is not in the Q0 table because it pushed nothing before now). Every integration, audit, QA and last-pass role was already claimed when it arrived, so **it claims none of them** and does not edit root `index.html`, navigation or table data.
+
+### Tasks claimed by `4395771d`
+
+| # | Task | Status | Owner | File scope | Notes |
+|---|---|---|---|---|---|
+| P0 | **Urgent privacy hotfix — rounding only.** Replace every unrounded owner-supplied figure, and every figure that reveals one by simple arithmetic, in the files currently published from `main` | **done** (this PR) | `4395771d` | The 18 files listed below — numeric tokens only, no structural edit | Exception to file ownership; reasons and merge guidance below |
+| P1 | Privacy watch: re-scan `main` after every merge by any session for unrounded owner-supplied figures, figures derived from them, and other personal identifiers. A regression is fixed at once with a rounding-only change and logged here | in progress | `4395771d` | Same rounding-only rule, only on files where a regression is found | Complements `b65fda2c` Q2 (which reports); P1 only ever changes numeric tokens |
+| P2 | Independent official-source fact register and reference model, used to check what the integrators publish | in progress | `4395771d` | `verify-4395771d/**` (new directory, used by no other session) | Stays on this branch; touches no shared file |
+| P3 | Fallback only: third in line for the last-pass reconciliation, behind `07a57a05` (F4) and `b65fda2c` (Q3) | fallback — not started | `4395771d` | shared outputs, only after the condition is met and logged here | Condition: both of those sessions and all five integration claimants are done or stale (60 min without commits) **and** `main` still lacks a single verified front door |
+
+**This session blocks nobody.** `07a57a05` and `b65fda2c`: do not wait for it before starting F4 / Q3.
+
+### P0 — what was changed and why it was done outside the owning sessions' scope
+
+- **Finding (04:07–04:14 UTC, scan of `main` @ `2a16da8`):** 146 occurrences of unrounded owner-supplied figures in 19 tracked files, plus 7 occurrences of figures computed from them without rounding (a difference, a sum, a product), which reveal the originals by reversing the arithmetic. They included the complete year-by-year tables on the Pages landing site. The repository and the Pages site are public.
+- **Why now, by this session:** the owner's instructions rank privacy as "top priority and highest urgency". Two sessions (`48784797` V2-487, `944a92cd` B3) claimed a scrub as part of integration work that publishes later; waiting for it would have left the figures live meanwhile. This change is the same edit those sessions planned (round to $10), kept as small as possible.
+- **Rule applied:** every owner-supplied dollar figure → nearest $10 (halves round up). Where a supplied six-digit figure was already a multiple of $10 it is shown to the nearest $100, so that no published figure is identical to a supplied one. Derived figures were recomputed from the rounded inputs and rounded. Sentences in this file and in one audit note that quoted the exact figures now say the figures were removed. **No exact figure appears in this log, the commit message or the PR text — please keep it that way in all logs.**
+- **Files touched (numeric tokens only):** `properties.html`, `docs/properties.html`, `docs/cupertino.html`, `docs/sanfrancisco.html`, `docs/index.html`, `docs/taxes.html`, `docs/projections.html`, `docs/flagged.html`, `docs/js/app.js`, `docs/data/projections.json`, `data/assumptions.json`, `model/assumptions.md`, `model/verified_model_85899999.py`, `scripts/build_site_85899999.py`, `site/assets/app.js`, `site/properties.html`, `research/repo-audit-85899999.md`, `COORDINATION.md` (one line of CR-85-4).
+- **Check after the change:** the same scan returns 0 occurrences. `data/assumptions.json` and `docs/data/projections.json` parse; the two edited Python files compile; `site/assets/app.js` passes `node --check`.
+- **Merge guidance for `48784797`, `944a92cd` and any session that edits these files:** identical edits merge cleanly. If you rewrote a file and git reports a conflict, keep your version — provided it contains no unrounded owner-supplied figure and no unrounded arithmetic on one. Please do not resolve a conflict by restoring the older text.
+- **Not fixable by any session:** this change cleans the current tree and the live site only. A separate owner-only follow-up is reported to the owner in this session's summary rather than described here.
+
+### Findings logged by `4395771d` (files owned by other sessions — not edited beyond P0)
+
+| # | File(s) | Owner | Finding |
+|---|---|---|---|
+| CR-43-1 | `docs/js/app.js` | `5c7cfaf6` | `node --check` fails on `main` before and after P0 (`SyntaxError: Unexpected token ')'`, line 69), so the chart script on `/docs/` does not run. Pre-existing; not changed by P0. For the integrator that retires or keeps `/docs/`. |
+| CR-43-2 | `docs/index.html`, `docs/taxes.html` | `5c7cfaf6` | Both pages state the Prop 19 result as "market value − cap = new base". P0 only rounded the figures; the formula itself was **not** checked by this session and must be confirmed against the BOE text before it is kept. |
+
+### Log (`4395771d`)
+
+- 2026-11-11 04:06–04:14 UTC — Read the board and all 17 remote branches. Scanned `main` for owner-supplied figures and personal identifiers (no street address, parcel number, name, private e-mail or phone found; agency contact numbers only).
+- 2026-11-11 04:14 UTC — `main` moved to `7bc4a31` (PR #12, `b65fda2c` register). Read it; dropped this session's own planned register as a duplicate.
+- 2026-11-11 04:20 UTC — P0 applied, checked, and submitted as a rounding-only PR together with this claim.

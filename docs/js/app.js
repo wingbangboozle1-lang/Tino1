@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded',()=>{
     const cupTaxLiveIn = [];
     const cupTaxFull = [];
     // Cupertino baseline 2026
-    let mv=3100000, av=550537;
+    let mv=3100000, av=550540;
     for(let y=2026;y<=2050;y++){
       labels.push(String(y));
       cupValue.push(Math.round(mv));
@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   const elSF = document.getElementById('chart-sf');
   if(elSF && window.Chart){
     const labels=[]; const mvArr=[]; const avArr=[]; const taxArr=[];
-    let mv=1800000, av=114248;
+    let mv=1800000, av=114250;
     for(let y=2026;y<=2050;y++){
       labels.push(String(y));
       mvArr.push(Math.round(mv));
