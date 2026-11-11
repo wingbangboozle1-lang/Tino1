@@ -19,7 +19,7 @@ OFFICIAL = ('gov', 'sftreasurer.org', 'fred.stlouisfed.org', 'sccassessor.org', 
             'capropeforms.org')
 OTHER_OK = ('github.com', 'pages.stern.nyu.edu')
 # official published figures that are not multiples of $10 (each is quoted from the linked page)
-OFFICIAL_ODD = {'1,044,586', '72,724', '371,479', '445,771', '742,953', '109,125', '208,325', '661,375',
+OFFICIAL_ODD = {'14,217,212,455', '324,973', '1,176', '601', '1,044,586', '72,724', '371,479', '445,771', '742,953', '109,125', '208,325', '661,375',
                 '56', '67', '76', '1.10', '0.55', '24.15'}
 errors = []
 
