@@ -35,6 +35,7 @@ SINGLE_HOME_SALE_EXCLUSION = 250_000.0
 HOME_GROWTH = 0.03
 ASSESSED_GROWTH = 0.02
 ALLOWANCE_GROWTH = 0.025
+CPI_GROWTH = 0.025
 A_RENT_GROWTH = 0.03
 B_RENT_GROWTH = 0.016
 VACANCY = 0.05
@@ -71,7 +72,7 @@ SCENARIOS = (
     Scenario('market', 'Market and housing crash',
              'In 2050 both home values fall 25% and the positive investment account falls 35%; rents are frozen for 2050–2052.', 'fhfa'),
     Scenario('inflation', 'Inflation and insurance squeeze',
-             'In 2048–2054, utilities rise 9%, insurance 12%, maintenance 7% annually and the after-tax investment return is 1%.', 'bls'),
+             'In 2048–2054, CPI rises 6%, utilities 9%, insurance 12%, maintenance 7% annually and the after-tax investment return is 1%.', 'bls'),
     Scenario('disaster', 'Uninsured damage',
              'In 2055, an assumed uninsured repair costs the inherited home $250,000 if retained and the already-owned home $100,000; assets are assumed restored.', 'cdi'),
     Scenario('no_relief', 'No family-home relief',
@@ -159,6 +160,8 @@ def simulate(scenario: Scenario, transfer_year: int = EXAMPLE_TRANSFER_YEAR,
         event_sale = first_sale(a_transfer_value, a_basis)
         account = event_sale['net'] if choice == 'sell' else 0.0
         a_depreciation_accum = 0.0
+        # Index is relative to January 1, 2026 purchasing power.
+        cpi_index = (1 + CPI_GROWTH) ** (transfer_year - START_YEAR)
         rows = []
 
         for i in range(years):
@@ -228,6 +231,8 @@ def simulate(scenario: Scenario, transfer_year: int = EXAMPLE_TRANSFER_YEAR,
             disposal = end_sale(a_end, a_basis, a_depreciation_accum, choice, i + 1) if choice != 'sell' else None
             a_exit_net = disposal['net'] if disposal else 0.0
             position = b_end + account + a_exit_net
+            cpi_rate = 0.06 if scenario.key == 'inflation' and 2048 <= year <= 2054 else CPI_GROWTH
+            cpi_index *= 1 + cpi_rate
             rows.append({
                 'year': year, 'years': i + 1, 'a_start_value': state['a_value'], 'a_end_value': a_end,
                 'a_factored': a_factored, 'a_assessed': a_assessed, 'a_tax': a_tax,
@@ -249,6 +254,7 @@ def simulate(scenario: Scenario, transfer_year: int = EXAMPLE_TRANSFER_YEAR,
                 'b_depreciation': b_depreciation, 'b_extra': b_extra, 'b_net': b_net,
                 'account': account, 'investment_change': investment_change,
                 'net_cash': a_net + b_net, 'position': position,
+                'cpi_index': cpi_index, 'real_position_2026': position / cpi_index,
                 'allowance_at_transfer': state['allowance'], 'a_basis': a_basis,
                 'event_sale_price': event_sale['price'], 'event_selling_cost': event_sale['selling_cost'],
                 'event_gain': event_sale['taxable_gain'], 'event_tax': event_sale['tax'],

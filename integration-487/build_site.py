@@ -190,6 +190,9 @@ def projections() -> str:
     for i in range(m.YEARS):
         r = [base[s][i] for s in m.STRATEGIES]
         rows.append(([str(r[0]['year']), money(r[0]['position']), money(r[1]['position']), money(r[2]['position']), money(r[0]['b_end_value'])], 'fhfa'))
+    real_rows = []
+    for i in range(m.YEARS):
+        real_rows.append(([str(base['live'][i]['year']), money(base['live'][i]['real_position_2026']), money(base['rent'][i]['real_position_2026']), money(base['sell'][i]['real_position_2026'])], 'bls'))
     detail = []
     for choice in m.STRATEGIES:
         parts = []
@@ -201,6 +204,7 @@ def projections() -> str:
 {notice('<strong>Read the number before comparing it.</strong> Position is not liquid wealth: the already-owned property is shown at market value and is not sold or reduced for future sale taxes. The inherited home is hypothetically sold at each year-end if retained. Cash flows are invested or financed, and a negative account is a funding gap.', True)}
 <div class="panel prose"><h2>What changes each year</h2><p>Values and rent follow invented growth rates; tax bills use a simplified assessed-value model; operating costs and rental income tax are deducted. The sell path invests its net proceeds at the beginning of the transfer year. All results are nominal dollars, rounded to the nearest $10; displayed sums may differ slightly from sums of rounded cells.</p><p><a href="data/annual-projections.csv">Download the synthetic annual CSV</a> · <a href="methodology.html">View every assumption</a> · {source('fhfa', 'FHFA context')}</p></div>
 {section('The base-path comparison', table(['Year', 'Live: position', 'Rent: position', 'Sell: position', 'Already-owned market value'], rows, 'Synthetic year-end modeled position, transfer in 2045') + '<p class="table-note">The common property is retained in all scenarios; a homeowner exemption produces a small tax difference by occupancy. The higher figure in this hypothetical case is not evidence that an actual sale is best.</p>')}
+{section('Adjusting for purchasing power', '<p class="table-note">These are the same modeled positions divided by a purely assumed 2.5% annual CPI index, expressed in January 2026 purchasing power. This is not a forecast or a substitute for a discount rate; actual inflation will differ.</p>' + table(['Year', 'Live: 2026 dollars', 'Rent: 2026 dollars', 'Sell: 2026 dollars'], real_rows, 'Synthetic inflation-adjusted positions, 2045–2094'))}
 {section('Show the components', ''.join(detail), '50 annual observations per path')}
 '''
 
@@ -226,9 +230,14 @@ def properties() -> str:
         (['Rent-path inherited-home annual property tax', money(rent['a_tax'])], 'prop8'),
         (['Already-owned home factored value, all paths', money(live['b_factored'])], 'sf_assessment'),
     ]
-    annual_rows = []
+    annual_rows, annual_costs = [], []
     for r in m.pre_transfer_projections():
         annual_rows.append(([str(r['year']), money(r['a_value']), money(r['a_factored_pre']), money(r['b_value']), money(r['b_factored']), money(r['b_rent'])], 'prop8'))
+        a_assessed = min(r['a_factored_pre'], r['a_value'])
+        b_assessed = min(r['b_factored'], r['b_value'])
+        a_tax = max(0, a_assessed - m.HOMEOWNERS_EXEMPTION) * m.A_AD_VALOREM + r['a_fixed']
+        b_tax = max(0, b_assessed - m.HOMEOWNERS_EXEMPTION) * m.B_AD_VALOREM + r['b_fixed']
+        annual_costs.append(([str(r['year']), money(a_tax), money(r['a_water']), money(r['a_power']), money(r['a_insurance']), money(r['a_maintenance']), money(b_tax), money(r['b_water']), money(r['b_power']), money(r['b_insurance']), money(r['b_maintenance'])], 'prop8'))
     return header('Property & assessment / 04', 'Two homes. Different histories.', 'The inherited home is modeled as a future transfer; the other home is already owned. Their assessments do not reset together.') + f'''
 {notice('<strong>Fact fields are deliberately blank.</strong> Publicly searchable assessment histories and combinations of rounded property details can identify a household. No private values are reproduced here; the numbers below are wholly synthetic.', True)}
 {section('Property-specific facts', table(['Fact', 'Actual value', 'Status'], real_rows, 'Actual property facts intentionally withheld or unverified'))}
@@ -237,6 +246,7 @@ def properties() -> str:
 {section('A synthetic 2045 assessment example', '<p class="table-note">Family-home relief is assumed only in the live path. The hypothetical future allowance is not a published BOE amount. Property tax includes separately modeled fixed charges, not only the ad valorem rate.</p>' + table(['Component', 'Illustrative amount'], formula_rows, 'Synthetic transfer-date assessment and first full-year bill'))}
 <div class="panel prose"><h2>Why assessed value is not market value</h2><p>The factored base generally grows by the applicable inflation factor, not more than 2% annually absent a qualifying event. In a decline, a temporary Proposition 8 value can be lower than the factored base; recovery may exceed 2% until that ceiling is reached. This model approximates the assessed value as the lower of January 1 market value and factored base. It omits supplemental bills, apportionment, construction and appeals. {source('prop8', 'BOE assessment guidance')}</p><p>The model applies an illustrative $7,000 homeowners’ exemption to one principal residence depending on occupancy; eligibility and use of another exemption are not verified. {source('homeowner', 'BOE exemption')}</p></div>
 {section('Before any illustrative transfer', '<p class="table-note">No-transfer baseline at the start of each year. This table holds the inherited property on its pre-transfer factored-value track through 2050 only to show the baseline; it is <em>not</em> the 2045-transfer assessment in the other tables. All values and rents below are invented.</p>' + table(['Year', 'Inherited: market', 'Inherited: factored', 'Already-owned: market', 'Already-owned: factored', 'Two rents / year'], annual_rows, 'Synthetic no-transfer property baseline, 2026–2050'))}
+{section('Before-transfer cost baseline', '<p class="table-note">No-transfer comparison through 2050, not the 2045-transfer case. Each synthetic owner is assumed to qualify for a principal-residence exemption on their own home. Inherited-home costs are borne by the transferor before a transfer and are not charged to the beneficiary account. The projection does not verify any actual bill.</p>' + table(['Year', 'Inherited tax', 'Inherited water', 'Inherited power', 'Inherited insurance', 'Inherited maintenance', 'Already-owned tax', 'Already-owned water', 'Already-owned power', 'Already-owned insurance', 'Already-owned maintenance'], annual_costs, 'Synthetic annual no-transfer costs, 2026–2050'))}
 '''
 
 
@@ -319,7 +329,7 @@ def scenarios() -> str:
         for choice in m.STRATEGIES:
             r10, r50 = paths[choice][9], paths[choice][-1]
             delta = r50['position'] - baseline[choice][-1]['position']
-            summary.append(([e(sc.label), e(m.LABELS[choice]), money(r10['position']), money(r50['position']), money(delta)], sc.source_key))
+            summary.append(([e(sc.label), e(m.LABELS[choice]), money(r10['position']), money(r50['position']), money(r50['real_position_2026']), money(delta)], sc.source_key))
         annual = []
         for i in range(m.YEARS):
             annual.append(([str(paths['live'][i]['year']), money(paths['live'][i]['position']), money(paths['rent'][i]['position']), money(paths['sell'][i]['position'])], sc.source_key))
@@ -340,9 +350,9 @@ def scenarios() -> str:
 {section('A little context', table(['Signal', 'Official observation', 'Limit'], observed, 'Observed economic context; not used as a forecast'))}
 {section('A half-century of different inflation regimes', '<p class="table-note">Selected annual-average CPI-U changes, not year-end changes. These historical observations provide context; the model does not replay them or assign them as future probabilities.</p>' + table(['Year', 'Annual-average CPI change', 'Measure'], history_rows, 'Selected U.S. inflation observations, 1974–2022'))}
 {section('Six hypothetical paths', '<div class="cards">' + descriptions + '</div>')}
-{section('After 10 and 50 years', '<p class="table-note">Transfer on January 1, 2045. Delta compares each path to its own strategy in the base scenario at year 50. All figures are nominal synthetic positions; the already-owned home is retained at market value.</p>' + table(['Scenario', 'Strategy', '10-year position', '50-year position', '50-year change vs base'], summary, 'Synthetic stress-test comparisons'))}
+{section('After 10 and 50 years', '<p class="table-note">Transfer on January 1, 2045. Delta compares each path to its own strategy in the base scenario at year 50. The first and last comparison figures are nominal; the purchasing-power column uses an assumed CPI path. The already-owned home is retained at market value.</p>' + table(['Scenario', 'Strategy', '10-year nominal', '50-year nominal', '50-year in 2026 dollars', '50-year nominal change vs base'], summary, 'Synthetic stress-test comparisons'))}
 {section('See the full annual paths', ''.join(sections), '2045–2094')}
-<div class="panel prose"><h2>How to interpret the shocks</h2><p>A 2050 market shock is applied to year-end property values and to a positive investment account; the following January’s simplified assessment can reflect the decline. The insurance squeeze permanently raises the cost level over its seven years. The repair example assumes work immediately restores the asset’s value and no modeled rental interruption—both optimistic simplifications. Relief and basis scenarios are not predictions of law.</p><p>There is no probability weighting, inflation-adjusted purchasing-power result, mortgage stress, loss carryforward or guarantee that a negative funding gap can actually be financed. See the <a href="methodology.html">full method</a> and <a href="flagged.html">flags</a>.</p></div>'''
+<div class="panel prose"><h2>How to interpret the shocks</h2><p>A 2050 market shock is applied to year-end property values and to a positive investment account; the following January’s simplified assessment can reflect the decline. The insurance squeeze permanently raises the cost level over its seven years. The repair example assumes work immediately restores the asset’s value and no modeled rental interruption—both optimistic simplifications. Relief and basis scenarios are not predictions of law.</p><p>The purchasing-power column assumes 2.5% annual CPI growth, except 6% in 2048–2054 in the inflation stress. There is no probability weighting, mortgage stress, loss carryforward or guarantee that a negative funding gap can actually be financed. See the <a href="methodology.html">full method</a> and <a href="flagged.html">flags</a>.</p></div>'''
 
 
 def methodology() -> str:
@@ -361,6 +371,7 @@ def methodology() -> str:
         (['Home market-value growth', '3% per year', 'Both homes; not a forecast'], 'fhfa'),
         (['Factored-base growth', '2% per year', 'Illustrative upper bound, actual annual factor may be lower'], 'prop8'),
         (['Future family-home allowance growth', '2.5% per year', 'Smooth illustration; actual BOE adjustment is biennial and unknown'], 'allowance'),
+        (['CPI for purchasing power', '2.5% per year; 6% during the inflation stress in 2048–2054', 'Invented price index, relative to January 2026'], 'bls'),
         (['Gross rent growth', '3% inherited home; 1.6% already-owned', 'Invented future assumptions; actual rent limits vary'], 'sf_rent'),
         (['Vacancy and management', '5% gross vacancy; 6% of rent collected', 'Both rented properties; no third-unit income'], 'rental'),
         (['Property tax rates', '1.15% inherited; 1.18% already-owned', 'Invented ad valorem rates; fixed charges separately'], 'sf_tax'),
@@ -422,10 +433,10 @@ def write_csv(output: Path) -> None:
     baseline = m.simulate(m.SCENARIOS[0])
     with target.open('w', encoding='utf-8', newline='') as f:
         writer = csv.writer(f)
-        writer.writerow(['classification', 'scenario', 'strategy', 'year', 'already_owned_market_value_usd', 'inherited_hypothetical_net_sale_usd', 'account_or_funding_usd', 'annual_net_cash_usd', 'modeled_position_usd', 'official_methodology_source'])
+        writer.writerow(['classification', 'scenario', 'strategy', 'year', 'already_owned_market_value_usd', 'inherited_hypothetical_net_sale_usd', 'account_or_funding_usd', 'annual_net_cash_usd', 'modeled_position_usd', 'modeled_position_in_2026_usd', 'official_methodology_source'])
         for choice in m.STRATEGIES:
             for row in baseline[choice]:
-                writer.writerow(['synthetic, not actual', 'base', choice, row['year'], m.round10(row['b_end_value']), m.round10(row['a_exit_net']), m.round10(row['account']), m.round10(row['net_cash']), m.round10(row['position']), SOURCES['rental'][0]])
+                writer.writerow(['synthetic, not actual', 'base', choice, row['year'], m.round10(row['b_end_value']), m.round10(row['a_exit_net']), m.round10(row['account']), m.round10(row['net_cash']), m.round10(row['position']), m.round10(row['real_position_2026']), SOURCES['rental'][0]])
 
 
 def build(output: Path) -> None:

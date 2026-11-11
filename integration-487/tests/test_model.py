@@ -88,6 +88,16 @@ class ModelTests(unittest.TestCase):
         self.assertEqual(disaster['sell'][10]['a_extra'], 0)
         self.assertEqual(disaster['sell'][10]['b_extra'], 100_000)
 
+    def test_purchasing_power_index_and_inflation_stress(self):
+        baseline = m.simulate(m.SCENARIOS[0])['sell']
+        final = baseline[-1]
+        self.assertAlmostEqual(final['cpi_index'], 1.025 ** (2094 - 2026 + 1))
+        self.assertAlmostEqual(final['real_position_2026'], final['position'] / final['cpi_index'])
+        stress = m.simulate(next(s for s in m.SCENARIOS if s.key == 'inflation'))['sell']
+        self.assertAlmostEqual(stress[2]['cpi_index'], baseline[2]['cpi_index'])
+        self.assertGreater(stress[3]['cpi_index'], baseline[3]['cpi_index'])
+        self.assertLess(stress[-1]['real_position_2026'], stress[-1]['position'])
+
     def test_funding_and_prop8_when_values_fall(self):
         baseline = m.simulate(m.SCENARIOS[0])
         # A negative account compounds as a funding gap, not a positive return.

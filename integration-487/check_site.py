@@ -167,6 +167,7 @@ def check(site: Path) -> list[str]:
                 'account_or_funding_usd': 'account',
                 'annual_net_cash_usd': 'net_cash',
                 'modeled_position_usd': 'position',
+                'modeled_position_in_2026_usd': 'real_position_2026',
             }
             for field, model_field in mapping.items():
                 if int(r[field]) != m.round10(expected[model_field]):
