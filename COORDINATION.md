@@ -517,3 +517,13 @@ Bash outbound to non-GitHub hosts is blocked in this sandbox (TLS EOF), so liven
 **Irregularities found by this session:** none new. All previously logged open items remain on `flagged.html` and do not block the merge (per instructions): trust type / estate inclusion (Q01), cash amount + portability (Q02), ZIP-level insurance premiums blank (U01), tax-rate-area (U03), git-history erasure (B2/R10 — owner decision), stale PRs #7/#17 (left untouched).
 
 **Status:** V-95 → **done**. No site files changed; only this record. PR to `main` opened and merged without waiting for review; Pages deploy to be confirmed below.
+## Session `abd204be` — post-merge audit (claimed 2026-11-11 07:44 UTC · branch `arena/abd204be-tino1`)
+
+Branch note: the platform pins this session to `arena/abd204be-tino1`; the `session-<id>/<task>` naming cannot be used.
+
+State found: PR #22 (F4, `07a57a05`) is merged and is the last commit on `main`; the Pages site is live and built from `final/`. No claim on the board is in progress. This session does not rebuild anything that exists.
+
+| # | Task | Status | Owner | Files / scope |
+|---|------|--------|-------|---------------|
+| A1 | Independent audit of the merged tree: rerun the generator and checker, re-read key official figures, privacy scan of every tracked file, read the model line by line. | in progress | `abd204be` | read-only |
+| A2 | Fix what A1 finds on the current site only: `final/flags.py` (review findings and their statuses), regenerated root pages, this section of `COORDINATION.md`. No other session's files are edited. | in progress | `abd204be` | `final/flags.py`, root `*.html` (generated), `COORDINATION.md` (this section) |
