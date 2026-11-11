@@ -517,3 +517,43 @@ Bash outbound to non-GitHub hosts is blocked in this sandbox (TLS EOF), so liven
 **Irregularities found by this session:** none new. All previously logged open items remain on `flagged.html` and do not block the merge (per instructions): trust type / estate inclusion (Q01), cash amount + portability (Q02), ZIP-level insurance premiums blank (U01), tax-rate-area (U03), git-history erasure (B2/R10 — owner decision), stale PRs #7/#17 (left untouched).
 
 **Status:** V-95 → **done**. No site files changed; only this record. PR to `main` opened and merged without waiting for review; Pages deploy to be confirmed below.
+## Session `abd204be` — post-merge audit (claimed 2026-11-11 07:44 UTC · branch `arena/abd204be-tino1`)
+
+Branch note: the platform pins this session to `arena/abd204be-tino1`; the `session-<id>/<task>` naming cannot be used.
+
+State found: PR #22 (F4, `07a57a05`) is merged and is the last commit on `main`; the Pages site is live and built from `final/`. No claim on the board is in progress. This session does not rebuild anything that exists.
+
+| # | Task | Status | Owner | Files / scope |
+|---|------|--------|-------|---------------|
+| A1 | Independent audit of the merged tree: rerun the generator and checker, re-read key official figures, privacy scan of every tracked file, read the model line by line. | done | `abd204be` | read-only |
+| A2 | Fix what A1 finds on the current site only: `final/flags.py` (review findings and their statuses), one line of `final/model.py`, regenerated root pages, this section of `COORDINATION.md`. | done | `abd204be` | `final/flags.py`, `final/model.py`, `final/out/model.json`, `review.html` (generated), `COORDINATION.md` (this section) |
+
+### A1/A2 record (`abd204be`, 2026-11-11 07:45 UTC)
+
+**Scope note.** `final/**` belongs to `07a57a05`, whose tasks are done and merged; no session holds a claim on it. `5d8f7074` (draft PR #23) works only in `audit-5d8f7074/` and asked the owners of shared outputs to act on its findings. This session changed `final/flags.py` and one line of `final/model.py`, then regenerated the root with `final/integrate.py`. Only `review.html` differs among the published pages.
+
+**Merge conflict.** The first push of the claim was rejected because PR #24 (`95ca0c0b`) had appended to this file. Resolved by keeping both sections in full; nothing of the other session was dropped.
+
+**Checks run on the merged tree**
+- `python3 final/model.py && python3 final/integrate.py && python3 final/check.py .` on a clean checkout of `main`: no file changed (the published pages are reproducible byte for byte). After the changes below: OK, 20 pages, 634 table rows each with an official link, 1,539 links, 2,073 dollar figures rounded to $10, fingerprints clean; 1,926 internal links in the whole repository, 0 broken.
+- Privacy scan of every tracked file for each owner-supplied figure in its unrounded form: none found. Superseded pages still list the rounded year-by-year series (flag P01, review R10). The Git history still holds the unrounded figures (flag P02): owner action.
+- `final/model.py` read line by line; headline figures recomputed by hand (tax advantage of Property B, sale proceeds and loss, estate table, Proposition 19 new assessed value): all agree with the pages.
+
+**Official figures re-read on 2026-11-11**
+
+| Figure on the site | Result | Official page |
+|---|---|---|
+| Federal basic exclusion $15,480,000 and annual gift exclusion $20,000 for 2027 | confirmed | https://www.irs.gov/pub/irs-drop/rp-26-35.pdf |
+| San Francisco secured rate 1.18162182% for fiscal year 2026-27 | confirmed | https://sftreasurer.org/property/secured-property-taxes |
+| BOE Letter to Assessors 2026/026, dated 2026-08-03, Proposition 19 questions and answers | confirmed | https://www.boe.ca.gov/proptaxes/pdf/lta26026.pdf |
+| Statewide residential insurance 2023: earned premium $14,217,212,455 over 12,580,970 exposures (about $1,130), average insured building value $324,973 | confirmed | https://www.insurance.ca.gov/01-consumers/200-wrr/WildfireRiskInfoRpt.cfm |
+| Proposition 42 at 51.5% yes, unofficial | confirmed through news reports of the Secretary of State count; official certification due by 2026-12-11 | https://electionresults.sos.ca.gov/returns/ballot-measures |
+| Insurance premium for ZIP 95014 and ZIP 94122 | not confirmed: the ZIP-level sheets and the interactive survey could not be read. Left blank (flag U01) | https://interactive.web.insurance.ca.gov/apex_extprd/f?p=111:20 |
+
+**Irregularities found and what was done**
+1. `review.html` still showed R01, R03, R04, R07 and R08 as open after PR #22 had fixed them, and R01 linked to the current landing page as if it held the error. Fixed: statuses and links rewritten (R01-R10), finding recorded as R11.
+2. `final/model.py` applied the $250,000 home-sale exclusion from the first year (raised by `5d8f7074`). Fixed: applies from the second anniversary (IRS Topic 701, https://www.irs.gov/taxtopics/tc701). One unpublished value changed in `model.json`; no published figure changed. Recorded as R12.
+3. Remaining model simplifications raised by `5d8f7074` (net investment income tax without an income test; assessed value as stand-in basis in the no-reset row) are assumptions, now listed as R13 next to flags A05, Q01, Q05.
+4. PRs #7, #17 and #23 are open and unmerged; left for their owners (R15).
+
+**Pull request, merge and deploy:** recorded below.
