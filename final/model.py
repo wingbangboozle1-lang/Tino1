@@ -287,7 +287,8 @@ def simulate(path, p=P):
                 A['sell'].grow(e, p)
             # ---- wealth if everything were liquidated at this year-end ----
             net_sale = Vc * (1 - p['sell_cost'] - p['doc_transfer_tax'])
-            gL = net_sale - basis - p['sec121']
+            excl121 = p['sec121'] if (y - T) >= 2 else 0.0   # IRS Topic 701: owned and lived in for 2 years before the sale
+            gL = net_sale - basis - excl121
             wL = A['live'].liq(p) + net_sale - max(gL, 0.0) * t_lump
             g_tot = net_sale - (basis - acc_depr) - susp
             recap = min(acc_depr, max(g_tot, 0.0))
