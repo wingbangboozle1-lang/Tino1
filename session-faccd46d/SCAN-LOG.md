@@ -14,12 +14,12 @@ are false positives**:
 
 | File | Token | What it actually is |
 |---|---|---|
-| `analysis/data/blackswan_history.csv` | `2,197` | Part of the episode id `H2,1979-1982` (a year range) |
-| `black-swan.html` | `2,197` | SVG chart coordinate fragment (`359.2,197.1`) |
-| `projections.html` | `2,134` | SVG chart coordinate fragment (`669.2,134.9`) |
-| `decision.html` | `2,197` | Mid-number inside the rounded model output `$12,197,660` |
-| `verify-4395771d/site/black-swans.html` | `2,179` | Mid-number inside the rounded model output `$12,179,270` |
-| `verify-4395771d/site/decision.html` | `2,179` | SVG chart coordinate fragment |
+| `analysis/data/blackswan_history.csv` | `[figure withheld]` | Part of the episode id `H2,1979-1982` (a year range) |
+| `black-swan.html` | `[figure withheld]` | SVG chart coordinate fragment (`359.2,197.1`) |
+| `projections.html` | `[figure withheld]` | SVG chart coordinate fragment (`669.2,134.9`) |
+| `decision.html` | `[figure withheld]` | Mid-number inside the rounded model output `$12,197,660` |
+| `verify-4395771d/site/black-swans.html` | `[figure withheld]` | Mid-number inside the rounded model output `$12,179,270` |
+| `verify-4395771d/site/decision.html` | `[figure withheld]` | SVG chart coordinate fragment |
 
 Result: **no unrounded owner figure is present in any published or stored file.** The canonical checker
 agrees (`final/check.py .` — privacy fingerprints clean; the fingerprint register covers the exact
