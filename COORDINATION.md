@@ -474,3 +474,31 @@ This is the **ninth** session started on 2026-11-11 (it is not in the Q0 table b
 
 **Flagged for the owner (published on `flagged.html`, none blocks the merge):** trust type and estate inclusion (decides the basis reset); amount of cash and portability; insurance premiums for both ZIP codes (official ZIP-level figure blank); tax rate area; 2027 Proposition 19 allowance; all growth, return, rent, cost and tax-bracket assumptions; the repository is public and its Git history predates the rounding (owner action needed to make it private or rewrite history). PR #7 (`e25621af`, opened 2026-11-10) is not merged: its pages would overwrite `docs/` with another superseded edition.
 
+
+### PR #22 merge and deploy record (added by `84ad24ba` at 2026-11-11 07:45 UTC — the F4 section above says "recorded below" but no record was written)
+
+Facts read from the GitHub API at 07:41 UTC, not from memory:
+
+- **PR #22** — https://github.com/wingbangboozle1-lang/Tino1/pull/22 — state `MERGED`, merged 2026-11-11T05:17:07Z, merge commit `245529adb5bfa147e13bf4480fb5945429713766` on `main`.
+- **GitHub Pages** — source `main:/` (legacy build). Build `1359253362` for commit `245529a`: `status: built`, `error: null`, created 2026-11-11T05:17:08Z, finished 05:17:30Z (22.8 s). Site address https://wingbangboozle1-lang.github.io/Tino1/.
+
+---
+
+## Session `84ad24ba` (`arena/84ad24ba-tino1`) — claim (2026-11-11 07:45 UTC)
+
+**Branch:** `arena/84ad24ba-tino1` (name fixed by the platform, so the `session-<id>/<task>` pattern cannot be used; this branch is this session's task branch). **Base:** `main` @ `245529a` (PR #22).
+
+**State found at 07:41 UTC (all 21 remote branches fetched, not only `main`):** every task on this board is done, yielded or stale. The newest commit on any other session branch is `07a57a05` at 05:16:59 UTC (2 h 24 min old). Open pull requests: #7 (`e25621af`, no commit since 2026-11-10 06:23 UTC) and #17 (`48784797`, draft, no commit since 04:31:07 UTC) — both past the 60-minute limit. No branch other than this one has a commit after 05:17 UTC.
+
+| # | Task | Status | Owner | File scope | Notes |
+|---|------|--------|-------|------------|-------|
+| S84-0 | Record the PR #22 merge result and Pages build that F4 left unrecorded | done (this commit) | `84ad24ba` | `COORDINATION.md` (append only) | Block above |
+| S84-1 | Independent line-by-line re-verification of the live front door (root pages and the inputs in `final/**`): each fact re-read on its official page in this session, the model's headline figures recomputed separately, the pages checked against every requirement in the owner's brief. Findings go to a register; nothing is marked verified without the official page having been read | in progress | `84ad24ba` | `audit-84ad24ba/**` (new directory, used by no other session) | Touches no shared file |
+| S84-2 | Next final-integration pass: apply the corrections and fill the gaps found in S84-1 on the front door, rebuild, run the checks. **Handoff noted under the 60-minute rule:** the front door and its generator belong to `07a57a05`, whose tasks F1–F4 are marked done and whose last commit is 05:16:59 UTC | claimed — starts after S84-1 | `84ad24ba` | `final/**`, root `*.html`, root `style.css`, `app.js`, `README.md`, `COORDINATION.md` | Earlier editions (`archive/`, `dashboard/`, `docs/`, `site/`, `analysis/`, `integrated/`, `verify-4395771d/`, `data/`, `model/`, `research/`, `scripts/`) are not edited except for a privacy regression, which would be a rounding-only change logged here |
+| S84-3 | Pull request to `main`, merge, confirm the Pages deploy, record the result here | claimed | `84ad24ba` | `COORDINATION.md` | A broken build is not merged |
+
+**To any session that starts in parallel with this one:** please run `git fetch origin '+refs/heads/arena/*:refs/remotes/origin/arena/*'` before claiming. If your claim commit is earlier than this one, say so here and this session will yield S84-2 and keep only S84-1.
+
+**Log (`84ad24ba`)**
+- 2026-11-11 07:41 UTC — Board read in full; all remote branches fetched; pull requests #1–#22 and the Pages status read from the GitHub API. No file owned by another session edited.
+- 2026-11-11 07:45 UTC — Claim written and pushed before any other work.
