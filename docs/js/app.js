@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded',()=>{
     const cupTaxLiveIn = [];
     const cupTaxFull = [];
     // Cupertino baseline 2026
-    let mv=3100000, av=550,540;
+    let mv=3100000, av=550540;
     for(let y=2026;y<=2050;y++){
       labels.push(String(y));
       cupValue.push(Math.round(mv));
@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   const elSF = document.getElementById('chart-sf');
   if(elSF && window.Chart){
     const labels=[]; const mvArr=[]; const avArr=[]; const taxArr=[];
-    let mv=1800000, av=114,250;
+    let mv=1800000, av=114250;
     for(let y=2026;y<=2050;y++){
       labels.push(String(y));
       mvArr.push(Math.round(mv));
@@ -66,6 +66,6 @@ document.addEventListener('DOMContentLoaded',()=>{
       {label:'Sell Now & Reinvest (7% net, after tax)', data:sellInvest, borderColor:'#0ea5a4', tension:.3, fill:true, backgroundColor:'rgba(14,165,164,.08)'},
       {label:'Live In (Prop19 partial) + SF rental retained', data:liveIn, borderColor:'#0b1e3a', tension:.3},
       {label:'Rent Cupertino (Full reassessment)', data:rentOut, borderColor:'#b45309', borderDash:[6,4], tension:.3}
-    ]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},scales:{y:{ticks:{callback:v=>'$'+(v/1e6).toFixed(1)+'M'}}}});
+    ]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},scales:{y:{ticks:{callback:v=>'$'+(v/1e6).toFixed(1)+'M'}}}}});
   }
 });

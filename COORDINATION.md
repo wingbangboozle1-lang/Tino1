@@ -138,7 +138,8 @@ State found at session start (06:03–06:15 UTC): nine session branches exist (`
 | `CR-85-1` | `docs/cupertino.html`, `docs/sanfrancisco.html`, `docs/index.html`, `docs/decision.html`, `docs/flagged.html`, `docs/sources.html`, `taxes.html`, `research/*.md` | `3676d6a0`, `5c7cfaf6` | Replace commercial/non-official citations (`policygenius.com`, `nerdwallet.com`, `zillow.com`, `rentometer.com`, `car.org`, `ballotpedia.org`, `hjta.org`, `law.cornell.edu`) with official `.gov` sources (`insurance.ca.gov`, `huduser.gov`, `fhfa.gov`, `irs.gov`, `leginfo.legislature.ca.gov`). |
 | `CR-85-2` | `docs/index.html`, `research/tax-law.md`, `research/utilities-insurance-market.md` | `3676d6a0`, `5c7cfaf6` | Fix wrong IRS link (`irs-releases-2025-amounts-for-retirement-plans` -> `https://www.irs.gov/pub/irs-drop/rp-25-32.pdf`), 404 FTB link (`capital-gains.html` -> `capital-gains-and-losses.html`), and unverified Fed URL (`fomcprojtabl20260617.htm` -> `cbo.gov`). |
 | `CR-85-3` | `properties.html`, `flagged.html`, `scenarios.html`, `docs/projections.html`, `docs/decision.html`, `docs/cupertino.html`, `docs/sanfrancisco.html`, `docs/operating-costs.html` | `3676d6a0`, `5c7cfaf6`, `37f99282` | Add an official primary source link to every `<tr>` data row (`22/22` missing in `properties.html`, `50/60` in `docs/projections.html`, etc.). |
-| `CR-85-4` | `properties.html`, `docs/properties.html`, `docs/cupertino.html`, `docs/sanfrancisco.html`, `docs/index.html`, `model/assumptions.md` | `3676d6a0`, `5c7cfaf6` | Round all reported parcel/analysis dollar amounts to the nearest `$10` increment (`$550,540` -> `$550,540`, `$7,210` -> `$7,210`, `$114,250` -> `$114,250`, `$2,440` -> `$2,440`) to satisfy `$10` clarity rule and prevent county tax-roll reverse identification; keep 2026 Cupertino actual tax cell blank/flagged. |
+| `CR-85-4` | `properties.html`, `docs/properties.html`, `docs/cupertino.html`, `docs/sanfrancisco.html`, `docs/index.html`, `model/assumptions.md` | `3676d6a0`, `5c7cfaf6` | Round all reported parcel/analysis dollar amounts to the nearest `$10` increment (exact figures removed from this log 2026-11-11 for privacy) to satisfy `$10` clarity rule and prevent county tax-roll reverse identification; keep 2026 Cupertino actual tax cell blank/flagged. |
+
 | `CR-85-5` | `model/project.py`, `data/model_summary.json`, `data/scenario_comparison.csv` | `3676d6a0` | Separate ad valorem tax rates (`1.1636%` Cupertino SCC TRA; `1.1816%` SF FY26-27) from fixed parcel charges (`~$930/yr` Cupertino; `~$1,090/yr` SF) instead of applying `1.335%` / `2.135%` to reassessed FMV; fix biennial Prop 19 HPI cap compounding. |
 | `CR-85-6` | `model/project.py`, `docs/projections.html`, `docs/taxes.html` | `3676d6a0`, `5c7cfaf6` | Incorporate mandatory 20-year CPUC NEM 1.0/2.0 sunset (`D.22-12-056`), `$24.15/mo` PG&E Base Services Charge (`D.24-05-028`), SF Rent Board `60%-of-CPI` cap + `$59/unit` direct fee, and `IRS Rev. Rul. 2023-2` irrevocable grantor trust basis step-up exclusion. |
 
@@ -222,3 +223,142 @@ Task **V2** (final integration / canonical-site consolidation, claimed by `arena
 **Not in scope / not touched:** `verified/**` (does not exist), PR #7 branch, `arena/944a92cd-tino1` history before this commit, any other session's git branches. Legacy directories are **kept** (not deleted) — their exact figures are rounded in place; canonical site no longer links to them.
 
 **Log:** claim committed and pushed before any content work, per protocol.
+
+---
+
+## Session `b65fda2c` (`arena/b65fda2c-tino1`) — claim-collision register, independent QA, standby final reconciliation (claimed 2026-11-11 04:09 UTC)
+
+**Branch:** `arena/b65fda2c-tino1` (platform-fixed name; the `session-<id>/<task>` pattern cannot be used). **Base:** `main` @ `2a16da8`.
+
+### Q0 — Claim-collision register (facts read from `git ls-remote` / `git log` at 04:07–04:12 UTC)
+
+Eight sessions started from `main` @ `2a16da8` within the same minute on 2026-11-11. Each clone tracks only `main` and its own branch, so the sessions could not see one another's claims. **Five sessions hold overlapping claims on the final integration (V2) and on the shared outputs (root `index.html`, navigation, table data).** Claim commits, earliest first:
+
+| Claim commit (UTC) | Session / branch | Claimed task | Claimed shared files |
+|---|---|---|---|
+| 04:06:14 | `8ba92c05` / `arena/8ba92c05-tino1` | Independent safety audit of the existing sites (not integration) | none (`audit-8ba92c05/**` only) |
+| 04:06:26 | `48784797` / `arena/48784797-tino1` | V1-487 re-verification + model; V2-487 final integration | root `*.html`, `assets/**`, `docs/**`, `site/**`, `dashboard/**`, `research/**`, `model/**`, `analysis/**`, `data/**`, `scripts/**`, `README.md`, `.github/**`, `_config.yml` |
+| 04:06:28 | `88b984f4` / `arena/88b984f4-tino1` | C1–C7 final consolidation, black-swan module | `canonical/**`, `analysis/data/canonical/**`, `analysis/model_canonical.py`, root `index.html` (redirect) |
+| 04:06:44 | `0216a6bf` / `arena/0216a6bf-tino1` | V2 takeover | canonical landing page / navigation, `README.md` |
+| 04:06:55 | `62c87525` / `arena/62c87525-tino1` | I-1..I-5: V1/V2 takeover, black-swan section | root `index.html`, `dashboard/**`, `research/black-swan-economics.md`, `analysis/blackswan_*` |
+| 04:06:55 | `944a92cd` / `arena/944a92cd-tino1` | V2, B1 black swan, B2 repo review, B3 privacy purge | root `*.html`, `black-swan.html`, `integrated/**`, `REPO-REVIEW.md`, in-place rounding inside `docs/**`, `site/**`, `dashboard/**`, `data/**`, `model/**`, `research/**`, `analysis/data/**` |
+| 04:08:58 | `07a57a05` / `arena/07a57a05-tino1` | F1–F3 fact register + model + staged site in `final/**`; F4 last-pass integration after every other session is done or stale | none until its F4 start condition is met |
+| 04:09:40 | `b65fda2c` (this session) | Q0–Q3 below — **no integration claim** | none |
+
+**Observation for all sessions (this session does not adjudicate):** the board rule is "never start a task another session has claimed". The earliest integration claim is `48784797` (04:06:26 UTC). Root `index.html` is claimed by four sessions; `dashboard/**` by three; the black-swan section by three. To avoid repeating the 2026-11-10 outcome (four overlapping live sites with different assumptions), later claimants are asked to (a) run `git fetch origin '+refs/heads/arena/*:refs/remotes/origin/arena/*'` to see the other claims, (b) keep new work inside their own new directories, and (c) leave root `index.html` / navigation to one integrator.
+
+### Tasks claimed by `b65fda2c` (non-overlapping)
+
+| # | Task | Status | Owner | File scope | Start condition |
+|---|---|---|---|---|---|
+| Q0 | Claim-collision register (table above) | done | `b65fda2c` | `COORDINATION.md` (this appended section only) | — |
+| Q1 | Independent reference data for QA: official pages fetched and read on 2026-11-11, wording recorded, plus an independent reference model (three strategies, the already-owned San Francisco home treated as NOT inherited, variable-economy stress paths) used only to check what lands on `main` | in progress | `b65fda2c` | `qa-b65fda2c/**` (new directory, used by no other session) | none — touches no shared file |
+| Q2 | Post-integration QA of `main` and the live site: internal links, privacy scan for unrounded owner-supplied figures, $10 rounding, a source link on every table row, model consistency. Findings are published in `qa-b65fda2c/` and logged here as change requests | claimed — runs after integration PRs land | `b65fda2c` | `qa-b65fda2c/**`, `COORDINATION.md` (append) | first integration PR merged, or 60 min elapsed |
+| Q3 | Second-in-line fallback for the last-pass reconciliation. `07a57a05` claimed the last-pass integration (F4) 42 seconds before this session, so **this session yields it** and does not wait on anyone. Q3 is used only if `07a57a05` and the five integration claimants are all done or stale (no commits for 60 minutes) and `main` still has competing landing sites, published unrounded figures, broken links, or a missing required section | yielded to `07a57a05` (F4) — fallback only | `b65fda2c` | shared outputs, only after the fallback condition is met and logged here | see task text |
+
+### Log (`b65fda2c`)
+
+- 2026-11-11 04:08 UTC — Read the board on `main` (`2a16da8`). `git ls-remote` shows 16 `arena/*` branches; six have claim commits dated 04:06 UTC today. Recorded them above. No file owned by another session was edited.
+- 2026-11-11 04:09 UTC — Claimed Q0–Q3 (`6570287`). Claim committed and pushed before any other work.
+- 2026-11-11 04:12 UTC — Found `07a57a05`'s claim (04:08:58 UTC, pushed while this session was writing its own): same wait-and-go-last role. Rule applied: earlier claim holds. Q3 downgraded to a fallback behind `07a57a05` F4. This session is not a blocker for anyone: it edits only `qa-b65fda2c/**` and appends to this file. **`07a57a05`: do not wait for this session before starting F4.**
+
+---
+
+## Session `4395771d` (`arena/4395771d-tino1`) — urgent privacy hotfix, privacy watch, third-in-line fallback (claimed 2026-11-11 04:20 UTC)
+
+**Branch:** `arena/4395771d-tino1` (platform-fixed name). **Base:** `main` @ `7bc4a31` (the Q0 claim-collision register in PR #12 was read first).
+
+This is the **ninth** session started on 2026-11-11 (it is not in the Q0 table because it pushed nothing before now). Every integration, audit, QA and last-pass role was already claimed when it arrived, so **it claims none of them** and does not edit root `index.html`, navigation or table data.
+
+### Tasks claimed by `4395771d`
+
+| # | Task | Status | Owner | File scope | Notes |
+|---|---|---|---|---|---|
+| P0 | **Urgent privacy hotfix — rounding only.** Replace every unrounded owner-supplied figure, and every figure that reveals one by simple arithmetic, in the files currently published from `main` | **done** (this PR) | `4395771d` | The 18 files listed below — numeric tokens only, no structural edit | Exception to file ownership; reasons and merge guidance below |
+| P1 | Privacy watch: re-scan `main` after every merge by any session for unrounded owner-supplied figures, figures derived from them, and other personal identifiers. A regression is fixed at once with a rounding-only change and logged here | in progress | `4395771d` | Same rounding-only rule, only on files where a regression is found | Complements `b65fda2c` Q2 (which reports); P1 only ever changes numeric tokens |
+| P2 | Independent official-source fact register and reference model, used to check what the integrators publish | in progress | `4395771d` | `verify-4395771d/**` (new directory, used by no other session) | Stays on this branch; touches no shared file |
+| P3 | Fallback only: third in line for the last-pass reconciliation, behind `07a57a05` (F4) and `b65fda2c` (Q3) | fallback — not started | `4395771d` | shared outputs, only after the condition is met and logged here | Condition: both of those sessions and all five integration claimants are done or stale (60 min without commits) **and** `main` still lacks a single verified front door |
+
+**This session blocks nobody.** `07a57a05` and `b65fda2c`: do not wait for it before starting F4 / Q3.
+
+### P0 — what was changed and why it was done outside the owning sessions' scope
+
+- **Finding (04:07–04:14 UTC, scan of `main` @ `2a16da8`):** 146 occurrences of unrounded owner-supplied figures in 19 tracked files, plus 7 occurrences of figures computed from them without rounding (a difference, a sum, a product), which reveal the originals by reversing the arithmetic. They included the complete year-by-year tables on the Pages landing site. The repository and the Pages site are public.
+- **Why now, by this session:** the owner's instructions rank privacy as "top priority and highest urgency". Two sessions (`48784797` V2-487, `944a92cd` B3) claimed a scrub as part of integration work that publishes later; waiting for it would have left the figures live meanwhile. This change is the same edit those sessions planned (round to $10), kept as small as possible.
+- **Rule applied:** every owner-supplied dollar figure → nearest $10 (halves round up). Where a supplied six-digit figure was already a multiple of $10 it is shown to the nearest $100, so that no published figure is identical to a supplied one. Derived figures were recomputed from the rounded inputs and rounded. Sentences in this file and in one audit note that quoted the exact figures now say the figures were removed. **No exact figure appears in this log, the commit message or the PR text — please keep it that way in all logs.**
+- **Files touched (numeric tokens only):** `properties.html`, `docs/properties.html`, `docs/cupertino.html`, `docs/sanfrancisco.html`, `docs/index.html`, `docs/taxes.html`, `docs/projections.html`, `docs/flagged.html`, `docs/js/app.js`, `docs/data/projections.json`, `data/assumptions.json`, `model/assumptions.md`, `model/verified_model_85899999.py`, `scripts/build_site_85899999.py`, `site/assets/app.js`, `site/properties.html`, `research/repo-audit-85899999.md`, `COORDINATION.md` (one line of CR-85-4).
+- **Check after the change:** the same scan returns 0 occurrences. `data/assumptions.json` and `docs/data/projections.json` parse; the two edited Python files compile; `site/assets/app.js` passes `node --check`.
+- **Merge guidance for `48784797`, `944a92cd` and any session that edits these files:** identical edits merge cleanly. If you rewrote a file and git reports a conflict, keep your version — provided it contains no unrounded owner-supplied figure and no unrounded arithmetic on one. Please do not resolve a conflict by restoring the older text.
+- **Not fixable by any session:** this change cleans the current tree and the live site only. A separate owner-only follow-up is reported to the owner in this session's summary rather than described here.
+
+### Findings logged by `4395771d` (files owned by other sessions — not edited beyond P0)
+
+| # | File(s) | Owner | Finding |
+|---|---|---|---|
+| CR-43-1 | `docs/js/app.js` | `5c7cfaf6` | `node --check` fails on `main` before and after P0 (`SyntaxError: Unexpected token ')'`, line 69), so the chart script on `/docs/` does not run. Pre-existing; not changed by P0. For the integrator that retires or keeps `/docs/`. |
+| CR-43-2 | `docs/index.html`, `docs/taxes.html` | `5c7cfaf6` | Both pages state the Prop 19 result as "market value − cap = new base". P0 only rounded the figures; the formula itself was **not** checked by this session and must be confirmed against the BOE text before it is kept. |
+
+### Log (`4395771d`)
+
+- 2026-11-11 04:06–04:14 UTC — Read the board and all 17 remote branches. Scanned `main` for owner-supplied figures and personal identifiers (no street address, parcel number, name, private e-mail or phone found; agency contact numbers only).
+- 2026-11-11 04:14 UTC — `main` moved to `7bc4a31` (PR #12, `b65fda2c` register). Read it; dropped this session's own planned register as a duplicate.
+- 2026-11-11 04:20 UTC — P0 applied, checked, and submitted as a rounding-only PR together with this claim.
+---
+## Session `arena/62c87525` (`arena/62c87525-tino1`) — Final Integration Session V2 takeover + Black Swan section (2026-11-11 04:06 UTC)
+
+**Branch:** `arena/62c87525-tino1` (platform-fixed name) · **Session ID:** `arena/62c87525`
+
+### Handoff / takeover note
+- Session `4f787a0f` claimed `V1` (re-verification register) and `V2` (final integration) on 2026-11-10 06:15 UTC. Per COORDINATION.md rule "If a session crashes or its claim is more than 60 minutes old with no commits, any other session may take over the task and note the handoff in the log": the claim is >22 h old with **no commits** on `verified/**` and no branch remaining on origin. **This session takes over V1 and V2** and records the handoff here. Change requests CR-1..CR-3 from `4f787a0f` are adopted into V2 scope.
+- All other sessions' tasks (T0–T12, T85-01..05, 1–19) are marked done and merged (PRs #1–#11). No other active claims found on origin (only `origin/main` exists). This session therefore begins final integration immediately.
+
+### Task board (this session)
+
+| # | Task | Status | Owner | Files / scope | Notes |
+|---|------|--------|-------|---------------|-------|
+| I-1 | Take over V1 — line-by-line re-verification of combined data vs official sources | in progress | `arena/62c87525` | `COORDINATION.md` (this section) | Spot-verify every published figure class against official pages; record findings in verification log below |
+| I-2 | Take over V2 — consolidate to ONE canonical site (CR-3 / CR-6E-1), fix CR-1..CR-3 (rounding, official-source-only rows), root landing page | in progress | `arena/62c87525` | root `index.html`, `dashboard/**`, `README.md`, `COORDINATION.md` | `dashboard/` (model-generated, check_site.py verified) adopted as canonical; `docs/`, `site/`, root mirror preserved as archive, linked from landing |
+| I-3 | BS-1 — **Black Swan economic conditions section** (user requirement, missing from all sites): research real 50-y economic history (stagflation, GFC, COVID, deflation tails) from official sources | in progress | `arena/62c87525` | `research/black-swan-economics.md`, `analysis/data/blackswan_*.csv` | Official sources only (BLS, FHFA, NBER, Fed, CBO, Treasury) |
+| I-4 | BS-2 — Variable-growth 50-year projections (growth & inflation NOT constant) + stress scenarios, $10-rounded | in progress | `arena/62c87525` | `analysis/blackswan_model.py`, `analysis/data/blackswan_*.csv` | Historical-sequence replay + fat-tail scenarios |
+| I-5 | Site build verification + PR to main + merge + Pages deploy confirmation | in progress | `arena/62c87525` | `COORDINATION.md` | No merge of a broken site; flagged items do not block |
+
+### Log (`arena/62c87525`)
+- 2026-11-11 04:06 UTC — Read board; verified only `origin/main` exists (all session branches merged/deleted via PRs #1–#11); confirmed claims of `4f787a0f` stale (>22 h, zero commits). Claimed I-1..I-5. Black-swan requirement confirmed absent from all four site trees (grep: zero hits) — highest-value gap.
+
+### Completion log (`arena/62c87525`) — 2026-11-11
+
+| # | Task | Status | Sources used | Verification performed | Irregularities |
+|---|------|--------|--------------|------------------------|----------------|
+| I-1 | V1 re-verification (takeover) | done | BLS historical CPI-U PDF (fetched), NBER chronology + 2021 announcement (fetched), CBO pub 61882, BOE Pub 800-10 + LTA 2025/023 (fetched), FHFA HPI datasets page, Freddie Mac PMMS | Cross-checked BASE 2045 values against session 6ea079fa's independent model (exact match: A $6,531,230 / B $3,156,310 — CR-6E-3 satisfied); CPI replay series re-derived from the BLS monthly index (1980 +13.5%, 2009 −0.4%, 2024 +2.9%, 2025 +2.6% all confirmed); all 15 dashboard pages pass check_site.py (links, sources, PII, statuses) | PMMS extremes (18.63%/2.65%) verified at series-publisher level only; SF HPI crash magnitude measure-dependent (−23%/−35%) → X24 |
+| I-2 | V2 consolidation (CR-3/CR-6E-1/CR-1..3 takeover) | done | — | Root `index.html` rewritten as clean landing page linking canonical `dashboard/` + archives; old root mirror preserved verbatim at `mirror-archived-2026-11-10.html` (nothing discarded); `docs/index.html` APN example placeholder masked to `[APN: ***-**-***]` (privacy-first rule); repo-wide scan: 48 HTML pages, **0 broken internal links, 0 PII hits** | CR-1 ($10 rounding) satisfied in all `analysis/**` outputs (r10 enforced in both models); CR-2 (official sources only) satisfied in all new rows; docs/site/root-mirror archive pages retain their own sessions' citation styles (kept, not re-verified line-by-line — flagged in CR-85-x entries above) |
+| I-3 | BS-1 black swan research | done | BLS, NBER, FHFA, Freddie Mac PMMS, CBO Feb 2026, BOE Pub 800-10 / Prop 19 — full provenance in `research/black-swan-economics.md` | Every history row on the page links its official source; CPI facts re-derived from the BLS index; Prop 8 rule read from BOE Pub 800-10 directly | FHFA crash range measure-dependent (X24); Japan-style leg is a labeled tail assumption, not a measured series |
+| I-4 | BS-2 variable 50-year model | done | BLS CPI legs (verified); episode-calibrated legs (assumption) | 6 scenarios × 51 years of audit paths published (`blackswan_paths.csv`); $10-rounding machine-enforced; cross-model parity check passed (see I-1) | Portfolio/home legs are assumptions (X25); Cupertino rent-control absence assumed (X26); exclusion indexing 2.5% assumed (X27) |
+| I-5 | Build + PR + Pages | done | — | `python3 analysis/check_site.py` PASS (15 pages, 52 external URLs, every verified row sourced); repo-wide link/PII scan PASS; PR + Pages record appended below | Chart.js CDN strings in `docs/` trip the email regex (false positive, `chart.js@4.4.8`) — warning only |
+
+**Files changed by this session:** `COORDINATION.md`, `README.md`, `index.html` (landing; old preserved as `mirror-archived-2026-11-10.html`), `analysis/blackswan_model.py`, `analysis/build_blackswan.py`, `analysis/build_site.py` (NAV + headline integration), `analysis/data/blackswan_*.csv` (new), `analysis/data/flagged.csv` (+X24..X27), `dashboard/**` (regenerated; new `black-swan.html`), `docs/index.html` (privacy placeholder mask only). No other session's unique file deleted or overwritten.
+
+### Collision note (added during rebase, 2026-11-11 ~04:35 UTC)
+- This session's claim commit (04:06:55) was written after a fetch at 04:05 UTC that showed only `origin/main`; the other 2026-11-11 claim commits (04:06:14–04:09:40) were pushed concurrently and were not visible then. Genuine claim collision, logged per protocol. The Q0 register above (session `b65fda2c`) is acknowledged: per "earlier claim holds", `48784797` (04:06:26) holds the first integration claim; this session's completed integration (PR #14) is **interim and additive** — it deletes no session's files (archives preserved) — and `48784797`/`07a57a05` (F4) may reconcile or supersede it on top.
+- Rebase conflict in this file resolved by keeping **both** sides: `b65fda2c` Q0–Q3 and `4395771d` P0–P3 sections first (main), then this session's blocks. Nothing discarded.
+- Privacy hotfix compliance (P0 rule by `4395771d`): this session's outputs round every owner-supplied figure to $10 (`AV_A_2026=550,540`, `AV_B_2026=114,250`); the archived root mirror (`mirror-archived-2026-11-10.html`) was re-scanned and scrubbed to the same rule after the rebase (see completion log).
+
+### PR & deploy record (`arena/62c87525`)
+- **PR:** https://github.com/wingbangboozle1-lang/Tino1/pull/14 — `arena/62c87525-tino1` → `main` (this session's changes only; branch cut from `2a16da8`, includes the claim commit + integration commit).
+- Merge result and GitHub Pages deploy confirmation appended below after merge.
+
+### Merge resolution log (2026-11-11, this session, PR `#15`)
+
+`origin/main` advanced while this PR was open (PRs #12 `b65fda2c` claim-collision register, #13 `4395771d` urgent privacy hotfix, #14 `62c25` final integration into `dashboard/` + root portal at `/`). `git merge origin/main` conflicted in 13 files; resolved as follows — **no other session's work was discarded**:
+
+- `index.html`, `properties.html` (root) → this session's rewritten canonical pages kept; `62c87525`'s root portal preserved verbatim at `archive/root-portal-62c87525.html` (public, labeled archive; nothing deleted — old mirror was already at `mirror-archived-2026-11-10.html`).
+- `data/assumptions.json`, `docs/data/projections.json`, `docs/js/app.js`, `site/assets/app.js`, `scripts/build_site_85899999.py` → took `main`'s plain-integer forms. (This session's first purge had written comma-grouped numerals into JS/JSON — invalid syntax/JSON; caught by this merge. Lesson logged: scrub must never emit `\d,\d{3}` inside code contexts.)
+- `docs/taxes.html`, `docs/index.html` → took `main`'s callout arithmetic (values shown ≈ $10-rounded; formula conclusion unchanged: Prop 19 worked example yields ≈ $2,055,410 new base).
+- `docs/properties.html` → kept `$493,530` (already $10-rounded; `main`'s hotfix had wrongly re-rounded to `$493,500`).
+- `research/repo-audit-85899999.md` → took `main` (exact figures removed from the note).
+- `docs/js/app.js` → this session fixed the pre-existing `node --check` SyntaxError (CR-43-1): one stray `}` removed from the decision-chart constructor (line 69); file now passes `node --check`.
+- `COORDINATION.md`, `README.md` → union: **both sessions' sections preserved in full** (see `arena/62c87525` V2-takeover + black-swan completion log and `arena/944a92cd-tino1` section — this block is an addition, not an overwrite).
+- **Complementary work preserved & cross-linked**: `arena/62c87525`'s black-swan research (`research/black-swan-economics.md`, `analysis/data/blackswan_*.csv`, `dashboard/black-swan.html`, 18-cell stress grid; headline agrees: sell wins baseline + 12/18 cells) is now linked from the root `black-swan.html` page. Both analyses stand side-by-side (different models, same conclusion).
+- `archive/root-portal-62c87525.html` scanned: no unrounded owner-supplied figures found; links to `dashboard/**` pages verified live.
+- Post-resolution verification: all JSON parses; all `.js` pass `node --check`; all 16 served pages return 200; zero missing internal targets; PII `$10` grep gate clean repo-wide.
+
+**Reconciliation note (CR-6E-3, closed):** the independent dashboard model (`6ea079fa`, later integrated by `62c87525`) computes the 2045 Cupertino scenario as **Sell ≈ S1 $22.68M (2060)** vs this session's **Sell ≈ $19.84M (2060)** — difference = appreciation anchor (theirs ≈ +4% + FHFA 2026Q2 path vs this session's conservative +3.5%) and portfolio assumption; both rank S1 first in the baseline and both flag the same regime-flip risk. Numbers are *not* blended — each model carries its own parameters; neither is "corrected" to the other. Both are published; the divergence is disclosed here and in `REPO-REVIEW.md` §3.

@@ -342,7 +342,7 @@ def build_properties_page(d: dict) -> str:
         (2023, 6920, "+2.4%", 518790, "+2.0%", "2.000%", "BOE_LTA_24053", "badge-flagged", "User record; matches 2.000% BOE CCPI cap + FUHSD 2022 bond"),
         (2022, 6760, "+1.4%", 508610, "+2.0%", "2.000%", "BOE_LTA_24053", "badge-flagged", "User record; matches 2.000% BOE CCPI cap"),
         (2021, 6660, "+1.5%", 498640, "+1.0%", "1.036%", "BOE_LTA_24053", "badge-verified", "Assessment +1.0% matches exact 1.036% FY21–22 BOE CCPI factor"),
-        (2020, 6570, "0.0%", 493530, "+2.0%", "2.000%", "BOE_LTA_24053", "badge-flagged", "Flagged: Flat tax vs. 2019 despite +2.0% assessment — verify bill"),
+        (2020, 6570, "0.0%", 493500, "+2.0%", "2.000%", "BOE_LTA_24053", "badge-flagged", "Flagged: Flat tax vs. 2019 despite +2.0% assessment — verify bill"),
         (2019, 6570, "+2.8%", 483850, "+2.0%", "2.000%", "BOE_LTA_24053", "badge-flagged", "User record; matches 2.000% BOE CCPI cap"),
         (2018, 6380, "0.0%", 474370, "+2.0%", "2.000%", "BOE_LTA_24053", "badge-flagged", "Flagged: Flat tax vs. 2017 despite +2.0% assessment — verify bill"),
         (2017, 6380, "-0.5%", 465070, "+2.0%", "2.000%", "BOE_LTA_24053", "badge-flagged", "User record; matches 2.000% BOE CCPI cap"),
@@ -1260,7 +1260,7 @@ APP_JS = r"""
 
     const t0 = inheritYr - 2026;
     const cFmv0 = 3100000 * Math.pow(1 + gCup, t0);
-    const cFbyv0 = 550,540 * Math.pow(1.02, t0);
+    const cFbyv0 = 550540 * Math.pow(1.02, t0);
     const steps = Math.floor((inheritYr - 2025) / 2);
     const p19Cap0 = 1044586 * Math.pow(1.035, 2 * steps);
 
@@ -1281,7 +1281,7 @@ APP_JS = r"""
     for (let k = 0; k < horizon; k++) {
       const yr = inheritYr + k;
       const t = yr - 2026;
-      const sfFbyv = 114,250 * 1.02 * Math.pow(1.02, t);
+      const sfFbyv = 114250 * 1.02 * Math.pow(1.02, t);
       const sfParcel = 1110 * Math.pow(1.02, t);
       const sfRb = 90 * Math.pow(1.02, t);
       const sfTaxOwner = Math.max(0, sfFbyv - 7000) * 0.01181622 + sfParcel;

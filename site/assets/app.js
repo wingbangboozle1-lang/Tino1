@@ -121,7 +121,7 @@
 
     const t0 = inheritYr - 2026;
     const cFmv0 = 3100000 * Math.pow(1 + gCup, t0);
-    const cFbyv0 = 550,540 * Math.pow(1.02, t0);
+    const cFbyv0 = 550540 * Math.pow(1.02, t0);
     const steps = Math.floor((inheritYr - 2025) / 2);
     const p19Cap0 = 1044586 * Math.pow(1.035, 2 * steps);
 
@@ -142,7 +142,7 @@
     for (let k = 0; k < horizon; k++) {
       const yr = inheritYr + k;
       const t = yr - 2026;
-      const sfFbyv = 114,250 * 1.02 * Math.pow(1.02, t);
+      const sfFbyv = 114250 * 1.02 * Math.pow(1.02, t);
       const sfParcel = 1110 * Math.pow(1.02, t);
       const sfRb = 90 * Math.pow(1.02, t);
       const sfTaxOwner = Math.max(0, sfFbyv - 7000) * 0.01181622 + sfParcel;
