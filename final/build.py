@@ -619,19 +619,16 @@ def build_costs():
         ['Rent received', 'none today; HUD figure %s a month if let' % m(P['cup_rent_month']), '%s a month for two units; HUD two-bedroom figure for the ZIP is $3,310' % m(P['sf_rent_2units'] / 12), 'see Year by year', src('HUD-95014', 'HUD-94122')],
         ['Management and vacancy if Property A is let', '6% of rent and 5% of the year (assumptions)', 'self-managed; 5% vacancy', flag('A06'), src('HUD-95014')],
     ], caption='Running costs and the figures behind them')
-    hA = table(['Tax year', 'Property A tax bill', 'Property A assessed value', 'Official basis'], [
-        [y, m(t), m(a), src('SCC-RATES')] for y, t, a in [
-            (2026, None, 550540), (2025, 7210, 539740), (2024, 7000, 529160), (2023, 6920, 518790), (2022, 6760, 508610), (2021, 6660, 498640),
-            (2020, 6570, 493500), (2019, 6570, 483850), (2018, 6380, 474370), (2017, 6380, 465070), (2016, 6410, 455950), (2015, 6100, 449100), (2014, 5970, 440310)]
-        if t is not None
-    ] + [[2026, 'not yet billed', m(550540), src('SCC-RATES')]], caption='Property A history as supplied by the owner (rounded to $10)', cls='num',
-        note='The assessed value rose 2% in most years, the legal maximum, which is what the projection continues. A supplied figure that was already a multiple of $10 is shown to the nearest $100.')
-    hB = table(['Tax year', 'Property B tax bill', 'Property B assessed value', 'Official basis'], [
-        [y, m(t), m(a), src('SF-TAX')] for y, t, a in [
-            (2025, 2440, 114250), (2024, 2320, 112010), (2023, 2180, 109810), (2022, 2110, 107660), (2021, 2070, 105600),
-            (2020, 2200, 104510), (2019, 2130, 102470), (2018, 2060, 100460), (2017, 1700, 98490), (2016, 1680, 96560)]
-    ], caption='Property B history as supplied by the owner (rounded to $10)', cls='num')
-    body = ins + how + op + hA + hB
+    # Privacy: the owner-supplied year-by-year history is NOT listed. A multi-year series can point to one
+    # parcel even when each figure is rounded, and the decision needs only its growth rates.
+    hist = table(['What the owner-supplied history shows', 'Property A', 'Property B', 'Use in the model', 'Official basis'], [
+        ['Years covered', '2014 to 2026', '2016 to 2025', 'not listed year by year, for privacy ' + flag('P01'), src('BOE-P19')],
+        ['Average yearly growth of the assessed value', '1.9%', '1.9%', 'continued at inflation, capped at 2%', src('BOE-P19')],
+        ['Average yearly growth of the tax bill', '1.7%', '4.2% (fixed charges rose in one year)', 'rate held constant; fixed charges grow with inflation', src('SCC-RATES', 'SF-TAX')],
+        ['Tax bill as a share of assessed value, 2025', '1.34%', '2.14%', 'official rate plus fixed charges ' + flag('U03'), src('SCC-RATES', 'SF-TAX')],
+        ['Assessed value as a share of market value, 2026', pc(P['cup_assessed'] / P['cup_value'], 0), pc(P['sf_assessed'] / P['sf_value'], 0), 'the gap is what a reassessment would tax', src('BOE-P19')],
+    ], caption='History, summarised')
+    body = ins + how + op + hist
     page('costs.html', 'Insurance and running costs',
          'Home insurance for ZIP 95014, rental-property insurance for ZIP 94122, and the utility and repair figures used in the projections.', body)
 
@@ -640,6 +637,7 @@ def build_costs():
 def build_flagged():
     cats = [
         ('Q', 'Questions only the owner or a professional can answer'),
+        ('P', 'Privacy decisions'),
         ('U', 'Values that could not be confirmed on an official page (left blank)'),
         ('A', 'Model assumptions (no official figure exists)'),
         ('S', 'Irregularities in sources'),
