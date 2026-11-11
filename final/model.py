@@ -33,10 +33,11 @@ def r10(x):
 # ----------------------------------------------------------------------------
 P = dict(
     # --- owner-supplied, rounded to $10 ---
-    cup_value=3_100_000, cup_assessed=550_540, cup_tax_2025=7_210, cup_assessed_2025=539_740,
+    cup_value=3_100_000, cup_assessed=550_540, cup_tax_2025=7_210,
     cup_water=1_500,            # midpoint of 100-150 per month
     cup_elec=-180,              # solar: credit of 10-20 per month (midpoint)
-    sf_value=1_800_000, sf_assessed_2025=114_250, sf_tax_2025=2_440,
+    sf_value=1_800_000, sf_assessed=116_540, sf_tax_2025=2_440,   # assessed value for 2026 = prior year + 2%
+    dc_cup=930, dc_sf=1_090,    # fixed charges inside the bills: bill minus official rate times assessed value (prior-year values not stored)
     sf_rent_2units=85_800,      # 7,150 per month for the two rented units
     sf_water=4_380,             # midpoint of 330-400 per month, all three units
     sf_elec=600,                # midpoint of 30-70 per month
@@ -74,9 +75,6 @@ P = dict(
 )
 
 # derived, shown rounded
-P['dc_cup'] = r10(P['cup_tax_2025'] - P['cup_assessed_2025'] * P['rate_cup'])   # fixed charges on the bill
-P['dc_sf'] = r10(P['sf_tax_2025'] - P['sf_assessed_2025'] * P['rate_sf'])
-P['sf_assessed'] = r10(P['sf_assessed_2025'] * 1.02)
 P['sf_unit3_rent'] = r10(P['sf_rent_2units'] / 2)                                # average of the two rented units
 
 

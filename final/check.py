@@ -146,7 +146,7 @@ def check_model():
             err('MODEL: sale right after a basis reset shows a taxable gain')
         if not (s['fbyv_T'] <= s['taxable_live_T'] <= s['fmv_T'] + 1e-6):
             err('MODEL: Proposition 19 value outside its bounds')
-    for k in ('cup_value', 'cup_assessed', 'cup_tax_2025', 'cup_assessed_2025', 'sf_value', 'sf_assessed_2025', 'sf_tax_2025', 'sf_rent_2units'):
+    for k in ('cup_value', 'cup_assessed', 'cup_tax_2025', 'sf_value', 'sf_assessed', 'sf_tax_2025', 'sf_rent_2units', 'dc_cup', 'dc_sf'):
         if M.P[k] % 10:
             err('MODEL: owner input not rounded to $10:', k)
     return len(paths)

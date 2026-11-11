@@ -619,7 +619,8 @@ def build_costs():
 <li>Read the range of annual premiums across insurers and compare it with the %s estimate used here.</li>
 <li>For Property B ask an agent for a landlord (dwelling fire) quote for a three-unit building; the survey has no such scenario.</li></ol>""" % (S['CDI-TOOL-APP']['url'], m(P['ins_home']))
     op = table(['Cost', 'Property A', 'Property B', 'How it is projected', 'Official basis'], [
-        ['Property tax (2025 bill)', '%s on an assessed value of %s' % (m(P['cup_tax_2025']), m(P['cup_assessed_2025'])), '%s on an assessed value of %s' % (m(P['sf_tax_2025']), m(P['sf_assessed_2025'])), 'official rate times assessed value, plus fixed charges', src('SCC-RATES', 'SF-TAX')],
+        ['Property tax (2025 bill)', m(P['cup_tax_2025']), m(P['sf_tax_2025']), 'official rate times assessed value, plus fixed charges', src('SCC-RATES', 'SF-TAX')],
+        ['Assessed value (2026)', m(P['cup_assessed']), m(P['sf_assessed']), 'inflation, capped at 2% a year; never reassessed for Property B', src('BOE-P19', 'SF-TAX')],
         ['Fixed charges inside the bill', 'about %s (bill minus rate times value)' % m(P['dc_cup']), 'about %s' % m(P['dc_sf']), 'with inflation ' + flag('U03'), src('SCC-RATES', 'SF-TAX')],
         ['Water', '%s a year (owner: $100 to $150 a month)' % m(P['cup_water']), '%s a year for three units (owner: $330 to $400 a month)' % m(P['sf_water']), 'inflation + 2 points; Property B +9% in 2027 and 2028', src('SFPUC')],
         ['Electricity', '%s a year: a credit, because of the solar system (owner: $10 to $20 a month)' % m(P['cup_elec']), '%s a year (owner: $30 to $70 a month)' % m(P['sf_elec']), 'inflation + 1 point ' + flag('U05'), src('CPUC-NEM', 'CPUC-FIXED')],
