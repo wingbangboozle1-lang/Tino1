@@ -723,6 +723,48 @@ P-CAB-1: done. P-CAB-2: in progress, subject to GitHub Pages configuration and s
 Rebase note (`cab26ebb`): while preparing the first publication commit, `main` advanced via PRs #32 and #33. Both sessions appended to the board; the conflict was resolved by preserving both complete entries. PR #31 independently flags the same outstanding public-repository/history exposure and was not edited or merged by this session.
 
 **P-CAB deployment adjustment:** GitHub rejected the Pages API update to workflow publishing with HTTP 403 (integration lacks the required permission). The existing site remains in branch-based Pages mode. Claiming `_config.yml`, `.nojekyll`, `index.html`, and `.github/workflows/privacy-pages.yml` to use GitHub Pages' documented branch/Jekyll exclusion mechanism instead. This changes only publication routing and leaves earlier work in the repository and its history untouched; the old files will be excluded from the generated Pages output. Prior root-publication tasks are complete; F12 closed via PR #33. An independent PR #31 is an audit-only change with a non-overlapping report scope.
+## Session `arena/4f50c51b-tino1` — final integration, verification, deploy and PR/merge (2026-11-11)
+
+**Branch:** `arena/4f50c51b-tino1` (base: `main` @ `0e207a61`). **Session ID:** `arena/4f50c51b-tino1`. All prior sessions' work is retained; nothing was discarded or overwritten. This session adds the final integration record only.
+
+### Claims
+
+| # | Task | Status | Owner | File scope | Notes |
+|---|------|--------|-------|------------|-------|
+| T21 | Final verification: run `final/model.py`, `final/build.py`, `final/check.py` | done | arena/4f50c51b-tino1 | `final/` | `final/check.py .` → OK: 21 pages, 668 table rows each with an official link, 1,654 links, 2,101 dollar figures rounded to $10, privacy fingerprints clean, model self-tests passed on 51 paths. Staging build: `final/model.py` + `final/build.py` → 12 pages built cleanly. |
+| T22 | Official-source re-read (estate tax, Prop 13, Prop 19, CA death tax, county/city rates) | done | arena/4f50c51b-tino1 | `final/sources.py`, `research/` | IRS Rev. Proc. 2025-32 / PL 119-21 §70106: 2026 basic exclusion $15,000,000 per person, 40% top rate; CA no estate/inheritance tax (CA State Controller); Prop 13 1% general levy + 2% assessed-value cap (RTC §51); Prop 19 $1,044,586 cap + 1-year primary-residence rule (BOE LTA 2025/009, R&TC §63.2); SCC tax rate book FY25-26 (1.16360); SF Treasurer secured rate 1.18162182%; BOE homeowners' exemption $7,000; HUD SAFMR 95014/94122; FHFA/FRED HPI series; BLS CPI; USGS Bay-area earthquake outlook. |
+| T23 | GitHub Pages live + deploy confirmed | done | arena/4f50c51b-tino1 | root site | Pages status `built`, source branch `main` path `/`, public, HTTPS enforced. Live site https://wingbangboozle1-lang.github.io/Tino1/ serves the executive summary with official sources on every table row (re-read via fetch). |
+| T24 | PR to main + merge + record | in progress | arena/4f50c51b-tino1 | `COORDINATION.md` | Pull request https://github.com/wingbangboozle1-lang/Tino1/pull/35 created from arena/4f50c51b-tino1 into main; merge to be performed; Pages rebuild to be confirmed after merge. See below. |
+
+### Verification performed
+- `python3 final/model.py` — baseline plus 50 historical replays (1976-2025 record) and named crisis paths (black swan). Baseline: sell-and-reinvest wins; sell ahead of rent in 43/50 replays at 10 years and 50/50 at 20 years. Japan-style lost decade and depression paths are the exceptions where rent can lead.
+- `python3 final/build.py` — 12 staging pages built, every table row carries a link to an official page.
+- `python3 final/check.py .` — root site fully OK (see T21). Every table row has an official `.gov` source link; unverifiable values left blank and flagged; no PII (no names/addresses/parcel numbers; people are "the Transferor" and "the Inheritor"); all owner/model dollars rounded to nearest $10; no broken internal links or anchors.
+
+### Flagged irregularities (non-blocking; published on the Flagged for Review page)
+- Historical property-tax / assessed-value tables are owner-provided (user's bills) and flagged UNVERIFIED — require county bill cross-check; not re-sourced.
+- Market estimates ($3,100,000 Cupertino 95014; $1,800,000 San Francisco 94122, Nov 2026) are owner-provided estimates, not appraisals.
+- Insurance estimates (~$1,500/yr) are owner estimates, not confirmed by an official source; formal quotes required; CDI ZIP-level premium tool results could not be read by automation.
+- SCC tax rate book is a two-column layout; line pairings are inferred, corroborated by reproducing the rounded current bill.
+- Rev. Proc. 2026-35 / 2027 exclusion figures are inflation projections, not yet final for deaths in 2027.
+- `docs/js/app.js` CR-43-1 on a superseded, unlinked edition — does not affect the current root site.
+
+### Sources used (official pages, each opened and read)
+- IRS: Estate Tax; What's new: estate and gift tax (PL 119-21 §70106); Rev. Proc. 2025-32; Topic 409 / 559 / 701; Pub 559 / Pub 527; Form 706 instructions (Table A)
+- CA State Controller: California Estate Tax (no CA estate tax return for deaths on/after 2005-01-01; inheritance tax only pre-1982)
+- CA Board of Equalization: Proposition 19; LTA 2025/009 ($1,044,586, transfers 2025-02-16..2027-02-15); LTA 2026/026; Rule 462.260; Homeowners' Exemption ($7,000)
+- CA Revenue & Taxation Code: §51 (Prop 13 1% / 2% cap), §63.2 (Prop 19), §480 (change-in-ownership statement)
+- CA Probate Code: §16061.7 (trustee notification within 60 days)
+- Santa Clara County: Assessor Prop 19 page; Controller-Treasurer Tax Rate Book FY2025-26; Clerk-Recorder documentary transfer tax ($0.55 per $500)
+- San Francisco: Treasurer secured rate 1.18162182%; Empty Homes Tax preempted (collection stopped); Rent Board allowable increase 1.6% (3/1/26–2/28/27)
+- HUD: FY2026 SAFMR 95014 / 94122; FHFA/FRED: San Jose / San Francisco / California HPI; BLS CPI (FRED); Treasury par yield curve; CBO Budget & Economic Outlook 2026-2036; USGS Fact Sheet 2016-3020 (Bay-area earthquake outlook)
+
+### Pull request and merge
+- Pull request: https://github.com/wingbangboozle1-lang/Tino1/pull/35 — created from `arena/4f50c51b-tino1` into `main`, summary of changes, sources used and flagged irregularities in the PR body.
+- Merge: to be performed via `gh pr merge 35 --merge` (no `--auto`).
+- Pages deploy: to be confirmed after the merge triggers a rebuild on `main`; served at https://wingbangboozle1-lang.github.io/Tino1/. Flagged irregularities do not block the merge and remain on the Flagged for Review page.
+
+---
 
 ### P-CAB-2 close-out (2026-11-11)
 
