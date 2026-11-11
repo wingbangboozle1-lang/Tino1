@@ -1,0 +1,56 @@
+{
+ "read_on": "2026-11-11",
+ "series": [
+  {
+   "series": "FHFA index, San Jose, fourth quarter",
+   "official_listing": "https://fred.stlouisfed.org/data/ATNHPIUS41940Q",
+   "values_compared": 50,
+   "differences": 0,
+   "first_year": 1975,
+   "last_year": 2025
+  },
+  {
+   "series": "FHFA index, San Francisco, fourth quarter",
+   "official_listing": "https://fred.stlouisfed.org/data/ATNHPIUS41884Q",
+   "values_compared": 50,
+   "differences": 0,
+   "first_year": 1975,
+   "last_year": 2025
+  },
+  {
+   "series": "FHFA index, California, fourth quarter",
+   "official_listing": "https://fred.stlouisfed.org/data/CASTHPI",
+   "values_compared": 51,
+   "differences": 0,
+   "first_year": 1975,
+   "last_year": 2025
+  },
+  {
+   "series": "Consumer price index, December",
+   "official_listing": "https://fred.stlouisfed.org/data/CPIAUCSL",
+   "values_compared": 52,
+   "differences": 0,
+   "first_year": 1974,
+   "last_year": 2025
+  },
+  {
+   "series": "Japan residential property prices, fourth quarter",
+   "official_listing": "https://fred.stlouisfed.org/data/QJPN368BIS",
+   "values_compared": 31,
+   "differences": 0,
+   "first_year": 1990,
+   "last_year": 2020
+  },
+  {
+   "series": "NYU Stern returns table",
+   "official_listing": "https://pages.stern.nyu.edu/~adamodar/New_Home_Page/datafile/histretSP.html",
+   "values_compared": 392,
+   "differences": 0,
+   "first_year": 1928,
+   "last_year": 2025
+  }
+ ],
+ "values_compared": 626,
+ "differences": 0,
+ "detail": []
+}
