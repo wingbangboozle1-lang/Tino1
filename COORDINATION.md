@@ -474,3 +474,22 @@ This is the **ninth** session started on 2026-11-11 (it is not in the Q0 table b
 
 **Flagged for the owner (published on `flagged.html`, none blocks the merge):** trust type and estate inclusion (decides the basis reset); amount of cash and portability; insurance premiums for both ZIP codes (official ZIP-level figure blank); tax rate area; 2027 Proposition 19 allowance; all growth, return, rent, cost and tax-bracket assumptions; the repository is public and its Git history predates the rounding (owner action needed to make it private or rewrite history). PR #7 (`e25621af`, opened 2026-11-10) is not merged: its pages would overwrite `docs/` with another superseded edition.
 
+
+---
+
+## Session `arena/ad120b45` — final QA, source correction, and publication (claimed 2026-11-11 UTC)
+
+**Branch:** `arena/ad120b45-tino1` (platform-fixed; current session branch). **Base:** `245529a` / `main`.
+
+### Claim
+
+This session takes the final QA and publication pass after the prior integration session's merge. All earlier claims visible in this board are complete or stale. The scope is limited to the canonical root site and its reproducible generator/checker, plus this coordination record: `index.html`, root canonical pages (`decision.html`, `projections.html`, `black-swan.html`, `process.html`, `law.html`, `estate-cash.html`, `costs.html`, `flagged.html`, `sources.html`, `review.html`, `versions.html`), `final/**`, `REPO-REVIEW.md`, `README.md` (correction/addendum only), and `COORDINATION.md` (this section and completion log). Legacy `docs/`, `site/`, and `dashboard/` are not edited except where the final checker requires an already-published notice; they remain superseded archives.
+
+### Work plan
+
+1. Read and re-check the canonical model, every public table row, official-source register, privacy gate, and internal links.
+2. Correct any remaining material distinction or legal/source error, especially the fact that the San Francisco property is already owned and must not be reassessed or counted in the transferor's estate.
+3. Keep every owner/model dollar amount at a $10 increment; leave unverified values blank and flag them.
+4. Build the canonical site from `final/`, run the full checker and a local HTTP/link smoke test, then create and merge one PR to `main` and verify GitHub Pages.
+
+**Status:** in progress. No personal names, addresses, APNs, contact details, or exact source-derived owner figures will be added to the site or this log.
