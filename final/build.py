@@ -17,7 +17,8 @@ M = json.load(open(os.path.join(HERE, 'out', 'model.json')))
 P = M['params']
 B = M['baseline']['summary']
 ROWS = M['baseline']['rows']
-OUT = os.path.join(HERE, 'site')
+OUT = os.path.abspath(os.environ.get('OUT_DIR', os.path.join(HERE, 'site')))
+ROOT_MODE = bool(os.environ.get('ROOT_MODE'))
 Y0 = 2026
 T = P['T']
 BUILD_DATE = '2026-11-11'
@@ -89,7 +90,7 @@ NAV = [
     ('flagged.html', 'Flagged for Review'),
     ('sources.html', 'Sources and method'),
     ('review.html', 'Repo review'),
-]
+] + ([('versions.html', 'Earlier versions')] if os.environ.get('ROOT_MODE') else [])
 
 
 def page(slug, title, lead, body):
@@ -109,9 +110,9 @@ def page(slug, title, lead, body):
 <p class="lead">%s</p>
 %s
 </main>
-<footer class="wrap"><p>Built %s from <a href="%s/tree/main/final">final/</a> (model, generator and checker). Property A = Cupertino home (ZIP 95014). Property B = San Francisco three-unit home (ZIP 94122). People are placeholders: "the Transferor" (current owner of Property A) and "the Inheritor" (already owns Property B). Owner-supplied and modelled dollar figures are rounded to the nearest $10. This is an analysis to prepare questions for a licensed estate attorney and tax adviser, not legal or tax advice. Open items are on the <a href="flagged.html">Flagged for Review</a> page.</p></footer>
+<footer class="wrap"><p>Built %s from <a href="%s/tree/main/final">final/</a> (model, generator and checker). %s Property A = Cupertino home (ZIP 95014). Property B = San Francisco three-unit home (ZIP 94122). People are placeholders: "the Transferor" (current owner of Property A) and "the Inheritor" (already owns Property B). Owner-supplied and modelled dollar figures are rounded to the nearest $10. This is an analysis to prepare questions for a licensed estate attorney and tax adviser, not legal or tax advice. Open items are on the <a href="flagged.html">Flagged for Review</a> page.</p></footer>
 <script src="app.js"></script>
-</body></html>""" % (e(title), nav, e(title), lead, body, BUILD_DATE, REPO)
+</body></html>""" % (e(title), nav, e(title), lead, body, BUILD_DATE, REPO, '<a href="versions.html">Earlier versions</a> are superseded.' if ROOT_MODE else '')
     open(os.path.join(OUT, slug), 'w').write(doc)
 
 
@@ -335,7 +336,14 @@ def build_decision():
         m((s['sell_proceeds'] - min(P['cup_assessed'], s['fmv_T'])) * 0.371),
         m(rT['rent_collected']), mm(s['fmv_T']), pc(rT['rent_collected'] / s['fmv_T']), pc(rT['rent_tax'] / rT['rent_collected'], 0),
         pc(BE['g_cup_rent_vs_sell']), pc(HS['sj_1976_2025']))
-    body = at + first + w + '<h2>Wealth over time, in 2026 dollars</h2>' + chart + why + sens + be + byT + '<h2>Property A or Property B?</h2>' + which
+    S_ = M['sensitivity']
+    where = table(['If Property A is sold, the proceeds go into', 'Assumed yearly return', 'Sell and reinvest: wealth in 2076 (2026 dollars)', 'Renting instead, same reinvestment of rent', 'Better choice', 'Official basis'], [
+        ['A diversified stock fund', '7.0%', m(S_[0]['real_sell']), m(S_[0]['real_rent']), NAME[S_[0]['best']], src('TREASURY') + ' · ' + src('DAMODARAN')],
+        ['60% stocks, 40% Treasury bonds', '7.0% and 4.5%', m(S_[7]['real_sell']), m(S_[7]['real_rent']), NAME[S_[7]['best']], src('TREASURY') + ' · ' + src('DAMODARAN')],
+        ['Savings account or Treasury bills', '3.5%', m(S_[6]['real_sell']), m(S_[6]['real_rent']), NAME[S_[6]['best']], src('TREASURY')],
+    ], caption='Stocks or savings: where the sale proceeds go decides the answer', cls='num',
+        note='Returns are assumptions (%s). On 2026-11-10 the 3-month Treasury bill yielded 4.30%% and the 10-year note 4.98%%. Interest is taxed every year at ordinary rates; stock growth is taxed when sold.' % flag('A02'))
+    body = at + first + w + where + '<h2>Wealth over time, in 2026 dollars</h2>' + chart + why + sens + be + byT + '<h2>Property A or Property B?</h2>' + which
     page('decision.html', 'Decision: live in it, rent it, or sell and reinvest',
          'One model, one set of assumptions, three choices for Property A. Property B stays as it is in every case because the Inheritor already owns it.', body)
 
@@ -469,11 +477,11 @@ def build_process():
         ['4', 'Date of death', 'Record the date. Order a written appraisal of Property A as of that date.', 'For a revocable trust this is the change-in-ownership date, and the appraisal sets the new basis.', src('BOE-RULE-462.260', 'IRS-FAQ-INHERIT')],
         ['5', 'Within 60 days', 'The successor trustee serves the notification to every beneficiary and heir.', 'Required when a revocable trust becomes irrevocable by death; starts the 120-day contest period.', src('PROB-16061.7')],
         ['6', 'Soon after death', 'Get an employer identification number for the trust or estate; file Form 1041 if it has more than $600 of gross income in a year.', 'Rent, interest or dividends received before distribution are taxed to the trust or passed through.', src('IRS-1041')],
-        ['7', 'Within 150 days of death', 'File the change-in-ownership statement for Property A with the Santa Clara County Assessor.', 'Statutory deadline when ownership changes by death; a penalty applies after a written request is ignored.', src('RTC-480')],
+        ['7', 'Within 150 days of death', 'File the change-in-ownership statement for Property A with the Santa Clara County Assessor.', 'Statutory deadline when ownership changes by death; the notice required by the statute warns of a penalty for not filing.', src('RTC-480')],
         ['8', 'Within 9 months of death', 'File Form 706 if the gross estate plus adjusted taxable gifts is above the filing threshold, or to elect portability for a surviving spouse. Form 4768 gives six more months.', 'Above the threshold the tax is 40% of the excess. Portability is lost without a timely return.', src('IRS-FAQ-ESTATE', 'IRS-I706')],
         ['9', 'Decide early: live, rent or sell', 'Use the <a href="decision.html">Decision</a> page. If selling, list promptly and keep the home insured while empty.', 'A sale near the date-of-death value has almost no taxable gain. Vacant homes can lose cover after 60 days.', src('IRS-FAQ-INHERIT', 'CDI-RES')],
         ['10', 'Within 1 year, only if moving in', 'Make Property A the Inheritor\'s principal residence and file for the homeowners\' exemption there.', 'Without both, the Proposition 19 exclusion is not available and the home is reassessed at full market value.', src('RTC-63.2', 'BOE-LTA-2026-026')],
-        ['11', 'Within 3 years, only if moving in', 'File the parent-child exclusion claim (form BOE-19-P) with the Assessor, before any transfer to a third party.', 'Later claims give relief only going forward.', src('BOE-P19', 'SCC-P19')],
+        ['11', 'Within 3 years, only if moving in', 'File the parent-child exclusion claim (form BOE-19-P) with the Assessor, before any transfer to a third party.', 'The county page says later claims receive relief only going forward; confirm with the Assessor. ' + flag('S03'), src('BOE-P19', 'SCC-P19')],
         ['12', 'After the Assessor acts', 'Expect a supplemental tax bill for Property A covering the period from the date of death.', 'Budget for it in every choice. The San Francisco page describes the same California process. ' + flag('U06'), src('SF-TAX')],
         ['13', 'Tax year of the sale, if sold', 'Report the sale on Form 8949 and Schedule D using the date-of-death value as basis; match any Schedule A to Form 8971 received.', 'A basis above the value finally determined for estate tax can draw an accuracy penalty.', src('IRS-FAQ-INHERIT', 'IRS-TC409')],
         ['14', 'Every year, if rented', 'Report rent and expenses; depreciate the building part of the new basis over 27.5 years. Follow the state rent cap and its notice rules.', 'Depreciation shelters part of the rent but is taxed back at up to 25% federal on a later sale.', src('IRS-P527', 'IRS-TC409', 'DOJ-TPA')],
@@ -530,13 +538,13 @@ def build_law():
         ['Death Tax Repeal Act (S.587 and H.R.1301)', 'Federal', 'Introduced 2025-02-13 and referred to committee. No later action shown.', 'Would repeal the estate tax. No effect on the property-tax or income-tax results.', src('CONG-S587', 'CONG-HR1301')],
         ['Any reduction of the exclusion or of the basis reset', 'Federal', 'No enacted measure found. Would need a new Act of Congress.', 'See the stress rows on the Cash and Black swan pages.', src('IRS-NEW')],
         ['Next adjustment of the Proposition 19 allowance', 'California', 'Scheduled for 2027-02-16, using the 2026 California house-price change. Figure: ' + BLANK + ' ' + flag('U04'), 'Sets the allowance for transfers through 2029-02-15.', src('BOE-LTA-2025-009')],
-        ['Proposition 3 (extends the existing tax on high incomes)', 'California', 'Yes 60.6% in unofficial returns; certification due by 2026-12-11.', 'Keeps the top state rates that apply to a large one-year gain.', src('SOS-RESULTS')],
+        ['Proposition 3 (extends the existing tax on high incomes)', 'California', 'Yes 60.6% in unofficial returns; certification due by 2026-12-11.', 'Would keep the existing higher state rates on high incomes, which reach a large one-year gain. Details are in the voter guide.', src('SOS-RESULTS')],
         ['Proposition 40 (one-time tax on certain taxpayers)', 'California', 'No 52.6% in unofficial returns.', 'None if the result holds.', src('SOS-RESULTS')],
-        ['Proposition 42 (bars new state personal-property taxes and certain retroactive taxes)', 'California', 'Yes 51.5% in unofficial returns.', 'Lowers the chance of a new state tax on invested sale proceeds.', src('SOS-RESULTS')],
+        ['Proposition 42 (bars new state personal-property taxes and certain retroactive taxes)', 'California', 'Yes 51.5% in unofficial returns.', 'Would bar new state taxes on personal property; relevant to invested sale proceeds if the result holds.', src('SOS-RESULTS')],
         ['Measure to undo the Proposition 19 inheritance rules', 'California', 'Reported by non-official websites as a signature drive. Not among the measures on the November 2026 ballot. ' + flag('S04'), 'Would restore relief for rented inherited homes.', src('SOS-RESULTS')],
         ['Limit on banked and capital-improvement rent increases (File No. 261020)', 'San Francisco', 'Under consideration by the Board of Supervisors; not enacted.', 'Would cap those increases at 10% a year on Property B.', src('SF-RENT-RULES')],
         ['Empty Homes Tax appeal', 'San Francisco', 'City lost on appeal; no collection unless reversed.', 'If revived, a charge on the unit kept empty.', src('SF-EHT')],
-        ['Residential fixed charge on electricity bills', 'California', 'Adopted: $24.15 a month for standard customers.', 'Reduces or removes the monthly solar credit at Property A.', src('CPUC-FIXED')],
+        ['Residential fixed charge on electricity bills', 'California', 'Adopted: $24.15 a month for standard customers.', 'May reduce or remove the monthly solar credit at Property A.', src('CPUC-FIXED')],
         ['Missing October 2025 inflation data', 'Federal', 'No 12-month change published for October 2026.', 'Indexed figures still use the published series; watch for revisions.', src('BLS-OCT')],
     ], caption='Changes under discussion or recently decided')
     body = fed + ca + loc + '<h2>Changes under discussion</h2>' + pend
@@ -683,6 +691,47 @@ def build_review():
     page('review.html', 'Repository review', 'Irregularities found while reading the repository, with links to the files and to the rule each one is measured against.', body)
 
 
+LEGACY = [
+    ('archive/root-site-2026-11-11/index.html', 'Root "decision hub" published earlier on 2026-11-11 (pull request 15)',
+     'Shows Property B as reassessed and as part of the estate. It is neither: the Inheritor already owns it. Tables stop in 2060.', ('BOE-RULE-462.260', 'IRS-ESTATE')),
+    ('dashboard/index.html', 'dashboard/ - model-generated dashboard of 2026-11-10 with a black-swan page added 2026-11-11',
+     'Grows the Proposition 19 allowance 2% every year instead of following the official two-year rule; many table rows have no official link.', ('BOE-LTA-2025-009',)),
+    ('site/index.html', 'site/ - eight-page suite of 2026-11-10',
+     'Different growth assumptions and a 10-year comparison only; superseded.', ('FHFA-SJ',)),
+    ('docs/index.html', 'docs/ - first multi-page site of 2026-11-10',
+     'Cites consumer finance websites as sources, has broken in-page anchors and a script error; lists a year-by-year history series.', ('IRS-ESTATE',)),
+    ('archive/root-portal-62c87525.html', 'Portal page of 2026-11-11 (pull request 14)',
+     'A landing page that pointed to dashboard/; replaced.', ('BOE-P19',)),
+    ('archive/mirror-archived-2026-11-10.html', 'Mirror of the first root page of 2026-11-10',
+     'Treated Property B as inherited; replaced.', ('BOE-RULE-462.260',)),
+    ('final/site/index.html', 'final/site/ - staging address of the current site',
+     'Now redirects to this site.', ('BOE-P19',)),
+]
+
+
+def build_versions():
+    rows = [['<a href="%s">%s</a>' % (h, e(t)), 'Superseded - kept for the record, carries a notice at the top', e(why), src(*s_)] for h, t, why, s_ in LEGACY]
+    t = table(['Earlier version', 'Status', 'Why it should not be relied on', 'Rule it is measured against'], rows, caption='Earlier versions kept in the repository')
+    body = '<p class="callout">This site is the only current version. The pages below were written by earlier or parallel work sessions. They are kept so that nothing is lost, each carries a notice pointing back here, and none is linked from anywhere else on this site. Their numbers differ from this site because their assumptions and, in places, their reading of the rules differ.</p>' + t + '<p class="note">Details of each finding are on the <a href="review.html">Repo review</a> page and in <a href="%s/blob/main/COORDINATION.md">COORDINATION.md</a>.</p>' % REPO
+    page('versions.html', 'Earlier versions', 'Older editions of this analysis that remain in the repository, and why this site replaces them.', body)
+
+
+def stub(slug, target, title):
+    open(os.path.join(OUT, slug), 'w').write('''<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta http-equiv="refresh" content="0; url=%s">
+<link rel="canonical" href="%s">
+<title>%s - moved</title></head>
+<body><p>This page has moved to <a href="%s">%s</a>.</p></body></html>
+''' % (target, target, e(title), target, e(title)))
+
+
+STUBS = [('properties.html', 'index.html', 'The two homes'), ('scenarios.html', 'decision.html', 'Decision'),
+         ('taxes.html', 'law.html', 'Law'), ('estate-tax.html', 'estate-cash.html', 'Cash and estate tax'),
+         ('methodology.html', 'sources.html', 'Sources and method'), ('pending-changes.html', 'law.html', 'Law'),
+         ('steps.html', 'process.html', 'Process'), ('mirror-archived-2026-11-10.html', 'versions.html', 'Earlier versions')]
+
 CSS = """
 :root{--ink:#16202b;--mut:#5b6875;--line:#d9dee4;--bg:#f6f7f9;--card:#fff;--acc:#1f4e8c;--warn:#9a5b00;--warnbg:#fff6e0}
 *{box-sizing:border-box}body{margin:0;font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg)}
@@ -754,6 +803,10 @@ def main():
     for f in (build_index, build_decision, build_projections, build_blackswan, build_process, build_law,
               build_estate, build_costs, build_flagged, build_sources, build_review):
         f()
+    if ROOT_MODE:
+        build_versions()
+        for s_, t_, n_ in STUBS:
+            stub(s_, t_, n_)
     print('built', len([x for x in os.listdir(OUT) if x.endswith('.html')]), 'pages in', OUT)
 
 
