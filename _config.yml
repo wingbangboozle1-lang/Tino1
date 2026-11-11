@@ -8,6 +8,7 @@ exclude:
   - 'app.js'
   - 'archive'
   - 'assets'
+  - 'audit-de9174cd'
   - 'black-swan.html'
   - 'costs.html'
   - 'dashboard'

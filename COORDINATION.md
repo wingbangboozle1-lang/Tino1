@@ -668,6 +668,15 @@ No figure on the site changed as a result of these reads. Two residual limits ar
 
 **L95 status:** L95-1 done, L95-2 done (`legacy95/rowrule.py`, `legacy95/source_rows.py`, `legacy95/check_legacy.py`, `legacy95/REPORT.md`), L95-3 PR→main→Pages→this record: in progress.
 
+## Session `arena/de9174cd-tino1` — independent release-safety audit (2026-11-11)
+
+| Task | Status | Owner | Scope |
+|---|---|---|---|
+| D91-1 | in progress | arena/de9174cd-tino1 | `audit-de9174cd/**` (new), this append-only board section |
+
+Review public-release privacy and verification gates independently, without changing files assigned to other sessions. The platform-fixed branch name supersedes the requested branch naming pattern. Record any release-blocking safety defects and requests to the integration owner here.
+
+**D91-1 done — independent safety audit:** `audit-de9174cd/REPORT.md` records the verification performed, official sources checked, and release blockers. The current public Pages tree and public repository expose linked household financial and housing details, including in legacy material and source inputs; rounding and placeholders do not establish anonymity. An official link on each row does not verify household inputs or forecast outputs. `final/check.py .` and `legacy95/check_legacy.py` pass their own limited checks, not the user's privacy or line-by-line fact-verification requirements. Integration owner: please address the full public tree, repo history, and source-to-claim verification before a further release; this audit does not claim the existing deployment is privacy-safe. Current Pages build API reports `built` at base `0e207a6`, but browser-level reachability and privacy were not established. No front-door files were edited, respecting existing ownership.
 ---
 
 ## Session `12a96d3d` (`arena/12a96d3d-tino1`) — final verification + publish (claimed 2026-11-11)
