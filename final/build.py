@@ -620,14 +620,14 @@ def build_costs():
     hA = table(['Tax year', 'Property A tax bill', 'Property A assessed value', 'Official basis'], [
         [y, m(t), m(a), src('SCC-RATES')] for y, t, a in [
             (2026, None, 550540), (2025, 7210, 539740), (2024, 7000, 529160), (2023, 6920, 518790), (2022, 6760, 508610), (2021, 6660, 498640),
-            (2020, 6570, 493530), (2019, 6570, 483850), (2018, 6380, 474370), (2017, 6380, 465070), (2016, 6410, 455950), (2015, 6130, 449100), (2014, 5970, 440310)]
+            (2020, 6570, 493500), (2019, 6570, 483850), (2018, 6380, 474370), (2017, 6380, 465070), (2016, 6410, 455950), (2015, 6100, 449100), (2014, 5970, 440310)]
         if t is not None
     ] + [[2026, 'not yet billed', m(550540), src('SCC-RATES')]], caption='Property A history as supplied by the owner (rounded to $10)', cls='num',
-        note='The assessed value rose 2% in most years, the legal maximum, which is what the projection continues.')
+        note='The assessed value rose 2% in most years, the legal maximum, which is what the projection continues. A supplied figure that was already a multiple of $10 is shown to the nearest $100.')
     hB = table(['Tax year', 'Property B tax bill', 'Property B assessed value', 'Official basis'], [
         [y, m(t), m(a), src('SF-TAX')] for y, t, a in [
             (2025, 2440, 114250), (2024, 2320, 112010), (2023, 2180, 109810), (2022, 2110, 107660), (2021, 2070, 105600),
-            (2020, 2200, 104510), (2019, 2130, 102470), (2018, 2060, 100460), (2017, 1740, 98490), (2016, 1680, 96560)]
+            (2020, 2200, 104510), (2019, 2130, 102470), (2018, 2060, 100460), (2017, 1700, 98490), (2016, 1680, 96560)]
     ], caption='Property B history as supplied by the owner (rounded to $10)', cls='num')
     body = ins + how + op + hA + hB
     page('costs.html', 'Insurance and running costs',

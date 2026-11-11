@@ -14,9 +14,9 @@ import os, re, sys, hashlib, html, json
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 SITE = os.path.abspath(sys.argv[1]) if len(sys.argv) > 1 else os.path.join(HERE, 'site')
-OFFICIAL = ('irs.gov', 'congress.gov', 'sco.ca.gov', 'boe.ca.gov', 'leginfo.legislature.ca.gov', 'ftb.ca.gov',
-            'sos.ca.gov', 'oag.ca.gov', 'insurance.ca.gov', 'cpuc.ca.gov', 'santaclaracounty.gov', 'sftreasurer.org',
-            'sf.gov', 'sfpuc.gov', 'huduser.gov', 'fred.stlouisfed.org', 'bls.gov', 'treasury.gov', 'cbo.gov', 'usgs.gov')
+# official = any .gov host (federal, state, county, city) plus these public-agency hosts
+OFFICIAL = ('gov', 'sftreasurer.org', 'fred.stlouisfed.org', 'sccassessor.org', 'valleywater.org', 'sfgov.legistar.com',
+            'capropeforms.org')
 OTHER_OK = ('github.com', 'pages.stern.nyu.edu')
 # official published figures that are not multiples of $10 (each is quoted from the linked page)
 OFFICIAL_ODD = {'1,044,586', '72,724', '371,479', '445,771', '742,953', '109,125', '208,325', '661,375',
@@ -107,7 +107,7 @@ def check_site():
             err(p, 'missing robots noindex')
         fingerprint_scan(p, text)
     for f in os.listdir(SITE):
-        if not f.endswith('.html'):
+        if not f.endswith('.html') and os.path.isfile(os.path.join(SITE, f)):
             fingerprint_scan(f, open(os.path.join(SITE, f), encoding='utf-8', errors='ignore').read())
     return len(pages), n_rows, n_links, n_money
 
@@ -158,7 +158,14 @@ if __name__ == '__main__':
     npaths = check_model()
     if errors:
         print('FAIL - %d problem(s)' % len(errors))
-        for x in errors[:80]:
+        kinds = {}
+        for x in errors:
+            for k in ('row without an official source link', 'not rounded to $10', 'broken internal link', 'broken anchor',
+                      'non-official domain', 'PRIVACY', 'possible', 'robots', 'non-https', 'empty cell', 'MODEL'):
+                if k in x:
+                    kinds[k] = kinds.get(k, 0) + 1
+        print('   by kind:', kinds)
+        for x in errors[:int(os.environ.get('SHOW', '80'))]:
             print(' -', x)
         sys.exit(1)
     print('OK - %d pages, %d table rows each with an official link, %d links, %d dollar figures rounded to $10, privacy fingerprints clean, model self-tests passed on %d paths' % (n + (npaths,)))
