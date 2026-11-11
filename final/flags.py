@@ -34,6 +34,10 @@ FLAGS = [
          used='Current pages are rounded and carry no history series. Nothing in the history was rewritten: that would be destructive and needs the owner\'s consent.',
          check='Owner action: make the repository private, or have the history rewritten, if the earlier commits must not remain readable.',
          src=('BOE-P19', 'SCC-RATES')),
+    dict(id='P03', item='Owner-supplied figures (market values, rents, utility bills, tax bills, insurance estimates) cannot be confirmed from an official source.',
+         used='Used as model inputs and shown only rounded to $10, labelled as the owner\'s own figures. The official link on such a row shows the rule or index the calculation follows, not verification of the owner\'s number.',
+         check='Replace with an appraisal, leases and bills where more precision is needed; the county assessment roll can confirm assessed values.',
+         src=('SCC-RATES', 'SF-TAX')),
     # ---- values not confirmed ---------------------------------------------------------------
     dict(id='U01', item='Home-insurance premium for ZIP 95014 and landlord-insurance premium for ZIP 94122.',
          used='ZIP-level official figure left blank. The model uses the owner\'s own estimate of $1,500 a year for each, shows the official statewide averages beside it, and shows that tripling it does not change the ranking.',
@@ -208,4 +212,8 @@ REVIEW = [
          finding='Federal exclusion $15,480,000 and annual gift exclusion $20,000 for 2027; San Francisco secured rate 1.18162182% for fiscal year 2026-27; Board of Equalization letter 2026/026 dated 2026-08-03; Proposition 42 at 51.5% yes in unofficial returns. All agree with this site. The model, generator and checker were rerun and reproduce the published pages byte for byte.',
          status='No irregularity. Ballot figures stay unofficial until certification, due by 2026-12-11.',
          src=('RP-2026-35', 'SF-TAX', 'BOE-LTA-2026-026', 'SOS-RESULTS')),
+    dict(id='R17', where='Landing page "Best plan" text and the Black swan named-paths note', path='blob/main/final/build.py',
+         finding='Both said the Japan-style path was the one tested path in which selling into stocks ends behind renting. The model\'s own named-paths table also puts renting ahead in the 1929-1941 Depression path (renting $4,960,970 against $4,757,310 for selling). Prose contradicted the table beside it. Found by the independent verification pass of session faccd46d.',
+         status='Closed 2026-11-11 (session faccd46d): both passages now name the two paths and quote the model\'s figures. No model figure changed.',
+         src=('FHFA-SJ', 'BLS-CPI')),
 ]
