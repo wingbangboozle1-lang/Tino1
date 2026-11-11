@@ -557,3 +557,43 @@ State found: PR #22 (F4, `07a57a05`) is merged and is the last commit on `main`;
 4. PRs #7, #17 and #23 are open and unmerged; left for their owners (R15).
 
 **Pull request, merge and deploy:** recorded below.
+
+---
+
+## Session `arena/1a7fa860` — claim and result (2026-11-11)
+
+**Branch:** `arena/1a7fa860-tino1`, branched from `main` @ `245529a` (PR #22 merged). **Session ID:** `arena/1a7fa860`.
+
+### Claim
+
+| # | Task | Status | Owner | Files / scope | Notes |
+|---|---|---|---|---|---|
+| T20 | Requirements traceability + independent re-verification pass on the live edition | in progress | `arena/1a7fa860` | `final/build.py`, `final/integrate.py`, root `requirements.html` and the regenerated root site, `README.md`, `COORDINATION.md` | New scope: `final/**` is not claimed by any open task; no other session has an active claim on `main` after F4 (PR #22 merged 05:16 UTC). Nothing outside `final/**`, the generated root pages, `README.md` and this file is touched. |
+
+### What was found before starting
+
+`python3 final/model.py && python3 final/build.py && python3 final/check.py .` on the branch tip reproduced the published edition: 20 pages, 628 sourced table rows, 2,065 rounded dollar figures, clean privacy scan. So the site on `main` was sound; this pass adds the one artefact the brief asks for that the site did not have (a line-by-line requirements list) and re-reads eleven official pages independently rather than trusting the earlier register.
+
+### Re-verification performed (pages fetched and read on 2026-11-11, this session)
+
+| Fact | Read on the official page | Result |
+|---|---|---|
+| 2026 federal estate-tax filing threshold | IRS, Estate tax (table by year of death) | $15,000,000 — matches |
+| 2027 basic exclusion | IRS Rev. Proc. 2026-35 §3.44 | $15,480,000 — matches |
+| California estate tax | State Controller, California Estate Tax | no return required for deaths on or after 2005-01-01 — matches |
+| Prop 19 §1m allowance | BOE LTA 2025/009 | $1,044,586 for transfers 2025-02-16 to 2027-02-15 — matches |
+| Prop 19 mechanics / trusts | BOE LTA 2026/026 | excluded amount = FBYV + $1m (adjusted); transfers "within or outside a trust"; continual-use rule — matches |
+| Basis reset in a non-includible grantor trust | IRS IRB 2023-16, Rev. Rul. 2023-2 | §1014 adjustment generally does not apply — matches |
+| Home-sale exclusion | IRS Topic 701 | $250,000 / $500,000; 24 of the last 60 months — matches |
+| SF secured rate FY2026-27 | SF Treasurer, Secured Property Taxes | 1.18162182% — matches |
+| Santa Clara rates FY2025-26 | SCC Controller-Treasurer Tax Rate Book, pp. A-4 to A-6 | components read; sum for a Cupertino address 1.16360 per $100, reproduces the rounded current bill — matches |
+| HUD fair market rents, 95014 and 94122 | HUD FY2026 SAFMR calculation pages | 95014: 2BR $4,440 / 3BR $5,870 / 4BR $6,390; 94122: 2BR $3,310 / 3BR $4,230 / 4BR $4,380 — matches |
+| FHFA San Jose index | FHFA via FRED, ATNHPIUS41940Q | Q4 2025 560.05; Q2 2025 564.26; Q2 2026 558.75 (−1.0% y/y) — matches |
+
+No figure on the site changed as a result of these reads. Two residual limits are unchanged and remain on the flag list: the exact tax rate area of Property A was deliberately not looked up (U03, privacy), and the tax-rate book is a two-column layout whose line pairings are inferred — the inference is corroborated by the fact that the resulting total reproduces the rounded current bill.
+
+### Irregularities noted (none blocking, none new to the data)
+
+- `docs/js/app.js` still carries the syntax error recorded as CR-43-1. `docs/` is a superseded edition with a notice and is not linked from the front door; not fixed here to keep this session's scope to the current edition.
+- CR-07-5 (rows without official links in `dashboard/`, `docs/`, `site/` and the archived root), CR-07-7 and CR-1/CR-2 remain open on superseded material only.
+- The repository is public and its Git history predates the $10 rounding (P02). Only the owner can fix that.
