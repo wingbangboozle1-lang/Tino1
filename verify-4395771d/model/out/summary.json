@@ -1,0 +1,1620 @@
+{
+ "assumptions": {
+  "inflation": 0.025,
+  "a_apprec": 0.04,
+  "b_apprec": 0.035,
+  "ca_apprec": 0.04,
+  "ca_change_2026": 0.013,
+  "stock_return": 0.07,
+  "dividend_yield": 0.015,
+  "cash_return": 0.034,
+  "rent_growth_over_cpi": 0.005,
+  "tax_ordinary": 0.371,
+  "tax_gains": 0.281,
+  "tax_recapture": 0.381,
+  "a_electric_after_solar_year": 1800,
+  "a_solar_credit_ends": 2040,
+  "a_maintenance_year": 8000,
+  "a_building_share": 0.3,
+  "a_rent_vacancy": 0.05,
+  "a_rent_mgmt": 0.06,
+  "a_landlord_insurance_mult": 1.25,
+  "b_maintenance_year": 12000,
+  "b_third_unit_rent_month": 3580,
+  "b_third_unit_vacancy": 0.05,
+  "b_third_unit_cost_share": 0.1,
+  "b_rent_controlled": true,
+  "insurance_over_cpi": 0.02,
+  "utilities_over_cpi": 0.02,
+  "selling_cost": 0.06,
+  "months_to_sell": 6,
+  "other_assets_at_T": 1000000
+ },
+ "verified": {
+  "a_rate": 0.011636,
+  "b_rate": 0.0118162182,
+  "prop13_cap": 0.02,
+  "hox": 7000,
+  "p19_allowance_2025": 1044586,
+  "p19_next_adjust": 2027,
+  "excl_2026": 15000000,
+  "excl_2027": 15480000,
+  "estate_rate": 0.4,
+  "a_hud_rent_4br_month": 6390,
+  "sf_rent_cap_share": 0.6,
+  "depreciation_years": 27.5,
+  "sec121_single": 250000,
+  "tbill_now": 0.043,
+  "t10_now": 0.0498
+ },
+ "owner": {
+  "a_value_2026": 3100000,
+  "a_assessed_2026": 550540,
+  "a_assessed_2025": 539740,
+  "a_tax_2025": 7210,
+  "a_water_month": 125,
+  "a_insurance_year": 1500,
+  "b_value_2026": 1800000,
+  "b_assessed_2025": 114250,
+  "b_tax_2025": 2440,
+  "b_rent_month_2units": 7150,
+  "b_water_month": 365,
+  "b_electric_month": 50,
+  "b_insurance_year": 1500
+ },
+ "derived_direct_charges_2025": {
+  "a": 1010,
+  "b": 1090
+ },
+ "status_quo": {
+  "2026": {
+   "a_market": 3100000,
+   "a_assessed": 550540,
+   "a_tax": 7340,
+   "b_market": 1800000,
+   "b_assessed": 116540,
+   "b_tax": 2470,
+   "b_rent": 85800,
+   "allowance": 1044590,
+   "exclusion": 15000000
+  },
+  "2030": {
+   "a_market": 3626560,
+   "a_assessed": 595920,
+   "a_tax": 7970,
+   "b_market": 2065540,
+   "b_assessed": 126140,
+   "b_tax": 2690,
+   "b_rent": 91060,
+   "allowance": 1100490,
+   "exclusion": 16670270
+  },
+  "2035": {
+   "a_market": 4412270,
+   "a_assessed": 657950,
+   "a_tax": 8840,
+   "b_market": 2453220,
+   "b_assessed": 139270,
+   "b_tax": 3010,
+   "b_rent": 98100,
+   "allowance": 1237900,
+   "exclusion": 18860880
+  },
+  "2040": {
+   "a_market": 5368200,
+   "a_assessed": 726430,
+   "a_tax": 9800,
+   "b_market": 2913650,
+   "b_assessed": 153770,
+   "b_tax": 3360,
+   "b_rent": 105680,
+   "allowance": 1338920,
+   "exclusion": 21339350
+  },
+  "2045": {
+   "a_market": 6531230,
+   "a_assessed": 802030,
+   "a_tax": 10870,
+   "b_market": 3460500,
+   "b_assessed": 169770,
+   "b_tax": 3750,
+   "b_rent": 113850,
+   "allowance": 1506100,
+   "exclusion": 24143520
+  },
+  "2050": {
+   "a_market": 7946240,
+   "a_assessed": 885510,
+   "a_tax": 12050,
+   "b_market": 4109990,
+   "b_assessed": 187440,
+   "b_tax": 4190,
+   "b_rent": 122650,
+   "allowance": 1629000,
+   "exclusion": 27316170
+  },
+  "2055": {
+   "a_market": 9667820,
+   "a_assessed": 977670,
+   "a_tax": 13360,
+   "b_market": 4881380,
+   "b_assessed": 206950,
+   "b_tax": 4680,
+   "b_rent": 132130,
+   "allowance": 1832400,
+   "exclusion": 30905740
+  },
+  "2060": {
+   "a_market": 11762380,
+   "a_assessed": 1079430,
+   "a_tax": 14820,
+   "b_market": 5797550,
+   "b_assessed": 228490,
+   "b_tax": 5220,
+   "b_rent": 142340,
+   "allowance": 1981920,
+   "exclusion": 34967010
+  },
+  "2070": {
+   "a_market": 17411200,
+   "a_assessed": 1315820,
+   "a_tax": 18230,
+   "b_market": 8178010,
+   "b_assessed": 278520,
+   "b_tax": 6520,
+   "b_rent": 165190,
+   "allowance": 2411310,
+   "exclusion": 44760730
+  },
+  "2076": {
+   "a_market": 22030720,
+   "a_assessed": 1481830,
+   "a_tax": 20640,
+   "b_market": 10052870,
+   "b_assessed": 313660,
+   "b_tax": 7450,
+   "b_rent": 180630,
+   "allowance": 2712400,
+   "exclusion": 51908720
+  }
+ },
+ "baseline": {
+  "2040": {
+   "prop19": {
+    "fmv": 5368200,
+    "fbyv": 726430,
+    "allowance": 1338920,
+    "value_cap": 2065340,
+    "taxable_move_in": 4029280,
+    "taxable_no_move_in": 5368200
+   },
+   "tax_before": 9800,
+   "tax_move_in": 48230,
+   "tax_no_move_in": 63890,
+   "options": {
+    "sell_stocks": {
+     "10": {
+      "nominal": 10795380,
+      "real": 5968500
+     },
+     "20": {
+      "nominal": 19070520,
+      "real": 8236660
+     },
+     "30": {
+      "nominal": 34718960,
+      "real": 11714310
+     }
+    },
+    "sell_6040": {
+     "10": {
+      "nominal": 9519620,
+      "real": 5263160
+     },
+     "20": {
+      "nominal": 14475450,
+      "real": 6252020
+     },
+     "30": {
+      "nominal": 22397440,
+      "real": 7556980
+     }
+    },
+    "sell_cash": {
+     "10": {
+      "nominal": 7932150,
+      "real": 4385490
+     },
+     "20": {
+      "nominal": 9801440,
+      "real": 4233290
+     },
+     "30": {
+      "nominal": 12111250,
+      "real": 4086380
+     }
+    },
+    "rent_out": {
+     "10": {
+      "nominal": 9541470,
+      "real": 5275240
+     },
+     "20": {
+      "nominal": 14707320,
+      "real": 6352170
+     },
+     "30": {
+      "nominal": 23742170,
+      "real": 8010700
+     }
+    },
+    "move_in": {
+     "10": {
+      "nominal": 8818790,
+      "real": 4875690
+     },
+     "20": {
+      "nominal": 12110150,
+      "real": 5230440
+     },
+     "30": {
+      "nominal": 17029510,
+      "real": 5745820
+     }
+    }
+   }
+  },
+  "2045": {
+   "prop19": {
+    "fmv": 6531230,
+    "fbyv": 802030,
+    "allowance": 1506100,
+    "value_cap": 2308130,
+    "taxable_move_in": 5025130,
+    "taxable_no_move_in": 6531230
+   },
+   "tax_before": 10870,
+   "tax_move_in": 60010,
+   "tax_no_move_in": 77610,
+   "options": {
+    "sell_stocks": {
+     "10": {
+      "nominal": 12932890,
+      "real": 6319800
+     },
+     "20": {
+      "nominal": 22846520,
+      "real": 8721460
+     },
+     "30": {
+      "nominal": 41593390,
+      "real": 12403810
+     }
+    },
+    "sell_6040": {
+     "10": {
+      "nominal": 11404530,
+      "real": 5572950
+     },
+     "20": {
+      "nominal": 17341620,
+      "real": 6620010
+     },
+     "30": {
+      "nominal": 26832180,
+      "real": 8001780
+     }
+    },
+    "sell_cash": {
+     "10": {
+      "nominal": 9502730,
+      "real": 4643620
+     },
+     "20": {
+      "nominal": 11742150,
+      "real": 4482460
+     },
+     "30": {
+      "nominal": 14509300,
+      "real": 4326900
+     }
+    },
+    "rent_out": {
+     "10": {
+      "nominal": 11353950,
+      "real": 5548240
+     },
+     "20": {
+      "nominal": 17359070,
+      "real": 6626680
+     },
+     "30": {
+      "nominal": 27786540,
+      "real": 8286390
+     }
+    },
+    "move_in": {
+     "10": {
+      "nominal": 10474620,
+      "real": 5118540
+     },
+     "20": {
+      "nominal": 14250560,
+      "real": 5440030
+     },
+     "30": {
+      "nominal": 19797260,
+      "real": 5903860
+     }
+    }
+   }
+  },
+  "2050": {
+   "prop19": {
+    "fmv": 7946240,
+    "fbyv": 885510,
+    "allowance": 1629000,
+    "value_cap": 2514510,
+    "taxable_move_in": 6317250,
+    "taxable_no_move_in": 7946240
+   },
+   "tax_before": 12050,
+   "tax_move_in": 75250,
+   "tax_no_move_in": 94290,
+   "options": {
+    "sell_stocks": {
+     "10": {
+      "nominal": 15507040,
+      "real": 6697570
+     },
+     "20": {
+      "nominal": 27393870,
+      "real": 9242800
+     },
+     "30": {
+      "nominal": 49872100,
+      "real": 13145250
+     }
+    },
+    "sell_6040": {
+     "10": {
+      "nominal": 13674470,
+      "real": 5906080
+     },
+     "20": {
+      "nominal": 20793280,
+      "real": 7015730
+     },
+     "30": {
+      "nominal": 32172830,
+      "real": 8480090
+     }
+    },
+    "sell_cash": {
+     "10": {
+      "nominal": 11394150,
+      "real": 4921190
+     },
+     "20": {
+      "nominal": 14079290,
+      "real": 4750410
+     },
+     "30": {
+      "nominal": 17397220,
+      "real": 4585550
+     }
+    },
+    "rent_out": {
+     "10": {
+      "nominal": 13523770,
+      "real": 5840990
+     },
+     "20": {
+      "nominal": 20508760,
+      "real": 6919730
+     },
+     "30": {
+      "nominal": 32546690,
+      "real": 8578630
+     }
+    },
+    "move_in": {
+     "10": {
+      "nominal": 12445810,
+      "real": 5375410
+     },
+     "20": {
+      "nominal": 16757250,
+      "real": 5653960
+     },
+     "30": {
+      "nominal": 22961440,
+      "real": 6052160
+     }
+    }
+   }
+  }
+ },
+ "sensitivity": [
+  [
+   "2.5%",
+   "5.0%",
+   13290070,
+   11664930,
+   9199620,
+   "sell_stocks"
+  ],
+  [
+   "2.5%",
+   "7.0%",
+   18474350,
+   13302340,
+   10317560,
+   "sell_stocks"
+  ],
+  [
+   "2.5%",
+   "9.0%",
+   25857370,
+   15586150,
+   11938730,
+   "sell_stocks"
+  ],
+  [
+   "4.0%",
+   "5.0%",
+   16435330,
+   15827810,
+   13246250,
+   "sell_stocks"
+  ],
+  [
+   "4.0%",
+   "7.0%",
+   22846520,
+   17359070,
+   14250560,
+   "sell_stocks"
+  ],
+  [
+   "4.0%",
+   "9.0%",
+   31976830,
+   19506590,
+   15724400,
+   "sell_stocks"
+  ],
+  [
+   "5.5%",
+   "5.0%",
+   20512640,
+   23013830,
+   20290150,
+   "rent_out"
+  ],
+  [
+   "5.5%",
+   "7.0%",
+   28514340,
+   24396960,
+   21144540,
+   "sell_stocks"
+  ],
+  [
+   "5.5%",
+   "9.0%",
+   39909720,
+   26356150,
+   22423990,
+   "sell_stocks"
+  ]
+ ],
+ "break_even_stock_return": {
+  "rent_out": 0.0469,
+  "move_in": 0.0337
+ },
+ "insurance_sensitivity": [
+  [
+   1,
+   1500,
+   14250560,
+   17359070
+  ],
+  [
+   2,
+   3000,
+   14062790,
+   17184590
+  ],
+  [
+   3,
+   4500,
+   13875010,
+   17010100
+  ]
+ ],
+ "move_in_if_not_rent_controlled_20y": 14470800,
+ "estate": [
+  [
+   2026,
+   15000000,
+   3100000,
+   11900000,
+   26900000
+  ],
+  [
+   2027,
+   15480000,
+   3224000,
+   12256000,
+   27736000
+  ],
+  [
+   2030,
+   16670270,
+   3626560,
+   13043710,
+   29713970
+  ],
+  [
+   2035,
+   18860880,
+   4412270,
+   14448610,
+   33309490
+  ],
+  [
+   2040,
+   21339350,
+   5368200,
+   15971150,
+   37310500
+  ],
+  [
+   2045,
+   24143520,
+   6531230,
+   17612280,
+   41755800
+  ],
+  [
+   2050,
+   27316170,
+   7946240,
+   19369930,
+   46686100
+  ]
+ ],
+ "estate_examples": [
+  [
+   2040,
+   5000000,
+   7064870,
+   12433070,
+   21339350,
+   0,
+   0
+  ],
+  [
+   2040,
+   10000000,
+   14129740,
+   19497940,
+   21339350,
+   0,
+   0
+  ],
+  [
+   2040,
+   15000000,
+   21194610,
+   26562800,
+   21339350,
+   2089380,
+   0
+  ],
+  [
+   2040,
+   20000000,
+   28259480,
+   33627670,
+   21339350,
+   4915330,
+   0
+  ],
+  [
+   2040,
+   30000000,
+   42389210,
+   47757410,
+   21339350,
+   10567220,
+   2031480
+  ],
+  [
+   2045,
+   5000000,
+   7993250,
+   14524480,
+   24143520,
+   0,
+   0
+  ],
+  [
+   2045,
+   10000000,
+   15986500,
+   22517730,
+   24143520,
+   0,
+   0
+  ],
+  [
+   2045,
+   15000000,
+   23979750,
+   30510990,
+   24143520,
+   2546990,
+   0
+  ],
+  [
+   2045,
+   20000000,
+   31973000,
+   38504240,
+   24143520,
+   5744290,
+   0
+  ],
+  [
+   2045,
+   30000000,
+   47959510,
+   54490740,
+   24143520,
+   12138890,
+   2481480
+  ],
+  [
+   2050,
+   5000000,
+   9043630,
+   16989870,
+   27316170,
+   0,
+   0
+  ],
+  [
+   2050,
+   10000000,
+   18087260,
+   26033500,
+   27316170,
+   0,
+   0
+  ],
+  [
+   2050,
+   15000000,
+   27130890,
+   35077130,
+   27316170,
+   3104380,
+   0
+  ],
+  [
+   2050,
+   20000000,
+   36174520,
+   44120760,
+   27316170,
+   6721840,
+   0
+  ],
+  [
+   2050,
+   30000000,
+   54261780,
+   62208020,
+   27316170,
+   13956740,
+   3030270
+  ]
+ ],
+ "black_swan_named": [
+  {
+   "name": "Baseline (constant rates)",
+   "span": "Assumptions table",
+   "horizon": 10,
+   "best": "sell_stocks",
+   "sell_stocks": 6319800,
+   "sell_6040": 5572950,
+   "sell_cash": 4643620,
+   "rent_out": 5548240,
+   "move_in": 5118540
+  },
+  {
+   "name": "Baseline (constant rates)",
+   "span": "Assumptions table",
+   "horizon": 20,
+   "best": "sell_stocks",
+   "sell_stocks": 8721460,
+   "sell_6040": 6620010,
+   "sell_cash": 4482460,
+   "rent_out": 6626680,
+   "move_in": 5440030
+  },
+  {
+   "name": "Baseline (constant rates)",
+   "span": "Assumptions table",
+   "horizon": 30,
+   "best": "sell_stocks",
+   "sell_stocks": 12403810,
+   "sell_6040": 8001780,
+   "sell_cash": 4326900,
+   "rent_out": 8286390,
+   "move_in": 5903860
+  },
+  {
+   "name": "1970s inflation starts the year after inheriting (real 1977-2006 record)",
+   "span": "1977-2006",
+   "horizon": 10,
+   "best": "sell_stocks",
+   "sell_stocks": 7126440,
+   "sell_6040": 5920370,
+   "sell_cash": 4435410,
+   "rent_out": 6529290,
+   "move_in": 5891830
+  },
+  {
+   "name": "1970s inflation starts the year after inheriting (real 1977-2006 record)",
+   "span": "1977-2006",
+   "horizon": 20,
+   "best": "sell_stocks",
+   "sell_stocks": 18357740,
+   "sell_6040": 10357860,
+   "sell_cash": 4374090,
+   "rent_out": 10383030,
+   "move_in": 7777450
+  },
+  {
+   "name": "1970s inflation starts the year after inheriting (real 1977-2006 record)",
+   "span": "1977-2006",
+   "horizon": 30,
+   "best": "sell_stocks",
+   "sell_stocks": 30968330,
+   "sell_6040": 14544440,
+   "sell_cash": 4311640,
+   "rent_out": 20461490,
+   "move_in": 15432020
+  },
+  {
+   "name": "Early-1990s California housing slump (real 1990-2019)",
+   "span": "1990-2019",
+   "horizon": 10,
+   "best": "sell_stocks",
+   "sell_stocks": 14365260,
+   "sell_6040": 9367030,
+   "sell_cash": 4909430,
+   "rent_out": 7143370,
+   "move_in": 6175680
+  },
+  {
+   "name": "Early-1990s California housing slump (real 1990-2019)",
+   "span": "1990-2019",
+   "horizon": 20,
+   "best": "sell_stocks",
+   "sell_stocks": 10238430,
+   "sell_6040": 7887480,
+   "sell_cash": 4543290,
+   "rent_out": 6624580,
+   "move_in": 5515590
+  },
+  {
+   "name": "Early-1990s California housing slump (real 1990-2019)",
+   "span": "1990-2019",
+   "horizon": 30,
+   "best": "sell_stocks",
+   "sell_stocks": 27131850,
+   "sell_6040": 13342430,
+   "sell_cash": 3958360,
+   "rent_out": 12918730,
+   "move_in": 8890930
+  },
+  {
+   "name": "Dot-com bust, then the 2008 crash (real 2000-2025)",
+   "span": "2000-2025",
+   "horizon": 10,
+   "best": "rent_out",
+   "sell_stocks": 3260850,
+   "sell_6040": 3906270,
+   "sell_cash": 4451800,
+   "rent_out": 4927860,
+   "move_in": 4591980
+  },
+  {
+   "name": "Dot-com bust, then the 2008 crash (real 2000-2025)",
+   "span": "2000-2025",
+   "horizon": 20,
+   "best": "sell_stocks",
+   "sell_stocks": 7816180,
+   "sell_6040": 6246590,
+   "sell_cash": 3878640,
+   "rent_out": 7776420,
+   "move_in": 6091320
+  },
+  {
+   "name": "Dot-com bust, then the 2008 crash (real 2000-2025)",
+   "span": "2000-2025",
+   "horizon": 30,
+   "best": "sell_stocks",
+   "sell_stocks": 15164180,
+   "sell_6040": 8879750,
+   "sell_cash": 3373210,
+   "rent_out": 10782500,
+   "move_in": 6617310
+  },
+  {
+   "name": "2007-2011 housing and stock crash (real 2007-2025)",
+   "span": "2007-2025",
+   "horizon": 10,
+   "best": "sell_stocks",
+   "sell_stocks": 6673770,
+   "sell_6040": 5730410,
+   "sell_cash": 4194000,
+   "rent_out": 5347430,
+   "move_in": 4718320
+  },
+  {
+   "name": "2007-2011 housing and stock crash (real 2007-2025)",
+   "span": "2007-2025",
+   "horizon": 20,
+   "best": "sell_stocks",
+   "sell_stocks": 15502300,
+   "sell_6040": 9014590,
+   "sell_cash": 3574060,
+   "rent_out": 8073920,
+   "move_in": 5707540
+  },
+  {
+   "name": "2007-2011 housing and stock crash (real 2007-2025)",
+   "span": "2007-2025",
+   "horizon": 30,
+   "best": "sell_stocks",
+   "sell_stocks": 22671070,
+   "sell_6040": 11163150,
+   "sell_cash": 3450030,
+   "rent_out": 10723640,
+   "move_in": 6550990
+  },
+  {
+   "name": "Great Depression (real 1929-1958, national home prices)",
+   "span": "1929-1958",
+   "horizon": 10,
+   "best": "sell_cash",
+   "sell_stocks": 4744600,
+   "sell_6040": 6111730,
+   "sell_cash": 6372460,
+   "rent_out": 5361700,
+   "move_in": 4717850
+  },
+  {
+   "name": "Great Depression (real 1929-1958, national home prices)",
+   "span": "1929-1958",
+   "horizon": 20,
+   "best": "rent_out",
+   "sell_stocks": 4729470,
+   "sell_6040": 4917450,
+   "sell_cash": 3789560,
+   "rent_out": 5897780,
+   "move_in": 4889480
+  },
+  {
+   "name": "Great Depression (real 1929-1958, national home prices)",
+   "span": "1929-1958",
+   "horizon": 30,
+   "best": "sell_stocks",
+   "sell_stocks": 19379990,
+   "sell_6040": 11549890,
+   "sell_cash": 3530280,
+   "rent_out": 11617530,
+   "move_in": 5805230
+  },
+  {
+   "name": "1973-74 crash and stagflation (real 1973-2002, national home prices)",
+   "span": "1973-2002",
+   "horizon": 10,
+   "best": "rent_out",
+   "sell_stocks": 3423480,
+   "sell_6040": 3578060,
+   "sell_cash": 3514340,
+   "rent_out": 4154430,
+   "move_in": 3716880
+  },
+  {
+   "name": "1973-74 crash and stagflation (real 1973-2002, national home prices)",
+   "span": "1973-2002",
+   "horizon": 20,
+   "best": "sell_stocks",
+   "sell_stocks": 8778710,
+   "sell_6040": 6450210,
+   "sell_cash": 3734510,
+   "rent_out": 6238630,
+   "move_in": 4234860
+  },
+  {
+   "name": "1973-74 crash and stagflation (real 1973-2002, national home prices)",
+   "span": "1973-2002",
+   "horizon": 30,
+   "best": "sell_stocks",
+   "sell_stocks": 15991980,
+   "sell_6040": 9678760,
+   "sell_cash": 3853890,
+   "rent_out": 9881260,
+   "move_in": 5632770
+  },
+  {
+   "name": "Japan after 1990 (real 1991-2020: homes, Nikkei, prices)",
+   "span": "Japan 1991-2020",
+   "horizon": 10,
+   "best": "sell_cash",
+   "sell_stocks": 2490380,
+   "sell_6040": 3383830,
+   "sell_cash": 4754850,
+   "rent_out": 3523090,
+   "move_in": 3103600
+  },
+  {
+   "name": "Japan after 1990 (real 1991-2020: homes, Nikkei, prices)",
+   "span": "Japan 1991-2020",
+   "horizon": 20,
+   "best": "sell_cash",
+   "sell_stocks": 1815210,
+   "sell_6040": 3070670,
+   "sell_cash": 4934120,
+   "rent_out": 2939880,
+   "move_in": 2082060
+  },
+  {
+   "name": "Japan after 1990 (real 1991-2020: homes, Nikkei, prices)",
+   "span": "Japan 1991-2020",
+   "horizon": 30,
+   "best": "sell_6040",
+   "sell_stocks": 4458300,
+   "sell_6040": 5426790,
+   "sell_cash": 4894600,
+   "rent_out": 4982660,
+   "move_in": 1961700
+  }
+ ],
+ "rotations": {
+  "Bay Area record 1977-2025|2040|10": {
+   "n": 49,
+   "wins": {
+    "sell_stocks": 40,
+    "sell_6040": 2,
+    "rent_out": 7,
+    "move_in": 0
+   },
+   "median": {
+    "sell_stocks": 9093210,
+    "sell_6040": 7189540,
+    "rent_out": 7274560,
+    "move_in": 6697930
+   },
+   "worst": {
+    "sell_stocks": 3606220,
+    "sell_6040": 3912290,
+    "rent_out": 5035740,
+    "move_in": 4666490
+   },
+   "best": {
+    "sell_stocks": 22166910,
+    "sell_6040": 14454180,
+    "rent_out": 10365880,
+    "move_in": 9519740
+   },
+   "a_value_at_T_2026_dollars": {
+    "min": 3166450,
+    "median": 4824630,
+    "max": 6882110
+   }
+  },
+  "Bay Area record 1977-2025|2040|20": {
+   "n": 49,
+   "wins": {
+    "sell_stocks": 48,
+    "sell_6040": 0,
+    "rent_out": 1,
+    "move_in": 0
+   },
+   "median": {
+    "sell_stocks": 17857470,
+    "sell_6040": 10607060,
+    "rent_out": 9714180,
+    "move_in": 8161290
+   },
+   "worst": {
+    "sell_stocks": 8397550,
+    "sell_6040": 6921700,
+    "rent_out": 7655970,
+    "move_in": 6437900
+   },
+   "best": {
+    "sell_stocks": 48207680,
+    "sell_6040": 21387400,
+    "rent_out": 16254710,
+    "move_in": 12439380
+   },
+   "a_value_at_T_2026_dollars": {
+    "min": 3166450,
+    "median": 4824630,
+    "max": 6882110
+   }
+  },
+  "Bay Area record 1977-2025|2040|30": {
+   "n": 49,
+   "wins": {
+    "sell_stocks": 49,
+    "sell_6040": 0,
+    "rent_out": 0,
+    "move_in": 0
+   },
+   "median": {
+    "sell_stocks": 36289770,
+    "sell_6040": 16952510,
+    "rent_out": 15764260,
+    "move_in": 11768590
+   },
+   "worst": {
+    "sell_stocks": 15373380,
+    "sell_6040": 9100100,
+    "rent_out": 11734440,
+    "move_in": 8053700
+   },
+   "best": {
+    "sell_stocks": 76089910,
+    "sell_6040": 24885500,
+    "rent_out": 27666270,
+    "move_in": 19826620
+   },
+   "a_value_at_T_2026_dollars": {
+    "min": 3166450,
+    "median": 4824630,
+    "max": 6882110
+   }
+  },
+  "Bay Area record 1977-2025|2045|10": {
+   "n": 49,
+   "wins": {
+    "sell_stocks": 40,
+    "sell_6040": 2,
+    "rent_out": 7,
+    "move_in": 0
+   },
+   "median": {
+    "sell_stocks": 11227710,
+    "sell_6040": 8764290,
+    "rent_out": 8285850,
+    "move_in": 7427280
+   },
+   "worst": {
+    "sell_stocks": 3662760,
+    "sell_6040": 4497750,
+    "rent_out": 5515420,
+    "move_in": 4957500
+   },
+   "best": {
+    "sell_stocks": 23987350,
+    "sell_6040": 15641220,
+    "rent_out": 10975840,
+    "move_in": 10501290
+   },
+   "a_value_at_T_2026_dollars": {
+    "min": 3396470,
+    "median": 5315600,
+    "max": 8216610
+   }
+  },
+  "Bay Area record 1977-2025|2045|20": {
+   "n": 49,
+   "wins": {
+    "sell_stocks": 48,
+    "sell_6040": 0,
+    "rent_out": 1,
+    "move_in": 0
+   },
+   "median": {
+    "sell_stocks": 20468040,
+    "sell_6040": 11643900,
+    "rent_out": 10712870,
+    "move_in": 8846330
+   },
+   "worst": {
+    "sell_stocks": 8529210,
+    "sell_6040": 7030220,
+    "rent_out": 8841260,
+    "move_in": 7024580
+   },
+   "best": {
+    "sell_stocks": 57615120,
+    "sell_6040": 25561020,
+    "rent_out": 17222530,
+    "move_in": 14420180
+   },
+   "a_value_at_T_2026_dollars": {
+    "min": 3396470,
+    "median": 5315600,
+    "max": 8216610
+   }
+  },
+  "Bay Area record 1977-2025|2045|30": {
+   "n": 49,
+   "wins": {
+    "sell_stocks": 49,
+    "sell_6040": 0,
+    "rent_out": 0,
+    "move_in": 0
+   },
+   "median": {
+    "sell_stocks": 41924840,
+    "sell_6040": 18304740,
+    "rent_out": 16813100,
+    "move_in": 12734860
+   },
+   "worst": {
+    "sell_stocks": 15614400,
+    "sell_6040": 9242780,
+    "rent_out": 12179270,
+    "move_in": 8776590
+   },
+   "best": {
+    "sell_stocks": 101915610,
+    "sell_6040": 31615960,
+    "rent_out": 28752090,
+    "move_in": 18865490
+   },
+   "a_value_at_T_2026_dollars": {
+    "min": 3396470,
+    "median": 5315600,
+    "max": 8216610
+   }
+  },
+  "Bay Area record 1977-2025|2050|10": {
+   "n": 49,
+   "wins": {
+    "sell_stocks": 40,
+    "sell_6040": 2,
+    "rent_out": 7,
+    "move_in": 0
+   },
+   "median": {
+    "sell_stocks": 11757420,
+    "sell_6040": 9435040,
+    "rent_out": 8989770,
+    "move_in": 8240280
+   },
+   "worst": {
+    "sell_stocks": 4519920,
+    "sell_6040": 5550310,
+    "rent_out": 6710560,
+    "move_in": 6091810
+   },
+   "best": {
+    "sell_stocks": 27941280,
+    "sell_6040": 18219430,
+    "rent_out": 11639460,
+    "move_in": 11153390
+   },
+   "a_value_at_T_2026_dollars": {
+    "min": 4277040,
+    "median": 6370320,
+    "max": 9450680
+   }
+  },
+  "Bay Area record 1977-2025|2050|20": {
+   "n": 49,
+   "wins": {
+    "sell_stocks": 48,
+    "sell_6040": 0,
+    "rent_out": 1,
+    "move_in": 0
+   },
+   "median": {
+    "sell_stocks": 23179870,
+    "sell_6040": 14090550,
+    "rent_out": 11911840,
+    "move_in": 10016380
+   },
+   "worst": {
+    "sell_stocks": 10525210,
+    "sell_6040": 8675430,
+    "rent_out": 9283100,
+    "move_in": 7813820
+   },
+   "best": {
+    "sell_stocks": 48757940,
+    "sell_6040": 21631520,
+    "rent_out": 18159340,
+    "move_in": 16153110
+   },
+   "a_value_at_T_2026_dollars": {
+    "min": 4277040,
+    "median": 6370320,
+    "max": 9450680
+   }
+  },
+  "Bay Area record 1977-2025|2050|30": {
+   "n": 49,
+   "wins": {
+    "sell_stocks": 49,
+    "sell_6040": 0,
+    "rent_out": 0,
+    "move_in": 0
+   },
+   "median": {
+    "sell_stocks": 45458660,
+    "sell_6040": 20478310,
+    "rent_out": 18056400,
+    "move_in": 12820190
+   },
+   "worst": {
+    "sell_stocks": 19268470,
+    "sell_6040": 11405760,
+    "rent_out": 13224150,
+    "move_in": 9096750
+   },
+   "best": {
+    "sell_stocks": 136446250,
+    "sell_6040": 42327950,
+    "rent_out": 29481330,
+    "move_in": 20821330
+   },
+   "a_value_at_T_2026_dollars": {
+    "min": 4277040,
+    "median": 6370320,
+    "max": 9450680
+   }
+  },
+  "National record 1929-2025|2040|10": {
+   "n": 97,
+   "wins": {
+    "sell_stocks": 67,
+    "sell_6040": 9,
+    "rent_out": 21,
+    "move_in": 0
+   },
+   "median": {
+    "sell_stocks": 7186930,
+    "sell_6040": 5949690,
+    "rent_out": 5488730,
+    "move_in": 4946530
+   },
+   "worst": {
+    "sell_stocks": 2401360,
+    "sell_6040": 2613060,
+    "rent_out": 3368610,
+    "move_in": 2980470
+   },
+   "best": {
+    "sell_stocks": 19538440,
+    "sell_6040": 11201540,
+    "rent_out": 8403430,
+    "move_in": 7618390
+   },
+   "a_value_at_T_2026_dollars": {
+    "min": 2661250,
+    "median": 3447860,
+    "max": 5523160
+   }
+  },
+  "National record 1929-2025|2040|20": {
+   "n": 97,
+   "wins": {
+    "sell_stocks": 86,
+    "sell_6040": 4,
+    "rent_out": 7,
+    "move_in": 0
+   },
+   "median": {
+    "sell_stocks": 11304980,
+    "sell_6040": 7860570,
+    "rent_out": 7311140,
+    "move_in": 5927870
+   },
+   "worst": {
+    "sell_stocks": 3779160,
+    "sell_6040": 3546060,
+    "rent_out": 3949610,
+    "move_in": 3211830
+   },
+   "best": {
+    "sell_stocks": 38517060,
+    "sell_6040": 17187300,
+    "rent_out": 13360690,
+    "move_in": 10681190
+   },
+   "a_value_at_T_2026_dollars": {
+    "min": 2661250,
+    "median": 3447860,
+    "max": 5523160
+   }
+  },
+  "National record 1929-2025|2040|30": {
+   "n": 97,
+   "wins": {
+    "sell_stocks": 95,
+    "sell_6040": 0,
+    "rent_out": 2,
+    "move_in": 0
+   },
+   "median": {
+    "sell_stocks": 20379880,
+    "sell_6040": 11241320,
+    "rent_out": 10354380,
+    "move_in": 6908540
+   },
+   "worst": {
+    "sell_stocks": 6140560,
+    "sell_6040": 6053840,
+    "rent_out": 6528820,
+    "move_in": 3878990
+   },
+   "best": {
+    "sell_stocks": 61806490,
+    "sell_6040": 20525710,
+    "rent_out": 20167990,
+    "move_in": 13650540
+   },
+   "a_value_at_T_2026_dollars": {
+    "min": 2661250,
+    "median": 3447860,
+    "max": 5523160
+   }
+  },
+  "National record 1929-2025|2045|10": {
+   "n": 97,
+   "wins": {
+    "sell_stocks": 67,
+    "sell_6040": 9,
+    "rent_out": 21,
+    "move_in": 0
+   },
+   "median": {
+    "sell_stocks": 7546750,
+    "sell_6040": 6226020,
+    "rent_out": 5710560,
+    "move_in": 5182890
+   },
+   "worst": {
+    "sell_stocks": 2533380,
+    "sell_6040": 2807030,
+    "rent_out": 3340540,
+    "move_in": 2933610
+   },
+   "best": {
+    "sell_stocks": 19537390,
+    "sell_6040": 11200940,
+    "rent_out": 8429100,
+    "move_in": 7646590
+   },
+   "a_value_at_T_2026_dollars": {
+    "min": 2738450,
+    "median": 3759310,
+    "max": 5352190
+   }
+  },
+  "National record 1929-2025|2045|20": {
+   "n": 97,
+   "wins": {
+    "sell_stocks": 90,
+    "sell_6040": 4,
+    "rent_out": 3,
+    "move_in": 0
+   },
+   "median": {
+    "sell_stocks": 11310560,
+    "sell_6040": 8210850,
+    "rent_out": 7413640,
+    "move_in": 6218510
+   },
+   "worst": {
+    "sell_stocks": 4155470,
+    "sell_6040": 4264940,
+    "rent_out": 4546300,
+    "move_in": 3516480
+   },
+   "best": {
+    "sell_stocks": 38514990,
+    "sell_6040": 17186370,
+    "rent_out": 14086260,
+    "move_in": 11042610
+   },
+   "a_value_at_T_2026_dollars": {
+    "min": 2738450,
+    "median": 3759310,
+    "max": 5352190
+   }
+  },
+  "National record 1929-2025|2045|30": {
+   "n": 97,
+   "wins": {
+    "sell_stocks": 95,
+    "sell_6040": 0,
+    "rent_out": 2,
+    "move_in": 0
+   },
+   "median": {
+    "sell_stocks": 20521930,
+    "sell_6040": 11149930,
+    "rent_out": 10582390,
+    "move_in": 7097210
+   },
+   "worst": {
+    "sell_stocks": 6062490,
+    "sell_6040": 5663350,
+    "rent_out": 6668200,
+    "move_in": 4006650
+   },
+   "best": {
+    "sell_stocks": 63987970,
+    "sell_6040": 21250170,
+    "rent_out": 20366460,
+    "move_in": 13489660
+   },
+   "a_value_at_T_2026_dollars": {
+    "min": 2738450,
+    "median": 3759310,
+    "max": 5352190
+   }
+  },
+  "National record 1929-2025|2050|10": {
+   "n": 97,
+   "wins": {
+    "sell_stocks": 69,
+    "sell_6040": 9,
+    "rent_out": 19,
+    "move_in": 0
+   },
+   "median": {
+    "sell_stocks": 7494370,
+    "sell_6040": 6202450,
+    "rent_out": 5917730,
+    "move_in": 5297010
+   },
+   "worst": {
+    "sell_stocks": 2871830,
+    "sell_6040": 3052370,
+    "rent_out": 3676140,
+    "move_in": 3230860
+   },
+   "best": {
+    "sell_stocks": 19345610,
+    "sell_6040": 11110640,
+    "rent_out": 8425340,
+    "move_in": 7583240
+   },
+   "a_value_at_T_2026_dollars": {
+    "min": 2977580,
+    "median": 4128560,
+    "max": 5752380
+   }
+  },
+  "National record 1929-2025|2050|20": {
+   "n": 97,
+   "wins": {
+    "sell_stocks": 89,
+    "sell_6040": 4,
+    "rent_out": 4,
+    "move_in": 0
+   },
+   "median": {
+    "sell_stocks": 11409710,
+    "sell_6040": 8164710,
+    "rent_out": 7549830,
+    "move_in": 6094590
+   },
+   "worst": {
+    "sell_stocks": 4604780,
+    "sell_6040": 4320760,
+    "rent_out": 4635070,
+    "move_in": 3636150
+   },
+   "best": {
+    "sell_stocks": 40576940,
+    "sell_6040": 18232480,
+    "rent_out": 14665750,
+    "move_in": 11332330
+   },
+   "a_value_at_T_2026_dollars": {
+    "min": 2977580,
+    "median": 4128560,
+    "max": 5752380
+   }
+  },
+  "National record 1929-2025|2050|30": {
+   "n": 97,
+   "wins": {
+    "sell_stocks": 95,
+    "sell_6040": 0,
+    "rent_out": 2,
+    "move_in": 0
+   },
+   "median": {
+    "sell_stocks": 21877750,
+    "sell_6040": 11955850,
+    "rent_out": 10659110,
+    "move_in": 7049690
+   },
+   "worst": {
+    "sell_stocks": 6651740,
+    "sell_6040": 6419950,
+    "rent_out": 6803730,
+    "move_in": 3982980
+   },
+   "best": {
+    "sell_stocks": 58840070,
+    "sell_6040": 19887570,
+    "rent_out": 20520550,
+    "move_in": 13771510
+   },
+   "a_value_at_T_2026_dollars": {
+    "min": 2977580,
+    "median": 4128560,
+    "max": 5752380
+   }
+  }
+ },
+ "replay_checkpoints": {
+  "2030": {
+   "a_market": 6365620,
+   "b_market": 3430630,
+   "allowance": 1224470,
+   "exclusion": 20400620,
+   "price_level": 1.483
+  },
+  "2035": {
+   "a_market": 8140670,
+   "b_market": 4414940,
+   "allowance": 1415550,
+   "exclusion": 28007630,
+   "price_level": 1.878
+  },
+  "2040": {
+   "a_market": 14333990,
+   "b_market": 8330130,
+   "allowance": 1823770,
+   "exclusion": 33540000,
+   "price_level": 2.299
+  },
+  "2045": {
+   "a_market": 13683540,
+   "b_market": 7666330,
+   "allowance": 1695150,
+   "exclusion": 39817110,
+   "price_level": 2.637
+  },
+  "2050": {
+   "a_market": 27185440,
+   "b_market": 13986840,
+   "allowance": 1833730,
+   "exclusion": 44764330,
+   "price_level": 2.99
+  },
+  "2060": {
+   "a_market": 32168680,
+   "b_market": 18855190,
+   "allowance": 2364470,
+   "exclusion": 57437980,
+   "price_level": 3.766
+  },
+  "2075": {
+   "a_market": 74802020,
+   "b_market": 38961270,
+   "allowance": 3421650,
+   "exclusion": 83944420,
+   "price_level": 5.568
+  }
+ }
+}
