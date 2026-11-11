@@ -667,3 +667,11 @@ No figure on the site changed as a result of these reads. Two residual limits ar
 **Official pages fetched in this session (read, not inferred):** IRS what's-new estate/gift (TD 10055 fee; §2010(c)(3) $15M for 2026), CA RTC §51 (leginfo, 2 % cap), IRS Pub 551 / Pub 523 / Pub 946, FTB home, govinfo 26 USC §1014 and §2001 (full section text), sfassessor.org → sf.gov Assessor-Recorder, sccassessor.org → asr.santaclaracounty.gov, selfhelp.courts.ca.gov, NBER business-cycle chronology. Redirect/404 findings and failed URL patterns recorded in REPORT §3.6 (do not retry).
 
 **L95 status:** L95-1 done, L95-2 done (`legacy95/rowrule.py`, `legacy95/source_rows.py`, `legacy95/check_legacy.py`, `legacy95/REPORT.md`), L95-3 PR→main→Pages→this record: in progress.
+
+## Session `arena/de9174cd-tino1` — independent release-safety audit (2026-11-11)
+
+| Task | Status | Owner | Scope |
+|---|---|---|---|
+| D91-1 | in progress | arena/de9174cd-tino1 | `audit-de9174cd/**` (new), this append-only board section |
+
+Review public-release privacy and verification gates independently, without changing files assigned to other sessions. The platform-fixed branch name supersedes the requested branch naming pattern. Record any release-blocking safety defects and requests to the integration owner here.
