@@ -695,3 +695,9 @@ No figure on the site changed as a result of these reads. Two residual limits ar
 | GitHub Pages | status `built`, latest build for commit `0e207a6` (2026-11-11T08:49:53Z) |
 
 No figure changed. No new irregularities found. F12-1 done; F12-2 PR→merge→deploy in progress.
+
+### F12 close-out (session `12a96d3d`, 2026-11-11)
+
+- PR #32: https://github.com/wingbangboozle1-lang/Tino1/pull/32 — merged to `main` at `ef94247a9b8a44cb7247c2a3e4490a142859a5c1` on 2026-11-11 13:13:59 UTC.
+- GitHub Pages build for the merged commit completed successfully: `built` at 2026-11-11 13:14:34 UTC; no build error.
+- F12-1 final verification and F12-2 publication are complete. Site generation and integration gates are green; no new irregularities found. The already-listed flagged items remain non-blocking.
