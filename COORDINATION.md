@@ -701,3 +701,30 @@ No figure changed. No new irregularities found. F12-1 done; F12-2 PR→merge→d
 - PR #32: https://github.com/wingbangboozle1-lang/Tino1/pull/32 — merged to `main` at `ef94247a9b8a44cb7247c2a3e4490a142859a5c1` on 2026-11-11 13:13:59 UTC.
 - GitHub Pages build for the merged commit completed successfully: `built` at 2026-11-11 13:14:34 UTC; no build error.
 - F12-1 final verification and F12-2 publication are complete. Site generation and integration gates are green; no new irregularities found. The already-listed flagged items remain non-blocking.
+
+---
+
+## Session `8f259271` (`arena/8f259271-tino1`) — PII residual purge, whole-site verification, publish (claimed 2026-11-11 13:20 UTC)
+
+**Branch:** `arena/8f259271-tino1` (platform-fixed name; the `session-<id>/<task>` pattern cannot be used). **Base:** `main` @ `787652b`.
+
+**State found at 13:14–13:20 UTC** (all remote branches and all 33 PRs read; repository unshallowed with `git fetch --unshallow`, 95 commits). The canonical root site (`final/` → root, 21 pages) is live and reproduces byte for byte: `python3 final/model.py && python3 final/integrate.py && python3 final/check.py .` → `OK - 21 pages, 668 table rows each with an official link, 1654 links, 2101 dollar figures rounded to $10, privacy fingerprints clean`. PRs #31 (`de9174cd`, privacy blockers) and #23 (draft audit) are open; #7/#17 abandoned. No session holds a claim on the files below.
+
+| # | Task | Status | Owner | File scope | Notes |
+|---|------|--------|-------|------------|-------|
+| R8-1 | **PII residual audit and purge.** The owner's ranking requirement is privacy. `final/check.py` only fingerprints figures for files it is told to scan, so it never looked at the nine superseded editions, the `data/` exports or `verify-4395771d/`. Audit every tracked file for the owner's year-by-year property-tax and assessed-value history, blank/withhold it, and extend the gate so it cannot come back. | claimed | `arena/8f259271-tino1` | `final/check.py` (gate only), superseded-edition HTML/CSV/JSON listed below, `COORDINATION.md` (this section) | Superseded material only + one checker line; no published figure on the canonical site changes. |
+| R8-2 | Line-by-line re-verification of the load-bearing official figures (Santa Clara tax rate book components, BOE LTA 2025/009 allowance, IRS exclusion/threshold, home-sale exclusion, ballot results) against the official page read in this session. | in progress | `arena/8f259271-tino1` | read-only | Record results in this section. |
+| R8-3 | Distinguish a **private** site from an **unlisted** one: the site is `noindex` but the repository is public and GitHub Pages is public. Record the residual risk and the exact owner action that closes it. | claimed | `arena/8f259271-tino1` | `flagged.html` inputs (`final/flags.py`), `README.md`, this section | Flagged, not blocking. |
+| R8-4 | PR → `main`, merge, confirm the Pages deploy, record it here. | claimed | `arena/8f259271-tino1` | `COORDINATION.md` | A broken build is not merged; flagged items do not block. |
+
+**Not in scope / not touched:** `final/model.py`, `final/build.py`, `final/sources.py`, any canonical headline figure, other sessions' audit directories (`audit-*`, `verify-*`), open PRs #7/#17/#23/#31, `README.md` history section.
+
+**Findings already made (R8-1/R8-2), before any edit:**
+
+1. **The canonical root site is clean** of the unrounded history, but it publishes the owner's **entire assessed-value series** implicitly: `$550,540` (2026) grown at exactly 2% back-calculates every prior year to the dollar, and two rounding anchors pin it (`$550,540 × 1.02 = $561,551` where the owner's figure is `$539,743 × 1.02 = $550,538`). One anchor rounded to a coarser step removes that path.
+2. **Nine superseded editions are published in full on the same Pages site** and each lists the owner's **year-by-year tax and assessed-value table** at $10 rounding (`docs/cupertino.html`, `site/properties.html`, `verify-4395771d/site/properties.html`, `archive/root-site-2026-11-11/properties.html`, `dashboard/*`, `docs/properties.html`, `integrated/*`, `data/*.csv|json`, `analysis/data/blackswan_projection_*.csv`). Any of the twelve rows identifies a specific parcel's public tax record (Santa Clara County publishes assessed value by parcel; assessed value ÷ 1.02 is the whole series). `noindex` does not protect a path that a public branch link still resolves.
+3. **Git history holds the same figures unrounded** (`git log --all -S550537` → commits `e1522a4`, `12f2f8a`, `4d6ba09`, `aadfa0c`, `2a89df5`, …). A history rewrite is the owner's decision and is not taken unilaterally; recorded as a flag.
+4. **Verified official this session:** Santa Clara FY2025-26 rate-book components sum to **1.16360** exactly (1.00000 + 0.03880 + 0.00240 + 0.00560 + 0.00520 + 0.04450 Cupertino Elem + 0.04070 Fremont Union High + 0.03110 Foothill-De Anza + 0.00390 SCVWD + 0.00140 Midpeninsula) — confirms the model's rate; BOE LTA 2025/009 `$1,044,586` for 2025-02-16…2027-02-15 and the every-other-February adjustment rule; IRS 2026 filing threshold `$15,000,000` and the 2011–2026 table; Rev. Proc. 2026-35 §3.44 `$15,480,000` (2027) and §3.46 annual gift exclusion `$20,000`; IRS Topic 701 24-month ownership/use test; California Secretary of State unofficial results Prop 3 **60.6% yes**, Prop 40 **47.4% yes / 52.6% no**, Prop 42 **51.5% yes**, certification due **2026-12-11**. All match the site.
+
+**Log (`8f259271`)**
+- 2026-11-11 13:20 UTC — Board read in full, repository unshallowed, canonical build reproduced, claim written here. No file edited yet.
