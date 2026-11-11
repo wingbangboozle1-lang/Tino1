@@ -190,3 +190,39 @@ This session started from `fd4bd84` when the repository held only `README.md` an
 - **GitHub Pages build confirmed:** `gh api repos/wingbangboozle1-lang/Tino1/pages/builds/latest` → `commit: aa994c30…`, `status: "built"`, `error: null`, `created: 2026-11-10T06:34:29Z`, `duration: 20091 ms`. Pages source unchanged (`main:/`, legacy build, root `.nojekyll`).
 - **Live verification (fetched after the build):** `https://wingbangboozle1-lang.github.io/Tino1/dashboard/` (dashboard renders; headline findings, key numbers, 13 section links) and `https://wingbangboozle1-lang.github.io/Tino1/dashboard/flagged.html` (23 flagged items render with source links). Other sessions' pages at `/`, `/docs/`, `/site/` unaffected.
 - Follow-up: this record committed via PR #11 (COORDINATION.md only).
+
+---
+
+## Session `a67c6fd7` (`arena/a67c6fd7-tino1`) — Canonical rebuild & consolidation (integration session)
+
+**Branch:** `arena/a67c6fd7-tino1` · **Started:** 2026-11-11 · **Synced with `origin/main`:** `2a16da8` (PRs #1–#11 merged).
+
+### Role & scope
+Acting as the **final integration / consolidation session** per the repo protocol ("shared outputs … changed only by a final integration session"). Prior sessions (5c7cfaf6, 3676d6a0, 37f99282, 4f787a0f, 85899999, 6ea079fa) produced four overlapping live sites (`/`, `/docs/`, `/site/`, `/dashboard/` with different assumptions and known defects logged as CR-85: dollars NOT rounded to $10, some rows missing source links, blended tax-rate model). This session delivers ONE clean canonical dashboard at the repo root, fixes the CR-85 defects, adds the user-supplied year-by-year property-tax tables (rounded to $10, anonymized, flagged unverified), the requested **black-swan economic section**, insurance/research, and the estate-tax threshold analysis.
+
+### File scope (all NEW except root `index.html` which replaces the broken mirror)
+- `index.html`, `properties.html`, `projections.html`, `decision.html`, `tax-law.html`, `estate-tax.html`, `process.html`, `costs.html`, `blackswan.html`, `pending.html`, `flagged.html`, `sources.html`, `methodology.html`
+- `assets/style.css`, `assets/app.js` (new clean theme)
+- `build/site.py` (generator), `data/v2/*.csv` (model outputs)
+- Prior dirs `docs/`, `dashboard/`, `site/`, `analysis/`, `data/*` (other sessions) left UNTOUCHED as archives.
+
+### Claim
+| # | Task | Status | Owner | Scope |
+|---|------|--------|-------|-------|
+| T-A | Research & verify all facts from official sources | done | a67c6fd7 | web search + source URLs |
+| T-B | Rebuild canonical dashboard (root) w/ $10 rounding + per-row sources | in progress | a67c6fd7 | root *.html, assets/* |
+| T-C | Black-swan economic section + sensitivity | in progress | a67c6fd7 | blackswan.html |
+| T-D | Estate-tax threshold + exposure projection | in progress | a67c6fd7 | estate-tax.html |
+| T-E | Site build check (no broken links, source per row) + Pages deploy + PR/merge | pending | a67c6fd7 | repo root |
+
+### Verification performed (official sources)
+- Prop 13 2% cap — BOE pub800-10 / RTC §51
+- Prop 19 $1,044,586 cap (LTA 2025/009, transfers 2/16/2025–2/15/2027) — BOE NR 25-02 + boe.ca.gov/prop19
+- SF secured rate 1.18162182% FY2026-27 — sftreasurer.org
+- Federal estate/gift exemption $15M (OBBBA §70106, Rev Proc 2025-32); 2026 gift exclusion $19,000 — IRS
+- No CA estate/inheritance/gift tax — SCO
+- Step-up basis IRC §1014 — Cornell U.S.C.
+- CA homeowners insurance (Santa Clara Co cheapest ~$1,257/yr; SF ~$1,965/yr) — CDI / insurance market data (flagged as estimates)
+- SF rent cap 1.6% (Mar 2026–Feb 2027) — SF Rent Board / sf.gov
+- Appreciation baseline C.A.R. +3.6% statewide, Bay Area 2–6% — C.A.R.; FHFA HPI CA
+- Historical CPI/S&P for black swan — BLS, S&P/S&P Global
