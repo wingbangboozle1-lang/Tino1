@@ -695,3 +695,25 @@ No figure on the site changed as a result of these reads. Two residual limits ar
 | GitHub Pages | status `built`, latest build for commit `0e207a6` (2026-11-11T08:49:53Z) |
 
 No figure changed. No new irregularities found. F12-1 done; F12-2 PR→merge→deploy in progress.
+
+---
+
+## Session `arena/faccd46d` (`arena/faccd46d-tino1`) — official-source verification register, release close-out and final integration (claimed 2026-11-11 13:35 UTC)
+
+**Branch:** `arena/faccd46d-tino1` (platform-fixed name). **Base:** `main` @ `ef94247` (PRs #1–#32 merged). **Session ID:** `faccd46d`.
+
+**State found at 13:15–13:35 UTC:** the canonical root site (21 pages, `final/` → root) is live and passes `final/check.py .` (668 sourced rows). Open PRs: #31 (`de9174cd`, ACTIVE 13:12 UTC — release-safety audit, `audit-de9174cd/**` only), #27 (`ad120b45`, last commit 07:49 — stale >60 min), #23 (`5d8f7074`, 07:43 — stale, draft), #17 (`48784797`, 04:31 — stale, draft), #7 (`e25621af`, 2026-11-10 — stale). Per the handoff rule this session takes over the stale sessions' unfinished close-out lane and the integration lane; `de9174cd`'s active audit claim (`audit-de9174cd/**`) is respected and untouched.
+
+| # | Task | Status | Owner | File scope | Notes |
+|---|------|--------|-------|------------|-------|
+| FAC-0 | Claim + scope (this section) | done (this commit) | `faccd46d` | `COORDINATION.md` (append only) | Claim pushed before any content work |
+| FAC-1 | Fresh official-source verification register: every headline legal/financial fact on the canonical site re-read on its official page **in this session** (IRS, BOE, LegInfo, SCO, SF Treasurer, SCC, HUD, BLS/FRED), published as `verification.html` on the site with a per-check link for manual review; anything not confirmable stays blank and flagged | claimed | `faccd46d` | `final/build.py` (+`build_verification()`), `final/sources.py` (append-only new ids), `final/flags.py` (append-only), root `verification.html` (generated) | Distinct from `de9174cd`'s release-safety audit (theirs = blockers report; this = fact-by-fact re-verification with links) |
+| FAC-2 | Provenance & conditionality close-out (acts on `de9174cd` blockers #2 and #4 as they apply to the user's own rules): owner-supplied rows labelled on the landing page, "best outcome" wording made explicitly conditional on assumptions, "how to read the numbers" provenance legend | claimed | `faccd46d` | `final/build.py` (index wording only) | No figure changes; wording/labels only. `de9174cd` blocker #1 (public repo + Git history) is owner-action, already documented in `README.md` + flags P02 — recorded, not fixable by a session |
+| FAC-3 | Legacy-tree consistency sweep: $10-rounding re-scan of every published path (`downloads/`, `data/`, `final/out/`, `dashboard/`, `docs/`, `site/`, `verify-4395771d/`), fix the one known `$550,530` mis-rounding in `dashboard/projections.html`; PII/figure scans | claimed | `faccd46d` | `dashboard/projections.html` (2 cells), `session-faccd46d/` (scan logs, new dir) | Superseded trees keep their notices; only the mis-rounded figure is corrected |
+| FAC-4 | Executive summary deliverable: `EXECUTIVE-SUMMARY.md` at the repo root, mirroring the canonical Summary page, with sources and flags | claimed | `faccd46d` | `EXECUTIVE-SUMMARY.md` (new) | Additive |
+| FAC-5 | Stale-PR disposition + final integration: PRs #7/#17/#23/#27 closed as superseded with per-PR notes (branches preserved, nothing deleted), PR #31 left to its active owner; then PR → `main`, merge, confirm the Pages deploy, record here | claimed | `faccd46d` | `COORDINATION.md` | R15 of `final/flags.py` to be updated accordingly. A broken build is not merged; flagged items do not block |
+
+**Not in scope / not touched:** `audit-de9174cd/**` (active owner `de9174cd`), `final/model.py` economics (no figure changes), `final/out/model.json`, other sessions' branches.
+
+**Log (`faccd46d`)**
+- 2026-11-11 13:15–13:35 UTC — Board read in full; all open PRs inspected; `final/check.py .` green at base; IRS estate-tax page re-fetched (2026 filing threshold $15,000,000 confirmed on the official page). Claim written and pushed before any content work.
