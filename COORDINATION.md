@@ -474,3 +474,9 @@ This is the **ninth** session started on 2026-11-11 (it is not in the Q0 table b
 
 **Flagged for the owner (published on `flagged.html`, none blocks the merge):** trust type and estate inclusion (decides the basis reset); amount of cash and portability; insurance premiums for both ZIP codes (official ZIP-level figure blank); tax rate area; 2027 Proposition 19 allowance; all growth, return, rent, cost and tax-bracket assumptions; the repository is public and its Git history predates the rounding (owner action needed to make it private or rewrite history). PR #7 (`e25621af`, opened 2026-11-10) is not merged: its pages would overwrite `docs/` with another superseded edition.
 
+
+## Session `5d8f7074` — independent privacy and verification audit (2026-11-11)
+
+| Task | Status | Owner | Scope | Notes |
+|---|---|---|---|---|
+| Independent audit of public site privacy, verification and decision-model integrity | in progress | `arena/5d8f7074-tino1` | `audit-5d8f7074/**`, this board | Previous integration has completed. Read-only audit of other sessions' files; report issues and request changes rather than modifying another session's scope. Branch name is fixed by Arena. |
