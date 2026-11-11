@@ -88,6 +88,23 @@ class ModelTests(unittest.TestCase):
         self.assertEqual(disaster['sell'][10]['a_extra'], 0)
         self.assertEqual(disaster['sell'][10]['b_extra'], 100_000)
 
+    def test_funding_and_prop8_when_values_fall(self):
+        baseline = m.simulate(m.SCENARIOS[0])
+        # A negative account compounds as a funding gap, not a positive return.
+        live = baseline['live']
+        index = next(i for i in range(1, len(live)) if live[i - 1]['account'] < 0)
+        previous, row = live[index - 1], live[index]
+        self.assertAlmostEqual(row['investment_change'], previous['account'] * m.FUNDING_RATE)
+        self.assertAlmostEqual(row['account'], previous['account'] * (1 + m.FUNDING_RATE) + row['net_cash'])
+        market = m.simulate(next(s for s in m.SCENARIOS if s.key == 'market'))['rent']
+        after_crash = market[6]  # January 2051 follows 2050 end-of-year crash
+        self.assertLess(after_crash['a_start_value'], after_crash['a_factored'])
+        self.assertAlmostEqual(after_crash['a_assessed'], after_crash['a_start_value'])
+        for row in baseline['sell']:
+            self.assertEqual(row['a_tax'], 0)
+            self.assertEqual(row['a_net'], 0)
+            self.assertGreater(row['b_rent_gross'], 0)
+
     def test_estate_is_transferor_only_and_future_is_a_scenario(self):
         estate = m.estate_table()
         self.assertEqual(estate[0]['exclusion'], 15_000_000)
