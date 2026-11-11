@@ -190,3 +190,15 @@ This session started from `fd4bd84` when the repository held only `README.md` an
 - **GitHub Pages build confirmed:** `gh api repos/wingbangboozle1-lang/Tino1/pages/builds/latest` → `commit: aa994c30…`, `status: "built"`, `error: null`, `created: 2026-11-10T06:34:29Z`, `duration: 20091 ms`. Pages source unchanged (`main:/`, legacy build, root `.nojekyll`).
 - **Live verification (fetched after the build):** `https://wingbangboozle1-lang.github.io/Tino1/dashboard/` (dashboard renders; headline findings, key numbers, 13 section links) and `https://wingbangboozle1-lang.github.io/Tino1/dashboard/flagged.html` (23 flagged items render with source links). Other sessions' pages at `/`, `/docs/`, `/site/` unaffected.
 - Follow-up: this record committed via PR #11 (COORDINATION.md only).
+
+---
+
+## Session `arena/0216a6bf-tino1` — final integration takeover (2026-11-11)
+
+The prior V2/final-integration claim by `4f787a0f` is more than 60 minutes old with no subsequent commits, so this session takes over that idle scope under the coordination rule. No other active session is visible on the current branch; all earlier claims are recorded as merged or stale.
+
+| Task | Status | Owner | Files / scope | Verification plan |
+|---|---|---|---|---|
+| V2-takeover | in progress | `arena-0216a6bf-tino1` | Canonical GitHub Pages landing/navigation and site content; `README.md`; `COORDINATION.md`; new verification/build helpers only where needed | Consolidate the overlapping published copies into one clearly identified canonical dashboard; re-check official source links, table-row citations, privacy, $10 rounding, model consistency, internal links, and GitHub Pages build before PR/merge. |
+
+**Claim commit:** this section is committed and pushed before any other task edits. Existing research/model files will be changed only if line-by-line re-verification identifies a required correction; otherwise corrections are logged and surfaced on the Flagged for Review page.
