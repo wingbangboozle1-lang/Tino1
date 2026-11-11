@@ -450,6 +450,7 @@ def build_blackswan():
         ('Real order from 2000', COL['sell'], {r['year']: r['cup_value'] / r['cpi'] for r in PATHS['replay_2000']['rows']}),
         ('2007-2012 bust at inheritance', COL['live'], {r['year']: r['cup_value'] / r['cpi'] for r in PATHS['crash_at_T']['rows']}),
         ('Depression at inheritance', COL['x'], {r['year']: r['cup_value'] / r['cpi'] for r in PATHS['depression_at_T']['rows']}),
+        ('Japan-style stagnation at inheritance', '#c0392b', {r['year']: r['cup_value'] / r['cpi'] for r in PATHS['japan_at_T']['rows']}),
     ], 2026, 2076, mark=T)
     cr = PATHS['crash_at_T']
     yr = table(['Year', 'Inflation', 'Home prices', 'Stocks', 'Market value', 'Assessed if lived in', 'Tax if lived in', 'Tax if rented', 'Wealth: live', 'Wealth: rent', 'Wealth: sell', 'Official basis'], [
@@ -472,7 +473,7 @@ def build_blackswan():
         ['Stricter rent rules', 'Statewide cap of 5% plus inflation (10% maximum) with an exemption for many single-family homes; San Francisco allows 60% of inflation on controlled units.', 'Lowers the Rent result for Property A if the exemption is lost, and limits Property B rent growth in every case.', src('DOJ-TPA', 'SF-RENT-RULES')],
     ], caption='Shocks that no price history captures')
     body = ("""<p class="callout">This section is kept apart from the baseline on purpose. The baseline uses constant rates so that the three choices can be compared cleanly. Here nothing is constant: every path uses real recorded years, in their real order, for inflation, local home prices, stocks, bonds and bills.</p>"""
-            + rep + named + '<h2>Property A market value in 2026 dollars under five paths</h2>' + ch + stats + other + yr + yr2 + hist)
+            + rep + named + '<h2>Property A market value in 2026 dollars under six paths</h2>' + ch + stats + other + yr + yr2 + hist)
     page('black-swan.html', 'Black swan section: non-constant growth and inflation over 50 years',
          'What happens to the decision when inflation, home prices and markets behave the way they really have: in bursts, busts and long flat stretches.', body)
 

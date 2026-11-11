@@ -192,6 +192,20 @@ def step7_fingerprints():
     return changed
 
 
+def step8_readme():
+    p = os.path.join(ROOT, 'README.md')
+    old = open(p, encoding='utf-8').read() if os.path.exists(p) else ''
+    if old.startswith('# Two-home inheritance analysis'):
+        return False
+    old = old.replace('https://www.sco.ca.gov/state_finances_estate_tax.html', 'https://www.sco.ca.gov/ardtax_estate_tax.html')
+    old = old.replace('https://sftreasurer.org/property-tax)', 'https://sftreasurer.org/property/secured-property-taxes)')
+    new = open(os.path.join(HERE, 'README_ROOT.md'), encoding='utf-8').read().rstrip() + (
+        '\n\n---\n\n## History: README of the earlier editions (kept unchanged except for two corrected source links)\n\n'
+        + re.sub(r'^# ', '### ', old, flags=re.M))
+    open(p, 'w', encoding='utf-8').write(new + '\n')
+    return True
+
+
 if __name__ == '__main__':
     moved = step1_archive()
     print('1. archived %d root page(s):' % len(moved), ', '.join(d for _, d in moved) or 'nothing to archive')
@@ -210,4 +224,5 @@ if __name__ == '__main__':
         print('   ', k, '->', sorted(set(broken[k]))[:6])
     ch = step7_fingerprints()
     print('7. fingerprinted figure shown to the nearest $100 / withheld in:', ', '.join(ch) or 'no file')
+    print('8. README.md', 'rewritten (old text kept below a History heading)' if step8_readme() else 'already current')
     sys.exit(0)

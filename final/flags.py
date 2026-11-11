@@ -30,6 +30,10 @@ FLAGS = [
          used='Not published. Only growth rates and the current-year figures needed for the decision are shown, rounded to $10. A multi-year series can identify one parcel even when each figure is rounded.',
          check='Owner decision. Older pages in this repository still list a rounded series; see the Repo review page.',
          src=('BOE-P19', 'SCC-RATES')),
+    dict(id='P02', item='The repository is public, and its Git history holds the first versions of the pages, written before the figures were rounded.',
+         used='Current pages are rounded and carry no history series. Nothing in the history was rewritten: that would be destructive and needs the owner\'s consent.',
+         check='Owner action: make the repository private, or have the history rewritten, if the earlier commits must not remain readable.',
+         src=('BOE-P19', 'SCC-RATES')),
     # ---- values not confirmed ---------------------------------------------------------------
     dict(id='U01', item='Home-insurance premium for ZIP 95014 and landlord-insurance premium for ZIP 94122.',
          used='ZIP-level official figure left blank. The model uses the owner\'s own estimate of $1,500 a year for each, shows the official statewide averages beside it, and shows that tripling it does not change the ranking.',
