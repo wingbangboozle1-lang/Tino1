@@ -85,7 +85,7 @@ add('BOE-RULE-462.260', 'BOE Rule 462.260', 'BOE Property Tax Rule 462.260 - Dat
     'https://boe.ca.gov/proptaxes/pdf/rules/Rule462_260.pdf', 'page',
     'Revocable trust: date of change in ownership is the date the trust becomes irrevocable (example: the date of death). Inheritance: the date of death.')
 add('BOE-HOX', 'BOE homeowners\' exemption', 'BOE - Homeowners\' Exemption',
-    'https://www.boe.ca.gov/proptaxes/homeowners_exemption.htm', 'excerpt',
+    'https://www.boe.ca.gov/proptaxes/homeowners_exemption.htm', 'page',
     '$7,000 reduction in taxable value for an owner-occupied principal residence on the January 1 lien date; one-time claim BOE-266; file by February 15 for the full exemption.')
 add('FTB-RATES', 'FTB 2025 rates', 'Franchise Tax Board - 2025 California Tax Rate Schedules',
     'https://www.ftb.ca.gov/forms/2025/2025-540-tax-rate-schedules.pdf', 'page',
@@ -106,7 +106,7 @@ add('CDI-TOOL-APP', 'CDI homeowners tool', 'California Department of Insurance -
     'https://interactive.web.insurance.ca.gov/apex_extprd/f?p=111:20', 'page',
     'Landing text read; ZIP-level premium tables require interactive input.')
 add('CDI-EQ', 'CDI earthquake guide', 'California Department of Insurance - Earthquake insurance',
-    'https://www.insurance.ca.gov/01-consumers/105-type/95-guides/03-res/eq-ins.cfm', 'excerpt',
+    'https://www.insurance.ca.gov/01-consumers/105-type/95-guides/03-res/eq-ins.cfm', 'page',
     'Homeowners policies do not cover earthquake damage (fire following an earthquake is covered); the insurer must offer earthquake coverage every other year.')
 add('CDI-RES', 'CDI residential guide', 'California Department of Insurance - Residential insurance guide',
     'https://www.insurance.ca.gov/01-consumers/105-type/95-guides/03-res/res-ins-guide.cfm', 'excerpt',
@@ -117,6 +117,12 @@ add('CPUC-NEM', 'CPUC net metering', 'California Public Utilities Commission - N
 add('CPUC-FIXED', 'CPUC fixed charge', 'CPUC resolution on PG&E advice letter 7351-E (Decision 24-05-028 fixed charge)',
     'https://docs.cpuc.ca.gov/PublishedDocs/Published/G000/M555/K816/555816677.pdf', 'excerpt',
     'Residential fixed charge of $24.15 per month for customers not in a discount tier.')
+add('CDI-SB824', 'CDI wildfire-risk data', 'California Department of Insurance - SB 824 residential property data (coverage amounts, wildfire risk and losses)',
+    'https://www.insurance.ca.gov/01-consumers/200-wrr/WildfireRiskInfoRpt.cfm', 'page',
+    'Statewide totals for 2023, all residential policy forms: earned premium $14,217,212,455 on 12,580,970 earned exposures (about $1,130 a policy); average Coverage A $324,973. ZIP-level sheets exist in the workbook but could not be read by this automated session.')
+add('CDI-RPI', 'CDI residential report', 'California Department of Insurance - Residential Property Insurance Report (Part I summary workbook)',
+    'https://www.insurance.ca.gov/0400-news/0200-studies-reports/0250-homeowners-study/', 'page',
+    'All years 2008-2023 pooled: average written premium $1,176 for homeowners policies and $601 for tenant-occupied dwelling-fire (landlord) policies.')
 # ---- Local ---------------------------------------------------------------------
 add('SCC-P19', 'Santa Clara Assessor', 'Santa Clara County Assessor - Parent-child transfer (Proposition 19)',
     'https://asr.santaclaracounty.gov/tax-savings/transferring-your-assessed-value/parent-to-child-2', 'page',
@@ -125,7 +131,7 @@ add('SCC-RATES', 'Santa Clara tax rate book', 'Santa Clara County Controller-Tre
     'https://files.santaclaracounty.gov/exjcpb1531/2025-11/tax-rate-book-2025-2026.pdf?VersionId=HHMZ1VmGwFXqVvpM36xuptkIcV2V8ctE', 'page',
     'Rates per $100 (pages A-4 to A-6): 1% levy 1.00000; county retirement 0.03880; library retirement 0.00240; VMC 2008 0.00520; housing bond 0.00560; Cupertino Elementary 0.00010 + 0.01650 + 0.01690; Fremont Union High 0.01040 + 0.00880 + 0.01070 + 0.01180; Foothill-De Anza 0.01010 + 0.01350 + 0.00750; SCVWD State Water Project 0.00390; Midpeninsula Open Space 0.00140. Sum 1.16360. The exact tax rate area of the home was not looked up (privacy).')
 add('SCC-DTT', 'Santa Clara Clerk-Recorder', 'Santa Clara County Clerk-Recorder - Recording real estate (documentary transfer tax)',
-    'https://clerkrecorder.santaclaracounty.gov/recording-documents/recording-real-estate', 'excerpt',
+    'https://clerkrecorder.santaclaracounty.gov/recording-documents/recording-real-estate', 'page',
     'Documentary transfer tax $0.55 per $500 of value; a higher rate applies only in San Jose, Palo Alto and Mountain View.')
 add('SF-TAX', 'SF Treasurer', 'San Francisco Treasurer and Tax Collector - Secured property taxes',
     'https://sftreasurer.org/property/secured-property-taxes', 'page',

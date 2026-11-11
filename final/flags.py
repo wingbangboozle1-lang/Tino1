@@ -28,9 +28,9 @@ FLAGS = [
          src=('BOE-LTA-2026-026', 'BOE-P19')),
     # ---- values not confirmed ---------------------------------------------------------------
     dict(id='U01', item='Home-insurance premium for ZIP 95014 and landlord-insurance premium for ZIP 94122.',
-         used='Official figure left blank. The model uses the owner\'s own estimate of $1,500 a year for each and shows that tripling it does not change the ranking.',
-         check='Use the Department of Insurance comparison tool for 95014; get a landlord quote for the three-unit building.',
-         src=('CDI-TOOL', 'CDI-TOOL-APP')),
+         used='ZIP-level official figure left blank. The model uses the owner\'s own estimate of $1,500 a year for each, shows the official statewide averages beside it, and shows that tripling it does not change the ranking.',
+         check='Use the Department of Insurance comparison tool for 95014, or open the ZIP-level sheets of its SB 824 workbook; get a landlord quote for the three-unit building.',
+         src=('CDI-TOOL', 'CDI-TOOL-APP', 'CDI-SB824')),
     dict(id='U02', item='Earthquake-insurance premium for either home.',
          used='Left blank and not included in any cost line.',
          check='Ask the insurer for the mandatory earthquake offer, or use the earthquake section of the same tool.',
