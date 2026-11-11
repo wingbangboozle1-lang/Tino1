@@ -15,6 +15,7 @@ import shutil
 from pathlib import Path
 
 import model as m
+from legacy import redirect_html, redirect_map
 from sources import SOURCES
 
 HERE = Path(__file__).resolve().parent
@@ -451,9 +452,15 @@ def build(output: Path) -> None:
     }
     for name, label, _ in PAGES:
         (output / name).write_text(page(name, label, contents[name]), encoding='utf-8')
+    for old, dest in redirect_map().items():
+        if old in contents:
+            raise ValueError(f'Redirect would overwrite canonical page: {old}')
+        target = output / old
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_text(redirect_html(old, dest), encoding='utf-8')
     (output / '.nojekyll').write_text('', encoding='utf-8')
     write_csv(output)
-    print(f'Built {len(contents)} pages and a synthetic CSV in {output}')
+    print(f'Built {len(contents)} pages, {len(redirect_map())} legacy redirects and a synthetic CSV in {output}')
 
 
 if __name__ == '__main__':

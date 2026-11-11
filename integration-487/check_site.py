@@ -18,6 +18,7 @@ from urllib.parse import unquote, urlsplit
 
 import model as m
 from build_site import PAGES
+from legacy import redirect_html, redirect_map
 from sources import SOURCES
 
 HERE = Path(__file__).resolve().parent
@@ -143,6 +144,13 @@ def check(site: Path) -> list[str]:
             elif url.fragment and target in parsed and url.fragment not in parsed[target].ids:
                 errors.append(f'{path.name}: missing fragment {href}')
 
+    for old, dest in redirect_map().items():
+        path = site / old
+        if not path.is_file() or path.read_text(encoding='utf-8') != redirect_html(old, dest):
+            errors.append(f'Legacy redirect missing or altered: {old}')
+        if not (site / dest).is_file():
+            errors.append(f'Legacy redirect target missing: {dest}')
+
     csv_path = site / 'data' / 'annual-projections.csv'
     if not csv_path.exists():
         errors.append('Missing annual CSV')
@@ -185,7 +193,7 @@ def main() -> None:
     if errors:
         print('\n'.join(errors), file=sys.stderr)
         raise SystemExit(1)
-    print(f'PASS: {len(PAGES)} pages, all table rows sourced, local links, $10 rounding, basic privacy patterns, and 150 CSV/model rows.')
+    print(f'PASS: {len(PAGES)} pages, {len(redirect_map())} legacy redirects, all table rows sourced, local links, $10 rounding, basic privacy patterns, and 150 CSV/model rows.')
     print('Note: static checks do not prove anonymity, legal correctness, external availability, or complete accessibility.')
 
 
