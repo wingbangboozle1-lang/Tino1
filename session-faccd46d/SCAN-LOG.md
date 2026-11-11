@@ -23,7 +23,10 @@ are false positives**:
 
 Result: **no unrounded owner figure is present in any published or stored file.** The canonical checker
 agrees (`final/check.py .` — privacy fingerprints clean; the fingerprint register covers the exact
-unrounded tokens).
+unrounded tokens). The token column below is masked by the repository's privacy scrub (`step7_fingerprints`,
+which rewrites fingerprinted tokens outside `final/`); each masked hit was only a substring of the
+non-owner content described in the third column (the underlying tokens are themselves owner figures from
+the brief, which is why the scrub masks them even in this log).
 
 Note on `dashboard/projections.html` and `dashboard/properties.html`: they show `$550,530` for the 2026
 assessed value. This is **not** a mis-rounding of the owner figure; it is a *derived* model output of the
