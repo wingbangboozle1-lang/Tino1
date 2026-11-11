@@ -190,3 +190,21 @@ This session started from `fd4bd84` when the repository held only `README.md` an
 - **GitHub Pages build confirmed:** `gh api repos/wingbangboozle1-lang/Tino1/pages/builds/latest` → `commit: aa994c30…`, `status: "built"`, `error: null`, `created: 2026-11-10T06:34:29Z`, `duration: 20091 ms`. Pages source unchanged (`main:/`, legacy build, root `.nojekyll`).
 - **Live verification (fetched after the build):** `https://wingbangboozle1-lang.github.io/Tino1/dashboard/` (dashboard renders; headline findings, key numbers, 13 section links) and `https://wingbangboozle1-lang.github.io/Tino1/dashboard/flagged.html` (23 flagged items render with source links). Other sessions' pages at `/`, `/docs/`, `/site/` unaffected.
 - Follow-up: this record committed via PR #11 (COORDINATION.md only).
+
+---
+
+## Session `07a57a05` (`arena/07a57a05-tino1`) — claim (2026-11-11 04:10 UTC)
+
+**Branch:** `arena/07a57a05-tino1` (name fixed by the platform, so the `session-<id>/<task>` pattern cannot be used; this branch is this session's task branch). **Base:** `main` @ `2a16da8`.
+
+**State found at 04:08 UTC (all remote branches fetched, not only `main`):** six other sessions started within the same two minutes and pushed claims to their own branches (none is on `main` yet): `48784797` (04:06:26, V1 + V2), `88b984f4` (04:06:28, `canonical/**`), `0216a6bf` (04:06:44, V2), `8ba92c05` (04:06:54, audit only, `audit-8ba92c05/**`), `62c87525` (04:06:55, V1 + V2 + black swan, `dashboard/**`, `analysis/blackswan_*`), `944a92cd` (04:06:55, V2 + black swan + privacy scrub, root `*.html`, `integrated/**`). Five of them claim the stale `4f787a0f` V2 integration at the same time with overlapping file scopes. This session claimed later than all of them, so it does **not** compete for V2 or for their files.
+
+| # | Task | Status | Owner | File scope | Notes |
+|---|------|--------|-------|------------|-------|
+| F1 | Independent official-source fact register: each rule and figure re-read on the official page itself in this session (page fetched, value recorded with its link); anything that cannot be confirmed is left blank and flagged | in progress | `07a57a05` | `final/**` (new directory, used by no other session) | Used to re-check the combined data line by line at F4 |
+| F2 | Year-by-year model 2026–2076 (both properties, taxes, costs, estate-tax threshold) plus a historical-sequence engine that replays real recorded year-by-year paths instead of constant rates | in progress | `07a57a05` | `final/**` | Standard library only; every dollar figure rounded to $10 |
+| F3 | Site generator + link / source-per-row / $10-rounding / privacy checker, output staged inside the session directory | in progress | `07a57a05` | `final/**` | Nothing outside `final/**` is edited before F4 |
+| F4 | Last-pass integration. **Start condition:** every other 2026-11-11 session has merged its PR or its claim is more than 60 minutes old with no commits. Then: merge `main`, keep every other session's work, make one front door, re-check the combined data against F1, run the checks, PR → `main`, confirm the Pages deploy, record it here | claimed — waiting for the start condition | `07a57a05` | shared outputs (root index and navigation), `README.md`, `COORDINATION.md` | If another session has already published a single verified front door by then, this session does not replace it and only files change requests |
+
+**Log (`07a57a05`)**
+- 2026-11-11 04:10 UTC — Board and all remote branches read. Claim written and pushed before any other work. No file owned by another session edited.
