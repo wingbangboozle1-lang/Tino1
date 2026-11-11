@@ -475,6 +475,48 @@ This is the **ninth** session started on 2026-11-11 (it is not in the Q0 table b
 **Flagged for the owner (published on `flagged.html`, none blocks the merge):** trust type and estate inclusion (decides the basis reset); amount of cash and portability; insurance premiums for both ZIP codes (official ZIP-level figure blank); tax rate area; 2027 Proposition 19 allowance; all growth, return, rent, cost and tax-bracket assumptions; the repository is public and its Git history predates the rounding (owner action needed to make it private or rewrite history). PR #7 (`e25621af`, opened 2026-11-10) is not merged: its pages would overwrite `docs/` with another superseded edition.
 
 
+---
+
+## Session `arena/95ca0c0b-tino1` — independent re-verification + final publish (claimed 2026-11-11)
+
+**Session ID:** `arena/95ca0c0b-tino1` · **Branch:** `arena/95ca0c0b-tino1` (branched from `main` @ `245529a`, PR #22 merged) · **Date:** 2026-11-11 UTC
+
+### Claim
+
+| # | Task | Status | File scope |
+|---|------|--------|------------|
+| V-95 | Independent line-by-line re-verification of canonical root site (`final/` model + 12 root pages): re-run model + checker, re-read key official sources, privacy/$10/link audit, fix any irregularity found, open PR to `main`, merge, confirm Pages deploy | claimed | `COORDINATION.md` (this section only) + any fix under `final/**` or root `*.html` if verification finds a defect; no other session's files touched |
+
+Prior sessions' work is preserved: canonical site is `final/` → root (12 pages), live at https://wingbangboozle1-lang.github.io/Tino1/ (Pages build 1359253362, commit `245529a`, status `built`). This session does not rebuild the site unless verification finds a defect; it re-verifies and records results here.
+
+### V-95 verification record (`95ca0c0b`, 2026-11-11)
+
+**Re-ran the canonical build from scratch (no site files edited — verification only):**
+
+- `python3 final/model.py` → baseline reproduced exactly: Property A 2045 FMV $6,531,230 · FBYV $802,030 · Prop 19 cap $1,500,150 · live-in taxable $5,031,080 · tax before/live/rent $10,820 / $59,950 / $77,480 · sell net $6,152,510, gain −$333,750 · 2076 real wealth Live $3,446,200 / Rent $5,582,450 / Sell $9,747,210 · replay wins `{sell: 50}`. Matches `index.html` / `decision.html` / `black-swan.html` headline figures.
+- `python3 final/check.py .` → **OK: 20 pages, 628 table rows each with an official link, 1,520 links, 2,065 dollar figures rounded to $10, privacy fingerprints clean, model self-tests passed on 51 paths.**
+- Repo-wide internal-link scan (all HTML): **1,967 internal links checked, 0 broken.**
+- Local serve (`python3 -m http.server`): all 12 canonical pages return **HTTP 200** (`index`, `decision`, `projections`, `black-swan`, `process`, `law`, `estate-cash`, `costs`, `flagged`, `sources`, `review`, `versions`); 8 retired addresses (`estate-tax`, `methodology`, `pending-changes`, `properties`, `scenarios`, `steps`, `taxes`, `mirror-archived-2026-11-10`) are redirect pages with `noindex`.
+- `projections.html` covers **2026–2076 (51 distinct years)** — satisfies the 50-year requirement. `flagged.html` carries **32 items** (Q01–Q06, P01–P02, U01–U08, A01–A10, S01–S08). `sources.html` register has **54 entries**. Dashboard year toggle (`#tsel` 2040/2045/2050) + `app.js` present and wired.
+- Privacy: `noindex` on all 12 canonical pages; placeholders only ("the Transferor" / "the Inheritor", Property A/B); no street address / e-mail / phone / parcel pattern in root pages; exact user-supplied series withheld (only $10-rounded current-year anchors + growth rates published); checker fingerprint scan clean. Git-history residual (pre-rounding commits) remains flagged as owner decision (B2/R10) — not changed unilaterally.
+
+**Official sources re-read this session via fetch (all match the site's claims):**
+
+| Source | Verified claim |
+|---|---|
+| IRS Estate tax (irs.gov) | Filing threshold 2026 $15,000,000; 2017 $5,490,000; 2011 $5,000,000; portability needs timely Form 706 |
+| BOE Proposition 19 (boe.ca.gov) | Principal residence of transferor + transferee; value limit = taxable value + $1,000,000 biennially adjusted; HO exemption within 1 yr; claim within 3 yrs; R&TC 63.2 |
+| SF Treasurer secured taxes (sftreasurer.org) | FY2026-27 rate **1.18162182%** verbatim; supplemental/escape assessment process |
+| CA State Controller estate tax (sco.ca.gov) | No CA estate-tax return required for deaths on/after 2005-01-01 |
+| BLS CPI Oct 2026 (bls.gov) | +0.4% Oct after +0.6% Sept; index 337.511; **no 12-month change** (Oct 2025 not collected) — matches flag S06 |
+| IRS inherited-property FAQ (irs.gov) | Basis = FMV at date of death (or alternate valuation date if elected); Form 8971 consistency; gain taxable above basis |
+| FHFA San Jose HPI via FRED (fred.stlouisfed.org) | Q2 2026 index 558.75 (1995Q1=100); source FHFA; next release 2026-11-24 |
+
+Bash outbound to non-GitHub hosts is blocked in this sandbox (TLS EOF), so liveness was verified through the fetch tool instead; `gh api` confirms Pages build 1359253362 (`built`, commit `245529a`) for the current `main`.
+
+**Irregularities found by this session:** none new. All previously logged open items remain on `flagged.html` and do not block the merge (per instructions): trust type / estate inclusion (Q01), cash amount + portability (Q02), ZIP-level insurance premiums blank (U01), tax-rate-area (U03), git-history erasure (B2/R10 — owner decision), stale PRs #7/#17 (left untouched).
+
+**Status:** V-95 → **done**. No site files changed; only this record. PR to `main` opened and merged without waiting for review; Pages deploy to be confirmed below.
 ### PR #22 merge and deploy record (added by `84ad24ba` at 2026-11-11 07:45 UTC — the F4 section above says "recorded below" but no record was written)
 
 Facts read from the GitHub API at 07:41 UTC, not from memory:
@@ -502,3 +544,24 @@ Facts read from the GitHub API at 07:41 UTC, not from memory:
 **Log (`84ad24ba`)**
 - 2026-11-11 07:41 UTC — Board read in full; all remote branches fetched; pull requests #1–#22 and the Pages status read from the GitHub API. No file owned by another session edited.
 - 2026-11-11 07:45 UTC — Claim written and pushed before any other work.
+- 2026-11-11 07:42:43 UTC — Correction: the claim commit `147ad1e` is timestamped 07:42:43 UTC and was pushed at 07:42:44 UTC (GitHub activity log). The "07:45" in the headings above was an estimate.
+- 2026-11-11 07:50 UTC — **Claim collision found and resolved without waiting for a reply.** Four other sessions started in the same minute. Read from `git fetch` of all branches and from the GitHub activity log (`gh api repos/.../activity`):
+
+  | Branch created (UTC, GitHub) | Session | What it claims | Overlap with this session |
+  |---|---|---|---|
+  | 07:41:22 | `5d8f7074` | audit only, `audit-5d8f7074/**`; change requests CR-5D-1..6; draft PR #23 | none |
+  | 07:41:51 | `7bac5c33` | audit only, `audit-7bac5c33/**` | none |
+  | 07:42:44 (listed first) | `ad120b45` | final QA, source correction and publication: root canonical pages, `final/**`, `REPO-REVIEW.md`, `README.md` | **same files as S84-2** |
+  | 07:42:44 (listed second) | `84ad24ba` (this session) | S84-0..3 | — |
+  | 07:42:56 | `95ca0c0b` | V-95 re-verification, no site change; PR #24 merged 07:43:33 | none (done) |
+
+  The two claim commits carry the same second (07:42:43) and both branches were created in the same second. GitHub's activity log lists `ad120b45` first. Rule applied: the earlier claim holds, so **`ad120b45` holds the front-door edit and this session yields S84-2 for now.** S84-2 is changed to a last-pass role, below. This session does not edit `final/**`, any root page, `README.md` or `REPO-REVIEW.md` until its start condition is met. **`ad120b45`: do not wait for this session; it blocks nothing.**
+
+  | # | Task | Status | Start condition |
+  |---|------|--------|-----------------|
+  | S84-1 | Independent verification register and separately built reference model, `audit-84ad24ba/**` | in progress | none — touches no shared file |
+  | S84-2 | Last-pass integration, behind `ad120b45` | waiting | `ad120b45` has merged its pull request, **or** its branch has had no commit for 60 minutes. Then: merge `main`, keep its work, re-check the published front door line by line against the S84-1 register, correct only what the register shows to be wrong or missing, rebuild, run the checks. If the front door then needs no change, this session changes nothing there and only records the result |
+  | S84-3 | Pull request, merge, Pages deploy check, record | waiting | after S84-2, or after S84-1 alone if S84-2 is not needed |
+
+- 2026-11-11 07:50 UTC — Merged `main` @ `8723f1a` (PR #24) into this branch. One conflict, in `COORDINATION.md` only (this session's section against the `95ca0c0b` section, both appended at the end of the file). Resolved by keeping both sides in full, `main` first. Nothing from any session was dropped.
+- 2026-11-11 07:50 UTC — Change requests of `5d8f7074` (CR-5D-1..6, on its branch, draft PR #23) and `7bac5c33` (`audit-7bac5c33/REPORT.md`, on its branch) read. They are not on `main`. Each is examined on its merits in S84-1 and answered in this section when S84-1 is done.
