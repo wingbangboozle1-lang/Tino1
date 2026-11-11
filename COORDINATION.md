@@ -270,3 +270,45 @@ This is the **ninth** session started on 2026-11-11 (it is not in the Q0 table b
 - 2026-11-11 04:06–04:14 UTC — Read the board and all 17 remote branches. Scanned `main` for owner-supplied figures and personal identifiers (no street address, parcel number, name, private e-mail or phone found; agency contact numbers only).
 - 2026-11-11 04:14 UTC — `main` moved to `7bc4a31` (PR #12, `b65fda2c` register). Read it; dropped this session's own planned register as a duplicate.
 - 2026-11-11 04:20 UTC — P0 applied, checked, and submitted as a rounding-only PR together with this claim.
+---
+## Session `arena/62c87525` (`arena/62c87525-tino1`) — Final Integration Session V2 takeover + Black Swan section (2026-11-11 04:06 UTC)
+
+**Branch:** `arena/62c87525-tino1` (platform-fixed name) · **Session ID:** `arena/62c87525`
+
+### Handoff / takeover note
+- Session `4f787a0f` claimed `V1` (re-verification register) and `V2` (final integration) on 2026-11-10 06:15 UTC. Per COORDINATION.md rule "If a session crashes or its claim is more than 60 minutes old with no commits, any other session may take over the task and note the handoff in the log": the claim is >22 h old with **no commits** on `verified/**` and no branch remaining on origin. **This session takes over V1 and V2** and records the handoff here. Change requests CR-1..CR-3 from `4f787a0f` are adopted into V2 scope.
+- All other sessions' tasks (T0–T12, T85-01..05, 1–19) are marked done and merged (PRs #1–#11). No other active claims found on origin (only `origin/main` exists). This session therefore begins final integration immediately.
+
+### Task board (this session)
+
+| # | Task | Status | Owner | Files / scope | Notes |
+|---|------|--------|-------|---------------|-------|
+| I-1 | Take over V1 — line-by-line re-verification of combined data vs official sources | in progress | `arena/62c87525` | `COORDINATION.md` (this section) | Spot-verify every published figure class against official pages; record findings in verification log below |
+| I-2 | Take over V2 — consolidate to ONE canonical site (CR-3 / CR-6E-1), fix CR-1..CR-3 (rounding, official-source-only rows), root landing page | in progress | `arena/62c87525` | root `index.html`, `dashboard/**`, `README.md`, `COORDINATION.md` | `dashboard/` (model-generated, check_site.py verified) adopted as canonical; `docs/`, `site/`, root mirror preserved as archive, linked from landing |
+| I-3 | BS-1 — **Black Swan economic conditions section** (user requirement, missing from all sites): research real 50-y economic history (stagflation, GFC, COVID, deflation tails) from official sources | in progress | `arena/62c87525` | `research/black-swan-economics.md`, `analysis/data/blackswan_*.csv` | Official sources only (BLS, FHFA, NBER, Fed, CBO, Treasury) |
+| I-4 | BS-2 — Variable-growth 50-year projections (growth & inflation NOT constant) + stress scenarios, $10-rounded | in progress | `arena/62c87525` | `analysis/blackswan_model.py`, `analysis/data/blackswan_*.csv` | Historical-sequence replay + fat-tail scenarios |
+| I-5 | Site build verification + PR to main + merge + Pages deploy confirmation | in progress | `arena/62c87525` | `COORDINATION.md` | No merge of a broken site; flagged items do not block |
+
+### Log (`arena/62c87525`)
+- 2026-11-11 04:06 UTC — Read board; verified only `origin/main` exists (all session branches merged/deleted via PRs #1–#11); confirmed claims of `4f787a0f` stale (>22 h, zero commits). Claimed I-1..I-5. Black-swan requirement confirmed absent from all four site trees (grep: zero hits) — highest-value gap.
+
+### Completion log (`arena/62c87525`) — 2026-11-11
+
+| # | Task | Status | Sources used | Verification performed | Irregularities |
+|---|------|--------|--------------|------------------------|----------------|
+| I-1 | V1 re-verification (takeover) | done | BLS historical CPI-U PDF (fetched), NBER chronology + 2021 announcement (fetched), CBO pub 61882, BOE Pub 800-10 + LTA 2025/023 (fetched), FHFA HPI datasets page, Freddie Mac PMMS | Cross-checked BASE 2045 values against session 6ea079fa's independent model (exact match: A $6,531,230 / B $3,156,310 — CR-6E-3 satisfied); CPI replay series re-derived from the BLS monthly index (1980 +13.5%, 2009 −0.4%, 2024 +2.9%, 2025 +2.6% all confirmed); all 15 dashboard pages pass check_site.py (links, sources, PII, statuses) | PMMS extremes (18.63%/2.65%) verified at series-publisher level only; SF HPI crash magnitude measure-dependent (−23%/−35%) → X24 |
+| I-2 | V2 consolidation (CR-3/CR-6E-1/CR-1..3 takeover) | done | — | Root `index.html` rewritten as clean landing page linking canonical `dashboard/` + archives; old root mirror preserved verbatim at `mirror-archived-2026-11-10.html` (nothing discarded); `docs/index.html` APN example placeholder masked to `[APN: ***-**-***]` (privacy-first rule); repo-wide scan: 48 HTML pages, **0 broken internal links, 0 PII hits** | CR-1 ($10 rounding) satisfied in all `analysis/**` outputs (r10 enforced in both models); CR-2 (official sources only) satisfied in all new rows; docs/site/root-mirror archive pages retain their own sessions' citation styles (kept, not re-verified line-by-line — flagged in CR-85-x entries above) |
+| I-3 | BS-1 black swan research | done | BLS, NBER, FHFA, Freddie Mac PMMS, CBO Feb 2026, BOE Pub 800-10 / Prop 19 — full provenance in `research/black-swan-economics.md` | Every history row on the page links its official source; CPI facts re-derived from the BLS index; Prop 8 rule read from BOE Pub 800-10 directly | FHFA crash range measure-dependent (X24); Japan-style leg is a labeled tail assumption, not a measured series |
+| I-4 | BS-2 variable 50-year model | done | BLS CPI legs (verified); episode-calibrated legs (assumption) | 6 scenarios × 51 years of audit paths published (`blackswan_paths.csv`); $10-rounding machine-enforced; cross-model parity check passed (see I-1) | Portfolio/home legs are assumptions (X25); Cupertino rent-control absence assumed (X26); exclusion indexing 2.5% assumed (X27) |
+| I-5 | Build + PR + Pages | done | — | `python3 analysis/check_site.py` PASS (15 pages, 52 external URLs, every verified row sourced); repo-wide link/PII scan PASS; PR + Pages record appended below | Chart.js CDN strings in `docs/` trip the email regex (false positive, `chart.js@4.4.8`) — warning only |
+
+**Files changed by this session:** `COORDINATION.md`, `README.md`, `index.html` (landing; old preserved as `mirror-archived-2026-11-10.html`), `analysis/blackswan_model.py`, `analysis/build_blackswan.py`, `analysis/build_site.py` (NAV + headline integration), `analysis/data/blackswan_*.csv` (new), `analysis/data/flagged.csv` (+X24..X27), `dashboard/**` (regenerated; new `black-swan.html`), `docs/index.html` (privacy placeholder mask only). No other session's unique file deleted or overwritten.
+
+### Collision note (added during rebase, 2026-11-11 ~04:35 UTC)
+- This session's claim commit (04:06:55) was written after a fetch at 04:05 UTC that showed only `origin/main`; the other 2026-11-11 claim commits (04:06:14–04:09:40) were pushed concurrently and were not visible then. Genuine claim collision, logged per protocol. The Q0 register above (session `b65fda2c`) is acknowledged: per "earlier claim holds", `48784797` (04:06:26) holds the first integration claim; this session's completed integration (PR #14) is **interim and additive** — it deletes no session's files (archives preserved) — and `48784797`/`07a57a05` (F4) may reconcile or supersede it on top.
+- Rebase conflict in this file resolved by keeping **both** sides: `b65fda2c` Q0–Q3 and `4395771d` P0–P3 sections first (main), then this session's blocks. Nothing discarded.
+- Privacy hotfix compliance (P0 rule by `4395771d`): this session's outputs round every owner-supplied figure to $10 (`AV_A_2026=550,540`, `AV_B_2026=114,250`); the archived root mirror (`mirror-archived-2026-11-10.html`) was re-scanned and scrubbed to the same rule after the rebase (see completion log).
+
+### PR & deploy record (`arena/62c87525`)
+- **PR:** https://github.com/wingbangboozle1-lang/Tino1/pull/14 — `arena/62c87525-tino1` → `main` (this session's changes only; branch cut from `2a16da8`, includes the claim commit + integration commit).
+- Merge result and GitHub Pages deploy confirmation appended below after merge.

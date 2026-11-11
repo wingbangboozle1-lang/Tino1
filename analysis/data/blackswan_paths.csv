@@ -1,0 +1,307 @@
+scenario,year,cpi_pct,appreciation_a_pct,appreciation_b_pct,portfolio_pct,rent_growth_pct,utility_growth_pct,ins_growth_pct,maint_growth_pct,cpi_status,source_url
+BASE,2026,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+BASE,2027,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+BASE,2028,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+BASE,2029,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+BASE,2030,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+BASE,2031,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+BASE,2032,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+BASE,2033,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+BASE,2034,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+BASE,2035,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+BASE,2036,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+BASE,2037,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+BASE,2038,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+BASE,2039,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+BASE,2040,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+BASE,2041,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+BASE,2042,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+BASE,2043,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+BASE,2044,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+BASE,2045,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+BASE,2046,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+BASE,2047,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+BASE,2048,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+BASE,2049,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+BASE,2050,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+BASE,2051,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+BASE,2052,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+BASE,2053,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+BASE,2054,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+BASE,2055,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+BASE,2056,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+BASE,2057,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+BASE,2058,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+BASE,2059,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+BASE,2060,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+BASE,2061,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+BASE,2062,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+BASE,2063,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+BASE,2064,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+BASE,2065,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+BASE,2066,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+BASE,2067,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+BASE,2068,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+BASE,2069,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+BASE,2070,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+BASE,2071,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+BASE,2072,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+BASE,2073,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+BASE,2074,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+BASE,2075,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+BASE,2076,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+REPLAY,2026,5.8,7.8,6.8,6.15,6.8,7.8,8.3,5.8,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+REPLAY,2027,6.5,8.5,7.5,6.5,7.5,8.5,9.0,6.5,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+REPLAY,2028,7.6,9.6,8.6,7.05,8.6,9.6,10.1,7.6,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+REPLAY,2029,11.3,13.3,12.3,8.9,12.3,13.3,13.8,11.3,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+REPLAY,2030,13.5,15.5,14.5,10.0,14.5,15.5,16.0,13.5,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+REPLAY,2031,10.3,6.3,5.3,8.4,11.3,12.3,12.8,10.3,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+REPLAY,2032,6.2,2.2,1.2,6.35,7.2,8.2,8.7,6.2,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+REPLAY,2033,3.2,-0.8,-1.8,4.85,4.2,5.2,5.7,3.2,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+REPLAY,2034,4.3,5.8,4.8,5.4,5.3,6.3,6.8,4.3,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+REPLAY,2035,3.5,5.0,4.0,5.0,4.5,5.5,6.0,3.5,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+REPLAY,2036,1.9,3.4,2.4,4.2,2.9,3.9,4.4,1.9,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+REPLAY,2037,3.7,5.2,4.2,5.1,4.7,5.7,6.2,3.7,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+REPLAY,2038,4.1,5.6,4.6,5.3,5.1,6.1,6.6,4.1,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+REPLAY,2039,4.8,6.3,5.3,5.65,5.8,6.8,7.3,4.8,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+REPLAY,2040,5.4,6.9,5.9,5.95,6.4,7.4,7.9,5.4,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+REPLAY,2041,4.2,2.7,1.7,5.35,5.2,6.2,6.7,4.2,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+REPLAY,2042,3.0,1.5,0.5,4.75,4.0,5.0,5.5,3.0,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+REPLAY,2043,3.0,1.5,0.5,4.75,4.0,5.0,5.5,3.0,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+REPLAY,2044,2.6,1.1,0.1,4.55,3.6,4.6,5.1,2.6,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+REPLAY,2045,2.8,1.3,0.3,4.65,3.8,4.8,5.3,2.8,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+REPLAY,2046,3.0,1.5,0.5,4.75,4.0,5.0,5.5,3.0,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+REPLAY,2047,2.3,6.3,5.3,4.4,3.3,4.3,4.8,2.3,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+REPLAY,2048,1.6,5.6,4.6,4.05,2.6,3.6,4.1,1.6,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+REPLAY,2049,2.2,6.2,5.2,4.35,3.2,4.2,4.7,2.2,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+REPLAY,2050,3.4,7.4,6.4,4.95,4.4,5.4,5.9,3.4,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+REPLAY,2051,2.8,6.8,5.8,4.65,3.8,4.8,5.3,2.8,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+REPLAY,2052,1.6,5.6,4.6,-22.0,2.6,3.6,4.1,1.6,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+REPLAY,2053,2.3,6.3,5.3,4.4,3.3,4.3,4.8,2.3,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+REPLAY,2054,2.7,6.7,5.7,4.6,3.7,4.7,5.2,2.7,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+REPLAY,2055,3.4,7.4,6.4,4.95,4.4,5.4,5.9,3.4,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+REPLAY,2056,3.2,-3.8,-4.8,4.85,4.2,5.2,5.7,3.2,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+REPLAY,2057,2.9,-4.1,-5.1,4.7,3.9,4.9,5.4,2.9,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+REPLAY,2058,3.8,-3.2,-4.2,-37.0,4.8,5.8,6.3,3.8,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+REPLAY,2059,-0.4,-7.4,-8.4,26.0,1.5,1.6,2.1,-0.4,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+REPLAY,2060,1.6,-5.4,-6.4,4.05,2.6,3.6,4.1,1.6,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+REPLAY,2061,3.2,-3.8,-4.8,4.85,4.2,5.2,5.7,3.2,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+REPLAY,2062,2.1,6.1,5.1,4.3,3.1,4.1,4.6,2.1,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+REPLAY,2063,1.5,5.5,4.5,4.0,2.5,3.5,4.0,1.5,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+REPLAY,2064,1.6,5.6,4.6,4.05,2.6,3.6,4.1,1.6,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+REPLAY,2065,0.1,4.1,3.1,3.3,1.5,2.1,2.6,0.1,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+REPLAY,2066,1.3,5.3,4.3,3.9,2.3,3.3,3.8,1.3,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+REPLAY,2067,2.1,6.1,5.1,4.3,3.1,4.1,4.6,2.1,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+REPLAY,2068,2.4,6.4,5.4,4.45,3.4,4.4,4.9,2.4,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+REPLAY,2069,1.8,5.8,4.8,4.15,2.8,3.8,4.3,1.8,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+REPLAY,2070,1.2,10.0,9.0,3.85,2.2,3.2,3.7,1.2,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+REPLAY,2071,4.7,14.7,13.7,27.0,5.7,6.7,7.2,4.7,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+REPLAY,2072,8.0,5.0,4.0,-19.0,9.0,10.0,10.5,8.0,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+REPLAY,2073,4.1,-1.9,-2.9,5.3,5.1,6.1,6.6,4.1,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+REPLAY,2074,2.9,3.9,2.9,4.7,3.9,4.9,5.4,2.9,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+REPLAY,2075,2.6,3.0,2.0,4.55,3.6,4.6,5.1,2.6,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+REPLAY,2076,2.6,3.0,2.0,4.55,3.6,4.6,5.1,2.6,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+STAG,2026,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+STAG,2027,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+STAG,2028,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+STAG,2029,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+STAG,2030,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+STAG,2031,11.0,2.0,1.0,5.0,12.0,13.0,13.5,11.0,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+STAG,2032,9.1,2.0,1.0,5.0,10.1,11.1,11.6,9.1,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+STAG,2033,5.8,2.0,1.0,5.0,6.8,7.8,8.3,5.8,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+STAG,2034,6.5,2.0,1.0,5.0,7.5,8.5,9.0,6.5,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+STAG,2035,7.6,2.0,1.0,5.0,8.6,9.6,10.1,7.6,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+STAG,2036,11.3,2.0,1.0,5.0,12.3,13.3,13.8,11.3,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+STAG,2037,13.5,2.0,1.0,5.0,14.5,15.5,16.0,13.5,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+STAG,2038,10.3,2.0,1.0,5.0,11.3,12.3,12.8,10.3,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+STAG,2039,6.2,2.0,1.0,5.0,7.2,8.2,8.7,6.2,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+STAG,2040,3.8,2.0,1.0,5.0,4.8,5.8,6.3,3.8,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+STAG,2041,3.0,4.0,3.0,7.0,4.0,5.0,5.5,3.0,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+STAG,2042,3.0,4.0,3.0,7.0,4.0,5.0,5.5,3.0,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+STAG,2043,3.0,4.0,3.0,7.0,4.0,5.0,5.5,3.0,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+STAG,2044,3.0,4.0,3.0,7.0,4.0,5.0,5.5,3.0,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+STAG,2045,3.0,4.0,3.0,7.0,4.0,5.0,5.5,3.0,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+STAG,2046,3.0,4.0,3.0,7.0,4.0,5.0,5.5,3.0,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+STAG,2047,3.0,4.0,3.0,7.0,4.0,5.0,5.5,3.0,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+STAG,2048,3.0,4.0,3.0,7.0,4.0,5.0,5.5,3.0,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+STAG,2049,3.0,4.0,3.0,7.0,4.0,5.0,5.5,3.0,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+STAG,2050,3.0,4.0,3.0,7.0,4.0,5.0,5.5,3.0,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+STAG,2051,3.0,4.0,3.0,7.0,4.0,5.0,5.5,3.0,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+STAG,2052,3.0,4.0,3.0,7.0,4.0,5.0,5.5,3.0,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+STAG,2053,3.0,4.0,3.0,7.0,4.0,5.0,5.5,3.0,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+STAG,2054,3.0,4.0,3.0,7.0,4.0,5.0,5.5,3.0,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+STAG,2055,3.0,4.0,3.0,7.0,4.0,5.0,5.5,3.0,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+STAG,2056,3.0,4.0,3.0,7.0,4.0,5.0,5.5,3.0,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+STAG,2057,3.0,4.0,3.0,7.0,4.0,5.0,5.5,3.0,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+STAG,2058,3.0,4.0,3.0,7.0,4.0,5.0,5.5,3.0,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+STAG,2059,3.0,4.0,3.0,7.0,4.0,5.0,5.5,3.0,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+STAG,2060,3.0,4.0,3.0,7.0,4.0,5.0,5.5,3.0,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+STAG,2061,3.0,4.0,3.0,7.0,4.0,5.0,5.5,3.0,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+STAG,2062,3.0,4.0,3.0,7.0,4.0,5.0,5.5,3.0,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+STAG,2063,3.0,4.0,3.0,7.0,4.0,5.0,5.5,3.0,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+STAG,2064,3.0,4.0,3.0,7.0,4.0,5.0,5.5,3.0,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+STAG,2065,3.0,4.0,3.0,7.0,4.0,5.0,5.5,3.0,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+STAG,2066,3.0,4.0,3.0,7.0,4.0,5.0,5.5,3.0,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+STAG,2067,3.0,4.0,3.0,7.0,4.0,5.0,5.5,3.0,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+STAG,2068,3.0,4.0,3.0,7.0,4.0,5.0,5.5,3.0,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+STAG,2069,3.0,4.0,3.0,7.0,4.0,5.0,5.5,3.0,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+STAG,2070,3.0,4.0,3.0,7.0,4.0,5.0,5.5,3.0,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+STAG,2071,3.0,4.0,3.0,7.0,4.0,5.0,5.5,3.0,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+STAG,2072,3.0,4.0,3.0,7.0,4.0,5.0,5.5,3.0,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+STAG,2073,3.0,4.0,3.0,7.0,4.0,5.0,5.5,3.0,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+STAG,2074,3.0,4.0,3.0,7.0,4.0,5.0,5.5,3.0,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+STAG,2075,3.0,4.0,3.0,7.0,4.0,5.0,5.5,3.0,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+STAG,2076,3.0,4.0,3.0,7.0,4.0,5.0,5.5,3.0,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+GFC,2026,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+GFC,2027,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+GFC,2028,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+GFC,2029,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+GFC,2030,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+GFC,2031,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+GFC,2032,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+GFC,2033,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+GFC,2034,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+GFC,2035,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+GFC,2036,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+GFC,2037,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+GFC,2038,2.9,-8.2,-8.2,-37.0,3.9,4.9,5.4,2.9,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+GFC,2039,3.8,-8.2,-8.2,26.0,4.8,5.8,6.3,3.8,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+GFC,2040,-0.4,-8.2,-8.2,15.0,1.5,1.6,2.1,-0.4,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+GFC,2041,1.6,-8.2,-8.2,2.0,2.6,3.6,4.1,1.6,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+GFC,2042,3.2,-8.2,-8.2,16.0,4.2,5.2,5.7,3.2,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+GFC,2043,2.0,8.0,8.0,7.0,3.0,4.0,4.5,2.0,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+GFC,2044,2.0,8.0,8.0,7.0,3.0,4.0,4.5,2.0,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+GFC,2045,2.0,8.0,8.0,7.0,3.0,4.0,4.5,2.0,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+GFC,2046,2.0,8.0,8.0,7.0,3.0,4.0,4.5,2.0,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+GFC,2047,2.0,8.0,8.0,7.0,3.0,4.0,4.5,2.0,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+GFC,2048,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+GFC,2049,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+GFC,2050,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+GFC,2051,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+GFC,2052,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+GFC,2053,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+GFC,2054,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+GFC,2055,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+GFC,2056,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+GFC,2057,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+GFC,2058,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+GFC,2059,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+GFC,2060,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+GFC,2061,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+GFC,2062,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+GFC,2063,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+GFC,2064,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+GFC,2065,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+GFC,2066,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+GFC,2067,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+GFC,2068,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+GFC,2069,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+GFC,2070,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+GFC,2071,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+GFC,2072,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+GFC,2073,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+GFC,2074,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+GFC,2075,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+GFC,2076,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+JP,2026,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+JP,2027,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+JP,2028,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+JP,2029,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+JP,2030,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+JP,2031,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+JP,2032,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+JP,2033,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+JP,2034,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+JP,2035,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+JP,2036,0.5,-2.0,-2.0,2.0,1.5,2.5,3.0,0.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+JP,2037,0.5,-2.0,-2.0,2.0,1.5,2.5,3.0,0.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+JP,2038,0.5,-2.0,-2.0,2.0,1.5,2.5,3.0,0.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+JP,2039,0.5,-2.0,-2.0,2.0,1.5,2.5,3.0,0.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+JP,2040,0.5,-2.0,-2.0,2.0,1.5,2.5,3.0,0.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+JP,2041,0.5,-2.0,-2.0,2.0,1.5,2.5,3.0,0.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+JP,2042,0.5,-2.0,-2.0,2.0,1.5,2.5,3.0,0.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+JP,2043,0.5,-2.0,-2.0,2.0,1.5,2.5,3.0,0.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+JP,2044,0.5,-2.0,-2.0,2.0,1.5,2.5,3.0,0.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+JP,2045,0.5,-2.0,-2.0,2.0,1.5,2.5,3.0,0.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+JP,2046,0.5,-2.0,-2.0,2.0,1.5,2.5,3.0,0.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+JP,2047,0.5,-2.0,-2.0,2.0,1.5,2.5,3.0,0.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+JP,2048,0.5,-2.0,-2.0,2.0,1.5,2.5,3.0,0.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+JP,2049,0.5,-2.0,-2.0,2.0,1.5,2.5,3.0,0.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+JP,2050,0.5,-2.0,-2.0,2.0,1.5,2.5,3.0,0.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+JP,2051,1.5,1.0,1.0,5.0,2.5,3.5,4.0,1.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+JP,2052,1.5,1.0,1.0,5.0,2.5,3.5,4.0,1.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+JP,2053,1.5,1.0,1.0,5.0,2.5,3.5,4.0,1.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+JP,2054,1.5,1.0,1.0,5.0,2.5,3.5,4.0,1.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+JP,2055,1.5,1.0,1.0,5.0,2.5,3.5,4.0,1.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+JP,2056,1.5,1.0,1.0,5.0,2.5,3.5,4.0,1.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+JP,2057,1.5,1.0,1.0,5.0,2.5,3.5,4.0,1.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+JP,2058,1.5,1.0,1.0,5.0,2.5,3.5,4.0,1.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+JP,2059,1.5,1.0,1.0,5.0,2.5,3.5,4.0,1.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+JP,2060,1.5,1.0,1.0,5.0,2.5,3.5,4.0,1.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+JP,2061,1.5,1.0,1.0,5.0,2.5,3.5,4.0,1.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+JP,2062,1.5,1.0,1.0,5.0,2.5,3.5,4.0,1.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+JP,2063,1.5,1.0,1.0,5.0,2.5,3.5,4.0,1.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+JP,2064,1.5,1.0,1.0,5.0,2.5,3.5,4.0,1.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+JP,2065,1.5,1.0,1.0,5.0,2.5,3.5,4.0,1.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+JP,2066,1.5,1.0,1.0,5.0,2.5,3.5,4.0,1.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+JP,2067,1.5,1.0,1.0,5.0,2.5,3.5,4.0,1.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+JP,2068,1.5,1.0,1.0,5.0,2.5,3.5,4.0,1.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+JP,2069,1.5,1.0,1.0,5.0,2.5,3.5,4.0,1.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+JP,2070,1.5,1.0,1.0,5.0,2.5,3.5,4.0,1.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+JP,2071,1.5,1.0,1.0,5.0,2.5,3.5,4.0,1.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+JP,2072,1.5,1.0,1.0,5.0,2.5,3.5,4.0,1.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+JP,2073,1.5,1.0,1.0,5.0,2.5,3.5,4.0,1.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+JP,2074,1.5,1.0,1.0,5.0,2.5,3.5,4.0,1.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+JP,2075,1.5,1.0,1.0,5.0,2.5,3.5,4.0,1.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+JP,2076,1.5,1.0,1.0,5.0,2.5,3.5,4.0,1.5,assumption,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+COVID,2026,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+COVID,2027,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+COVID,2028,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+COVID,2029,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+COVID,2030,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+COVID,2031,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+COVID,2032,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+COVID,2033,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+COVID,2034,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+COVID,2035,2.5,4.0,3.0,7.0,3.5,4.5,5.0,2.5,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+COVID,2036,1.2,18.0,17.0,16.0,2.2,3.2,3.7,1.2,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+COVID,2037,4.7,2.0,1.0,27.0,5.7,6.7,7.2,4.7,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+COVID,2038,8.0,-3.0,-4.0,-19.0,9.0,10.0,10.5,8.0,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+COVID,2039,4.1,4.0,3.0,24.0,5.1,6.1,6.6,4.1,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+COVID,2040,2.8,4.0,3.0,7.0,3.8,4.8,5.3,2.8,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+COVID,2041,2.8,4.0,3.0,7.0,3.8,4.8,5.3,2.8,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+COVID,2042,2.8,4.0,3.0,7.0,3.8,4.8,5.3,2.8,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+COVID,2043,2.8,4.0,3.0,7.0,3.8,4.8,5.3,2.8,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+COVID,2044,2.8,4.0,3.0,7.0,3.8,4.8,5.3,2.8,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+COVID,2045,2.8,4.0,3.0,7.0,3.8,4.8,5.3,2.8,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+COVID,2046,2.8,4.0,3.0,7.0,3.8,4.8,5.3,2.8,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+COVID,2047,2.8,4.0,3.0,7.0,3.8,4.8,5.3,2.8,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+COVID,2048,2.8,4.0,3.0,7.0,3.8,4.8,5.3,2.8,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+COVID,2049,2.8,4.0,3.0,7.0,3.8,4.8,5.3,2.8,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+COVID,2050,2.8,4.0,3.0,7.0,3.8,4.8,5.3,2.8,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+COVID,2051,2.8,4.0,3.0,7.0,3.8,4.8,5.3,2.8,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+COVID,2052,2.8,4.0,3.0,7.0,3.8,4.8,5.3,2.8,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+COVID,2053,2.8,4.0,3.0,7.0,3.8,4.8,5.3,2.8,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+COVID,2054,2.8,4.0,3.0,7.0,3.8,4.8,5.3,2.8,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+COVID,2055,2.8,4.0,3.0,7.0,3.8,4.8,5.3,2.8,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+COVID,2056,2.8,4.0,3.0,7.0,3.8,4.8,5.3,2.8,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+COVID,2057,2.8,4.0,3.0,7.0,3.8,4.8,5.3,2.8,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+COVID,2058,2.8,4.0,3.0,7.0,3.8,4.8,5.3,2.8,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+COVID,2059,2.8,4.0,3.0,7.0,3.8,4.8,5.3,2.8,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+COVID,2060,2.8,4.0,3.0,7.0,3.8,4.8,5.3,2.8,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+COVID,2061,2.8,4.0,3.0,7.0,3.8,4.8,5.3,2.8,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+COVID,2062,2.8,4.0,3.0,7.0,3.8,4.8,5.3,2.8,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+COVID,2063,2.8,4.0,3.0,7.0,3.8,4.8,5.3,2.8,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+COVID,2064,2.8,4.0,3.0,7.0,3.8,4.8,5.3,2.8,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+COVID,2065,2.8,4.0,3.0,7.0,3.8,4.8,5.3,2.8,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+COVID,2066,2.8,4.0,3.0,7.0,3.8,4.8,5.3,2.8,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+COVID,2067,2.8,4.0,3.0,7.0,3.8,4.8,5.3,2.8,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+COVID,2068,2.8,4.0,3.0,7.0,3.8,4.8,5.3,2.8,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+COVID,2069,2.8,4.0,3.0,7.0,3.8,4.8,5.3,2.8,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+COVID,2070,2.8,4.0,3.0,7.0,3.8,4.8,5.3,2.8,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+COVID,2071,2.8,4.0,3.0,7.0,3.8,4.8,5.3,2.8,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+COVID,2072,2.8,4.0,3.0,7.0,3.8,4.8,5.3,2.8,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+COVID,2073,2.8,4.0,3.0,7.0,3.8,4.8,5.3,2.8,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+COVID,2074,2.8,4.0,3.0,7.0,3.8,4.8,5.3,2.8,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+COVID,2075,2.8,4.0,3.0,7.0,3.8,4.8,5.3,2.8,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf
+COVID,2076,2.8,4.0,3.0,7.0,3.8,4.8,5.3,2.8,verified BLS replay,https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202407.pdf

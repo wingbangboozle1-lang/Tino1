@@ -1,7 +1,8 @@
 # Tino1 — Cupertino & San Francisco Inheritance Decision Hub
 
 **Live site (GitHub Pages):** https://wingbangboozle1-lang.github.io/Tino1/  
-Docs entry: `docs/index.html` (canonical dashboard) + mirror at `/index.html` for Pages root.
+**Canonical dashboard:** [`dashboard/`](dashboard/index.html) — 15 pages, model-generated, line-verified (linked from the landing page).  
+Landing page: [`index.html`](index.html) (clean entry point with category links). Archive sites preserved at [`docs/`](docs/index.html), [`site/`](site/index.html), and [`mirror-archived-2026-11-10.html`](mirror-archived-2026-11-10.html) — no session's work was discarded.
 
 Anonymized decision-analysis site for a 2040–2050 trust inheritance: two CA houses (Cupertino 95014 ~$3.1M, San Francisco 94122 ~$1.8M), live vs rent vs sell+invest.
 
@@ -78,6 +79,7 @@ Internal family decision support — not legal/tax advice. Consult CA attorney &
 ## Changelog
 - 2026-11-10 — v1.0 initial site (executive summary, projections, decision, tax hub, flagged, data CSVs)
 - 2026-11-10 — v1.1 merged parallel sessions (model/research + 4 complement pages, no discard, integrated Pages deploy)
+- 2026-11-11 — v1.2 final integration (session `arena/62c87525`): **black swan economic conditions section** (user requirement), 50-year variable-rate projections 2026–2076, clean root landing page, one canonical dashboard (`dashboard/`, 15 pages), central flagged list extended to 27 items
 
 ## Session `6ea079fa` — verified dataset + after-tax scenario dashboard (`analysis/`, `dashboard/`)
 
@@ -86,3 +88,13 @@ Internal family decision support — not legal/tax advice. Consult CA attorney &
 - `analysis/data/*.csv` — every fact row carries an official source URL and a status (`verified` / `derived` / `user-supplied` / `assumption` / `unverified`); unverifiable values are blank and flagged, never inferred. Owner-supplied assessment histories are deliberately not published (privacy); all amounts rounded to $10.
 - `analysis/model.py` → `analysis/data/projections/*.csv`, `analysis/data/scenarios.csv`, `dashboard/data/model_output.json`; `analysis/build_site.py` renders `dashboard/`; `analysis/check_site.py` runs link / source / privacy checks.
 - Reproduce: `python3 analysis/model.py && python3 analysis/build_site.py && python3 analysis/check_site.py` (standard library only).
+
+## Session `arena/62c87525` — Black Swan section + final integration (V1/V2 takeover)
+
+**Live:** https://wingbangboozle1-lang.github.io/Tino1/dashboard/black-swan.html — verified economic history (BLS CPI-U 1976–2025, NBER recession dating, FHFA HPI crash magnitudes, Freddie Mac PMMS rate extremes, CBO Feb 2026 baseline) turned into six **variable-growth** economic scenarios over 50 years (2026–2076): baseline control, historical CPI replay, 1970s stagflation, 2006–12 GFC/Bay-Area crash, Japan-style deflation tail, and the 2020–23 COVID whiplash.
+
+- `analysis/blackswan_model.py` → `analysis/data/blackswan_paths.csv` (every yearly rate used, auditable), `blackswan_projection_*.csv` (year-by-year value / assessed value / property tax / carrying costs, $10-rounded, with Prop 8 handling), `blackswan_stress.csv` (sell vs rent vs live × 3 inheritance years × 6 scenarios).
+- Finding: **sell & reinvest at inheritance wins 12 of 18 stress cells and the baseline**; "live in it" wins only housing-boom/replay cells; renting it out never wins (full reassessment + ordinary-rate rent tax). Crash *timing* vs the death year dominates crash *magnitude*.
+- `analysis/build_blackswan.py` → `dashboard/black-swan.html` (integrates with the model-generated dashboard; every history/scenario row carries an official source link; assumptions labeled).
+- Research log with per-figure provenance and irregularities: `research/black-swan-economics.md`.
+- Reproduce: `python3 analysis/model.py && python3 analysis/blackswan_model.py && python3 analysis/build_site.py && python3 analysis/build_blackswan.py && python3 analysis/check_site.py`.
