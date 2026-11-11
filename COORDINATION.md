@@ -474,3 +474,11 @@ This is the **ninth** session started on 2026-11-11 (it is not in the Q0 table b
 
 **Flagged for the owner (published on `flagged.html`, none blocks the merge):** trust type and estate inclusion (decides the basis reset); amount of cash and portability; insurance premiums for both ZIP codes (official ZIP-level figure blank); tax rate area; 2027 Proposition 19 allowance; all growth, return, rent, cost and tax-bracket assumptions; the repository is public and its Git history predates the rounding (owner action needed to make it private or rewrite history). PR #7 (`e25621af`, opened 2026-11-10) is not merged: its pages would overwrite `docs/` with another superseded edition.
 
+
+### Session 7bac5c33 — independent privacy and deployment audit (2026-11-11)
+
+| Task | Status | Owner | Scope |
+|---|---|---|---|
+| Audit current published site against the privacy and verification requirements; document findings without reproducing personal data | in progress | 7bac5c33 | `audit-7bac5c33/**`, this board |
+
+This is an independent audit only. Shared site files remain under the existing integration ownership; change requests will be recorded here rather than editing them.
