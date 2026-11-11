@@ -190,3 +190,35 @@ This session started from `fd4bd84` when the repository held only `README.md` an
 - **GitHub Pages build confirmed:** `gh api repos/wingbangboozle1-lang/Tino1/pages/builds/latest` → `commit: aa994c30…`, `status: "built"`, `error: null`, `created: 2026-11-10T06:34:29Z`, `duration: 20091 ms`. Pages source unchanged (`main:/`, legacy build, root `.nojekyll`).
 - **Live verification (fetched after the build):** `https://wingbangboozle1-lang.github.io/Tino1/dashboard/` (dashboard renders; headline findings, key numbers, 13 section links) and `https://wingbangboozle1-lang.github.io/Tino1/dashboard/flagged.html` (23 flagged items render with source links). Other sessions' pages at `/`, `/docs/`, `/site/` unaffected.
 - Follow-up: this record committed via PR #11 (COORDINATION.md only).
+
+---
+
+## Session `arena/944a92cd-tino1` — final integration + privacy purge (claimed 2026-11-11)
+
+**Session ID:** `arena/944a92cd-tino1` · **Branch:** `arena/944a92cd-tino1` (branched from `main` @ `2a16da8`) · **Date:** 2026-11-11 UTC
+
+### Handoff note (V2 — final consolidation)
+
+Task **V2** (final integration / canonical-site consolidation, claimed by `arena/4f787a0f-tino1` in PR #6, merged 2026-11-10T06:14Z) has **no commits and no PRs since 2026-11-10** — well over the 60-minute stale threshold. Per the handoff rule this session takes over V2 and notes it here. `4f787a0f`'s files (`verified/**`) do not exist on disk — nothing to preserve. PR #7 (`arena/e25621af-tino1`, opened 2026-11-10, still OPEN) is likewise stale; this session does **not** use its content; its branch is left untouched.
+
+### Found on review (before changes — irregularities, all to be flagged on the site)
+
+1. **Privacy breach (highest urgency):** the live root-mirror and `/docs/` publish exact, user-supplied figures — year-by-year assessed values and tax bills for both properties (e.g. values ending in non-$10 amounts such as `…537`, `…248`, `…207`, `…439`). These are quasi-identifiers (county rolls are searchable) and violate the privacy mandate and the $10-rounding rule. `/site/` is compliant (rounded); `/dashboard/` withholds the series entirely (compliant) but carries assumptions that differ from the other sites.
+2. **Four overlapping live sites** (`/`, `/docs/`, `/site/`, `/dashboard/`) with mutually inconsistent assumptions (appreciation 3%–4.5%, portfolio 6.5% vs 7%, CPI 2.5%–3%) and contradictory bottom lines (e.g. "Sell wins by ~$1M at 10 yr" vs "S1 builds $22.7M by 2060"). No canonical entry point.
+3. **Numbers not $10-rounded** in root + `/docs/` pages (raw bill values).
+4. No dedicated **black-swan / regime-shift** section anywhere, despite non-constant growth/inflation over 50 years being an explicit requirement.
+5. Macro backdrop changed since 2026-11-10 drafting: CPI 3.7% YoY (Sept 2026, energy-led), FF target 3.75–4.00% (FOMC 2026-10-28), 10Y ≈ 4.9%, mortgage ≈ 7.5% — prior pages assume ~2.5% CPI / 7% portfolio with no stress analysis.
+6. Stale external links needing re-check (e.g. `sftreasurer.org/properties.html` vs `/property/secured-property-taxes`; `sco.ca.gov/state_finances_estate_tax.html` vs `/ardtax_estate_tax.html`) — already logged as CR-6E-2, still unresolved on the live root mirror.
+
+### Claims (this session)
+
+| # | Task | Status | File scope |
+|---|------|--------|------------|
+| V2 | Final integration: consolidate to ONE canonical site at repo root; privacy-purge exact figures across all published files; verify links; open PR; merge; confirm Pages deploy; record here | claimed | `index.html`, root `*.html` (rewritten), `black-swan.html`, `estate-tax.html`, `costs.html`, `pending-changes.html`, `methodology.html`, `steps.html` (redirect), **privacy scrub only (round to $10) inside:** `docs/**`, `site/**`, `dashboard/**`, `data/*.json,*.csv`, `model/*.md`, `research/*.md`, `analysis/data/*.csv`, `COORDINATION.md`, `README.md` (append only); `integrated/**` (new), `REPO-REVIEW.md` (new) |
+| B1 | Black-swan / economic-regime section: history table (official sources) + quantitative stress grid (stagflation, GFC replay, Japan stagnation, deflation, energy shock 2026, productivity boom) applied to the 2045 decision | claimed | `black-swan.html`, `integrated/blackswan.py`, `integrated/*.csv` |
+| B2 | REPO-REVIEW.md: line-by-line repo review with official sources + irregularity list | claimed | `REPO-REVIEW.md` |
+| B3 | Executive summary rewrite + full $10-rounding audit + link audit + privacy grep gate | claimed | root canonical pages, `integrated/audit.py` |
+
+**Not in scope / not touched:** `verified/**` (does not exist), PR #7 branch, `arena/944a92cd-tino1` history before this commit, any other session's git branches. Legacy directories are **kept** (not deleted) — their exact figures are rounded in place; canonical site no longer links to them.
+
+**Log:** claim committed and pushed before any content work, per protocol.
