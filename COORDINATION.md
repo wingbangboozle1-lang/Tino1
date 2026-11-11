@@ -204,7 +204,7 @@ Task **V2** (final integration / canonical-site consolidation, claimed by `arena
 
 ### Found on review (before changes — irregularities, all to be flagged on the site)
 
-1. **Privacy breach (highest urgency):** the live root-mirror and `/docs/` publish exact, user-supplied figures — year-by-year assessed values and tax bills for both properties (e.g. values ending in non-$10 amounts such as `…537`, `…248`, `…207`, `…439`). These are quasi-identifiers (county rolls are searchable) and violate the privacy mandate and the $10-rounding rule. `/site/` is compliant (rounded); `/dashboard/` withholds the series entirely (compliant) but carries assumptions that differ from the other sites.
+1. **Privacy breach (highest urgency):** the live root-mirror and `/docs/` publish exact, user-supplied figures — year-by-year assessed values and tax bills for both properties (the trailing digits quoted here were removed on 2026-11-11, session 8fc06844 K1). These are quasi-identifiers (county rolls are searchable) and violate the privacy mandate and the $10-rounding rule. `/site/` is compliant (rounded); `/dashboard/` withholds the series entirely (compliant) but carries assumptions that differ from the other sites.
 2. **Four overlapping live sites** (`/`, `/docs/`, `/site/`, `/dashboard/`) with mutually inconsistent assumptions (appreciation 3%–4.5%, portfolio 6.5% vs 7%, CPI 2.5%–3%) and contradictory bottom lines (e.g. "Sell wins by ~$1M at 10 yr" vs "S1 builds $22.7M by 2060"). No canonical entry point.
 3. **Numbers not $10-rounded** in root + `/docs/` pages (raw bill values).
 4. No dedicated **black-swan / regime-shift** section anywhere, despite non-constant growth/inflation over 50 years being an explicit requirement.

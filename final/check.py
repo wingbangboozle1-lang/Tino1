@@ -6,11 +6,11 @@
 1. every internal link and anchor resolves;
 2. every table body row links to an official source;
 3. every dollar figure is a multiple of $10 unless it is a listed official published figure;
-4. no fingerprint of an unrounded owner-supplied figure appears in any published or stored file;
+4. no unrounded owner-supplied figure appears in any published or stored file (needs TINO1_PRIVATE_FIGURES, see below);
 5. no street address, e-mail address, phone number or parcel-number pattern appears;
 6. model self-tests (Proposition 19 formula against the county assessor's worked example; Property B never reassessed).
 """
-import os, re, sys, hashlib, html, json
+import os, re, sys, html, json
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 SITE = os.path.abspath(sys.argv[1]) if len(sys.argv) > 1 else os.path.join(HERE, 'site')
@@ -33,13 +33,21 @@ def host_ok(url, hosts):
     return any(h == d or h.endswith('.' + d) for d in hosts)
 
 
-FP = set(open(os.path.join(HERE, 'data', 'privacy_fingerprints.txt')).read().split())
+# The unrounded owner figures are never stored in this repository in any form. A hash of a 4- to 6-digit number is
+# reversible in seconds, so the fingerprint file that used to be read here was itself an exposure and has been removed
+# (session 8fc06844, K1). To run this scan, list the unrounded figures one per line in a file OUTSIDE the repository and
+# set TINO1_PRIVATE_FIGURES to its path. Without it the scan is skipped and the result line says so.
+_PF = os.environ.get('TINO1_PRIVATE_FIGURES', '')
+FP = set(re.sub(r'\D', '', x) for x in open(_PF).read().split()) - {''} if _PF and os.path.isfile(_PF) else set()
 
 
 def fingerprint_scan(name, text):
-    for tok in set(re.findall(r'(?<![\d,.])\d{1,3}(?:,\d{3})+(?![\d,])|(?<![\d.])\d{5,7}(?![\d])', text)):
-        if hashlib.sha256(('tino1:' + tok).encode()).hexdigest() in FP:
-            err('PRIVACY: unrounded owner figure fingerprint in', name)
+    if not FP:
+        return
+    # digits with any separator a figure has been written with so far: comma, optional comma in a pattern, underscore, space
+    for tok in set(re.findall(r'(?<![\d.])\d{1,3}(?:(?:,\??|\\,|[_ \u00a0]|&#44;)\d{3})+(?![\d])|(?<![\d.])\d{4,7}(?![\d])', text)):
+        if re.sub(r'\D', '', tok) in FP and (len(re.sub(r'\D', '', tok)) > 4 or not tok.isdigit()):
+            err('PRIVACY: unrounded owner figure in', name)
 
 
 PII = [
@@ -168,4 +176,4 @@ if __name__ == '__main__':
         for x in errors[:int(os.environ.get('SHOW', '80'))]:
             print(' -', x)
         sys.exit(1)
-    print('OK - %d pages, %d table rows each with an official link, %d links, %d dollar figures rounded to $10, privacy fingerprints clean, model self-tests passed on %d paths' % (n + (npaths,)))
+    print('OK - %d pages, %d table rows each with an official link, %d links, %d dollar figures rounded to $10, %s, model self-tests passed on %d paths' % (n + ('unrounded owner figures: none found' if FP else 'unrounded-figure scan SKIPPED (TINO1_PRIVATE_FIGURES not set)', npaths)))
