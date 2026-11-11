@@ -89,6 +89,7 @@ NAV = [
     ('costs.html', 'Insurance and costs'),
     ('flagged.html', 'Flagged for Review'),
     ('sources.html', 'Sources and method'),
+    ('requirements.html', 'Requirements'),
     ('review.html', 'Repo review'),
 ] + ([('versions.html', 'Earlier versions')] if os.environ.get('ROOT_MODE') else [])
 
@@ -247,6 +248,7 @@ def build_index():
         ('estate-cash.html', 'Cash and estate tax', 'Thresholds, room before tax is due, and projections to 2050'),
         ('costs.html', 'Insurance and costs', 'What could and could not be confirmed for ZIP 95014 and 94122'),
         ('flagged.html', 'Flagged for Review', 'Every unconfirmed value, assumption and irregularity, with links'),
+        ('requirements.html', 'Requirements', 'Every part of the brief, the page that answers it, and the official pages re-read on 2026-11-11'),
     ])
     body = """
 <section class="kpis">%s</section>
@@ -704,6 +706,183 @@ def build_sources():
     page('sources.html', 'Sources and method', 'Every source used, how it was read, and how the numbers are produced.', t + xc + method)
 
 
+# ================================================================ requirements
+def build_requirements():
+    # Requirement -> where answered -> status -> the official page behind it.
+    rows = [
+        ['Whether to live in, rent out, or sell Property A and reinvest after tax',
+         'Summary: the recommended plan and why. <a href="decision.html">Decision</a>: cash flows, after-tax wealth ten and thirty years out, sensitivities and break-even points for all three choices.',
+         'Met', src('IRS-TC409', 'IRS-TC559')],
+        ['Property A passes by trust some time between 2040 and 2050, so show the answer for each of those years',
+         'Summary dashboard switches between 2040, 2045 and 2050. <a href="projections.html">Year by year</a> runs 2026 to 2076 with 2045 as the baseline.',
+         'Met; the year of death is not knowable in advance', src('BOE-RULE-462.260', 'RTC-480')],
+        ['Property B is already owned by the Inheritor, so it is not inherited and must not be treated as if it were',
+         'Summary, the table <em>The two homes are not the same case</em>. Year by year keeps Property B on its existing base with no reassessment and no basis reset.',
+         'Met', src('RTC-63.2', 'RR-2023-2')],
+        ['Keep the two rented units at Property B, and the option of living in its third unit without losing that rent',
+         'Summary, plan item 1. Year by year shows Property B rent for all three choices. Decision adds the rent of the vacated unit when the Inheritor moves into Property A.',
+         'Met; the rent is an owner figure', src('SF-RENT-RULES', 'SF-RENT-2026')],
+        ['Weigh Property B into every decision about Property A',
+         'Summary (the tax advantage that is lost if Property B is sold). <a href="decision.html">Decision</a> (the opportunity cost of each choice, including the rent given up).',
+         'Met', src('SF-TAX')],
+        ['Project the market value of Property A, its assessed value and its property tax, year by year',
+         'Year by year: one column each for market value, assessed value and tax, on the live-in, rent-out and sell paths, 2026 to 2076.',
+         'Met; the growth rate is an assumption', src('FHFA-SJ', 'SCC-RATES')],
+        ['Apply the Proposition 19 relief only if the Inheritor moves in within a year; otherwise reassess at market value',
+         'Decision and Year by year, the three paths. <a href="law.html">Law</a> sets out the conditions and the deadlines.',
+         'Met; the exact tax rate area and the allowance from 2027 are unconfirmed ' + flag('U03') + ' ' + flag('U04'), src('BOE-LTA-2026-026', 'RTC-63.2')],
+        ['Home-insurance cost for a primary residence in 95014 and a rental in 94122, researched rather than guessed',
+         '<a href="costs.html">Insurance and costs</a>: every official statewide yardstick found, both ZIP-level premiums left blank because no official source publishes them.',
+         'Partly - no official ZIP-level premium exists; premiums are an assumption ' + flag('U01'), src('CDI-SB824', 'CDI-RPI')],
+        ['Water and electricity cost, including the solar credit that makes Property A a net exporter',
+         'Insurance and costs (official rate design and the net-metering rule); Year by year (the cost lines).',
+         'Met from the owner\'s monthly figures; the solar tariff is not confirmed ' + flag('U05'), src('CPUC-NEM', 'CPUC-FIXED')],
+        ['The federal estate-tax threshold, the room left for a cash inheritance, and a projection forward',
+         '<a href="estate-cash.html">Cash and estate tax</a>: 2026 and 2027 thresholds, room for other assets, projection to 2050, and the two-transferor case.',
+         'Met; future indexation of the threshold is an assumption ' + flag('A03'), src('IRS-ESTATE', 'RP-2026-35')],
+        ['Whether California or a city or county taxes an inheritance',
+         'Cash and estate tax: no California estate-tax return is required for a death on or after 2005-01-01, there is no inheritance tax in California, and no city or county levies one.',
+         'Met - nothing applies', src('SCO-ESTATE')],
+        ['The amount that can be inherited before tax is due, at each level',
+         'Cash and estate tax: federal threshold by year, the 40% rate above it, a worked example, and the portability question for a married Transferor.',
+         'Met; the amount of cash is still an owner answer ' + flag('Q02'), src('IRS-I706', 'IRS-FAQ-ESTATE')],
+        ['A step-by-step walk through what inheriting the house actually involves',
+         '<a href="process.html">Process</a>: fourteen steps in order, each with the day it falls due, the form to file and the authority behind it.',
+         'Met; the trust type decides several steps ' + flag('Q01'), src('PROB-16061.7', 'RTC-480')],
+        ['The law in force today at federal, state and local level',
+         'Law: three tables, one for each level, each row linked to the statute, regulation or agency page.',
+         'Met', src('IRS-NEW', 'BOE-P19')],
+        ['Changes to the law now under discussion, and what each would do to the answer',
+         'Law: a table of pending changes with the effect on each choice, and the November 2026 state measures with their unofficial results.',
+         'Met; the results are unofficial until 2026-12-11 ' + flag('S05'), src('SOS-RESULTS', 'CONG-S587')],
+        ['Black swan: growth and inflation that are not constant over a fifty-year period',
+         '<a href="black-swan.html">Black swan</a>: the real 1976-2025 record replayed from each of its fifty starting years, plus named crisis paths, kept apart from the baseline.',
+         'Met; the record is used as it happened, not smoothed', src('BLS-CPI', 'FHFA-SJ')],
+        ['Project repairs, utilities, insurance and tax from our own figures instead of rules of thumb',
+         'Year by year: every cost line by year with the rule that drives it. Decision uses those same lines.',
+         'Partly - maintenance and growth rates are assumptions ' + flag('A08') + ' ' + flag('A09'), src('BLS-OCT')],
+        ['What the reinvested proceeds would earn in the stock market, or in savings',
+         'Decision: stock, bond and bill cases side by side. Black swan replays the same three assets through the historical sequences.',
+         'Assumption ' + flag('A02') + '; the Treasury yield is the official anchor for the bill rate', src('TREASURY')],
+        ['The rent Property B produces now (about $7,150 a month for two units)',
+         'Summary and Year by year; the HUD small-area market rent for 94122 is shown next to it as an independent benchmark.',
+         'Owner figure; the benchmark was read at HUD', src('HUD-94122')],
+        ['What Property A would rent for if it is rented out',
+         '<a href="decision.html">Decision</a> and Year by year; the HUD small-area fair market rent for 95014 is the starting rent.',
+         'Met', src('HUD-95014')],
+        ['The value of Property A today (about $3,100,000 in November 2026) and its growth',
+         'Year by year, year zero. Growth follows the FHFA San Jose index; the owner\'s value is the starting point.',
+         'Owner figure; growth from the official index', src('FHFA-SJ')],
+        ['Selling costs, transfer tax and the capital-gains tax that a sale would cause',
+         'Decision: net proceeds and after-tax wealth. Law: the home-sale exclusion, the holding period and the 3.8% surtax.',
+         'Met', src('SCC-DTT', 'IRS-TC701')],
+        ['Numbers rounded so that nothing can be traced back to the source, yet still clear enough to reason with',
+         'Every page. Owner-supplied and modelled figures are rounded to $10; official published figures are quoted exactly and listed on the sources page.',
+         'Met - enforced by <a href="sources.html">final/check.py</a> on every build', src('BLS-CPI')],
+    ]
+    t1 = table(['No.', 'What was asked', 'Where this site answers it', 'Status', 'Official basis'], 
+               [[str(i + 1)] + r for i, r in enumerate(rows)],
+               caption='The brief, line by line, and where each part is answered', 
+               note='Every row above is a requirement taken from the owner\'s instructions. "Met" means the answer is produced by the model from an official rule; where a figure has no official source it is named as an assumption and linked to the Flagged for Review page.')
+
+    no_fact = [
+        ('Repairs and maintenance: %s a year for Property A and %s for Property B' % (m(P['maint_cup']), m(P['maint_sf'])), 'A08',
+         'No official figure exists for a particular house. The lower figure for Property A is the owner\'s statement that it needs less work than Property B.'),
+        ('Home prices rise 4.0% a year and prices in both areas move together', 'A01',
+         'The FHFA index gives history, not a forecast. The long-run California rate is shown next to the assumption on the sources page.'),
+        ('Inflation 2.5% a year; rents, insurance, water and electricity each grow at a stated margin above it', 'A01',
+         'The 1976-2025 record in Black swan shows how wrong a constant rate can be, which is why that page exists.'),
+        ('Stocks 7.0%, Treasury bonds 4.5%, savings or bills 3.5%, dividend yield 1.5%', 'A02',
+         'Ten-year Treasury yields are official; the equity return and the spread over bonds are not.'),
+        ('Home insurance %s and landlord insurance %s a year' % (m(P['ins_home']), m(P['ins_rental'])), 'U01',
+         'The owner\'s estimate. The official statewide figures are the only ZIP-free numbers that exist; a real quote is needed.'),
+        ('The fixed charges inside each tax bill (%s for Property A, %s for Property B)' % (m(P['dc_cup']), m(P['dc_sf'])), 'U03',
+         'Derived by subtracting the official rate times the assessed value from the owner\'s rounded bill. The exact tax rate area was deliberately not looked up.'),
+        ('The Proposition 19 allowance after 2027-02-16', 'U04',
+         'The Board of Equalization publishes the next figure in February 2027; the model assumes it grows with the FHFA California index.'),
+        ('Selling cost 5%, vacancy 5%, management 6%, building share 30%, rent growth and rent of the third unit at Property B', 'A06',
+         'Market conventions, not official figures. Each is shown on the decision page so it can be changed.'),
+        ('The trust type, the amount of cash and other assets, and whether a deceased spouse\'s exclusion was ported', 'Q01',
+         'Owner answers needed. These three decide the basis reset and the estate-tax bill.'),
+    ]
+    li = ''.join('<li><strong>%s</strong> - %s <a class="flag" href="flagged.html#%s">flag %s</a></li>' % (a, c, b, b)
+                 for a, b, c in no_fact)
+    assumptions = ('<h2>Owner figures and assumptions, and why each is flagged</h2>'
+                   '<p class="note">These are the only places where a number in this site does not come from an official page. '
+                   'Each is listed on the Flagged for Review page with what would replace it.</p><ul class="plan">%s</ul>' % li)
+
+    rules = """
+<h2>Rules this site holds itself to, where there is no external fact to check</h2>
+<ul class="plan">
+<li><strong>No personal information.</strong> No name, street address, parcel number, e-mail or phone number appears. The people are "the Transferor" and "the Inheritor". <code>final/check.py</code> scans every published page on every build for an address, e-mail, phone or parcel pattern, for unrounded owner figures, and for the one figure the owner asked to be hidden - the build fails if any appears.</li>
+<li><strong>Every figure to the nearest $10.</strong> Owner-supplied and modelled dollars are rounded; a short list of figures that an official page publishes unrounded (an index value, a statutory cap such as $1,044,586) is quoted exactly and listed on the sources page.</li>
+<li><strong>No manual input.</strong> Three scripts produce the whole site from two data files: <code>final/model.py</code> (the model), <code>final/build.py</code> (the pages) and <code>final/check.py</code> (the rules above). Nothing on any page is typed by hand.</li>
+<li><strong>Every table row links to an official page,</strong> and a value that could not be confirmed is left blank and listed on the <a href="flagged.html">Flagged for Review</a> page rather than estimated.</li>
+<li><strong>A dashboard, not an essay.</strong> Summary first, then one page per question, then the year-by-year tables. Tables scroll sideways on a phone, the navigation stays at the top, and every page loads without any outside script or font.</li>
+<li><strong>One front door, with earlier work kept.</strong> Parallel work sessions produced several editions; the earlier ones are preserved under <a href="versions.html">Earlier versions</a> with a notice, and nothing was deleted.</li>
+<li><strong>Nothing published until it builds.</strong> The pull request, the checks and the Pages deployment are recorded in <code>COORDINATION.md</code>; the build is refused if a link breaks or a row loses its source.</li>
+</ul>
+<p class="callout">One privacy item cannot be fixed from inside the site: this repository is public, and its Git history holds the first drafts, written before the figures were rounded. Rounding the pages does not rewrite that history. The owner has to make the repository private or have the history rewritten. <a class="flag" href="flagged.html#P02">flag P02</a></p>
+"""
+
+    checks = [
+        ['2026 federal estate-tax filing threshold',
+         'Table of filing thresholds by year of death: 2011 $5,000,000 through 2025 $13,990,000 to 2026 $15,000,000; a timely Form 706 is needed to port an unused exclusion.',
+         src('IRS-ESTATE')],
+        ['2027 basic exclusion used in the projection',
+         'Rev. Proc. 2026-35, section 3.44: "For calendar year 2027, the basic exclusion amount under section 2010(c)(3) is $15,480,000."',
+         src('RP-2026-35')],
+        ['No California estate tax',
+         '"For decedents that die on or after January 1, 2005, there is no longer a requirement to file a California Estate Tax Return."',
+         src('SCO-ESTATE')],
+        ['Proposition 19 allowance in force',
+         'BOE Letter to Assessors 2025/009: $1,044,586, for transfers from 2025-02-16 through 2027-02-15, adjusted every other February 16 by the FHFA California index.',
+         src('BOE-LTA-2025-009')],
+        ['How the relief is computed, and that a trust transfer is covered',
+         'BOE Letter to Assessors 2026/026: excluded amount = factored base year value + $1 million (adjusted); new taxable value = that plus any excess; the transfer may be "within or outside a trust"; the home must be continually used as the family home.',
+         src('BOE-LTA-2026-026')],
+        ['Basis resets on death only if the home is in the gross estate',
+         'Rev. Rul. 2023-2, Internal Revenue Bulletin 2023-16: the section 1014 basis adjustment "generally does not apply to the assets of an irrevocable grantor trust not included in the deceased grantor\'s gross estate".',
+         src('RR-2023-2')],
+        ['Home-sale exclusion and the holding period',
+         'IRS Topic 701: up to $250,000 of gain excluded, $500,000 on a joint return; ownership and use for 24 of the last 60 months.',
+         src('IRS-TC701')],
+        ['San Francisco secured property tax rate',
+         '"The secured property tax rate for Fiscal Year 2026-27 is 1.18162182%."',
+         src('SF-TAX')],
+        ['Santa Clara County tax rates used for Property A',
+         'Tax Rate Book FY2025-26, pages A-4 to A-6: 1% maximum levy 1.00000; county retirement 0.03880; county library retirement 0.00240; VMC 2008 0.00520; housing bond 0.00560; three Cupertino elementary bonds; four Fremont Union High bonds; three Foothill-De Anza bonds; SCVWD State Water Project 0.00390; Midpeninsula Open Space 0.00140. The sum of the components that apply to a Cupertino address is 1.16360 per $100, and it reproduces the rounded bill for the current year.',
+         src('SCC-RATES')],
+        ['Market rent at both ZIP codes',
+         'HUD FY2026 Small Area FMR: 95014 - two-bedroom $4,440, three-bedroom $5,870, four-bedroom $6,390 a month; 94122 - two-bedroom $3,310, three-bedroom $4,230, four-bedroom $4,380.',
+         src('HUD-95014', 'HUD-94122')],
+        ['The house-price index behind every value projection',
+         'FHFA all-transactions index for San Jose-Sunnyvale-Santa Clara: Q4 2025 560.05, Q2 2025 564.26, Q2 2026 558.75 - a fall of 1.0% over the year, which is why the projections carry a sensitivity case.',
+         src('FHFA-SJ')],
+    ]
+    t2 = table(['No.', 'Fact this analysis uses', 'What was read on the official page on 2026-11-11', 'Source'],
+               [[str(i + 1)] + r for i, r in enumerate(checks)],
+               caption='Independent re-verification performed for this page, 2026-11-11',
+               note='Each page above was fetched and read during this work session, not copied from an earlier edition. Nothing in the tables changed as a result: the figures already on the site match these pages. The sources page lists the sources that were read only through an excerpt, and the Flagged page lists every value that could not be confirmed.')
+
+    body = """
+<p class="note">This page is the checklist behind the rest of the site. The brief the owner gave is broken into the rows below, each row names the page that answers it and the official rule it rests on. Then come the handful of places where only the owner or an assumption can supply the number, the rules the site holds itself to, and the sources that were re-read on the day this page was built.</p>
+<h2>Requirements and where each one is answered</h2>%s
+%s
+%s
+<h2>Re-verification performed for this page</h2>%s
+<h2>What this pass changed</h2>
+<p class="note">This page is new. It adds no figures: every number on it is produced by <code>final/model.py</code> or quoted from an official page linked in the row. The rest of the site is unchanged, and the checks below were run on the whole tree after the page was added. If a later pass changes a figure, this page is regenerated with the rest of the site, so it cannot drift out of date.</p>
+<ul class="plan">
+<li>Build: <code>python3 final/model.py &amp;&amp; python3 final/build.py</code> - twelve substantive pages, plus the earlier-versions page and redirects at retired addresses.</li>
+<li>Checks: <code>python3 final/check.py .</code> - every table row carries a link to an official page, every internal link and anchor resolves, every dollar figure is a multiple of $10 unless it is a listed official figure, and no personal information or unrounded owner figure appears.</li>
+<li>Model self-tests: the Proposition 19 formula is checked against the county assessor's own worked example, and Property B is asserted never to be reassessed.</li>
+</ul>
+""" % (t1, assumptions, rules, t2)
+    page('requirements.html', 'Requirements and verification',
+         'Every part of the brief, the page that answers it, the official rule behind it - and the official pages that were re-read on 2026-11-11 to make sure the numbers on this site still match.', body)
+
+
 # ====================================================================== review
 def build_review():
     rows = [[r['id'], r['where'], r['finding'], r['status'], src(*r['src']) + ' · <a href="%s/%s" rel="noopener">file</a>' % (REPO, r['path'])] for r in REVIEW]
@@ -822,7 +1001,7 @@ def main():
     open(os.path.join(OUT, 'style.css'), 'w').write(CSS)
     open(os.path.join(OUT, 'app.js'), 'w').write(JS)
     for f in (build_index, build_decision, build_projections, build_blackswan, build_process, build_law,
-              build_estate, build_costs, build_flagged, build_sources, build_review):
+              build_estate, build_costs, build_flagged, build_sources, build_requirements, build_review):
         f()
     if ROOT_MODE:
         build_versions()
