@@ -190,3 +190,29 @@ This session started from `fd4bd84` when the repository held only `README.md` an
 - **GitHub Pages build confirmed:** `gh api repos/wingbangboozle1-lang/Tino1/pages/builds/latest` → `commit: aa994c30…`, `status: "built"`, `error: null`, `created: 2026-11-10T06:34:29Z`, `duration: 20091 ms`. Pages source unchanged (`main:/`, legacy build, root `.nojekyll`).
 - **Live verification (fetched after the build):** `https://wingbangboozle1-lang.github.io/Tino1/dashboard/` (dashboard renders; headline findings, key numbers, 13 section links) and `https://wingbangboozle1-lang.github.io/Tino1/dashboard/flagged.html` (23 flagged items render with source links). Other sessions' pages at `/`, `/docs/`, `/site/` unaffected.
 - Follow-up: this record committed via PR #11 (COORDINATION.md only).
+
+---
+
+## Session `88b984f4` (`arena/88b984f4-tino1`) — Final consolidation, black-swan module, executive summary, integration & deploy
+
+**Branch:** `arena/88b984f4-tino1` · **Started:** 2026-11-11 UTC · **Base:** `2a16da8` (main, post-PR #11)
+**Role:** integration session per the standing instructions (merge, re-verify, publish to GitHub Pages).
+
+### Scope statement (non-overlapping)
+This session edits only: `canonical/**` (new production site), `analysis/data/canonical/**` (new data files), `analysis/model_canonical.py` (new model), `COORDINATION.md`, `README.md`, and — at the end only — the root `index.html` redirect to the canonical site. **No file previously owned by `3676d6a0`, `5c7cfaf6`, `37f99282`, `4f787a0f`, `85899999` or `6ea079fa` is modified or deleted.** Their four sites remain live at `/docs/`, `/site/`, `/dashboard/` and the legacy root mirror; the root becomes a redirect so there is exactly one front door.
+
+### Task board (`88b984f4`)
+
+| # | Task | Status | Owner | File scope | Notes |
+|---|---|---|---|---|---|
+| C1 | Repo audit line by line + irregularity log | in progress | `88b984f4` | `COORDINATION.md`, `analysis/data/canonical/flagged.csv` | Four overlapping sites, three different projection assumption sets, unrounded figures, missing black-swan module |
+| C2 | Official-source re-verification of every published fact | in progress | `88b984f4` | `analysis/data/canonical/sources.csv` | IRS, BOE, SCC, SF, FTB, SCO, CPUC, BLS, FHFA, CBO, FRED |
+| C3 | Canonical financial engine (2026–2070, three strategies, after-tax) | unclaimed | `88b984f4` | `analysis/model_canonical.py`, `analysis/data/canonical/*.csv` | $10 rounding, separated ad valorem + fixed charges |
+| C4 | Black-swan / regime model (1970s stagflation, 2008, 2020, 1990s Japan, 1978 Prop 13, rate shock) | unclaimed | `88b984f4` | `canonical/black-swans.html` | Historical anchors from FRED/BLS/CBO/BOE |
+| C5 | Canonical site (landing + 10 subpages, retires overlap) | unclaimed | `88b984f4` | `canonical/**` | Tables, every row sourced |
+| C6 | Link / rounding / privacy / source-attribute checker | unclaimed | `88b984f4` | `analysis/check_canonical.py` | Must pass before merge |
+| C7 | PR to `main`, merge, GitHub Pages deploy verification | unclaimed | `88b984f4` | root `index.html`, `COORDINATION.md` | Record PR link + build status here |
+
+### Log (`88b984f4`)
+
+- 2026-11-11 — Read board; found work through PR #11 (6 sessions, 4 sites, 23-flagged items in `dashboard/`). Claimed C1–C7 with the non-overlapping scope above.
