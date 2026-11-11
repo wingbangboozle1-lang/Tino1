@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Methodology — Formulas, Parameters, Privacy Rules, How to Re-Run</title>
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top">
+  <a class="brand" href="index.html"><span style="font-size:22px">🏡</span><span><b>Trust Inheritance Decision Hub</b><small>Cupertino 95014 · San Francisco 94122 · revocable trust, est. 2040–2050</small></span></a>
+  <nav class="main" aria-label="Site"><a class="skip" href="#main">Skip to content</a><a class="" href="index.html">Executive summary</a><a class="" href="properties.html">Properties</a><a class="" href="process.html">Inheritance steps</a><a class="" href="projections.html">Projections</a><a class="" href="scenarios.html">Live / Rent / Sell</a><a class="" href="black-swan.html">Black swans</a><a class="" href="estate-tax.html">Estate tax</a><a class="" href="taxes.html">Tax law</a><a class="" href="costs.html">Costs</a><a class="" href="pending-changes.html">Pending changes</a><a class="" href="flagged.html">⚠ Flagged</a><a class="" href="sources.html">Sources</a><a class="on" href="methodology.html">Methodology</a></nav>
+</header>
+<div class="privacy"><span><b>Privacy first:</b> placeholders only. No names, addresses, parcel numbers or trust identifiers appear anywhere on this site.</span><span><b>Rounded:</b> all dollars to nearest $10.</span><span><b>Sourced:</b> every table row links an official source — or is blank + flagged.</span></div>
+<main id="main">
+<h1>Methodology</h1>
+<p class="lede">Exactly how every number on this site was produced — so you can audit it, reproduce it, or replace its inputs with better ones.</p>
+
+<h2>1 · Ground rules (non-negotiable, inherited from the project brief)</h2>
+<ol>
+<li><strong>Privacy first.</strong> No names, addresses, APNs, trust names, financial institution names or parcel identifiers anywhere. Placeholders: [Property A], [Property B], [Transferor], [Heir], [Family] Trust. User-supplied dollar figures are rounded to the nearest <strong>$10</strong> before display — including the historical assessment series (this is why the owner-supplied anchors render $10-rounded throughout.). Statutory constants set by law stay exact ($15,000,000; $19,000; $1,044,586) because rounding law is not privacy protection, it is falsification.</li>
+<li><strong>Precision by rounding.</strong> All reported dollars, taxes, values and projections are multiples of $10 (values computed unrounded, displayed rounded). Rates and percentages shown to natural precision. Intermediate CSV stores full precision; display pages show $10.</li>
+<li><strong>Source or silence.</strong> Every factual claim links an official source (federal statute, CA statute, agency PDF/page, official statistics). What could not be confirmed is left blank or labelled and sent to <a href="flagged.html">Flagged for Review</a> — never filled in by inference.</li>
+<li><strong>Assumptions are opinions with labels.</strong> Appreciation, inflation, returns, growth caps and holding costs are the analyst’s chosen inputs, always tagged <span class="badge warn">assumption</span> with their anchor named (FHFA, BLS, FOMC, Treasury, BOE).</li>
+<li><strong>Nominal, deterministic, pre-tax-ish.</strong> Projections are deterministic compounding — no Monte Carlo, no fake confidence intervals; distributions live in the regime grid (<a href="black-swan.html">Black swans</a>) instead. Nominal dollars throughout; ordinary income tax on rents excluded (applies equally to rent scenarios); capital-gains tax included at ≈ 37.1% combined.</li>
+</ol>
+
+<h2>2 · Parameters (the whole model in one table)</h2>
+<div class="tablewrap"><table>
+<thead><tr><th>Parameter</th><th class="num">Value</th><th>Type / anchor</th></tr></thead>
+<tbody>
+<tr><td>A — value Nov 2026</td><td class="num">$3,100,000</td><td><span class="badge info">user-supplied</span> owner estimate (not an appraisal; Nov 2026)</td></tr>
+<tr><td>B — value Nov 2026</td><td class="num">$1,800,000</td><td><span class="badge info">user-supplied</span> owner estimate</td></tr>
+<tr><td>A — assessed 2026 (Prop 13 base)</td><td class="num">$550,540</td><td><span class="badge info">user-supplied</span> ($10-rounded; exact withheld)</td></tr>
+<tr><td>B — assessed 2025</td><td class="num">$114,250</td><td><span class="badge info">user-supplied</span>; 2026 factored ×1.02 = $116,540</td></tr>
+<tr><td>A — appreciation</td><td class="num">3.5%/yr</td><td><span class="badge warn">assumption</span> anchor FHFA CA 5-yr +17.3%, 1991–2026 ≈ +6.4%/yr path, current print −0.2% y/y</td></tr>
+<tr><td>B — appreciation</td><td class="num">3.0%/yr</td><td><span class="badge warn">assumption</span> anchor FHFA (SF metro ≈ −2.4% y/y; long-run positive)</td></tr>
+<tr><td>CPI (baseline)</td><td class="num">2.5%/yr</td><td><span class="badge warn">assumption</span> vs Sept 2026 actual 3.7% — flagged P19; Fed target 2%</td></tr>
+<tr><td>Prop 13 cap</td><td class="num">2%/yr</td><td><span class="badge ok">verified</span> Cal. Const. XIII A §2(b)</td></tr>
+<tr><td>A — ad valorem rate</td><td class="num">1.1636%</td><td><span class="badge warn">derived</span> SCC FY2025-26 rate book components summed; parcel TRA unreadable → flagged X01/P18</td></tr>
+<tr><td>B — ad valorem rate</td><td class="num">1.1816%</td><td><span class="badge ok">verified</span> SF FY2026-27 (1.18162182% exactly) · SF Treasurer</td></tr>
+<tr><td>A — direct charges</td><td class="num">$930 (2025), +3%/yr</td><td><span class="badge warn">derived</span> user bill ÷ assessed gap</td></tr>
+<tr><td>B — fixed parcel charges</td><td class="num">$1,000 (2026), +3%/yr</td><td><span class="badge warn">assumption</span> user bill implied; unitemized → flagged</td></tr>
+<tr><td>Prop 19 cap (2025–27)</td><td class="num">$1,044,586</td><td><span class="badge ok">verified</span> BOE LTA 2025/009; modelled +2%/yr → $1,521,770 (2045)</td></tr>
+<tr><td>Estate exclusion indexation</td><td class="num">+2.5%/yr</td><td><span class="badge warn">assumption</span> “from 2027” per RP 2025-32; no table yet</td></tr>
+<tr><td>Insurance growth</td><td class="num">+5%/yr</td><td><span class="badge warn">assumption</span> CA market reality (NAIC/CDI context), not forecast</td></tr>
+<tr><td>Rent growth — controlled units</td><td class="num">+1.6%/yr</td><td><span class="badge ok">verified</span> SF 2026–27 allowable increase (sf.gov)</td></tr>
+<tr><td>Rent growth — market units</td><td class="num">+3.0%/yr</td><td><span class="badge warn">assumption</span></td></tr>
+<tr><td>Portfolio nominal return</td><td class="num">+7.0%/yr</td><td><span class="badge warn">assumption</span> vs 10-yr ≈ 4.9% — flagged P01; ± sensitivity shown</td></tr>
+<tr><td>Selling costs</td><td class="num">A 5.0% · B 5.75%</td><td><span class="badge warn">assumption</span> agent ≈ 4.9% + transfer tax (SCC 0.11% · SF 0.75% tier)</td></tr>
+<tr><td>Capital-gains combined rate</td><td class="num">37.1% (+41.1% recapture)</td><td><span class="badge warn">assumption</span> fed 20 + NIIT 3.8 + CA 13.3 (incl. 1% MHST)</td></tr>
+<tr><td>Inflation indexation of costs</td><td class="num">+3%/yr utilities · +2.5%/yr maintenance</td><td><span class="badge warn">assumption</span></td></tr>
+</tbody></table></div>
+
+<h2>3 · The formulas (all public-record arithmetic)</h2>
+<ul>
+<li><strong>Prop 13 assessed path (pre-death):</strong> assessed(t) = assessed(t−1) × (1 + r), r = min(2%, CA CPI change) as supplied by the county — modelled 2% flat.</li>
+<li><strong>Prop 19 excluded amount:</strong> excluded = FBYV + cap(t). <strong>New taxable value:</strong> taxable = max(FBYV, FMV(t) − cap(t)). FBYV(2045) = 550,540 × 1.02¹⁹ ≈ $802,030; cap(2045) = 1,044,590 × 1.02¹⁹ ≈ $1,521,770; taxable = max(802,030, 5,959,750 − 1,521,770) = <strong>$4,437,980</strong>; tax = 1.1636% × 4,437,980 + direct ≈ <strong>$53,320</strong>. If rented/no live-in: taxable = FMV = $5,959,750; tax ≈ <strong>$71,030</strong>.</li>
+<li><strong>B reassessment (no exclusion possible for rentals):</strong> taxable = FMV(2045) = $3,156,310; tax = 1.1816% × 3,156,310 + fixed ≈ <strong>$39,050</strong>.</li>
+<li><strong>Estate exclusion path:</strong> excl(t) = 15,000,000 × 1.025^(t−2026), t ≥ 2026.</li>
+<li><strong>Terminal wealth (2060, nominal):</strong> W(S) = Σ invested flows × (1+r_port) compounded + Σ (liquidation net of selling costs) − gains tax on (liquidation value − date-of-death basis). Step-up basis at 2045 = FMV(2045). Gains tax = 0.371 × max(0, V₂₀₆₀ − basis). S1 seeds the account with A’s net sale proceeds at 2045.</li>
+<li><strong>GFC shock path:</strong> appreciation shocked −7.5% (A) / −7.0% (B) for 2045–49, then +4.5% both; portfolio −10% (2046–49) then +9%; rent +0.5%.</li>
+<li><strong>Black-swan parameters:</strong> see <a href="black-swan.html">Black swans</a> table — all are deliberately explicit, none are “90% confidence”.</li>
+</ul>
+
+<h2>4 · Privacy audit (this site and the whole repository)</h2>
+<ul>
+<li>Zero names/addresses/APNs/trust identifiers anywhere in the canonical pages (grep-verified). Legacy pages scrubbed 2026-11-11: every user-supplied figure rounded to $10 in <code>docs/…</code>, <code>site/…</code>, <code>properties.html</code>, <code>dashboard/</code> (already withheld), <code>model/</code>, <code>research/</code>, <code>data/</code>, <code>analysis/data/</code> — automated with <code>integrated/scrub.py</code> (exact literal map, ROUND_HALF_UP, no regex guessing).</li>
+<li>Year-by-year assessment history shown only in $10-rounded form on <a href="properties.html">Properties</a>; exact values no longer appear anywhere in the repo.</li>
+<li>Statutory constants kept exact by design (P15) — they identify nothing about the owner.</li>
+<li>Git history still contains earlier commits with exact figures (e.g., merge 2a16da8 and before). True erasure would require history rewriting — <strong>flagged for the owner to decide</strong>: <code>git filter-repo</code> is destructive and force-pushes; not performed unilaterally. (See REPO-REVIEW.md §privacy.)</li>
+</ul>
+
+<h2>5 · Reproduce this analysis</h2>
+<pre><code>git clone https://github.com/wingbangboozle1-lang/Tino1.git
+cd Tino1
+python3 integrated/model.py      # recomputes baseline_rows.json/csv + blackswan_results.json
+python3 integrated/scrub.py      # no-op if already clean (idempotent)
+# inspect: downloads/inheritance-baseline-2026-2060.csv
+</code></pre>
+<p>Everything is Python standard library. No network calls; no secrets; no telemetry.</p>
+
+<h2>6 · What this analysis is <em>not</em></h2>
+<p>Not legal advice (attorney required for the deeds/trust administration), not tax advice (CPA required for the 706/709/540 filings), not investment advice (fiduciary required for reinvestment), not an appraisal (certified appraiser required for basis), not insurance advice (broker required for the FAIR Plan decision), and not an estate plan. It is an organized evidence pack that makes all five cheaper.</p>
+
+<h2>7 · Known limitations</h2>
+<ul>
+<li>Single-path deterministic compounding; regime grid is the honesty valve (<a href="black-swan.html">Black swans</a>).</li>
+<li>Ordinary-income tax on rents omitted; would widen S1’s advantage.</li>
+<li>Insurance premiums are placeholders pending quotes.</li>
+<li>Inheritance year = 2045; every figure scales mildly with earlier/later death (direction unchanged).</li>
+<li>Exchange rates, leverage, 1031 (not applicable at death), GRATs — out of scope; see <a href="estate-tax.html">Estate tax §5</a>.</li>
+</ul>
+</main>
+<footer><div class="wrap">
+<p class="legend"><span class="badge ok">verified</span> official source · <span class="badge info">user-supplied</span> owner data ($10-rounded) · <span class="badge warn">assumption/derived</span> modelled · <span class="badge bad">unverified</span> → <a href="flagged.html">Flagged for Review</a></p>
+<p><strong>Trust Inheritance Decision Hub</strong> — not legal, tax or investment advice. Built 2026-11-11 · All amounts rounded to nearest $10 · <a href="https://github.com/wingbangboozle1-lang/Tino1">Repository</a> · <a href="https://github.com/wingbangboozle1-lang/Tino1/blob/main/REPO-REVIEW.md">Repo review notes</a></p>
+</div></footer>
+</body>
+</html>

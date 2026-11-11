@@ -139,6 +139,7 @@ State found at session start (06:03–06:15 UTC): nine session branches exist (`
 | `CR-85-2` | `docs/index.html`, `research/tax-law.md`, `research/utilities-insurance-market.md` | `3676d6a0`, `5c7cfaf6` | Fix wrong IRS link (`irs-releases-2025-amounts-for-retirement-plans` -> `https://www.irs.gov/pub/irs-drop/rp-25-32.pdf`), 404 FTB link (`capital-gains.html` -> `capital-gains-and-losses.html`), and unverified Fed URL (`fomcprojtabl20260617.htm` -> `cbo.gov`). |
 | `CR-85-3` | `properties.html`, `flagged.html`, `scenarios.html`, `docs/projections.html`, `docs/decision.html`, `docs/cupertino.html`, `docs/sanfrancisco.html`, `docs/operating-costs.html` | `3676d6a0`, `5c7cfaf6`, `37f99282` | Add an official primary source link to every `<tr>` data row (`22/22` missing in `properties.html`, `50/60` in `docs/projections.html`, etc.). |
 | `CR-85-4` | `properties.html`, `docs/properties.html`, `docs/cupertino.html`, `docs/sanfrancisco.html`, `docs/index.html`, `model/assumptions.md` | `3676d6a0`, `5c7cfaf6` | Round all reported parcel/analysis dollar amounts to the nearest `$10` increment (exact figures removed from this log 2026-11-11 for privacy) to satisfy `$10` clarity rule and prevent county tax-roll reverse identification; keep 2026 Cupertino actual tax cell blank/flagged. |
+
 | `CR-85-5` | `model/project.py`, `data/model_summary.json`, `data/scenario_comparison.csv` | `3676d6a0` | Separate ad valorem tax rates (`1.1636%` Cupertino SCC TRA; `1.1816%` SF FY26-27) from fixed parcel charges (`~$930/yr` Cupertino; `~$1,090/yr` SF) instead of applying `1.335%` / `2.135%` to reassessed FMV; fix biennial Prop 19 HPI cap compounding. |
 | `CR-85-6` | `model/project.py`, `docs/projections.html`, `docs/taxes.html` | `3676d6a0`, `5c7cfaf6` | Incorporate mandatory 20-year CPUC NEM 1.0/2.0 sunset (`D.22-12-056`), `$24.15/mo` PG&E Base Services Charge (`D.24-05-028`), SF Rent Board `60%-of-CPI` cap + `$59/unit` direct fee, and `IRS Rev. Rul. 2023-2` irrevocable grantor trust basis step-up exclusion. |
 
@@ -190,6 +191,38 @@ This session started from `fd4bd84` when the repository held only `README.md` an
 - **GitHub Pages build confirmed:** `gh api repos/wingbangboozle1-lang/Tino1/pages/builds/latest` → `commit: aa994c30…`, `status: "built"`, `error: null`, `created: 2026-11-10T06:34:29Z`, `duration: 20091 ms`. Pages source unchanged (`main:/`, legacy build, root `.nojekyll`).
 - **Live verification (fetched after the build):** `https://wingbangboozle1-lang.github.io/Tino1/dashboard/` (dashboard renders; headline findings, key numbers, 13 section links) and `https://wingbangboozle1-lang.github.io/Tino1/dashboard/flagged.html` (23 flagged items render with source links). Other sessions' pages at `/`, `/docs/`, `/site/` unaffected.
 - Follow-up: this record committed via PR #11 (COORDINATION.md only).
+
+---
+
+## Session `arena/944a92cd-tino1` — final integration + privacy purge (claimed 2026-11-11)
+
+**Session ID:** `arena/944a92cd-tino1` · **Branch:** `arena/944a92cd-tino1` (branched from `main` @ `2a16da8`) · **Date:** 2026-11-11 UTC
+
+### Handoff note (V2 — final consolidation)
+
+Task **V2** (final integration / canonical-site consolidation, claimed by `arena/4f787a0f-tino1` in PR #6, merged 2026-11-10T06:14Z) has **no commits and no PRs since 2026-11-10** — well over the 60-minute stale threshold. Per the handoff rule this session takes over V2 and notes it here. `4f787a0f`'s files (`verified/**`) do not exist on disk — nothing to preserve. PR #7 (`arena/e25621af-tino1`, opened 2026-11-10, still OPEN) is likewise stale; this session does **not** use its content; its branch is left untouched.
+
+### Found on review (before changes — irregularities, all to be flagged on the site)
+
+1. **Privacy breach (highest urgency):** the live root-mirror and `/docs/` publish exact, user-supplied figures — year-by-year assessed values and tax bills for both properties (e.g. values ending in non-$10 amounts such as `…537`, `…248`, `…207`, `…439`). These are quasi-identifiers (county rolls are searchable) and violate the privacy mandate and the $10-rounding rule. `/site/` is compliant (rounded); `/dashboard/` withholds the series entirely (compliant) but carries assumptions that differ from the other sites.
+2. **Four overlapping live sites** (`/`, `/docs/`, `/site/`, `/dashboard/`) with mutually inconsistent assumptions (appreciation 3%–4.5%, portfolio 6.5% vs 7%, CPI 2.5%–3%) and contradictory bottom lines (e.g. "Sell wins by ~$1M at 10 yr" vs "S1 builds $22.7M by 2060"). No canonical entry point.
+3. **Numbers not $10-rounded** in root + `/docs/` pages (raw bill values).
+4. No dedicated **black-swan / regime-shift** section anywhere, despite non-constant growth/inflation over 50 years being an explicit requirement.
+5. Macro backdrop changed since 2026-11-10 drafting: CPI 3.7% YoY (Sept 2026, energy-led), FF target 3.75–4.00% (FOMC 2026-10-28), 10Y ≈ 4.9%, mortgage ≈ 7.5% — prior pages assume ~2.5% CPI / 7% portfolio with no stress analysis.
+6. Stale external links needing re-check (e.g. `sftreasurer.org/properties.html` vs `/property/secured-property-taxes`; `sco.ca.gov/state_finances_estate_tax.html` vs `/ardtax_estate_tax.html`) — already logged as CR-6E-2, still unresolved on the live root mirror.
+
+### Claims (this session)
+
+| # | Task | Status | File scope |
+|---|------|--------|------------|
+| V2 | Final integration: consolidate to ONE canonical site at repo root; privacy-purge exact figures across all published files; verify links; open PR; merge; confirm Pages deploy; record here | claimed | `index.html`, root `*.html` (rewritten), `black-swan.html`, `estate-tax.html`, `costs.html`, `pending-changes.html`, `methodology.html`, `steps.html` (redirect), **privacy scrub only (round to $10) inside:** `docs/**`, `site/**`, `dashboard/**`, `data/*.json,*.csv`, `model/*.md`, `research/*.md`, `analysis/data/*.csv`, `COORDINATION.md`, `README.md` (append only); `integrated/**` (new), `REPO-REVIEW.md` (new) |
+| B1 | Black-swan / economic-regime section: history table (official sources) + quantitative stress grid (stagflation, GFC replay, Japan stagnation, deflation, energy shock 2026, productivity boom) applied to the 2045 decision | claimed | `black-swan.html`, `integrated/blackswan.py`, `integrated/*.csv` |
+| B2 | REPO-REVIEW.md: line-by-line repo review with official sources + irregularity list | claimed | `REPO-REVIEW.md` |
+| B3 | Executive summary rewrite + full $10-rounding audit + link audit + privacy grep gate | claimed | root canonical pages, `integrated/audit.py` |
+
+**Not in scope / not touched:** `verified/**` (does not exist), PR #7 branch, `arena/944a92cd-tino1` history before this commit, any other session's git branches. Legacy directories are **kept** (not deleted) — their exact figures are rounded in place; canonical site no longer links to them.
+
+**Log:** claim committed and pushed before any content work, per protocol.
 
 ---
 
@@ -312,6 +345,23 @@ This is the **ninth** session started on 2026-11-11 (it is not in the Q0 table b
 ### PR & deploy record (`arena/62c87525`)
 - **PR:** https://github.com/wingbangboozle1-lang/Tino1/pull/14 — `arena/62c87525-tino1` → `main` (this session's changes only; branch cut from `2a16da8`, includes the claim commit + integration commit).
 - Merge result and GitHub Pages deploy confirmation appended below after merge.
+
+### Merge resolution log (2026-11-11, this session, PR `#15`)
+
+`origin/main` advanced while this PR was open (PRs #12 `b65fda2c` claim-collision register, #13 `4395771d` urgent privacy hotfix, #14 `62c25` final integration into `dashboard/` + root portal at `/`). `git merge origin/main` conflicted in 13 files; resolved as follows — **no other session's work was discarded**:
+
+- `index.html`, `properties.html` (root) → this session's rewritten canonical pages kept; `62c87525`'s root portal preserved verbatim at `archive/root-portal-62c87525.html` (public, labeled archive; nothing deleted — old mirror was already at `mirror-archived-2026-11-10.html`).
+- `data/assumptions.json`, `docs/data/projections.json`, `docs/js/app.js`, `site/assets/app.js`, `scripts/build_site_85899999.py` → took `main`'s plain-integer forms. (This session's first purge had written comma-grouped numerals into JS/JSON — invalid syntax/JSON; caught by this merge. Lesson logged: scrub must never emit `\d,\d{3}` inside code contexts.)
+- `docs/taxes.html`, `docs/index.html` → took `main`'s callout arithmetic (values shown ≈ $10-rounded; formula conclusion unchanged: Prop 19 worked example yields ≈ $2,055,410 new base).
+- `docs/properties.html` → kept `$493,530` (already $10-rounded; `main`'s hotfix had wrongly re-rounded to `$493,500`).
+- `research/repo-audit-85899999.md` → took `main` (exact figures removed from the note).
+- `docs/js/app.js` → this session fixed the pre-existing `node --check` SyntaxError (CR-43-1): one stray `}` removed from the decision-chart constructor (line 69); file now passes `node --check`.
+- `COORDINATION.md`, `README.md` → union: **both sessions' sections preserved in full** (see `arena/62c87525` V2-takeover + black-swan completion log and `arena/944a92cd-tino1` section — this block is an addition, not an overwrite).
+- **Complementary work preserved & cross-linked**: `arena/62c87525`'s black-swan research (`research/black-swan-economics.md`, `analysis/data/blackswan_*.csv`, `dashboard/black-swan.html`, 18-cell stress grid; headline agrees: sell wins baseline + 12/18 cells) is now linked from the root `black-swan.html` page. Both analyses stand side-by-side (different models, same conclusion).
+- `archive/root-portal-62c87525.html` scanned: no unrounded owner-supplied figures found; links to `dashboard/**` pages verified live.
+- Post-resolution verification: all JSON parses; all `.js` pass `node --check`; all 16 served pages return 200; zero missing internal targets; PII `$10` grep gate clean repo-wide.
+
+**Reconciliation note (CR-6E-3, closed):** the independent dashboard model (`6ea079fa`, later integrated by `62c87525`) computes the 2045 Cupertino scenario as **Sell ≈ S1 $22.68M (2060)** vs this session's **Sell ≈ $19.84M (2060)** — difference = appreciation anchor (theirs ≈ +4% + FHFA 2026Q2 path vs this session's conservative +3.5%) and portfolio assumption; both rank S1 first in the baseline and both flag the same regime-flip risk. Numbers are *not* blended — each model carries its own parameters; neither is "corrected" to the other. Both are published; the divergence is disclosed here and in `REPO-REVIEW.md` §3.
 
 ### Merge & deploy result (`arena/62c87525`, appended 2026-11-11 04:26 UTC)
 - **PR #14 MERGED** 2026-11-11T04:23:29Z — https://github.com/wingbangboozle1-lang/Tino1/pull/14 — merge commit `4463765` on `main` (`git merge` via `gh pr merge 14 --merge`). Pre-merge state: rebased onto `main` @ `45c189e` (PRs #12/#13), test merge 0 conflicts, `mergeable: MERGEABLE`.

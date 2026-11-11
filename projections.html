@@ -1,16 +1,80 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Projections 2026–2050 — Inheritance Dashboard</title><link rel="stylesheet" href="assets/style.css"></head>
-<body><header><span class="brand">🏠 Inheritance Decision Dashboard</span>
-<nav><a href="index.html">Overview</a><a href="properties.html">Properties</a><a href="taxes.html">Tax &amp; Law</a><a class="on" href="projections.html">Projections 2026–2050</a><a href="scenarios.html">Scenarios</a><a href="steps.html">Inheritance Steps</a><a href="sources.html">Sources</a><a href="flagged.html">⚠ Flagged for Review</a></nav></header>
-<main><h1>Projections 2026–2050</h1>
-<p class="note">Assumptions: home value +3%/yr (CAR 2026 forecast +3.6%); assessed +2%/yr (Prop 13); insurance +5%/yr; water +3% (Cupertino) / +4% (SF); electric +3%; maintenance +3%; rent +3%. All $ rounded to $10. Full methodology: <a href="sources.html">Sources</a>.</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Projections 2026–2060 — Value, Assessed, Tax, Rent, Exclusion</title>
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top">
+  <a class="brand" href="index.html"><span style="font-size:22px">🏡</span><span><b>Trust Inheritance Decision Hub</b><small>Cupertino 95014 · San Francisco 94122 · revocable trust, est. 2040–2050</small></span></a>
+  <nav class="main" aria-label="Site"><a class="skip" href="#main">Skip to content</a><a class="" href="index.html">Executive summary</a><a class="" href="properties.html">Properties</a><a class="" href="process.html">Inheritance steps</a><a class="on" href="projections.html">Projections</a><a class="" href="scenarios.html">Live / Rent / Sell</a><a class="" href="black-swan.html">Black swans</a><a class="" href="estate-tax.html">Estate tax</a><a class="" href="taxes.html">Tax law</a><a class="" href="costs.html">Costs</a><a class="" href="pending-changes.html">Pending changes</a><a class="" href="flagged.html">⚠ Flagged</a><a class="" href="sources.html">Sources</a><a class="" href="methodology.html">Methodology</a></nav>
+</header>
+<div class="privacy"><span><b>Privacy first:</b> placeholders only. No names, addresses, parcel numbers or trust identifiers appear anywhere on this site.</span><span><b>Rounded:</b> all dollars to nearest $10.</span><span><b>Sourced:</b> every table row links an official source — or is blank + flagged.</span></div>
+<main id="main">
+<h1>Projections, 2026 → 2060</h1>
+<p class="lede">Baseline assumptions (each labelled; see <a href="methodology.html">Methodology</a>): A +3.5%/yr, B +3.0%/yr nominal (anchor: FHFA CA HPI 5-yr +17.3%, 2026Q2), CPI 2.5%, Prop 13 2% cap, Prop 19 cap +2%/yr, exclusion indexation +2.5%/yr, insurance +5%/yr. Inheritance modelled at 2045 (midpoint; 2040 &amp; 2050 bracket shown on <a href="estate-tax.html">Estate tax</a>). Every dollar figure rounded to $10.</p>
 
-<div class="card"><h2>Cupertino — value vs assessed</h2><canvas class="chart" id="ch-cup-value"></canvas>
-<h2>Cupertino — annual costs</h2><canvas class="chart" id="ch-cup-cost"></canvas>
-<table id="tb-cup"></table></div>
+<div class="callout warn"><strong>Read this first:</strong> 2026–2044 rows show <em>pre-transfer</em> bills (Prop 13 caps growth at 2%/yr). The 2045 row is the inheritance year — A’s assessed value jumps to (FMV − cap) if the heir moves in, or full FMV if not; B is fully reassessed either way. Post-2045 A rows assume the heir <strong>moves in</strong> (Prop 19); the “no live-in” alternative is shown in the jump table. All rows are model outputs from a deterministic formula — not a forecast; see <a href="black-swan.html">Black swans</a> for what happens when these go wrong.</div>
 
-<div class="card"><h2>San Francisco — value vs assessed</h2><canvas class="chart" id="ch-sf-value"></canvas>
-<h2>San Francisco — rent vs costs</h2><canvas class="chart" id="ch-sf-net"></canvas>
-<table id="tb-sf"></table></div>
-</main><footer>Planning tool, not tax/legal advice.</footer>
-<script src="assets/data.js"></script><script src="assets/app.js"></script></body></html>
+<h2>Baseline year-by-year (key years)</h2>
+<div class="tablewrap"><table>
+<thead><tr><th>Year</th><th class="num">A value</th><th class="num">A assessed¹</th><th class="num">A tax²</th><th class="num">B value</th><th class="num">B assessed¹</th><th class="num">B tax²</th><th class="num">B rent (2 units)</th><th class="num">Fed exclusion</th><th class="num">Prop 19 cap</th></tr></thead>
+<tbody>
+<tr><td>2026</td><td class="num">$3,100,000</td><td class="num">$550,540</td><td class="num">$7,360</td><td class="num">$1,800,000</td><td class="num">$116,540</td><td class="num">$2,380</td><td class="num">$85,800</td><td class="num">$15,000,000</td><td class="num">$1,044,590</td></tr>
+<tr><td>2028</td><td class="num">$3,320,800</td><td class="num">$572,780</td><td class="num">$7,680</td><td class="num">$1,909,620</td><td class="num">$121,240</td><td class="num">$2,490</td><td class="num">$88,570</td><td class="num">$15,759,370</td><td class="num">$1,086,790</td></tr>
+<tr><td>2030</td><td class="num">$3,557,320</td><td class="num">$595,920</td><td class="num">$8,010</td><td class="num">$2,025,920</td><td class="num">$126,140</td><td class="num">$2,620</td><td class="num">$91,420</td><td class="num">$16,557,190</td><td class="num">$1,130,700</td></tr>
+<tr><td>2035</td><td class="num">$4,224,980</td><td class="num">$657,950</td><td class="num">$8,910</td><td class="num">$2,348,590</td><td class="num">$139,270</td><td class="num">$2,950</td><td class="num">$98,980</td><td class="num">$18,732,940</td><td class="num">$1,248,380</td></tr>
+<tr><td>2040</td><td class="num">$5,017,950</td><td class="num">$726,430</td><td class="num">$9,900</td><td class="num">$2,722,660</td><td class="num">$153,770</td><td class="num">$3,330</td><td class="num">$107,150</td><td class="num">$21,194,610</td><td class="num">$1,378,310</td></tr>
+<tr><td>2044</td><td class="num">$5,758,220</td><td class="num">$786,310</td><td class="num">$10,780</td><td class="num">$3,064,380</td><td class="num">$166,440</td><td class="num">$3,670</td><td class="num">$114,180</td><td class="num">$23,394,880</td><td class="num">$1,491,930</td></tr>
+<tr><td><strong>2045 INHERITS</strong></td><td class="num"><strong>$5,959,750</strong></td><td class="num"><strong>$4,437,980³</strong></td><td class="num"><strong>$53,320³</strong></td><td class="num"><strong>$3,156,310</strong></td><td class="num"><strong>$3,156,310</strong></td><td class="num"><strong>$39,050</strong></td><td class="num"><strong>$116,000</strong></td><td class="num"><strong>$23,979,750</strong></td><td class="num"><strong>$1,521,770</strong></td></tr>
+<tr><td>2046</td><td class="num">$6,168,350</td><td class="num">$4,616,140</td><td class="num">$55,440</td><td class="num">$3,251,000</td><td class="num">$3,251,000</td><td class="num">$40,220</td><td class="num">$117,860</td><td class="num">$24,579,250</td><td class="num">$1,552,210</td></tr>
+<tr><td>2050</td><td class="num">$7,078,320</td><td class="num">$5,398,160</td><td class="num">$64,760</td><td class="num">$3,659,030</td><td class="num">$3,659,030</td><td class="num">$45,270</td><td class="num">$125,580</td><td class="num">$27,130,890</td><td class="num">$1,680,160</td></tr>
+<tr><td>2055</td><td class="num">$8,406,820</td><td class="num">$6,551,790</td><td class="num">$78,490</td><td class="num">$4,241,820</td><td class="num">$4,241,820</td><td class="num">$52,480</td><td class="num">$135,960</td><td class="num">$30,696,110</td><td class="num">$1,855,030</td></tr>
+<tr><td>2060</td><td class="num">$9,984,670</td><td class="num">$7,936,560</td><td class="num">$94,970</td><td class="num">$4,917,430</td><td class="num">$4,917,430</td><td class="num">$60,840</td><td class="num">$147,190</td><td class="num">$34,729,830</td><td class="num">$2,048,100</td></tr>
+</tbody></table></div>
+<p class="note">¹ Post-2045 A assessed value assumes the heir moved in within 1 year (Prop 19) — it is itself capped at 2%/yr growth. B’s post-2045 assessed value grows at 2%/yr from its 2045 reassessment. ² A tax = 1.1636% composite ad valorem + direct charges (≈ $930 in 2025, growing 3%/yr); B tax = 1.1816% SF FY2026-27 rate + ≈ $1,000 fixed parcel charges growing 3%/yr. ³ If the heir does <em>not</em> move in: A assessed = $5,959,750, A tax = $71,030 (2045). Full 35-year series: <a href="downloads/inheritance-baseline-2026-2060.csv">inheritance-baseline-2026-2060.csv</a> (rounded $10).</p>
+
+<h2>The 2045 jump, in isolation</h2>
+<div class="tablewrap"><table>
+<thead><tr><th>Metric</th><th class="num">2044 (before death)</th><th class="num">2045 — Prop 19 (move in)</th><th class="num">2045 — no live-in (or rename/rent)</th></tr></thead>
+<tbody>
+<tr><td>A — assessed value</td><td class="num">$786,310</td><td class="num">$4,437,980</td><td class="num">$5,959,750</td></tr>
+<tr><td>A — property tax</td><td class="num">$10,780/yr</td><td class="num">$53,320/yr</td><td class="num">$71,030/yr</td></tr>
+<tr><td>A — tax vs 2026 ($7,360)</td><td class="num">1.5×</td><td class="num">7.2×</td><td class="num">9.7×</td></tr>
+<tr><td>B — assessed value</td><td class="num">$166,440</td><td class="num">$3,156,310</td><td class="num">$3,156,310</td></tr>
+<tr><td>B — property tax</td><td class="num">$3,670/yr</td><td class="num">$39,050/yr</td><td class="num">$39,050/yr</td></tr>
+<tr><td>B — rent (2 controlled units)</td><td class="num">$114,180/yr</td><td class="num">$116,000/yr</td><td class="num">$116,000/yr</td></tr>
+<tr><td>Combined A+B tax</td><td class="num">$14,450/yr</td><td class="num">$92,370/yr</td><td class="num">$110,080/yr</td></tr>
+<tr><td>Combined carrying incl. water/elec/ins/maint</td><td class="num">≈ $45,000/yr</td><td class="num">≈ $142,550/yr</td><td class="num">≈ $160,260/yr</td></tr>
+</tbody></table></div>
+<p class="note">Why the inheritance is a <em>tax regime change</em>, not a bookkeeping event: the two properties collectively go from ≈ $14,450/yr to ≈ $92,370–$110,080/yr in property tax alone — ≈ $78,000–95,600/yr permanently higher, growing 2%/yr. This single fact drives the sell/hold decision more than any market forecast. Sources: <a href="https://www.boe.ca.gov/prop19/">BOE Prop 19</a> · <a href="https://files.santaclaracounty.gov/exjcpb1531/2025-11/tax-rate-book-2025-2026.pdf">SCC Tax Rate Book FY2025-26</a> · <a href="https://sftreasurer.org/property/secured-property-taxes">SF Treasurer</a> · <a href="https://leginfo.legislature.ca.gov/faces/codes_displayText.xhtml?lawCode=CONS&division=&title=&part=&chapter=&article=XIII%20A">Cal. Const. XIII A</a>.</p>
+
+<h2>Sensitivity — [Property A] value at inheritance (2045)</h2>
+<div class="tablewrap"><table>
+<thead><tr><th>A appreciation assumption</th><th class="num">A value 2045</th><th class="num">A basis (step-up)</th><th class="num">Prop 19 live-in tax (2045)</th><th class="num">Net sale proceeds (5% costs)</th></tr></thead>
+<tbody>
+<tr><td>2.0%/yr (bear)</td><td class="num">$4,485,810</td><td class="num">$4,485,810</td><td class="num">$40,790/yr</td><td class="num">$4,261,520</td></tr>
+<tr><td>3.0%/yr</td><td class="num">$5,278,070</td><td class="num">$5,278,070</td><td class="num">$47,390/yr</td><td class="num">$5,014,170</td></tr>
+<tr><td>3.5%/yr (baseline)</td><td class="num">$5,959,750</td><td class="num">$5,959,750</td><td class="num">$53,320/yr</td><td class="num">$5,661,770</td></tr>
+<tr><td>4.5%/yr (bull)</td><td class="num">$7,280,840</td><td class="num">$7,280,840</td><td class="num">$64,930/yr</td><td class="num">$6,916,800</td></tr>
+<tr><td>6.0%/yr (historic SF/CA 1991–2026 pace)</td><td class="num">$9,367,270</td><td class="num">$9,367,270</td><td class="num">$90,050/yr</td><td class="num">$8,898,910</td></tr>
+</tbody></table></div>
+<p class="note">Anchors: FHFA purchase-only HPI — CA 1-yr −0.2%, 5-yr +17.3%, since 1991 +317% (≈ 6.4%/yr long-run). Baseline deliberately sits <em>below</em> the 34-year average and <em>above</em> the current flat print; if Bay Area appreciation re-accelerates, all dollar figures scale, the ranking of scenarios does not (see <a href="scenarios.html">Scenarios</a>).</p>
+
+<h2>Assessed value &amp; Prop 19 cap mechanics (the two clocks everyone misses)</h2>
+<ol>
+<li><strong>Prop 13 clock (pre-death):</strong> A and B assessed bases grow ≤ the California CPI change, max 2%/yr (Cal. Const. XIII A §2(b)); drops allowed (Prop 8) in declines. The bases shown for 2014–2026 grew ≈ 2%/yr every year except 2020 (+1%) exactly as the constitution permits.</li>
+<li><strong>Prop 19 clock (post-death):</strong> for the transferor’s <em>principal residence</em> transferred to a child, the excluded amount = FBYV + cap; the cap was $1,000,000 (2021) → adjusted every 2 years by FHFA CA HPI → <strong>$1,044,590</strong> for transfers 2/16/2025–2/15/2027 (BOE LTA 2025/009). Model: +2%/yr thereafter. If full cash value ≤ FBYV + cap, no reassessed excess; otherwise the excess is added to the FBYV. File <strong>BOE-19-P within 3 years</strong>; claim Homeowners’ Exemption (BOE-266) <strong>within 1 year</strong> or the exclusion is lost — no exceptions (LTA 2026/026 Q7).</li>
+<li><strong>Multi-unit rule:</strong> only the unit the Transferor occupied qualifies; B’s other units are reassessed to market regardless. If B were the principal residence, its third unit (or a unit) could be the exclusion property instead — confirm where the Homeowners’ Exemption is claimed <em>now</em>.</li>
+<li><strong>Prop 8 decline-in-value:</strong> if market falls below factored base, assessed value drops to market (both properties currently trade far above their bases — no relief available today).</li>
+</ol>
+</main>
+<footer><div class="wrap">
+<p class="legend"><span class="badge ok">verified</span> official source · <span class="badge info">user-supplied</span> owner data ($10-rounded) · <span class="badge warn">assumption/derived</span> modelled · <span class="badge bad">unverified</span> → <a href="flagged.html">Flagged for Review</a></p>
+<p><strong>Trust Inheritance Decision Hub</strong> — not legal, tax or investment advice. Built 2026-11-11 · All amounts rounded to nearest $10 · <a href="https://github.com/wingbangboozle1-lang/Tino1">Repository</a> · <a href="https://github.com/wingbangboozle1-lang/Tino1/blob/main/REPO-REVIEW.md">Repo review notes</a> · <a href="flagged.html">Flagged for Review</a></p>
+</div></footer>
+</body>
+</html>
