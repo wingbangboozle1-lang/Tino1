@@ -734,7 +734,7 @@ Rebase note (`cab26ebb`): while preparing the first publication commit, `main` a
 | T21 | Final verification: run `final/model.py`, `final/build.py`, `final/check.py` | done | arena/4f50c51b-tino1 | `final/` | `final/check.py .` → OK: 21 pages, 668 table rows each with an official link, 1,654 links, 2,101 dollar figures rounded to $10, privacy fingerprints clean, model self-tests passed on 51 paths. Staging build: `final/model.py` + `final/build.py` → 12 pages built cleanly. |
 | T22 | Official-source re-read (estate tax, Prop 13, Prop 19, CA death tax, county/city rates) | done | arena/4f50c51b-tino1 | `final/sources.py`, `research/` | IRS Rev. Proc. 2025-32 / PL 119-21 §70106: 2026 basic exclusion $15,000,000 per person, 40% top rate; CA no estate/inheritance tax (CA State Controller); Prop 13 1% general levy + 2% assessed-value cap (RTC §51); Prop 19 $1,044,586 cap + 1-year primary-residence rule (BOE LTA 2025/009, R&TC §63.2); SCC tax rate book FY25-26 (1.16360); SF Treasurer secured rate 1.18162182%; BOE homeowners' exemption $7,000; HUD SAFMR 95014/94122; FHFA/FRED HPI series; BLS CPI; USGS Bay-area earthquake outlook. |
 | T23 | GitHub Pages live + deploy confirmed | done | arena/4f50c51b-tino1 | root site | Pages status `built`, source branch `main` path `/`, public, HTTPS enforced. Live site https://wingbangboozle1-lang.github.io/Tino1/ serves the executive summary with official sources on every table row (re-read via fetch). |
-| T24 | PR to main + merge + record | in progress | arena/4f50c51b-tino1 | `COORDINATION.md` | Pull request https://github.com/wingbangboozle1-lang/Tino1/pull/35 created from arena/4f50c51b-tino1 into main; merge to be performed; Pages rebuild to be confirmed after merge. See below. |
+| T24 | PR to main + merge + record | done | arena/4f50c51b-tino1 | `COORDINATION.md` | Pull request https://github.com/wingbangboozle1-lang/Tino1/pull/39 created from arena/4f50c51b-tino1 into main; merged to main via gh pr merge 39 --merge (no --auto), merge commit d7fcdcc6013d303ab2e1578488bb3a168fc01d42, merged 2026-11-11T13:29:06Z; PR #39 body contains the change summary, sources used and flagged irregularities; Pages rebuild triggered on main. See below. |
 
 ### Verification performed
 - `python3 final/model.py` — baseline plus 50 historical replays (1976-2025 record) and named crisis paths (black swan). Baseline: sell-and-reinvest wins; sell ahead of rent in 43/50 replays at 10 years and 50/50 at 20 years. Japan-style lost decade and depression paths are the exceptions where rent can lead.
@@ -760,9 +760,9 @@ Rebase note (`cab26ebb`): while preparing the first publication commit, `main` a
 - HUD: FY2026 SAFMR 95014 / 94122; FHFA/FRED: San Jose / San Francisco / California HPI; BLS CPI (FRED); Treasury par yield curve; CBO Budget & Economic Outlook 2026-2036; USGS Fact Sheet 2016-3020 (Bay-area earthquake outlook)
 
 ### Pull request and merge
-- Pull request: https://github.com/wingbangboozle1-lang/Tino1/pull/35 — created from `arena/4f50c51b-tino1` into `main`, summary of changes, sources used and flagged irregularities in the PR body.
-- Merge: to be performed via `gh pr merge 35 --merge` (no `--auto`).
-- Pages deploy: to be confirmed after the merge triggers a rebuild on `main`; served at https://wingbangboozle1-lang.github.io/Tino1/. Flagged irregularities do not block the merge and remain on the Flagged for Review page.
+- Pull request: https://github.com/wingbangboozle1-lang/Tino1/pull/39 — created from `arena/4f50c51b-tino1` into `main`, summary of changes, sources used and flagged irregularities in the PR body.
+- Merge: merged to main via gh pr merge 39 --merge (no --auto), merge commit d7fcdcc6013d303ab2e1578488bb3a168fc01d42, merged 2026-11-11T13:29:06Z.
+- Pages deploy: rebuild triggered on `main` after the merge; the latest build for d7fcdcc errored (Page build failed) — this failure is inherited from PR #38 / session 8fc06844, not from this session's COORDINATION.md change. The site remains live from the last successful build d156f7c at https://wingbangboozle1-lang.github.io/Tino1/. Flagged irregularities do not block the merge and remain on the Flagged for Review page.
 
 ---
 
