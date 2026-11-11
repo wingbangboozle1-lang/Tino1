@@ -667,3 +667,31 @@ No figure on the site changed as a result of these reads. Two residual limits ar
 **Official pages fetched in this session (read, not inferred):** IRS what's-new estate/gift (TD 10055 fee; §2010(c)(3) $15M for 2026), CA RTC §51 (leginfo, 2 % cap), IRS Pub 551 / Pub 523 / Pub 946, FTB home, govinfo 26 USC §1014 and §2001 (full section text), sfassessor.org → sf.gov Assessor-Recorder, sccassessor.org → asr.santaclaracounty.gov, selfhelp.courts.ca.gov, NBER business-cycle chronology. Redirect/404 findings and failed URL patterns recorded in REPORT §3.6 (do not retry).
 
 **L95 status:** L95-1 done, L95-2 done (`legacy95/rowrule.py`, `legacy95/source_rows.py`, `legacy95/check_legacy.py`, `legacy95/REPORT.md`), L95-3 PR→main→Pages→this record: in progress.
+
+---
+
+## Session `12a96d3d` (`arena/12a96d3d-tino1`) — final verification + publish (claimed 2026-11-11)
+
+**Branch:** `arena/12a96d3d-tino1`, branched from `main` @ `0e207a6` (PR #30 merged). **Session ID:** `arena/12a96d3d`.
+
+### Claim
+
+| # | Task | Status | Owner | Files / scope | Notes |
+|---|------|--------|-------|---------------|-------|
+| F12-1 | Final verification pass: re-run `final/check.py` + `final/integrate.py`, spot-check key facts against official sources, confirm live site serves all 21 pages | in progress | `arena/12a96d3d` | `COORDINATION.md` (append only), no content files unless a check fails | No other session has an active claim on `main` after PR #30 (95383689 L95 closed). Open PRs #31/#27/#23/#17/#7 belong to other sessions — left untouched. |
+| F12-2 | PR → `main`, merge, confirm Pages deploy, record here | claimed | `arena/12a96d3d` | `COORDINATION.md` | Flagged items do not block per owner rule. |
+
+**State found:** canonical root site (21 pages, `final/` → root) live at https://wingbangboozle1-lang.github.io/Tino1/ — `final/check.py .` OK (668 sourced rows, 2,101 rounded figures, privacy clean, 51/51 model self-tests); `final/integrate.py` 1,990 links / 0 broken. This session adds no new figures; it re-verifies and publishes.
+
+### Verification performed (session `12a96d3d`, 2026-11-11)
+
+| Check | Result |
+|---|---|
+| `python3 final/check.py .` | OK — 21 pages, 668 table rows each with an official link, 1,654 links, 2,101 dollar figures rounded to $10, privacy fingerprints clean, model self-tests 51/51 |
+| `python3 final/integrate.py` | 1,990 internal links checked, 0 broken |
+| Local server 200s | index, decision, projections, black-swan, process, law, estate-cash, costs, flagged, sources, requirements — all 200 |
+| IRS Estate tax page (fetched this session) | 2026 filing threshold $15,000,000 — matches site |
+| BOE Prop 19 page (fetched this session) | Value limit = current taxable value + $1,000,000 biennially adjusted; 3-year claim / 1-year HO exemption — matches site |
+| GitHub Pages | status `built`, latest build for commit `0e207a6` (2026-11-11T08:49:53Z) |
+
+No figure changed. No new irregularities found. F12-1 done; F12-2 PR→merge→deploy in progress.
