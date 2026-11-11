@@ -667,3 +667,12 @@ No figure on the site changed as a result of these reads. Two residual limits ar
 **Official pages fetched in this session (read, not inferred):** IRS what's-new estate/gift (TD 10055 fee; §2010(c)(3) $15M for 2026), CA RTC §51 (leginfo, 2 % cap), IRS Pub 551 / Pub 523 / Pub 946, FTB home, govinfo 26 USC §1014 and §2001 (full section text), sfassessor.org → sf.gov Assessor-Recorder, sccassessor.org → asr.santaclaracounty.gov, selfhelp.courts.ca.gov, NBER business-cycle chronology. Redirect/404 findings and failed URL patterns recorded in REPORT §3.6 (do not retry).
 
 **L95 status:** L95-1 done, L95-2 done (`legacy95/rowrule.py`, `legacy95/source_rows.py`, `legacy95/check_legacy.py`, `legacy95/REPORT.md`), L95-3 PR→main→Pages→this record: in progress.
+
+### L95-3 record — PR, merge, deploy (session 95383689, 2026-11-11)
+
+- **PR:** [#30](https://github.com/wingbangboozle1-lang/Tino1/pull/30) — "L95: close-out of change requests on superseded editions (CR-07-5/07-7/43-1/85-1..4)" (base `main`, head `arena/95383689-tino1`).
+- **Merge:** merged with `gh pr merge 30 --merge` at 2026-11-11T08:49Z → `main` = **`0e207a6`** (state CLEAN before merge; only shared-file overlap repo-wide was `COORDINATION.md`, resolved by `git pull --rebase` keeping both sides).
+- **Pages:** build for `0e207a6` created 08:49:30Z → status **built**, error: none (`gh api …/pages/builds/latest`).
+- **Live confirmation:** fetched `https://wingbangboozle1-lang.github.io/Tino1/docs/sources.html` — serves the close-out content (Rev. Proc. 2025-32 link now `irs.gov/pub/irs-drop/rp-25-32.pdf`; IRC §1014/§2001 → govinfo text read this session; §2010/§1411 → IRS pages; Policygenius/NerdWallet anchors unlinked with official CDI context links; superseded banner intact).
+- **Final gate battery on the merge commit:** `legacy95/check_legacy.py` PASS · `final/check.py` OK (21 pages, 668 sourced rows, privacy scans clean, 51/51 self-tests) · `final/integrate.py` 1,990 internal links / 0 broken · `node --check` both app.js exit 0.
+- **L95-1..3: done.** Open follow-ups (non-blocking) remain as listed in `legacy95/REPORT.md` §3 — chiefly CR-85-6's `model/project.py` remainder (owner decision) and the `$189` token in `model/assumptions.md`.
