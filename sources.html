@@ -1,31 +1,122 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Sources — Inheritance Dashboard</title><link rel="stylesheet" href="assets/style.css"></head>
-<body><header><span class="brand">🏠 Inheritance Decision Dashboard</span>
-<nav><a href="index.html">Overview</a><a href="properties.html">Properties</a><a href="taxes.html">Tax &amp; Law</a><a href="projections.html">Projections 2026–2050</a><a href="scenarios.html">Scenarios</a><a href="steps.html">Inheritance Steps</a><a class="on" href="sources.html">Sources</a><a href="flagged.html">⚠ Flagged for Review</a></nav></header>
-<main><h1>Sources (official, line-by-line)</h1>
-<p class="note">Every table row on this site traces to a row below. Owner-record rows are labeled as such (verify with county). No inferred values.</p>
-<div class="card"><table>
-<tr><th>#</th><th>Figure / rule</th><th>Value</th><th>Official source</th></tr>
-<tr><td>S1</td><td>Federal estate exemption 2026</td><td>$15,000,000/person</td><td><a href="https://www.irs.gov/newsroom/irs-releases-tax-inflation-adjustments-for-tax-year-2026">IRS Rev. Proc. 2025-32</a></td></tr>
-<tr><td>S2</td><td>Gift exclusion 2026</td><td>$19,000</td><td><a href="https://www.irs.gov/newsroom/irs-releases-tax-inflation-adjustments-for-tax-year-2026">IRS</a></td></tr>
-<tr><td>S3</td><td>CA estate/inheritance tax</td><td>$0</td><td><a href="https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=13301">R&amp;TC §13301</a> · <a href="https://www.ftb.ca.gov/file/personal/income-types/gifts-inheritances.html">FTB</a></td></tr>
-<tr><td>S4</td><td>Prop 13 (+2%/yr)</td><td>2% cap</td><td><a href="https://www.boe.ca.gov/proptaxes/property-tax-assessment/">BOE</a></td></tr>
-<tr><td>S5</td><td>Prop 19 cap 2025–27</td><td>$1,044,586</td><td><a href="https://www.boe.ca.gov/prop19/">BOE</a></td></tr>
-<tr><td>S6</td><td>Step-up basis</td><td>FMV at death</td><td><a href="https://www.law.cornell.edu/uscode/text/26/1014">26 USC §1014</a></td></tr>
-<tr><td>S7</td><td>CA capital gains</td><td>1%–13.3%</td><td><a href="https://www.ftb.ca.gov/file/personal/income-types/capital-gains.html">FTB</a></td></tr>
-<tr><td>S8</td><td>Federal LTCG/NIIT</td><td>0/15/20% + 3.8%</td><td><a href="https://www.irs.gov/taxtopics/tc409">IRS Topic 409</a></td></tr>
-<tr><td>S9</td><td>SFPUC water+sewer avg</td><td>~$189/mo (7/1/2026)</td><td><a href="https://www.sfpuc.gov/accounts-services/rates-schedules-fees">SFPUC</a></td></tr>
-<tr><td>S10</td><td>SJ Water (Cupertino)</td><td>~$120/mo avg; GRC +2.65% 2026</td><td><a href="https://www.cpuc.ca.gov/industries-and-topics/water-utility-industry">CPUC</a></td></tr>
-<tr><td>S11</td><td>PG&E E-1</td><td>$0.326 / $0.407 per kWh</td><td><a href="https://www.pge.com/en/account/rate-plans.html">PG&amp;E</a></td></tr>
-<tr><td>S12</td><td>CA solar Net Billing</td><td>D.22-12-056 (≥4/15/2023)</td><td><a href="https://www.cpuc.ca.gov/industries-and-topics/electrical-energy/electric-power-procurement-and-generation/net-billing-tariff">CPUC</a></td></tr>
-<tr><td>S13</td><td>CA homeowners insurance avg</td><td>$1,571/yr</td><td><a href="https://www.insurance.ca.gov/">CA DOI</a></td></tr>
-<tr><td>S14</td><td>CA home-price forecast</td><td>+3.6% 2026</td><td><a href="https://www.car.org/aboutus/mediacenter/newsreleases/2025releases/2026forecast">CAR</a></td></tr>
-<tr><td>S15</td><td>Fed target / SEP</td><td>2% target</td><td><a href="https://www.federalreserve.gov/monetarypolicy/fomcprojtabl20260617.htm">Federal Reserve</a></td></tr>
-<tr><td>S16</td><td>Mortgage 30-yr</td><td>~6.2–6.7%</td><td><a href="https://www.freddiemac.com/pmms">Freddie Mac PMMS</a></td></tr>
-<tr><td>S17</td><td>S&amp;P 500 long-run</td><td>~10% nom / ~7% real</td><td><a href="https://pages.stern.nyu.edu/~adamodar/New_Home_Page/data.html">NYU Stern</a></td></tr>
-<tr><td>S18</td><td>AB 1482 cap</td><td>5%+CPI, max 10%</td><td><a href="https://www.sf.gov/reports--california-tenant-protection-act-2019-ab-1482">SF.gov</a></td></tr>
-<tr><td>S19</td><td>SF Rent Ordinance</td><td>Just cause §37.9</td><td><a href="https://www.sf.gov/evictions-san-francisco">SF.gov</a></td></tr>
-<tr><td>S20</td><td>House values / tax history</td><td>Owner records</td><td>Internal (anonymized) — verify w/ county assessor</td></tr>
-</table></div>
-</main><footer>Planning tool, not tax/legal advice.</footer>
-<script src="assets/data.js"></script><script src="assets/app.js"></script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Official Sources — Grouped by Authority (All Rows Traceable)</title>
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top">
+  <a class="brand" href="index.html"><span style="font-size:22px">🏡</span><span><b>Trust Inheritance Decision Hub</b><small>Cupertino 95014 · San Francisco 94122 · revocable trust, est. 2040–2050</small></span></a>
+  <nav class="main" aria-label="Site"><a class="skip" href="#main">Skip to content</a><a class="" href="index.html">Executive summary</a><a class="" href="properties.html">Properties</a><a class="" href="process.html">Inheritance steps</a><a class="" href="projections.html">Projections</a><a class="" href="scenarios.html">Live / Rent / Sell</a><a class="" href="black-swan.html">Black swans</a><a class="" href="estate-tax.html">Estate tax</a><a class="" href="taxes.html">Tax law</a><a class="" href="costs.html">Costs</a><a class="" href="pending-changes.html">Pending changes</a><a class="" href="flagged.html">⚠ Flagged</a><a class="on" href="sources.html">Sources</a><a class="" href="methodology.html">Methodology</a></nav>
+</header>
+<div class="privacy"><span><b>Privacy first:</b> placeholders only. No names, addresses, parcel numbers or trust identifiers appear anywhere on this site.</span><span><b>Rounded:</b> all dollars to nearest $10.</span><span><b>Sourced:</b> every table row links an official source — or is blank + flagged.</span></div>
+<main id="main">
+<h1>Sources &amp; verification index</h1>
+<p class="lede">Every non-user-supplied number on this site traces to one of these. Grouped by authority. “Read” = content extracted by automated fetch on 2026-11-10/11 during this project; “landing” = only headings/index pages readable by automation. Statutory texts from official legislature/govinfo; agency guidance from the agencies themselves.</p>
+
+<h2>Federal — tax statute &amp; IRS</h2>
+<div class="tablewrap"><table>
+<thead><tr><th>Source</th><th>What it confirms</th><th>Access</th></tr></thead>
+<tbody>
+<tr><td><a href="https://www.irs.gov/pub/irs-drop/rp-25-32.pdf">Rev. Proc. 2025-32 (IRS)</a></td><td>2026 estate/gift/GST exclusion $15,000,000; annual gift $19,000; indexation begins 2027</td><td>PDF, full text read</td></tr>
+<tr><td><a href="https://www.irs.gov/instructions/i706">Form 706 (United States Estate &amp; Generation-Skipping Transfer Tax Return)</a></td><td>Filing threshold, 9-month due date, portability election, rate table 18%–40%</td><td>page read</td></tr>
+<tr><td><a href="https://www.irs.gov/instructions/i709">Form 709 (Gift &amp; GST returns)</a></td><td>Lifetime gifts, unified credit usage, GST allocation</td><td>page read</td></tr>
+<tr><td><a href="https://www.irs.gov/instructions/i4768">Form 4768</a></td><td>6-month extension to file/pay Form 706</td><td>page read</td></tr>
+<tr><td><a href="https://www.irs.gov/pub/irs-drop/rp-22-32.pdf">Rev. Proc. 2022-32</a></td><td>Late portability election within 5 years of death</td><td>PDF, full text read</td></tr>
+<tr><td><a href="https://www.govinfo.gov/content/pkg/USCODE-2023-title26/html/USCODE-2023-title26-subtitleA-chap1-subchapO-partII-sec1014.htm">26 U.S.C. §1014</a></td><td>Basis of property acquired from a decedent (step-up incl. revocable trust)</td><td>full text read</td></tr>
+<tr><td><a href="https://www.govinfo.gov/content/pkg/USCODE-2023-title26/html/USCODE-2023-title26-subtitleB-chap11-subchapA-partI-sec2001.htm">26 U.S.C. §2001</a></td><td>Rate schedule 18% → 40%</td><td>full text read</td></tr>
+<tr><td><a href="https://www.govinfo.gov/content/pkg/USCODE-2023-title26/html/USCODE-2023-title26-subtitleB-chap11-subchapA-partII-sec2010.htm">26 U.S.C. §2010</a></td><td>Basic exclusion; §2010(c)(4) portability mechanics</td><td>full text read</td></tr>
+<tr><td><a href="https://www.govinfo.gov/link/pkg/USCODE-2023-title26/html/USCODE-2023-title26-subtitleA-chap1-subchapA-partIV-sec1015.htm">26 U.S.C. §1015</a></td><td>Gift basis carryover (why gifting appreciated property pre-death is tax-destructive)</td><td>cited</td></tr>
+<tr><td><a href="https://www.irs.gov/taxtopics/tc409">IRS Topic 409 — Capital gains</a></td><td>Holding period, 0/15/20% brackets, home-sale exclusion basics</td><td>page read</td></tr>
+<tr><td><a href="https://www.irs.gov/taxtopics/tc701">IRS Topic 701 — Sale of your home</a></td><td>$250k/$500k exclusion, 2-of-5-year rule</td><td>page read</td></tr>
+<tr><td><a href="https://www.irs.gov/publications/p551">IRS Pub. 551 — Basis of assets</a></td><td>Date-of-death basis determination, community-property double basis</td><td>page read</td></tr>
+<tr><td><a href="https://www.irs.gov/publications/p559">IRS Pub. 559 — Survivors, executors, administrators</a></td><td>One-stop executor guide; §16061.7 analog for federal asset discovery</td><td>cited</td></tr>
+<tr><td><a href="https://www.irs.gov/publications/p527">IRS Pub. 527 — Residential rental</a></td><td>27.5-yr straight-line; SF/Cupertino costs; depreciation</td><td>TOC read</td></tr>
+<tr><td><a href="https://www.irs.gov/publications/p550">IRS Pub. 550 — Investment income &amp; expenses</a></td><td>Capital-gain distributions, unrecaptured §1250 (≤25%)</td><td>cited</td></tr>
+</tbody></table></div>
+
+<h2>California — statute, agencies, controllers</h2>
+<div class="tablewrap"><table>
+<thead><tr><th>Source</th><th>What it confirms</th><th>Access</th></tr></thead>
+<tbody>
+<tr><td><a href="https://www.boe.ca.gov/prop19/">BOE — Proposition 19 (intergenerational transfers)</a></td><td>Parent-child exclusion: principal residence only, 1-year move-in + BOE-266, BOE-19-P ≤ 3 years, FBYV + cap mechanics</td><td>full page read</td></tr>
+<tr><td><a href="https://www.boe.ca.gov/proptaxes/pdf/lta25009.pdf">BOE LTA 2025/009</a></td><td>Prop 19 cap = <strong>$1,044,586</strong> for transfers 2/16/2025–2/15/2027 (FHFA CA HPI biennial)</td><td>PDF read</td></tr>
+<tr><td><a href="https://www.boe.ca.gov/proptaxes/pdf/lta26026.pdf">BOE LTA 2026/026</a></td><td>Prop 19 FAQ — occupancy, claim deadlines, multi-unit rules (Q5/Q15), continued occupancy requirement</td><td>PDF read</td></tr>
+<tr><td><a href="https://www.boe.ca.gov/proptaxes/homeowners_exemption.htm">BOE — Homeowners’ Exemption</a></td><td>$7,000 assessed-value reduction (≈ $70–80/yr), BOE-266 deadline Feb 15 / 1 year</td><td>page read</td></tr>
+<tr><td><a href="https://leginfo.legislature.ca.gov/faces/codes_displayText.xhtml?lawCode=CONS&division=&title=&part=&chapter=&article=XIII%20A">Cal. Const. art. XIII A (§§1–2)</a></td><td>Prop 13: 1% + bonds; 2%/yr cap (lesser of 2% or CA CPI)</td><td>full text read</td></tr>
+<tr><td><a href="https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=RTC&sectionNum=13301.">R&amp;TC §13301</a></td><td>No CA estate/inheritance tax</td><td>full text read</td></tr>
+<tr><td><a href="https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=RTC&sectionNum=480.">R&amp;TC §480</a></td><td>BOE-502-D death-of-owner statement within 150 days</td><td>full text read</td></tr>
+<tr><td><a href="https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=RTC&sectionNum=11911.">R&amp;TC §11911</a></td><td>County transfer tax $1.10/$1,000</td><td>full text read</td></tr>
+<tr><td><a href="https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=RTC&sectionNum=11930.">R&amp;TC §11930</a></td><td>Exemption: transfers by reason of death (incl. trust)</td><td>full text read</td></tr>
+<tr><td><a href="https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=RTC&sectionNum=17043.">R&amp;TC §17043</a></td><td>1% Mental Health Services Tax on taxable income &gt; $1M</td><td>full text read</td></tr>
+<tr><td><a href="https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1947.12.">Civ. Code §1947.12 (AB 1482)</a></td><td>State rent cap: 5% + CPI, max 10%/12 mo</td><td>full text read</td></tr>
+<tr><td><a href="https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=PROB&amp;sectionNum=16061.7.">Prob. Code §16061.7</a></td><td>Trustee notice within 60 days of revocable trust becoming irrevocable</td><td>full text read</td></tr>
+<tr><td><a href="https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=PROB&amp;sectionNum=16062.">Prob. Code §16062</a></td><td>Beneficiary accounting on request</td><td>cited</td></tr>
+<tr><td><a href="https://www.sco.ca.gov/ardtax_estate_tax.html">State Controller — Estate Tax</a></td><td>No CA estate tax for deaths on/after 2005-01-01</td><td>page read</td></tr>
+<tr><td><a href="https://www.ftb.ca.gov/forms/2025/2025-540-tax-rate-schedules.pdf">FTB 2025 Form 540 tax rate schedules</a></td><td>CA ordinary brackets incl. 12.3% top; MHST 1% separate</td><td>PDF read</td></tr>
+<tr><td><a href="https://www.ftb.ca.gov/file/personal/income-types/gifts-inheritances.html">FTB — Gifts &amp; inheritances</a></td><td>No CA inheritance/gift tax; basis rules conform to federal</td><td>page read</td></tr>
+<tr><td><a href="https://www.sos.ca.gov/elections/ballot-measures/qualified-ballot-measures">SOS — Qualified statewide ballot measures</a></td><td>2026 measures incl. Prop 3 / 40 / 42 (unofficial returns as of Nov 9)</td><td>page read</td></tr>
+<tr><td><a href="https://electionresults.sos.ca.gov/returns/ballot-measures">SOS — Election results (unofficial)</a></td><td>Unofficial 2026-11-11 returns; certification by 2026-12-11</td><td>page read</td></tr>
+<tr><td><a href="https://www.sos.ca.gov/elections/ballot-measures/initiative-and-referendum-status">SOS — Initiative status</a></td><td>Death-tax repeal initiative failed to qualify (2026)</td><td>page read</td></tr>
+</tbody></table></div>
+
+<h2>Local — counties, cities, utilities</h2>
+<div class="tablewrap"><table>
+<thead><tr><th>Source</th><th>What it confirms</th><th>Access</th></tr></thead>
+<tbody>
+<tr><td><a href="https://files.santaclaracounty.gov/exjcpb1531/2025-11/tax-rate-book-2025-2026.pdf">SCC Tax Rate Book FY2025-26</a></td><td>Component rates at Cupertino TRAs (district/school/college components summed ≈ 1.1636% — derived; parcel-specific TRA table exceeded the fetch tool’s page limit → <a href="flagged.html">X01/P18</a>)</td><td>PDF, partial (30-page tool limit)</td></tr>
+<tr><td><a href="https://www.sccassessor.org/">Santa Clara County Assessor</a></td><td>Prop 19 information, annual reports, assessment roll methodology</td><td>page read</td></tr>
+<tr><td><a href="https://payments.sccgov.org/propertytax">SCC DTAC — tax lookup</a></td><td>Where an owner verifies the itemised bill (manual step)</td><td>landing page (lookup interactive)</td></tr>
+<tr><td><a href="https://sftreasurer.org/property/secured-property-taxes">SF Treasurer — Secured property taxes</a></td><td><strong>1.18162182%</strong> FY2026-27 ad valorem; direct charges separate</td><td>page read</td></tr>
+<tr><td><a href="https://sftreasurer.org/business/taxes-fees/transfer-tax">SF Treasurer — Transfer tax</a></td><td>Tier schedule (0.75% assumed in <a href="scenarios.html">Scenarios</a>)</td><td>page read</td></tr>
+<tr><td><a href="https://sftreasurer.org/business/taxes-fees/empty-homes-tax-eht">SF Treasurer — Empty Homes Tax</a></td><td>Struck down 2026-09-11 (Court of Appeal); not collected; revival risk</td><td>page read</td></tr>
+<tr><td><a href="https://www.sf.gov/learn-about-san-francisco-rental-laws">SF — Rental laws</a></td><td>Rent control (pre-1979), just-cause, OMI (owner move-in) rules, vacancy decontrol</td><td>page read</td></tr>
+<tr><td><a href="https://www.sf.gov/news--annual-rent-increase-3126-22827-announced">sf.gov — 2026–27 allowable increase 1.6%</a></td><td>Annual allowable rent increase (Mar 2026–Feb 2027)</td><td>page read</td></tr>
+<tr><td><a href="https://www.sfpuc.gov/accounts-services/water-power-sewer-rates">SFPUC — Water/sewer rates</a></td><td>Schedules exist; no usable figures extracted — user ranges used → flagged</td><td>landing page</td></tr>
+<tr><td><a href="https://www.sjwater.com/">San Jose Water Company</a> · <a href="https://www.valleywater.org/">Valley Water</a> · <a href="https://www.pge.com/">PG&amp;E</a> · <a href="https://www.cpuc.ca.gov/">CPUC</a></td><td>Santa Clara County water/power framework (tiered conservation rates; NEM interconnection terms)</td><td>landing pages</td></tr>
+</tbody></table></div>
+
+<h2>Market &amp; macro — official statistics</h2>
+<div class="tablewrap"><table>
+<thead><tr><th>Source</th><th>What it confirms</th><th>Access</th></tr></thead>
+<tbody>
+<tr><td><a href="https://www.fhfa.gov/document/d/hpi/fhfa-house-price-index-report-2026q2">FHFA HPI — 2026Q2 (published 2026-08-25)</a></td><td>US +2.1% y/y; CA −0.2% y/y; 5-yr CA +17.31%; SF metro ≈ −2.4% y/y; purchase-only &amp; all-transactions versions</td><td>PDF read</td></tr>
+<tr><td><a href="https://www.bls.gov/news.release/cpi.nr0.htm">BLS CPI news release (Sept 2026)</a></td><td>Headline 3.7% y/y; core 2.6%; shelter +0.4% m/m; energy +20.4% y/y</td><td>archive page read</td></tr>
+<tr><td><a href="https://www.federalreserve.gov/newsevents/pressreleases/monetary20261028a.htm">FOMC statement 2026-10-28</a></td><td>Hold at 3.75–4.00% (10–2); two dissents preferred +25bp; next 2026-12-09</td><td>page read</td></tr>
+<tr><td><a href="https://home.treasury.gov/">U.S. Treasury — daily par yield curve</a></td><td>10-yr ≈ 4.90% (Nov 2026); 30-yr ≈ 5.28%</td><td>page read (search-verified snapshot)</td></tr>
+<tr><td><a href="https://fred.stlouisfed.org/">FRED (St. Louis Fed)</a></td><td>Historical series (FEDFUNDS, CPI, HPI) — charts rendered there for the black-swan table</td><td>landing pages</td></tr>
+<tr><td><a href="https://www.nber.org/research/business-cycle-dating">NBER — Business cycle dating</a></td><td>Recession windows: 1929–33; 1973–75; 1980–82 (2); 1990–91; 2001; 2007–09; 2020 (Feb–Apr)</td><td>page read</td></tr>
+<tr><td><a href="https://www.huduser.gov/portal/datasets/fmr.html">HUD FY2026 Fair Market Rents</a></td><td>SF metro 2-BR ≈ $3,170 (metrowide FMR); small-area FMRs vary by ZIP — used only to sanity-check B’s vacant-unit market rent and A’s rent proxy</td><td>PDF schedule read (metro headline)</td></tr>
+</tbody></table></div>
+
+<h2>Insurance — regulator &amp; market</h2>
+<div class="tablewrap"><table>
+<thead><tr><th>Source</th><th>What it confirms</th><th>Access</th></tr></thead>
+<tbody>
+<tr><td><a href="https://www.insurance.ca.gov/">CA Department of Insurance — home</a></td><td>Regulator; availability crisis context; FAIR Plan oversight; rate-filing reforms</td><td>page read</td></tr>
+<tr><td><a href="https://www.insurance.ca.gov/01-consumers/105-type/9-compare-prem/index.cfm">CDI premium comparison tool</a></td><td>Interactive; cannot be scraped — manual check needed for A (HO-3) and B (DP-3)</td><td>landing page (interactive)</td></tr>
+<tr><td><a href="https://www.cfp.ca.gov/">California FAIR Plan</a></td><td>Insurer of last resort; growing exposure; pairs with DIC (difference-in-conditions) wrap</td><td>page read</td></tr>
+<tr><td><a href="https://content.naic.org/reports/homeowners-insurance-report">NAIC — Homeowners report</a></td><td>National premium/ loss benchmarks (context for 5%/yr inflation assumption)</td><td>page read</td></tr>
+</tbody></table></div>
+
+<h2>Federal — other authoritative series used</h2>
+<div class="tablewrap"><table>
+<thead><tr><th>Source</th><th>What it confirms</th><th>Access</th></tr></thead>
+<tbody>
+<tr><td><a href="https://www.congress.gov/bill/119th-congress/house-bill/1">Congress.gov — H.R. 1 (OBBBA), 119th Congress</a></td><td>PL 119-21, §70106 (estate exclusion permanence); signed July 2025</td><td>bill page read</td></tr>
+<tr><td><a href="https://www.freddiemac.com/pmms">Freddie Mac PMMS</a></td><td>30-yr fixed ≈ 7.5% (Oct 2026 snapshots)</td><td>series read via search summaries</td></tr>
+<tr><td><a href="https://www.spglobal.com/spdji/">S&amp;P Dow Jones Indices</a></td><td>S&amp;P 500 drawdowns: −48% 1973–74; −49% 2000–02; −57% 2007–09; SF Case-Shiller peak-to-trough ≈ −50% (2006–11)</td><td>referenced series (historical constants)</td></tr>
+<tr><td><a href="https://www.worldbank.org/">World Bank</a> · <a href="https://www.imf.org/">IMF</a></td><td>Japan 1990–2020 land/Nikkei stagnation statistics</td><td>referenced series</td></tr>
+</tbody></table></div>
+
+<p class="note"><strong>Method.</strong> “Full text read” = this project’s automated fetch retrieved and reviewed the document contents. “PDF read” = PDF parsed (≤30 pages; documents longer were marked partial rather than guessed — e.g., SCC Tax Rate Book). “Page read” = page text extracted. “Landing page” = only navigation/headings obtainable; no figures taken from it. Anything not obtaining its number this way is either <a href="flagged.html">flagged</a> or user-supplied. Links verified live on 2026-11-10/11 unless marked “search-verified snapshot”.</p>
+</main>
+<footer><div class="wrap">
+<p class="legend"><span class="badge ok">verified</span> official source · <span class="badge info">user-supplied</span> owner data ($10-rounded) · <span class="badge warn">assumption/derived</span> modelled · <span class="badge bad">unverified</span> → <a href="flagged.html">Flagged for Review</a></p>
+<p><strong>Trust Inheritance Decision Hub</strong> — not legal, tax or investment advice. Built 2026-11-11 · All amounts rounded to nearest $10 · <a href="https://github.com/wingbangboozle1-lang/Tino1">Repository</a> · <a href="https://github.com/wingbangboozle1-lang/Tino1/blob/main/REPO-REVIEW.md">Repo review notes</a></p>
+</div></footer>
+</body>
+</html>

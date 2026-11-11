@@ -86,3 +86,13 @@ Internal family decision support — not legal/tax advice. Consult CA attorney &
 - `analysis/data/*.csv` — every fact row carries an official source URL and a status (`verified` / `derived` / `user-supplied` / `assumption` / `unverified`); unverifiable values are blank and flagged, never inferred. Owner-supplied assessment histories are deliberately not published (privacy); all amounts rounded to $10.
 - `analysis/model.py` → `analysis/data/projections/*.csv`, `analysis/data/scenarios.csv`, `dashboard/data/model_output.json`; `analysis/build_site.py` renders `dashboard/`; `analysis/check_site.py` runs link / source / privacy checks.
 - Reproduce: `python3 analysis/model.py && python3 analysis/build_site.py && python3 analysis/check_site.py` (standard library only).
+
+## Canonical site (2026-11-11, session `arena/944a92cd-tino1`)
+
+**Live:** https://wingbangboozle1-lang.github.io/Tino1/ — `index.html` is the canonical **Executive summary**. Nav: Executive summary · Properties · Inheritance steps · Projections 2026–2060 · Live/Rent/Sell · **Black swans** · Estate tax · Tax law · Costs · Pending changes · Flagged for Review · Sources · Methodology.
+
+- Privacy first: placeholders only; every user-supplied dollar figure rounded to the nearest **$10** repo-wide (exact statutory constants excepted); assessment histories withheld/rounded; PII grep-audited.
+- Every table row → official source or a flag on **Flagged for Review** (25 new P-flags + 23 carried X-flags).
+- Headline: sell [Property A] at the step-up (≈ $0 capital-gains tax), reinvest (≈ $5,660,000 net at 2045), live in [Property B]'s vacant unit; keep B's rents. Stagflation is the one regime that flips the answer — see **Black swans** page for the full 7-regime grid and tripwires. Full math: **Live/Rent/Sell** and **Methodology** pages; model: `integrated/model.py`; CSV: `downloads/inheritance-baseline-2026-2060.csv`.
+- Legacy multi-session sites (`/docs/`, `/site/`, `/dashboard/`) are superseded but retained; exact figures purged. See **REPO-REVIEW.md** for the line-by-line repo audit (including two verified-dead government URLs corrected with evidence).
+- Not legal/tax/investment advice.
