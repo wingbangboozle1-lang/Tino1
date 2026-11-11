@@ -1,85 +1,100 @@
-# REPO REVIEW — wingbangboozle1-lang/Tino1 (2026-11-11, session arena/944a92cd-tino1)
+# Repository review — Tino1
 
-Method: line-by-line read of tracked files; every figure either traced to an official source or flagged; claims verified against live official pages (links in §5). Nothing was corrected silently — canonical pages were rewritten; legacy content was preserved (not deleted) with exact parcel figures rounded to $10.
+**Review date:** 2026-11-11 UTC
+**Review session:** `arena/ad120b45`
+**Scope:** current root site, `final/` generator/model/checker, source register, privacy controls, and retained legacy editions.
 
-## 1. Architecture irregularities (structural)
+This is a technical and source-verification record, not legal, tax, investment, appraisal, insurance, or property-management advice. The public site uses **Property A** for the Cupertino home and **Property B** for the San Francisco home. No names, street addresses, APNs, contact details, or private-document contents are published.
 
-| # | Finding | Severity | Resolution |
-|---|---------|----------|------------|
-| A1 | **Four overlapping sites deployed simultaneously**: root `/` (mirror), `/docs/` (9-page lab), `/site/` (standalone suite), `/dashboard/` (after-tax model). Different assumptions (A appreciation 3.0/3.5/4.0/4.5%, portfolio 6.5 vs 7.0%, CPI 2.5 vs 3.0%) and contradictory headline verdicts ("Sell wins by ≈ $1M @10yr NPV" vs "S4 ≈ $14.2M at 2055" vs "S1 = $22.68M by 2060"). | HIGH | **Closed**: canonical site = root pages (this session). Legacy trees kept in repo, exact figures purged (§3), removed from canonical nav. See COORDINATION.md log. |
-| A2 | **GitHub Pages source = `main:/`** (legacy build, root `.nojekyll`): every directory in the repo is public. Anyone can reach `/docs/`, `/site/`, `/dashboard/`, `/model/`, `/research/`, `/analysis/`, `/data/`. | HIGH | Content now privacy-clean repo-wide; canonical entry is `/`. Consider Pages = `/docs` with curated content or excluding legacy dirs via `_config.yml`/`.nojekyll` hygiene (Jekyll not in use). **Owner decision needed — not changed unilaterally** (Pages settings are out-of-band-state). |
-| A3 | `_config.yml` (Jekyll Cayman) unused under `.nojekyll`; misleading. | LOW | Harmless; left untouched. |
-| A4 | `steps.html` duplicated `process.html`; root `index.html` duplicated `docs/index.html`. | LOW | **Closed**: `steps.html` is now a redirect → `process.html`; root `index.html` is the canonical executive summary. |
-| A5 | `scripts/`, `model/verified_model_85899999.py`, `research/repo-audit-85899999.md` etc. — session-named artifacts in shared tree. | LOW | Retained (no discard); not part of canonical build. |
-| A6 | Open PR #7 (session e25621af, opened 2026-11-10, never merged, >60 min stale) — content unknown to this review. | MEDIUM | Not merged, not used. If it merges later, a diff against canonical pages is mandatory before treating it as authoritative. |
+## 1. Canonical site and repository structure
 
-## 2. Privacy findings (top priority)
+| Finding | Result | Source / verification |
+|---|---|---|
+| One public front door | **Closed:** the current edition is the root site, beginning at [`index.html`](index.html). Root navigation links the current pages, including [`properties.html`](properties.html), [`decision.html`](decision.html), [`projections.html`](projections.html), [`black-swan.html`](black-swan.html), [`process.html`](process.html), [`law.html`](law.html), [`estate-cash.html`](estate-cash.html), [`costs.html`](costs.html), [`flagged.html`](flagged.html), [`sources.html`](sources.html), and [`review.html`](review.html). | `python3 final/check.py .` — 20 root HTML pages, 640 table rows, 1,587 links; zero reported failures. |
+| Retained parallel work | `dashboard/`, `docs/`, `site/`, `archive/`, and session-named research/model directories remain for traceability. Their HTML pages are marked superseded and are not linked from the current navigation. | [`versions.html`](versions.html); the legacy pages carry a visible superseded notice. |
+| GitHub Pages exposure | The Pages source is the repository's main branch, so retained directories remain publicly reachable by URL. This is disclosed rather than treated as private storage. | [GitHub Pages documentation](https://docs.github.com/en/pages/getting-started-with-github-pages/about-github-pages) · owner decision remains on whether to make the repository private or rewrite history. |
+| Reproducibility | The current site is generated with the standard-library-only model and builder. | `python3 final/model.py && python3 final/integrate.py`; `python3 -m py_compile final/*.py`; all passed. |
 
-| # | Finding | Where | Resolution |
-|---|---------|-------|------------|
-| B1 | **Exact user-supplied assessed values & tax bills published**: year-by-year assessed values (A: 2014–2026; B: 2016–2025) and exact bills (exact, non-$10 bills for both properties) — quasi-identifiers searchable against public county rolls. Violated both the privacy mandate and the $10-rounding rule. | `properties.html`, `docs/properties.html`, `docs/cupertino.html`, `docs/sanfrancisco.html`, `docs/index.html`, `docs/projections.html`, `docs/taxes.html`, `docs/flagged.html`, `docs/data/projections.json`, `model/assumptions.md`, `data/assumptions.json`, `docs/js/app.js`, `site/assets/app.js`, `scripts/build_site_85899999.py`, `research/repo-audit-85899999.md`, `COORDINATION.md` | **Closed 2026-11-11**: automated purge (`integrated/scrub.py`, literal-map ROUND_HALF_UP to nearest $10). Verified: exact values no longer matchable anywhere in working tree. Statutory constants kept exact by design (P15). |
-| B2 | **Exact values remain in git history** (commits ≤ 2a16da8). True erasure requires `git filter-repo` + force-push — destructive, rewrites PR refs. **Not performed without owner consent.** | all pre-merge commits | **Flagged for owner decision.** Recommend: (a) accept residual risk (repo is public), or (b) owner runs history-rewrite + secret/PII scan + re-publish. |
-| B3 | ZIP codes 95014 / 94122 are public and intentional; values & assessment-ratio patterns narrow identification further but are now all $10-rounded. | site-wide | Mitigated by rounding; appraisals/exacts remain owner-side only. |
-| B4 | `analysis/data/property_a_history.csv` already withholds series (privacy-correct pattern — kept); `property_b_history.csv` derived-ratio-only (kept). | analysis/ | No change. |
-| B5 | COORDINATION.md embeds exact figures quoted while documenting CR-85-4 itself. | COORDINATION.md | **Closed** (scrubbed). |
+## 2. Privacy review — highest urgency
 
-## 3. Content-accuracy irregularities found in legacy pages (all superseded by canonical pages)
+| Check | Result | Verification |
+|---|---|---|
+| Personal identifiers | **Pass for current site:** no names, street addresses, APNs, phone numbers, or private e-mail addresses were added. People are placeholders: “the Transferor” and “the Inheritor.” | `final/check.py` PII scan; current root pages use `noindex, nofollow`. |
+| Owner-provided history | **Withheld from the current canonical site:** the supplied year-by-year assessment and tax-bill series is not reproduced. | [`properties.html`](properties.html) and [`flagged.html#P01`](flagged.html#P01). |
+| Publication rounding | **Pass for canonical site:** model and owner planning dollars are displayed at $10 increments. Official legal constants and rates remain linked to the source; planning displays are rounded. | `python3 final/check.py .` — 2,092 dollar figures checked; privacy fingerprints clean. |
+| Git history | **Open owner action:** earlier commits may still be readable in public Git history even though the current files are scrubbed. An agent did not force-rewrite history. | [`README.md`](README.md) privacy notice; owner must decide whether to privatize or rewrite history. |
+| Private records | Keep bills, trust instruments, basis records, insurance quotes, rent ledger, and utility statements offline for licensed advisers. They are not required for the public site. | [`flagged.html#P03`](flagged.html#P03). |
 
-Numbers cited as published (pre-purge rounding):
+## 3. Material ownership distinction
 
-1. **docs/cupertino.html**: "Assessed value" anchor published unrounded (quasi-ID; now $10-rounded); "2025 bill" and "assessed" both published unrounded = 1.34% effective (arithmetic ✓; effective rate above 1.16% composite — direct charges ≈ $930/yr, derived, unverified (flagged X02/X17)); "County avg for Cupertino 1.15–1.22%" — no .gov source; industry-ish figure.
-2. **docs/sanfrancisco.html**: "2.13% effective vs 1.18% ad valorem — extra ≈ 0.95% (fixed charges)" — arithmetic ✓, unitemized; "$7,150/yr $85,800/yr" user-supplied, flagged; "$3,500/mo HUD benchmark" — superseded by HUD FY2026 metro 2-BR ≈ $3,174 (my pages) — note: metro vs small-area distinction unresolved in legacy.
-3. **docs/index.html / root index.html**: "Sell wins ~$1M at 10-yr NPV (6.5% portfolio)" — method mismatch across sessions (NPV vs terminal wealth); both favor S1; canonical model uses terminal-wealth accounting with after-tax liquidation (scenarios.html).
-4. **docs/projections.html**: parent-assessed column uses unrounded anchor (now rounded); Prop 19 example "live-in" figure computed off $3.1M- 2026 values with 2026 cap — internally consistent then; canonical 2045 worked example supersedes it.
-5. **dashboard/ (6ea079fa)**: consistently privacy-safe (withholds series) and well-structured; its verdict "S4: $14,218,760 (2055)" differs in horizon (2055 vs my 2060), in scenario taxonomy (S4 = sell+invest+live-B-unit ≈ my S1), and in assumptions (A +4% vs my +3.5%, CPI 2.5% same, portfolio 7% same). Arithmetic internally consistent; not directly comparable to canonical. Its 23 X-flags carry forward as X01–X23 here.
-6. **site/ (85899999)**: "All figures $10-rounded" claim verified on spot checks of its pages (compliant); verdict identical (Strategy S1); its $22,682,780 (2045→2060) vs my $19,840,500 — difference from A appreciation (theirs ≈ 4%+, B 5-yr HPI path) and tax/horizon handling; both rank S1 first.
-7. **README.md**: SF Treasurer was linked `sftreasurer.org/property-tax` → **dead (verified 2026-11-11: "Page Not Found")**. SCO link `state_finances_estate_tax.html` → **dead (verified 2026-11-11: "The page you requested is not found")**. Correct destinations: `sftreasurer.org/property/secured-property-taxes` and `sco.ca.gov/ardtax_estate_tax.html` — both live (verified 2026-11-11) and used throughout the canonical site. (CR-6E-2 closed with evidence.)
-8. **docs/ & root pages**: SCC rate-book figure for FY2026-27/2025-26 conflated: FY2025-26 SCC composite ≈ 1.1636% (derived); FY2026-27 SF = 1.18162182% (official). Legacy mixed the two vintages ("FY25-26 rate 1.18268325%") — SF figure for FY2025-26 is not verified; FY2026-27 is. Flagged.
-9. **Assumption drift across sites**: home appreciation 3.0–4.5%, SF 3.8%, Cupertino 4.0–4.5% vs FHFA 2026Q2 actual prints (CA −0.2% y/y, SF metro ≈ −2.4% y/y, 5-yr CA +17.3%). Canonical re-anchored to FHFA (P01) — flagged, not silently adopted.
-10. **Verification hygiene**: "SCO no CA estate tax" was cited to a dead URL in the root mirror and docs; FTB "Programs" pages cited loosely; nerdwallet/policygenius industry figures presented next to official stats without separation labels. All canonical pages separate **verified / user-supplied / assumption / derived / unverified**.
+The **San Francisco property is already owned by the Inheritor**. It is not the asset being inherited in this analysis. The current model therefore:
 
-## 4. What was done in this session (traceability)
+- does not treat the Transferor's death as a change in ownership of Property B;
+- does not apply a death-time reassessment to Property B;
+- does not give Property B a new inherited basis;
+- does not add Property B to the Transferor's gross estate; and
+- carries Property B's existing rent, utilities, insurance, and ordinary assessment growth as a separate status-quo property.
 
-- Claimed V2 (integration), B1 (black swans), B2 (repo review), B3 (privacy purge) in COORDINATION.md, commit pushed before content work.
-- Canonical site: 13 pages at root (`index`, `properties`, `process`, `projections`, `scenarios`, `black-swan`, `estate-tax`, `taxes`, `costs`, `pending-changes`, `flagged`, `sources`, `methodology`) + `steps.html` redirect + `assets/site.css` + `downloads/inheritance-baseline-2026-2060.csv`.
-- New analysis: 2045 inheritance quantified (A FMV $5,959,750 · FBYV $802,030 · Prop 19 cap $1,521,770 · live-in assessed $4,437,980 · taxes $7,360 → $53,320/$71,030 · B → $39,050 · estate headroom ≈ $14,863,690 @2045); terminal wealth 2060 across 7 regimes; estate-exclusion grid 2040–2060; 25 new flags (P01–P25); 23 carried (X01–X23).
-- Repo-wide privacy purge executed and audited (`grep` gate in §6).
+Property A is different: it passes through the trust at the Transferor's death. A revocable trust generally changes ownership when it becomes irrevocable at death; an inheritance is dated at death. Whether any Prop 19 exclusion applies and whether basis resets depend on the actual trust, relationship, occupancy, filing, and gross-estate facts.
 
-## 5. Live-link verification performed (2026-11-11)
+**Sources read:** [BOE Rule 462.260](https://boe.ca.gov/proptaxes/pdf/rules/Rule462_260.pdf), [IRS estate tax](https://www.irs.gov/businesses/small-businesses-self-employed/estate-tax), [BOE Proposition 19](https://www.boe.ca.gov/prop19/), [R&TC §63.2](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=RTC&sectionNum=63.2.).
 
-| URL | Result |
-|---|---|
-| https://sftreasurer.org/property-tax (legacy) | **DEAD** — "Page Not Found" |
-| https://www.sco.ca.gov/state_finances_estate_tax.html (legacy) | **DEAD** — "This page has been redesigned… not found" |
-| https://sftreasurer.org/property/secured-property-taxes | **LIVE** — FY2026-27 rate **1.18162182%** verbatim |
-| https://www.sco.ca.gov/ardtax_estate_tax.html | **LIVE** — "For decedents that die on or after January 1, 2005, there is no longer a requirement to file a California Estate Tax Return." |
-| https://www.bls.gov/news.release/cpi.nr0.htm | Live archive (Sept 2026: 3.7% y/y, core 2.6%) |
-| https://www.federalreserve.gov/newsevents/pressreleases/monetary20261028a.htm | Live (hold 3.75–4.00%; two dissents preferred hike; next FOMC 2026-12-09) |
-| https://www.fhfa.gov/document/d/hpi/fhfa-house-price-index-report-2026q2 | Live (CA −0.2% y/y; 5-yr +17.31%; SF metro ≈ −2.4%) |
-| https://www.boe.ca.gov/prop19/ · lta25009.pdf · lta26026.pdf · /homeowners_exemption.htm | Live (LTA 2025/009 cap $1,044,586) |
-| github.com PRs #1–#11 statuses | verified via `gh pr list` (all merged except #7 open/stale) |
+## 4. Legal and tax verification register
 
-Spot-checks not repeated for every link on legacy pages — legacy pages are superseded, not retired, and their failures are logged here.
+| Topic | Canonical treatment | Status and official source |
+|---|---|---|
+| Federal estate threshold | The model shows approximately **$15,000,000** for a 2026 death and approximately **$15,480,000** for 2027. It measures the Transferor's whole gross estate, adjusted taxable gifts, deductions, and elections—not “cash inherited” in isolation. | Verified against [IRS estate-tax threshold table](https://www.irs.gov/businesses/small-businesses-self-employed/estate-tax) and [Rev. Proc. 2026-35](https://www.irs.gov/pub/irs-drop/rp-26-35.pdf). Future years are projections, not enacted thresholds. |
+| Federal estate-tax rate | The model uses the top **40%** rate only for a planning illustration above the applicable exclusion; actual Form 706 computation is progressive and fact dependent. | [IRS Form 706 instructions](https://www.irs.gov/instructions/i706). |
+| California estate/inheritance tax | No California estate-tax return is required for deaths on or after January 1, 2005; the older inheritance-tax cutoff is stated by the State Controller. | [California State Controller](https://www.sco.ca.gov/ardtax_estate_tax.html). |
+| Inherited basis | The model assumes a reset to date-of-death FMV only when the asset is included in the gross estate. A trust outside the gross estate is shown as a sensitivity case. | [IRS inherited-property FAQ](https://www.irs.gov/faqs/interest-dividends-other-types-of-income/gifts-inheritances/gifts-inheritances) · [Rev. Rul. 2023-2](https://www.irs.gov/irb/2023-16_IRB). |
+| Prop 19 eligibility | Property A receives partial relief only in the live-in case: eligible family relationship, qualifying principal residence, move-in within one year, homeowners' exemption within one year, and timely exclusion claim. Renting or leaving it empty is modeled as full reassessment. | [BOE Prop 19](https://www.boe.ca.gov/prop19/) · [R&TC §63.2](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=RTC&sectionNum=63.2.) · [BOE LTA 2026/026](https://www.boe.ca.gov/proptaxes/pdf/lta26026.pdf). |
+| Prop 19 value cap | The published amount for the current 2025–2027 window is rounded in planning displays; the official exact amount and the every-other-February prior-year HPI mechanism are linked. The 2027 amount is intentionally flagged until the official adjustment is published. | [BOE LTA 2025/009](https://www.boe.ca.gov/proptaxes/pdf/lta25009.pdf) · [`flagged.html#U04`](flagged.html#U04). |
+| Filing clocks | The site shows the trust notice, change-in-ownership statement, Form 706, homeowners' exemption, and Prop 19 claim deadlines separately. They are not interchangeable. | [Probate Code §16061.7](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=PROB&sectionNum=16061.7.) · [R&TC §480](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=RTC&sectionNum=480.) · [IRS estate FAQ](https://www.irs.gov/businesses/small-businesses-self-employed/frequently-asked-questions-on-estate-taxes). |
 
-## 6. Re-run the audits
+## 5. Operating-cost verification
 
-```bash
-# privacy gate: exact user parcel figures anywhere?
-grep -rEn '550,?537|539,?743|529,?161|518,?786|508,?614|498,?642|493,?530|483,?854|474,?368|465,?067|455,?949|449,?101|440,?305|114,?248|112,?008|109,?814|107,?662|105,?595|104,?513|102,?465|100,?456|98,?488|96,?557' .
-# expect: no output
-# every canonical HTML page reachable:
-python3 -m http.server 8080  # then open /, /flagged.html, /black-swan.html, …
+| Cost | Property A — Cupertino | Property B — San Francisco | Status |
+|---|---:|---:|---|
+| Water | Rounded planning midpoint from the owner's stated range: **$1,500/year**. | Rounded planning midpoint for three units: **$4,380/year**. | User-supplied planning inputs; no parcel bills published. Official rate material is linked on [`properties.html`](properties.html) and [`costs.html`](costs.html). |
+| Electricity / solar | Rounded planning credit: **-$180/year**. | Rounded planning amount: **$600/year**. | Solar tariff and interconnection date are not confirmed. [CPUC NEM/NBT](https://www.cpuc.ca.gov/industries-and-topics/electrical-energy/demand-side-management/customer-generation/net-energy-metering-and-net-billing); [`flagged.html#U05`](flagged.html#U05). |
+| Insurance | Owner estimate **$1,500/year** is used only as a flagged planning input; official ZIP-level quote is blank. | Same treatment; a three-unit landlord/dwelling-fire quote is required. | [California Department of Insurance comparison tool](https://www.insurance.ca.gov/01-consumers/105-type/9-compare-prem/index.cfm) says survey results are not quotes. [`flagged.html#U01`](flagged.html#U01). |
+| Repairs and maintenance | **$6,000/year** assumption. | **$12,000/year** assumption. | Not independently confirmed; sensitivity tests double maintenance. [`flagged.html#A08`](flagged.html#A08). |
+| Rent | Property A uses HUD FY2026 SAFMR as a labeled proxy, not a private rent appraisal. | Property B uses the owner's rounded two-unit rent input; rent-control status remains flagged. | [HUD SAFMR 95014](https://www.huduser.gov/portal/datasets/fmr/fmrs/FY2026_code/2026zip_code_calc.odn?zcta=95014&metro_code=METRO41940M41940&year=2026) · [SF Rent Board](https://www.sf.gov/learn-about-rent-increases-san-francisco/). |
+
+## 6. Economic model and black-swan review
+
+The baseline is deliberately not presented as a forecast. It is a planning case with constant nominal assumptions, while the separate black-swan page replays variable growth and inflation. The stress set includes historical 1976–2025 sequences, California housing slumps, high-inflation/stagflation, the 2007–2012 crash sequence, a Depression-era national path, a Japan-style stagnation path, and a savings/Treasury alternative.
+
+The current model's baseline headline is **sell Property A after inheritance, keep Property B, and reinvest**, but the result is not universal. The first decade is the main sequence risk; the Japan-style path and cash/T-bill case can favor retaining/renting. The site therefore shows a sensitivity table and a 50-sequence count rather than presenting “sell” as a certainty.
+
+| Model item | Treatment | Source / limitation |
+|---|---|---|
+| CPI and home-price history | FRED series for BLS CPI and FHFA San Jose/San Francisco/California HPI. | [FRED CPI](https://fred.stlouisfed.org/series/CPIAUCSL) · [FHFA San Jose](https://fred.stlouisfed.org/series/ATNHPIUS41940Q) · [FHFA San Francisco](https://fred.stlouisfed.org/series/ATNHPIUS41884Q). |
+| Cash/risk-free reference | Treasury daily yields are shown as a current reference, not a guaranteed future return. | [U.S. Treasury daily yield curve](https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView). |
+| Long-run stock return series | The long-run total-return table is academic, not a government series; it is labeled and flagged rather than presented as an official forecast. | [NYU Stern table](https://pages.stern.nyu.edu/~adamodar/New_Home_Page/datafile/histretSP.html) · [`flagged.html#S02`](flagged.html#S02). |
+| Baseline assumptions | Inflation, home growth, portfolio return, rent growth, insurance growth, repairs, vacancy, management, tax brackets, and sale costs are planning assumptions. | [`flagged.html`](flagged.html) lists each assumption and sensitivity. |
+
+## 7. Verification commands and results
+
+```text
+python3 -m py_compile final/*.py                 PASS
+python3 final/model.py                           PASS; rounded outputs generated
+python3 final/integrate.py                       PASS; 1,967 internal links, 0 broken
+python3 final/check.py .                         PASS; 20 pages, 640 sourced rows, privacy clean
 ```
 
-## 7. Flagged for the owner (not resolvable by any agent)
+The checker also verifies the Prop 19 worked example, checks that Property B's modeled assessment does not jump by more than the annual cap, confirms that the live-in value is not above the full-reassessment value, checks internal anchors, and scans for street-address, phone, e-mail, parcel-pattern, and stored owner-figure fingerprints.
 
-1. B2 — git-history erasure decision (`git filter-repo`).
-2. A2 — whether to narrow Pages source away from `main:/`.
-3. P09/P03/P07/P08/P16 — appraisals, insurance quotes, utility bills, NEM status, itemized tax bills (owner documents only).
-4. P21 — marital status of the transferor (determines portability; single estates: no DSUE).
-5. PR #7 disposition (merge/close) — if merged, diff vs canonical before adopting.
-6. Which property carries the transferor’s Homeowners’ Exemption (determines which property Prop 19 can protect).
+## 8. Remaining flagged items
 
-## 8. Bottom line
+These items are intentionally visible on [`flagged.html`](flagged.html) and do not block publication:
 
-The repository contained real, good work — four parallel builds that mostly agreed on the law (step-up, Prop 19, $15M, no CA tax) and disagreed on tone and arithmetic. It also contained a live privacy breach (B1) now closed, and a broken-links patchwork now catalogued. The canonical site is self-consistent, privacy-clean, source-linked, regime-tested, and honest about what it cannot verify — which is the whole assignment.
+1. Trust type, gross-estate inclusion, family relationship, portability, and the Inheritor's filing status.
+2. Private parcel-level assessment/tax bills, basis records, rent ledger, utility bills, insurance quotes, tax-rate areas, solar interconnection record, and bedroom/rent condition.
+3. Future law, future federal exclusion indexing, future Prop 19 adjustment, future rates, insurance availability, and market returns.
+4. Academic return history and the Japan stress path's non-U.S. data limitations.
+5. Public Git history may contain earlier versions; only the owner can authorize a history rewrite or repository privacy change.
+
+## 9. Bottom line
+
+The current site is a privacy-conscious, source-linked planning tool. It separates the inherited Cupertino decision from the already-owned San Francisco property, distinguishes verified law from owner inputs and assumptions, shows rounded costs and projections, and preserves the uncertainty that cannot be resolved without private documents or future facts.

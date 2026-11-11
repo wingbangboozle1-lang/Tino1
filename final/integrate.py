@@ -17,7 +17,7 @@ ROOT = os.path.abspath(sys.argv[1]) if len(sys.argv) > 1 else os.path.dirname(HE
 ARCH = 'archive/root-site-2026-11-11'
 MARK = '<!-- superseded-notice 07a57a05 -->'
 LEGACY_DIRS = ['dashboard', 'docs', 'site', 'archive']
-CURRENT = ['index.html', 'decision.html', 'projections.html', 'black-swan.html', 'process.html', 'law.html',
+CURRENT = ['index.html', 'properties.html', 'decision.html', 'projections.html', 'black-swan.html', 'process.html', 'law.html',
            'estate-cash.html', 'costs.html', 'flagged.html', 'sources.html', 'review.html', 'versions.html']
 ATTR = re.compile(r'((?:href|src)=")([^"]*)(")')
 

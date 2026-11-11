@@ -11,6 +11,7 @@ The pages at the repository root are the only current edition. They are generate
 | Page | Content |
 |---|---|
 | `index.html` | Executive summary, dashboard, best plan and why |
+| `properties.html` | Privacy-safe property profiles, ownership distinction, rounded operating inputs, and verification limits |
 | `decision.html` | Live, rent or sell: cash flows, after-tax wealth, sensitivities, break-even points |
 | `projections.html` | Year by year 2026 to 2076: value, assessed value, property tax, insurance, water, electricity, repairs, rental insurance |
 | `black-swan.html` | Non-constant growth and inflation: 50 replays of the real 1976-2025 record and named crisis paths |
@@ -34,7 +35,7 @@ Standard library only. `final/check.py` fails if a table row has no link to an o
 ## Rules followed
 
 - **Privacy first.** No names, addresses or parcel numbers. People are "the Transferor" and "the Inheritor". Owner-supplied figures are stored and shown only rounded to $10; no year-by-year history is listed. Pages ask search engines not to index them.
-- **Official sources.** Every table row links to an official page. A value that could not be confirmed is left blank and listed on the Flagged for Review page. Assumptions are labelled as assumptions.
+- **Official sources.** Every canonical table row links to an official page. A value that could not be confirmed is left blank and listed on the Flagged for Review page; user-supplied planning inputs are explicitly labeled and rounded rather than presented as official records. Assumptions are labelled as assumptions.
 - **Not advice.** The site prepares questions for a licensed estate attorney and tax adviser.
 
 ## Not current

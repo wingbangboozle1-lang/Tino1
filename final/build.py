@@ -80,6 +80,7 @@ BLANK = '<span class="blank">not confirmed - left blank</span>'
 
 NAV = [
     ('index.html', 'Summary'),
+    ('properties.html', 'Properties'),
     ('decision.html', 'Decision'),
     ('projections.html', 'Year by year'),
     ('black-swan.html', 'Black swan'),
@@ -218,12 +219,12 @@ def build_index():
             ['Property-tax reassessment', 'Yes. Full market value if rented or left empty; partial relief only if the Inheritor moves in within one year.', 'None. The assessed value stays on its current base with at most 2% a year.', src('BOE-P19', 'RTC-63.2')],
             ['Income-tax basis', 'Reset to market value at the date of death if the home is included in the Transferor\'s gross estate. A sale soon after has almost no taxable gain.', 'No reset. The Inheritor keeps the existing basis, so a sale is taxed on the whole gain since acquisition.', src('IRS-FAQ-INHERIT', 'RR-2023-2')],
             ['Counted in the Transferor\'s taxable estate', 'Yes, with the cash.', 'No.', src('IRS-ESTATE')],
-            ['Value today / assessed value today', '%s / %s' % (m(P['cup_value']), m(P['cup_assessed'])), '%s / %s' % (m(P['sf_value']), m(P['sf_assessed'])), src('SCC-RATES', 'SF-TAX')],
-            ['What it earns today', 'Nothing (the Transferor lives in it).', '%s a year from two rented units; the third unit is free for the Inheritor.' % m(P['sf_rent_2units']), src('SF-RENT-RULES')],
+            ['Current estimate / last reported assessment', '%s / %s (rounded owner input)' % (m(P['cup_value']), m(P['cup_assessed'])), '%s / %s (rounded owner input)' % (m(P['sf_value']), m(P['sf_assessed'])), src('SCC-RATES', 'SF-TAX') + ' ' + flag('P03')],
+            ['What it earns today', 'Nothing (the Transferor lives in it).', '%s a year from two rented units; the third unit is free for the Inheritor (owner input)' % m(P['sf_rent_2units']), src('SF-RENT-RULES') + ' ' + flag('P03')],
         ], caption='Why the two homes must be treated differently')
     plan = """
 <ol class="plan">
-<li><strong>Keep Property B and keep living in its third unit.</strong> Its assessed value is %s against a market value of %s, which saves about %s of property tax every year, and that saving is lost for good if it is sold. It also has no basis reset, so selling it would tax the whole gain. It already produces %s a year.</li>
+<li><strong>Keep Property B and keep living in its third unit.</strong> Its last reported assessed-value anchor is %s against a market estimate of %s, which saves about %s of property tax every year in this planning model; the parcel-level amount is not independently verified. That saving is lost for good if it is sold. It also has no basis reset, so selling it would tax the whole gain. It already produces %s a year.</li>
 <li><strong>Sell Property A within a few months of inheriting it and invest the proceeds in a diversified stock fund.</strong> With the basis reset to the date-of-death value the sale has no taxable gain (the model shows a small loss of %s from selling costs). About %s is released. In the baseline it grows to %s by 2076 after all taxes (%s in 2026 dollars), against %s if rented and %s if lived in.</li>
 <li><strong>Expect the first ten years to be the risky ones.</strong> Replaying the real 1976-2025 record from each of its 50 starting years, selling is ahead of renting in %d of 50 cases ten years after the inheritance and in all 50 after twenty. In the worst ten-year case selling is behind by %s (2026 dollars). A long stagnation of the kind Japan had after 1990 is the one tested path where selling into stocks ends up behind keeping the house. Investing the proceeds in stages and keeping a few years of spending in Treasury bills narrows that risk.</li>
 <li><strong>Do not sell and park the money in savings.</strong> If the proceeds would sit in savings or Treasury bills at about 3.5%%, keeping the house as a rental comes out ahead (%s against %s in 2026 dollars).</li>
@@ -239,6 +240,7 @@ def build_index():
         m(B['real_sell'] - M['sensitivity'][-1]['real_sell']))
     chart = bars([(NAME[k], B['real_' + k], COL[k]) for k in ('sell', 'rent', 'live')])
     links = ''.join('<a class="card" href="%s"><b>%s</b><span>%s</span></a>' % x for x in [
+        ('properties.html', 'Properties', 'Rounded owner inputs, current operating costs, ownership status, and privacy limits'),
         ('decision.html', 'Decision', 'Live, rent or sell: numbers, sensitivities and break-even points'),
         ('projections.html', 'Year by year', 'Value, assessed value, tax, insurance, water, electricity and repairs, 2026 to 2076'),
         ('black-swan.html', 'Black swan', 'Fifty real historical sequences and named crisis paths, kept apart from the baseline'),
@@ -263,8 +265,30 @@ def build_index():
          'Property A (Cupertino, 95014) will pass to the Inheritor through a trust some time around 2040 to 2050. Property B (San Francisco, 94122) is already owned by the Inheritor. This site works out, with official sources on every table row, whether to live in Property A, rent it out, or sell it and reinvest.', body)
 
 
+# ====================================================================== properties
+def build_properties():
+    rows = [
+        ['Ownership status at the Transferor\'s death', 'Property A passes through a trust and is the inherited asset.', 'Property B is already owned by the Inheritor; it does not transfer at this death.', src('BOE-RULE-462.260', 'IRS-ESTATE')],
+        ['Current market estimate', '%s (owner-supplied estimate, not an appraisal)' % m(P['cup_value']), '%s (owner-supplied estimate, not an appraisal)' % m(P['sf_value']), src('FHFA-SJ', 'FHFA-SF') + ' ' + flag('P03')],
+        ['Assessment anchor used in the model', '%s (rounded 2026 owner input)' % m(P['cup_assessed']), '%s (rounded 2025 owner input; 2026 parcel value not independently verified)' % m(P['sf_assessed']), src('BOE-P19', 'SF-TAX') + ' ' + flag('P03')],
+        ['Last reported property-tax bill used as a check', '%s (rounded 2025 owner input)' % m(P['cup_tax_2025']), '%s (rounded 2025 owner input)' % m(P['sf_tax_2025']), src('SCC-RATES', 'SF-TAX') + ' ' + flag('P03')],
+        ['Current rental income', '$0 while the Transferor occupies Property A', '%s a year from two rented units; the third is occupied by the Inheritor' % m(P['sf_rent_2units']), src('SF-RENT-RULES') + ' ' + flag('P03')],
+        ['Water and sewer', '%s a year planning midpoint of the owner\'s $100-$150 monthly range' % m(P['cup_water']), '%s a year planning midpoint of the owner\'s $330-$400 monthly range for three units' % m(P['sf_water']), src('SFPUC') + ' ' + flag('P03')],
+        ['Electricity / solar', '%s a year planning credit from the owner\'s $10-$20 monthly range' % m(P['cup_elec']), '%s a year planning midpoint of the owner\'s $30-$70 monthly range' % m(P['sf_elec']), src('CPUC-NEM', 'CPUC-FIXED') + ' ' + flag('U05')],
+        ['Home or landlord insurance', '%s a year owner estimate; official ZIP-level quote left blank' % m(P['ins_home']), '%s a year owner estimate; official three-unit landlord quote left blank' % m(P['ins_rental']), src('CDI-TOOL', 'CDI-TOOL-APP') + ' ' + flag('U01')],
+        ['Repairs and maintenance', '%s a year planning assumption; owner says this home costs less' % m(P['maint_cup']), '%s a year planning assumption for the larger three-unit property' % m(P['maint_sf']), src('CDI-RES', 'BLS-CPI') + ' ' + flag('A08')],
+        ['Property-tax treatment after the death', 'Reassessment at transfer; Prop 19 partial relief only if the Inheritor makes it the principal residence and files on time.', 'No reassessment caused by the Transferor\'s death because ownership is already with the Inheritor; ordinary annual assessment rules continue.', src('BOE-P19', 'RTC-63.2', 'BOE-RULE-462.260')],
+        ['Basis and estate treatment', 'Basis generally resets to date-of-death FMV if included in the gross estate; trust terms must be reviewed.', 'No basis reset and not part of the Transferor\'s estate because it is already owned by the Inheritor.', src('IRS-FAQ-INHERIT', 'RR-2023-2', 'IRS-ESTATE')],
+    ]
+    t = table(['Measure', 'Property A - Cupertino 95014', 'Property B - San Francisco 94122', 'Official basis'], rows, caption='Privacy-safe property profile', cls='num')
+    body = ('<p class="callout"><strong>Privacy:</strong> this page deliberately withholds the owner\'s year-by-year assessment and tax-bill history. Current amounts are planning inputs rounded to $10 and marked as owner-supplied where they were not independently verified from a parcel record. No names, addresses, APNs, or private documents are published.</p>'
+            + t + '<h2>How to use this page</h2><ol><li>Use Property A\'s rounded values only to compare live, rent, and sell choices; the projections are not an appraisal or tax bill.</li><li>Keep Property B in the model as an already-owned asset. Its rent, utilities, insurance, and tax history are not inheritance-tax inputs for Property A.</li><li>Before the transfer, have the attorney and CPA verify the trust, gross-estate inclusion, title, basis, tax-rate areas, insurance classification, and all operating bills offline. See <a href="flagged.html">Flagged for Review</a>.</li></ol><p class="note">Official sources below explain the legal treatment and agency methods; they do not verify the private parcel figures. The page follows the $10 publication rule while preserving uncertainty instead of inventing a value.</p>')
+    page('properties.html', 'The two properties', 'A privacy-safe profile of the Cupertino home to be inherited and the San Francisco home that is already owned by the Inheritor.', body)
+
+
 # ====================================================================== decision
 def build_decision():
+
     s = B
     at = table(['Item at inheritance in %d' % T, 'Amount', 'How it is worked out', 'Official basis'], [
         ['Market value of Property A', m(s['fmv_T']), '%s today, growing 4.0%% a year (assumption %s)' % (m(P['cup_value']), flag('A01')), src('FHFA-SJ')],
@@ -318,7 +342,7 @@ def build_decision():
     which = table(['If one home had to be sold', 'Sell Property A after inheriting', 'Sell Property B instead', 'Official basis'], [
         ['Basis used to measure the gain', 'Market value at death (reset)', 'The Inheritor\'s own basis: ' + BLANK + ' ' + flag('Q03'), src('IRS-FAQ-INHERIT')],
         ['Tax on the sale', 'None in the baseline (small loss)', 'Up to about 37.1%% of the gain for a large one-year gain (20%% federal + 3.8%% + 13.3%% California). If the basis were as low as the assessed value, about %s.' % m((sf_net - P['sf_assessed']) * 0.371), src('IRS-TC409', 'IRS-TC559', 'FTB-RATES')],
-        ['Property-tax position given up', 'Already lost at inheritance (assessed value moves to market or near it)', 'A %s assessed value on a %s home: about %s a year of tax saving, lost permanently' % (m(P['sf_assessed']), m(P['sf_value']), m(sf_gap)), src('SF-TAX', 'BOE-P19')],
+        ['Property-tax position given up', 'Already lost at inheritance (assessed value moves to market or near it)', 'A last reported %s assessment anchor on a %s market estimate: about %s a year of modeled tax saving, lost permanently if sold' % (m(P['sf_assessed']), m(P['sf_value']), m(sf_gap)), src('SF-TAX', 'BOE-P19') + ' ' + flag('P03')],
         ['Income given up', 'None today', '%s a year of rent' % m(P['sf_rent_2units']), src('SF-RENT-RULES')],
         ['Home-sale exclusion', 'Not needed; the gain is already near zero', 'Up to $250,000 ($500,000 joint) only for the part used as the Inheritor\'s main home for 2 of the last 5 years', src('IRS-TC701')],
     ], caption='Which home to keep')
@@ -748,7 +772,7 @@ def stub(slug, target, title):
 ''' % (target, target, e(title), target, e(title)))
 
 
-STUBS = [('properties.html', 'index.html', 'The two homes'), ('scenarios.html', 'decision.html', 'Decision'),
+STUBS = [('scenarios.html', 'decision.html', 'Decision'),
          ('taxes.html', 'law.html', 'Law'), ('estate-tax.html', 'estate-cash.html', 'Cash and estate tax'),
          ('methodology.html', 'sources.html', 'Sources and method'), ('pending-changes.html', 'law.html', 'Law'),
          ('steps.html', 'process.html', 'Process'), ('mirror-archived-2026-11-10.html', 'versions.html', 'Earlier versions')]
@@ -821,7 +845,7 @@ def main():
     os.makedirs(OUT, exist_ok=True)
     open(os.path.join(OUT, 'style.css'), 'w').write(CSS)
     open(os.path.join(OUT, 'app.js'), 'w').write(JS)
-    for f in (build_index, build_decision, build_projections, build_blackswan, build_process, build_law,
+    for f in (build_index, build_properties, build_decision, build_projections, build_blackswan, build_process, build_law,
               build_estate, build_costs, build_flagged, build_sources, build_review):
         f()
     if ROOT_MODE:
