@@ -172,6 +172,9 @@ wins = {}
 for x in M['replays']:
     wins[x['best']] = wins.get(x['best'], 0) + 1
 rep_sorted = lambda k: sorted(x['real_' + k] for x in M['replays'])
+RH = M['replay_horizons']
+JS_ = M['japan_savings']
+VERIFY = ('' if ROOT_MODE else '../../') + 'verify-4395771d/site/index.html'
 NAME = {'live': 'Live in it', 'rent': 'Rent it out', 'sell': 'Sell and reinvest'}
 SRC_MODEL_TAX = ('SCC-RATES', 'BOE-LTA-2026-026')
 
@@ -184,7 +187,7 @@ def kpi(label, value, sub=''):
 def build_index():
     by = M['by_T']
     cards = ''.join([
-        kpi('Best financial outcome', 'Sell Property A, keep Property B', 'ahead in the baseline and in %d of 50 real historical sequences' % wins.get('sell', 0)),
+        kpi('Best financial outcome', 'Sell Property A, keep Property B', 'ahead in the baseline; across 50 real historical sequences it leads in %d after 10 years and in %d after 20' % (RH['10']['wins']['sell'], RH['20']['wins']['sell'])),
         kpi('Property A at inheritance (%d)' % T, m(B['fmv_T']), 'from %s today at 4.0%% a year (assumption)' % m(P['cup_value'])),
         kpi('Property A tax: today / if lived in / if rented', '%s / %s / %s' % (m(P['cup_tax_2025']), m(B['tax_live_T']), m(B['tax_rent_T'])), 'per year; first year after inheritance'),
         kpi('Property B tax advantage kept by not selling', m(sf_gap) + ' a year', 'difference between tax on market value and on the current assessed value'),
@@ -222,12 +225,14 @@ def build_index():
 <ol class="plan">
 <li><strong>Keep Property B and keep living in its third unit.</strong> Its assessed value is %s against a market value of %s, which saves about %s of property tax every year, and that saving is lost for good if it is sold. It also has no basis reset, so selling it would tax the whole gain. It already produces %s a year.</li>
 <li><strong>Sell Property A within a few months of inheriting it and invest the proceeds in a diversified stock fund.</strong> With the basis reset to the date-of-death value the sale has no taxable gain (the model shows a small loss of %s from selling costs). About %s is released. In the baseline it grows to %s by 2076 after all taxes (%s in 2026 dollars), against %s if rented and %s if lived in.</li>
+<li><strong>Expect the first ten years to be the risky ones.</strong> Replaying the real 1976-2025 record from each of its 50 starting years, selling is ahead of renting in %d of 50 cases ten years after the inheritance and in all 50 after twenty. In the worst ten-year case selling is behind by %s (2026 dollars). A long stagnation of the kind Japan had after 1990 is the one tested path where selling into stocks ends up behind keeping the house. Investing the proceeds in stages and keeping a few years of spending in Treasury bills narrows that risk.</li>
 <li><strong>Do not sell and park the money in savings.</strong> If the proceeds would sit in savings or Treasury bills at about 3.5%%, keeping the house as a rental comes out ahead (%s against %s in 2026 dollars).</li>
 <li><strong>Living in Property A is a lifestyle choice with a price.</strong> The assessed value jumps from %s to %s even with the Proposition 19 relief, so the tax bill rises from about %s to about %s a year. Compared with selling, living there costs about %s of 2076 wealth in 2026 dollars.</li>
 <li><strong>Before anything else, have the trust read by an estate attorney.</strong> The whole result depends on the home being included in the Transferor's gross estate so that the basis resets. If it is not, selling triggers tax on decades of gain (the model shows %s less wealth in 2026 dollars). See the <a href="flagged.html">Flagged for Review</a> page.</li>
 </ol>""" % (
         m(P['sf_assessed']), m(P['sf_value']), m(sf_gap), m(P['sf_rent_2units']),
         m(-B['sell_gain']), m(B['sell_net']), m(B['w_sell']), m(B['real_sell']), m(B['w_rent']), m(B['w_live']),
+        RH['10']['wins']['sell'], m(-RH['10']['sell_minus_rent_worst']),
         m(M['sensitivity'][6]['real_rent']), m(M['sensitivity'][6]['real_sell']),
         m(B['fbyv_T']), m(B['taxable_live_T']), m(B['tax_before_T']), m(B['tax_live_T']),
         m(B['real_sell'] - B['real_live']),
@@ -419,21 +424,25 @@ def build_blackswan():
     ], caption='How uneven the real record was', cls='num')
     med = lambda k: rep_sorted(k)[25]
     rep = table(['Across all 50 real starting years', 'Live in it', 'Rent it out', 'Sell and reinvest', 'Official basis'], [
-        ['Times it was the best choice', wins.get('live', 0), wins.get('rent', 0), wins.get('sell', 0), src('FHFA-SJ', 'BLS-CPI')],
-        ['Worst result (2026 dollars)', m(rep_sorted('live')[0]), m(rep_sorted('rent')[0]), m(rep_sorted('sell')[0]), src('FHFA-SJ', 'BLS-CPI')],
-        ['Middle result (2026 dollars)', m(med('live')), m(med('rent')), m(med('sell')), src('FHFA-SJ', 'BLS-CPI')],
-        ['Best result (2026 dollars)', m(rep_sorted('live')[-1]), m(rep_sorted('rent')[-1]), m(rep_sorted('sell')[-1]), src('FHFA-SJ', 'BLS-CPI')],
+        ['Times it was the best choice 10 years after inheritance', RH['10']['wins']['live'], RH['10']['wins']['rent'], RH['10']['wins']['sell'], src('FHFA-SJ', 'BLS-CPI')],
+        ['Times it was the best choice 20 years after inheritance', RH['20']['wins']['live'], RH['20']['wins']['rent'], RH['20']['wins']['sell'], src('FHFA-SJ', 'BLS-CPI')],
+        ['Times it was the best choice in 2076', wins.get('live', 0), wins.get('rent', 0), wins.get('sell', 0), src('FHFA-SJ', 'BLS-CPI')],
+        ['Worst result 10 years after inheritance (2026 dollars)', m(RH['10']['worst']['live']), m(RH['10']['worst']['rent']), m(RH['10']['worst']['sell']), src('FHFA-SJ', 'BLS-CPI')],
+        ['Worst result 20 years after inheritance (2026 dollars)', m(RH['20']['worst']['live']), m(RH['20']['worst']['rent']), m(RH['20']['worst']['sell']), src('FHFA-SJ', 'BLS-CPI')],
+        ['Worst result in 2076 (2026 dollars)', m(rep_sorted('live')[0]), m(rep_sorted('rent')[0]), m(rep_sorted('sell')[0]), src('FHFA-SJ', 'BLS-CPI')],
+        ['Middle result in 2076 (2026 dollars)', m(med('live')), m(med('rent')), m(med('sell')), src('FHFA-SJ', 'BLS-CPI')],
+        ['Best result in 2076 (2026 dollars)', m(rep_sorted('live')[-1]), m(rep_sorted('rent')[-1]), m(rep_sorted('sell')[-1]), src('FHFA-SJ', 'BLS-CPI')],
         ['Baseline (constant rates) for comparison', m(B['real_live']), m(B['real_rent']), m(B['real_sell']), src('FHFA-SJ', 'BLS-CPI')],
     ], caption='Replay of the real 1976-2025 sequence from every possible starting year (wrapped around to fill 2027-2076)', cls='num',
-        note='Each replay keeps the real year-to-year order, so inflation, home prices and stocks move together as they actually did. The spread is very wide because the order of good and bad years matters: a boom just after the sale helps the seller, a crash just after hurts.')
+        note='Each replay keeps the real year-to-year order, so inflation, home prices and stocks move together as they actually did. The spread is very wide because the order of good and bad years matters: a boom just after the sale helps the seller, a crash just after hurts. Ten years after the inheritance selling is behind renting in %d of the 50 histories, by as much as %s; after twenty years it is ahead in every one. The 1976-2025 period was an unusually good one for United States stocks, which is why the Depression and Japan paths below are shown as well.' % (RH['10']['wins']['rent'], m(-RH['10']['sell_minus_rent_worst'])))
     named = table(['Path', 'Market value at inheritance', 'Tax if lived in / rented, first year', 'Live in it', 'Rent it out', 'Sell and reinvest', 'Best', 'Official basis'], [
         [e(x['label']), m(x['summary']['fmv_T']), '%s / %s' % (m(x['summary']['tax_live_T']), m(x['summary']['tax_rent_T'])),
          m(x['summary']['real_live']), m(x['summary']['real_rent']), m(x['summary']['real_sell']), NAME[x['summary']['best']],
-         src('FHFA-SJ', 'BLS-CPI') + ' · ' + src('DAMODARAN')]
+         (src('FRED-JP') if x['key'] == 'japan_at_T' else src('FHFA-SJ', 'BLS-CPI') + ' · ' + src('DAMODARAN'))]
         for x in M['paths']
     ] + [['Baseline (constant rates)', m(B['fmv_T']), '%s / %s' % (m(B['tax_live_T']), m(B['tax_rent_T'])), m(B['real_live']), m(B['real_rent']), m(B['real_sell']), NAME[B['best']], src('FHFA-SJ', 'BLS-CPI')]],
         caption='Named paths (wealth in 2076, in 2026 dollars; inheritance in %d)' % T, cls='num',
-        note='The Depression path uses national home-price data because no local index goes back that far (%s).' % flag('S02'))
+        note='The Depression path uses national home-price data because no local index goes back that far (%s). The Japan path is the one case where selling into stocks fails outright: with the proceeds in stocks, renting ends ahead; had the proceeds been kept in savings instead, selling would have ended at %s against %s for renting (%s).' % (flag('S02'), m(JS_['real_sell']), m(JS_['real_rent']), flag('S08')))
     PATHS = {x['key']: x for x in M['paths']}
     ch = lines([
         ('Baseline', COL['before'], {r['year']: r['cup_value'] / r['cpi'] for r in ROWS}),
@@ -681,7 +690,17 @@ def build_sources():
 </ul>
 <h2>Reproduce</h2>
 <pre>python3 final/model.py &amp;&amp; python3 final/build.py &amp;&amp; python3 final/check.py</pre>""" % (REPO, REPO)
-    page('sources.html', 'Sources and method', 'Every source used, how it was read, and how the numbers are produced.', t + method)
+    xc = table(['Figure (baseline, inheritance in 2045)', 'This site', 'Independent second model', 'Difference and cause', 'Official basis'], [
+        ['Property A market value', m(B['fmv_T']), m(B['fmv_T']), 'none', src('FHFA-SJ')],
+        ['Assessed value before death', m(B['fbyv_T']), m(B['fbyv_T']), 'none', src('BOE-P19')],
+        ['Proposition 19 allowance', m(B['cap_T']), '$1,506,100', '0.4%: different stand-in for the 2026 price change that is not yet published', src('BOE-LTA-2025-009')],
+        ['New assessed value if lived in', m(B['taxable_live_T']), '$5,025,130', '0.1%: follows from the allowance', src('BOE-LTA-2026-026')],
+        ['First-year tax, lived in / rented', '%s / %s' % (m(B['tax_live_T']), m(B['tax_rent_T'])), '$60,010 / $77,610', '0.1% to 0.2%: fixed charges derived with or without the $7,000 exemption', src('SCC-RATES', 'BOE-HOX')],
+        ['Federal exclusion / room for other assets', '%s / %s' % (m(B['exclusion_T']), m(B['exclusion_T'] - B['fmv_T'])), '%s / %s' % (m(B['exclusion_T']), m(B['exclusion_T'] - B['fmv_T'])), 'none', src('RP-2026-35')],
+        ['Ranking of the three choices', 'sell, then rent, then live in; renting beats selling into savings', 'the same', 'none', src('IRS-FAQ-INHERIT')],
+    ], caption='Cross-check against a second model built separately by another work session', cls='num',
+        note='The second model, its own source register and its pages are kept as an <a href="%s">independent check</a>. It is not a second front door; its figures are quoted from the coordination log of 2026-11-11 04:58 UTC.' % VERIFY)
+    page('sources.html', 'Sources and method', 'Every source used, how it was read, and how the numbers are produced.', t + xc + method)
 
 
 # ====================================================================== review

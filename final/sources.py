@@ -182,6 +182,9 @@ add('CBO', 'CBO outlook', 'Congressional Budget Office - The Budget and Economic
 add('USGS', 'USGS earthquake outlook', 'U.S. Geological Survey Fact Sheet 2016-3020 - Earthquake outlook for the San Francisco Bay region 2014-2043',
     'https://pubs.usgs.gov/fs/2016/3020/fs20163020.pdf', 'excerpt',
     '72% probability of at least one magnitude 6.7 or greater earthquake in the Bay region before 2043; 51% for magnitude 7.0 or greater.')
+add('FRED-JP', 'Japan series (FRED)', 'Japan: BIS residential property prices, Nikkei 225 and OECD consumer prices (via FRED QJPN368BIS, NIKKEI225, JPNCPIALLMINMEI)',
+    'https://fred.stlouisfed.org/series/QJPN368BIS', 'page',
+    'Year-end values 1989-2012 read on the FRED download: home prices fell in 21 of the 22 years 1991-2012; Nikkei 225 38,915.87 at end-1989, 8,455.35 at end-2011. Home-price changes for 2013-2020 taken from the file prepared by session 4395771d from the same series.')
 add('DAMODARAN', 'NYU Stern returns table', 'NYU Stern (A. Damodaran) - Historical returns on stocks, bonds and bills 1928-2025',
     'https://pages.stern.nyu.edu/~adamodar/New_Home_Page/datafile/histretSP.html', 'academic',
     'Annual S&P 500 total return, 3-month T-bill, 10-year T-bond and national real-estate returns. Not a government source.')

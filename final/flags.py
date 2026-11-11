@@ -133,6 +133,10 @@ FLAGS = [
          used='Its 1976 change is replaced by the California index change for that year.',
          check='Affects one of fifty replayed years.',
          src=('FHFA-SJ', 'FHFA-CA')),
+    dict(id='S08', item='The Japan path uses series from the Bank for International Settlements, the OECD and the Nikkei index, published through FRED. They are not United States government statistics, and the Nikkei figure leaves out dividends.',
+         used='Used for one stress path only. Cash is assumed to do no better than consumer prices in that path.',
+         check='Treat it as an illustration of a long stagnation, not as a forecast for California.',
+         src=('FRED-JP',)),
 ]
 
 REVIEW = [
