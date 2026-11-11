@@ -19,7 +19,7 @@ OFFICIAL = ('gov', 'sftreasurer.org', 'fred.stlouisfed.org', 'sccassessor.org', 
             'capropeforms.org')
 OTHER_OK = ('github.com', 'pages.stern.nyu.edu')
 # official published figures that are not multiples of $10 (each is quoted from the linked page)
-OFFICIAL_ODD = {'14,217,212,455', '324,973', '1,176', '601', '1,044,586', '72,724', '371,479', '445,771', '742,953', '109,125', '208,325', '661,375',
+OFFICIAL_ODD = {'38,915.87', '8,455.35', '14,217,212,455', '324,973', '1,176', '601', '1,044,586', '72,724', '371,479', '445,771', '742,953', '109,125', '208,325', '661,375',
                 '56', '67', '76', '1.10', '0.55', '24.15'}
 errors = []
 
@@ -146,7 +146,7 @@ def check_model():
             err('MODEL: sale right after a basis reset shows a taxable gain')
         if not (s['fbyv_T'] <= s['taxable_live_T'] <= s['fmv_T'] + 1e-6):
             err('MODEL: Proposition 19 value outside its bounds')
-    for k in ('cup_value', 'cup_assessed', 'cup_tax_2025', 'cup_assessed_2025', 'sf_value', 'sf_assessed_2025', 'sf_tax_2025', 'sf_rent_2units'):
+    for k in ('cup_value', 'cup_assessed', 'cup_tax_2025', 'sf_value', 'sf_assessed', 'sf_tax_2025', 'sf_rent_2units', 'dc_cup', 'dc_sf'):
         if M.P[k] % 10:
             err('MODEL: owner input not rounded to $10:', k)
     return len(paths)

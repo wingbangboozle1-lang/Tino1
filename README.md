@@ -1,4 +1,59 @@
-# Tino1 — Cupertino & San Francisco Inheritance Decision Hub
+# Two-home inheritance analysis
+
+**Live site:** https://wingbangboozle1-lang.github.io/Tino1/
+
+A decision analysis for two California homes. Property A (Cupertino, ZIP 95014) will pass to the Inheritor through a trust around 2040 to 2050. Property B (San Francisco, ZIP 94122) is already owned by the Inheritor. The site answers one question with numbers: live in Property A, rent it out, or sell it and reinvest.
+
+## What is current
+
+The pages at the repository root are the only current edition. They are generated from [`final/`](final/):
+
+| Page | Content |
+|---|---|
+| `index.html` | Executive summary, dashboard, best plan and why |
+| `decision.html` | Live, rent or sell: cash flows, after-tax wealth, sensitivities, break-even points |
+| `projections.html` | Year by year 2026 to 2076: value, assessed value, property tax, insurance, water, electricity, repairs, rental insurance |
+| `black-swan.html` | Non-constant growth and inflation: 50 replays of the real 1976-2025 record and named crisis paths |
+| `process.html` | Step-by-step process with legal deadlines |
+| `law.html` | Federal, California and local law in force, and changes under discussion |
+| `estate-cash.html` | Cash inheritance: thresholds at each level, room before tax, projections |
+| `costs.html` | Insurance for both ZIP codes and running costs |
+| `flagged.html` | Flagged for Review: every unconfirmed value, assumption and irregularity, with links |
+| `sources.html` | Source register, method, cross-check against a second model |
+| `review.html` | Repository review findings |
+| `versions.html` | Earlier editions and why they were replaced |
+
+## Reproduce
+
+```
+python3 final/model.py && python3 final/integrate.py && python3 final/check.py .
+```
+
+Standard library only. `final/check.py` fails if a table row has no link to an official page, if an internal link is broken, if a dollar figure is not a multiple of $10 (listed official figures excepted), or if a fingerprint of an unrounded owner figure appears.
+
+## Rules followed
+
+- **Privacy first.** No names, addresses or parcel numbers. People are "the Transferor" and "the Inheritor". Owner-supplied figures are stored and shown only rounded to $10; no year-by-year history is listed. Pages ask search engines not to index them.
+- **Official sources.** Every table row links to an official page. A value that could not be confirmed is left blank and listed on the Flagged for Review page. Assumptions are labelled as assumptions.
+- **Not advice.** The site prepares questions for a licensed estate attorney and tax adviser.
+
+## Not current
+
+Earlier editions (`archive/`, `dashboard/`, `docs/`, `site/`) are kept for the record. Each page carries a notice pointing to the current site. See `versions.html`. An independent second model is in [`verify-4395771d/`](verify-4395771d/); it is a check, not a second front door.
+
+## Owner action still needed for full privacy
+
+This repository is public, and its Git history contains the first versions of the pages, written before the figures were rounded. Rounding the current pages does not remove that history. Only the owner can make the repository private or have the history rewritten.
+
+## Coordination
+
+Work sessions, claims, change requests and merge records are in [`COORDINATION.md`](COORDINATION.md).
+
+---
+
+## History: README of the earlier editions (kept unchanged except for two corrected source links)
+
+### Tino1 — Cupertino & San Francisco Inheritance Decision Hub
 
 **Live site (GitHub Pages):** https://wingbangboozle1-lang.github.io/Tino1/  
 **Canonical dashboard:** [`dashboard/`](dashboard/index.html) — 15 pages, model-generated, line-verified (linked from the landing page).  
@@ -51,9 +106,9 @@ See `docs/decision.html` + `docs/compare-decisions.html` for full math.
 Key official sources (Source pages list all):
 - IRS Form 709 Instr. 2026 + Rev Proc 2025-32 ($15M exemption, $19k gift) — [IRS](https://www.irs.gov/pub/irs-dft/i709--dft.pdf)
 - BOE Prop 13/19 + LTA 2025/009 ($1,044,586) — [BOE](https://www.boe.ca.gov/prop19/)
-- SCO no CA estate tax — [SCO](https://www.sco.ca.gov/state_finances_estate_tax.html)
+- SCO no CA estate tax — [SCO](https://www.sco.ca.gov/ardtax_estate_tax.html)
 - SCC Assessor Annual Report 2025 — [SCC](https://www.sccassessor.org/)
-- SF Treasurer 1.18268325% FY25-26 — [SF Treasurer](https://sftreasurer.org/property-tax)
+- SF Treasurer 1.18268325% FY25-26 — [SF Treasurer](https://sftreasurer.org/property/secured-property-taxes)
 - C.A.R. forecast — [C.A.R.](https://www.car.org/aboutus/newsreleases/2026housingforecast)
 - CDI / NAIC insurance — [CDI](https://www.insurance.ca.gov/), [NAIC](https://content.naic.org/reports/homeowners-insurance-report)
 - FTB, Cal Courts — [FTB](https://www.ftb.ca.gov/), [Courts](https://selfhelp.courts.ca.gov/probate)
@@ -63,9 +118,9 @@ See `COORDINATION.md` for combined 16-task board, file ownership, verification &
 
 ## Local dev
 ```bash
-# no build required — open docs/index.html or index.html
+### no build required — open docs/index.html or index.html
 python -m http.server 8000
-# or Jekyll (Cayman theme via _config.yml in root, .nojekyll in docs/)
+### or Jekyll (Cayman theme via _config.yml in root, .nojekyll in docs/)
 bundle exec jekyll serve
 ```
 
@@ -110,3 +165,4 @@ Internal family decision support — not legal/tax advice. Consult CA attorney &
 - `analysis/blackswan_model.py` → `analysis/data/blackswan_paths.csv` (every yearly rate used, auditable), `blackswan_projection_*.csv` (year-by-year value / assessed / tax / costs, $10-rounded, Prop 8 handling), `blackswan_stress.csv` (sell vs rent vs live × 3 inheritance years × 6 scenarios).
 - Finding: **sell & reinvest at inheritance wins 12 of 18 stress cells and the baseline**; "live in it" wins only housing-boom/replay cells; renting never wins (full reassessment + ordinary-rate rent tax). Crash *timing* vs the death year dominates crash *magnitude*.
 - `analysis/build_blackswan.py` → `dashboard/black-swan.html`. Research log with per-figure provenance: `research/black-swan-economics.md`.
+

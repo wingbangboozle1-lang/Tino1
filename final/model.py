@@ -33,10 +33,11 @@ def r10(x):
 # ----------------------------------------------------------------------------
 P = dict(
     # --- owner-supplied, rounded to $10 ---
-    cup_value=3_100_000, cup_assessed=550_540, cup_tax_2025=7_210, cup_assessed_2025=539_740,
+    cup_value=3_100_000, cup_assessed=550_540, cup_tax_2025=7_210,
     cup_water=1_500,            # midpoint of 100-150 per month
     cup_elec=-180,              # solar: credit of 10-20 per month (midpoint)
-    sf_value=1_800_000, sf_assessed_2025=114_250, sf_tax_2025=2_440,
+    sf_value=1_800_000, sf_assessed=116_540, sf_tax_2025=2_440,   # assessed value for 2026 = prior year + 2%
+    dc_cup=930, dc_sf=1_090,    # fixed charges inside the bills: bill minus official rate times assessed value (prior-year values not stored)
     sf_rent_2units=85_800,      # 7,150 per month for the two rented units
     sf_water=4_380,             # midpoint of 330-400 per month, all three units
     sf_elec=600,                # midpoint of 30-70 per month
@@ -74,9 +75,6 @@ P = dict(
 )
 
 # derived, shown rounded
-P['dc_cup'] = r10(P['cup_tax_2025'] - P['cup_assessed_2025'] * P['rate_cup'])   # fixed charges on the bill
-P['dc_sf'] = r10(P['sf_tax_2025'] - P['sf_assessed_2025'] * P['rate_sf'])
-P['sf_assessed'] = r10(P['sf_assessed_2025'] * 1.02)
 P['sf_unit3_rent'] = r10(P['sf_rent_2units'] / 2)                                # average of the two rented units
 
 
@@ -110,10 +108,19 @@ def load_hist():
                     r_stock=float(ret[y]['sp500_total_return_pct']) / 100,
                     r_bond=float(ret[y]['tbond_10y_return_pct']) / 100,
                     r_bill=float(ret[y]['tbill_3m_pct']) / 100)
-    return H, N
+    # Japan 1991-2020 (official series via FRED: BIS residential property prices, Nikkei 225 price index, OECD CPI)
+    jp = {int(r['year']): r for r in csv.DictReader(open(os.path.join(HERE, 'data', 'hist_japan.csv')))}
+    J = {}
+    for y in range(1991, 2021):
+        infl = float(jp[y]['cpi']) / float(jp[y - 1]['cpi']) - 1
+        g = float(jp[y]['home_yoy_pct']) / 100
+        J[y] = dict(infl=infl, g_cup=g, g_sf=g, g_ca=g,
+                    r_stock=float(jp[y]['nikkei']) / float(jp[y - 1]['nikkei']) - 1,   # price only, no dividends
+                    r_bond=max(0.0, infl), r_bill=max(0.0, infl))                          # cash keeps pace with prices at best
+    return H, N, J
 
 
-HIST, NAT = load_hist()
+HIST, NAT, JPN = load_hist()
 KEYS = ('infl', 'g_cup', 'g_sf', 'g_ca', 'r_stock', 'r_bond', 'r_bill')
 
 
@@ -399,12 +406,29 @@ def main():
         ('slump_at_T', 'Baseline, then the real 1990-1996 California housing slump starting the year of inheritance', overlay_path(P, HIST, 1990, 1996, T)),
         ('depression_at_T', 'Baseline, then the real 1929-1941 national Depression sequence starting the year of inheritance (national data)', overlay_path(P, NAT, 1929, 1941, T)),
         ('crash_before_T', 'Baseline, then the real 2007-2012 bust ending the year before inheritance', overlay_path(P, HIST, 2007, 2012, T - 6)),
+        ('japan_at_T', 'Baseline, then Japan\'s real 1991-2020 stagnation starting the year of inheritance (home prices, Nikkei without dividends, consumer prices)', overlay_path(P, JPN, 1991, 2020, T)),
     ]
     out['paths'] = []
     for key, label, path in named:
         r_, s_ = run(P, path)
         out['paths'].append(dict(key=key, label=label, summary=pick(s_), rows=r_,
                                  econ=[dict(year=y, **path[y]) for y in sorted(path)]))
+    # the Japan path again with everything kept in savings instead of stocks
+    out['japan_savings'] = pick(run(with_(w_stock=0.0, w_bill=1.0), overlay_path(P, JPN, 1991, 2020, T))[1])
+    # how often each choice leads at 10 years, 20 years and in 2076, across the 50 replays
+    hz = {}
+    for name, get in (('10', lambda x: x['w10']), ('20', lambda x: x['w20']), ('end', lambda x: dict(live=x['w_live'], rent=x['w_rent'], sell=x['w_sell'], cpi=x['cpi_end']))):
+        cnt = dict(live=0, rent=0, sell=0)
+        worst = {}
+        for x in replays:
+            d = get(x)
+            cnt[max(('live', 'rent', 'sell'), key=lambda k: d[k])] += 1
+            for k in ('live', 'rent', 'sell'):
+                v = d[k] / d['cpi']
+                worst[k] = min(worst.get(k, v), v)
+        gaps = sorted(get(x)['sell'] / get(x)['cpi'] - get(x)['rent'] / get(x)['cpi'] for x in replays)
+        hz[name] = dict(wins=cnt, worst=worst, sell_minus_rent_worst=gaps[0], sell_minus_rent_median=gaps[len(gaps) // 2])
+    out['replay_horizons'] = hz
     # historical summary statistics used on the site
     def cagr(vals):
         prod = 1.0

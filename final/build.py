@@ -17,7 +17,8 @@ M = json.load(open(os.path.join(HERE, 'out', 'model.json')))
 P = M['params']
 B = M['baseline']['summary']
 ROWS = M['baseline']['rows']
-OUT = os.path.join(HERE, 'site')
+OUT = os.path.abspath(os.environ.get('OUT_DIR', os.path.join(HERE, 'site')))
+ROOT_MODE = bool(os.environ.get('ROOT_MODE'))
 Y0 = 2026
 T = P['T']
 BUILD_DATE = '2026-11-11'
@@ -89,7 +90,7 @@ NAV = [
     ('flagged.html', 'Flagged for Review'),
     ('sources.html', 'Sources and method'),
     ('review.html', 'Repo review'),
-]
+] + ([('versions.html', 'Earlier versions')] if os.environ.get('ROOT_MODE') else [])
 
 
 def page(slug, title, lead, body):
@@ -109,9 +110,9 @@ def page(slug, title, lead, body):
 <p class="lead">%s</p>
 %s
 </main>
-<footer class="wrap"><p>Built %s from <a href="%s/tree/main/final">final/</a> (model, generator and checker). Property A = Cupertino home (ZIP 95014). Property B = San Francisco three-unit home (ZIP 94122). People are placeholders: "the Transferor" (current owner of Property A) and "the Inheritor" (already owns Property B). Owner-supplied and modelled dollar figures are rounded to the nearest $10. This is an analysis to prepare questions for a licensed estate attorney and tax adviser, not legal or tax advice. Open items are on the <a href="flagged.html">Flagged for Review</a> page.</p></footer>
+<footer class="wrap"><p>Built %s from <a href="%s/tree/main/final">final/</a> (model, generator and checker). %s Property A = Cupertino home (ZIP 95014). Property B = San Francisco three-unit home (ZIP 94122). People are placeholders: "the Transferor" (current owner of Property A) and "the Inheritor" (already owns Property B). Owner-supplied and modelled dollar figures are rounded to the nearest $10. This is an analysis to prepare questions for a licensed estate attorney and tax adviser, not legal or tax advice. Open items are on the <a href="flagged.html">Flagged for Review</a> page.</p></footer>
 <script src="app.js"></script>
-</body></html>""" % (e(title), nav, e(title), lead, body, BUILD_DATE, REPO)
+</body></html>""" % (e(title), nav, e(title), lead, body, BUILD_DATE, REPO, '<a href="versions.html">Earlier versions</a> are superseded.' if ROOT_MODE else '')
     open(os.path.join(OUT, slug), 'w').write(doc)
 
 
@@ -171,6 +172,9 @@ wins = {}
 for x in M['replays']:
     wins[x['best']] = wins.get(x['best'], 0) + 1
 rep_sorted = lambda k: sorted(x['real_' + k] for x in M['replays'])
+RH = M['replay_horizons']
+JS_ = M['japan_savings']
+VERIFY = ('' if ROOT_MODE else '../../') + 'verify-4395771d/site/index.html'
 NAME = {'live': 'Live in it', 'rent': 'Rent it out', 'sell': 'Sell and reinvest'}
 SRC_MODEL_TAX = ('SCC-RATES', 'BOE-LTA-2026-026')
 
@@ -183,7 +187,7 @@ def kpi(label, value, sub=''):
 def build_index():
     by = M['by_T']
     cards = ''.join([
-        kpi('Best financial outcome', 'Sell Property A, keep Property B', 'ahead in the baseline and in %d of 50 real historical sequences' % wins.get('sell', 0)),
+        kpi('Best financial outcome', 'Sell Property A, keep Property B', 'ahead in the baseline; across 50 real historical sequences it leads in %d after 10 years and in %d after 20' % (RH['10']['wins']['sell'], RH['20']['wins']['sell'])),
         kpi('Property A at inheritance (%d)' % T, m(B['fmv_T']), 'from %s today at 4.0%% a year (assumption)' % m(P['cup_value'])),
         kpi('Property A tax: today / if lived in / if rented', '%s / %s / %s' % (m(P['cup_tax_2025']), m(B['tax_live_T']), m(B['tax_rent_T'])), 'per year; first year after inheritance'),
         kpi('Property B tax advantage kept by not selling', m(sf_gap) + ' a year', 'difference between tax on market value and on the current assessed value'),
@@ -221,12 +225,14 @@ def build_index():
 <ol class="plan">
 <li><strong>Keep Property B and keep living in its third unit.</strong> Its assessed value is %s against a market value of %s, which saves about %s of property tax every year, and that saving is lost for good if it is sold. It also has no basis reset, so selling it would tax the whole gain. It already produces %s a year.</li>
 <li><strong>Sell Property A within a few months of inheriting it and invest the proceeds in a diversified stock fund.</strong> With the basis reset to the date-of-death value the sale has no taxable gain (the model shows a small loss of %s from selling costs). About %s is released. In the baseline it grows to %s by 2076 after all taxes (%s in 2026 dollars), against %s if rented and %s if lived in.</li>
+<li><strong>Expect the first ten years to be the risky ones.</strong> Replaying the real 1976-2025 record from each of its 50 starting years, selling is ahead of renting in %d of 50 cases ten years after the inheritance and in all 50 after twenty. In the worst ten-year case selling is behind by %s (2026 dollars). A long stagnation of the kind Japan had after 1990 is the one tested path where selling into stocks ends up behind keeping the house. Investing the proceeds in stages and keeping a few years of spending in Treasury bills narrows that risk.</li>
 <li><strong>Do not sell and park the money in savings.</strong> If the proceeds would sit in savings or Treasury bills at about 3.5%%, keeping the house as a rental comes out ahead (%s against %s in 2026 dollars).</li>
 <li><strong>Living in Property A is a lifestyle choice with a price.</strong> The assessed value jumps from %s to %s even with the Proposition 19 relief, so the tax bill rises from about %s to about %s a year. Compared with selling, living there costs about %s of 2076 wealth in 2026 dollars.</li>
 <li><strong>Before anything else, have the trust read by an estate attorney.</strong> The whole result depends on the home being included in the Transferor's gross estate so that the basis resets. If it is not, selling triggers tax on decades of gain (the model shows %s less wealth in 2026 dollars). See the <a href="flagged.html">Flagged for Review</a> page.</li>
 </ol>""" % (
         m(P['sf_assessed']), m(P['sf_value']), m(sf_gap), m(P['sf_rent_2units']),
         m(-B['sell_gain']), m(B['sell_net']), m(B['w_sell']), m(B['real_sell']), m(B['w_rent']), m(B['w_live']),
+        RH['10']['wins']['sell'], m(-RH['10']['sell_minus_rent_worst']),
         m(M['sensitivity'][6]['real_rent']), m(M['sensitivity'][6]['real_sell']),
         m(B['fbyv_T']), m(B['taxable_live_T']), m(B['tax_before_T']), m(B['tax_live_T']),
         m(B['real_sell'] - B['real_live']),
@@ -335,7 +341,14 @@ def build_decision():
         m((s['sell_proceeds'] - min(P['cup_assessed'], s['fmv_T'])) * 0.371),
         m(rT['rent_collected']), mm(s['fmv_T']), pc(rT['rent_collected'] / s['fmv_T']), pc(rT['rent_tax'] / rT['rent_collected'], 0),
         pc(BE['g_cup_rent_vs_sell']), pc(HS['sj_1976_2025']))
-    body = at + first + w + '<h2>Wealth over time, in 2026 dollars</h2>' + chart + why + sens + be + byT + '<h2>Property A or Property B?</h2>' + which
+    S_ = M['sensitivity']
+    where = table(['If Property A is sold, the proceeds go into', 'Assumed yearly return', 'Sell and reinvest: wealth in 2076 (2026 dollars)', 'Renting instead, same reinvestment of rent', 'Better choice', 'Official basis'], [
+        ['A diversified stock fund', '7.0%', m(S_[0]['real_sell']), m(S_[0]['real_rent']), NAME[S_[0]['best']], src('TREASURY') + ' · ' + src('DAMODARAN')],
+        ['60% stocks, 40% Treasury bonds', '7.0% and 4.5%', m(S_[7]['real_sell']), m(S_[7]['real_rent']), NAME[S_[7]['best']], src('TREASURY') + ' · ' + src('DAMODARAN')],
+        ['Savings account or Treasury bills', '3.5%', m(S_[6]['real_sell']), m(S_[6]['real_rent']), NAME[S_[6]['best']], src('TREASURY')],
+    ], caption='Stocks or savings: where the sale proceeds go decides the answer', cls='num',
+        note='Returns are assumptions (%s). On 2026-11-10 the 3-month Treasury bill yielded 4.30%% and the 10-year note 4.98%%. Interest is taxed every year at ordinary rates; stock growth is taxed when sold.' % flag('A02'))
+    body = at + first + w + where + '<h2>Wealth over time, in 2026 dollars</h2>' + chart + why + sens + be + byT + '<h2>Property A or Property B?</h2>' + which
     page('decision.html', 'Decision: live in it, rent it, or sell and reinvest',
          'One model, one set of assumptions, three choices for Property A. Property B stays as it is in every case because the Inheritor already owns it.', body)
 
@@ -411,21 +424,25 @@ def build_blackswan():
     ], caption='How uneven the real record was', cls='num')
     med = lambda k: rep_sorted(k)[25]
     rep = table(['Across all 50 real starting years', 'Live in it', 'Rent it out', 'Sell and reinvest', 'Official basis'], [
-        ['Times it was the best choice', wins.get('live', 0), wins.get('rent', 0), wins.get('sell', 0), src('FHFA-SJ', 'BLS-CPI')],
-        ['Worst result (2026 dollars)', m(rep_sorted('live')[0]), m(rep_sorted('rent')[0]), m(rep_sorted('sell')[0]), src('FHFA-SJ', 'BLS-CPI')],
-        ['Middle result (2026 dollars)', m(med('live')), m(med('rent')), m(med('sell')), src('FHFA-SJ', 'BLS-CPI')],
-        ['Best result (2026 dollars)', m(rep_sorted('live')[-1]), m(rep_sorted('rent')[-1]), m(rep_sorted('sell')[-1]), src('FHFA-SJ', 'BLS-CPI')],
+        ['Times it was the best choice 10 years after inheritance', RH['10']['wins']['live'], RH['10']['wins']['rent'], RH['10']['wins']['sell'], src('FHFA-SJ', 'BLS-CPI')],
+        ['Times it was the best choice 20 years after inheritance', RH['20']['wins']['live'], RH['20']['wins']['rent'], RH['20']['wins']['sell'], src('FHFA-SJ', 'BLS-CPI')],
+        ['Times it was the best choice in 2076', wins.get('live', 0), wins.get('rent', 0), wins.get('sell', 0), src('FHFA-SJ', 'BLS-CPI')],
+        ['Worst result 10 years after inheritance (2026 dollars)', m(RH['10']['worst']['live']), m(RH['10']['worst']['rent']), m(RH['10']['worst']['sell']), src('FHFA-SJ', 'BLS-CPI')],
+        ['Worst result 20 years after inheritance (2026 dollars)', m(RH['20']['worst']['live']), m(RH['20']['worst']['rent']), m(RH['20']['worst']['sell']), src('FHFA-SJ', 'BLS-CPI')],
+        ['Worst result in 2076 (2026 dollars)', m(rep_sorted('live')[0]), m(rep_sorted('rent')[0]), m(rep_sorted('sell')[0]), src('FHFA-SJ', 'BLS-CPI')],
+        ['Middle result in 2076 (2026 dollars)', m(med('live')), m(med('rent')), m(med('sell')), src('FHFA-SJ', 'BLS-CPI')],
+        ['Best result in 2076 (2026 dollars)', m(rep_sorted('live')[-1]), m(rep_sorted('rent')[-1]), m(rep_sorted('sell')[-1]), src('FHFA-SJ', 'BLS-CPI')],
         ['Baseline (constant rates) for comparison', m(B['real_live']), m(B['real_rent']), m(B['real_sell']), src('FHFA-SJ', 'BLS-CPI')],
     ], caption='Replay of the real 1976-2025 sequence from every possible starting year (wrapped around to fill 2027-2076)', cls='num',
-        note='Each replay keeps the real year-to-year order, so inflation, home prices and stocks move together as they actually did. The spread is very wide because the order of good and bad years matters: a boom just after the sale helps the seller, a crash just after hurts.')
+        note='Each replay keeps the real year-to-year order, so inflation, home prices and stocks move together as they actually did. The spread is very wide because the order of good and bad years matters: a boom just after the sale helps the seller, a crash just after hurts. Ten years after the inheritance selling is behind renting in %d of the 50 histories, by as much as %s; after twenty years it is ahead in every one. The 1976-2025 period was an unusually good one for United States stocks, which is why the Depression and Japan paths below are shown as well.' % (RH['10']['wins']['rent'], m(-RH['10']['sell_minus_rent_worst'])))
     named = table(['Path', 'Market value at inheritance', 'Tax if lived in / rented, first year', 'Live in it', 'Rent it out', 'Sell and reinvest', 'Best', 'Official basis'], [
         [e(x['label']), m(x['summary']['fmv_T']), '%s / %s' % (m(x['summary']['tax_live_T']), m(x['summary']['tax_rent_T'])),
          m(x['summary']['real_live']), m(x['summary']['real_rent']), m(x['summary']['real_sell']), NAME[x['summary']['best']],
-         src('FHFA-SJ', 'BLS-CPI') + ' · ' + src('DAMODARAN')]
+         (src('FRED-JP') if x['key'] == 'japan_at_T' else src('FHFA-SJ', 'BLS-CPI') + ' · ' + src('DAMODARAN'))]
         for x in M['paths']
     ] + [['Baseline (constant rates)', m(B['fmv_T']), '%s / %s' % (m(B['tax_live_T']), m(B['tax_rent_T'])), m(B['real_live']), m(B['real_rent']), m(B['real_sell']), NAME[B['best']], src('FHFA-SJ', 'BLS-CPI')]],
         caption='Named paths (wealth in 2076, in 2026 dollars; inheritance in %d)' % T, cls='num',
-        note='The Depression path uses national home-price data because no local index goes back that far (%s).' % flag('S02'))
+        note='The Depression path uses national home-price data because no local index goes back that far (%s). The Japan path is the one case where selling into stocks fails outright: with the proceeds in stocks, renting ends ahead; had the proceeds been kept in savings instead, selling would have ended at %s against %s for renting (%s).' % (flag('S02'), m(JS_['real_sell']), m(JS_['real_rent']), flag('S08')))
     PATHS = {x['key']: x for x in M['paths']}
     ch = lines([
         ('Baseline', COL['before'], {r['year']: r['cup_value'] / r['cpi'] for r in ROWS}),
@@ -433,6 +450,7 @@ def build_blackswan():
         ('Real order from 2000', COL['sell'], {r['year']: r['cup_value'] / r['cpi'] for r in PATHS['replay_2000']['rows']}),
         ('2007-2012 bust at inheritance', COL['live'], {r['year']: r['cup_value'] / r['cpi'] for r in PATHS['crash_at_T']['rows']}),
         ('Depression at inheritance', COL['x'], {r['year']: r['cup_value'] / r['cpi'] for r in PATHS['depression_at_T']['rows']}),
+        ('Japan-style stagnation at inheritance', '#c0392b', {r['year']: r['cup_value'] / r['cpi'] for r in PATHS['japan_at_T']['rows']}),
     ], 2026, 2076, mark=T)
     cr = PATHS['crash_at_T']
     yr = table(['Year', 'Inflation', 'Home prices', 'Stocks', 'Market value', 'Assessed if lived in', 'Tax if lived in', 'Tax if rented', 'Wealth: live', 'Wealth: rent', 'Wealth: sell', 'Official basis'], [
@@ -455,7 +473,7 @@ def build_blackswan():
         ['Stricter rent rules', 'Statewide cap of 5% plus inflation (10% maximum) with an exemption for many single-family homes; San Francisco allows 60% of inflation on controlled units.', 'Lowers the Rent result for Property A if the exemption is lost, and limits Property B rent growth in every case.', src('DOJ-TPA', 'SF-RENT-RULES')],
     ], caption='Shocks that no price history captures')
     body = ("""<p class="callout">This section is kept apart from the baseline on purpose. The baseline uses constant rates so that the three choices can be compared cleanly. Here nothing is constant: every path uses real recorded years, in their real order, for inflation, local home prices, stocks, bonds and bills.</p>"""
-            + rep + named + '<h2>Property A market value in 2026 dollars under five paths</h2>' + ch + stats + other + yr + yr2 + hist)
+            + rep + named + '<h2>Property A market value in 2026 dollars under six paths</h2>' + ch + stats + other + yr + yr2 + hist)
     page('black-swan.html', 'Black swan section: non-constant growth and inflation over 50 years',
          'What happens to the decision when inflation, home prices and markets behave the way they really have: in bursts, busts and long flat stretches.', body)
 
@@ -469,11 +487,11 @@ def build_process():
         ['4', 'Date of death', 'Record the date. Order a written appraisal of Property A as of that date.', 'For a revocable trust this is the change-in-ownership date, and the appraisal sets the new basis.', src('BOE-RULE-462.260', 'IRS-FAQ-INHERIT')],
         ['5', 'Within 60 days', 'The successor trustee serves the notification to every beneficiary and heir.', 'Required when a revocable trust becomes irrevocable by death; starts the 120-day contest period.', src('PROB-16061.7')],
         ['6', 'Soon after death', 'Get an employer identification number for the trust or estate; file Form 1041 if it has more than $600 of gross income in a year.', 'Rent, interest or dividends received before distribution are taxed to the trust or passed through.', src('IRS-1041')],
-        ['7', 'Within 150 days of death', 'File the change-in-ownership statement for Property A with the Santa Clara County Assessor.', 'Statutory deadline when ownership changes by death; a penalty applies after a written request is ignored.', src('RTC-480')],
+        ['7', 'Within 150 days of death', 'File the change-in-ownership statement for Property A with the Santa Clara County Assessor.', 'Statutory deadline when ownership changes by death; the notice required by the statute warns of a penalty for not filing.', src('RTC-480')],
         ['8', 'Within 9 months of death', 'File Form 706 if the gross estate plus adjusted taxable gifts is above the filing threshold, or to elect portability for a surviving spouse. Form 4768 gives six more months.', 'Above the threshold the tax is 40% of the excess. Portability is lost without a timely return.', src('IRS-FAQ-ESTATE', 'IRS-I706')],
         ['9', 'Decide early: live, rent or sell', 'Use the <a href="decision.html">Decision</a> page. If selling, list promptly and keep the home insured while empty.', 'A sale near the date-of-death value has almost no taxable gain. Vacant homes can lose cover after 60 days.', src('IRS-FAQ-INHERIT', 'CDI-RES')],
         ['10', 'Within 1 year, only if moving in', 'Make Property A the Inheritor\'s principal residence and file for the homeowners\' exemption there.', 'Without both, the Proposition 19 exclusion is not available and the home is reassessed at full market value.', src('RTC-63.2', 'BOE-LTA-2026-026')],
-        ['11', 'Within 3 years, only if moving in', 'File the parent-child exclusion claim (form BOE-19-P) with the Assessor, before any transfer to a third party.', 'Later claims give relief only going forward.', src('BOE-P19', 'SCC-P19')],
+        ['11', 'Within 3 years, only if moving in', 'File the parent-child exclusion claim (form BOE-19-P) with the Assessor, before any transfer to a third party.', 'The county page says later claims receive relief only going forward; confirm with the Assessor. ' + flag('S03'), src('BOE-P19', 'SCC-P19')],
         ['12', 'After the Assessor acts', 'Expect a supplemental tax bill for Property A covering the period from the date of death.', 'Budget for it in every choice. The San Francisco page describes the same California process. ' + flag('U06'), src('SF-TAX')],
         ['13', 'Tax year of the sale, if sold', 'Report the sale on Form 8949 and Schedule D using the date-of-death value as basis; match any Schedule A to Form 8971 received.', 'A basis above the value finally determined for estate tax can draw an accuracy penalty.', src('IRS-FAQ-INHERIT', 'IRS-TC409')],
         ['14', 'Every year, if rented', 'Report rent and expenses; depreciate the building part of the new basis over 27.5 years. Follow the state rent cap and its notice rules.', 'Depreciation shelters part of the rent but is taxed back at up to 25% federal on a later sale.', src('IRS-P527', 'IRS-TC409', 'DOJ-TPA')],
@@ -530,13 +548,13 @@ def build_law():
         ['Death Tax Repeal Act (S.587 and H.R.1301)', 'Federal', 'Introduced 2025-02-13 and referred to committee. No later action shown.', 'Would repeal the estate tax. No effect on the property-tax or income-tax results.', src('CONG-S587', 'CONG-HR1301')],
         ['Any reduction of the exclusion or of the basis reset', 'Federal', 'No enacted measure found. Would need a new Act of Congress.', 'See the stress rows on the Cash and Black swan pages.', src('IRS-NEW')],
         ['Next adjustment of the Proposition 19 allowance', 'California', 'Scheduled for 2027-02-16, using the 2026 California house-price change. Figure: ' + BLANK + ' ' + flag('U04'), 'Sets the allowance for transfers through 2029-02-15.', src('BOE-LTA-2025-009')],
-        ['Proposition 3 (extends the existing tax on high incomes)', 'California', 'Yes 60.6% in unofficial returns; certification due by 2026-12-11.', 'Keeps the top state rates that apply to a large one-year gain.', src('SOS-RESULTS')],
+        ['Proposition 3 (extends the existing tax on high incomes)', 'California', 'Yes 60.6% in unofficial returns; certification due by 2026-12-11.', 'Would keep the existing higher state rates on high incomes, which reach a large one-year gain. Details are in the voter guide.', src('SOS-RESULTS')],
         ['Proposition 40 (one-time tax on certain taxpayers)', 'California', 'No 52.6% in unofficial returns.', 'None if the result holds.', src('SOS-RESULTS')],
-        ['Proposition 42 (bars new state personal-property taxes and certain retroactive taxes)', 'California', 'Yes 51.5% in unofficial returns.', 'Lowers the chance of a new state tax on invested sale proceeds.', src('SOS-RESULTS')],
+        ['Proposition 42 (bars new state personal-property taxes and certain retroactive taxes)', 'California', 'Yes 51.5% in unofficial returns.', 'Would bar new state taxes on personal property; relevant to invested sale proceeds if the result holds.', src('SOS-RESULTS')],
         ['Measure to undo the Proposition 19 inheritance rules', 'California', 'Reported by non-official websites as a signature drive. Not among the measures on the November 2026 ballot. ' + flag('S04'), 'Would restore relief for rented inherited homes.', src('SOS-RESULTS')],
         ['Limit on banked and capital-improvement rent increases (File No. 261020)', 'San Francisco', 'Under consideration by the Board of Supervisors; not enacted.', 'Would cap those increases at 10% a year on Property B.', src('SF-RENT-RULES')],
         ['Empty Homes Tax appeal', 'San Francisco', 'City lost on appeal; no collection unless reversed.', 'If revived, a charge on the unit kept empty.', src('SF-EHT')],
-        ['Residential fixed charge on electricity bills', 'California', 'Adopted: $24.15 a month for standard customers.', 'Reduces or removes the monthly solar credit at Property A.', src('CPUC-FIXED')],
+        ['Residential fixed charge on electricity bills', 'California', 'Adopted: $24.15 a month for standard customers.', 'May reduce or remove the monthly solar credit at Property A.', src('CPUC-FIXED')],
         ['Missing October 2025 inflation data', 'Federal', 'No 12-month change published for October 2026.', 'Indexed figures still use the published series; watch for revisions.', src('BLS-OCT')],
     ], caption='Changes under discussion or recently decided')
     body = fed + ca + loc + '<h2>Changes under discussion</h2>' + pend
@@ -611,7 +629,8 @@ def build_costs():
 <li>Read the range of annual premiums across insurers and compare it with the %s estimate used here.</li>
 <li>For Property B ask an agent for a landlord (dwelling fire) quote for a three-unit building; the survey has no such scenario.</li></ol>""" % (S['CDI-TOOL-APP']['url'], m(P['ins_home']))
     op = table(['Cost', 'Property A', 'Property B', 'How it is projected', 'Official basis'], [
-        ['Property tax (2025 bill)', '%s on an assessed value of %s' % (m(P['cup_tax_2025']), m(P['cup_assessed_2025'])), '%s on an assessed value of %s' % (m(P['sf_tax_2025']), m(P['sf_assessed_2025'])), 'official rate times assessed value, plus fixed charges', src('SCC-RATES', 'SF-TAX')],
+        ['Property tax (2025 bill)', m(P['cup_tax_2025']), m(P['sf_tax_2025']), 'official rate times assessed value, plus fixed charges', src('SCC-RATES', 'SF-TAX')],
+        ['Assessed value (2026)', m(P['cup_assessed']), m(P['sf_assessed']), 'inflation, capped at 2% a year; never reassessed for Property B', src('BOE-P19', 'SF-TAX')],
         ['Fixed charges inside the bill', 'about %s (bill minus rate times value)' % m(P['dc_cup']), 'about %s' % m(P['dc_sf']), 'with inflation ' + flag('U03'), src('SCC-RATES', 'SF-TAX')],
         ['Water', '%s a year (owner: $100 to $150 a month)' % m(P['cup_water']), '%s a year for three units (owner: $330 to $400 a month)' % m(P['sf_water']), 'inflation + 2 points; Property B +9% in 2027 and 2028', src('SFPUC')],
         ['Electricity', '%s a year: a credit, because of the solar system (owner: $10 to $20 a month)' % m(P['cup_elec']), '%s a year (owner: $30 to $70 a month)' % m(P['sf_elec']), 'inflation + 1 point ' + flag('U05'), src('CPUC-NEM', 'CPUC-FIXED')],
@@ -672,7 +691,17 @@ def build_sources():
 </ul>
 <h2>Reproduce</h2>
 <pre>python3 final/model.py &amp;&amp; python3 final/build.py &amp;&amp; python3 final/check.py</pre>""" % (REPO, REPO)
-    page('sources.html', 'Sources and method', 'Every source used, how it was read, and how the numbers are produced.', t + method)
+    xc = table(['Figure (baseline, inheritance in 2045)', 'This site', 'Independent second model', 'Difference and cause', 'Official basis'], [
+        ['Property A market value', m(B['fmv_T']), m(B['fmv_T']), 'none', src('FHFA-SJ')],
+        ['Assessed value before death', m(B['fbyv_T']), m(B['fbyv_T']), 'none', src('BOE-P19')],
+        ['Proposition 19 allowance', m(B['cap_T']), '$1,506,100', '0.4%: different stand-in for the 2026 price change that is not yet published', src('BOE-LTA-2025-009')],
+        ['New assessed value if lived in', m(B['taxable_live_T']), '$5,025,130', '0.1%: follows from the allowance', src('BOE-LTA-2026-026')],
+        ['First-year tax, lived in / rented', '%s / %s' % (m(B['tax_live_T']), m(B['tax_rent_T'])), '$60,010 / $77,610', '0.1% to 0.2%: fixed charges derived with or without the $7,000 exemption', src('SCC-RATES', 'BOE-HOX')],
+        ['Federal exclusion / room for other assets', '%s / %s' % (m(B['exclusion_T']), m(B['exclusion_T'] - B['fmv_T'])), '%s / %s' % (m(B['exclusion_T']), m(B['exclusion_T'] - B['fmv_T'])), 'none', src('RP-2026-35')],
+        ['Ranking of the three choices', 'sell, then rent, then live in; renting beats selling into savings', 'the same', 'none', src('IRS-FAQ-INHERIT')],
+    ], caption='Cross-check against a second model built separately by another work session', cls='num',
+        note='The second model, its own source register and its pages are kept as an <a href="%s">independent check</a>. It is not a second front door; its figures are quoted from the coordination log of 2026-11-11 04:58 UTC.' % VERIFY)
+    page('sources.html', 'Sources and method', 'Every source used, how it was read, and how the numbers are produced.', t + xc + method)
 
 
 # ====================================================================== review
@@ -682,6 +711,47 @@ def build_review():
     body = """<p class="callout">The repository holds several generations of the same analysis written by parallel sessions. This page records what an independent pass found, so that a reader knows which pages to trust. The full history is in <a href="%s/blob/main/COORDINATION.md">COORDINATION.md</a>.</p>""" % REPO + t
     page('review.html', 'Repository review', 'Irregularities found while reading the repository, with links to the files and to the rule each one is measured against.', body)
 
+
+LEGACY = [
+    ('archive/root-site-2026-11-11/index.html', 'Root "decision hub" published earlier on 2026-11-11 (pull request 15)',
+     'Shows Property B as reassessed and as part of the estate. It is neither: the Inheritor already owns it. Tables stop in 2060.', ('BOE-RULE-462.260', 'IRS-ESTATE')),
+    ('dashboard/index.html', 'dashboard/ - model-generated dashboard of 2026-11-10 with a black-swan page added 2026-11-11',
+     'Grows the Proposition 19 allowance 2% every year instead of following the official two-year rule; many table rows have no official link.', ('BOE-LTA-2025-009',)),
+    ('site/index.html', 'site/ - eight-page suite of 2026-11-10',
+     'Different growth assumptions and a 10-year comparison only; superseded.', ('FHFA-SJ',)),
+    ('docs/index.html', 'docs/ - first multi-page site of 2026-11-10',
+     'Cites consumer finance websites as sources, has broken in-page anchors and a script error; lists a year-by-year history series.', ('IRS-ESTATE',)),
+    ('archive/root-portal-62c87525.html', 'Portal page of 2026-11-11 (pull request 14)',
+     'A landing page that pointed to dashboard/; replaced.', ('BOE-P19',)),
+    ('archive/mirror-archived-2026-11-10.html', 'Mirror of the first root page of 2026-11-10',
+     'Treated Property B as inherited; replaced.', ('BOE-RULE-462.260',)),
+    ('final/site/index.html', 'final/site/ - staging address of the current site',
+     'Now redirects to this site.', ('BOE-P19',)),
+]
+
+
+def build_versions():
+    rows = [['<a href="%s">%s</a>' % (h, e(t)), 'Superseded - kept for the record, carries a notice at the top', e(why), src(*s_)] for h, t, why, s_ in LEGACY]
+    t = table(['Earlier version', 'Status', 'Why it should not be relied on', 'Rule it is measured against'], rows, caption='Earlier versions kept in the repository')
+    body = '<p class="callout">This site is the only current version. The pages below were written by earlier or parallel work sessions. They are kept so that nothing is lost, each carries a notice pointing back here, and none is linked from anywhere else on this site. Their numbers differ from this site because their assumptions and, in places, their reading of the rules differ.</p>' + t + '<p class="note">Details of each finding are on the <a href="review.html">Repo review</a> page and in <a href="%s/blob/main/COORDINATION.md">COORDINATION.md</a>.</p>' % REPO
+    page('versions.html', 'Earlier versions', 'Older editions of this analysis that remain in the repository, and why this site replaces them.', body)
+
+
+def stub(slug, target, title):
+    open(os.path.join(OUT, slug), 'w').write('''<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta http-equiv="refresh" content="0; url=%s">
+<link rel="canonical" href="%s">
+<title>%s - moved</title></head>
+<body><p>This page has moved to <a href="%s">%s</a>.</p></body></html>
+''' % (target, target, e(title), target, e(title)))
+
+
+STUBS = [('properties.html', 'index.html', 'The two homes'), ('scenarios.html', 'decision.html', 'Decision'),
+         ('taxes.html', 'law.html', 'Law'), ('estate-tax.html', 'estate-cash.html', 'Cash and estate tax'),
+         ('methodology.html', 'sources.html', 'Sources and method'), ('pending-changes.html', 'law.html', 'Law'),
+         ('steps.html', 'process.html', 'Process'), ('mirror-archived-2026-11-10.html', 'versions.html', 'Earlier versions')]
 
 CSS = """
 :root{--ink:#16202b;--mut:#5b6875;--line:#d9dee4;--bg:#f6f7f9;--card:#fff;--acc:#1f4e8c;--warn:#9a5b00;--warnbg:#fff6e0}
@@ -754,6 +824,10 @@ def main():
     for f in (build_index, build_decision, build_projections, build_blackswan, build_process, build_law,
               build_estate, build_costs, build_flagged, build_sources, build_review):
         f()
+    if ROOT_MODE:
+        build_versions()
+        for s_, t_, n_ in STUBS:
+            stub(s_, t_, n_)
     print('built', len([x for x in os.listdir(OUT) if x.endswith('.html')]), 'pages in', OUT)
 
 
