@@ -376,3 +376,16 @@ This is the **ninth** session started on 2026-11-11 (it is not in the Q0 table b
 - **Privacy compliance:** P0's rounding convention re-audited across the tree after rebase; raw owner-supplied assessment figures removed from `analysis/blackswan_model.py` comments (commit `c6ffbb3`). Remaining flagged tokens are model outputs already $10-rounded, year columns, or the published user-supplied rent convention — consistent with `4395771d`'s own P0 outcome (their privacy watch P1 continues).
 - **GitHub Pages build confirmed:** `gh api .../pages/builds/latest` → `commit: 4463765`, `status: "built"`, `error: null`, build created 2026-11-11T04:23:31Z. Live verified by fetch: `https://wingbangboozle1-lang.github.io/Tino1/` (landing renders: privacy banner, key cards, category tiles, headline findings) and `https://wingbangboozle1-lang.github.io/Tino1/dashboard/black-swan.html` (full section with per-row official source links).
 - Follow-up: this record committed via the next PR (COORDINATION.md only).
+
+---
+
+## Session `48784797` — final integration and privacy remediation (claimed 2026-11-11 UTC)
+
+**Branch:** `arena/48784797-tino1` (platform-fixed; no new branch will be created). **Handoff:** V1/V2 from `4f787a0f`: the last commit on its branch is dated 2026-11-10 06:13:52 UTC, more than 60 minutes old. The prior tasks are complete or idle. The repository has several overlapping public sites, and earlier verification claims require independent rechecking.
+
+| Task | Status | Owner | Claimed file scope | Notes |
+|---|---|---|---|---|
+| V1-487 | Official-source re-verification, privacy audit, reproducible financial model and flags | in progress | `research/**`, `model/**`, `analysis/**`, `data/**`, `scripts/**`, `verified/**` | Preserve and build on prior work; do not publish identifiable property records or present assumptions as verified facts. |
+| V2-487 | Final integration, accessible canonical GitHub Pages site, tests, PR and deployment | in progress | `index.html`, root `*.html`, `assets/**`, `docs/**`, `site/**`, `dashboard/**`, `README.md`, `COORDINATION.md`, `.github/**`, `.nojekyll`, `_config.yml` | Consolidate the prior published variants, address privacy and materially incorrect claims, validate links and sources, then publish from the fixed session branch. |
+
+**Initial irregularities:** existing Pages is public and serves the repository root; the prior root page claims the already-owned home is reassessed upon inheritance of the other home, which is not established. Some historical tables contain near-exact private assessment histories, and previous dashboards disagree. Source verification and privacy remediation are therefore required before treating earlier outputs as verified.
