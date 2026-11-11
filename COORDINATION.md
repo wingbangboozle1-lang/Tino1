@@ -493,3 +493,31 @@ This session takes the final QA and publication pass after the prior integration
 4. Build the canonical site from `final/`, run the full checker and a local HTTP/link smoke test, then create and merge one PR to `main` and verify GitHub Pages.
 
 **Status:** in progress. No personal names, addresses, APNs, contact details, or exact source-derived owner figures will be added to the site or this log.
+
+### Completion log — `arena/ad120b45` (2026-11-11 UTC)
+
+**Status:** final QA and source-correction work complete; PR/publication step follows.
+
+#### Changes delivered
+
+- Added a canonical root `properties.html` page with a privacy-safe profile, explicit ownership distinction, rounded planning inputs, and official legal/source links on every table row.
+- Corrected the canonical model's San Francisco assessment anchor to the rounded last reported owner-supplied anchor rather than publishing an inferred 2026 parcel value. The current site labels it as unverified and flags it as `P03`.
+- Rebuilt the root site and generator navigation so Property B is consistently treated as already owned: no transfer-time reassessment, no inherited basis reset, and no inclusion in the Transferor's estate.
+- Updated the review register: earlier model conflicts are marked resolved for the canonical site, while legacy-only issues remain visible as superseded/flagged rather than silently deleted.
+- Rechecked the official IRS, BOE, California Legislature, State Controller, San Francisco Treasurer, CDI, SF Rent Board, CPUC, FRED/FHFA, and Treasury pages. The IRS closing-letter fee item was clarified as date-dependent rather than contradictory; the official 2027 exclusion and Prop 19 mechanics remain separated from later assumptions.
+- Rewrote `REPO-REVIEW.md` as a current line-by-line architecture, privacy, legal, operating-cost, black-swan, and verification report. No personal names, addresses, APNs, or private records were added.
+
+#### Verification performed
+
+- `python3 final/model.py` — PASS; 2026–2076 model regenerated.
+- `python3 final/integrate.py` — PASS; 1,967 internal links checked, zero broken files.
+- `python3 final/check.py .` — PASS; 20 root pages, 640 table rows with official links, 1,587 links, $10 display-rounding gate clean, privacy fingerprints clean, model tests on 51 paths.
+- `python3 final/check.py final/site` — PASS; staging redirects clean and model tests pass.
+- `python3 -m py_compile final/*.py` and `git diff --check` — PASS.
+- Local HTTP smoke test — all canonical pages returned HTTP 200; Property B ownership text and Property A/B property page rendered.
+
+#### Remaining flagged items (non-blocking)
+
+Trust type and gross-estate inclusion, family relationship, portability, parcel-level assessment/tax bills, basis records, insurance quotes, utilities, solar interconnection, bedroom/rent condition, future law and rates, and the academic/non-U.S. data used for selected stress paths remain on `flagged.html`. Git history privacy requires the owner's decision and cannot be fixed without authorization for a history rewrite or private repository.
+
+**Commit:** `5f8fb45` — `feat: finalize privacy-safe property analysis and QA`.
