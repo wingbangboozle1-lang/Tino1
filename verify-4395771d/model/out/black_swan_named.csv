@@ -1,0 +1,25 @@
+scenario,history_used,years_after_inheriting,sell_stocks,sell_6040,sell_cash,rent_out,move_in,best
+Baseline (constant rates),Assumptions table,10,6319800,5572950,4643620,5548240,5118540,sell_stocks
+Baseline (constant rates),Assumptions table,20,8721460,6620010,4482460,6626680,5440030,sell_stocks
+Baseline (constant rates),Assumptions table,30,12403810,8001780,4326900,8286390,5903860,sell_stocks
+1970s inflation starts the year after inheriting (real 1977-2006 record),1977-2006,10,7126440,5920370,4435410,6529290,5891830,sell_stocks
+1970s inflation starts the year after inheriting (real 1977-2006 record),1977-2006,20,18357740,10357860,4374090,10383030,7777450,sell_stocks
+1970s inflation starts the year after inheriting (real 1977-2006 record),1977-2006,30,30968330,14544440,4311640,20461490,15432020,sell_stocks
+Early-1990s California housing slump (real 1990-2019),1990-2019,10,14365260,9367030,4909430,7143370,6175680,sell_stocks
+Early-1990s California housing slump (real 1990-2019),1990-2019,20,10238430,7887480,4543290,6624580,5515590,sell_stocks
+Early-1990s California housing slump (real 1990-2019),1990-2019,30,27131850,13342430,3958360,12918730,8890930,sell_stocks
+"Dot-com bust, then the 2008 crash (real 2000-2025)",2000-2025,10,3260850,3906270,4451800,4927860,4591980,rent_out
+"Dot-com bust, then the 2008 crash (real 2000-2025)",2000-2025,20,7816180,6246590,3878640,7776420,6091320,sell_stocks
+"Dot-com bust, then the 2008 crash (real 2000-2025)",2000-2025,30,15164180,8879750,3373210,10782500,6617310,sell_stocks
+2007-2011 housing and stock crash (real 2007-2025),2007-2025,10,6673770,5730410,4194000,5347430,4718320,sell_stocks
+2007-2011 housing and stock crash (real 2007-2025),2007-2025,20,15502300,9014590,3574060,8073920,5707540,sell_stocks
+2007-2011 housing and stock crash (real 2007-2025),2007-2025,30,22671070,11163150,3450030,10723640,6550990,sell_stocks
+"Great Depression (real 1929-1958, national home prices)",1929-1958,10,4744600,6111730,6372460,5361700,4717850,sell_cash
+"Great Depression (real 1929-1958, national home prices)",1929-1958,20,4729470,4917450,3789560,5897780,4889480,rent_out
+"Great Depression (real 1929-1958, national home prices)",1929-1958,30,19379990,11549890,3530280,11617530,5805230,sell_stocks
+"1973-74 crash and stagflation (real 1973-2002, national home prices)",1973-2002,10,3423480,3578060,3514340,4154430,3716880,rent_out
+"1973-74 crash and stagflation (real 1973-2002, national home prices)",1973-2002,20,8778710,6450210,3734510,6238630,4234860,sell_stocks
+"1973-74 crash and stagflation (real 1973-2002, national home prices)",1973-2002,30,15991980,9678760,3853890,9881260,5632770,sell_stocks
+"Japan after 1990 (real 1991-2020: homes, Nikkei, prices)",Japan 1991-2020,10,2490380,3383830,4754850,3523090,3103600,sell_cash
+"Japan after 1990 (real 1991-2020: homes, Nikkei, prices)",Japan 1991-2020,20,1815210,3070670,4934120,2939880,2082060,sell_cash
+"Japan after 1990 (real 1991-2020: homes, Nikkei, prices)",Japan 1991-2020,30,4458300,5426790,4894600,4982660,1961700,sell_6040
