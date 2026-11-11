@@ -474,3 +474,17 @@ This is the **ninth** session started on 2026-11-11 (it is not in the Q0 table b
 
 **Flagged for the owner (published on `flagged.html`, none blocks the merge):** trust type and estate inclusion (decides the basis reset); amount of cash and portability; insurance premiums for both ZIP codes (official ZIP-level figure blank); tax rate area; 2027 Proposition 19 allowance; all growth, return, rent, cost and tax-bracket assumptions; the repository is public and its Git history predates the rounding (owner action needed to make it private or rewrite history). PR #7 (`e25621af`, opened 2026-11-10) is not merged: its pages would overwrite `docs/` with another superseded edition.
 
+
+---
+
+## Session `arena/95ca0c0b-tino1` — independent re-verification + final publish (claimed 2026-11-11)
+
+**Session ID:** `arena/95ca0c0b-tino1` · **Branch:** `arena/95ca0c0b-tino1` (branched from `main` @ `245529a`, PR #22 merged) · **Date:** 2026-11-11 UTC
+
+### Claim
+
+| # | Task | Status | File scope |
+|---|------|--------|------------|
+| V-95 | Independent line-by-line re-verification of canonical root site (`final/` model + 12 root pages): re-run model + checker, re-read key official sources, privacy/$10/link audit, fix any irregularity found, open PR to `main`, merge, confirm Pages deploy | claimed | `COORDINATION.md` (this section only) + any fix under `final/**` or root `*.html` if verification finds a defect; no other session's files touched |
+
+Prior sessions' work is preserved: canonical site is `final/` → root (12 pages), live at https://wingbangboozle1-lang.github.io/Tino1/ (Pages build 1359253362, commit `245529a`, status `built`). This session does not rebuild the site unless verification finds a defect; it re-verifies and records results here.
