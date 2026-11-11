@@ -613,3 +613,9 @@ No figure on the site changed as a result of these reads. Two residual limits ar
 ### Conflict during the final push, and how it was resolved
 
 `git pull --rebase origin main` hit one conflict, in this file only. `main` had moved from `245529a` to `77d3d4d` (PR #24 from `95ca0c0b`, PR #25 from `abd204be`) while this session was working, and both sessions appended a section at the end of `COORDINATION.md`. Nothing was discarded: both sections are kept, `95ca0c0b`'s first (as it landed on `main` first) and this one after it, with the conflict markers removed. The code merged without a conflict, and the combined tree was rebuilt and re-checked before the pull request: `final/build.py` holds both `95ca0c0b`'s review-status changes and this session's `build_requirements()`, and `final/model.py` keeps `abd204be`'s fix that the home-sale exclusion applies from the second anniversary (R12). No published figure moved in either direction.
+
+### Pull request, merge and deployment
+
+- **Pull request:** https://github.com/wingbangboozle1-lang/Tino1/pull/26 - opened and merged 2026-11-11T07:49:26Z, merge commit `22c28b2`.
+- **Pages build:** run `42982315445`, build for commit `22c28b2`, status `built` (2026-11-11T07:49:27Z), 46 s.
+- **Live check:** `https://wingbangboozle1-lang.github.io/Tino1/requirements.html` served and read after the deploy; the page is linked from the navigation on every page and from a card on the Summary page. The site is live with 21 pages and no broken internal links.
