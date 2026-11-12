@@ -72,8 +72,8 @@ FLAGS = [
          check='Get a written rent opinion from a local property manager.',
          src=('HUD-95014',)),
     dict(id='U09', item='HUD Small Area Fair Market Rents for fiscal year 2027, ZIP 95014 and ZIP 94122.',
-         used='Left blank. The model keeps the fiscal year 2026 figures, which were re-read on the official page on 2026-11-12. The 2027 release took effect 2026-10-01, but its ZIP-level figures sit behind an interactive lookup that the work session could not operate, and commercial websites quoting them were not used.',
-         check='Open the HUD release list, choose fiscal year 2027, enter each ZIP code and compare with the 2026 figures used here.',
+         used='Left blank. The model keeps the fiscal year 2026 figures, which were re-read on the official page on 2026-11-12. The 2027 release took effect 2026-10-01, but its ZIP-level figures sit behind an interactive lookup that the work session could not operate. HUD also publishes them as a spreadsheet; one attempt to open it from the work session failed. Commercial websites quoting the figures were not used.',
+         check='Open the HUD release list, choose fiscal year 2027 and enter each ZIP code, or download the fiscal year 2027 spreadsheet from the same page and find the two rows. Compare with the 2026 figures used here.',
          src=('HUD-SAFMR-INDEX', 'FR-FMR-2027')),
     # ---- assumptions ------------------------------------------------------------------------
     dict(id='A01', item='Baseline growth rates: inflation 2.5%, home prices 4.0% for both areas.',
