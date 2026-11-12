@@ -8,22 +8,22 @@ Under the current numeric model's assumptions, selling Property A at inheritance
 
 The ranking is assumption-sensitive in important ways. Proceeds kept only in savings/T-bills favor renting over selling in the current model. The Depression and Japan stress overlays also favor renting at the terminal horizon. A lower stock-return assumption narrows the sell lead; a 60/40 mix narrows it further than the all-equity baseline but still leaves sell first in the tested run. These are model comparisons, not forecasts.
 
-The public privacy-first guide is structurally green and excludes the numeric root pages. That protects the current Pages surface, not the public repository or Git history. The original request for rounded decision numbers on the public site is therefore only partially satisfied: the public guide uses synthetic illustrations, while the household-derived numeric edition remains source-only. Any future public numeric edition must be rebuilt privacy-safe and provenance-labeled; do not simply expose the existing root pages.
+Main `e7656b4` (PR #69/#70) now publishes both editions through a chooser and a 39-file union allowlist. The original request for rounded decision numbers on the public site is satisfied, but privacy-safe anonymization is not: the numeric root pages still contain ZIP/locality cues and household-derived rounded outputs, and the public repository/Git history remains exposed. This branch makes a minimal truthfulness correction to the root chooser (rounding is disclosure minimization, not anonymization) and excludes this audit directory from Pages. It does not reverse D1 or make the numeric edition anonymous. The owner must still decide between a privacy-safe numeric rebuild, privacy-only routing, and repository/history remediation.
 
 ## Requirements coverage
 
 | Requirement | Current coverage | Gap / required treatment |
 |---|---|---|
 | Live vs rent vs sell comparison | `final/model.py`, `decision.html`, `summary.html`; privacy guide has a synthetic decision page. | Numeric baseline counts inferred third-unit rent and treats HUD SAFMR as property rent. Correct provenance before publication; keep owner decision gates visible. |
-| Year-by-year projections and rounded costs | Numeric edition covers 2026–2076 and $10 display rounding. | Excluded from Pages; rounding is not anonymization. Do not republish exact or rounded historical assessment/bill series. |
+| Year-by-year projections and rounded costs | Numeric edition covers 2026–2076 and $10 display rounding; public under merged D1. | Rounding is not anonymization. Do not republish exact or rounded historical assessment/bill series; numeric outputs remain household-derived. |
 | Federal/state/local tax and trust process | `law.html`, `process.html`, `estate-cash.html`, privacy guide equivalents; official passages in `SOURCES.md`. | Future law unknown; estate headroom is conditional; trust inclusion, basis, depreciation and passive-loss facts require private records. |
 | Official source for every verified row | Checkers enforce an official-context link per row. | A link is not cell-level verification. Label verified rule, owner input, assumption, model output or unverified blank separately. |
 | Insurance, utilities, market context | CDI/CPUC/PG&E/SFPUC/HUD/FHFA/FRED/BOE sources read; owner estimates flagged. | No property-specific quote, meter/usage facts, retailer confirmation or appraisal. San José/Valley Water charges are context, not automatic household inputs. |
 | Black-swan / variable economy | 50 historical-sequence replays, named overlays, sensitivities and break-evens in `final/model.py`. | Equity/bond series are academic, not official; assessment replays use national CPI rather than California CCPI; Japan bond/cash paths are assumptions. Label or replace before claiming verification. |
 | Questions and missing information | `questions.html`, privacy `questions.html`/`suggestions-detail.html`, flags Q/U/D registers. | Keep answers blank where private evidence is missing; discovery must happen privately, not through public uploads or parcel lookups. |
-| Suggestions before implementation | `suggestions.html`, `requirements.html`, privacy suggestions pages; review queue SG/GAP/IMP items. | Proposals are not owner choices. This pack adds review-only S5 proposals below; none changes shared generators. |
-| Privacy and publication boundary | Root redirect + 12 privacy-site files; exact allowlist checker; locality/signature guards. | Public repo/history exposure remains unresolved (P01/P02). PR #69 would reverse the boundary; do not merge while conflicting/unverified. |
-| Final integration and deploy | This branch rebased on main `536ee03`; checks green locally; one `_config.yml` exclusion added for this audit directory. | PR/CI/Pages verification still required. Preserve other sessions' work; merge only green. |
+| Suggestions before implementation | `suggestions.html`, `requirements.html`, privacy suggestions pages; review queue SG/GAP/IMP items. | Proposals are not owner choices. This pack adds review-only S5 proposals below; the only shared-generator edit is the root chooser privacy-wording correction. |
+| Privacy and publication boundary | Merged D1 publishes a chooser + numeric root pages + 12 privacy-site files (39 total); exact union allowlist and byte-identity gates. Privacy-site locality/signature guards cover only the guide. | Numeric root pages still publish ZIP/locality cues and household-derived rounded outputs; public repo/history exposure remains unresolved (P01/P02). A green publication gate is not a privacy audit. |
+| Final integration and deploy | This branch merged main `e7656b4`; checks green locally; `final/publish.py` added the `session-5ea93a0e` exclusion; root chooser wording corrected. | PR/CI/Pages verification still required. Preserve other sessions' work; merge only green. Owner decision G01/G02 remains open. |
 
 ## Evidence questions to resolve privately
 
@@ -41,7 +41,7 @@ These use S5 identifiers to avoid colliding with existing D/Q/U registers.
 
 ## Review-only suggestions
 
-No item below is implemented by this session. Shared generators and public pages are unchanged except the one publication-boundary exclusion needed to keep this audit directory out of Jekyll.
+No proposal below is implemented by this session except the minimal root chooser truthfulness correction already described. Model assumptions, numeric outputs and D1 routing are unchanged; the audit directory is excluded from Pages.
 
 | ID | Proposal | Why | Decision needed |
 |---|---|---|---|
@@ -50,7 +50,7 @@ No item below is implemented by this session. Shared generators and public pages
 | S5-P3 | Use BOE California CCPI factors for Prop 13 indexing where verified; otherwise label national CPI as a proxy. | Statutory indexing differs from national CPI, especially in replays. | Model owner chooses verified-factor replacement or explicit proxy label. |
 | S5-P4 | Separate official data, academic return series and hypothetical stress paths in the black-swan pages. | Academic returns cannot be presented as officially verified. | Reviewer approves provenance labels or replacement paths. |
 | S5-P5 | Generate Suggestions Part 1 figures from `model.json` instead of hand-typed literals. | Current figures match after rounding but are drift-prone. | Model/build owner implements after active claims resolve. |
-| S5-P6 | Keep the privacy-first front door until a privacy-safe rounded numeric edition is reviewed. | Existing numeric pages contain ZIP/locality cues and household-derived outputs; PR #69 would reverse the boundary without green checks. | Owner decides G01/G02 and repository/history remediation; do not merge conflicting dual-edition routing. |
+| S5-P6 | Replace the public numeric edition with a privacy-safe rebuild, or revert to privacy-only routing until the owner approves the exposure. | Merged D1 publishes numeric pages with ZIP/locality cues and household-derived rounded outputs; the chooser correction does not anonymize them. | Owner decides G01/G02 and repository/history remediation; any revert/rebuild must preserve the no-figures guide and pass union/privacy gates. |
 | S5-P7 | Treat repository visibility/history cleanup as urgent owner action. | Pages exclusion and noindex are not access control; clones/forks/caches may persist. | Owner chooses private repo, history rewrite and GitHub Support cleanup; coordinate before destructive rewrite. |
 
 ## Variable-economy method and bounded results
@@ -75,4 +75,4 @@ python3 -m unittest discover -s privacy-site -p 'test_*.py' -v
 python3 final/publish.py --check
 ```
 
-The real Jekyll build and `privacy-site/check_published.py _site` must run in CI; Ruby/Jekyll are not installed in this sandbox.
+The real Jekyll build and both `final/check_published.py _site` and `privacy-site/check_published.py _site` must run in CI; Ruby/Jekyll are not installed in this sandbox.

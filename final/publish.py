@@ -14,8 +14,8 @@ running it could not silently put every numeric page back on the public site.
 
 Integration decision D1 (final integration session b724a7d8, 2026-11-12, recorded in
 COORDINATION.md): **both editions publish.**  The owner's brief requires the decision
-analysis with numbers on the site, every figure rounded to the nearest $10 exactly so it
-cannot be traced; the no-figures guide stays published, byte-identical, at
+analysis with numbers on the site, rounded to the nearest $10 as disclosure minimization,
+not anonymization; the no-figures guide stays published, byte-identical, at
 `privacy-site/public/` and is the site's front door.  R29's concern is answered differently:
 the exact-set, byte-identity and PII gates in `final/check_published.py` and
 `privacy-site/check_published.py` now pin the full published set (this file is the single
