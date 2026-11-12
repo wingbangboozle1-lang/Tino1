@@ -1085,3 +1085,20 @@ K3 (reconciliation of the front door) was claimed by `8fc06844` on 2026-11-11 13
 **Log (`arena/155782b5`)**
 - 2026-11-12 — Board read; `main` at `609d23f` (PR #54 merged, 14 pages + estate-cash/pending logic in `law.html`). Checked `final/check_published.py` allowlist (24 files incl. assets) and verified `final/site/` is a redirect staging dir. Claim written and pushed before any content work.
 
+
+**Log (`arena/155782b5`, continued)**
+- 2026-11-12 — `final/build.py` patched: `NAV` now includes `suggestions.html` and `questions.html`; `build_index` cards updated; added `build_suggestions()` (9 data-gap + 9 site-improvement suggestions, each with Why/Effort/Status/Official link, plus 3-path choice table and approval workflow) and `build_questions()` (13 have + 14 missing + 14 questions with Have/Missing/Answer/How-to-discover + 13 discover-actions + readiness checklist). `final/publish.py` and `final/integrate.py` allowlists updated from 24 to 26 published files.
+- 2026-11-12 — Rebuilt site via `final/integrate.py` (which runs `model.py` + `build.py` ROOT_MODE=1): 24 HTML pages at root (16 substantive + 8 redirects) + `style.css`/`app.js` = 26 published files; `final/site/` staging redirects regenerated; `EXECUTIVE-SUMMARY.md` regenerated; `README.md` unchanged; `_config.yml` regenerates clean.
+- 2026-11-12 — Verification: `final/check.py .` **PASS** — 24 pages, 791 table rows each with official link, 1959 internal links, 2209 dollar figures rounded to $10, 51/51 model self-tests (Prop 19 formula, Property B never reassessed above market). `final/publish.py --check` **PASS** (26 files). `privacy-site/build.py` + `check.py` **PASS** (8 pages, 304 rows). No PII, no unrounded owner figures, every table row has official source, no manual input.
+
+| # | Task | Status | Owner | File scope | Notes |
+|---|------|--------|-------|------------|-------|
+| S-1 | Repo review line-by-line | done | `arena/155782b5` | `review.html`, `flagged.html`, `verification.html` | Re-verified all 791 rows have official source; PII scan clean; rounding to $10 enforced; irregularities remain R01-R18 flagged, not inferred |
+| S-2 | Executive summary audit + polish | done | `arena/155782b5` | `index.html`, `EXECUTIVE-SUMMARY.md` | Summary now links Suggestions + Questions via cards and nav; generated from model — wording only |
+| S-3 | Suggestions page | done | `arena/155782b5` | `suggestions.html`, `final/build.py`, `final/publish.py`, `final/integrate.py` | 18 suggestions (S-01..S-18) + 3-path choice table; every row has official link; status Proposed until owner approves `COORDINATION.md` |
+| S-4 | Questions / Have-vs-Missing page | done | `arena/155782b5` | `questions.html`, `final/build.py`, `final/publish.py`, `final/integrate.py` | 14 have / 14 missing / 14 Q+A + 13 discover actions + readiness checklist; every row has official link; suggestions for how to discover missing info included |
+| S-5 | Privacy re-audit | done | `arena/155782b5` | `final/check.py`, `final/check_published.py` gates | Placeholders, $10 rounding, no bill-history series, no address/parcel/email/phone, noindex on every page — confirmed; P02 Git-history exposure remains owner action |
+| S-6 | Black-swan + pending-law check | done | `arena/155782b5` | `black-swan.html`, `law.html` | 50 replays + named crises published; pending law (IRS exclusion, BOE allowance, SF rate, state props, S.587/HR1301, Prop 19 drive, banked-rent, Empty Homes, fixed charge) traced — content unchanged, already comprehensive |
+| S-7 | Site-build + local verification | done | `arena/155782b5` | all `*.html` at root, `style.css`, `app.js`, `final/*` | Local `final/check.py` + `publish --check` + link check 2231 links 0 broken; Jekyll build verified by prior CI — branch ready for PR |
+| S-8 | PR to main + merge + Pages deploy | in progress | `arena/155782b5` | `COORDINATION.md` | Awaiting PR creation and merge — flagged items do not block |
+

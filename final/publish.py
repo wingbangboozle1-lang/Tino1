@@ -35,6 +35,8 @@ PAGES = [
     'estate-cash.html',      # cash inheritance and estate tax
     'costs.html',            # insurance, water, electricity, repairs
     'flagged.html',          # flagged for review
+    'suggestions.html',      # proposed improvements with review status
+    'questions.html',        # have/missing/questions/answers + how to discover
     'sources.html',          # source register and method
     'requirements.html',     # the brief, line by line
     'review.html',           # repository review findings

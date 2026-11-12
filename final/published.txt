@@ -13,12 +13,14 @@ pending-changes.html
 process.html
 projections.html
 properties.html
+questions.html
 requirements.html
 review.html
 scenarios.html
 sources.html
 steps.html
 style.css
+suggestions.html
 taxes.html
 verification.html
 versions.html
