@@ -17,23 +17,16 @@ are false positives**:
 | `analysis/data/blackswan_history.csv` | `[figure withheld]` | Part of the episode id `H2,1979-1982` (a year range) |
 | `black-swan.html` | `[figure withheld]` | SVG chart coordinate fragment (`359.2,197.1`) |
 | `projections.html` | `[figure withheld]` | SVG chart coordinate fragment (`669.2,134.9`) |
-| `decision.html` | `[figure withheld]` | Mid-number inside the rounded model output `$12,197,660` |
-| `verify-4395771d/site/black-swans.html` | `[figure withheld]` | Mid-number inside the rounded model output `$12,179,270` |
+| `decision.html` | `[figure withheld]` | Mid-number inside a rounded model output |
+| `verify-4395771d/site/black-swans.html` | `[figure withheld]` | Mid-number inside a rounded model output |
 | `verify-4395771d/site/decision.html` | `[figure withheld]` | SVG chart coordinate fragment |
 
-Result: **no unrounded owner figure is present in any published or stored file.** The canonical checker
-agrees (`final/check.py .` — privacy fingerprints clean; the fingerprint register covers the exact
-unrounded tokens). The token column below is masked by the repository's privacy scrub (`step7_fingerprints`,
+Historical session result: the specific token sweep described above did not find an unrounded owner figure in its inspected files. This is not proof of anonymity or completeness; the fingerprint register was subsequently removed because it was reversible. The token column below is masked by the repository's privacy scrub (`step7_fingerprints`,
 which rewrites fingerprinted tokens outside `final/`); each masked hit was only a substring of the
 non-owner content described in the third column (the underlying tokens are themselves owner figures from
 the brief, which is why the scrub masks them even in this log).
 
-Note on `dashboard/projections.html` and `dashboard/properties.html`: they show `$550,530` for the 2026
-assessed value. This is **not** a mis-rounding of the owner figure; it is a *derived* model output of the
-superseded 6ea079fa model (2025 anchor `$539,740` × 1.02 = 550,534.8, rounded to $10), and it is labelled
-“derived” and flagged on that page. The canonical model uses the owner’s 2026 figure rounded to `$550,540`.
-Left unchanged: altering another edition’s model output would falsify it; it is consistent inside its own
-edition and its label is accurate.
+Note on the superseded dashboard: one assessed-value illustration is a rounded derived model output rather than the rounded owner-reported anchor. Both values appeared in earlier material; the distinction does not verify either figure. The original branch is retained for the full historical audit.
 
 ## B. PII patterns (street addresses, e-mail addresses, phone numbers, parcel numbers)
 
@@ -58,8 +51,8 @@ Zero unmasked APN-like tokens. All parcel references are masked placeholders (`[
   repository private or have the history rewritten; this is recorded in `README.md` (“Owner action still
   needed for full privacy”), flags **P02** on the Flagged for Review page, and PR #31’s blocker 1.
 - Rounded owner figures plus ZIP codes remain *linkable in principle* to county assessment rolls for
-  anyone who already has the roll. The owner’s own brief prescribes the $10 rounding as the accepted
-  mitigation; the year-by-year series is withheld entirely (flag **P01**) to reduce that risk further.
+  anyone who already has the roll. The owner’s own brief prescribes $10 rounding as one requested
+  mitigation (not a guarantee of anonymity); the year-by-year series is withheld entirely (flag **P01**) to reduce that risk further.
 
 ## E. Gates run after the sweep
 
