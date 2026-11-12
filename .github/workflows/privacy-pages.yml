@@ -20,5 +20,6 @@ jobs:
           python3 privacy-site/build.py
           git diff --exit-code -- privacy-site/public
           python3 privacy-site/check.py
+          python3 -m unittest discover -s privacy-site -p 'test_*.py' -v
           jekyll build
           python3 privacy-site/check_published.py _site
