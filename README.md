@@ -33,6 +33,19 @@ python3 final/model.py && python3 final/integrate.py && python3 final/check.py .
 
 Standard library only. `final/check.py` fails if a table row has no link to an official page, if an internal link is broken, if a dollar figure is not a multiple of $10 (listed official figures excepted), or if a fingerprint of an unrounded owner figure appears.
 
+## What is published, exactly
+
+GitHub Pages serves this repository from the root of `main` through Jekyll, and the Pages build type cannot be changed from a work session, so the served set is controlled by the `exclude` list in `_config.yml`. That list is **generated**, never hand-edited: `final/publish.py` holds the one declared allowlist (the 22 current pages, `style.css`, `app.js`), writes `_config.yml` and `final/published.txt`, and `final/check_published.py` compares the files Jekyll actually produced with that declaration.
+
+```
+python3 final/publish.py            # regenerate _config.yml + final/published.txt after adding a page
+jekyll build && python3 final/check_published.py _site
+```
+
+The published check fails, by file name, if an unexcluded legacy directory is served, if a published page links to a path that is not published, if a page lacks `noindex`, if personal information is found, or if the committed copy of a page differs from a fresh build of `final/build.py`. CI runs the publication check, `final/check.py`, the Jekyll build and this output check on every pull request and every push to `main` (`.github/workflows/pages.yml`).
+
+Not published, by design: every earlier edition (`archive/`, `dashboard/`, `docs/`, `site/`, `verified/`, `verify-4395771d/`), all research notes, data and model inputs, the coordination log, the audit directory and the no-figures edition in `privacy-site/`. Those pages are still in the repository and are linked from `versions.html` and `review.html` by their GitHub address, so nothing is lost and no live link is dead.
+
 ## Rules followed
 
 - **Privacy first.** No names, addresses or parcel numbers. People are "the Transferor" and "the Inheritor". Owner-supplied figures are stored and shown only rounded to $10; no year-by-year history is listed. Pages ask search engines not to index them.
