@@ -22,6 +22,7 @@ exclude:
   - 'model'
   - 'research'
   - 'scripts'
+  - 'session-5ea93a0e'
   - 'session-faccd46d'
   - 'site'
   - 'verify-4395771d'

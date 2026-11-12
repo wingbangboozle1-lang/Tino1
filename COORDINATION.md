@@ -1650,3 +1650,37 @@ is fully integrated. No other PRs are open against these files.
 `final/publish.py` and above. The durable privacy fix remains owner action on repository
 visibility and history (flags P01/P02). Flagged items Q01-Q18, U01-U09, A01-A10, S01-S05
 and P01-P03 stay open on the Flagged for Review page and do not block anything.
+
+---
+
+## Session `arena/5ea93a0e-tino1` — independent analysis and integration (claimed 2026-11-12 15:35 UTC)
+
+Branch fixed by workspace: `arena/5ea93a0e-tino1`; base `609d23f`. Read the board, main (`c1abff8` at initial fetch), and active PR #56 before claiming. During the claim push main advanced to `6e1afab` (PR #57): a concurrent board conflict was resolved by retaining both complete entries; no other session work was discarded. No alternate branch will be created. `708757cf` is actively editing the privacy-site publication boundary; its scope is respected. The completed `ccd19b78` privacy release is retained and will be incorporated by rebasing this branch, not discarded.
+
+| Task | Status | Owner session | Files / scope | Verification / handoff |
+|---|---|---|---|---|
+| S5-0 Claim and coordination | done | arena/5ea93a0e-tino1 | COORDINATION.md (append only) | Claim pushed at a35197b; refresh and rebase before subsequent pushes. |
+| S5-1 Independent bounded repo/model/source/privacy audit | done (bounded; corrections pending integration) | arena/5ea93a0e-tino1 | session-5ea93a0e/** (new, exclusive) | Existing checkers and model inspected; official rules re-read; findings recorded without exact household history. No claim to verify all historical editions. |
+| S5-2 Requirements, executive findings, evidence questions, review-only suggestions, variable-economy analysis | in progress | arena/5ea93a0e-tino1 | session-5ea93a0e/** (new, exclusive) | Keep verified rules, owner-supplied rounded inputs, assumptions and missing values separate. Suggestions remain proposals, not implemented choices. |
+| S5-3 Final integration and publication | unclaimed | arena/5ea93a0e-tino1 | Shared files only after independent tasks complete and active claims resolve; append-only board | Preserve other sessions; exact publication checks; PR from this branch, merge only green, verify Pages; log conflicts. |
+
+Privacy interpretation: names, contact details, exact addresses, parcel identifiers, account information and private documents must not enter the public product. The owner explicitly requests rounded financial figures and projections; $10 rounding is a requested disclosure-minimization measure, NOT anonymization. Exact historical series will not be republished. Public repository/history exposure is a separate unresolved risk. No parcel lookup or identity research will be performed. Active session `708757cf` owns current privacy-site files; any integration request will be logged rather than editing that work concurrently.
+
+### S5 claim conflict and handoff acknowledgement (2026-11-12 15:37 UTC)
+- `git pull --rebase origin main` conflicted only in the append-only board because PR #57 landed while the claim was being prepared. Resolved by retaining the complete `155782b5` entry and this session's entry, with no loss of either record. Main is now `6e1afab`.
+- `155782b5` completed the suggestions/questions pages in PR #57. This session will audit those outputs in its exclusive scope rather than duplicate or overwrite them. `708757cf` remains active on privacy-site files (PR #56); no edit to those files by this session until that claim resolves.
+
+### S5 audit progress and integration requests (2026-11-12 16:05 UTC)
+- Re-fetched main: `7b02eb8` (PR #68). P709 is closed in its board record; PR #66's generator guard (R29) is retained. PR #62 (`a6ec5b1d`, last commit 15:58 UTC) and PR #59 (`557214ba`, last commit 15:55 UTC) remain active and are not edited or taken over. PR #59 is conflicting and its latest verify job failed; both full-log retrieval attempts returned an Actions log-download EOF, so the failure cause is not asserted.
+- Independent audit artifacts are in `session-5ea93a0e/`. Important model findings: the baseline infers rent for the vacated third SF unit from the two-unit total; HUD four-bedroom SAFMR is used as Cupertino rent without a verified bedroom count; assessment replays use national CPI rather than California CCPI; academic asset-return series must not be labeled officially verified. These are scenario/provenance corrections, not optional suggestions requiring owner approval.
+- Official BOE LTA 2026/002 was fetched: the 2026 roll factor is 1.02; DIR CCPI rose 3.307% using August 2024-to-August 2025 because October 2025 regional data were unavailable. SFPUC's working rates index was found, but its linked water/sewer PDF still failed to parse; no adopted household rate is inferred.
+- Request to the final publication owner: preserve a usable public guide, but do not describe an official-context link as verification of an inferred household input or model output. Keep exact historical series, ZIPs and private documents out of the public product. Any numeric publication must clearly separate rounded owner inputs, assumptions and model outputs, and disclose that the public repository/history is not private. No shared publication file is changed by this progress commit.
+
+### S5 status refresh and D1 observation (2026-11-12 16:36 UTC)
+
+- Main advanced to `e7656b4` while this session was completing the bounded review: PR #69 merged dual-edition routing (D1) and PR #70 recorded the close-out. This branch merged `origin/main`; the append-only board conflict was resolved by preserving the complete b724a7d8 close-out and the S5 claim/progress/audit records. No other session work was discarded. No open PRs remain at this check.
+- S5-1 bounded audit and S5-2 review pack are done in `session-5ea93a0e/` (`AUDIT.md`, `SOURCES.md`, `FINDINGS.md`, `recheck.py`). The pack corrects the SFPUC fetch claim, adds primary IRS Rev. Proc. 2026-35, San José/Valley Water/CBO context, and records assumption-dependent sensitivity rankings without republishing household dollar totals.
+- S5-3 integration is in progress. Under merged D1, `final/publish.py` regenerates `_config.yml`; running it added the `session-5ea93a0e` exclusion so Jekyll cannot publish this audit directory. This session did not add numeric pages to the allowlist.
+- Observation, not a takeover: D1 satisfies the request for public rounded numbers but does not anonymize them. The merged root chooser claimed $10 rounding makes figures untraceable; numeric root pages still contain ZIP/locality cues and household-derived outputs. This session made a minimal truthfulness correction in `final/build.py`/`index.html`: rounding is disclosure minimization, not anonymization; city names removed from the chooser lead; privacy flags P01/P02 linked. Model assumptions, numeric outputs and D1 routing are unchanged. Owner decisions G01/G02 and repository/history remediation remain open.
+- Local checks on the merged tree: `final/check.py .` OK (25 pages, 925 rows, 2,414 links, 2,369 dollar figures, 51 model paths; unrounded scan skipped); `privacy-site/build.py` reproducible; `privacy-site/check.py` PASS (11 pages, 316 rows); unittest 8/8; `final/publish.py --check` OK (39-file union); simulated `final/check_published.py` and `privacy-site/check_published.py` PASS (39 files byte-identical). Real Jekyll/CI and post-merge Pages verification still required. Pages API last reports `built` at `e7656b4`.
+
