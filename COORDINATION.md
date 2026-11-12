@@ -1081,3 +1081,127 @@ K3 (reconciliation of the front door) was claimed by `8fc06844` on 2026-11-11 13
 
 **Log (`b724a7d8`)**
 - 2026-11-12 15:25–15:35 UTC — Board, branches, open PRs and Pages state read. Claim written and pushed before any other work. No file owned by another session edited.
+
+
+## Preserved records from open audit PRs #42, #43, #44 (session `arena/b724a7d8-tino1`, 2026-11-12)
+
+The three open pull requests below append only to this file. Their sessions are more than eleven hours stale with no commits, so as the integrating session this one preserves their text verbatim here and closes the PRs as superseded (branches left untouched, nothing deleted). Their findings describe the privacy-first edition served at 04:17 UTC on 2026-11-12; since PRs #45–#54 the front door serves the numeric edition under the declared allowlist. Their standing findings (public repository and Git history; checker-coverage limits; a source link does not verify an owner figure) remain valid and are published on the live Flagged for Review page as P02/P03 and in the "What these passes do not establish" note on verification.html.
+
+<details><summary>Preserved text of PR #42 (verbatim)</summary>
+
+
+## Session fc10623f — independent release and privacy audit (2026-11-12 UTC)
+
+| Task | Status | Owner | Scope |
+|---|---|---|---|
+| F106-1: independently audit Pages configuration, live deployment, privacy and release readiness; document verified findings | needs review | fc10623f | this coordination section |
+
+The platform fixes this session's branch name. Existing claims on shared site/model files are respected; this audit does not take them over. Findings will not reproduce sensitive figures.
+
+### F106-1 findings (2026-11-12 UTC)
+
+- The Pages API reports build `11ae16e` built; the live landing and flagged pages were read. The currently served edition explicitly omits private inputs and derived projections. It is a framework, **not** the requested numerical 50-year decision analysis; no financial winner has been verified.
+- `python3 privacy-site/build.py` and `python3 privacy-site/check.py` passed locally (8 pages, 95 linked rows, internal-link checks). This is an automated check, not independent verification that every linked source supports each claim. No full line-by-line audit was completed in this session.
+- Spot checks: [IRS estate tax](https://www.irs.gov/businesses/small-businesses-self-employed/estate-tax) supports the 2026 filing threshold and estate-level approach; [California BOE Proposition 19](https://www.boe.ca.gov/prop19/) supports qualified principal residence, value-limit and filing distinctions. Neither establishes the household's eligibility or future outcome.
+- The Pages exclude list limits site publication, not access to a public repository, previous commits, forks or caches. Rounding alone does not guarantee anonymity. Prior board notes report historical exposure; the live flagged page acknowledges it. A repository owner should review visibility, history and cached copies with GitHub support.
+- Open PR #41 has a failed verification check; it was not merged or represented as verified. This session did not merge other sessions' branches. Future tax law, insurance quotes and personal eligibility remain unverified.
+
+</details>
+
+<details><summary>Preserved text of PR #43 (verbatim)</summary>
+
+
+## Session `arena/f40db77f-tino1` — independent deployment and privacy audit (2026-11-12)
+
+| Task | Status | Owner | Scope |
+|---|---|---|---|
+| F40 | Independently audit the current Pages deployment, privacy and verification claims without changing another session's files; report actionable findings | in progress | arena/f40db77f-tino1 | `audit-f40/**`, this board entry |
+
+The platform fixes the branch name. Existing K3 integration ownership is respected; no shared site files are claimed. Findings will not reproduce private figures.
+
+### F40 findings and handoff (2026-11-12 UTC)
+
+**Status: needs review.** Read-only audit completed; no new public file was added because the current Jekyll build uses an exact output allowlist. Please ask the session owning the public flagged page and the checker to incorporate the findings; F40 does not edit those scopes.
+
+1. The repository is public (`gh repo view --json isPrivate`), and historical commits and PR references can still expose material removed from the current Pages output. Rounding and a Pages exclusion are not anonymization; cache, history, forks and third-party copies cannot be assumed erased. Refer to GitHub's [sensitive-data removal guidance](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/removing-sensitive-data-from-a-repository). No additional private figures reproduced here.
+2. The current Pages build reports `built` at `11ae16e`, and the live root redirects to the eight-page privacy-first edition. It expressly omits household figures, year-by-year numerical projections and a numerical best-plan comparison. Therefore the requested full financial deliverable is **not** complete on the live site; a successful deployment is not evidence of completion. The conflict between a public website, $10 rounding and non-identification cannot be resolved merely by labels.
+3. `python3 privacy-site/check.py` passes (8 pages, 95 sourced rows), but its message says "privacy fingerprints checked" even though its implementation checks a short fixed list of literals, not all personal information or encoded/derived representations. `python3 final/check.py .` passes while explicitly reporting its unrounded-figure scan **SKIPPED** without a private local file. Neither result establishes complete privacy nor line-by-line factual correctness; a source link in each row does not prove its claim. Request checker owner correct the output and clarify coverage.
+4. PR #41's required `verify` check is failing as observed; do not merge it or describe final integration as verified. The run's full failure log was unavailable in this environment; cause not determined. PR #42 is independently auditing the release; K3 owns integration files.
+5. Fresh official spot-check: the [BOE Proposition 19 page](https://www.boe.ca.gov/prop19/) distinguishes the one-year homeowners' exemption filing period from the three-year exclusion claim period and describes qualifying relationships and use. The [IRS estate tax page](https://www.irs.gov/businesses/small-businesses-self-employed/estate-tax) describes the 2026 filing threshold, inclusion of adjusted taxable gifts, deductions and portability. These checks do not verify all rows or future law.
+
+Verification: `gh api repos/wingbangboozle1-lang/Tino1/pages/builds/latest`, `gh pr checks 41`, live Pages root, `privacy-site/check.py`, and `final/check.py .` reviewed. The older board entry saying the latest deployment failed is superseded by the successful 11ae16e build; this is not an assertion about any later build. No PR merge attempted while integration is incomplete.
+
+</details>
+
+<details><summary>Preserved text of PR #44 (verbatim)</summary>
+
+
+## Session aa367c4e — independent public-release audit (2026-11-12)
+
+| Task | Status | Owner | File scope |
+|---|---|---|---|
+| AA-1: Independently inspect the deployed Pages privacy posture, source verification, and outstanding release blockers; document reproducible findings without repeating household data. | in progress | arena/aa367c4e-tino1 | `audit-aa367c4e/**`, this appended board section only |
+
+The platform fixes the branch name; no separate session branch will be created. Shared site files remain with their existing owners. Findings or integration requests will be recorded here rather than editing their files.
+
+### AA-1 findings and integration request (2026-11-12)
+
+- **Needs review — repository privacy:** GitHub API reports this repository is public. The deployed Pages exclusion is not repository access control: tracked files, historical commits, PRs, and caches may be visible. `privacy-site/check.py` itself contains a fixed list of owner-related numeric literals, even though the public Pages artifact excludes that file. Do not repeat the literals in a public issue or report. This session cannot guarantee their removal from Git history or external caches. An authorized owner should consider repository visibility and GitHub's documented sensitive-data-removal process: https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/removing-sensitive-data-from-a-repository. Visibility changes or history rewriting may disrupt Pages and other sessions; neither was performed.
+- **Needs review — verification limitations:** `privacy-site/check.py` checks an allowlisted hostname for each non-header row and a small fixed token list; it does not check that source pages substantiate each claim, detect all identifying derivatives, or verify external link availability. Its PASS is not proof of complete line-by-line verification or anonymity. Request to the integration owner: qualify the checker message, independently verify claim-to-source correspondence, and use an appropriately private review process for owner-derived values.
+- **Needs review — decision outputs:** the deployed front door deliberately withholds household forecasts and does not identify a financially optimal choice. It acknowledges this limitation. A numerical personalized analysis cannot be represented as independently verified official fact, and rounding alone does not anonymize it. Preserve private analysis separately from the public site; no private values are added to this board.
+- **Official-source spot checks (not full audit):** IRS estate-tax guidance https://www.irs.gov/businesses/small-businesses-self-employed/estate-tax describes the gross estate, adjusted taxable gifts and the 2026 filing threshold; BOE https://www.boe.ca.gov/prop19/ describes qualifying principal-residence use and filing periods; California State Controller https://www.sco.ca.gov/ardtax_estate_tax.html describes state return requirements. Each page was read on 2026-11-12. These checks do not validate every website claim.
+- **Deployment observation:** Pages API reported `built` for `11ae16eeb23107518ad65aaa9c745eda35643eb6`; the live landing page was retrieved and distinguishes the already-owned home from the future transfer. Local `python3 privacy-site/check.py` passed for 8 pages and 95 sourced rows, subject to the limitations above. PR #41's verification was failing when checked; logs were inaccessible from this sandbox, so the cause was not established. PR #42's verification was still running. No other session's files were changed.
+- **Status:** AA-1 done for the independent spot audit; the issues above remain needs review. No claim of full verification or completed integration is made. Initial pull-before-push found no remote branch because this was the first push; it was then created on the fixed Arena branch.
+
+</details>
+
+---
+
+## Session `arena/b724a7d8-tino1` — result (B7-1..B7-4, 2026-11-12)
+
+### What was added (nothing of any other session changed or deleted)
+
+| # | Task | Status | What was done |
+|---|------|--------|---------------|
+| B7-1 | Suggestions section | **done** | `suggestions.html`: 12 suggestions to improve the decision (D1–D12) and 5 to improve this site (W1–W5), each with effort, priority and the official page it rests on; every row has an Adopt / Hold / Reject control and the page keeps a running count; 3 implementation paths (R1 minimal, R2 balanced, R3 thorough) with a "choose one before any change" gate. Choices are saved in the reviewer's browser only (localStorage) and are sent nowhere. Built by `build_suggestions()` in `final/build.py`. |
+| B7-2 | Open questions and missing information | **done** | `questions.html`: 6 blocker questions (B1–B6, each with what the site assumes, what is missing and how to discover it), 8 established facts (K1–K8) each re-read on its official page, and 11 missing items (M1–M11) each with a suggested discovery route and its flag. Built by `build_questions()`. |
+| B7-3 | Third verification pass | **done** | `verification.html` third table: 12 rows re-read on the official pages on 2026-11-12 in this session (list below). One row is honestly marked **not re-confirmed** (the HUD documentation page is interactive and did not render its ZIP-level results in the fetch) and keeps its link for manual re-check. Nav, summary cards and the requirements traceability table updated (25 brief rows now, including the two brief items these pages answer). |
+| B7-4 | Integration | **done** | `final/publish.py` and `final/integrate.py` allowlists updated (26 published files); full pipeline re-run; every gate green (below); PR to `main` opened and merged without waiting (record in the addendum); audit PRs #42/#43/#44 preserved above and closed as superseded. |
+
+### Verification performed (commands run from the repository root)
+
+- `python3 final/publish.py --check` — OK: `_config.yml` and `final/published.txt` match the declared allowlist of 26 published files.
+- `python3 final/check.py .` — OK: 24 pages, 776 table rows each with an official link, 1,962 links, 2,170 dollar figures all multiples of $10 (official published figures excepted), model self-tests passed on 51 economic paths. The unrounded-owner-figure scan is skipped without `TINO1_PRIVATE_FIGURES` (the list is kept outside the repository by design, K1 rule).
+- `python3 final/integrate.py` — 2,221 internal links checked across every HTML file in the repository, 0 broken; `EXECUTIVE-SUMMARY.md` regenerated from the model (unchanged — the model was not touched).
+- Fresh-build comparison (the CI `check_fresh` test run locally): a rebuild into a scratch directory is byte-identical to the committed root for all 26 published files.
+- `python3 privacy-site/build.py && python3 privacy-site/check.py` — PASS (8 pages, 304 context-linked rows).
+- Generated script passes `node --check`. No Ruby/Jekyll is installed in this sandbox; the repository workflow (`.github/workflows/pages.yml`) runs `jekyll build` and `final/check_published.py _site` on the pull request and on `main` — a broken build is not merged.
+
+### Third official-source re-read, 2026-11-12 (this session) — printed row by row on `verification.html`
+
+| Fact | Result on the official page |
+|------|------------------------------|
+| IRS estate tax — filing threshold 2026 | $15,000,000 — confirmed |
+| Rev. Proc. 2026-35 §3.44 — basic exclusion 2027 | $15,480,000 — confirmed |
+| Rev. Proc. 2026-35 §3.46(1) — annual gift exclusion 2027 | $20,000 — confirmed |
+| BOE LTA 2025/009 — Prop 19 allowance | $1,044,586 for transfers 2025-02-16..2027-02-15 (2.15% up from $1,022,600); next adjustment February 2027 — confirmed |
+| BOE Proposition 19 page — conditions | principal residence of transferor and transferee; value limit = current taxable value + $1,000,000 biennially adjusted; homeowners' exemption within 1 year; claim within 3 years — confirmed |
+| R&TC 51(a)(1)(D) — Prop 13 cap | "In no event shall the percentage increase ... exceed 2 percent of the prior year's value" — confirmed word for word |
+| CA State Controller — estate tax | no California Estate Tax Return for deaths on/after 2005-01-01 — confirmed |
+| SF Treasurer — secured rate FY2026-27 | 1.18162182%; reappraisal required after a change in ownership — confirmed |
+| Prob. Code 16061.7(f) — trustee notice | not later than 60 days — confirmed |
+| R&TC 480(b) — change in ownership statement | within 150 days after the date of death for a trust transfer — confirmed |
+| Rev. Rul. 2023-2 (IRB 2023-16) | §1014 basis adjustment generally does not apply to assets of an irrevocable grantor trust outside the gross estate — confirmed |
+| IRS Topic 701 — home-sale exclusion | $250,000 / $500,000; 24-month ownership and use tests — confirmed |
+| HUD FY2026 SAFMR, ZIP 95014 | **not re-confirmed today** — the documentation page is interactive and did not render its results in the fetch; the four-bedroom figure stands on the 2026-11-11 pass |
+
+### Irregularities (flagged, none blocking)
+
+1. The HUD SAFMR figure could not be re-read in this session's fetch (row labelled on `verification.html`).
+2. S01 unchanged: two IRS pages still disagree on the earlier estate-tax closing-letter fee ($67 on the FAQ page, $56 on the What's New page).
+3. P02 unchanged: the repository is public and its Git history predates the $10 rounding — owner action only (make the repository private, or ask GitHub Support to rewrite history).
+4. The unrounded-figure scan was skipped in this sandbox (by design, K1 rule); CI runs the same checker.
+
+### Pull request
+
+- PR opened from `arena/b724a7d8-tino1` to `main` without waiting for review (this integration). The merge result, the Pages deploy confirmation and the disposition of audit PRs #42/#43/#44 are recorded in the addendum below.
