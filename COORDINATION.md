@@ -1229,3 +1229,17 @@ Claim was pushed at `69fc794` before content work. While this session re-read of
 Official pages opened in this session (not copied from an earlier edition): IRS estate-tax threshold page ($15,000,000 for 2026); IRS IR-2026-133 ($15,480,000 and $20,000 gift exclusion for 2027); IRS What is New (Public Law 119-21); IRS closing-letter FAQ (dated fees $67 / $56 / $76, not a contradiction); SCO estate-tax page; BOE Proposition 19 page; BOE LTA 2025/009 ($1,044,586); BOE LTA 2026/026 (family-home and formula); R&TC 63.2 and 51; Probate Code 16061.7; BOE homeowners exemption ($7,000); SF Treasurer (1.18162182%); Santa Clara tax rate book FY2025-26 pages A-4 to A-6; Clerk-Recorder transfer tax; HUD SAFMR 95014 and 94122; CDI comparison tool (not a quote; ZIP premium left blank); SF rent-increase page (1.6%); Treasury yield curve 2026-11-10; Congress.gov S.587 (introduced, not law).
 
 Irregularities found and not silently "fixed" in the model: closing-letter disagreement note is stale (R19); sale-year tax uses six months of the reassessed bill (R20); El Camino Hospital 0.00200 is on page A-4 and is not in the 1.16360% composite (R21 / U03). New unanswered questions, later numbered Q15-Q18 so they do not collide with the existing questions page: principal residence, transfer timing, deductible loss, and which home has the exemption.
+
+### Session `arena/3e79fc01-tino1` — rebase and content handoff (2026-11-12)
+
+Rebased onto `origin/main` at `396518f` (PR #61). Both sides of the board conflict were kept. `final/build.py` `build_review` keeps the in-page anchors this session needs and keeps `build_suggestions` and `build_questions` from `arena/155782b5`.
+
+Content added, model figures unchanged:
+- Questions Q15–Q18 (principal residence at death, transfer timing, deductible selling-cost loss, which home has the homeowners exemption). These do not reuse Q07–Q14, which `questions.html` already uses for other items.
+- Suggestions SG-1 through SG-11 on `requirements.html`, each marked proposed and not implemented.
+- Third verification pass on `verification.html` for pages opened this session.
+- Flag corrections: S01 closing-letter fee is a dated schedule ($67 / $56 / $76), not a contradiction (R19). El Camino Hospital 2003 at 0.00200 is on tax-rate book page A-4 and is not in the 1.16360 percent composite (R21, U03). Sale-year tax treatment remains an open modeling choice (R20).
+
+Not edited, because other open pull requests own them: `_config.yml`, `.github/workflows/pages.yml`, `index.html`, `privacy-site/**`, `README.md`. `python3 final/publish.py --check` fails on this branch only because the committed privacy exclude list differs from the numeric generator. The privacy-first Pages workflow is the check that matches current `main`. This session does not restore household figures to the live front door.
+
+Open PRs #62 (`arena/a6ec5b1d-tino1`) and #59 (`arena/557214ba-tino1`) also touch `final/build.py`, `final/flags.py`, `questions.html` and `requirements.html`. A merge of this branch will need a conflict resolution that keeps both sessions' unique rows. No file from those branches was discarded here.
