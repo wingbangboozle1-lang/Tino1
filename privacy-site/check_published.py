@@ -7,7 +7,7 @@ import sys
 
 PUBLIC_FILES = frozenset({
     'index.html', 'decision.html', 'projection.html', 'stress.html',
-    'process.html', 'law.html', 'costs.html', 'flagged.html', 'style.css',
+    'process.html', 'law.html', 'costs.html', 'suggestions.html', 'flagged.html', 'style.css',
 })
 
 

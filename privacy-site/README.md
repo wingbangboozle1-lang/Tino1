@@ -2,7 +2,7 @@
 
 ## Boundary and privacy
 
-The only Pages deliverables are the root redirect and the nine files (eight HTML pages plus CSS) in `public/`. `_config.yml` excludes prior numeric editions, all model/data/research files, this README and tests. CI builds with GitHub Pages Jekyll and `check_published.py` fails on **any** unexpected output file or changed byte. It uses a fixed allowlist, not files discovered at runtime.
+The only Pages deliverables are the root redirect and the ten files (nine HTML pages plus CSS) in `public/`. `_config.yml` excludes prior numeric editions, all model/data/research files, this README and tests. CI builds with GitHub Pages Jekyll and `check_published.py` fails on **any** unexpected output file or changed byte. It uses a fixed allowlist, not files discovered at runtime.
 
 The public generator reads only the reviewed official-source registry (`research.json`) and independent synthetic teaching model (`illustrations.py`). It does **not** import earlier models, owner values, tax histories, ZIP codes, rents or utility amounts. Those amounts and household-derived forecasts remain blank. Public site has no JavaScript, forms, trackers, remote resources or uploads. A restrictive CSP and no-referrer policy are embedded. Noindex is a request to crawlers, not confidentiality or access control. Hosting access logs, old Git files, history, forks and caches are not removed by this work. The repository is a separate exposure surface; this is not a promise that old public information is erased.
 
