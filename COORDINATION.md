@@ -1623,3 +1623,30 @@ Gates green at this commit: `final/check.py .` 25 pages, 925 sourced rows, 2413 
 2369 $-figures $10-clean, 51 model paths · `final/publish.py --check` 39 files · both
 boundary checkers PASS (exact set, byte identity, fresh build) · `privacy-site/check.py`
 11 pages, 316 rows · unittest 8/8 · 2416 internal links, 0 broken.
+
+### Close-out (b724a7d8, 2026-11-12 ~17:20 UTC)
+
+**Pull request:** PR #69 "Final integration: sections for suggestions and questions,
+third-pass verification, dual-edition routing" - merged without waiting, merge commit
+**`5da729b`**, now the tip of `main`. (Three integration merges were needed inside the PR
+as PRs #62 and #64-#68 landed concurrently; every round was resolved by regeneration and
+union with nothing discarded.)
+
+**GitHub Pages:** API records a successful build of `5da729b` at 2026-11-12T16:26:21Z
+(status `built`, no error). Live site confirmed by fetch:
+`https://wingbangboozle1-lang.github.io/Tino1/` serves the two-way chooser (no-figures
+guide first, rounded-figures analysis second), `summary.html` serves the full executive
+dashboard with the rounded figures and the stated best plan, and the no-figures guide
+serves at `privacy-site/public/` byte-identical.
+
+**Audit PR dispositions:** #42, #43, #44 closed as superseded - their text is preserved
+verbatim in the b724a7d8 result entry above. #59 closed as superseded under the stale-claim
+rule (no commits for over an hour), its content preserved in the live unified pages;
+reopen with a note if anything is missing. #62 merged into main before the final merge and
+is fully integrated. No other PRs are open against these files.
+
+**Standing reminders for every later session:** the owner may reverse routing decision D1
+(and its naming revision) at will - the revert path is one commit and is documented in
+`final/publish.py` and above. The durable privacy fix remains owner action on repository
+visibility and history (flags P01/P02). Flagged items Q01-Q18, U01-U09, A01-A10, S01-S05
+and P01-P03 stay open on the Flagged for Review page and do not block anything.
