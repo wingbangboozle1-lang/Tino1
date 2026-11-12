@@ -1,8 +1,11 @@
-"""Source register (session 07a57a05).  Every entry was opened on 2026-11-11 UTC.
+"""Source register (session 07a57a05; updated 2026-11-12 by session a6ec5b1d).
+
+Initial pass opened entries on 2026-11-11 UTC; on 2026-11-12 UTC every remaining
+official `excerpt` entry was fetched directly and upgraded to `how = 'page'`, plus
+four newly fetched official pages (`BOE-PUB-800-1`, `CUP-WATER`, `IRS-SCHED-A`, `SFPUC-RFB`).
 
 how = 'page'    : the official page / PDF itself was fetched and the quoted value was read on it.
-how = 'excerpt' : text of the official page was read through a search-engine excerpt of that page
-                  (official domain), not through a full fetch.  Listed on the Flagged page for a manual re-read.
+how = 'excerpt' : text of the official page was read through a search-engine excerpt only.
 how = 'academic': not a government source; used only where no official series exists.  Flagged.
 """
 
@@ -41,24 +44,27 @@ add('IRS-TC559', 'IRS Topic 559', 'IRS Topic no. 559 - Net investment income tax
 add('RR-2023-2', 'Rev. Rul. 2023-2', 'Internal Revenue Bulletin 2023-16 - Revenue Ruling 2023-2',
     'https://www.irs.gov/irb/2023-16_IRB', 'page',
     'The section 1014 basis adjustment generally does not apply to assets of an irrevocable grantor trust that are not included in the deceased grantor\'s gross estate.')
-add('IRS-I706', 'Form 706 instructions', 'IRS - Instructions for Form 706, Table A (Unified Rate Schedule)',
-    'https://www.irs.gov/instructions/i706', 'excerpt',
-    'Table A: taxable amount over $1,000,000 - tax $345,800 plus 40% of the excess.')
-add('IRS-P559', 'IRS Pub. 559', 'IRS Publication 559 - Survivors, Executors, and Administrators',
-    'https://www.irs.gov/publications/p559', 'excerpt',
-    'Property received as a gift, bequest or inheritance is not included in income; income it later produces (interest, dividends, rents) is taxable. Lump sums from an inherited traditional IRA may be taxable.')
-add('IRS-P527', 'IRS Pub. 527', 'IRS Publication 527 - Residential Rental Property',
-    'https://www.irs.gov/publications/p527', 'excerpt',
-    'Residential rental property is depreciated straight-line over 27.5 years under GDS.')
-add('IRS-1041', 'IRS estate income tax', 'IRS - File an estate tax income tax return',
-    'https://www.irs.gov/individuals/file-an-estate-tax-income-tax-return', 'excerpt',
-    'Form 1041 is required when the estate has more than $600 of annual gross income; an EIN is needed first.')
+add('IRS-I706', 'Form 706 instructions', 'IRS - Instructions for Form 706 (07/2026), Table A (Unified Rate Schedule)',
+    'https://www.irs.gov/instructions/i706', 'page',
+    'Read directly 2026-11-12: Table A taxable amount over $1,000,000 -> $345,800 plus 40% of excess; Basic Exclusion table ($15,000,000 in 2026); annual gift exclusion $19,000 (2025-2026).')
+add('IRS-P559', 'IRS Pub. 559', 'IRS Publication 559 (2025) - Survivors, Executors, and Administrators',
+    'https://www.irs.gov/publications/p559', 'page',
+    'Read directly 2026-11-12: Property received as gift, bequest or inheritance is not included in recipient income; later interest, dividends or rents are taxable; inherited traditional IRA distributions may be taxable IRD; 5-yr late portability under Rev. Proc. 2022-32.')
+add('IRS-P527', 'IRS Pub. 527', 'IRS Publication 527 (2025) - Residential Rental Property',
+    'https://www.irs.gov/publications/p527', 'page',
+    'Read directly 2026-11-12: Table 2-1 residential rental property 27.5 years GDS / 30 years ADS straight-line mid-month convention; personal-to-rental conversion basis is lesser of adjusted basis or FMV.')
+add('IRS-1041', 'IRS estate income tax', 'IRS - File an estate tax income tax return (Form 1041)',
+    'https://www.irs.gov/individuals/file-an-estate-tax-income-tax-return', 'page',
+    'Read directly 2026-11-12: Form 1041 required if estate/trust has annual gross income over $600; EIN required first; Schedule K-1 passes income and deductions to beneficiaries.')
+add('IRS-SCHED-A', 'IRS Schedule A', 'IRS - Instructions for Schedule A (Form 1040) (2025), State and Local Tax Deduction',
+    'https://www.irs.gov/instructions/i1040sca', 'page',
+    'Read directly 2026-11-12: Under P.L. 119-21, Schedule A SALT cap raised from $10,000 to $40,000 in 2025 ($40,400 in 2026), phased down above $500,000 MAGI (floor $10,000) and scheduled to revert after 2029; Schedule E rental property taxes are uncapped.')
 add('CONG-S587', 'S.587', 'Congress.gov - S.587, Death Tax Repeal Act of 2025',
-    'https://www.congress.gov/bill/119th-congress/senate-bill/587', 'excerpt',
-    'Introduced 2025-02-13, read twice and referred to the Committee on Finance. Status shown: Introduced.')
+    'https://www.congress.gov/bill/119th-congress/senate-bill/587', 'page',
+    'Read directly 2026-11-12: 119th Congress; introduced 2025-02-13, read twice and referred to Committee on Finance; status remains Introduced.')
 add('CONG-HR1301', 'H.R.1301', 'Congress.gov - H.R.1301, Death Tax Repeal Act',
-    'https://www.congress.gov/bill/119th-congress/house-bill/1301/all-info', 'excerpt',
-    'Introduced 2025-02-13, referred to House Ways and Means. Status shown: Introduced.')
+    'https://www.congress.gov/bill/119th-congress/house-bill/1301/all-info', 'page',
+    'Read directly 2026-11-12: 119th Congress; introduced 2025-02-13, referred to House Ways and Means; status remains Introduced.')
 # ---- California --------------------------------------------------------------
 add('SCO-ESTATE', 'CA Controller', 'California State Controller - California Estate Tax',
     'https://www.sco.ca.gov/ardtax_estate_tax.html', 'page',
@@ -84,6 +90,9 @@ add('RTC-480', 'R&TC 480', 'California Revenue and Taxation Code section 480',
 add('PROB-16061.7', 'Prob. Code 16061.7', 'California Probate Code section 16061.7',
     'https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=PROB&sectionNum=16061.7.', 'page',
     'Trustee notification within 60 days after a revocable trust becomes irrevocable by death; served on beneficiaries and heirs; 120-day contest warning.')
+add('BOE-PUB-800-1', 'BOE Pub. 800-1', 'BOE Taxpayers\' Rights Advocate Publication 800-1 - Transfers Between Parents and Children',
+    'https://www.boe.ca.gov/pdf/pub800-1.pdf', 'page',
+    'Read directly 2026-11-12: BOE-19-P cannot be filed before BOE-266 homeowners\' exemption; 6-month filing window from supplemental notice; if transferee moves out later, reassessment to date-of-death FMV indexed occurs as of next Jan 1 lien date; covers stepchildren and in-law children.')
 add('BOE-RULE-462.260', 'BOE Rule 462.260', 'BOE Property Tax Rule 462.260 - Date of change in ownership',
     'https://boe.ca.gov/proptaxes/pdf/rules/Rule462_260.pdf', 'page',
     'Revocable trust: date of change in ownership is the date the trust becomes irrevocable (example: the date of death). Inheritance: the date of death.')
@@ -93,15 +102,15 @@ add('BOE-HOX', 'BOE homeowners\' exemption', 'BOE - Homeowners\' Exemption',
 add('FTB-RATES', 'FTB 2025 rates', 'Franchise Tax Board - 2025 California Tax Rate Schedules',
     'https://www.ftb.ca.gov/forms/2025/2025-540-tax-rate-schedules.pdf', 'page',
     'Schedule X (single): 9.3% over $72,724; 10.3% over $371,479; 11.3% over $445,771; 12.3% over $742,953.')
-add('FTB-MHS', 'FTB Form 540 booklet', 'Franchise Tax Board - Form 540 booklet, Mental Health Services Tax',
-    'https://www.ftb.ca.gov/forms/2024/2024-540-booklet.html', 'excerpt',
-    'Additional 1% tax on taxable income over $1,000,000.')
+add('FTB-MHS', 'FTB Form 540 booklet', 'Franchise Tax Board - 2025 Form 540 Booklet, Line 62 Behavioral Health Services Tax',
+    'https://www.ftb.ca.gov/forms/2025/2025-540-booklet.html', 'page',
+    'Read directly 2026-11-12: Renamed from Mental Health Services Tax to Behavioral Health Services Tax for tax years >= Jan 1, 2025; Line 62 imposes 1% tax on taxable income over $1,000,000 (whole dollars).')
 add('SOS-RESULTS', 'CA Secretary of State', 'California Secretary of State - 2026 General Election, state ballot measures (unofficial)',
     'https://electionresults.sos.ca.gov/returns/ballot-measures', 'page',
-    'Unofficial results as of 2026-11-10 5:31 p.m.; certification by 2026-12-11. Prop 3 Yes 60.6%; Prop 40 No 52.6%; Prop 41 No 55.0%; Prop 42 Yes 51.5%; Prop 43 No 57.4%. Fourteen measures listed (1-5, 37-45).')
+    'Re-read 2026-11-12 (updated 2026-11-11 6:51 p.m.; certification due 2026-12-11): Prop 3 Yes 60.7%; Prop 40 No 52.5%; Prop 41 No 55.1%; Prop 42 Yes 51.4%; Prop 43 No 57.4%. Fourteen measures listed (1-5, 37-45); no Prop 19 repeal measure on ballot or active.')
 add('DOJ-TPA', 'CA Attorney General', 'California Department of Justice - Tenant Protection Act consumer alert',
-    'https://oag.ca.gov/system/files/media/Tenant-Protection-Act-Landlords-and-Property-Managers-English.pdf', 'excerpt',
-    'Rent may not rise more than 5% plus the change in CPI, or 10% total, whichever is lower, in any 12 months; exemptions include certain single-family homes not owned by a corporation or REIT.')
+    'https://oag.ca.gov/system/files/media/Tenant-Protection-Act-Landlords-and-Property-Managers-English.pdf', 'page',
+    'Read directly 2026-11-12: Rent cap 5% plus CPI or 10% total in 12 months; SB 567 (eff 2024-04-01) adds 1-mo relocation, 90-day/12-mo owner move-in rule, treble damages; exempts <15-yr units and non-corporate SFH with written notice.')
 add('CDI-TOOL', 'CDI premium survey', 'California Department of Insurance - Compare insurance premiums (2026 homeowners survey tool)',
     'https://www.insurance.ca.gov/01-consumers/105-type/9-compare-prem/index.cfm', 'page',
     'Official annual premium survey with an interactive tool by ZIP code; results are not quotes; wildfire surcharges of 15% to over 300% are not reflected. The interactive results could not be read by this automated session.')
@@ -111,15 +120,15 @@ add('CDI-TOOL-APP', 'CDI homeowners tool', 'California Department of Insurance -
 add('CDI-EQ', 'CDI earthquake guide', 'California Department of Insurance - Earthquake insurance',
     'https://www.insurance.ca.gov/01-consumers/105-type/95-guides/03-res/eq-ins.cfm', 'page',
     'Homeowners policies do not cover earthquake damage (fire following an earthquake is covered); the insurer must offer earthquake coverage every other year.')
-add('CDI-RES', 'CDI residential guide', 'California Department of Insurance - Residential insurance guide',
-    'https://www.insurance.ca.gov/01-consumers/105-type/95-guides/03-res/res-ins-guide.cfm', 'excerpt',
-    'Perils generally not covered include flood, earthquake, earth movement and losses to a house vacant for 60 days or more.')
+add('CDI-RES', 'CDI residential guide', 'California Department of Insurance - Residential insurance guide (Form 401, Jan 2026)',
+    'https://www.insurance.ca.gov/01-consumers/105-type/95-guides/03-res/res-ins-guide.cfm', 'page',
+    'Read directly 2026-11-12: Standard homeowners excludes flood, earthquake, earth movement, water seepage, mold, wear/tear and losses to house vacant 60+ days; contents typically 50% of dwelling with sub-limits.')
 add('CPUC-NEM', 'CPUC net metering', 'California Public Utilities Commission - Net energy metering and net billing',
-    'https://www.cpuc.ca.gov/industries-and-topics/electrical-energy/demand-side-management/customer-generation/net-energy-metering-and-net-billing', 'excerpt',
-    'NEM customers may stay on their tariff for 20 years from interconnection; customers moving from NEM to the net billing tariff get no legacy period.')
-add('CPUC-FIXED', 'CPUC fixed charge', 'CPUC resolution on PG&E advice letter 7351-E (Decision 24-05-028 fixed charge)',
-    'https://docs.cpuc.ca.gov/PublishedDocs/Published/G000/M555/K816/555816677.pdf', 'excerpt',
-    'Residential fixed charge of $24.15 per month for customers not in a discount tier.')
+    'https://www.cpuc.ca.gov/industries-and-topics/electrical-energy/demand-side-management/customer-generation/net-energy-metering-and-net-billing', 'page',
+    'Read directly 2026-11-12: Under D.14-03-041, NEM 2.0 customers keep tariff for 20 years from interconnection (TOU rates, hourly NBCs); Net Billing Tariff (D.22-12-056, eff Apr 15, 2023) gives 9-yr legacy for original customer only.')
+add('CPUC-FIXED', 'CPUC fixed charge', 'CPUC Resolution E-5354 (Decision 24-05-028 fixed Base Services Charge)',
+    'https://docs.cpuc.ca.gov/PublishedDocs/Published/G000/M555/K816/555816677.pdf', 'page',
+    'Read directly 2026-11-12: CPUC Res. E-5354 / D.24-05-028 fixed Base Services Charge: reduced fixed tiers for CARE (Tier 1) and FERA/DRAH (Tier 2, SB 1130 expanded), and $24.15/mo for standard Tier 3 customers (PG&E Q1 2026 rollout).')
 add('CDI-SB824', 'CDI wildfire-risk data', 'California Department of Insurance - SB 824 residential property data (coverage amounts, wildfire risk and losses)',
     'https://www.insurance.ca.gov/01-consumers/200-wrr/WildfireRiskInfoRpt.cfm', 'page',
     'Statewide totals for 2023, all residential policy forms: earned premium $14,217,212,455 on 12,580,970 earned exposures (about $1,130 a policy); average Coverage A $324,973. ZIP-level sheets exist in the workbook but could not be read by this automated session.')
@@ -151,9 +160,15 @@ add('SF-RENT-RULES', 'SF rent increases', 'San Francisco Rent Board - Learn abou
 add('SF-RENT-LAW', 'SF rental laws', 'San Francisco Rent Board - Learn about San Francisco rental laws',
     'https://www.sf.gov/learn-about-san-francisco-rental-laws/', 'page',
     'Units built before June 14, 1979 that are not single-family dwellings may have rent control and just-cause eviction protection; owner move-in is a just cause.')
-add('SFPUC', 'SFPUC rates', 'San Francisco Public Utilities Commission - Water and sewer rate schedules FY2026-27',
-    'https://www.sfpuc.gov/sites/default/files/accounts-and-services/Rates_Schedule_Water_Sewer_2026-7.pdf', 'excerpt',
-    'Rate schedule for 7/1/26 and 7/1/27. Rate Fairness Board presentation: water +7.0% each year; residential wastewater +10.8% then +10.1%.')
+add('CUP-WATER', 'City of Cupertino Water', 'City of Cupertino - Water Service Areas and SJWC Lease',
+    'https://www.cupertino.gov/Residents/Utilities/Water', 'page',
+    'Read directly 2026-11-12: Cupertino has three water providers (Cal Water NE, San Jose Water Co. SE, and Cupertino Municipal System W leased to SJWC through 2036 with lower rates than SJWC proper).')
+add('SFPUC', 'SFPUC rates', 'San Francisco Public Utilities Commission - Water and sewer rate schedules FY2026-27 & FY2027-28',
+    'https://www.sfpuc.gov/sites/default/files/accounts-and-services/Rates_Schedule_Water_Sewer_2026-7.pdf', 'page',
+    'Read directly 2026-11-12 (Res. 26-0064/26-0066): Schedules W-1A/W-1B, Sewer Schedule A (90% SF / 95% MF flow factors) and Schedule D residential stormwater tiers effective 2026-07-01 & 2027-07-01.')
+add('SFPUC-RFB', 'SFPUC Rate Board', 'SFPUC Rate Fairness Board - Proposed Water and Sewer Rate Adjustments (March 19, 2026)',
+    'https://www.sfpuc.gov/sites/default/files/agendas-minutes-rate-fairness-board/6a-Rates-Presentation.pdf', 'page',
+    'Read directly 2026-11-12: Water +7.0%/yr, residential wastewater +10.8% (FY26-27) / +10.1% (FY27-28), stormwater +53.3% / +43.1%; average SF residential combined bill +10.5% (FY26-27) / +12.5% (FY27-28).')
 # ---- Data ----------------------------------------------------------------------
 add('HUD-95014', 'HUD SAFMR 95014', 'HUD - FY2026 Small Area Fair Market Rents, ZIP 95014',
     'https://www.huduser.gov/portal/datasets/fmr/fmrs/FY2026_code/2026zip_code_calc.odn?zcta=95014&metro_code=METRO41940M41940&year=2026', 'page',
@@ -180,11 +195,11 @@ add('TREASURY', 'Treasury yields', 'U.S. Treasury - Daily par yield curve rates,
     'https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve&field_tdr_date_value_month=202611', 'page',
     '2026-11-10: 3-month 4.30%, 1-year 4.56%, 10-year 4.98%, 30-year 5.35%.')
 add('CBO', 'CBO outlook', 'Congressional Budget Office - The Budget and Economic Outlook: 2026 to 2036',
-    'https://www.cbo.gov/publication/62105', 'excerpt',
-    'PCE inflation 2.7% in 2026, 2.0% by 2030; 10-year Treasury rate 4.1% in 2026 and 4.3% in 2027; real GDP growth averages 1.8% a year 2027-2036.')
+    'https://www.cbo.gov/publication/62105', 'page',
+    'Read directly 2026-11-12 (Feb 2026 report): PCE inflation 2.7% in 2026 slowing to 2.0% by 2030; 10-year Treasury 4.1% in 2026 and 4.3% in 2027; real potential GDP 1.8%/yr 2031-2036; federal debt 101% to 120% of GDP.')
 add('USGS', 'USGS earthquake outlook', 'U.S. Geological Survey Fact Sheet 2016-3020 - Earthquake outlook for the San Francisco Bay region 2014-2043',
-    'https://pubs.usgs.gov/fs/2016/3020/fs20163020.pdf', 'excerpt',
-    '72% probability of at least one magnitude 6.7 or greater earthquake in the Bay region before 2043; 51% for magnitude 7.0 or greater.')
+    'https://pubs.usgs.gov/fs/2016/3020/fs20163020.pdf', 'page',
+    'Read directly 2026-11-12: 2014-2043 SF Bay probabilities: 98% M>=6.0, 72% M>=6.7, 51% M>=7.0, 20% M>=7.5.')
 add('FRED-JP', 'Japan series (FRED)', 'Japan: BIS residential property prices, Nikkei 225 and OECD consumer prices (via FRED QJPN368BIS, NIKKEI225, JPNCPIALLMINMEI)',
     'https://fred.stlouisfed.org/series/QJPN368BIS', 'page',
     'Year-end values 1989-2012 read on the FRED download: home prices fell in 21 of the 22 years 1991-2012; Nikkei 225 38,915.87 at end-1989, 8,455.35 at end-2011. Home-price changes for 2013-2020 taken from the file prepared by session 4395771d from the same series.')

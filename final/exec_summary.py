@@ -85,14 +85,18 @@ on any official page (U01, U02).
 See the [Process page]({site}/process.html): what to do before the death, in the first 60 days, in the first 150 days, \
 before the first property-tax bill, and in the first year, each step with its legal deadline and the official page it comes from.
 
+## Questions, missing information, and site improvements to review
+
+- **What must still be verified before deciding:** See [Questions & discovery]({site}/questions.html) for a clean split of **known vs. unknown information**, the exact pre-decision questions (`Q01–Q06`, `U01–U08`), and concrete ways to discover each missing answer (trust terms, prior spouse Form 706 portability, exact Santa Clara & SF tax bills, Cupertino's three water providers, PG&E solar interconnection date, actual broker insurance quotes, SF Rent Board registration).
+- **Proposed improvements before implementation:** See [Site improvements]({site}/suggestions.html) for 11 structured model, UX, tax-detail (`P.L. 119-21` SALT cap, NIIT MAGI threshold, NEM 2.0 20-year cliff, Treasury-staged proceeds, hybrid move-in-then-sell), and privacy-governance suggestions formatted for reviewer sign-off before any baseline numbers are changed.
+
 ## What is verified, and what is not
 
-- Every table row on the site links to an official page; two independent passes (2026-11-11 and 2026-11-12) re-read the \
-headline facts on the government pages, and both are printed on the [Verification page]({site}/verification.html).
+- Every table row on the site links to an official page; three verification passes (`2026-11-11` initial pass, `2026-11-12` headline re-read, and `2026-11-12` full-page direct read of all remaining official sources plus `BOE-PUB-800-1`, `CUP-WATER`, `IRS-SCHED-A`, and `SFPUC-RFB`) are recorded on the [Verification page]({site}/verification.html). Zero official `.gov` sources remain as unverified search excerpts.
 - Owner-supplied figures (market values, rents, utility bills, insurance estimates) cannot be confirmed on an official \
 page and are labelled (P03). Projections are conditional scenarios (A01-A10).
 - Open items are on the [Flagged for Review page]({site}/flagged.html): the trust terms and basis (Q01), the estate contents \
-(Q02), the tax rate area (U03), the Proposition 19 allowance after 2027-02-16 (U04), the solar tariff (U05), and the \
+(Q02), the tax rate area (U03), the Proposition 19 allowance after 2027-02-16 (U04), the solar tariff and water provider (U05), and the \
 repository's public history (P01/P02).
 
 **Privacy.** Names, addresses and parcel numbers are replaced by placeholders; owner figures are stored and shown only \

@@ -18,10 +18,12 @@ The pages at the repository root are the only current edition. They are generate
 | `law.html` | Federal, California and local law in force, and changes under discussion |
 | `estate-cash.html` | Cash inheritance: thresholds at each level, room before tax, projections |
 | `costs.html` | Insurance for both ZIP codes and running costs |
+| `questions.html` | Clear questions, known vs. unknown info, required answers, and discovery suggestions |
+| `suggestions.html` | Proposed site improvements to review before implementing changes |
 | `flagged.html` | Flagged for Review: every unconfirmed value, assumption and irregularity, with links |
 | `sources.html` | Source register, method, cross-check against a second model |
-| `verification.html` | Verification: the independent 2026-11-11 check register, every fact with its official link for manual review |
-| `requirements.html` | Every part of the brief, the page that answers it, and the official pages re-read on 2026-11-11 |
+| `verification.html` | Verification: three verification passes (`2026-11-11` and `2026-11-12`), every official source read directly on its agency page |
+| `requirements.html` | Every part of the brief, the page that answers it, and the official pages re-read |
 | `review.html` | Repository review findings |
 | `versions.html` | Earlier editions and why they were replaced |
 
@@ -39,7 +41,7 @@ Standard library only. `final/check.py` fails if a table row has no link to an o
 
 ## What is published, exactly
 
-GitHub Pages serves this repository from the root of `main` through Jekyll, and the Pages build type cannot be changed from a work session, so the served set is controlled by the `exclude` list in `_config.yml`. That list is **generated**, never hand-edited: `final/publish.py` holds the one declared allowlist (the 22 current pages, `style.css`, `app.js`), writes `_config.yml` and `final/published.txt`, and `final/check_published.py` compares the files Jekyll actually produced with that declaration.
+GitHub Pages serves this repository from the root of `main` through Jekyll, and the Pages build type cannot be changed from a work session, so the served set is controlled by the `exclude` list in `_config.yml`. That list is **generated**, never hand-edited: `final/publish.py` holds the one declared allowlist (the 24 current HTML pages, `style.css`, `app.js`), writes `_config.yml` and `final/published.txt`, and `final/check_published.py` compares the files Jekyll actually produced with that declaration.
 
 ```
 python3 final/publish.py            # regenerate _config.yml + final/published.txt after adding a page
