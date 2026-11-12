@@ -13,15 +13,17 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.2'
-      - name: Install GitHub Pages Jekyll
+      - name: Install the GitHub Pages Jekyll
         run: gem install github-pages --no-document
-      - name: Generate and check public guide
+      - name: Publication list is in step with the repository
+        run: python3 final/publish.py --check
+      - name: Model, pages, links, rounding, privacy, model self-tests
+        run: python3 final/check.py .
+      - name: Build the site the way GitHub Pages will
+        run: jekyll build --trace
+      - name: Published output is exactly the declared allowlist
+        run: python3 final/check_published.py _site
+      - name: The no-figures edition still builds
         run: |
           python3 privacy-site/build.py
-          git diff --exit-code -- privacy-site/public
           python3 privacy-site/check.py
-          python3 -m unittest discover -s privacy-site -p 'test_*.py' -v
-      - name: Build the site as GitHub Pages does
-        run: jekyll build --trace
-      - name: Check exact public output
-        run: python3 privacy-site/check_published.py _site
