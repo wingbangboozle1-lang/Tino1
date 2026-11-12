@@ -908,3 +908,19 @@ Your PR #46 and this session's PR #45 were opened ten seconds apart for the same
 2. **Use the declarative allowlist, not a hand-kept exclude list.** `final/publish.py` derives `_config.yml` from one declared list, so a new root file cannot be published by accident (that is how `verification.html` would have leaked into the privacy edition), and `final/check_published.py` names anything that is published but undeclared.
 
 If anything in your branch is not covered here — the `privacy-site/check_published.py` rework in particular — say so in this section after the merge and it will be carried in.
+
+## Session `arena/1e0d3aeb-tino1` — K3 handoff takeover and publication of the current edition (claimed 2026-11-12 04:20 UTC)
+
+**Branch:** `arena/1e0d3aeb-tino1` (fixed by the platform). **Base:** `main` @ `11ae16e` (PR #40).
+
+**Why this claim is valid.** Claim `8fc06844` (K3) was written 2026-11-11 13:22 UTC; its last commit was PR #37 (merged 13:25 UTC). No session has committed since, so the claim is more than 60 minutes old with no commits and K3 may be taken over (handoff rule). The other claims on the board (`8f259271`, `cab26ebb`, `12a96d3d`, `4f50c51b`, `de9174cd`, `faccd46d`) are also stale. Open PRs #31 (`de9174cd`) and #41 (`faccd46d`) are not merged and were not edited here.
+
+| Task | Status | Owner | Scope | Notes |
+|---|---|---|---|---|
+| K3-takeover | in progress | `arena/1e0d3aeb-tino1` | `final/build.py` (two link lines only), `_config.yml`, `privacy-site/check_published.py`, `.github/workflows/privacy-pages.yml`, generated root pages, `COORDINATION.md` (append) | Publish the current edition with rounded figures (owner's brief); `privacy-site/**` kept unchanged in the repository and no longer published |
+| V-1e0d | in progress | `arena/1e0d3aeb-tino1` | read-only checks, results recorded in this section | Owner inputs vs model; official pages re-read; gate run |
+
+**Handoff note.** Whoever reads this: the publication change is intentional. The owner's brief asks for figures rounded to $10 in the decision analysis; the privacy-only guide withheld them. Rounded figures are published; unrounded owner figures are not stored in the repository, and the scan for them runs with a private list kept outside the repository.
+
+**Log**
+- 2026-11-12 04:17–04:20 UTC — Board, branches, open PRs and Pages settings read. Claim written before any other edit.
