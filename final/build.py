@@ -12,6 +12,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 from sources import S          # noqa: E402
 from flags import FLAGS, REVIEW  # noqa: E402
+from review_queue import render_queue, render_verification  # noqa: E402
 
 M = json.load(open(os.path.join(HERE, 'out', 'model.json')))
 P = M['params']
@@ -828,8 +829,9 @@ def build_verification():
 <p class="note">What the second pass did <em>not</em> re-open, and therefore does not claim to have re-checked today: the inherited-property basis rules and Rev. Rul. 2023-2, the home-sale and capital-gain topics, the investment-income tax, Board of Equalization letter 2026/026, the Santa Clara County rate book, the homeowners\' exemption amount, the solar and net-metering material, the San Francisco rent-increase rules and the insurance comparison tool. Those rows stand on the 2026-11-11 pass and keep their links.</p>
 <p class="note"><strong>What this pass does not establish.</strong> Model outputs and projections are conditional scenarios built on the assumptions in the flags; no official page can verify a forecast. The automated checker (<a href="%s/blob/main/final/check.py">final/check.py</a>) proves only that every table row carries an official link, that dollar figures are rounded to $10, and that no stored fingerprint of an unrounded owner figure appears in the tree - it does not prove that each link supports each cell. This register exists so every claim can be checked by hand against its link. People remain placeholders (the Transferor, the Inheritor); no names, addresses or parcel numbers appear anywhere.</p>
 """ % (t1, t2, t3, t4, REPO)
+    body += '<h2>Third independent re-read, 2026-11-12</h2>' + render_verification(src, table, flag)
     page('verification.html', 'Verification',
-         'Two independent verification passes - 2026-11-11 and 2026-11-12: every headline legal and financial fact re-read on its official page, each check linked for manual review, everything unconfirmable left blank and flagged.', body)
+         'Three independent verification passes: every headline legal and financial fact re-read on its official page, each check linked for manual review, everything unconfirmable left blank and flagged.', body)
 
 
 # ====================================================================== flagged
@@ -888,6 +890,12 @@ def build_sources():
 def build_requirements():
     # Requirement -> where answered -> status -> the official page behind it.
     rows = [
+        ['A clear list of questions, what is already known, what is still blank, and how to discover each gap',
+         'This page, <a href="#questions">Questions, information in hand, and answers still missing</a>. An unconfirmed answer is left blank rather than estimated.',
+         'Met as a list. The blanks themselves are not met until the owner or an adviser fills them', src('IRS-ESTATE', 'RTC-63.2')],
+        ['A dedicated suggestions section, so a reader can choose a path before any change is implemented',
+         'This page, <a href="#suggestions">Suggestions — review and choose before any change</a>. Each suggestion is marked proposed and not implemented.',
+         'Met by listing the suggestions. None of them was implemented on this pass', src('BOE-P19', 'SCC-RATES')],
         ['Whether to live in, rent out, or sell Property A and reinvest after tax',
          'Summary: the recommended plan and why. <a href="decision.html">Decision</a>: cash flows, after-tax wealth ten and thirty years out, sensitivities and break-even points for all three choices.',
          'Met', src('IRS-TC409', 'IRS-TC559')],
@@ -1043,8 +1051,8 @@ def build_requirements():
                caption='Independent re-verification performed for this page, 2026-11-11',
                note='Each page above was fetched and read during this work session, not copied from an earlier edition. Nothing in the tables changed as a result: the figures already on the site match these pages. The sources page lists the sources that were read only through an excerpt, and the Flagged page lists every value that could not be confirmed.')
 
-    body = """
-<p class="note">This page is the checklist behind the rest of the site. The brief the owner gave is broken into the rows below, each row names the page that answers it and the official rule it rests on. Then come the handful of places where only the owner or an assumption can supply the number, the rules the site holds itself to, and the sources that were re-read on the day this page was built.</p>
+    body = render_queue(src, table, flag, BLANK, m, B) + """
+<p class="note">The two sections above are the review queue: questions that are still blank, and suggestions that have not been implemented. The checklist below is the original brief, row by row. Model figures were not changed to add these sections.</p>
 <h2>Requirements and where each one is answered</h2>%s
 %s
 %s
@@ -1193,8 +1201,7 @@ def build_questions():
 
 # ====================================================================== review
 def build_review():
-
-    rows = [[r['id'], r['where'], r['finding'], r['status'], src(*r['src']) + ' · <a href="%s/%s" rel="noopener">file</a>' % (REPO, r['path'])] for r in REVIEW]
+    rows = [['<span id="%s">%s</span>' % (r['id'], r['id']), r['where'], r['finding'], r['status'], src(*r['src']) + ' · <a href="%s/%s" rel="noopener">file</a>' % (REPO, r['path'])] for r in REVIEW]
     t = table(['No.', 'Where', 'Finding', 'Status', 'Rule or source, and file'], rows, caption='Repository review findings') if rows else ''
     body = """<p class="callout">The repository holds several generations of the same analysis written by parallel sessions. This page records what an independent pass found, so that a reader knows which pages to trust. The full history is in <a href="%s/blob/main/COORDINATION.md">COORDINATION.md</a>.</p>""" % REPO + t
     page('review.html', 'Repository review', 'Irregularities found while reading the repository, with links to the files and to the rule each one is measured against.', body)

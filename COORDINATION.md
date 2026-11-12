@@ -1221,3 +1221,11 @@ First push: the session branch had no remote ref, so `git pull --rebase origin a
 **Change request (not edited):** ask `ccd19b78` not to remove the rounded numeric edition. This brief asks for clear rounded numbers and a best-plan comparison on the site, and also asks that names, addresses, parcel numbers and unrounded bills stay off the site. Their privacy-first rewrite is a suggestion, not a completed decision.
 
 **Log:** claim written before content work.
+
+### Session `arena/3e79fc01-tino1` — work log before rebase (2026-11-12)
+
+Claim was pushed at `69fc794` before content work. While this session re-read official pages, `origin/main` advanced through PRs #55–#61. PR #55 and later privacy releases made the live front door a redirect to `privacy-site/public/`. PR #57 added numeric `suggestions.html` and `questions.html`, then later merges excluded those pages from Pages. This session will rebase onto `origin/main`, keep both the privacy guide and the numeric pages, and not discard either session's files.
+
+Official pages opened in this session (not copied from an earlier edition): IRS estate-tax threshold page ($15,000,000 for 2026); IRS IR-2026-133 ($15,480,000 and $20,000 gift exclusion for 2027); IRS What is New (Public Law 119-21); IRS closing-letter FAQ (dated fees $67 / $56 / $76, not a contradiction); SCO estate-tax page; BOE Proposition 19 page; BOE LTA 2025/009 ($1,044,586); BOE LTA 2026/026 (family-home and formula); R&TC 63.2 and 51; Probate Code 16061.7; BOE homeowners exemption ($7,000); SF Treasurer (1.18162182%); Santa Clara tax rate book FY2025-26 pages A-4 to A-6; Clerk-Recorder transfer tax; HUD SAFMR 95014 and 94122; CDI comparison tool (not a quote; ZIP premium left blank); SF rent-increase page (1.6%); Treasury yield curve 2026-11-10; Congress.gov S.587 (introduced, not law).
+
+Irregularities found and not silently "fixed" in the model: closing-letter disagreement note is stale (R19); sale-year tax uses six months of the reassessed bill (R20); El Camino Hospital 0.00200 is on page A-4 and is not in the 1.16360% composite (R21 / U03). New unanswered questions, later numbered Q15-Q18 so they do not collide with the existing questions page: principal residence, transfer timing, deductible loss, and which home has the exemption.
