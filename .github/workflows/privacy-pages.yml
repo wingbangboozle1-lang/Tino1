@@ -18,6 +18,7 @@ jobs:
       - name: Build and validate isolated public site
         run: |
           python3 privacy-site/build.py
+          git diff --exit-code -- privacy-site/public
           python3 privacy-site/check.py
           jekyll build
           python3 privacy-site/check_published.py _site

@@ -176,7 +176,7 @@ for x in M['replays']:
 rep_sorted = lambda k: sorted(x['real_' + k] for x in M['replays'])
 RH = M['replay_horizons']
 JS_ = M['japan_savings']
-VERIFY = ('' if ROOT_MODE else '../../') + 'verify-4395771d/site/index.html'
+VERIFY = REPO + '/blob/main/verify-4395771d/site/index.html'   # superseded copy lives in the repository, not on the site
 NAME = {'live': 'Live in it', 'rent': 'Rent it out', 'sell': 'Sell and reinvest'}
 SRC_MODEL_TAX = ('SCC-RATES', 'BOE-LTA-2026-026')
 
@@ -1040,7 +1040,7 @@ LEGACY = [
 
 
 def build_versions():
-    rows = [['<a href="%s">%s</a>' % (h, e(t)), 'Superseded - kept for the record, carries a notice at the top', e(why), src(*s_)] for h, t, why, s_ in LEGACY]
+    rows = [['<a href="%s/blob/main/%s">%s</a>' % (REPO, h, e(t)), 'Superseded - kept for the record, carries a notice at the top', e(why), src(*s_)] for h, t, why, s_ in LEGACY]
     t = table(['Earlier version', 'Status', 'Why it should not be relied on', 'Rule it is measured against'], rows, caption='Earlier versions kept in the repository')
     body = '<p class="callout">This site is the only current version. The pages below were written by earlier or parallel work sessions. They are kept so that nothing is lost, each carries a notice pointing back here, and none is linked from anywhere else on this site. Their numbers differ from this site because their assumptions and, in places, their reading of the rules differ.</p>' + t + '<p class="note">Details of each finding are on the <a href="review.html">Repo review</a> page and in <a href="%s/blob/main/COORDINATION.md">COORDINATION.md</a>.</p>' % REPO
     page('versions.html', 'Earlier versions', 'Older editions of this analysis that remain in the repository, and why this site replaces them.', body)

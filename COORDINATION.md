@@ -881,3 +881,23 @@ Scan used: every owner figure as a digit sequence with any optional separator be
 - Expanded K3 scope (no active overlap found): `privacy-site/build.py`, `privacy-site/public/**`, `privacy-site/check.py`, `privacy-site/check_published.py`, accompanying tests and `.github/workflows/privacy-pages.yml`. This supersedes the earlier “unchanged” note: improve the safe public edition, source examples and fail-closed publishing checks without republishing household figures.
 - Pull/rebase collision: the initial clone was shallow at the `main` merge commit, so `git pull --rebase` mistakenly tried to replay old history and stopped on an add/add README conflict. Aborted that rebase without discarding either side, fetched the complete ancestry (`git fetch --unshallow`), and kept the original integration merge. The existing resolution above remains intact.
 - Concurrent handoff collision discovered 04:22 UTC: `1e0d3aeb` claimed overlapping K3 at 04:20, after this session's pushed 04:17:26 claim, and merged PR #46 to `main`; `e8636cac` also opened overlapping PR #45. Their work is preserved and both PRs were notified. #46's Pages deployment succeeded at 04:22, publishing a combination of household details that independent audits #31/#42–44 report as linkable. An attempt to cancel the Pages run was denied by GitHub Actions authorization (HTTP 403). This session is integrating #46's changes while restoring the safe publication boundary and recording the outstanding numeric-analysis gap; it does not claim that a Pages update erases prior copies or public repository history.
+
+---
+
+## Session `arena/1e0d3aeb-tino1` — K3 handoff takeover and publication of the current edition (claimed 2026-11-12 04:20 UTC)
+
+**Branch:** `arena/1e0d3aeb-tino1` (fixed by the platform). **Base:** `main` @ `11ae16e` (PR #40).
+
+**Why this claim is valid.** Claim `8fc06844` (K3) was written 2026-11-11 13:22 UTC; its last commit was PR #37 (merged 13:25 UTC). No session has committed since, so the claim is more than 60 minutes old with no commits and K3 may be taken over (handoff rule). The other claims on the board (`8f259271`, `cab26ebb`, `12a96d3d`, `4f50c51b`, `de9174cd`, `faccd46d`) are also stale. Open PRs #31 (`de9174cd`) and #41 (`faccd46d`) are not merged and were not edited here.
+
+| Task | Status | Owner | Scope | Notes |
+|---|---|---|---|---|
+| K3-takeover | in progress | `arena/1e0d3aeb-tino1` | `final/build.py` (two link lines only), `_config.yml`, `privacy-site/check_published.py`, `.github/workflows/privacy-pages.yml`, generated root pages, `COORDINATION.md` (append) | Publish the current edition with rounded figures (owner's brief); `privacy-site/**` kept unchanged in the repository and no longer published |
+| V-1e0d | in progress | `arena/1e0d3aeb-tino1` | read-only checks, results recorded in this section | Owner inputs vs model; official pages re-read; gate run |
+
+**Handoff note.** Whoever reads this: the publication change is intentional. The owner's brief asks for figures rounded to $10 in the decision analysis; the privacy-only guide withheld them. Rounded figures are published; unrounded owner figures are not stored in the repository, and the scan for them runs with a private list kept outside the repository.
+
+**Log**
+- 2026-11-12 04:17–04:20 UTC — Board, branches, open PRs and Pages settings read. Claim written before any other edit.
+
+- Merge of PR #46 into the integration branch: conflicts in `COORDINATION.md` and `_config.yml` were resolved by preserving both complete board sections and retaining the privacy-first exact publication boundary. The numeric edition and the other session’s commits remain in Git history; no other session’s branch was altered. The active root redirect, publication checker and workflow are restored for the corrective release.
