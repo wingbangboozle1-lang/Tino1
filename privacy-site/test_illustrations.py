@@ -70,10 +70,15 @@ class PublicationTests(unittest.TestCase):
         repo=here.parent
         with tempfile.TemporaryDirectory() as folder:
             root=Path(folder)
-            shutil.copyfile(repo/'index.html',root/'index.html')
+            # Fixture mirrors the union allowlist in final/published.txt (numeric edition
+            # at the root plus the no-figures guide under privacy-site/public/), each file
+            # byte-identical to its repository source - updated for the dual-edition
+            # routing contract, see check_published.py and COORDINATION.md.
+            for name in (repo/'final'/'published.txt').read_text().split():
+                dst=root/name
+                dst.parent.mkdir(parents=True,exist_ok=True)
+                shutil.copyfile(repo/name,dst)
             target=root/'privacy-site/public'
-            target.mkdir(parents=True)
-            for source in (here/'public').iterdir(): shutil.copyfile(source,target/source.name)
             cmd=[sys.executable,str(here/'check_published.py'),str(root)]
             self.assertEqual(subprocess.run(cmd,capture_output=True).returncode,0)
             (root/'leaked.json').write_text('{}')

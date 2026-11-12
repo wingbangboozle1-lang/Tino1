@@ -88,7 +88,10 @@ def check_site(site):
             if re.match(r'^(?:[a-z][a-z0-9+.-]*:|//|#)', u, flags=re.I):
                 continue
             target = u.split('#')[0].split('?')[0]
-            if target and target not in ALLOW_SET:
+            if not target:
+                continue
+            resolved = os.path.normpath(os.path.join(os.path.dirname(name), target)).replace(os.sep, '/')
+            if resolved not in ALLOW_SET:
                 err('published page', name, 'links to a path that is not published:', target)
     return len(actual)
 
@@ -109,6 +112,8 @@ def check_fresh():
     for name in sorted(ALLOW_SET):
         if not name.endswith(('.html', '.css', '.js')):
             continue
+        if '/' in name:
+            continue  # privacy-site/public/*: built by privacy-site/build.py, freshness enforced in CI
         fresh = os.path.join(tmp, name)
         live = os.path.join(ROOT, name)
         if not os.path.exists(fresh):

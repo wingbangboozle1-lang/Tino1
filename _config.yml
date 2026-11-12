@@ -1,4 +1,4 @@
-title: Two-home inheritance analysis
+title: Two-home inheritance analysis and no-figures guide
 exclude:
   - '.github'
   - '.gitignore'
@@ -10,6 +10,7 @@ exclude:
   - 'analysis'
   - 'archive'
   - 'assets'
+  - 'audit-708757cf'
   - 'audit-de9174cd'
   - 'dashboard'
   - 'data'
@@ -19,9 +20,15 @@ exclude:
   - 'integrated'
   - 'legacy95'
   - 'model'
-  - 'privacy-site'
   - 'research'
   - 'scripts'
   - 'session-faccd46d'
   - 'site'
   - 'verify-4395771d'
+  - 'privacy-site/README.md'
+  - 'privacy-site/build.py'
+  - 'privacy-site/check.py'
+  - 'privacy-site/check_published.py'
+  - 'privacy-site/illustrations.py'
+  - 'privacy-site/research.json'
+  - 'privacy-site/test_illustrations.py'

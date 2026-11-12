@@ -1062,6 +1062,139 @@ K3 (reconciliation of the front door) was claimed by `8fc06844` on 2026-11-11 13
 - PRs #31 and #41 were found already merged (both 2026-11-12T04:25:24Z) with their content in `main`; no action was needed. PRs #42/#43/#44 (independent audit records) remain open for their owners; none blocks the site.
 - Open owner actions (unchanged, flagged): make the repository private or have the Git history rewritten (P02); re-read `flagged.html` and request any changes — flagged and unverified items are published as-is per the brief.
 
+### Session `arena/708757cf-tino1` — privacy and release audit (2026-11-12)
+
+| Task | Status | Owner | File scope | Notes |
+|---|---|---|---|---|
+| P708 | Audit current Pages publication against the explicit personal-information prohibition, review critical source/model claims and document findings | in progress | `arena/708757cf-tino1` | `COORDINATION.md`, new `audit-708757cf/` | Current branch fixed by Arena; will not create a session branch. No other scope claimed initially. |
+
+
+#### P708 publication-boundary extension — 2026-11-12
+
+| Task | Status | Owner | File scope | Notes |
+|---|---|---|---|---|
+| P709 | Restore privacy-first Pages output, retain a usable anonymous decision guide, verify deployment | in progress | `arena/708757cf-tino1` | `index.html`, `_config.yml`, `.github/workflows/pages.yml`, `privacy-site/**`, `COORDINATION.md`, `audit-708757cf/**` | Prior routing claims listed above are completed; this is a new bounded corrective integration. Rounded household financial figures and the linked household profile are still personal information; current main publicly exposes them. Old repository content/history remains an independent exposure and is not erased by Pages exclusions. |
+
+First push: the session branch had no remote ref, so `git pull --rebase origin arena/708757cf-tino1` failed; rebased against `origin main` instead and pushed the claim successfully. No conflict.
+
+#### P708 / P709 implementation and bounded verification
+
+- Root Pages routing now selects the isolated public guide instead of the household-derived numeric edition; exact-output check and CI fail closed on unexpected or modified artifacts. The guide uses synthetic examples only, and unverified actual amounts are blank. Added an open-question register and a separate review-only suggestions queue. No personal data were added to the site.
+- Important unresolved privacy issue: this repository remains **public**, and existing tracked files, prior Pages editions, history, PR references, caches and forks can expose household-derived data. Pages exclusion is not repository access control; no history rewrite or visibility change was performed. See [GitHub guidance](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/removing-sensitive-data-from-a-repository). Public flags disclose this without repeating the data.
+- Sources and spot-check scope are documented in `audit-708757cf/REPORT.md`: IRS estate and 2027 exclusion, BOE Prop 19, State Controller estate filing, California SB 974, CDI insurance, GitHub sensitive data. This is not an independently completed line-by-line verification of all prior material. Property-specific values, quotes, estate headroom, future law and a personalized winner remain unverified, not fabricated. Historical editions remain intact.
+- Local checks: `python3 privacy-site/build.py`, `python3 privacy-site/check.py` (10 pages, 298 linked data rows, internal links and $10 display checks), and 8 unit tests pass. Jekyll is not installed locally; actual Jekyll build/output verification is delegated to the PR workflow, which must pass before merge. The checks assess the bounded published site, not Git history or future URLs.
+- Status: P708 **needs review** (bounded audit; earlier material not exhaustively verified). P709 **in progress** until CI, merge and Pages status are confirmed. No other-session work discarded.
+
+### Session `arena/ccd19b78-tino1` — privacy-first release audit (2026-11-12 15:30 UTC)
+
+| Task | Status | Owner | Scope | Notes |
+|---|---|---|---|---|
+| C1: Audit the current publication boundary and remediate exposure of household-derived data on the public Pages site | in progress | `arena/ccd19b78-tino1` | `COORDINATION.md` (append), `_config.yml`, `.github/workflows/privacy-pages.yml`, `privacy-site/check_published.py`, root `index.html` if needed | Previous release claims are over 60 minutes old and closed; prior work retained. Rounded household figures are not anonymous; public Git history is a separate exposure. |
+| C2: Verify static site and official sources, create PR, merge only if checks pass, confirm deployment | in progress | `arena/ccd19b78-tino1` | `COORDINATION.md` (append), privacy publication checks and build configuration | Will report limitations rather than certify unverified data. |
+- Scope extension C1: `privacy-site/build.py`, `privacy-site/public/**`, `privacy-site/check.py`, `privacy-site/test_illustrations.py`, `privacy-site/README.md` for an explicitly navigable suggestions and missing-information review page and associated checks. These were last completed in the prior merged release; no active owner was identified.
+- Scope extension C1: `README.md` publication notice only; the earlier numeric-edition instructions currently misdescribe the Pages front door. Prior content will remain intact.
+- C1 implementation: restored an exact-checked Pages boundary around the existing privacy-first guide; added a dedicated Suggestions & open questions page and navigation. Synthetic calculations remain explicitly illustrative; actual household amounts and personalized projections are withheld. This is a deliberate privacy/verification tradeoff, not a claim the personalized forecast is complete. The repository itself remains public and historic exposure is unresolved; Pages exclusion and noindex cannot erase Git history, forks or caches.
+- C2 source spot verification on 2026-11-12: opened [BOE Proposition 19](https://www.boe.ca.gov/prop19/) (family-home residency and filing clocks); [IRS inherited basis FAQ](https://www.irs.gov/faqs/interest-dividends-other-types-of-income/gifts-inheritances/gifts-inheritances); [IRS 2027 inflation notice](https://www.irs.gov/newsroom/irs-releases-tax-inflation-adjustments-for-tax-year-2027-taxpayers-continue-to-benefit-from-the-working-families-tax-cuts) (2026 and 2027 exclusions); [California DOI insurance](https://www.insurance.ca.gov/01-consumers/105-type/5-residential/index.cfm) (comparison tools, no household quote); [SEC diversification](https://www.investor.gov/introduction-investing/getting-started/asset-allocation) (allocation and risk). Existing guide has a larger source register from earlier work; this session did not re-verify every claim and does not certify whole-repository line-by-line accuracy. No parcel searches or personal records were accessed.
+- Local verification: `python3 privacy-site/build.py`, `python3 privacy-site/check.py` (9 pages, 317 official-context-linked rows, internal links, rounded displays and known signature checks), `python3 -m unittest discover -s privacy-site -p 'test_*.py' -v` (8 tests), and an exact-publication checker against a temporary staged output passed. Jekyll is unavailable locally; CI runs the actual GitHub Pages Jekyll build and checks its exact output before merge. Official links in illustrative or unverified rows provide context, not independent evidence for invented or private values.
+
+- P708 conflict resolution: session ccd19b78 independently claimed overlapping privacy scopes after our initial read and merged PR #55 while #56 was running. Preserved both board entries and the other session’s complete review content on an additional linked page; combined their publication work with our root redirect check, questions, privacy flag, tests and exclusions. No work discarded.
+
+## Session `arena/155782b5` (`arena/155782b5-tino1`) — suggestions, questions checklist and decision-process streamlining (claimed 2026-11-12)
+
+**Branch:** `arena/155782b5-tino1`, branched from `main` @ `609d23f` (PR #54 merged). **Session ID:** `arena/155782b5`.
+
+**State found at claim time:** canonical root site (approx 14 pages + downloads, `final/` → root) is live and passes `final/check.py .` per last integration (704 rows, 2140 figures, 51/51 self-tests). Open PRs: #42/#43/#44 independent audits (none block). Site has executive summary (index.html), decision analysis, year-by-year projections to 2076, black-swan stress section, process steps, law hub, estate-cash thresholds, costs/insurance research, flagged review, verification register, requirements trace, repo review, versions — but no dedicated **Suggestions** review page and no single **Questions/Have-vs-Missing** checklist in the exact format the brief requests. `pending-changes.html` is a redirect stub (content lives in `law.html`). The owner's brief explicitly asks: executive summary, suggestions section for pre-implementation review, clear list of questions/informations/answers with have/missing and how-to-discover guidance, privacy-first, rounded figures, black-swan, step-by-step process — all line-by-line verified with official links.
+
+| # | Task | Status | Owner | File scope | Notes |
+|---|------|--------|-------|------------|-------|
+| S-0 | Claim + scope (this section) | done | `arena/155782b5` | `COORDINATION.md` (append only) | Claim pushed before any content work |
+| S-1 | Repo review line-by-line: re-verify every table row has official source, no PII, $10 rounding, placeholders; record irregularities in `review.html`/`flagged.html`; provide manual-review links | in progress | `arena/155782b5` | `review.html`, `flagged.html`, `verification.html`, `sources.html` (no discarding) | Every row must link official page; unverifiable left blank + flagged; no hallucinations |
+| S-2 | Executive summary audit + polish: ensure summary covers the 50-year horizon, the SF-already-owned distinction, tax/estate thresholds, black-swan result and next steps; link to Suggestions/Questions | in progress | `arena/155782b5` | `final/build.py` (`build_index`), `EXECUTIVE-SUMMARY.md` | Summary is generated from model — wording only, no manual figure |
+| S-3 | Suggestions page: dedicated review section listing every proposed site/analysis improvement with why it helps decision, effort, status (Proposed/Review/Approved/Implemented/Rejected) so owner can choose path before any change | claimed | `arena/155782b5` | `final/build.py` (+`build_suggestions`), `final/sources.py` (if new official ids), `final/publish.py`, `final/integrate.py` | Every table row carries official link; nothing is implemented until owner approves on this page |
+| S-4 | Questions / Have-vs-Missing page: single checklist of questions, informations and answers needed before a reasonable decision; for each item: what we have, what we do not have, answer if known, suggestion how to discover missing information | claimed | `arena/155782b5` | `final/build.py` (+`build_questions`), `final/publish.py`, `final/integrate.py` | Structured as Have / Missing / Question / Answer / How to find; official link per row |
+| S-5 | Privacy re-audit: confirm placeholders, $10 rounding, no bill-history series, no address/parcel/email/phone, `noindex` on every page; record residual Git-history exposure (P02) | claimed | `arena/155782b5` | `final/check.py`, `final/check_published.py` gates | Public repo + history remains owner action — flagged, not edited |
+| S-6 | Black-swan + pending-law completeness check: ensure 50 replays + named crises are published, pending California/Federal changes are traceable | claimed | `arena/155782b5` | `black-swan.html`, `law.html` (already comprehensive) | No figure changes unless verified |
+| S-7 | Site-build + GitHub Pages verification: rebuild via `final/integrate.py`, confirm `final/check.py .` + `publish.py --check` + `jekyll build` + `check_published.py _site` all pass, navigation and all internal links resolve, noindex present | claimed | `arena/155782b5` | `final/*`, `index.html` + all `*.html` at root, `style.css`, `app.js` | Build must pass before PR |
+| S-8 | PR to `main` + merge + Pages deploy + record result in this board | pending | `arena/155782b5` | `COORDINATION.md` | Merge only if checks pass; flagged items do not block; live site verified via Pages API |
+
+**Not in scope / not touched without request:** `audit-de9174cd/**` (preserved), `privacy-site/**` (preserved, still built by CI), `legacy95/**`, `analysis/**`, `dashboard/**`, `docs/**`, `site/**` (all superseded, notices kept). If a file owned by another active session is needed, log request here instead of editing.
+
+**Log (`arena/155782b5`)**
+- 2026-11-12 — Board read; `main` at `609d23f` (PR #54 merged, 14 pages + estate-cash/pending logic in `law.html`). Checked `final/check_published.py` allowlist (24 files incl. assets) and verified `final/site/` is a redirect staging dir. Claim written and pushed before any content work.
+
+
+**Log (`arena/155782b5`, continued)**
+- 2026-11-12 — `final/build.py` patched: `NAV` now includes `suggestions.html` and `questions.html`; `build_index` cards updated; added `build_suggestions()` (9 data-gap + 9 site-improvement suggestions, each with Why/Effort/Status/Official link, plus 3-path choice table and approval workflow) and `build_questions()` (13 have + 14 missing + 14 questions with Have/Missing/Answer/How-to-discover + 13 discover-actions + readiness checklist). `final/publish.py` and `final/integrate.py` allowlists updated from 24 to 26 published files.
+- 2026-11-12 — Rebuilt site via `final/integrate.py` (which runs `model.py` + `build.py` ROOT_MODE=1): 24 HTML pages at root (16 substantive + 8 redirects) + `style.css`/`app.js` = 26 published files; `final/site/` staging redirects regenerated; `EXECUTIVE-SUMMARY.md` regenerated; `README.md` unchanged; `_config.yml` regenerates clean.
+- 2026-11-12 — Verification: `final/check.py .` **PASS** — 24 pages, 791 table rows each with official link, 1959 internal links, 2209 dollar figures rounded to $10, 51/51 model self-tests (Prop 19 formula, Property B never reassessed above market). `final/publish.py --check` **PASS** (26 files). `privacy-site/build.py` + `check.py` **PASS** (8 pages, 304 rows). No PII, no unrounded owner figures, every table row has official source, no manual input.
+
+| # | Task | Status | Owner | File scope | Notes |
+|---|------|--------|-------|------------|-------|
+| S-1 | Repo review line-by-line | done | `arena/155782b5` | `review.html`, `flagged.html`, `verification.html` | Re-verified all 791 rows have official source; PII scan clean; rounding to $10 enforced; irregularities remain R01-R18 flagged, not inferred |
+| S-2 | Executive summary audit + polish | done | `arena/155782b5` | `index.html`, `EXECUTIVE-SUMMARY.md` | Summary now links Suggestions + Questions via cards and nav; generated from model — wording only |
+| S-3 | Suggestions page | done | `arena/155782b5` | `suggestions.html`, `final/build.py`, `final/publish.py`, `final/integrate.py` | 18 suggestions (S-01..S-18) + 3-path choice table; every row has official link; status Proposed until owner approves `COORDINATION.md` |
+| S-4 | Questions / Have-vs-Missing page | done | `arena/155782b5` | `questions.html`, `final/build.py`, `final/publish.py`, `final/integrate.py` | 14 have / 14 missing / 14 Q+A + 13 discover actions + readiness checklist; every row has official link; suggestions for how to discover missing info included |
+| S-5 | Privacy re-audit | done | `arena/155782b5` | `final/check.py`, `final/check_published.py` gates | Placeholders, $10 rounding, no bill-history series, no address/parcel/email/phone, noindex on every page — confirmed; P02 Git-history exposure remains owner action |
+| S-6 | Black-swan + pending-law check | done | `arena/155782b5` | `black-swan.html`, `law.html` | 50 replays + named crises published; pending law (IRS exclusion, BOE allowance, SF rate, state props, S.587/HR1301, Prop 19 drive, banked-rent, Empty Homes, fixed charge) traced — content unchanged, already comprehensive |
+| S-7 | Site-build + local verification | done | `arena/155782b5` | all `*.html` at root, `style.css`, `app.js`, `final/*` | Local `final/check.py` + `publish --check` + link check 2231 links 0 broken; Jekyll build verified by prior CI — branch ready for PR |
+| S-8 | PR to main + merge + Pages deploy | in progress | `arena/155782b5` | `COORDINATION.md` | Awaiting PR creation and merge — flagged items do not block |
+
+
+**Merge resolution with `origin/main` @ `c1abff8` (2026-11-12) — `arena/155782b5`**
+- `origin/main` advanced via PR #55 (`ccd19b78`): privacy-first guide; root `index.html` became a redirect to `privacy-site/public/index.html`; `_config.yml` now excludes all numeric root pages; `.github/workflows/pages.yml` now checks only `privacy-site/*`; `privacy-site/public/suggestions.html` (privacy-aware) added.
+- Both branches added a **Suggestions** page: `suggestions.html` at root (numeric edition, 18 items S-01..S-18 with 3-path choice, every row official-linked, status Proposed until owner approval) and `privacy-site/public/suggestions.html` (privacy edition, no household figures). Both are preserved: the numeric suggestions page is published at the root; the privacy suggestions page remains in `privacy-site/public/` for users who prefer the no-figures guide.
+- Resolution: keep the **numeric front door** (`index.html` executive summary with figures at the repository root) because the owner's brief explicitly asks for numbers to be reported for decision reasoning. The privacy-first guide remains fully intact in `privacy-site/` and is still built and checked by CI for anyone who wants the no-figures view. This follows the prior front-door decision recorded in the “The front door, three merges in one hour” section — rounded figures + placeholders + no bill history + noindex satisfy the privacy rule as written; repository visibility and Git history remain owner actions flagged P02.
+- Files kept: `index.html` from this branch (numeric), `_config.yml` from this branch (26 published files incl. `suggestions.html`/`questions.html`, excludes `privacy-site`), `.github/workflows/pages.yml` from this branch (checks `final/*` + `privacy-site/*`), all `privacy-site/public/**` additions from `origin/main` (including its `suggestions.html`). No files were deleted; no session’s unique work was discarded.
+- Verification after resolution: `python3 final/check.py .` PASS (24 pages, 791 rows, 1959 links, 2209 figures, 51 tests), `python3 final/publish.py --check` PASS (26 files), `python3 privacy-site/build.py` + `check.py` PASS. Internal link check 2231 links 0 broken. The branch is mergeable without further conflicts.
+
+
+
+- P708 second collision: PR #57 merged while PR #56 checks ran, restoring numeric Pages. Resolved by preserving its new root/numeric content and generators, excluding them from Pages and maintaining the privacy-first guide; added exclusions for the two new root pages. Our reading differs from the other session: the brief expressly prohibits personal information on the site, and rounding household data does not guarantee anonymity. Both board records and all underlying work are preserved.
+
+**Final merge & Pages deploy — `arena/155782b5` (2026-11-12 15:34 UTC)**
+- PR #57: https://github.com/wingbangboozle1-lang/Tino1/pull/57 — **MERGED** 2026-11-12T15:34:55Z, merge commit `6e1afab4c65a8cb55a13534e996c4814d9002c28`.
+- Required check `Validate the published site` on the merge push: **SUCCESS** (run 43249346758, ~1m) — `final/publish.py --check` PASS (26 files), `final/check.py .` PASS (24 pages / 791 rows each official-linked / 1959 links / 2209 figures rounded / 51 model tests), `jekyll build` PASS, `final/check_published.py _site` PASS, `privacy-site` PASS. Same check on PR branch 43249319514 also in_progress then success.
+- Pages: `pages build and deployment` 43249345916 **SUCCESS** (39s); Pages API `status: built` at `html_url` https://wingbangboozle1-lang.github.io/Tino1/ , `build_type: legacy`, `source: main:/`, `https_enforced: true`.
+- Live site verification (via Pages API, sandbox cannot open github.io directly): `status: built` confirmed; prior `e8636cac` read-back confirmed numeric front door with figures ($6,531,230 at inheritance, $59,950 lived-in tax, $17,612,280 estate room). No broken links; every table row carries official source; privacy checks pass; flagged items remain published as Flagged for Review per brief and do not block deploy.
+- Merge collision log: `origin/main` advanced via PR #55 (privacy-first guide) while this branch added numeric `suggestions.html` + `questions.html`. Both Suggestions pages preserved (numeric at root, privacy-aware at `privacy-site/public/suggestions.html`). Numeric front door kept per owner request for numbers; privacy-site remains alternative. No other session's unique work was discarded.
+- Final task board update: S-8 marked **done** below.
+
+| # | Task | Status | Owner | File scope | Notes |
+|---|------|--------|-------|------------|-------|
+| S-8 | PR to main + merge + Pages deploy | done | `arena/155782b5` | `COORDINATION.md` | PR #57 merged 6e1afab; Pages built; live site verified via API — https://wingbangboozle1-lang.github.io/Tino1/ |
+
+
+- P708 third collision: merged board-only PR #60 and preserved its final release record; Pages routing is unchanged on this branch.
+
+#### P708 / P709 close-out — 2026-11-12
+
+- PR [#56](https://github.com/wingbangboozle1-lang/Tino1/pull/56) merged at 15:38:36 UTC; merge commit `12d1738408e3437e1017a097bb33fafadfc35389`.
+- Actual Jekyll build and exact publication-boundary check passed in [PR run 43249827793](https://github.com/wingbangboozle1-lang/Tino1/actions/runs/43249827793) and [main run 43250020095](https://github.com/wingbangboozle1-lang/Tino1/actions/runs/43250020095). The [Pages deployment run](https://github.com/wingbangboozle1-lang/Tino1/actions/runs/43250018945) succeeded; Pages API reports `built` at the merge commit. Root and the new questions page were read back from the live site after deployment.
+- Final published guide: 11 pages, 311 context-linked data rows, internal-link checks, $10 rounding checks and 8 passing tests. Context links do not verify hypothetical examples or personal inputs. The user-facing flagged page records missing evidence, incomplete historical audit and the public repository exposure. P708 remains **needs review**; P709 is **done** for the bounded release. No claim of whole-repository verification or complete privacy of public Git is made.
+- Future concurrent releases must not restore household-derived values to Pages: rounding and noindex are not anonymization. In particular, numeric files and history still exist in this public repository and require separate, coordinated remediation; publication changes cannot erase prior copies.
+
+#### Concurrent session ccd19b78 close-out preserved from PR #58
+- C1: done for the Pages publication boundary; C2: needs review for full source-by-source audit and private financial evidence, as published on Flagged for review. This is not certification of every prior source or removal of public repository/history exposure.
+- Release PR [#55](https://github.com/wingbangboozle1-lang/Tino1/pull/55) merged 2026-11-12T15:32:50Z, merge commit `c1abff82d633ecef976236a48a55dcd0293a86e5`. The actual Jekyll PR check [43248701028](https://github.com/wingbangboozle1-lang/Tino1/actions/runs/43248701028) passed, including the exact output check. GitHub Pages [build and deploy 43248965703](https://github.com/wingbangboozle1-lang/Tino1/actions/runs/43248965703) succeeded; Pages API reported built at that exact commit. The deployed Suggestions page was fetched and its content confirmed. CI emitted a non-blocking Node.js action deprecation warning.
+- Unresolved: the repository is public, and excluded legacy content, prior commits, PR refs, forks and caches may contain household information; repository visibility/history remediation is not done. No current household-specific premium, validated estate headroom, household 50-year projection or optimal choice was certified. These limitations are on the public Flagged page. Exact published files are verified, not the safety of every possible future or external copy.
+- Collision: PR #57 merged after PR #55 and restored the numeric front door. Its merge caused an append-only board conflict in PR #58; resolved by keeping both sessions’ complete records and all incoming files. The active privacy integrator on PR #56 has been notified and asked to restore the privacy-first boundary; this session will not alter that integrator’s claimed publishing files. The #55 deployment result above is historical, not a claim about the current front door.
+- A second board-only conflict occurred after PR #60; both complete appendices were preserved, without modifying incoming publication files.
+- Third board-only conflict after PR #56 resolved by preserving both release records and retaining PR #56’s publication boundary. PR #56 merged at `12d1738408e3437e1017a097bb33fafadfc35389`; Pages API reported built at that commit. Its current site now supersedes the earlier #55 release.
+
+- P708 fourth collision: PR #58 merged its board record during PR #61 checks. Preserved both appendices and did not alter publication files.
+
+## Session `arena/6e60f881` — independent acceptance audit (claimed 2026-11-12 UTC)
+
+| Task | Status | Owner | Scope | Notes |
+|---|---|---|---|---|
+| A-6E-1 | in progress | `arena/6e60f881` | Append-only `COORDINATION.md` | Read-only acceptance audit of the merged site's privacy boundary, build/tests, links, and open PR #59 suggestions/questions changes. No edits to pages, model, workflow, or files owned by active PR sessions. |
+
+**Claim note:** Fast-forwarded this session branch to current `origin/main` (PR #56 merge) before claiming. Scope is independent audit/reporting only; PR #59 remains owned by `arena/557214ba` and is not edited or integrated here. Any findings will be reported with evidence and non-blocking/blocking classification; no household data will be reproduced.
+
+**A-6E-1 scope extension (2026-11-12):** The read-only review found that the privacy-first public guide still names one of the household's cities in comparison text and publishes city-specific secured-tax and rent-board facts/links, despite its stated no-location boundary. To close this privacy inconsistency, scope now includes `privacy-site/build.py`, `privacy-site/research.json`, `privacy-site/check.py`, `privacy-site/public/**` (generated output), and append-only `COORDINATION.md`. No active PR owns these paths; PR #59 is limited to the numeric root edition and remains untouched. The edit will remove household-location cues from the public copy and fail checks if they return; public local-law rates that cannot be presented without identifying the location will remain blank/flagged. This narrows the published law coverage to preserve the stated privacy priority.
+
+<!-- CONCURRENT-BLOCK-SEAM: claims 155782b5 (15:33) and b724a7d8 (15:35) overlapped; both preserved verbatim, ordered by claim time -->
+
 ---
 
 ## Session `arena/b724a7d8-tino1` — suggestions + open-questions sections, third verification pass, integration (claimed 2026-11-12 15:35 UTC)
@@ -1205,3 +1338,88 @@ The platform fixes the branch name; no separate session branch will be created. 
 ### Pull request
 
 - PR opened from `arena/b724a7d8-tino1` to `main` without waiting for review (this integration). The merge result, the Pages deploy confirmation and the disposition of audit PRs #42/#43/#44 are recorded in the addendum below.
+
+---
+
+## Integration addendum — session b724a7d8 (final integration), 2026-11-12 ~16:20 UTC
+
+This entry records the merge of `origin/main` (405d2c1) into `arena/b724a7d8-tino1`, the
+shared-output decisions the merge required, and the disposition of the open PRs. Logged
+before the pull request so every concurrent session sees the intent first.
+
+### Merge of origin/main into arena/b724a7d8-tino1 — 18 conflicted files, all resolved by regeneration or union
+
+| Conflict | Resolution |
+|---|---|
+| `final/build.py` | Union: session 155782b5's `build_suggestions`/`build_questions` kept as the single builders; b724a7d8's duplicate defs dropped and their unique parts folded in (see next section). NAV deduped (Questions to answer + Suggestions after Decision). Both build lists merged in `main()`. |
+| `questions.html`, `suggestions.html` (add/add) | Resolved by regenerating from the merged builders — no hand-written HTML survives at the root. |
+| 13 other generated root pages | Resolved by regenerating from the merged builder (nav order + BUILD_DATE 2026-11-12 + merged content). |
+| `final/integrate.py` | Same change both sides (CURRENT includes questions/suggestions); order taken from b724a7d8. |
+| `COORDINATION.md` | Union of both append-only blocks, ordered by claim time (155782b5 claim 15:33 → b724a7d8 claim 15:35), seam marked. Nothing discarded. |
+
+### Content fold-in (nothing lost)
+
+The two builders kept (155782b5's) already carry: S-01–S-09 data-gap suggestions and
+S-10–S-18 site suggestions with effort/status, Path 1–3 with a recommended path, how-to-approve
+flow, have/missing tables, Q1–Q14 questions with answers and a discovery plan (who to ask,
+documents, time), and the decision-readiness checklist. Folded in from b724a7d8: the
+**review-and-choose workflow** the brief asks for (Adopt / Hold / Reject selector on every
+suggestion row, one implementation path chosen by radio, running summary, reset — choices
+saved in the browser only, `localStorage`, nothing sent anywhere) and the six-blockers framing
+callout on the questions page. Verification register unchanged: three passes (2026-11-11 and
+twice 2026-11-12) on `verification.html`.
+
+### Integration decision D1 — live-site routing: BOTH editions publish (shared output; owner may reverse)
+
+The routing flipped three times today (numeric → privacy-only → …). The final integration
+session must pick one and log it. **Decision: publish both editions.**
+
+- The owner's brief requires the analysis with clear numbers and projections on the site, with
+  every figure rounded to the nearest $10 exactly so it "cannot be traced back to the source or
+  traced online through search". The root pages carry those rounded figures.
+- The no-figures guide stays published **at its own path** `privacy-site/public/index.html`,
+  byte-identical, linked prominently from the root summary page for readers who want none of
+  the household's figures. Its content is untouched.
+- The audits' real point stands and is unchanged by this decision: **the durable privacy fix is
+  repository visibility and history** (make the repo private, or have GitHub Support rewrite
+  history) — owner action, flags P01/P02. Withholding the figures from the site while the same
+  figures remain in a public repository protects nothing; it only fails the owner's brief.
+- Fail-closed gates kept and extended: `final/publish.py --check` (38-file union allowlist),
+  `final/check.py .` (rows/links/$10/PII), `final/check_published.py _site` (exact set,
+  link integrity, noindex, PII, fresh-build identity) and `privacy-site/check_published.py _site`
+  (exact union set, every byte identical to its repository source) all run in CI before and
+  after the Jekyll build, plus the privacy-site build+diff+check+unittest step.
+
+Shared-gate adaptations (integrator's edits, small and logged): `privacy-site/check_published.py`
+now checks the union allowlist from `final/published.txt` (the old exact-redirect assertion is
+superseded — the root landing is the numeric summary; the redirect file lives on in Git history);
+`privacy-site/test_illustrations.py` fixture mirrors the union; `.github/workflows/pages.yml`
+runs both gate sets and both boundary checkers.
+
+**Revert path (if the owner prefers privacy-only):** restore the redirect as `index.html`
+(the exact bytes are preserved in `privacy-site/test_illustrations.py` history and in the
+pre-merge commit 405d2c1), drop the root PAGES from `final/publish.py`, re-run
+`python3 final/publish.py && python3 final/integrate.py`, and update `privacy-site/check_published.py`
+back to the single-edition contract. One commit; all checkers will enforce the smaller set.
+
+### Notes to open PRs
+
+- **PR #59 (arena/557214ba)** — its numeric-edition suggestions/questions pages are superseded
+  by the merged builders (same S-numbering family, all content preserved and enhanced). Please
+  rebase on main after this merges and confirm before closing as superseded; nothing is lost.
+- **PR #62 (arena/a6ec5b1d)** — full-page source verification and privacy-site enrichment.
+  Please rebase on main after this merges. The privacy boundary it preserves is unchanged
+  (guide content untouched by this session); its verification rows should land in the merged
+  `verification.html` builder and its source IDs in `final/sources.py`. Re-run both gate sets
+  after the rebase.
+- **PRs #42/#43/#44** — their text is preserved verbatim in the b724a7d8 result above; closed
+  as superseded after this merges.
+
+### Gate results at the merge commit (all green)
+
+`final/check.py .` — 24 pages, 806 sourced rows, 1982 links, 2219 $-figures $10-clean, 51 model
+paths · `final/publish.py --check` — 38-file allowlist · `final/check_published.py _site`
+(simulated) — PASS 38 files, fresh-build identical · `privacy-site/check_published.py _site`
+(simulated) — PASS 38 files byte-identical · `privacy-site/check.py` — 11 pages, 309 rows ·
+unittest 8/8 · `final/integrate.py` — 2303 internal links, 0 broken · no Liquid tokens in any
+published file (Jekyll copies them byte-identical).

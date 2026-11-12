@@ -37,6 +37,8 @@ PAGES = [
     'estate-cash.html',      # cash inheritance and estate tax
     'costs.html',            # insurance, water, electricity, repairs
     'flagged.html',          # flagged for review
+    'suggestions.html',      # proposed improvements with review status
+    'questions.html',        # have/missing/questions/answers + how to discover
     'sources.html',          # source register and method
     'requirements.html',     # the brief, line by line
     'review.html',           # repository review findings
@@ -51,19 +53,48 @@ REDIRECTS = [
 ]
 ASSETS = ['style.css', 'app.js']
 
-ALLOW = set(PAGES) | set(REDIRECTS) | set(ASSETS)
+# The no-figures decision guide (privacy-site) is published alongside the numeric
+# edition at its own path.  Routing decision by the final integration session
+# (b724a7d8, 2026-11-12): both editions publish - the owner's brief requires the
+# rounded ($10) figures in the decision analysis on the site, and the no-figures
+# guide stays available at privacy-site/public/ for readers who want none of the
+# household's figures.  Logged in COORDINATION.md with the revert path.
+PRIVACY = [
+    'privacy-site/public/index.html',
+    'privacy-site/public/decision.html',
+    'privacy-site/public/projection.html',
+    'privacy-site/public/stress.html',
+    'privacy-site/public/process.html',
+    'privacy-site/public/law.html',
+    'privacy-site/public/costs.html',
+    'privacy-site/public/questions.html',
+    'privacy-site/public/suggestions.html',
+    'privacy-site/public/suggestions-detail.html',
+    'privacy-site/public/flagged.html',
+    'privacy-site/public/style.css',
+]
 
-TITLE = 'Two-home inheritance analysis'
+ALLOW = set(PAGES) | set(REDIRECTS) | set(ASSETS) | set(PRIVACY)
+
+TITLE = 'Two-home inheritance analysis and no-figures guide'
 
 
 def config(entries):
-    """Jekyll exclude list: every top-level entry that is not in the published set."""
+    """Jekyll exclude list: every top-level entry that is not in the published set.
+    privacy-site publishes only privacy-site/public/; its other files are excluded
+    one by one because the directory itself must stay publishable."""
     keep = sorted(ALLOW)
     out = ['title: %s' % TITLE, 'exclude:']
     for name in sorted(entries):
-        if name in keep:
+        if name in keep or name == 'privacy-site':
             continue
         out.append("  - '%s'" % name)
+    ps = os.path.join(ROOT, 'privacy-site')
+    if os.path.isdir(ps):
+        for name in sorted(os.listdir(ps)):
+            if name in ('public', '__pycache__') or 'privacy-site/public/' + name in keep:
+                continue
+            out.append("  - 'privacy-site/%s'" % name)
     out.append('')
     return '\n'.join(out)
 
