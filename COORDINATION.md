@@ -824,6 +824,14 @@ Scan used: every owner figure as a digit sequence with any optional separator be
 
 | Task | Status | Owner | Scope |
 |---|---|---|---|
-| F106-1: independently audit Pages configuration, live deployment, privacy and release readiness; document verified findings | in progress | fc10623f | `audit-fc10623f/**`, this coordination section |
+| F106-1: independently audit Pages configuration, live deployment, privacy and release readiness; document verified findings | needs review | fc10623f | this coordination section |
 
 The platform fixes this session's branch name. Existing claims on shared site/model files are respected; this audit does not take them over. Findings will not reproduce sensitive figures.
+
+### F106-1 findings (2026-11-12 UTC)
+
+- The Pages API reports build `11ae16e` built; the live landing and flagged pages were read. The currently served edition explicitly omits private inputs and derived projections. It is a framework, **not** the requested numerical 50-year decision analysis; no financial winner has been verified.
+- `python3 privacy-site/build.py` and `python3 privacy-site/check.py` passed locally (8 pages, 95 linked rows, internal-link checks). This is an automated check, not independent verification that every linked source supports each claim. No full line-by-line audit was completed in this session.
+- Spot checks: [IRS estate tax](https://www.irs.gov/businesses/small-businesses-self-employed/estate-tax) supports the 2026 filing threshold and estate-level approach; [California BOE Proposition 19](https://www.boe.ca.gov/prop19/) supports qualified principal residence, value-limit and filing distinctions. Neither establishes the household's eligibility or future outcome.
+- The Pages exclude list limits site publication, not access to a public repository, previous commits, forks or caches. Rounding alone does not guarantee anonymity. Prior board notes report historical exposure; the live flagged page acknowledges it. A repository owner should review visibility, history and cached copies with GitHub support.
+- Open PR #41 has a failed verification check; it was not merged or represented as verified. This session did not merge other sessions' branches. Future tax law, insurance quotes and personal eligibility remain unverified.
