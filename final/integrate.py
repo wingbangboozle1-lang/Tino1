@@ -197,6 +197,11 @@ def step7_fingerprints():
     return changed
 
 
+def step9_exec_summary():
+    """Regenerate EXECUTIVE-SUMMARY.md so the Markdown summary cannot drift from the model."""
+    subprocess.check_call([sys.executable, os.path.join(HERE, 'exec_summary.py')], stdout=subprocess.DEVNULL)
+
+
 def step8_readme():
     p = os.path.join(ROOT, 'README.md')
     old = open(p, encoding='utf-8').read() if os.path.exists(p) else ''
@@ -230,4 +235,6 @@ if __name__ == '__main__':
     ch = step7_fingerprints()
     print('7. fingerprinted figure shown to the nearest $100 / withheld in:', ', '.join(ch) or 'no file')
     print('8. README.md', 'rewritten (old text kept below a History heading)' if step8_readme() else 'already current')
+    step9_exec_summary()
+    print('9. EXECUTIVE-SUMMARY.md regenerated from the model')
     sys.exit(0)
