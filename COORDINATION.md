@@ -1166,6 +1166,23 @@ First push: the session branch had no remote ref, so `git pull --rebase origin a
 
 - P708 third collision: merged board-only PR #60 and preserved its final release record; Pages routing is unchanged on this branch.
 
+#### P708 / P709 close-out — 2026-11-12
+
+- PR [#56](https://github.com/wingbangboozle1-lang/Tino1/pull/56) merged at 15:38:36 UTC; merge commit `12d1738408e3437e1017a097bb33fafadfc35389`.
+- Actual Jekyll build and exact publication-boundary check passed in [PR run 43249827793](https://github.com/wingbangboozle1-lang/Tino1/actions/runs/43249827793) and [main run 43250020095](https://github.com/wingbangboozle1-lang/Tino1/actions/runs/43250020095). The [Pages deployment run](https://github.com/wingbangboozle1-lang/Tino1/actions/runs/43250018945) succeeded; Pages API reports `built` at the merge commit. Root and the new questions page were read back from the live site after deployment.
+- Final published guide: 11 pages, 311 context-linked data rows, internal-link checks, $10 rounding checks and 8 passing tests. Context links do not verify hypothetical examples or personal inputs. The user-facing flagged page records missing evidence, incomplete historical audit and the public repository exposure. P708 remains **needs review**; P709 is **done** for the bounded release. No claim of whole-repository verification or complete privacy of public Git is made.
+- Future concurrent releases must not restore household-derived values to Pages: rounding and noindex are not anonymization. In particular, numeric files and history still exist in this public repository and require separate, coordinated remediation; publication changes cannot erase prior copies.
+
+#### Concurrent session ccd19b78 close-out preserved from PR #58
+- C1: done for the Pages publication boundary; C2: needs review for full source-by-source audit and private financial evidence, as published on Flagged for review. This is not certification of every prior source or removal of public repository/history exposure.
+- Release PR [#55](https://github.com/wingbangboozle1-lang/Tino1/pull/55) merged 2026-11-12T15:32:50Z, merge commit `c1abff82d633ecef976236a48a55dcd0293a86e5`. The actual Jekyll PR check [43248701028](https://github.com/wingbangboozle1-lang/Tino1/actions/runs/43248701028) passed, including the exact output check. GitHub Pages [build and deploy 43248965703](https://github.com/wingbangboozle1-lang/Tino1/actions/runs/43248965703) succeeded; Pages API reported built at that exact commit. The deployed Suggestions page was fetched and its content confirmed. CI emitted a non-blocking Node.js action deprecation warning.
+- Unresolved: the repository is public, and excluded legacy content, prior commits, PR refs, forks and caches may contain household information; repository visibility/history remediation is not done. No current household-specific premium, validated estate headroom, household 50-year projection or optimal choice was certified. These limitations are on the public Flagged page. Exact published files are verified, not the safety of every possible future or external copy.
+- Collision: PR #57 merged after PR #55 and restored the numeric front door. Its merge caused an append-only board conflict in PR #58; resolved by keeping both sessions’ complete records and all incoming files. The active privacy integrator on PR #56 has been notified and asked to restore the privacy-first boundary; this session will not alter that integrator’s claimed publishing files. The #55 deployment result above is historical, not a claim about the current front door.
+- A second board-only conflict occurred after PR #60; both complete appendices were preserved, without modifying incoming publication files.
+- Third board-only conflict after PR #56 resolved by preserving both release records and retaining PR #56’s publication boundary. PR #56 merged at `12d1738408e3437e1017a097bb33fafadfc35389`; Pages API reported built at that commit. Its current site now supersedes the earlier #55 release.
+
+- P708 fourth collision: PR #58 merged its board record during PR #61 checks. Preserved both appendices and did not alter publication files.
+
 ## Session `arena/6e60f881` — independent acceptance audit (claimed 2026-11-12 UTC)
 
 | Task | Status | Owner | Scope | Notes |
