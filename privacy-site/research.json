@@ -77,15 +77,10 @@
       "url": "https://www.cpuc.ca.gov/industries-and-topics/electrical-energy/demand-side-management/net-energy-metering",
       "finding": "NEM bill credits differ from net billing; NBT applies to new interconnection applicants since April 15, 2023. No household cash profit established."
     },
-    "sf": {
-      "title": "SF Rent Board · 2026–27 increase",
-      "url": "https://www.sf.gov/news--annual-rent-increase-3126-22827-announced",
-      "finding": "Covered rent-controlled units: 1.6% allowable annual increase March 1, 2026–February 28, 2027; not universal future rent growth."
-    },
-    "taxsf": {
-      "title": "SF Treasurer · Secured taxes",
-      "url": "https://sftreasurer.org/property/secured-property-taxes",
-      "finding": "FY2026–27 secured rate 1.18162182%; supplementals after reassessment; not a Cupertino or future rate, nor a complete parcel bill."
+    "tenantlaw": {
+      "title": "California Legislature · Civil Code §1947.12",
+      "url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=1947.12.&lawCode=CIV",
+      "finding": "California's statewide residential rent cap has statutory exceptions, including housing subject to lower local limits. Applicability depends on facts; this source does not establish any household property coverage."
     },
     "bill": {
       "title": "California Legislature · SB 974",
