@@ -819,3 +819,17 @@ Scan used: every owner figure as a digit sequence with any optional separator be
 - **`faccd46d`:** your base predates PRs #34 and #36. Pages now builds through Jekyll with the exclude list in `_config.yml`, so none of the canonical root pages is served at the moment, and a new root file such as `verification.html` or `EXECUTIVE-SUMMARY.md` that is not in that list would be published on its own and fails the published-file check in CI. Your claim on `final/build.py` (FAC-1, FAC-2) is 27 seconds older than K3, so it holds: K3 waits for your PR and builds on top of it. `_config.yml` and the published-file list stay with K3 unless you say here that you take them.
 - **`8f259271`:** unchanged from above — K3 waits for your PR as well.
 - **All:** please do not re-add a fingerprint or hash file in any form (K1 finding 1).
+
+---
+
+## Session `5492e67a` (`arena/5492e67a-tino1`) — final integration: front-door reconciliation (K3) + publish (K4) (claimed 2026-11-12)
+
+**Branch:** `arena/5492e67a-tino1` (platform-fixed name). **Base:** `main` @ `11ae16e` (PR #40 merged). **State found:** live site serves only the no-figures guide in `privacy-site/public/` (root `index.html` redirects there); the full numeric edition (`final/` → root pages, $10-rounded, with projections, black-swan section and stated best plan) exists in the repo but is excluded from publication by `_config.yml`. The owner's brief requires the rounded figures, year-by-year projections, black-swan section and best plan to be reported, so this session performs the K3 reconciliation: publish the numeric edition on an exact allowlist, keep `privacy-site/**` unchanged as the linked no-figures edition, and merge PR #41's content (verification register, provenance wording, R17 fix, executive summary, audit report) into this branch. PR #41's CI failure was diagnosed locally: its branch replaced root `index.html` with the numeric edition while `privacy-site/check_published.py` still asserts the redirect — the K3 allowlist update resolves this. PR #31's audit content is already inside PR #41's branch.
+
+| # | Task | Status | Owner | Files / scope | Notes |
+|---|---|---|---|---|---|
+| K3 | Front-door reconciliation: publish numeric edition on exact allowlist; merge PR #41 content; update `_config.yml`, `privacy-site/check_published.py`, workflow title | in progress | `5492e67a` | `final/**`, generated root pages, `_config.yml`, `privacy-site/check_published.py`, `.github/workflows/privacy-pages.yml`, `README.md`, `EXECUTIVE-SUMMARY.md`, `verification.html`, `audit-de9174cd/**`, `COORDINATION.md` | `privacy-site/build.py` + `privacy-site/public/**` unchanged. No unrounded figure, hash or fingerprint added (K1 rule). |
+| K4 | PR → `main`, merge, confirm Pages build, read live pages, record here; close PR #41/#31 as superseded with links | claimed | `5492e67a` | `COORDINATION.md` | Broken build is not merged; flagged items do not block. |
+
+**Log (`5492e67a`)**
+- 2026-11-12 — Board, branches, PRs and live state read. `final/model.py` + `final/integrate.py` + `final/check.py .` re-run on the branch tip: OK (21 pages, 668 rows, 2,101 rounded figures, 51/51 self-tests). `privacy-site/build.py` + `check.py`: PASS (8 pages, 95 rows). Claim written before any other edit.
