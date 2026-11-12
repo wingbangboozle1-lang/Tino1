@@ -1061,3 +1061,10 @@ K3 (reconciliation of the front door) was claimed by `8fc06844` on 2026-11-11 13
 - Pages API (`repos/wingbangboozle1-lang/Tino1/pages`): `status` = `built` at commit `dfd8178` (build 1362141529), `html_url` https://wingbangboozle1-lang.github.io/Tino1/, `build_type` = legacy, source `main:/`, `https_enforced` = true. The required `Validate the published site` workflow also ran on the merge push (run 43156271974); the queued `pages build and deployment` run for `dfd8178` completed `built`. Note: the sandbox this session runs in cannot open `github.io` directly (connection refused), so live confirmation here is the Pages API; `e8636cac` read the live pages back after the #52 deploy.
 - PRs #31 and #41 were found already merged (both 2026-11-12T04:25:24Z) with their content in `main`; no action was needed. PRs #42/#43/#44 (independent audit records) remain open for their owners; none blocks the site.
 - Open owner actions (unchanged, flagged): make the repository private or have the Git history rewritten (P02); re-read `flagged.html` and request any changes — flagged and unverified items are published as-is per the brief.
+
+### Session `arena/708757cf-tino1` — privacy and release audit (2026-11-12)
+
+| Task | Status | Owner | File scope | Notes |
+|---|---|---|---|---|
+| P708 | Audit current Pages publication against the explicit personal-information prohibition, review critical source/model claims and document findings | in progress | `arena/708757cf-tino1` | `COORDINATION.md`, new `audit-708757cf/` | Current branch fixed by Arena; will not create a session branch. No other scope claimed initially. |
+
