@@ -15,13 +15,17 @@ jobs:
           ruby-version: '3.2'
       - name: Install the GitHub Pages Jekyll
         run: gem install github-pages --no-document
-      - name: Rebuild and check public guide and model tests
+      - name: Rebuild and check public guide, numeric edition and model tests
         run: |
           python3 privacy-site/build.py
           git diff --exit-code -- privacy-site/public
           python3 privacy-site/check.py
           python3 -m unittest discover -s privacy-site -p 'test_*.py' -v
+          python3 final/publish.py --check
+          python3 final/check.py .
       - name: Build the site the way GitHub Pages will
         run: jekyll build --trace
-      - name: Verify exact privacy-first publication boundary
-        run: python3 privacy-site/check_published.py _site
+      - name: Verify exact publication boundary and published pages
+        run: |
+          python3 final/check_published.py _site
+          python3 privacy-site/check_published.py _site

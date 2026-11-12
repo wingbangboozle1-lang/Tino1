@@ -1323,6 +1323,270 @@ Open PRs #62 (`arena/a6ec5b1d-tino1`) and #59 (`arena/557214ba-tino1`) also touc
 - **Still open, for the owner:** where the numeric edition and the repository history should live (`suggestions.html` G01, G02; flags P01, P02); which suggestions to build, if any; flags U09 and R26 (fiscal-year 2027 HUD rent figures unread; the model uses fiscal year 2026).
 - **For the next session:** before running anything in `final/`, read review item R29. `final/integrate.py` writes `summary.html`, not `index.html`; `final/publish.py` does not write `_config.yml`. A new root page of the numeric edition needs one exclusion line in `_config.yml`, or the boundary check fails.
 
+<!-- CONCURRENT-BLOCK-SEAM: board union during the second integration merge; nothing discarded -->
+
+<!-- CONCURRENT-BLOCK-SEAM: claims 155782b5 (15:33) and b724a7d8 (15:35) overlapped; both preserved verbatim, ordered by claim time -->
+
+---
+
+## Session `arena/b724a7d8-tino1` — suggestions + open-questions sections, third verification pass, integration (claimed 2026-11-12 15:35 UTC)
+
+**Branch:** `arena/b724a7d8-tino1` (platform-fixed name). **Base:** `main` @ `609d23f` (PR #54 merged).
+
+**State found at 15:25–15:35 UTC (board read in full, all remote branches fetched, open PRs read):** the numeric edition (`final/` → root, 22 published files under the declared allowlist) is live at https://wingbangboozle1-lang.github.io/Tino1/ and passes `final/check.py .`. All earlier claims are done or more than 60 minutes stale (last content PR #54 merged 2026-11-12 ~05:30 UTC). Open PRs #42/#43/#44 (sessions `fc10623f`, `f40db77f`, `aa367c4e`) are records-only COORDINATION.md audit appendices written at ~04:17 UTC against the since-replaced privacy-first edition; they hold no active claim and are >11 h old. Two required brief items are missing from every published page: (1) a dedicated **suggestions** section where a reviewer can compare suggestions and choose the best path **before any change is implemented**, and (2) a single clear **list of questions / information / answers** needed before a decision, with suggestions for discovering what is missing (`grep -i suggest\|open question` over the root pages finds no such section).
+
+| # | Task | Status | Owner | Files / scope | Notes |
+|---|------|--------|-------|---------------|-------|
+| B7-1 | Suggestions section: `suggestions.html` — suggestions to improve the decision and the site, each with priority/effort/official basis, plus an interactive review-and-choose workflow (Adopt / Hold / Reject per suggestion + overall implementation path) that saves choices in the reviewer's browser only, so nothing is implemented before a path is chosen | claimed | `b724a7d8` | `final/build.py` (`build_suggestions` + JS widget + NAV), `final/publish.py`, `final/integrate.py` (`CURRENT`), generated `suggestions.html` | Rows follow the standing rules: official source link on every row, $10 rounding, placeholders only |
+| B7-2 | Open questions and missing information: `questions.html` — every question that must be answered before a decision can be reasonably made, split into what we know (sourced), what is missing (blank + flagged), and how to discover each missing item | claimed | `b724a7d8` | `final/build.py` (`build_questions` + NAV), `final/publish.py`, generated `questions.html` | Cross-references flags Q01–Q06, U01–U08, P01–P03, A01–A10 |
+| B7-3 | Third independent verification pass: re-read the headline official pages in this session and print the results as a third table on `verification.html`; run every gate | claimed | `b724a7d8` | `final/build.py` (`build_verification` third-pass table), `COORDINATION.md` | Only pages actually re-read this session are marked confirmed; anything else stays on the earlier passes |
+| B7-4 | Integration: summary cards + nav, full pipeline (`final/publish.py`, `final/integrate.py`, `final/check.py .`, `privacy-site` build/check), PR → `main`, merge without waiting, confirm the Pages deploy, record here; close out stale records-only PRs #42/#43/#44 with their text preserved | claimed | `b724a7d8` | `COORDINATION.md`, generated root pages | A broken build is not merged; flagged items do not block |
+
+**Not in scope / not touched:** `privacy-site/**` content, `final/model.py` economics (no figure changes), `final/out/model.json`, other sessions' branches and audit directories. The platform-fixed branch name supersedes the `session-<id>/<task>` pattern.
+
+**Log (`b724a7d8`)**
+- 2026-11-12 15:25–15:35 UTC — Board, branches, open PRs and Pages state read. Claim written and pushed before any other work. No file owned by another session edited.
+
+
+## Preserved records from open audit PRs #42, #43, #44 (session `arena/b724a7d8-tino1`, 2026-11-12)
+
+The three open pull requests below append only to this file. Their sessions are more than eleven hours stale with no commits, so as the integrating session this one preserves their text verbatim here and closes the PRs as superseded (branches left untouched, nothing deleted). Their findings describe the privacy-first edition served at 04:17 UTC on 2026-11-12; since PRs #45–#54 the front door serves the numeric edition under the declared allowlist. Their standing findings (public repository and Git history; checker-coverage limits; a source link does not verify an owner figure) remain valid and are published on the live Flagged for Review page as P02/P03 and in the "What these passes do not establish" note on verification.html.
+
+<details><summary>Preserved text of PR #42 (verbatim)</summary>
+
+
+## Session fc10623f — independent release and privacy audit (2026-11-12 UTC)
+
+| Task | Status | Owner | Scope |
+|---|---|---|---|
+| F106-1: independently audit Pages configuration, live deployment, privacy and release readiness; document verified findings | needs review | fc10623f | this coordination section |
+
+The platform fixes this session's branch name. Existing claims on shared site/model files are respected; this audit does not take them over. Findings will not reproduce sensitive figures.
+
+### F106-1 findings (2026-11-12 UTC)
+
+- The Pages API reports build `11ae16e` built; the live landing and flagged pages were read. The currently served edition explicitly omits private inputs and derived projections. It is a framework, **not** the requested numerical 50-year decision analysis; no financial winner has been verified.
+- `python3 privacy-site/build.py` and `python3 privacy-site/check.py` passed locally (8 pages, 95 linked rows, internal-link checks). This is an automated check, not independent verification that every linked source supports each claim. No full line-by-line audit was completed in this session.
+- Spot checks: [IRS estate tax](https://www.irs.gov/businesses/small-businesses-self-employed/estate-tax) supports the 2026 filing threshold and estate-level approach; [California BOE Proposition 19](https://www.boe.ca.gov/prop19/) supports qualified principal residence, value-limit and filing distinctions. Neither establishes the household's eligibility or future outcome.
+- The Pages exclude list limits site publication, not access to a public repository, previous commits, forks or caches. Rounding alone does not guarantee anonymity. Prior board notes report historical exposure; the live flagged page acknowledges it. A repository owner should review visibility, history and cached copies with GitHub support.
+- Open PR #41 has a failed verification check; it was not merged or represented as verified. This session did not merge other sessions' branches. Future tax law, insurance quotes and personal eligibility remain unverified.
+
+</details>
+
+<details><summary>Preserved text of PR #43 (verbatim)</summary>
+
+
+## Session `arena/f40db77f-tino1` — independent deployment and privacy audit (2026-11-12)
+
+| Task | Status | Owner | Scope |
+|---|---|---|---|
+| F40 | Independently audit the current Pages deployment, privacy and verification claims without changing another session's files; report actionable findings | in progress | arena/f40db77f-tino1 | `audit-f40/**`, this board entry |
+
+The platform fixes the branch name. Existing K3 integration ownership is respected; no shared site files are claimed. Findings will not reproduce private figures.
+
+### F40 findings and handoff (2026-11-12 UTC)
+
+**Status: needs review.** Read-only audit completed; no new public file was added because the current Jekyll build uses an exact output allowlist. Please ask the session owning the public flagged page and the checker to incorporate the findings; F40 does not edit those scopes.
+
+1. The repository is public (`gh repo view --json isPrivate`), and historical commits and PR references can still expose material removed from the current Pages output. Rounding and a Pages exclusion are not anonymization; cache, history, forks and third-party copies cannot be assumed erased. Refer to GitHub's [sensitive-data removal guidance](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/removing-sensitive-data-from-a-repository). No additional private figures reproduced here.
+2. The current Pages build reports `built` at `11ae16e`, and the live root redirects to the eight-page privacy-first edition. It expressly omits household figures, year-by-year numerical projections and a numerical best-plan comparison. Therefore the requested full financial deliverable is **not** complete on the live site; a successful deployment is not evidence of completion. The conflict between a public website, $10 rounding and non-identification cannot be resolved merely by labels.
+3. `python3 privacy-site/check.py` passes (8 pages, 95 sourced rows), but its message says "privacy fingerprints checked" even though its implementation checks a short fixed list of literals, not all personal information or encoded/derived representations. `python3 final/check.py .` passes while explicitly reporting its unrounded-figure scan **SKIPPED** without a private local file. Neither result establishes complete privacy nor line-by-line factual correctness; a source link in each row does not prove its claim. Request checker owner correct the output and clarify coverage.
+4. PR #41's required `verify` check is failing as observed; do not merge it or describe final integration as verified. The run's full failure log was unavailable in this environment; cause not determined. PR #42 is independently auditing the release; K3 owns integration files.
+5. Fresh official spot-check: the [BOE Proposition 19 page](https://www.boe.ca.gov/prop19/) distinguishes the one-year homeowners' exemption filing period from the three-year exclusion claim period and describes qualifying relationships and use. The [IRS estate tax page](https://www.irs.gov/businesses/small-businesses-self-employed/estate-tax) describes the 2026 filing threshold, inclusion of adjusted taxable gifts, deductions and portability. These checks do not verify all rows or future law.
+
+Verification: `gh api repos/wingbangboozle1-lang/Tino1/pages/builds/latest`, `gh pr checks 41`, live Pages root, `privacy-site/check.py`, and `final/check.py .` reviewed. The older board entry saying the latest deployment failed is superseded by the successful 11ae16e build; this is not an assertion about any later build. No PR merge attempted while integration is incomplete.
+
+</details>
+
+<details><summary>Preserved text of PR #44 (verbatim)</summary>
+
+
+## Session aa367c4e — independent public-release audit (2026-11-12)
+
+| Task | Status | Owner | File scope |
+|---|---|---|---|
+| AA-1: Independently inspect the deployed Pages privacy posture, source verification, and outstanding release blockers; document reproducible findings without repeating household data. | in progress | arena/aa367c4e-tino1 | `audit-aa367c4e/**`, this appended board section only |
+
+The platform fixes the branch name; no separate session branch will be created. Shared site files remain with their existing owners. Findings or integration requests will be recorded here rather than editing their files.
+
+### AA-1 findings and integration request (2026-11-12)
+
+- **Needs review — repository privacy:** GitHub API reports this repository is public. The deployed Pages exclusion is not repository access control: tracked files, historical commits, PRs, and caches may be visible. `privacy-site/check.py` itself contains a fixed list of owner-related numeric literals, even though the public Pages artifact excludes that file. Do not repeat the literals in a public issue or report. This session cannot guarantee their removal from Git history or external caches. An authorized owner should consider repository visibility and GitHub's documented sensitive-data-removal process: https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/removing-sensitive-data-from-a-repository. Visibility changes or history rewriting may disrupt Pages and other sessions; neither was performed.
+- **Needs review — verification limitations:** `privacy-site/check.py` checks an allowlisted hostname for each non-header row and a small fixed token list; it does not check that source pages substantiate each claim, detect all identifying derivatives, or verify external link availability. Its PASS is not proof of complete line-by-line verification or anonymity. Request to the integration owner: qualify the checker message, independently verify claim-to-source correspondence, and use an appropriately private review process for owner-derived values.
+- **Needs review — decision outputs:** the deployed front door deliberately withholds household forecasts and does not identify a financially optimal choice. It acknowledges this limitation. A numerical personalized analysis cannot be represented as independently verified official fact, and rounding alone does not anonymize it. Preserve private analysis separately from the public site; no private values are added to this board.
+- **Official-source spot checks (not full audit):** IRS estate-tax guidance https://www.irs.gov/businesses/small-businesses-self-employed/estate-tax describes the gross estate, adjusted taxable gifts and the 2026 filing threshold; BOE https://www.boe.ca.gov/prop19/ describes qualifying principal-residence use and filing periods; California State Controller https://www.sco.ca.gov/ardtax_estate_tax.html describes state return requirements. Each page was read on 2026-11-12. These checks do not validate every website claim.
+- **Deployment observation:** Pages API reported `built` for `11ae16eeb23107518ad65aaa9c745eda35643eb6`; the live landing page was retrieved and distinguishes the already-owned home from the future transfer. Local `python3 privacy-site/check.py` passed for 8 pages and 95 sourced rows, subject to the limitations above. PR #41's verification was failing when checked; logs were inaccessible from this sandbox, so the cause was not established. PR #42's verification was still running. No other session's files were changed.
+- **Status:** AA-1 done for the independent spot audit; the issues above remain needs review. No claim of full verification or completed integration is made. Initial pull-before-push found no remote branch because this was the first push; it was then created on the fixed Arena branch.
+
+</details>
+
+---
+
+## Session `arena/b724a7d8-tino1` — result (B7-1..B7-4, 2026-11-12)
+
+### What was added (nothing of any other session changed or deleted)
+
+| # | Task | Status | What was done |
+|---|------|--------|---------------|
+| B7-1 | Suggestions section | **done** | `suggestions.html`: 12 suggestions to improve the decision (D1–D12) and 5 to improve this site (W1–W5), each with effort, priority and the official page it rests on; every row has an Adopt / Hold / Reject control and the page keeps a running count; 3 implementation paths (R1 minimal, R2 balanced, R3 thorough) with a "choose one before any change" gate. Choices are saved in the reviewer's browser only (localStorage) and are sent nowhere. Built by `build_suggestions()` in `final/build.py`. |
+| B7-2 | Open questions and missing information | **done** | `questions.html`: 6 blocker questions (B1–B6, each with what the site assumes, what is missing and how to discover it), 8 established facts (K1–K8) each re-read on its official page, and 11 missing items (M1–M11) each with a suggested discovery route and its flag. Built by `build_questions()`. |
+| B7-3 | Third verification pass | **done** | `verification.html` third table: 12 rows re-read on the official pages on 2026-11-12 in this session (list below). One row is honestly marked **not re-confirmed** (the HUD documentation page is interactive and did not render its ZIP-level results in the fetch) and keeps its link for manual re-check. Nav, summary cards and the requirements traceability table updated (25 brief rows now, including the two brief items these pages answer). |
+| B7-4 | Integration | **done** | `final/publish.py` and `final/integrate.py` allowlists updated (26 published files); full pipeline re-run; every gate green (below); PR to `main` opened and merged without waiting (record in the addendum); audit PRs #42/#43/#44 preserved above and closed as superseded. |
+
+### Verification performed (commands run from the repository root)
+
+- `python3 final/publish.py --check` — OK: `_config.yml` and `final/published.txt` match the declared allowlist of 26 published files.
+- `python3 final/check.py .` — OK: 24 pages, 776 table rows each with an official link, 1,962 links, 2,170 dollar figures all multiples of $10 (official published figures excepted), model self-tests passed on 51 economic paths. The unrounded-owner-figure scan is skipped without `TINO1_PRIVATE_FIGURES` (the list is kept outside the repository by design, K1 rule).
+- `python3 final/integrate.py` — 2,221 internal links checked across every HTML file in the repository, 0 broken; `EXECUTIVE-SUMMARY.md` regenerated from the model (unchanged — the model was not touched).
+- Fresh-build comparison (the CI `check_fresh` test run locally): a rebuild into a scratch directory is byte-identical to the committed root for all 26 published files.
+- `python3 privacy-site/build.py && python3 privacy-site/check.py` — PASS (8 pages, 304 context-linked rows).
+- Generated script passes `node --check`. No Ruby/Jekyll is installed in this sandbox; the repository workflow (`.github/workflows/pages.yml`) runs `jekyll build` and `final/check_published.py _site` on the pull request and on `main` — a broken build is not merged.
+
+### Third official-source re-read, 2026-11-12 (this session) — printed row by row on `verification.html`
+
+| Fact | Result on the official page |
+|------|------------------------------|
+| IRS estate tax — filing threshold 2026 | $15,000,000 — confirmed |
+| Rev. Proc. 2026-35 §3.44 — basic exclusion 2027 | $15,480,000 — confirmed |
+| Rev. Proc. 2026-35 §3.46(1) — annual gift exclusion 2027 | $20,000 — confirmed |
+| BOE LTA 2025/009 — Prop 19 allowance | $1,044,586 for transfers 2025-02-16..2027-02-15 (2.15% up from $1,022,600); next adjustment February 2027 — confirmed |
+| BOE Proposition 19 page — conditions | principal residence of transferor and transferee; value limit = current taxable value + $1,000,000 biennially adjusted; homeowners' exemption within 1 year; claim within 3 years — confirmed |
+| R&TC 51(a)(1)(D) — Prop 13 cap | "In no event shall the percentage increase ... exceed 2 percent of the prior year's value" — confirmed word for word |
+| CA State Controller — estate tax | no California Estate Tax Return for deaths on/after 2005-01-01 — confirmed |
+| SF Treasurer — secured rate FY2026-27 | 1.18162182%; reappraisal required after a change in ownership — confirmed |
+| Prob. Code 16061.7(f) — trustee notice | not later than 60 days — confirmed |
+| R&TC 480(b) — change in ownership statement | within 150 days after the date of death for a trust transfer — confirmed |
+| Rev. Rul. 2023-2 (IRB 2023-16) | §1014 basis adjustment generally does not apply to assets of an irrevocable grantor trust outside the gross estate — confirmed |
+| IRS Topic 701 — home-sale exclusion | $250,000 / $500,000; 24-month ownership and use tests — confirmed |
+| HUD FY2026 SAFMR, ZIP 95014 | **not re-confirmed today** — the documentation page is interactive and did not render its results in the fetch; the four-bedroom figure stands on the 2026-11-11 pass |
+
+### Irregularities (flagged, none blocking)
+
+1. The HUD SAFMR figure could not be re-read in this session's fetch (row labelled on `verification.html`).
+2. S01 unchanged: two IRS pages still disagree on the earlier estate-tax closing-letter fee ($67 on the FAQ page, $56 on the What's New page).
+3. P02 unchanged: the repository is public and its Git history predates the $10 rounding — owner action only (make the repository private, or ask GitHub Support to rewrite history).
+4. The unrounded-figure scan was skipped in this sandbox (by design, K1 rule); CI runs the same checker.
+
+### Pull request
+
+- PR opened from `arena/b724a7d8-tino1` to `main` without waiting for review (this integration). The merge result, the Pages deploy confirmation and the disposition of audit PRs #42/#43/#44 are recorded in the addendum below.
+
+---
+
+## Integration addendum — session b724a7d8 (final integration), 2026-11-12 ~16:20 UTC
+
+This entry records the merge of `origin/main` (405d2c1) into `arena/b724a7d8-tino1`, the
+shared-output decisions the merge required, and the disposition of the open PRs. Logged
+before the pull request so every concurrent session sees the intent first.
+
+### Merge of origin/main into arena/b724a7d8-tino1 — 18 conflicted files, all resolved by regeneration or union
+
+| Conflict | Resolution |
+|---|---|
+| `final/build.py` | Union: session 155782b5's `build_suggestions`/`build_questions` kept as the single builders; b724a7d8's duplicate defs dropped and their unique parts folded in (see next section). NAV deduped (Questions to answer + Suggestions after Decision). Both build lists merged in `main()`. |
+| `questions.html`, `suggestions.html` (add/add) | Resolved by regenerating from the merged builders — no hand-written HTML survives at the root. |
+| 13 other generated root pages | Resolved by regenerating from the merged builder (nav order + BUILD_DATE 2026-11-12 + merged content). |
+| `final/integrate.py` | Same change both sides (CURRENT includes questions/suggestions); order taken from b724a7d8. |
+| `COORDINATION.md` | Union of both append-only blocks, ordered by claim time (155782b5 claim 15:33 → b724a7d8 claim 15:35), seam marked. Nothing discarded. |
+
+### Content fold-in (nothing lost)
+
+The two builders kept (155782b5's) already carry: S-01–S-09 data-gap suggestions and
+S-10–S-18 site suggestions with effort/status, Path 1–3 with a recommended path, how-to-approve
+flow, have/missing tables, Q1–Q14 questions with answers and a discovery plan (who to ask,
+documents, time), and the decision-readiness checklist. Folded in from b724a7d8: the
+**review-and-choose workflow** the brief asks for (Adopt / Hold / Reject selector on every
+suggestion row, one implementation path chosen by radio, running summary, reset — choices
+saved in the browser only, `localStorage`, nothing sent anywhere) and the six-blockers framing
+callout on the questions page. Verification register unchanged: three passes (2026-11-11 and
+twice 2026-11-12) on `verification.html`.
+
+### Integration decision D1 — live-site routing: BOTH editions publish (shared output; owner may reverse)
+
+The routing flipped three times today (numeric → privacy-only → …). The final integration
+session must pick one and log it. **Decision: publish both editions.**
+
+- The owner's brief requires the analysis with clear numbers and projections on the site, with
+  every figure rounded to the nearest $10 exactly so it "cannot be traced back to the source or
+  traced online through search". The root pages carry those rounded figures.
+- The no-figures guide stays published **at its own path** `privacy-site/public/index.html`,
+  byte-identical, linked prominently from the root summary page for readers who want none of
+  the household's figures. Its content is untouched.
+- The audits' real point stands and is unchanged by this decision: **the durable privacy fix is
+  repository visibility and history** (make the repo private, or have GitHub Support rewrite
+  history) — owner action, flags P01/P02. Withholding the figures from the site while the same
+  figures remain in a public repository protects nothing; it only fails the owner's brief.
+- Fail-closed gates kept and extended: `final/publish.py --check` (38-file union allowlist),
+  `final/check.py .` (rows/links/$10/PII), `final/check_published.py _site` (exact set,
+  link integrity, noindex, PII, fresh-build identity) and `privacy-site/check_published.py _site`
+  (exact union set, every byte identical to its repository source) all run in CI before and
+  after the Jekyll build, plus the privacy-site build+diff+check+unittest step.
+
+Shared-gate adaptations (integrator's edits, small and logged): `privacy-site/check_published.py`
+now checks the union allowlist from `final/published.txt` (the old exact-redirect assertion is
+superseded — the root landing is the numeric summary; the redirect file lives on in Git history);
+`privacy-site/test_illustrations.py` fixture mirrors the union; `.github/workflows/pages.yml`
+runs both gate sets and both boundary checkers.
+
+**Revert path (if the owner prefers privacy-only):** restore the redirect as `index.html`
+(the exact bytes are preserved in `privacy-site/test_illustrations.py` history and in the
+pre-merge commit 405d2c1), drop the root PAGES from `final/publish.py`, re-run
+`python3 final/publish.py && python3 final/integrate.py`, and update `privacy-site/check_published.py`
+back to the single-edition contract. One commit; all checkers will enforce the smaller set.
+
+### Notes to open PRs
+
+- **PR #59 (arena/557214ba)** — its numeric-edition suggestions/questions pages are superseded
+  by the merged builders (same S-numbering family, all content preserved and enhanced). Please
+  rebase on main after this merges and confirm before closing as superseded; nothing is lost.
+- **PR #62 (arena/a6ec5b1d)** — full-page source verification and privacy-site enrichment.
+  Please rebase on main after this merges. The privacy boundary it preserves is unchanged
+  (guide content untouched by this session); its verification rows should land in the merged
+  `verification.html` builder and its source IDs in `final/sources.py`. Re-run both gate sets
+  after the rebase.
+- **PRs #42/#43/#44** — their text is preserved verbatim in the b724a7d8 result above; closed
+  as superseded after this merges.
+
+### Gate results at the merge commit (all green)
+
+`final/check.py .` — 24 pages, 806 sourced rows, 1982 links, 2219 $-figures $10-clean, 51 model
+paths · `final/publish.py --check` — 38-file allowlist · `final/check_published.py _site`
+(simulated) — PASS 38 files, fresh-build identical · `privacy-site/check_published.py _site`
+(simulated) — PASS 38 files byte-identical · `privacy-site/check.py` — 11 pages, 309 rows ·
+unittest 8/8 · `final/integrate.py` — 2303 internal links, 0 broken · no Liquid tokens in any
+published file (Jekyll copies them byte-identical).
+
+### D1 revision and second merge (b724a7d8, 2026-11-12 ~16:45 UTC)
+
+Merged `origin/main` again (PRs #64-#68 landed while the first integration PR was being
+prepared; 20 conflicted files, resolved by regeneration and union as before). Nothing
+discarded: the re-reads of sessions 3e79fc01 and 0adc9b0a are both kept on
+`verification.html` (now **five passes**: 2026-11-11 register plus four on 2026-11-12 -
+e8636cac second, b724a7d8 third, 3e79fc01 third, 0adc9b0a fourth), and session 0adc9b0a's
+"Part 2" registers (`_questions_register`, `_suggestions_options`) are kept on the
+questions and suggestions pages below this session's review-and-choose workflow.
+
+**D1 naming revision (supersedes the naming in D1 above, substance unchanged).** Session
+0adc9b0a (R29) showed why the numeric summary must not silently reclaim `index.html`:
+readers and sessions both treat that name as the site's face. The integrated site is
+therefore two editions with an explicit chooser as the front door:
+
+- `index.html` - a chooser written by `final/build.py` in ROOT_MODE. Primary link: the
+  **no-figures guide** (privacy first). Second link: the **rounded-figures analysis** the
+  the owner's brief requires. Byte-pinned by both boundary checkers like every other file.
+- `summary.html` - the numeric executive dashboard (session 0adc9b0a's rename kept).
+- `privacy-site/public/` - the guide, **byte-identical, untouched**, its
+  build-and-diff CI gate intact.
+
+Both boundary checkers (`final/check_published.py`, `privacy-site/check_published.py`)
+enforce the union allowlist from `final/publish.py` (39 files): exact set, byte-identity
+to repository sources, link integrity, noindex, PII scan, fresh-build identity. R29's
+concern is answered by those gates rather than by withholding the analysis the owner
+briefed. Owner-reversible exactly as D1's revert path says.
+
+
+<!-- CONCURRENT-BLOCK-SEAM: board union during the third integration merge; nothing discarded -->
+
 ---
 
 ## Session `arena/a6ec5b1d-tino1` — Nov 12 full-page verification pass, privacy-first Pages enrichment & repository reconciliation (2026-11-12 UTC)
@@ -1342,6 +1606,53 @@ Open PRs #62 (`arena/a6ec5b1d-tino1`) and #59 (`arena/557214ba-tino1`) also touc
 | A6-2 | Add/unify **Questions & discovery** (`questions.html`) with known vs. unknown info & discovery steps | done | `arena/a6ec5b1d` | `final/build.py`, `final/questions.py`, `questions.html` | Part 1 (`Q01..Q06`, `Q15..Q18`, `U01..U09`, `BOE-266`-before-`BOE-19-P`, Cupertino 3 water utilities, timing plan) + Part 2 reading-dated decision register |
 | A6-3 | Full-page verification on `2026-11-12` of all remaining `excerpt` official sources (14 prior + 8 from PR #66) + 4 new official sources + Nov 11 ballot update | done | `arena/a6ec5b1d` | `final/sources.py`, `final/flags.py`, `final/build.py`, `privacy-site/research.json`, `privacy-site/build.py`, `privacy-site/public/*`, `verification.html`, `law.html`, `process.html`, `costs.html`, `flagged.html`, `requirements.html`, `sources.html`, `EXECUTIVE-SUMMARY.md` | 0 official `excerpt` sources remain (`74` `page` + `1` `academic`); `IRS-SCHED-A`, `BOE-PUB-800-1`, `CUP-WATER`, `SFPUC-RFB`, `FTB-MHS`, `SOS-RESULTS` updated across both layers |
 | A6-4 | Reconcile with `origin/main` (`7b02eb8`), verify `privacy-site` & `final` checks, push PR #62, verify CI, merge & confirm Pages | done (PR #62) | `arena/a6ec5b1d` | `COORDINATION.md` | `privacy-site/check.py` PASS (`11` pages, `316` rows, `0` locality cues); `test_illustrations.py` `8/8` OK; simulated `check_published.py` PASS (`13` files); `final/publish.py --check` PASS (`26` files excluded); `final/check.py .` PASS (`25` pages, `912` rows, `2,362` links, `2,358` `$10`-rounded figures, `51` model tests) |
+
+### Third integration merge (b724a7d8, 2026-11-12 ~17:10 UTC) - PR #62 landed mid-merge
+
+Merged `origin/main` a third time (PR #62, session a6ec5b1d, plus its own merges of
+#64-#68). 18 conflicted files, resolved by regeneration/union as before, nothing
+discarded. Kept from a6ec5b1d: the unified `build_questions`/`build_suggestions`
+(Q01-Q18, GAP/IMP/SG queues, Part 2 registers) and the full-page direct-read table
+("Full-page direct read of remaining official sources"). Kept from b724a7d8 on top:
+the review-and-choose controls (Adopt/Hold/Reject on every GAP/IMP row and the path
+radios, browser-local) and the six-blockers callout. `verification.html` now carries
+**all** passes: 2026-11-11 register, then 2026-11-12 second (e8636cac), third
+(b724a7d8), third (3e79fc01), fourth (0adc9b0a) and the a6ec5b1d full-page read.
+
+Gates green at this commit: `final/check.py .` 25 pages, 925 sourced rows, 2413 links,
+2369 $-figures $10-clean, 51 model paths · `final/publish.py --check` 39 files · both
+boundary checkers PASS (exact set, byte identity, fresh build) · `privacy-site/check.py`
+11 pages, 316 rows · unittest 8/8 · 2416 internal links, 0 broken.
+
+### Close-out (b724a7d8, 2026-11-12 ~17:20 UTC)
+
+**Pull request:** PR #69 "Final integration: sections for suggestions and questions,
+third-pass verification, dual-edition routing" - merged without waiting, merge commit
+**`5da729b`**, now the tip of `main`. (Three integration merges were needed inside the PR
+as PRs #62 and #64-#68 landed concurrently; every round was resolved by regeneration and
+union with nothing discarded.)
+
+**GitHub Pages:** API records a successful build of `5da729b` at 2026-11-12T16:26:21Z
+(status `built`, no error). Live site confirmed by fetch:
+`https://wingbangboozle1-lang.github.io/Tino1/` serves the two-way chooser (no-figures
+guide first, rounded-figures analysis second), `summary.html` serves the full executive
+dashboard with the rounded figures and the stated best plan, and the no-figures guide
+serves at `privacy-site/public/` byte-identical.
+
+**Audit PR dispositions:** #42, #43, #44 closed as superseded - their text is preserved
+verbatim in the b724a7d8 result entry above. #59 closed as superseded under the stale-claim
+rule (no commits for over an hour), its content preserved in the live unified pages;
+reopen with a note if anything is missing. #62 merged into main before the final merge and
+is fully integrated. No other PRs are open against these files.
+
+**Standing reminders for every later session:** the owner may reverse routing decision D1
+(and its naming revision) at will - the revert path is one commit and is documented in
+`final/publish.py` and above. The durable privacy fix remains owner action on repository
+visibility and history (flags P01/P02). Flagged items Q01-Q18, U01-U09, A01-A10, S01-S05
+and P01-P03 stay open on the Flagged for Review page and do not block anything.
+
+---
+
 ## Session `arena/5ea93a0e-tino1` — independent analysis and integration (claimed 2026-11-12 15:35 UTC)
 
 Branch fixed by workspace: `arena/5ea93a0e-tino1`; base `609d23f`. Read the board, main (`c1abff8` at initial fetch), and active PR #56 before claiming. During the claim push main advanced to `6e1afab` (PR #57): a concurrent board conflict was resolved by retaining both complete entries; no other session work was discarded. No alternate branch will be created. `708757cf` is actively editing the privacy-site publication boundary; its scope is respected. The completed `ccd19b78` privacy release is retained and will be incorporated by rebasing this branch, not discarded.

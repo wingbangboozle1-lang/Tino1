@@ -17,11 +17,11 @@ ROOT = os.path.abspath(sys.argv[1]) if len(sys.argv) > 1 else os.path.dirname(HE
 ARCH = 'archive/root-site-2026-11-11'
 MARK = '<!-- superseded-notice 07a57a05 -->'
 LEGACY_DIRS = ['dashboard', 'docs', 'site', 'archive']
-CURRENT = ['summary.html', 'decision.html', 'projections.html', 'black-swan.html', 'process.html', 'law.html',
-           'estate-cash.html', 'costs.html', 'flagged.html', 'suggestions.html', 'questions.html', 'sources.html', 'verification.html', 'requirements.html',
+CURRENT = ['index.html', 'summary.html', 'decision.html', 'questions.html', 'suggestions.html', 'projections.html', 'black-swan.html', 'process.html', 'law.html',
+           'estate-cash.html', 'costs.html', 'flagged.html', 'sources.html', 'verification.html', 'requirements.html',
            'review.html', 'versions.html']
-# The root index.html is the redirect to the privacy-first guide. It is not generated here and must never be archived or
-# overwritten by this script (session 0adc9b0a, review item R29).
+# The root index.html is the site's front door (D1: a chooser between the no-figures guide and the rounded-figures
+# analysis, written by final/build.py in ROOT_MODE). It must never be archived by this script (R29's guard, kept).
 FRONT_DOOR = 'index.html'
 ATTR = re.compile(r'((?:href|src)=")([^"]*)(")')
 
