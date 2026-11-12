@@ -19,5 +19,6 @@ jobs:
         run: |
           python3 privacy-site/build.py
           python3 privacy-site/check.py
+          python3 -m unittest discover -s privacy-site -p 'test_*.py' -v
           jekyll build
           python3 privacy-site/check_published.py _site
