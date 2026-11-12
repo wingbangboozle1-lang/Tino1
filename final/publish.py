@@ -61,9 +61,15 @@ TITLE = 'Two-home inheritance analysis'
 def config(entries):
     """Jekyll exclude list: every top-level entry that is not in the published set."""
     keep = sorted(ALLOW)
+    # In comprehensive mode the privacy-first guide lives in privacy-site/public and must be published too;
+    # it is verified by privacy-site/check_published.py, so don't exclude it when it exists.
+    keep_extra = keep + (['privacy-site'] if os.path.isdir(os.path.join(ROOT, 'privacy-site', 'public')) else [])
     out = ['title: %s' % TITLE, 'exclude:']
     for name in sorted(entries):
-        if name in keep:
+        if name in keep_extra:
+            continue
+        # Never exclude the privacy guide — it is checked separately
+        if name == 'privacy-site':
             continue
         out.append("  - '%s'" % name)
     out.append('')

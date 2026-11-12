@@ -20,7 +20,6 @@ exclude:
   - 'integrated'
   - 'legacy95'
   - 'model'
-  - 'privacy-site'
   - 'research'
   - 'scripts'
   - 'session-faccd46d'

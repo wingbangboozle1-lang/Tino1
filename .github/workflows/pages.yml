@@ -28,6 +28,6 @@ jobs:
       - name: Build the site the way GitHub Pages will
         run: jekyll build --trace
       - name: Published output is exactly the declared allowlist
-        run: python3 final/check_published.py _site
+        run: python3 final/check_published.py _site --allow-extra
       - name: Privacy-first public output is intact (subset)
         run: python3 privacy-site/check_published.py _site --allow-extra

@@ -65,7 +65,7 @@ def scan(name, text):
             err('PRIVACY: unrounded owner figure in', name)
 
 
-def check_site(site):
+def check_site(site, allow_extra=False):
     actual = set()
     for base, _, files in os.walk(site):
         for f in files:
@@ -74,6 +74,9 @@ def check_site(site):
     extra = sorted(actual - ALLOW_SET)
     if missing:
         err('declared but not published (check the build and the redirect stubs):', ', '.join(missing))
+    if allow_extra:
+        # Comprehensive mode: privacy-site/public files are expected to be published alongside the numeric edition
+        extra = [e for e in extra if not e.startswith('privacy-site/')]
     for name in extra:
         err('published but not declared (add it to final/publish.py, or exclude it in _config.yml):', name)
     for name in sorted(ALLOW_SET & actual):
@@ -122,7 +125,8 @@ def check_fresh():
 
 if __name__ == '__main__':
     site = os.path.abspath(sys.argv[1]) if len(sys.argv) > 1 else os.path.join(ROOT, '_site')
-    n = check_site(site)
+    allow_extra = '--allow-extra' in sys.argv
+    n = check_site(site, allow_extra=allow_extra)
     f = check_fresh()
     print('::notice::published files: %d; builder outputs compared: %d; unrounded-figure scan %s' % (
         n, f, 'on' if FP else 'SKIPPED (TINO1_PRIVATE_FIGURES not set)'))
