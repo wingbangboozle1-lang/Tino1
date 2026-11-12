@@ -17,9 +17,12 @@ ROOT = os.path.abspath(sys.argv[1]) if len(sys.argv) > 1 else os.path.dirname(HE
 ARCH = 'archive/root-site-2026-11-11'
 MARK = '<!-- superseded-notice 07a57a05 -->'
 LEGACY_DIRS = ['dashboard', 'docs', 'site', 'archive']
-CURRENT = ['index.html', 'decision.html', 'projections.html', 'black-swan.html', 'process.html', 'law.html',
-           'estate-cash.html', 'costs.html', 'questions.html', 'suggestions.html', 'flagged.html', 'sources.html',
-           'verification.html', 'requirements.html', 'review.html', 'versions.html']
+CURRENT = ['summary.html', 'decision.html', 'projections.html', 'black-swan.html', 'process.html', 'law.html',
+           'estate-cash.html', 'costs.html', 'flagged.html', 'suggestions.html', 'questions.html', 'sources.html', 'verification.html', 'requirements.html',
+           'review.html', 'versions.html']
+# The root index.html is the redirect to the privacy-first guide. It is not generated here and must never be archived or
+# overwritten by this script (session 0adc9b0a, review item R29).
+FRONT_DOOR = 'index.html'
 ATTR = re.compile(r'((?:href|src)=")([^"]*)(")')
 
 
@@ -41,7 +44,7 @@ def step1_archive():
     os.makedirs(os.path.join(ROOT, ARCH), exist_ok=True)
     for f in sorted(os.listdir(ROOT)):
         p = os.path.join(ROOT, f)
-        if not f.endswith('.html') or not os.path.isfile(p) or is_ours(p):
+        if not f.endswith('.html') or not os.path.isfile(p) or is_ours(p) or f == FRONT_DOOR:
             continue
         dest = os.path.join(ROOT, 'archive', f) if f.startswith('mirror-archived') else os.path.join(ROOT, ARCH, f)
         os.replace(p, dest)
@@ -110,6 +113,11 @@ def step4_staging_redirects():
             '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="robots" content="noindex, nofollow">'
             '<meta http-equiv="refresh" content="0; url=../../%s"><title>Moved</title></head>'
             '<body><p>The site now lives at the repository root: <a href="../../%s">open the page</a>.</p></body></html>\n' % (f, f))
+    # final/site/index.html is linked from the Earlier versions page; keep it, pointing at the numeric summary
+    open(os.path.join(d, 'index.html'), 'w').write(
+        '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="robots" content="noindex, nofollow">'
+        '<meta http-equiv="refresh" content="0; url=../../summary.html"><title>Moved</title></head>'
+        '<body><p>The numeric edition now lives at the repository root: <a href="../../summary.html">open its summary</a>.</p></body></html>\n')
 
 
 def step5_linkcheck(fix_archive=True):
@@ -205,7 +213,8 @@ def step9_exec_summary():
 def step8_readme():
     p = os.path.join(ROOT, 'README.md')
     old = open(p, encoding='utf-8').read() if os.path.exists(p) else ''
-    if old.startswith('# Two-home inheritance analysis'):
+    # A notice may stand above the title (the publication update of 2026-11-12 does); look for the title, not at byte 0.
+    if '# Two-home inheritance analysis' in old[:4000]:
         return False
     old = old.replace('https://www.sco.ca.gov/state_finances_estate_tax.html', 'https://www.sco.ca.gov/ardtax_estate_tax.html')
     old = old.replace('https://sftreasurer.org/property-tax)', 'https://sftreasurer.org/property/secured-property-taxes)')

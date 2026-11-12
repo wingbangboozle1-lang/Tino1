@@ -46,6 +46,7 @@ exclude:
   - 'steps.html'
   - 'style.css'
   - 'suggestions.html'
+  - 'summary.html'
   - 'taxes.html'
   - 'verification.html'
   - 'verify-4395771d'
