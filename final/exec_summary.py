@@ -80,6 +80,25 @@ the transfer to keep the Proposition 19 relief, and the change-in-ownership stat
 4. Get property-specific insurance quotes: the $1,500 a year used here is the owner's own estimate and is not confirmed \
 on any official page (U01, U02).
 
+## Questions to settle before deciding
+
+The [Questions page]({site}/questions.html) lists what must be answered first: what is known (with the official page), \
+what is not, and how to find each missing answer. Three open questions matter far more than the rest:
+
+1. **What the trust says about the home** — is Property A inside the Transferor's gross estate? Without the basis reset, \
+selling falls from {sell} to {sell_nostep}. (Q01)
+2. **Whether the Inheritor wants to live there** — a personal choice with a known price ({livecost}) and a one-year \
+move-in limit that has no exception.
+3. **How sale proceeds would be invested** — the one input that reverses the ranking in the cases tested: left in savings, \
+selling ({savings_sell}) falls behind renting ({savings_rent}).
+
+## Suggestions for the site — for review, nothing implemented
+
+The [Suggestions page]({site}/suggestions.html) holds proposals for making the site more useful for the decision, each \
+with options, a suggested choice, its effect on the decision, effort and risk. Status of every one: **decision needed**. \
+Ready-made paths: privacy first (the public repository and its history), better inputs (current HUD rent, insurance \
+figures, a private cash test), decision tools (tipping-point panel, mixed paths, reinvestment risk, timeline).
+
 ## Process, step by step
 
 See the [Process page]({site}/process.html): what to do before the death, in the first 60 days, in the first 150 days, \
@@ -87,8 +106,8 @@ before the first property-tax bill, and in the first year, each step with its le
 
 ## What is verified, and what is not
 
-- Every table row on the site links to an official page; two independent passes (2026-11-11 and 2026-11-12) re-read the \
-headline facts on the government pages, and both are printed on the [Verification page]({site}/verification.html).
+- Every table row on the site links to an official page; three passes (2026-11-11 and two on 2026-11-12) re-read the \
+headline facts on the government pages, and all three are printed on the [Verification page]({site}/verification.html).
 - Owner-supplied figures (market values, rents, utility bills, insurance estimates) cannot be confirmed on an official \
 page and are labelled (P03). Projections are conditional scenarios (A01-A10).
 - Open items are on the [Flagged for Review page]({site}/flagged.html): the trust terms and basis (Q01), the estate contents \
@@ -112,6 +131,7 @@ def main(target=None):
         tax0=m(P['cup_tax_2025']), taxlive=m(B['tax_live_T']), taxrent=m(B['tax_rent_T']),
         sfgap=m(SF_GAP), room=m(B['exclusion_T'] - B['fmv_T']),
         livecost=m(B['real_sell'] - B['real_live']),
+        sell_nostep=m(M['sensitivity'][-1]['real_sell']),
         savings_sell=m(M['sensitivity'][6]['real_sell']), savings_rent=m(M['sensitivity'][6]['real_rent']),
         w10=RH['10']['wins']['sell'], w20=RH['20']['wins']['sell'],
         worst=m(-RH['10']['sell_minus_rent_worst']),

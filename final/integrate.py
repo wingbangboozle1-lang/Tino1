@@ -19,7 +19,7 @@ MARK = '<!-- superseded-notice 07a57a05 -->'
 LEGACY_DIRS = ['dashboard', 'docs', 'site', 'archive']
 CURRENT = ['index.html', 'decision.html', 'projections.html', 'black-swan.html', 'process.html', 'law.html',
            'estate-cash.html', 'costs.html', 'flagged.html', 'sources.html', 'verification.html', 'requirements.html',
-           'review.html', 'versions.html']
+           'review.html', 'versions.html', 'questions.html', 'suggestions.html']
 ATTR = re.compile(r'((?:href|src)=")([^"]*)(")')
 
 

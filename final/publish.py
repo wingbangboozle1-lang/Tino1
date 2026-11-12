@@ -40,6 +40,8 @@ PAGES = [
     'review.html',           # repository review findings
     'versions.html',         # earlier editions, repository links only
     'verification.html',     # verification register
+    'questions.html',        # what must be answered before deciding: known, unknown, how to find it
+    'suggestions.html',      # proposals for the site, for review before any change
 ]
 # Retired addresses kept as noindex redirects so that older links do not break.
 REDIRECTS = [

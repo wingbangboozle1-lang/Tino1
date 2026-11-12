@@ -12,6 +12,7 @@ The pages at the repository root are the only current edition. They are generate
 |---|---|
 | `index.html` | Executive summary, dashboard, best plan and why |
 | `decision.html` | Live, rent or sell: cash flows, after-tax wealth, sensitivities, break-even points |
+| `questions.html` | Questions to settle before deciding: what is known, what is not, how to find each missing answer |
 | `projections.html` | Year by year 2026 to 2076: value, assessed value, property tax, insurance, water, electricity, repairs, rental insurance |
 | `black-swan.html` | Non-constant growth and inflation: 50 replays of the real 1976-2025 record and named crisis paths |
 | `process.html` | Step-by-step process with legal deadlines |
@@ -22,6 +23,7 @@ The pages at the repository root are the only current edition. They are generate
 | `sources.html` | Source register, method, cross-check against a second model |
 | `verification.html` | Verification: the independent 2026-11-11 check register, every fact with its official link for manual review |
 | `review.html` | Repository review findings |
+| `suggestions.html` | Suggestions for improving the site, for review before anything is implemented |
 | `versions.html` | Earlier editions and why they were replaced |
 
 ## Reproduce

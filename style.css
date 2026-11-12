@@ -23,6 +23,7 @@ th,td{padding:8px 12px;border-top:1px solid var(--line);text-align:left;vertical
 thead th{background:#eef1f5;font-size:13px;position:sticky;top:0}
 table.num td:not(:first-child):not(:last-child){font-variant-numeric:tabular-nums}
 table.yr td{white-space:nowrap;padding:5px 10px}table.yr td:last-child{white-space:normal;min-width:150px}
+table.qa{min-width:1500px}table.qa td{min-width:150px}table.qa td:first-child,table.qa th:first-child{min-width:0;white-space:nowrap}
 tbody tr:hover{background:#f3f7fc}
 a{color:var(--acc)}a.src{font-size:12.5px;white-space:nowrap}
 a.flag{font-size:12px;background:var(--warnbg);color:var(--warn);border:1px solid #e6c98a;border-radius:4px;padding:0 5px;text-decoration:none;white-space:nowrap}

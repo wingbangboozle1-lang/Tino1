@@ -39,13 +39,25 @@ Inflation, house prices and stock returns do not compound evenly over 50 years. 
 3. The trustee's notification to beneficiaries and heirs is due within **60 days** of the trust becoming irrevocable.
 4. Get property-specific insurance quotes: the $1,500 a year used here is the owner's own estimate and is not confirmed on any official page (U01, U02).
 
+## Questions to settle before deciding
+
+The [Questions page](https://wingbangboozle1-lang.github.io/Tino1/questions.html) lists what must be answered first: what is known (with the official page), what is not, and how to find each missing answer. Three open questions matter far more than the rest:
+
+1. **What the trust says about the home** — is Property A inside the Transferor's gross estate? Without the basis reset, selling falls from $9,747,210 to $6,428,140. (Q01)
+2. **Whether the Inheritor wants to live there** — a personal choice with a known price ($6,301,010) and a one-year move-in limit that has no exception.
+3. **How sale proceeds would be invested** — the one input that reverses the ranking in the cases tested: left in savings, selling ($3,554,580) falls behind renting ($5,118,360).
+
+## Suggestions for the site — for review, nothing implemented
+
+The [Suggestions page](https://wingbangboozle1-lang.github.io/Tino1/suggestions.html) holds proposals for making the site more useful for the decision, each with options, a suggested choice, its effect on the decision, effort and risk. Status of every one: **decision needed**. Ready-made paths: privacy first (the public repository and its history), better inputs (current HUD rent, insurance figures, a private cash test), decision tools (tipping-point panel, mixed paths, reinvestment risk, timeline).
+
 ## Process, step by step
 
 See the [Process page](https://wingbangboozle1-lang.github.io/Tino1/process.html): what to do before the death, in the first 60 days, in the first 150 days, before the first property-tax bill, and in the first year, each step with its legal deadline and the official page it comes from.
 
 ## What is verified, and what is not
 
-- Every table row on the site links to an official page; two independent passes (2026-11-11 and 2026-11-12) re-read the headline facts on the government pages, and both are printed on the [Verification page](https://wingbangboozle1-lang.github.io/Tino1/verification.html).
+- Every table row on the site links to an official page; three passes (2026-11-11 and two on 2026-11-12) re-read the headline facts on the government pages, and all three are printed on the [Verification page](https://wingbangboozle1-lang.github.io/Tino1/verification.html).
 - Owner-supplied figures (market values, rents, utility bills, insurance estimates) cannot be confirmed on an official page and are labelled (P03). Projections are conditional scenarios (A01-A10).
 - Open items are on the [Flagged for Review page](https://wingbangboozle1-lang.github.io/Tino1/flagged.html): the trust terms and basis (Q01), the estate contents (Q02), the tax rate area (U03), the Proposition 19 allowance after 2027-02-16 (U04), the solar tariff (U05), and the repository's public history (P01/P02).
 
