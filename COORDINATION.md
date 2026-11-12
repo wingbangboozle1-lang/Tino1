@@ -901,3 +901,10 @@ Scan used: every owner figure as a digit sequence with any optional separator be
 - 2026-11-12 04:17–04:20 UTC — Board, branches, open PRs and Pages settings read. Claim written before any other edit.
 
 - Merge of PR #46 into the integration branch: conflicts in `COORDINATION.md` and `_config.yml` were resolved by preserving both complete board sections and retaining the privacy-first exact publication boundary. The numeric edition and the other session’s commits remain in Git history; no other session’s branch was altered. The active root redirect, publication checker and workflow are restored for the corrective release.
+
+### Privacy hotfix result (`5492e67a`)
+
+- PR: https://github.com/wingbangboozle1-lang/Tino1/pull/47 — merged 2026-11-12 04:25 UTC, merge commit `c9b0cebe96e27ec201cd04cb750c2973676f6fac`. PRs #31 and #41 are included in the merged ancestry; their work was preserved.
+- PR CI: https://github.com/wingbangboozle1-lang/Tino1/actions/runs/43154555481 — passed, including a real Jekyll build and exact output check. GitHub Pages deploy: https://github.com/wingbangboozle1-lang/Tino1/actions/runs/43154699244 — succeeded; Pages API reports `built` at the merge commit. A cache-busted live landing and Flagged page were read; the former root projections page returned 404. A separate fetch of the old decision path encountered an intermittent GitHub error, so it was not counted as a verified 404.
+- Exposure was not retroactively erased: #46 was published before the hotfix, and the public repository, earlier commits, PR refs, caches and copies may still hold linkable financial details. Owner-directed visibility/history remediation remains necessary; [GitHub guidance](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/removing-sensitive-data-from-a-repository).
+- Next: complete the previously claimed public-safe source examples, black-swan historical evidence, scoped source audit, and tests; the private household winner and forecast remain unverified and must not be represented as completed.
