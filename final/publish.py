@@ -28,6 +28,8 @@ ROOT = os.path.dirname(HERE)
 PAGES = [
     'index.html',            # executive summary and dashboard
     'decision.html',         # live / rent / sell
+    'questions.html',        # questions to answer before deciding
+    'suggestions.html',      # suggestions and the review-and-choose workflow
     'projections.html',      # year by year 2026-2076
     'black-swan.html',       # non-constant growth and inflation
     'process.html',          # step-by-step inheritance
