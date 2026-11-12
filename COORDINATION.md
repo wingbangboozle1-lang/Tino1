@@ -1203,3 +1203,21 @@ First push: the session branch had no remote ref, so `git pull --rebase origin a
 - **Unresolved privacy / repository-review flags:** GitHub API confirms the repository is still public. Pages allowlisting does not remove prior tracked files, commits, pull-request references, forks, archives or caches. No repository visibility change or history rewrite was performed. GitHub's guidance: https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/removing-sensitive-data-from-a-repository . Full historic repository/PR/fork verification is not certified.
 - **Repository tooling irregularity:** `python3 final/publish.py --check` reports `_config.yml` stale because that legacy checker describes the retired numeric edition, while current Pages deliberately serves the privacy-first edition through the separate `privacy-site` check/workflow. The current GitHub workflow does not run the legacy numeric check. It was not changed here because PR #59 actively owns those numeric-publishing files; reconcile this separately without restoring personal data to Pages.
 - **Remaining analytical limitation:** The public website intentionally does not publish personalized home values, rents, estate cash headroom, local rates, insurance quotes, or a numeric personalized “best path.” Its projections are synthetic teaching examples, not household forecasts. Actual legal and financial inputs must remain in a secure private workspace for professional review.
+
+### Session `arena/3e79fc01-tino1` — official re-read, questions register, and suggestions review queue (claimed 2026-11-12 15:40 UTC)
+
+**Session ID:** `3e79fc01` · **Branch:** `arena/3e79fc01-tino1` (platform-fixed name; a `session-<id>/<task>` branch cannot be created). **Base:** `main` @ `609d23f`.
+
+**Active claims respected (not touched):** `arena/ccd19b78-tino1` (PR #55, claimed 2026-11-12 15:30 UTC, still inside 60 minutes) owns `COORDINATION.md` append on that branch, `_config.yml`, `.github/workflows/privacy-pages.yml`, `privacy-site/**`, root `index.html` if needed, and the `README.md` publication notice. This session does not edit those files. Open audit PRs #42, #43 and #44 are left to their owners.
+
+| # | Task | Status | Owner | File scope | Notes |
+|---|------|--------|-------|------------|-------|
+| S3-1 | Claim this scope and push before content work | in progress | `3e79fc01` | `COORDINATION.md` (append only) | Non-overlapping with PR #55 file list except this shared board |
+| S3-2 | Re-read headline official pages in this session; flag any mismatch; do not fill unverified cells | unclaimed → claimed | `3e79fc01` | `final/sources.py` (append-only notes), `final/flags.py` (append-only), `verification.html` (generated) | No parcel lookup. No personal identifiers. |
+| S3-3 | Questions, information on hand, answers still missing, and how to discover each gap | claimed | `3e79fc01` | `final/build.py` (`build_requirements` only), `requirements.html` | Already-published page. No new root file, so `_config.yml` is not required. |
+| S3-4 | Dedicated suggestions review queue: proposed site and decision-process improvements, status "not implemented — choose before any change" | claimed | `3e79fc01` | `final/build.py` (`build_requirements` only), `requirements.html`, `review.html` | Suggestions are listed for review. They are not implemented in this session. |
+| S3-5 | If checks pass, open a PR from this branch to `main`, merge, confirm Pages, record the result | claimed | `3e79fc01` | this branch only | Will not edit `_config.yml` or `index.html` while `ccd19b78` holds them. A broken build is not merged. |
+
+**Change request (not edited):** ask `ccd19b78` not to remove the rounded numeric edition. This brief asks for clear rounded numbers and a best-plan comparison on the site, and also asks that names, addresses, parcel numbers and unrounded bills stay off the site. Their privacy-first rewrite is a suggestion, not a completed decision.
+
+**Log:** claim written before content work.
