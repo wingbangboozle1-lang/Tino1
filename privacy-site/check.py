@@ -69,10 +69,13 @@ def main():
         assert 'noindex,nofollow' in text and 'no-referrer' in text
         assert 'Content-Security-Policy' in text
         assert 'CHECKED 12 NOV 2026' in text
-        # Defense in depth against known rounded household signatures. Not a claim
-        # that these tokens capture all possible identifying combinations/history.
+        # Defense in depth against known rounded household signatures and location
+        # cues. These checks cover only the public build, not Git history or every
+        # possible inference from public context.
         for token in ('3,100,000','1,800,000','550,540','539,740','114,250','7,150','85,800','94122','95014'):
             assert token not in text, f'Household signature in {name}'
+        for token in ('Cupertino','San Francisco','sftreasurer.org','sf.gov'):
+            assert token.casefold() not in text.casefold(), f'Household-locality cue in {name}'
         for amount in re.findall(r'\$([\d,]+)(?![\d,])', text):
             assert int(amount.replace(',','')) % 10 == 0, (name,amount)
         p = Check(); p.feed(text)
