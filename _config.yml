@@ -10,6 +10,7 @@ exclude:
   - 'analysis'
   - 'archive'
   - 'assets'
+  - 'audit-708757cf'
   - 'audit-de9174cd'
   - 'dashboard'
   - 'data'
