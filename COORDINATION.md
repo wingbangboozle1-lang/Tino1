@@ -1068,3 +1068,11 @@ K3 (reconciliation of the front door) was claimed by `8fc06844` on 2026-11-11 13
 |---|---|---|---|---|
 | P708 | Audit current Pages publication against the explicit personal-information prohibition, review critical source/model claims and document findings | in progress | `arena/708757cf-tino1` | `COORDINATION.md`, new `audit-708757cf/` | Current branch fixed by Arena; will not create a session branch. No other scope claimed initially. |
 
+
+#### P708 publication-boundary extension — 2026-11-12
+
+| Task | Status | Owner | File scope | Notes |
+|---|---|---|---|---|
+| P709 | Restore privacy-first Pages output, retain a usable anonymous decision guide, verify deployment | in progress | `arena/708757cf-tino1` | `index.html`, `_config.yml`, `.github/workflows/pages.yml`, `privacy-site/**`, `COORDINATION.md`, `audit-708757cf/**` | Prior routing claims listed above are completed; this is a new bounded corrective integration. Rounded household financial figures and the linked household profile are still personal information; current main publicly exposes them. Old repository content/history remains an independent exposure and is not erased by Pages exclusions. |
+
+First push: the session branch had no remote ref, so `git pull --rebase origin arena/708757cf-tino1` failed; rebased against `origin main` instead and pushed the claim successfully. No conflict.
