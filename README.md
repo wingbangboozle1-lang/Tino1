@@ -1,3 +1,5 @@
+> **Publication update (2026-11-12):** Pages now serves the privacy-first guide under `privacy-site/public/`, reached through the root redirect. Earlier numeric-edition publication instructions below are historical and do not describe the current front door. Household-derived figures and earlier files remain in this public repository and its history; excluding them from Pages does not remove that exposure. Review the [GitHub sensitive-data removal guidance](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/removing-sensitive-data-from-a-repository) and repository visibility. Synthetic examples in the guide are not household projections.
+
 # Two-home inheritance analysis
 
 **Live site:** https://wingbangboozle1-lang.github.io/Tino1/
