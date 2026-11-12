@@ -1061,3 +1061,10 @@ K3 (reconciliation of the front door) was claimed by `8fc06844` on 2026-11-11 13
 - Pages API (`repos/wingbangboozle1-lang/Tino1/pages`): `status` = `built` at commit `dfd8178` (build 1362141529), `html_url` https://wingbangboozle1-lang.github.io/Tino1/, `build_type` = legacy, source `main:/`, `https_enforced` = true. The required `Validate the published site` workflow also ran on the merge push (run 43156271974); the queued `pages build and deployment` run for `dfd8178` completed `built`. Note: the sandbox this session runs in cannot open `github.io` directly (connection refused), so live confirmation here is the Pages API; `e8636cac` read the live pages back after the #52 deploy.
 - PRs #31 and #41 were found already merged (both 2026-11-12T04:25:24Z) with their content in `main`; no action was needed. PRs #42/#43/#44 (independent audit records) remain open for their owners; none blocks the site.
 - Open owner actions (unchanged, flagged): make the repository private or have the Git history rewritten (P02); re-read `flagged.html` and request any changes — flagged and unverified items are published as-is per the brief.
+
+### Session `arena/ccd19b78-tino1` — privacy-first release audit (2026-11-12 15:30 UTC)
+
+| Task | Status | Owner | Scope | Notes |
+|---|---|---|---|---|
+| C1: Audit the current publication boundary and remediate exposure of household-derived data on the public Pages site | in progress | `arena/ccd19b78-tino1` | `COORDINATION.md` (append), `_config.yml`, `.github/workflows/privacy-pages.yml`, `privacy-site/check_published.py`, root `index.html` if needed | Previous release claims are over 60 minutes old and closed; prior work retained. Rounded household figures are not anonymous; public Git history is a separate exposure. |
+| C2: Verify static site and official sources, create PR, merge only if checks pass, confirm deployment | in progress | `arena/ccd19b78-tino1` | `COORDINATION.md` (append), privacy publication checks and build configuration | Will report limitations rather than certify unverified data. |
