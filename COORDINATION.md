@@ -1003,3 +1003,12 @@ Both readings are defensible from parts of the brief, so the decision is recorde
 - Git history and closed PR refs still hold the earlier unrounded owner figures. This is owner action; no session can remove it.
 - Log closed. `arena/1e0d3aeb-tino1` is merged (PR #46); no further publication commits will be made on it.
 
+
+### W4 — pull request, merge and the live site (2026-11-12)
+
+- **Pull request:** https://github.com/wingbangboozle1-lang/Tino1/pull/45 — merged 2026-11-12T04:31:18Z, merge commit `9885418`.
+- **Required check:** `verify` passed on the merged head in 1m14s (run 43155342017 on `main`) — publication list in step, `final/check.py .` (22 pages, 716 rows with an official link, 2,152 dollar figures all multiples of $10, model self-tests 51/51), real `jekyll build`, published-output check (24 files, exact), no-figures edition still builds. The same check passed on the pull request (run 43155189862) before the merge.
+- **Pages:** the Pages API reports `status: built` after the merge; run "pages build and deployment" 43155341333 completed successfully.
+- **Live site read back, not assumed:** `https://wingbangboozle1-lang.github.io/Tino1/` now returns the Executive summary page with the dashboard, the six-item plan and the figures (spot-read: $6,531,230 value at inheritance, $59,950 lived-in tax, $17,612,280 estate-tax room). `verification.html` was also fetched from the live site and shows both verification passes and the second-pass table. The no-figures guide is no longer served; it remains in the repository under `privacy-site/**`.
+- **Collisions during the merge (all recorded, none discarded):** PR #46 (`1e0d3aeb`) merged the same lane first; PR #47 (`5492e67a`) reverted the front door to the no-figures guide; PR #48 (`916d12ad`) and PR #50 (`1e0d3aeb`) changed the no-figures edition and the board. This branch merged `main` three times, kept every session's files, and restored `archive/root-site-2026-11-11/index.html` (the archived earlier edition that PR #46's rebuild had overwritten with a 912-byte redirect; the 22 KB edition page is back in the repository and is not served).
+- **Still open for the owner:** repository visibility and Git history (P01/P02), the trust terms and basis question (Q01), property-specific insurance quotes (U01/U02), the tax rate area (U03), the Prop 19 allowance after 2027-02-16 (U04), the solar tariff (U05). All of them are on the live Flagged for Review page; none blocks the site.
