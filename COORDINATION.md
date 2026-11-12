@@ -1244,6 +1244,14 @@ Not edited, because other open pull requests own them: `_config.yml`, `.github/w
 
 Open PRs #62 (`arena/a6ec5b1d-tino1`) and #59 (`arena/557214ba-tino1`) also touch `final/build.py`, `final/flags.py`, `questions.html` and `requirements.html`. A merge of this branch will need a conflict resolution that keeps both sessions' unique rows. No file from those branches was discarded here.
 
+### Session `arena/3e79fc01-tino1` — merge and Pages record (2026-11-12)
+
+- PR #64: https://github.com/wingbangboozle1-lang/Tino1/pull/64 — merged 2026-11-12T15:53:56Z, merge commit `cc1138ef760d4708cbbae9e5fb9d050a032fb7cf`.
+- Required check `verify` passed on the rebased branch: run https://github.com/wingbangboozle1-lang/Tino1/actions/runs/43252550792 (58s).
+- GitHub Pages build for that merge commit succeeded: https://github.com/wingbangboozle1-lang/Tino1/actions/runs/43252758204 . Pages builds API reports `built` at `cc1138ef760d4708cbbae9e5fb9d050a032fb7cf` (updated 2026-11-12T15:54:36Z). Site: https://wingbangboozle1-lang.github.io/Tino1/
+- This merge does not change the privacy-first front door. `index.html`, `_config.yml`, the Pages workflow and `privacy-site/**` were not edited. The new questions and suggestions are on the numeric requirements page, which the current Pages exclude list does not publish. Suggestions remain proposed and not implemented. Flagged items do not block the deploy.
+- Local checks before merge: `python3 final/check.py .` passed (24 pages, 831 official-linked rows, figures rounded to $10, 51 model tests). `python3 privacy-site/check.py` passed. `python3 final/publish.py --check` still disagrees with the privacy exclude list and was not used to rewrite `_config.yml`.
+
 ---
 
 ## Session `0adc9b0a` (`arena/0adc9b0a-tino1`) — Suggestions section, Questions and missing-information register, fresh line-by-line re-verification, integration and publish (claimed 2026-11-12 15:32 UTC)
