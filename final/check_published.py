@@ -99,6 +99,12 @@ def check_fresh():
     env = dict(os.environ, OUT_DIR=tmp, ROOT_MODE='1')
     subprocess.run([sys.executable, os.path.join(HERE, 'model.py')], check=True, stdout=subprocess.DEVNULL)
     subprocess.run([sys.executable, os.path.join(HERE, 'build.py')], check=True, env=env, stdout=subprocess.DEVNULL)
+    # the Markdown executive summary is generated too: it must match the model today
+    fresh_md = os.path.join(tmp, 'EXECUTIVE-SUMMARY.md')
+    subprocess.run([sys.executable, os.path.join(HERE, 'exec_summary.py'), fresh_md], check=True, stdout=subprocess.DEVNULL)
+    md = os.path.join(ROOT, 'EXECUTIVE-SUMMARY.md')
+    if not os.path.exists(md) or open(fresh_md, 'rb').read() != open(md, 'rb').read():
+        err('EXECUTIVE-SUMMARY.md differs from what final/exec_summary.py produces today')
     n = 0
     for name in sorted(ALLOW_SET):
         if not name.endswith(('.html', '.css', '.js')):
