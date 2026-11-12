@@ -251,7 +251,7 @@ def build_index():
         ('estate-cash.html', 'Cash and estate tax', 'Thresholds, room before tax is due, and projections to 2050'),
         ('costs.html', 'Insurance and costs', 'What could and could not be confirmed for ZIP 95014 and 94122'),
         ('questions.html', 'Questions &amp; discovery', 'Known vs. unknown facts, answers needed before deciding, and ways to discover missing details'),
-        ('suggestions.html', 'Site improvements', 'Proposed model, tax-detail, UX and privacy improvements for review before implementing changes'),
+        ('suggestions.html', 'Site improvements', 'Proposed data, model, tax-detail and privacy improvements with review status so you can choose a path before any build'),
         ('flagged.html', 'Flagged for Review', 'Every unconfirmed value, assumption and irregularity, with links'),
         ('verification.html', 'Verification', 'Line-by-line check register: what was re-read on which official page, and what stays flagged'),
         ('requirements.html', 'Requirements', 'Every part of the brief, the page that answers it, and the official pages re-read'),
@@ -942,6 +942,11 @@ def build_questions():
          'California carriers have tightened 95014/94122 underwriting; standard homeowners policies cut off cover after 60 days of vacancy while waiting to close a sale or place a tenant.',
          'Call current insurers plus an independent California broker for ballpark replacement-cost and DP-3 quotes, and ask about short-term estate/vacancy endorsements for the post-death transition.',
          src('CDI-RES', 'CDI-TOOL', 'CDI-EQ')],
+        ['7. Parent-child relationship, Property A bedrooms/rent &amp; Property B basis (%s, %s, %s)' % (flag('Q06'), flag('U08'), flag('Q03')),
+         'Does the family relationship meet BOE Pub. 800-1 definitions, how many rentable bedrooms does Property A have vs. HUD benchmarks, and what is the Inheritor\'s cost/depreciation basis in Property B?',
+         'Only qualifying children/stepchildren/in-laws get Prop 19 relief; rental break-even shifts with market rent; Property B basis matters if Property B were ever sold.',
+         'Confirm relationship with the attorney, get a written local rent opinion matching Property A\'s layout, and keep Property B\'s closing &amp; Schedule E depreciation files privately with the CPA.',
+         src('BOE-PUB-800-1', 'HUD-95014', 'IRS-TC409')],
     ]
     t2 = table(['Question &amp; flag', 'Exact answer needed before deciding', 'Why it matters to the answer', 'Concrete way to discover it', 'Official basis'],
                qa, caption='Questions to answer before making a final decision, and how to find each missing fact')
@@ -1016,22 +1021,37 @@ def build_suggestions():
          'Replace the single flat repair line with an optional periodic capital-expenditure / seismic-retrofit reserve schedule (roof, HVAC, soft-story/foundation) plus an illustrative CEA premium stress.',
          'Makes Live/Rent carrying costs more realistic given the 72% USGS Bay Area quake probability.',
          src('USGS', 'CDI-EQ')],
+        ['IMP-09', 'Model Property B sale as a 4th comparison choice',
+         'Medium impact / low-medium effort',
+         'Show selling Property B instead of Property A as a full baseline option alongside keeping B, quantifying lost Prop 13 protection (%s/yr tax advantage) and un-reset capital gains on B.' % m(sf_gap),
+         'Directly demonstrates with numbers why Property B is kept in the baseline plan.',
+         src('SF-TAX', 'IRS-TC409')],
     ]
     t1 = table(['ID', 'Proposed model / financial-logic change', 'Impact &amp; effort', 'What would change if approved', 'Why review first', 'Official basis'],
                mod, caption='Proposed model &amp; analytical improvements (pending reviewer approval)')
 
+    data_gaps = [
+        ['GAP-01', 'Attorney trust-inclusion letter (%s)' % flag('Q01'), 'Confirms revocable inclusion vs. irrevocable grantor trust under Rev. Rul. 2023-2 (largest single swing in Sell).', 'Low - 1 legal review', 'Proposed - owner approval needed', src('RR-2023-2')],
+        ['GAP-02', 'Estate total &amp; prior spouse Form 706 portability (%s)' % flag('Q02'), 'Establishes cash vs. IRA mix against %s 2045 room and whether a second exclusion was preserved.' % m(B['exclusion_T'] - B['fmv_T']), 'Medium - CPA + attorney', 'Proposed - owner approval needed', src('IRS-ESTATE', 'IRS-FAQ-ESTATE')],
+        ['GAP-03', 'Actual CDI comparison tool + broker quotes &amp; quake offer (%s, %s)' % (flag('U01'), flag('U02')), 'Replaces %s/yr placeholder with actual 95014 homeowners, 94122 3-unit DP-3 landlord, vacancy endorsement, and CEA earthquake quotes.' % m(P['ins_home']), 'Low - broker call + 5 min on CDI tool', 'Proposed - owner / broker', src('CDI-TOOL-APP', 'CDI-RES', 'CDI-EQ')],
+        ['GAP-04', 'Santa Clara TRA bill lines, Cupertino water provider &amp; PG&amp;E PTO date (%s, %s)' % (flag('U03'), flag('U05')), 'Verifies parcel fixed charges, which of Cupertino\'s 3 water utilities serves Property A, and when 20-yr NEM 2.0 grandfathering expires.', 'Low - read utility &amp; tax bills', 'Proposed - owner', src('SCC-RATES', 'CUP-WATER', 'CPUC-NEM')],
+        ['GAP-05', 'Local property-manager rent opinion + bedroom confirmation &amp; appraisals (%s)' % flag('U08'), 'Benchmarks actual rent against HUD 4-BR (%s/mo) / 3-BR (%s/mo) and updates owner estimates (%s / %s).' % (m(P['cup_rent_month']), m(5870), m(P['cup_value']), m(P['sf_value'])), 'Medium - manager + appraiser', 'Proposed - owner approval needed', src('HUD-95014', 'FHFA-SJ')],
+    ]
+    t_gaps = table(['ID', 'Data-gathering step', 'Why it improves the decision', 'Effort', 'Status', 'Official basis'],
+                   data_gaps, caption='Data-gap items to gather before finalizing numbers')
+
     ux = [
-        ['IMP-09', 'Scrub pre-rounding Git history / move repo private (Flag P02)',
+        ['IMP-10', 'Scrub pre-rounding Git history / keep repo privacy-first (Flag P02)',
          'Critical privacy fix / owner action',
-         'Rewrite Git history (<code>git filter-repo</code> or fresh orphan export of current clean state) and/or change repository visibility from public to private before adding any exact bills, parcel details, or trust summaries.',
-         'Cannot be solved cleanly via normal commits alone because early pre-rounding commits still sit in public Git history.',
+         'Rewrite Git history (<code>git filter-repo</code> or fresh orphan export of clean state) and/or change repository visibility from public to private before referencing exact bills or trust memos; keep public GitHub Pages on the non-household guide in <code>privacy-site/public/</code>.',
+         'Cannot be solved via normal commits alone because early pre-rounding commits sit in public Git history.',
          src('SCC-RATES')],
-        ['IMP-10', 'Split local private input overrides from public repo (<code>local_private.json</code>)',
+        ['IMP-11', 'Split local private input overrides from public repo (<code>local_private.json</code>)',
          'High usability &amp; privacy value',
          'Allow the owner to keep an untracked, <code>.gitignore</code>-excluded <code>local_private.json</code> file locally to recompute exact household numbers on their own machine while keeping the GitHub repo strictly rounded to $10.',
          'Prevents accidental leaks while giving the owner exact household figures locally.',
          src('BLS-CPI')],
-        ['IMP-11', 'One-page printable "Attorney &amp; CPA Briefing Sheet" export',
+        ['IMP-12', 'One-page printable "Attorney &amp; CPA Briefing Sheet" export',
          'High practical utility / low effort',
          'Add a dedicated <code>@media print</code> CSS layout and a single-page summary view printing <code>Q01-Q06</code>, Prop 19 BOE-266/BOE-19-P sequence, and estate-tax headroom without charts/navigation clutter.',
          'Gives the Transferor and Inheritor a clean agenda to hand directly to an estate attorney or CPA.',
@@ -1040,22 +1060,31 @@ def build_suggestions():
     t2 = table(['ID', 'Proposed workflow, UX &amp; privacy option', 'Impact &amp; effort', 'What would change if approved', 'Why review first', 'Official basis'],
                ux, caption='Proposed workflow, reporting &amp; privacy-governance improvements')
 
-    order = [
-        ['Step 1 (Immediate - Privacy)', 'IMP-09 &amp; IMP-10 (Repo visibility/history + untracked local override)', 'Fixes the open P02 Git-history leak risk before any real trust or exact-bill figures are explored.', src('SCC-RATES')],
-        ['Step 2 (Before changing numbers)', 'IMP-11 &amp; Questions checklist (Attorney/CPA printout + Q01/Q02 answers)', 'Resolves trust step-up (Q01) and estate cash/IRA mix (Q02) before spending effort fine-tuning secondary assumptions.', src('RR-2023-2', 'IRS-P559')],
-        ['Step 3 (Next model release, once selected)', 'IMP-01, IMP-02, IMP-05 &amp; IMP-06 (Interactive sliders, SALT/Joint toggle, hybrid Live->Sell, phased Treasury entry)', 'Upgrades the analytical engine only after the reviewer chooses which options belong in the baseline vs. side scenarios.', src('IRS-SCHED-A', 'TREASURY')],
-    ]
-    t3 = table(['Suggested order', 'Items bundled', 'Rationale', 'Official basis'],
-               order, caption='Recommended review &amp; implementation sequence')
+    paths = table(['Implementation path (choose before editing baseline)', 'Included items', 'Owner time', 'Best fit', 'Official basis'], [
+        ['Path 1 - Minimal (data verification first)', 'Keep baseline model as-is + resolve GAP-01..GAP-05 (trust letter, insurance quotes, tax bill/TRA, Cupertino water utility, NEM date, rent opinion).', '1-2 weeks part-time', 'Fastest way to eliminate major unknowns before any code changes', src('RR-2023-2', 'CUP-WATER')],
+        ['Path 2 - Standard (recommended)', 'Path 1 + IMP-01 (sliders), IMP-02 (SALT/Joint toggle), IMP-06 (Treasury staging), IMP-12 (Attorney/CPA sheet), plus IMP-10/IMP-11 privacy split.', '2-4 weeks', 'Lets you test assumptions and tax details interactively while keeping household privacy intact', src('IRS-SCHED-A', 'TREASURY')],
+        ['Path 3 - Comprehensive', 'Path 1 + Path 2 + IMP-03 (IRA 10-yr drag), IMP-04 (NEM sunset), IMP-05 (hybrid Live-then-Sell), IMP-08 (quake/capex reserve), IMP-09 (Sell B comparison).', '4-6 weeks', 'Complete household decision workbook ready for family, attorney, and CPA sign-off', src('IRS-P559', 'BOE-PUB-800-1')],
+    ], caption='Three implementation paths - pick one before any baseline numbers change')
+
+    workflow = """
+<h2>Review status workflow</h2>
+<ul class="plan">
+<li><strong>Proposed</strong> - waiting for your review; zero baseline figures modified.</li>
+<li><strong>Under review</strong> - sent to estate attorney, CPA, broker, or appraiser.</li>
+<li><strong>Approved / Built</strong> - selected for implementation, rebuilt through <code>final/model.py</code> and verified against <code>final/check.py</code>.</li>
+<li><strong>Not approved / Deferred</strong> - explicitly declined and recorded for completeness.</li>
+</ul>"""
 
     body = """
-<p class="callout"><strong>Proposed site improvements - for review before implementing.</strong> None of the changes below have been folded into the baseline numbers yet. Presenting them here lets the reviewer pick which model refinements, interactive tools, or privacy workflows to adopt without silently shifting the verified baseline outputs (%s Sell vs. %s Rent vs. %s Live).</p>
-<h2>1. Model &amp; financial-logic candidates</h2>%s
-<h2>2. Workflow, reporting &amp; privacy candidates</h2>%s
-<h2>3. Suggested priority order</h2>%s
-""" % (m(B['real_sell']), m(B['real_rent']), m(B['real_live']), t1, t2, t3)
+<p class="callout"><strong>Proposed site improvements - for review before implementing.</strong> None of the changes below have been folded into the baseline numbers yet. Presenting them here lets the reviewer pick which data checks, model refinements, interactive tools, or privacy workflows to adopt (e.g., Path 1, Path 2, or Path 3) without silently shifting the verified baseline outputs (%s Sell vs. %s Rent vs. %s Live).</p>
+%s
+<h2>1. Data-gap verification candidates</h2>%s
+<h2>2. Model &amp; financial-logic candidates</h2>%s
+<h2>3. Workflow, reporting &amp; privacy candidates</h2>%s
+<h2>4. Choose a path before implementing changes</h2>%s
+""" % (m(B['real_sell']), m(B['real_rent']), m(B['real_live']), workflow, t_gaps, t1, t2, paths)
     page('suggestions.html', 'Site improvements & proposed options',
-         'Structured suggestions for improving the site, model nuance, and privacy workflow so the reviewer can select the best path before implementing changes.', body)
+         'Structured suggestions for improving the site, data coverage, model nuance, and privacy workflow so the reviewer can select the best path before implementing changes.', body)
 
 
 # ====================================================================== flagged
@@ -1293,8 +1322,10 @@ def build_requirements():
          'Every part of the brief, the page that answers it, the official rule behind it - and the official pages that were re-read on 2026-11-11 to make sure the numbers on this site still match.', body)
 
 
+
 # ====================================================================== review
 def build_review():
+
     rows = [[r['id'], r['where'], r['finding'], r['status'], src(*r['src']) + ' · <a href="%s/%s" rel="noopener">file</a>' % (REPO, r['path'])] for r in REVIEW]
     t = table(['No.', 'Where', 'Finding', 'Status', 'Rule or source, and file'], rows, caption='Repository review findings') if rows else ''
     body = """<p class="callout">The repository holds several generations of the same analysis written by parallel sessions. This page records what an independent pass found, so that a reader knows which pages to trust. The full history is in <a href="%s/blob/main/COORDINATION.md">COORDINATION.md</a>.</p>""" % REPO + t

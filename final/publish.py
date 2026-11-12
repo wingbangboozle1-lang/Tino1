@@ -37,6 +37,8 @@ PAGES = [
     'questions.html',        # questions, known vs. unknown info, and discovery suggestions
     'suggestions.html',      # proposed site improvements to review before implementing
     'flagged.html',          # flagged for review
+    'suggestions.html',      # proposed improvements with review status
+    'questions.html',        # have/missing/questions/answers + how to discover
     'sources.html',          # source register and method
     'requirements.html',     # the brief, line by line
     'review.html',           # repository review findings
