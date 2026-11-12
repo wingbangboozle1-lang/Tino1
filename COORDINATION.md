@@ -1203,3 +1203,43 @@ First push: the session branch had no remote ref, so `git pull --rebase origin a
 - **Unresolved privacy / repository-review flags:** GitHub API confirms the repository is still public. Pages allowlisting does not remove prior tracked files, commits, pull-request references, forks, archives or caches. No repository visibility change or history rewrite was performed. GitHub's guidance: https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/removing-sensitive-data-from-a-repository . Full historic repository/PR/fork verification is not certified.
 - **Repository tooling irregularity:** `python3 final/publish.py --check` reports `_config.yml` stale because that legacy checker describes the retired numeric edition, while current Pages deliberately serves the privacy-first edition through the separate `privacy-site` check/workflow. The current GitHub workflow does not run the legacy numeric check. It was not changed here because PR #59 actively owns those numeric-publishing files; reconcile this separately without restoring personal data to Pages.
 - **Remaining analytical limitation:** The public website intentionally does not publish personalized home values, rents, estate cash headroom, local rates, insurance quotes, or a numeric personalized “best path.” Its projections are synthetic teaching examples, not household forecasts. Actual legal and financial inputs must remain in a secure private workspace for professional review.
+
+### Session `arena/3e79fc01-tino1` — official re-read, questions register, and suggestions review queue (claimed 2026-11-12 15:40 UTC)
+
+**Session ID:** `3e79fc01` · **Branch:** `arena/3e79fc01-tino1` (platform-fixed name; a `session-<id>/<task>` branch cannot be created). **Base:** `main` @ `609d23f`.
+
+**Active claims respected (not touched):** `arena/ccd19b78-tino1` (PR #55, claimed 2026-11-12 15:30 UTC, still inside 60 minutes) owns `COORDINATION.md` append on that branch, `_config.yml`, `.github/workflows/privacy-pages.yml`, `privacy-site/**`, root `index.html` if needed, and the `README.md` publication notice. This session does not edit those files. Open audit PRs #42, #43 and #44 are left to their owners.
+
+| # | Task | Status | Owner | File scope | Notes |
+|---|------|--------|-------|------------|-------|
+| S3-1 | Claim this scope and push before content work | in progress | `3e79fc01` | `COORDINATION.md` (append only) | Non-overlapping with PR #55 file list except this shared board |
+| S3-2 | Re-read headline official pages in this session; flag any mismatch; do not fill unverified cells | unclaimed → claimed | `3e79fc01` | `final/sources.py` (append-only notes), `final/flags.py` (append-only), `verification.html` (generated) | No parcel lookup. No personal identifiers. |
+| S3-3 | Questions, information on hand, answers still missing, and how to discover each gap | claimed | `3e79fc01` | `final/build.py` (`build_requirements` only), `requirements.html` | Already-published page. No new root file, so `_config.yml` is not required. |
+| S3-4 | Dedicated suggestions review queue: proposed site and decision-process improvements, status "not implemented — choose before any change" | claimed | `3e79fc01` | `final/build.py` (`build_requirements` only), `requirements.html`, `review.html` | Suggestions are listed for review. They are not implemented in this session. |
+| S3-5 | If checks pass, open a PR from this branch to `main`, merge, confirm Pages, record the result | claimed | `3e79fc01` | this branch only | Will not edit `_config.yml` or `index.html` while `ccd19b78` holds them. A broken build is not merged. |
+
+**Change request (not edited):** ask `ccd19b78` not to remove the rounded numeric edition. This brief asks for clear rounded numbers and a best-plan comparison on the site, and also asks that names, addresses, parcel numbers and unrounded bills stay off the site. Their privacy-first rewrite is a suggestion, not a completed decision.
+
+**Log:** claim written before content work.
+
+### Session `arena/3e79fc01-tino1` — work log before rebase (2026-11-12)
+
+Claim was pushed at `69fc794` before content work. While this session re-read official pages, `origin/main` advanced through PRs #55–#61. PR #55 and later privacy releases made the live front door a redirect to `privacy-site/public/`. PR #57 added numeric `suggestions.html` and `questions.html`, then later merges excluded those pages from Pages. This session will rebase onto `origin/main`, keep both the privacy guide and the numeric pages, and not discard either session's files.
+
+Official pages opened in this session (not copied from an earlier edition): IRS estate-tax threshold page ($15,000,000 for 2026); IRS IR-2026-133 ($15,480,000 and $20,000 gift exclusion for 2027); IRS What is New (Public Law 119-21); IRS closing-letter FAQ (dated fees $67 / $56 / $76, not a contradiction); SCO estate-tax page; BOE Proposition 19 page; BOE LTA 2025/009 ($1,044,586); BOE LTA 2026/026 (family-home and formula); R&TC 63.2 and 51; Probate Code 16061.7; BOE homeowners exemption ($7,000); SF Treasurer (1.18162182%); Santa Clara tax rate book FY2025-26 pages A-4 to A-6; Clerk-Recorder transfer tax; HUD SAFMR 95014 and 94122; CDI comparison tool (not a quote; ZIP premium left blank); SF rent-increase page (1.6%); Treasury yield curve 2026-11-10; Congress.gov S.587 (introduced, not law).
+
+Irregularities found and not silently "fixed" in the model: closing-letter disagreement note is stale (R19); sale-year tax uses six months of the reassessed bill (R20); El Camino Hospital 0.00200 is on page A-4 and is not in the 1.16360% composite (R21 / U03). New unanswered questions, later numbered Q15-Q18 so they do not collide with the existing questions page: principal residence, transfer timing, deductible loss, and which home has the exemption.
+
+### Session `arena/3e79fc01-tino1` — rebase and content handoff (2026-11-12)
+
+Rebased onto `origin/main` at `396518f` (PR #61). Both sides of the board conflict were kept. `final/build.py` `build_review` keeps the in-page anchors this session needs and keeps `build_suggestions` and `build_questions` from `arena/155782b5`.
+
+Content added, model figures unchanged:
+- Questions Q15–Q18 (principal residence at death, transfer timing, deductible selling-cost loss, which home has the homeowners exemption). These do not reuse Q07–Q14, which `questions.html` already uses for other items.
+- Suggestions SG-1 through SG-11 on `requirements.html`, each marked proposed and not implemented.
+- Third verification pass on `verification.html` for pages opened this session.
+- Flag corrections: S01 closing-letter fee is a dated schedule ($67 / $56 / $76), not a contradiction (R19). El Camino Hospital 2003 at 0.00200 is on tax-rate book page A-4 and is not in the 1.16360 percent composite (R21, U03). Sale-year tax treatment remains an open modeling choice (R20).
+
+Not edited, because other open pull requests own them: `_config.yml`, `.github/workflows/pages.yml`, `index.html`, `privacy-site/**`, `README.md`. `python3 final/publish.py --check` fails on this branch only because the committed privacy exclude list differs from the numeric generator. The privacy-first Pages workflow is the check that matches current `main`. This session does not restore household figures to the live front door.
+
+Open PRs #62 (`arena/a6ec5b1d-tino1`) and #59 (`arena/557214ba-tino1`) also touch `final/build.py`, `final/flags.py`, `questions.html` and `requirements.html`. A merge of this branch will need a conflict resolution that keeps both sessions' unique rows. No file from those branches was discarded here.
