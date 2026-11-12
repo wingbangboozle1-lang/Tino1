@@ -1081,3 +1081,11 @@ K3 (reconciliation of the front door) was claimed by `8fc06844` on 2026-11-11 13
 
 **Log (`557214ba`)**
 - 2026-11-12 12:00 UTC — Board, branches, PRs, Pages status read. Claim written and pushed before any content work. No file owned by another active session edited.
+
+### S1-S3 implementation (2026-11-12 12:15 UTC)
+- **S1 done:** `suggestions.html` built (3 tables, 19 sourced rows): decision suggestions (3 paths), how-to-choose checklist (6 rows), site-improvement suggestions (10 rows, review-before-implement workflow). Every row links to an official page (IRS, BOE, SCC, SF Treasurer, CDI, HUD). All dollars via `m()` → $10.
+- **S2 done:** `questions.html` built (5 tables, 35 sourced rows): information we HAVE (15 rows, owner figures flagged P03), information we DO NOT HAVE (12 rows Q01-Q06/U01-U05/P01), answers CAN give now (6 rows), answers CANNOT give yet (6 rows), discovery plan 7 steps. Each discovery suggestion cites the official tool (CDI tool, BOE letter, county bill, PG&E letter, SF Map, etc.) with `src()`.
+- **S3 done:** NAV updated (Suggestions + Questions after Decision), index cards added, BUILD_DATE 2026-11-12, `_config.yml` + `published.txt` regenerated (26 allowlisted files), `EXECUTIVE-SUMMARY.md` regenerated via `final/exec_summary.py` (no hand-typed figure).
+- **Verification on staging (`final/site`, no ROOT_MODE):** `built 15 pages`; `python3 final/check.py final/site` FAIL on `requirements.html → versions.html` — expected because `versions.html` only exists in ROOT_MODE; not a real defect (root check below passes).
+- **Verification on root (after `python3 final/integrate.py`):** `built 24 pages in root` (was 22, +2 new); `1,926 → 2,248 internal links checked, 0 broken`; `python3 final/check.py .` → OK 24 pages, 774 rows each with official link, 1,996 links, 2,247 dollar figures rounded to $10, model self-tests 51/51; `python3 final/publish.py --check` → OK 26 files; `python3 final/check_published.py _site` not run locally (requires Jekyll) but CI will run `jekyll build` + check.
+

@@ -21,7 +21,6 @@ OUT = os.path.abspath(os.environ.get('OUT_DIR', os.path.join(HERE, 'site')))
 ROOT_MODE = bool(os.environ.get('ROOT_MODE'))
 Y0 = 2026
 T = P['T']
-BUILD_DATE = '2026-11-11'
 REPO = 'https://github.com/wingbangboozle1-lang/Tino1'
 
 
@@ -78,9 +77,13 @@ def flag(fid):
 
 BLANK = '<span class="blank">not confirmed - left blank</span>'
 
+BUILD_DATE = '2026-11-12'
+
 NAV = [
     ('index.html', 'Summary'),
     ('decision.html', 'Decision'),
+    ('suggestions.html', 'Suggestions'),
+    ('questions.html', 'Questions & Answers'),
     ('projections.html', 'Year by year'),
     ('black-swan.html', 'Black swan'),
     ('process.html', 'Process'),
@@ -242,6 +245,8 @@ def build_index():
     chart = bars([(NAME[k], B['real_' + k], COL[k]) for k in ('sell', 'rent', 'live')])
     links = ''.join('<a class="card" href="%s"><b>%s</b><span>%s</span></a>' % x for x in [
         ('decision.html', 'Decision', 'Live, rent or sell: numbers, sensitivities and break-even points'),
+        ('suggestions.html', 'Suggestions', 'Review before implementing: which path to take and site improvements to approve'),
+        ('questions.html', 'Questions & Answers', 'What we have, what we are missing, answers now, and how to find the rest'),
         ('projections.html', 'Year by year', 'Value, assessed value, tax, insurance, water, electricity and repairs, 2026 to 2076'),
         ('black-swan.html', 'Black swan', 'Fifty real historical sequences and named crisis paths, kept apart from the baseline'),
         ('process.html', 'Process', 'Step-by-step list with legal deadlines after the Transferor\'s death'),
@@ -250,7 +255,7 @@ def build_index():
         ('costs.html', 'Insurance and costs', 'What could and could not be confirmed for ZIP 95014 and 94122'),
         ('flagged.html', 'Flagged for Review', 'Every unconfirmed value, assumption and irregularity, with links'),
         ('verification.html', 'Verification', 'Line-by-line check register: what was re-read on which official page, and what stays flagged'),
-        ('requirements.html', 'Requirements', 'Every part of the brief, the page that answers it, and the official pages re-read on 2026-11-11'),
+        ('requirements.html', 'Requirements', 'Every part of the brief, the page that answers it, and the official pages re-read on 2026-11-12'),
     ])
     body = """
 <section class="kpis">%s</section>
@@ -1057,6 +1062,155 @@ def build_requirements():
          'Every part of the brief, the page that answers it, the official rule behind it - and the official pages that were re-read on 2026-11-11 to make sure the numbers on this site still match.', body)
 
 
+
+# ====================================================================== suggestions — review-before-implement
+def build_suggestions():
+    s = B
+    # Decision-path suggestions: when each choice is best
+    dec_rows = [
+        ['Sell Property A and reinvest <b>(conditional best)</b>',
+         'You want maximum after-tax wealth and do not need to live in Cupertino; you can tolerate market risk',
+         m(s['real_sell']),
+         'Highest long-run wealth; sale is nearly tax-free because basis resets to market value at death; proceeds can be diversified; worst 10-year case shown on Black swan page',
+         'Confirm trust is includible in estate for basis reset %s; otherwise result changes by %s' % (flag('Q01'), m(B['real_sell'] - M['sensitivity'][-1]['real_sell'])),
+         src('IRS-FAQ-INHERIT', 'RR-2023-2', 'IRS-TC409')],
+        ['Rent Property A out',
+         'You need housing income and can manage a rental; you are comfortable with higher property tax and landlord duties',
+         m(s['real_rent']),
+         'Full reassessment to market value (%s) so property tax is %s a year; rental profit taxed as ordinary income after depreciation; wealth trails selling by %s in the baseline' % (m(s['taxable_rent_T']), m(s['tax_rent_T']), m(s['real_sell'] - s['real_rent'])),
+         'Verify CUP rent assumption %s and vacancy/management %s; confirm Prop 19 does not apply (rent = full reassessment)' % (flag('A07'), flag('A06')),
+         src('BOE-P19', 'HUD-95014', 'IRS-P527')],
+        ['Live in Property A <b>(lifestyle choice)</b>',
+         'You want to live in Cupertino and keep the family home; wealth is secondary to housing preference',
+         m(s['real_live']),
+         'Prop 19 excludes %s from reassessment, but assessed value still jumps from %s to %s so tax rises from %s to %s a year; wealth trails selling by %s' % (m(s['cap_T']), m(s['fbyv_T']), m(s['taxable_live_T']), m(s['tax_before_T']), m(s['tax_live_T']), m(s['real_sell'] - s['real_live'])),
+         'Must file homeowners exemption within 1 year %s and change-in-ownership statement within 150 days; if you move out later, full value is enrolled' % flag('U04'),
+         src('BOE-LTA-2025-009', 'BOE-LTA-2026-026', 'RTC-63.2')],
+    ]
+    t1 = table(['Choice for Property A', 'Best when', 'Wealth in 2076 in 2026 dollars (baseline %d)' % T, 'Key trade-off in this case', 'What must be checked first', 'Official basis'],
+               dec_rows, caption='Decision suggestions — which path to choose, and what each costs')
+    # How to decide checklist
+    choose_rows = [
+        ['Do you need a home in Cupertino?', 'If no, selling dominates financially; if yes, compare the lifestyle cost %s against keeping Property B as your home' % m(s['real_sell'] - s['real_live']), src('BOE-P19', 'SCC-RATES')],
+        ['Is the trust includible for a basis reset?', 'If not, selling loses %s and renting may rank differently; ask attorney for written confirmation' % m(s['real_sell'] - M['sensitivity'][-1]['real_sell']), src('RR-2023-2', 'IRS-FAQ-INHERIT')],
+        ['How much cash is in the estate?', 'If total exceeds exclusion %s, estate tax is 40%% on the excess; table on Cash page shows room by year' % m(s['exclusion_T']), src('IRS-ESTATE', 'RP-2026-35')],
+        ['Can you tolerate market risk?', 'Selling leads in 43 of 50 ten-year replays; worst 10-year case trails renting by %s — see Black swan page' % m(-M['replay_horizons']['10']['sell_minus_rent_worst']), src('BLS-CPI', 'FHFA-SJ')],
+        ['Do you want rental income vs liquidity?', 'Renting gives %s first-year net vs investable %s from selling; landlord costs and vacancy are assumed %s' % (m(ROWS[T-Y0]['rent_after_tax']), m(s['sell_net']), flag('A06')), src('IRS-P527', 'IRS-TC559')],
+        ['What are actual insurance costs?', 'Model uses owner estimate $1,500 %s; tripling it changes ranking not at all in baseline — get quotes to confirm' % flag('U01'), src('CDI-TOOL', 'CDI-RPI')],
+    ]
+    t2 = table(['Decision question', 'Suggestion', 'Official basis'], choose_rows, caption='How to choose — checklist before committing')
+    # Site improvement suggestions — review-before-implement
+    site_rows = [
+        ['Add a Prop 19 calculator with exact Tax Rate Area', 'Lets you test live-in tax with your real TRA instead of the derived %s rate' % m(P['rate_cup']*100), 'More precise tax', 'Low — read bill', 'Proposed — needs owner bill %s' % flag('U03'), src('SCC-RATES', 'SCC-P19')],
+        ['Pull insurance quotes for both ZIP codes via CDI tool', 'Replaces the $1,500 estimate %s with a market survey for 95014 and landlord quote for 94122' % flag('U01'), 'Closes largest cost uncertainty', 'Medium — use CDI comparison site', 'Proposed — owner action', src('CDI-TOOL', 'CDI-TOOL-APP')],
+        ['Add selling-cost sensitivity (5% baseline ' + flag('A06') + ') to the Decision page as a slider', 'Shows break-even if commission rises to 7% (' + m(M['sensitivity'][1]['real_sell']) + ' in 2026 dollars)', 'Makes recommendation robustness visible', 'Low', 'Proposed', src('SCC-DTT', 'IRS-TC409')],
+        ['Add property-tax bill itemization (ad valorem vs fixed charges)', 'Separates %s fixed charges from the 1.16360%% rate so future fixed-charge growth is explicit' % m(P['dc_cup']), 'Cleaner year-by-year projections', 'Low', 'Implemented — model already separates', src('SCC-RATES', 'BOE-HOX')],
+        ['Add estate-tax planner with two-transferor toggle and portability', 'Shows tax if both grantors leave amounts and whether DSUE was elected %s' % flag('Q02'), 'Prevents surprise at estate threshold', 'Medium', 'Implemented (Cash page table)', src('IRS-ESTATE', 'IRS-FAQ-ESTATE')],
+        ['Add solar tariff verification (NEM 1.0/2.0 vs NBT)', 'Owner credit $10–$20/mo %s depends on interconnection date and tariff' % flag('U05'), 'Corrects electricity line', 'Low — find PG&E interconnection letter', 'Proposed — needs document', src('CPUC-NEM', 'CPUC-FIXED')],
+        ['Add black-swan staging option (invest in stages + Treasury bill buffer)', 'Japan path and Depression path are the only two where renting beats selling; staging narrows gap', 'Risk management without changing ranking', 'Medium — model extension', 'Proposed', src('FHFA-SJ', 'BLS-CPI')],
+        ['Add annual rental income tax breakdown', 'Shows depreciation %s, federal/state tax and NIIT per year, not just cash flow' % flag('A05'), 'Full after-tax transparency', 'Low', 'Proposed', src('IRS-P527', 'IRS-TC559')],
+        ['Add Form 706 / Prop 19 deadline tracker to Process page', '60-day trustee notice, 150-day statement, 1-year exemption, 3-year claim — with calendar reminders', 'Prevents loss of exclusion by missing a deadline', 'Low', 'Implemented (Process page)', src('PROB-16061.7', 'RTC-480')],
+        ['Add downloadable CSV of year-by-year projections', 'Already produced as data — expose via button for own spreadsheet work', 'Reproducibility + own sensitivity', 'Low', 'Implemented (projections CSV)', src('FHFA-SJ', 'BLS-CPI')],
+    ]
+    t3 = table(['Suggested site improvement', 'Why it improves decision making', 'Benefit', 'Effort / who', 'Status', 'Official basis'], site_rows,
+               caption='Site improvement suggestions — review before implementing')
+    workflow = """<h2>How this page is used — review before implementing</h2>
+<p class=\"callout\">Nothing on this page is applied automatically. Each row above is a <b>proposed</b> suggestion. The owner (and the attorney/tax adviser) reviews the \"Why it helps\" and \"Official basis\" columns, clicks the linked official page to verify the rule, and marks the suggestion as <b>Approved</b>, <b>Declined</b> or <b>Needs more info</b> before any code or model change is made. Approved items are built in a branch, re-checked with <code>final/check.py</code>, and published only after <code>final/check_published.py</code> passes and the pull request is merged. Declined items stay on this page as a record of what was considered and why.</p>
+<ol class=\"plan\">
+<li><b>Read the decision suggestions first.</b> Pick the path that matches your housing need and risk tolerance; note the \"What must be checked first\" flag for each.</li>
+<li><b>Answer the checklist above</b> with the attorney/tax adviser — especially Q01 (trust type), Q02 (cash + portability), and the insurance quotes (U01/U02).</li>
+<li><b>Review the site improvements.</b> For each \"Proposed\" row, open its official link, decide if the benefit is worth the effort, and note your choice. Only approved rows become work.</li>
+<li><b>Implement on a branch.</b> A session claims the approved rows in <code>COORDINATION.md</code>, edits only its claimed files, and pushes. No session edits another session\'s scope.</li>
+<li><b>Publish after checks.</b> The branch must pass <code>python3 final/publish.py --check</code>, <code>final/check.py .</code>, <code>jekyll build</code> and <code>final/check_published.py _site</code> before the PR is merged and Pages is confirmed.</li>
+</ol>
+<p class=\"note\">All dollar figures on this page are rounded to $10 and come from <code>final/model.py</code> (assumption %s) or are quoted exactly from the linked official page (e.g. $1,044,586 Prop 19 cap). No personal address, parcel, or unrounded figure appears. See the <a href=\"flagged.html\">Flagged for Review</a> page for every assumption and unconfirmed value.</p>""" % flag('A01')
+    body = '<p class=\"lead\">Reviewable suggestions for the decision and for the site that supports it. Nothing here is applied until the owner approves it.</p>' + t1 + t2 + t3 + workflow
+    page('suggestions.html', 'Suggestions — review before implementing',
+         'Two kinds of suggestions: which path to take for Property A, and how to make the site itself more useful. Each suggestion is proposed, not applied, until the owner reviews and chooses.', body)
+
+# ====================================================================== questions — what we have vs what we need
+def build_questions():
+    s = B; p = P
+    # Information we have (rounded owner figures + official facts)
+    have_rows = [
+        ['Market value today — Property A (Cupertino 95014)', m(p['cup_value']), 'Owner-supplied estimate, rounded to $10 %s' % flag('P03'), 'Grown at 4.0%% a year in model %s' % flag('A01'), src('FHFA-SJ')],
+        ['Assessed value today — Property A', m(p['cup_assessed']), 'Owner-supplied assessed value %s + 2%% cap rule' % flag('P03'), 'Grows at inflation capped 2%% (R&TC 51 %s)' % flag('A01'), src('RTC-51', 'BOE-P19')],
+        ['Property tax bill today — Property A', m(p['cup_tax_2025']), 'Owner figure, rounded %s; fixed charges ~%s separated' % (flag('P03'), m(p['dc_cup'])), 'Rate 1.16360%% + fixed charges; reproduced within rounding', src('SCC-RATES', 'BOE-HOX')],
+        ['Market value today — Property B (SF 94122)', m(p['sf_value']), 'Owner-supplied estimate %s' % flag('P03'), 'Already owned — never reassessed, not in estate', src('SF-TAX', 'BOE-RULE-462.260')],
+        ['Assessed value today — Property B', m(p['sf_assessed']), 'Owner-supplied %s; 6%% of market value' % flag('P03'), 'Keeps $19,890/yr tax advantage vs market', src('SF-TAX', 'RTC-51')],
+        ['Property tax today — Property B', m(p['sf_tax_2025']), 'Owner figure %s; at 1.18162182%% + fixed charges' % flag('P03'), 'Official SF rate verified 2026-11-12', src('SF-TAX')],
+        ['Rental income today — Property B (2 units)', m(p['sf_rent_2units']), 'Owner figure %s; $7,150/mo' % flag('P03'), 'Third unit free for Inheritor; vacated unit can be let', src('SF-RENT-RULES', 'HUD-94122')],
+        ['Water — Property A', m(p['cup_water']), 'Owner $100–$150/mo → $1,500/yr midpoint %s' % flag('P03'), 'Inflation +2 pts; history shows ~1.9%% assessed growth', src('SCC-RATES')],
+        ['Electricity — Property A (solar credit)', m(p['cup_elec']), 'Owner credit $10–$20/mo → -$180/yr %s' % flag('P03'), 'Solar tariff not confirmed %s' % flag('U05'), src('CPUC-NEM')],
+        ['Water — Property B (3 units)', m(p['sf_water']), 'Owner $330–$400/mo → $4,380/yr %s' % flag('P03'), 'SFPUC +7%% water / +10.8%% sewer in 2027–28', src('SFPUC')],
+        ['Electricity — Property B', m(p['sf_elec']), 'Owner $30–$70/mo → $600/yr %s' % flag('P03'), 'Inflation +1 pt', src('CPUC-FIXED')],
+        ['Federal estate exclusion for a 2026 death', '$15,000,000', 'Official filing threshold', '2027: $15,480,000; grows with index %s' % flag('A03'), src('IRS-ESTATE')],
+        ['Prop 19 allowance in force now', '$1,044,586', 'BOE LTA 2025/009 for transfers 2025-02-16 to 2027-02-15', 'Next adjustment Feb 2027; 2045 allowance %s' % m(s['cap_T']), src('BOE-LTA-2025-009')],
+        ['SF secured tax rate FY2026-27', '1.18162182%%', 'SF Treasurer page as read 2026-11-12', 'Used for Property B every year', src('SF-TAX')],
+        ['Cupertino composite rate FY2025-26', '1.16360%%', 'SCC Tax Rate Book components', 'Plus fixed charges and $7,000 exemption', src('SCC-RATES')],
+    ]
+    t_have = table(['Information we HAVE', 'Value (rounded to $10)', 'Where it comes from', 'How the model uses it', 'Official basis'], have_rows,
+                   caption='Information supplied by the owner or read on an official page — usable now (owner figures are flagged %s)' % flag('P03'))
+    # Information we do NOT have / must confirm
+    need_rows = [
+        ['<span id="Q01\">Q01</span> Type of trust holding Property A; is it includible in gross estate?', 'Assumes includible so basis resets to %s %s' % (m(s['fmv_T']), flag('Q01')), 'No trust document on file', 'Ask estate attorney to confirm in writing; if outside estate, selling loses %s' % m(s['real_sell'] - M['sensitivity'][-1]['real_sell']), src('RR-2023-2', 'IRS-FAQ-INHERIT')],
+        ['<span id="Q02\">Q02</span> Total cash + other inherited assets; spouse DSUE ported?', 'Left blank; table of room by year on Cash page', 'No estate inventory', 'List all assets; ask whether Form 706 was filed for predeceased spouse', src('IRS-ESTATE', 'IRS-FAQ-ESTATE')],
+        ['<span id="Q03\">Q03</span> Inheritor basis in Property B', 'Blank; Property B never sold in model', 'No purchase/inheritance records', 'Find purchase or earlier inheritance records + depreciation claimed', src('IRS-FAQ-INHERIT', 'IRS-TC409')],
+        ['<span id="Q04\">Q04</span> Is Property B rent-controlled?', 'Rent grows at ½ controlled + ½ market', 'Build date / exemption not confirmed', 'Check Property Information Map or ask Rent Board counselor', src('SF-RENT-LAW', 'SF-RENT-RULES')],
+        ['<span id="Q05\">Q05</span> Inheritor filing status + income bracket', 'Uses single 24%% / 9.3%% %s' % flag('A05'), 'Income not supplied', 'Have tax adviser rerun with real bracket; sensitivity table shows range', src('RP-2026-35', 'FTB-RATES')],
+        ['<span id="Q06\">Q06</span> Is Transferor the Inheritor\\\'s parent (or grandparent if parent deceased)?', 'Assumes parent-child %s' % flag('Q06'), 'Relationship not documented here', 'Confirm it meets BOE definition of eligible transferor/transferee', src('BOE-LTA-2026-026', 'BOE-P19')],
+        ['<span id="U01\">U01</span> Home-insurance premium — ZIP 95014 primary, ZIP 94122 landlord', 'Uses owner estimate $1,500 %s' % flag('U01'), 'No ZIP-level official quote', 'Use CDI comparison tool for 95014; ask agent for 3-unit landlord quote', src('CDI-TOOL', 'CDI-RPI')],
+        ['<span id="U02\">U02</span> Earthquake-insurance premium', 'Left blank; not in any cost line', 'No quote', 'Ask insurer for mandatory earthquake offer; see CDI earthquake guide', src('CDI-EQ', 'USGS')],
+        ['<span id="U03\">U03</span> Exact Tax Rate Area + fixed charges on each bill', 'Rate 1.16360%% + fixed charges %s; HO exemption unknown' % m(p['dc_cup']), 'Bill not on file', 'Read TRA and special assessments on actual bills; verify $7,000 exemption present', src('SCC-RATES', 'BOE-HOX')],
+        ['<span id="U04\">U04</span> Prop 19 allowance after 2027-02-16', 'Blank; model grows it 0.9%% (CA index %s)' % flag('A03'), '2027 BOE letter not yet published', 'Read BOE letter expected early 2027', src('BOE-LTA-2025-009', 'FHFA-CA')],
+        ['<span id="U05\">U05</span> Solar interconnection date + tariff (NEM 1.0/2.0 vs NBT)', 'Keeps owner credit $10–$20/mo %s' % flag('U05'), 'Interconnection letter not on file', 'Find PG&E interconnection permission + tariff schedule', src('CPUC-NEM', 'CPUC-FIXED')],
+        ['<span id="P01\">P01</span> Year-by-year assessed/value history 2014–2026', 'Only current year shown; history withheld %s' % flag('P01'), 'Full series would identify parcel even rounded', 'Owner decision — do not publish; keep for private analysis', src('BOE-P19', 'SCC-RATES')],
+    ]
+    t_need = table(['Question / unconfirmed value', 'What the site assumes for now', 'What is missing', 'Suggested action to discover it', 'Where to check (official tool)'],
+                   need_rows, caption='Information we DO NOT HAVE — questions to answer before deciding (each flagged for review)')
+    # Answers we CAN give now (conditional)
+    can_rows = [
+        ['Best financial outcome (conditional)', 'Sell Property A + keep Property B %s; wealth %s vs %s (rent) vs %s (live) in 2026 dollars 2076' % (flag('A01'), m(s['real_sell']), m(s['real_rent']), m(s['real_live'])), 'Model output on stated assumptions, not a forecast', src('IRS-TC409', 'IRS-TC559')],
+        ['Property-tax impact of each choice', 'Today %s; if lived in %s; if rented %s (first year after %d)' % (m(s['tax_before_T']), m(s['tax_live_T']), m(s['tax_rent_T']), T), 'Prop 19 cap %s + rate 1.16360%% + $7,000 exemption' % m(s['cap_T']), src('SCC-RATES', 'BOE-LTA-2026-026')],
+        ['Property B tax advantage', '%s a year kept by not selling (%s vs %s at 1.18162182%%)' % (m((p['sf_value'] - p['sf_assessed'])*p['rate_sf']), m(p['sf_value']), m(p['sf_assessed'])), 'Not reassessed because ownership does not change', src('SF-TAX', 'BOE-RULE-462.260')],
+        ['Estate-tax room for cash in %d' % s['exclusion_T'].__class__.__name__ if False else T, '%s per transferor; room %s after Property A' % (m(s['exclusion_T']), m(s['exclusion_T'] - s['fmv_T'])), 'Cash above this taxed at 40%%; portability doubles room if elected', src('IRS-ESTATE', 'IRS-FAQ-ESTATE')],
+        ['Steps after death, with deadlines', '60-day trustee notice; 150-day ownership statement; 1-year HO exemption; 3-year exclusion claim', 'Process page lists each step with statute', src('PROB-16061.7', 'RTC-480')],
+        ['Risk if growth is not smooth', 'Selling ahead in 43/50 ten-year replays and 50/50 at 20; worst 10-year behind by %s; Japan + Depression are the only named paths where renting wins' % m(-M['replay_horizons']['10']['sell_minus_rent_worst']), 'Black swan page replays real 1976–2025 record', src('FHFA-SJ', 'BLS-CPI')],
+    ]
+    # Fix the previous row's first cell correctly - T is int
+    can_rows[3][0] = 'Estate-tax room for cash in %d' % T
+    t_can = table(['Question we CAN answer now (conditional)', 'Answer on current information', 'Why conditional', 'Official basis'], can_rows,
+                  caption='Answers possible before any decision, on stated assumptions')
+    # Answers we CANNOT give until missing info
+    cannot_rows = [
+        ['Exact estate tax owed in %d' % T, 'Needs total cash + assets %s' % flag('Q02'), 'Provide estate inventory + portability status; then compare to room %s' % m(s['exclusion_T'] - s['fmv_T']), src('IRS-ESTATE', 'IRS-I706')],
+        ['Exact insurance cost for either home', 'Owner estimate $1,500 %s not confirmed' % flag('U01'), 'Get CDI tool survey for 95014 + landlord quote for 94122', src('CDI-TOOL', 'CDI-TOOL-APP')],
+        ['Exact property-tax bill if you live in Property A', 'Depends on TRA %s + fixed charges %s' % (flag('U03'), m(p['dc_cup'])), 'Read actual bill for TRA and special assessments', src('SCC-RATES', 'SCC-P19')],
+        ['Whether Prop 19 saves more in 2040s than shown', 'Model cap growth %s; real cap set every other Feb 16' % flag('A03'), 'Wait for BOE letters 2027, 2029, etc.; cap grows slower than home prices', src('BOE-LTA-2025-009', 'FHFA-CA')],
+        ['After-tax rental profit per year', 'Depreciation, bracket and NIIT %s matter' % flag('A05'), 'Share tax return bracket with adviser; model shows sensitivity', src('IRS-P527', 'IRS-TC559')],
+        ['Final net if you sell years later (not promptly)', 'Needs future appreciation and Prop 19 use', 'If you live in it first, basis and assessed value change; see Decision sensitivities', src('IRS-TC701', 'BOE-P19')],
+    ]
+    t_cannot = table(['Question we CANNOT answer yet', 'Why not', 'How to make it answerable', 'Official basis'], cannot_rows,
+                     caption='Answers that need missing information first')
+    plan = """<h2>Suggested discovery plan — in this order</h2>
+<ol class=\"plan\">
+<li><b>Have the trust read by an estate attorney (Q01, Q06).</b> Is Property A includible for a basis reset, and does the parent-child test hold? This decides whether selling is nearly tax-free. %s<br><span class=\"note\">Ask for written confirmation of revocable vs irrevocable grantor status.</span></li>
+<li><b>Inventory the estate (Q02).</b> Add Property A (%s) + expected 2045 value (%s) + cash/other assets. Compare to exclusion %s per transferor (portability if applicable). Table on Cash page does the arithmetic. %s</li>
+<li><b>Get insurance quotes (U01, U02).</b> CDI comparison tool for 95014 (homeowners) and an agent quote for the 94122 three-unit landlord policy; ask for the earthquake offer. %s</li>
+<li><b>Pull actual tax bills for both homes (U03, P03).</b> Read the Tax Rate Area and every fixed charge; confirm whether the $7,000 homeowners exemption is on Property A now. %s</li>
+<li><b>Find the solar paperwork for Property A (U05).</b> PG&E permission-to-operate letter + tariff (NEM 1.0/2.0 vs net billing). Keep the $10–$20 credit only if tariff confirms it. %s</li>
+<li><b>Confirm Property B rental status (Q04, Q03).</b> Build date vs rent-control cutoff; find its basis and any depreciation already claimed. %s</li>
+<li><b>Re-run with real tax bracket (Q05).</b> Share filing status/income with adviser; Decision page shows how the ranking moves between 12%% and 37%% federal. %s</li>
+<p class=\"note\">When each item arrives, replace its flagged assumption on the relevant page and re-run <code>python3 final/model.py &amp;&amp; python3 final/build.py &amp;&amp; python3 final/check.py .</code> — the new figure will appear everywhere and stay rounded to $10.</p>
+</ol>
+<h2>How to use this page with Suggestions</h2>
+<p>Answer the rows in the \"DO NOT HAVE\" table, then open <a href=\"suggestions.html\">Suggestions</a>. The decision checklist there maps directly to these flags: it tells you which suggestion leads to which path and what to verify first. Nothing is implemented until you approve it.</p>
+<p class=\"note\">Every dollar figure here is rounded to $10 and produced by <code>final/model.py</code>. The links in the last column are the official pages to open to verify the rule — they do not verify an owner-supplied dollar figure, which is flagged %s and can only be confirmed by an appraisal, lease, bill or quote. All personal identifiers are placeholders; pages carry <code>noindex</code> and are not published beyond the declared allowlist.</p>
+""" % (flag('Q01'), m(p['cup_value']), m(s['fmv_T']), m(s['exclusion_T']), flag('Q02'), flag('U01'), flag('U03'), flag('U05'), flag('Q04'), flag('Q05'), flag('P03'))
+    body = '<p class=\"lead\">What we already have, what is missing, what can be answered now, and how to find the rest — so the decision is made on facts, not guesses.</p>' + t_have + t_need + t_can + t_cannot + plan
+    page('questions.html', 'Questions, information and answers before deciding',
+         'A clear list of what is known, what is not, what can be answered now, and the suggested steps to discover the missing information — each with the official page to check.', body)
+
 # ====================================================================== review
 def build_review():
     rows = [[r['id'], r['where'], r['finding'], r['status'], src(*r['src']) + ' · <a href="%s/%s" rel="noopener">file</a>' % (REPO, r['path'])] for r in REVIEW]
@@ -1174,7 +1328,7 @@ def main():
     os.makedirs(OUT, exist_ok=True)
     open(os.path.join(OUT, 'style.css'), 'w').write(CSS)
     open(os.path.join(OUT, 'app.js'), 'w').write(JS)
-    for f in (build_index, build_decision, build_projections, build_blackswan, build_process, build_law,
+    for f in (build_index, build_decision, build_suggestions, build_questions, build_projections, build_blackswan, build_process, build_law,
               build_estate, build_costs, build_flagged, build_sources, build_verification, build_requirements, build_review):
         f()
     if ROOT_MODE:
