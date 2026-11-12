@@ -1180,7 +1180,6 @@ First push: the session branch had no remote ref, so `git pull --rebase origin a
 - Collision: PR #57 merged after PR #55 and restored the numeric front door. Its merge caused an append-only board conflict in PR #58; resolved by keeping both sessions’ complete records and all incoming files. The active privacy integrator on PR #56 has been notified and asked to restore the privacy-first boundary; this session will not alter that integrator’s claimed publishing files. The #55 deployment result above is historical, not a claim about the current front door.
 - A second board-only conflict occurred after PR #60; both complete appendices were preserved, without modifying incoming publication files.
 - Third board-only conflict after PR #56 resolved by preserving both release records and retaining PR #56’s publication boundary. PR #56 merged at `12d1738408e3437e1017a097bb33fafadfc35389`; Pages API reported built at that commit. Its current site now supersedes the earlier #55 release.
-
 - P708 fourth collision: PR #58 merged its board record during PR #61 checks. Preserved both appendices and did not alter publication files.
 
 ## Session `arena/6e60f881` — independent acceptance audit (claimed 2026-11-12 UTC)
@@ -1254,6 +1253,8 @@ Open PRs #62 (`arena/a6ec5b1d-tino1`) and #59 (`arena/557214ba-tino1`) also touc
 
 ---
 
+---
+
 ## Session `0adc9b0a` (`arena/0adc9b0a-tino1`) — Suggestions section, Questions and missing-information register, fresh line-by-line re-verification, integration and publish (claimed 2026-11-12 15:32 UTC)
 
 **Branch:** `arena/0adc9b0a-tino1` (name fixed by the platform; the `session-<id>/<task>` pattern cannot be used, so the session id is carried in the branch name and in every task id below). **Base:** `main` @ `609d23f` (PR #54).
@@ -1321,3 +1322,23 @@ Open PRs #62 (`arena/a6ec5b1d-tino1`) and #59 (`arena/557214ba-tino1`) also touc
 - **`main` moved four times while the branch was open** (pull requests 55 to 63, then 65, 64 and 67). Each was merged in; nothing was discarded. The three board collisions and the review-number collision are recorded above.
 - **Still open, for the owner:** where the numeric edition and the repository history should live (`suggestions.html` G01, G02; flags P01, P02); which suggestions to build, if any; flags U09 and R26 (fiscal-year 2027 HUD rent figures unread; the model uses fiscal year 2026).
 - **For the next session:** before running anything in `final/`, read review item R29. `final/integrate.py` writes `summary.html`, not `index.html`; `final/publish.py` does not write `_config.yml`. A new root page of the numeric edition needs one exclusion line in `_config.yml`, or the boundary check fails.
+
+---
+
+## Session `arena/a6ec5b1d-tino1` — Nov 12 full-page verification pass, privacy-first Pages enrichment & repository reconciliation (2026-11-12 UTC)
+
+**Branch:** `arena/a6ec5b1d-tino1` (originally branched from `609d23f`, merged with `origin/main` @ `f82fbdf`, `3dbe7cb`, and `7b02eb8` after PR #56/#57/#58/#60/#61/#63/#64/#65/#66/#67/#68).
+
+**Reconciliation with `origin/main` (`7b02eb8`):**
+- While this branch completed a direct full-page verification of all remaining official sources and added `questions.html` + `suggestions.html`, `origin/main` merged PR #55/#56/#57/#58/#60/#61/#63/#64/#65/#66/#67/#68 — establishing the **privacy-first, locality-free GitHub Pages boundary** (`index.html`, `_config.yml`, `.github/workflows/pages.yml`, `privacy-site/check.py` locality guards), adding PR #64's `final/review_queue.py`, `IRS-FAQ-ETCL`, `Q15`–`Q18`, `S01` dated schedule, and `R19`–`R21`, and adding PR #66/#68's `summary.html` numeric home (`_config.yml` exclude + non-destructive `final/integrate.py`/`final/publish.py`), `final/questions.py`, `final/suggestions.py`, `READ_DATE`/`BUILD_DATE` split, `4th re-read` on `verification.html`, `HUD-SAFMR-INDEX`/`SF-LEG-261020`/`FR-FMR-2027`/SEC/CalBar/Digital.gov sources, `U09`, and `R22`–`R30` (`R31` assigned to `arena/a6ec5b1d`'s excerpt/deliverable audit).
+- **Boundary respected (addressing `arena/6e60f881` review on PR #62 & preserving PR #66 `FRONT_DOOR = 'index.html'`):** Removed city/utility-specific entries from `privacy-site/` (`cupwater`, `sfpuc`, `taxsf`, `sf`) and preserved `origin/main`'s privacy-first, city-agnostic Pages front door (`index.html`, `_config.yml` with `- 'summary.html'`, `.github/workflows/pages.yml`, `privacy-site/check.py` locality-cue assertions, `README.md` top publication update) completely intact — no household-derived figures or locality cues are published to GitHub Pages.
+- **Both layers enriched & merged cleanly:**
+  1. **`privacy-site/` (live GitHub Pages site):** Added 6 statewide/federal verified official 2026-11-12 entries to `privacy-site/research.json` (`sched_a`, `boepub`, `ftb540`, `sos26`, `cdires`, `cpucfixed` — preserving PR #63's city-agnostic `tenantlaw` and removing `taxsf`/`sf` locality cues) and updated `privacy-site/build.py` (`process.html`, `law.html`, `costs.html`, `suggestions.html`) + regenerated `privacy-site/public/**` (11 pages, 316 official-context rows, zero household figures or locality cues).
+  2. **`final/` (preserved numeric analysis at `summary.html`, excluded from Pages):** Opened all 8 additional official URLs from PR #66 (`SEC-TEN`, `SEC-ALLOC`, `CALBAR-SPEC`, `SCC-P19-EST`, `CAPF-BOE19P`, `FR-FMR-2027`, `SF-LEG-261020`, `DIGITAL-GOV`) directly on their agency domains and upgraded them alongside our 14 earlier sources in `final/sources.py` so **zero** official `excerpt` sources remain (`74` `page` + `1` `academic` `DAMODARAN`), preserved `final/review_queue.py` (`SG-1..SG-11`), PR #64 (`Q15`–`Q18`, `R19`–`R21`), and PR #66 (`HOME = 'summary.html'`, `READ_DATE`, `U09`, `R22`–`R30`, Part 2 `final/questions.py` & `final/suggestions.py`), unified `final/build.py` (`Pass 1`, `Pass 2`, PR #64 `Pass 3`, PR #66 `Fourth re-read`, and `a6ec5b1d` full-page direct-read register on `verification.html`; 2026-11-12 tax/water/ballot/File #261020 updates; unified Part 1 + Part 2 `questions.html` and `suggestions.html`), and updated `final/exec_summary.py` + `EXECUTIVE-SUMMARY.md`.
+
+| # | Task | Status | Owner | Scope | Notes |
+|---|---|---|---|---|---|
+| A6-1 | Add/unify pre-implementation **Site improvements** (`suggestions.html`) for reviewer selection | done | `arena/a6ec5b1d` | `final/build.py`, `final/suggestions.py`, `suggestions.html`, `privacy-site/build.py`, `privacy-site/public/suggestions.html` | Part 1 (`GAP-01..05`, `IMP-01..12`, Paths 1–3) + Part 2 (`G01..G15`), plus cross-link to `SG-1..SG-11`; privacy-safe summary updated too |
+| A6-2 | Add/unify **Questions & discovery** (`questions.html`) with known vs. unknown info & discovery steps | done | `arena/a6ec5b1d` | `final/build.py`, `final/questions.py`, `questions.html` | Part 1 (`Q01..Q06`, `Q15..Q18`, `U01..U09`, `BOE-266`-before-`BOE-19-P`, Cupertino 3 water utilities, timing plan) + Part 2 reading-dated decision register |
+| A6-3 | Full-page verification on `2026-11-12` of all remaining `excerpt` official sources (14 prior + 8 from PR #66) + 4 new official sources + Nov 11 ballot update | done | `arena/a6ec5b1d` | `final/sources.py`, `final/flags.py`, `final/build.py`, `privacy-site/research.json`, `privacy-site/build.py`, `privacy-site/public/*`, `verification.html`, `law.html`, `process.html`, `costs.html`, `flagged.html`, `requirements.html`, `sources.html`, `EXECUTIVE-SUMMARY.md` | 0 official `excerpt` sources remain (`74` `page` + `1` `academic`); `IRS-SCHED-A`, `BOE-PUB-800-1`, `CUP-WATER`, `SFPUC-RFB`, `FTB-MHS`, `SOS-RESULTS` updated across both layers |
+| A6-4 | Reconcile with `origin/main` (`7b02eb8`), verify `privacy-site` & `final` checks, push PR #62, verify CI, merge & confirm Pages | done (PR #62) | `arena/a6ec5b1d` | `COORDINATION.md` | `privacy-site/check.py` PASS (`11` pages, `316` rows, `0` locality cues); `test_illustrations.py` `8/8` OK; simulated `check_published.py` PASS (`13` files); `final/publish.py --check` PASS (`26` files excluded); `final/check.py .` PASS (`25` pages, `912` rows, `2,362` links, `2,358` `$10`-rounded figures, `51` model tests) |

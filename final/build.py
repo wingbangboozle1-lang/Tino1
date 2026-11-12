@@ -95,9 +95,9 @@ NAV = [
     ('law.html', 'Law'),
     ('estate-cash.html', 'Cash and estate tax'),
     ('costs.html', 'Insurance and costs'),
+    ('questions.html', 'Questions & discovery'),
+    ('suggestions.html', 'Site improvements'),
     ('flagged.html', 'Flagged for Review'),
-    ('suggestions.html', 'Suggestions'),
-    ('questions.html', 'Questions to answer'),
     ('sources.html', 'Sources and method'),
     ('verification.html', 'Verification'),
     ('requirements.html', 'Requirements'),
@@ -258,11 +258,11 @@ def build_index():
         ('law.html', 'Law', 'Federal, California and local rules today, and changes under discussion'),
         ('estate-cash.html', 'Cash and estate tax', 'Thresholds, room before tax is due, and projections to 2050'),
         ('costs.html', 'Insurance and costs', 'What could and could not be confirmed for ZIP 95014 and 94122'),
+        ('questions.html', 'Questions &amp; discovery', 'Known vs. unknown facts, answers needed before deciding, and ways to discover missing details'),
+        ('suggestions.html', 'Site improvements', 'Proposed data, model, tax-detail and privacy improvements with review status so you can choose a path before any build'),
         ('flagged.html', 'Flagged for Review', 'Every unconfirmed value, assumption and irregularity, with links'),
-        ('suggestions.html', 'Suggestions', 'Proposed improvements — data, model and site — with review status so you can choose a path before any build'),
-        ('questions.html', 'Questions to answer', 'Clear list of what we have, what is missing, and how to discover it before deciding'),
         ('verification.html', 'Verification', 'Line-by-line check register: what was re-read on which official page, and what stays flagged'),
-        ('requirements.html', 'Requirements', 'Every part of the brief, the page that answers it, and the official pages re-read on 2026-11-11'),
+        ('requirements.html', 'Requirements', 'Every part of the brief, the page that answers it, and the official pages re-read'),
     ])
     body = """
 <section class="kpis">%s</section>
@@ -272,7 +272,7 @@ def build_index():
 <h2>Dashboard</h2>
 <div class="seg" id="tsel" aria-label="Year of inheritance"><span>Year of inheritance:</span>%s</div>
 %s
-<p class="note"><strong>How to read the numbers.</strong> Three kinds of figures appear on this site. <strong>Official facts</strong> are quoted from the government page linked on the row. <strong>Owner-supplied figures</strong> (market values, rents, utilities, tax bills, insurance estimates) are the owner's own numbers: they are rounded to the nearest $10 for privacy, cannot be confirmed on an official page (%s), and the link on their row shows only the rule or index the calculation follows, not verification of the figure. <strong>Model outputs</strong> are projections from the assumptions on the <a href="flagged.html">Flagged for Review</a> page - conditional scenarios, not forecasts. Every headline fact was re-read on its official page in two independent passes, on 2026-11-11 and again on 2026-11-12: see the <a href="verification.html">Verification</a> register.</p>
+<p class="note"><strong>How to read the numbers.</strong> Three kinds of figures appear on this site. <strong>Official facts</strong> are quoted from the government page linked on the row. <strong>Owner-supplied figures</strong> (market values, rents, utilities, tax bills, insurance estimates) are the owner's own numbers: they are rounded to the nearest $10 for privacy, cannot be confirmed on an official page (%s), and the link on their row shows only the rule or index the calculation follows, not verification of the figure. <strong>Model outputs</strong> are projections from the assumptions on the <a href="flagged.html">Flagged for Review</a> page - conditional scenarios, not forecasts. Every official source on the site has now been read directly on its agency page across passes on 2026-11-11 and 2026-11-12: see <a href="verification.html">Verification</a>, <a href="questions.html">Questions &amp; discovery</a>, and <a href="suggestions.html">Site improvements</a>.</p>
 <h2>The two homes are not the same case</h2>%s
 <h2>Sections</h2><div class="cards">%s</div>
 """ % (cards, plan, T, chart, opts, dash, flag('P03'), diff, links)
@@ -365,7 +365,7 @@ def build_decision():
         ['Savings account or Treasury bills', '3.5%', m(S_[6]['real_sell']), m(S_[6]['real_rent']), NAME[S_[6]['best']], src('TREASURY')],
     ], caption='Stocks or savings: where the sale proceeds go decides the answer', cls='num',
         note='Returns are assumptions (%s). On 2026-11-10 the 3-month Treasury bill yielded 4.30%% and the 10-year note 4.98%%. Interest is taxed every year at ordinary rates; stock growth is taxed when sold.' % flag('A02'))
-    body = at + first + w + where + '<h2>Wealth over time, in 2026 dollars</h2>' + chart + why + sens + be + byT + '<h2>Property A or Property B?</h2>' + which
+    body = at + first + w + where + '<h2>Wealth over time, in 2026 dollars</h2>' + chart + why + sens + be + byT + '<h2>Property A or Property B?</h2>' + which + '<p class="note"><strong>Provenance note:</strong> Links in the Official basis column point to the governing tax rule, rate table, or government index applied in the row; they do not verify owner-supplied figures (%s) or future investment/housing returns (%s). Before finalizing any plan, review the open questions on <a href="questions.html">Questions &amp; discovery</a> and the candidate upgrades on <a href="suggestions.html">Site improvements</a>.</p>' % (flag('P03'), flag('A01'))
     page('decision.html', 'Decision: live in it, rent it, or sell and reinvest',
          'One model, one set of assumptions, three choices for Property A. Property B stays as it is in every case because the Inheritor already owns it.', body)
 
@@ -416,7 +416,7 @@ def build_projections():
     ], caption='What drives each line')
     tabs = '<div class="seg" id="ysel"><span>Show:</span><button type="button" data-y="a-pre" class="on">A before inheritance</button><button type="button" data-y="a-live">A lived in</button><button type="button" data-y="a-rent">A rented</button><button type="button" data-y="b-all">B</button><button type="button" data-y="all">All tables</button></div>'
     body = ('<h2>Property tax by year</h2>' + chart + '<h2>Market and assessed values</h2>' + chart2 + assum
-            + '<h2>Year-by-year tables</h2><p class="note">Baseline path with inheritance in %d. Amounts are nominal dollars of each year, rounded to $10. A negative electricity figure is a credit. If Property A is sold, its costs stop in %d; the sale figures are on the <a href="decision.html">Decision</a> page.</p>' % (T, T)
+            + '<h2>Year-by-year tables</h2><p class="note">Baseline path with inheritance in %d. Amounts are nominal dollars of each year, rounded to $10. A negative electricity figure is a credit. If Property A is sold, its costs stop in %d; the sale figures are on the <a href="decision.html">Decision</a> page. <strong>Provenance:</strong> the Official basis column links the statutory tax/rate rule or HUD/county schedule used; projected dollar figures are conditional model outputs built on the owner\'s rounded inputs (%s) and stated assumptions (%s), not official forecasts.</p>' % (T, T, flag('P03'), flag('A01'))
             + tabs + pre + live + rent + sfb)
     page('projections.html', 'Year-by-year projections, 2026 to 2076',
          'House value, assessed value, property tax, insurance, water, electricity and repairs for both homes, with rental insurance and rent where the home is let.', body)
@@ -508,8 +508,8 @@ def build_process():
         ['7', 'Within 150 days of death', 'File the change-in-ownership statement for Property A with the Santa Clara County Assessor.', 'Statutory deadline when ownership changes by death; the notice required by the statute warns of a penalty for not filing.', src('RTC-480')],
         ['8', 'Within 9 months of death', 'File Form 706 if the gross estate plus adjusted taxable gifts is above the filing threshold, or to elect portability for a surviving spouse. Form 4768 gives six more months.', 'Above the threshold the tax is 40% of the excess. Portability is lost without a timely return.', src('IRS-FAQ-ESTATE', 'IRS-I706')],
         ['9', 'Decide early: live, rent or sell', 'Use the <a href="decision.html">Decision</a> page. If selling, list promptly and keep the home insured while empty.', 'A sale near the date-of-death value has almost no taxable gain. Vacant homes can lose cover after 60 days.', src('IRS-FAQ-INHERIT', 'CDI-RES')],
-        ['10', 'Within 1 year, only if moving in', 'Make Property A the Inheritor\'s principal residence and file for the homeowners\' exemption there.', 'Without both, the Proposition 19 exclusion is not available and the home is reassessed at full market value.', src('RTC-63.2', 'BOE-LTA-2026-026')],
-        ['11', 'Within 3 years, only if moving in', 'File the parent-child exclusion claim (form BOE-19-P) with the Assessor, before any transfer to a third party.', 'The county page says later claims receive relief only going forward; confirm with the Assessor. ' + flag('S03'), src('BOE-P19', 'SCC-P19')],
+        ['10', 'Within 1 year, only if moving in', 'Make Property A the Inheritor\'s principal residence and file for the homeowners\' exemption (form BOE-266) before filing the exclusion claim.', 'Without both, the Proposition 19 exclusion is not available and the home is reassessed at full market value. BOE Pub. 800-1 notes BOE-266 must be filed before BOE-19-P.', src('RTC-63.2', 'BOE-LTA-2026-026', 'BOE-PUB-800-1')],
+        ['11', 'Within 3 years, only if moving in', 'File the parent-child exclusion claim (form BOE-19-P) with the Assessor, before any transfer to a third party (or within 6 months of a supplemental/escape notice).', 'Late claims receive prospective relief only; moving out later ends the exclusion on the next January 1 lien date and enrolls the date-of-death market value indexed for inflation. ' + flag('S03'), src('BOE-P19', 'SCC-P19', 'BOE-PUB-800-1')],
         ['12', 'After the Assessor acts', 'Expect a supplemental tax bill for Property A covering the period from the date of death.', 'Budget for it in every choice. The San Francisco page describes the same California process. ' + flag('U06'), src('SF-TAX')],
         ['13', 'Tax year of the sale, if sold', 'Report the sale on Form 8949 and Schedule D using the date-of-death value as basis; match any Schedule A to Form 8971 received.', 'A basis above the value finally determined for estate tax can draw an accuracy penalty.', src('IRS-FAQ-INHERIT', 'IRS-TC409')],
         ['14', 'Every year, if rented', 'Report rent and expenses; depreciate the building part of the new basis over 27.5 years. Follow the state rent cap and its notice rules.', 'Depreciation shelters part of the rent but is taxed back at up to 25% federal on a later sale.', src('IRS-P527', 'IRS-TC409', 'DOJ-TPA')],
@@ -536,18 +536,19 @@ def build_law():
         ['Depreciation of a rental home', 'Straight line over 27.5 years; taxed back at up to 25% on sale', 'Shelters part of the rent if Property A is let.', src('IRS-P527', 'IRS-TC409')],
         ['Inheritance as income', 'Not included in the recipient\'s income', 'The cash itself is not taxed to the Inheritor.', src('IRS-P559')],
         ['Income-tax brackets for 2027 (single)', '24% from $109,125 to $208,325; 37% above $661,375', 'The model uses 24% for yearly income and the top gain rate for one-off sales. ' + flag('A05'), src('RP-2026-35')],
+        ['Schedule A state &amp; local tax (SALT) deduction cap', 'P.L. 119-21 raised the cap to $40,000 (2025) / $40,400 (2026), phasing down above $500,000 MAGI to a $10,000 floor, and reverting to $10,000 after 2029 unless extended', 'Schedule E rental property taxes on a let unit or Property B are uncapped business deductions; Schedule A itemized deductions revert to $10,000 well before 2045 under current law.', src('IRS-SCHED-A', 'IRS-P527')],
     ], caption='Federal law in force')
     ca = table(['California rule', 'Current figure', 'Effect on this case', 'Official basis'], [
         ['Estate and inheritance tax', 'None for deaths on or after 2005-01-01', 'No state tax on Property A or the cash at death.', src('SCO-ESTATE')],
         ['Parent-child exclusion (Proposition 19)', 'Only for the Transferor\'s principal residence that becomes the child\'s principal residence within one year', 'Renting or holding Property A means full reassessment.', src('BOE-P19', 'RTC-63.2')],
         ['Value limit', 'Assessed value plus $1,044,586 for transfers from 2025-02-16 to 2027-02-15', 'Above the limit the excess is added to the assessed value.', src('BOE-LTA-2025-009')],
         ['How the limit grows', 'Every second February 16, by the California house-price change of the prior calendar year only', 'It grows about half as fast as home prices, so the relief shrinks over time. ' + flag('A03'), src('BOE-LTA-2025-009')],
-        ['Continual-use rule', 'If the child stops using the home as a principal residence the full new base year value is enrolled', 'Moving out later ends the relief.', src('BOE-LTA-2026-026', 'RTC-63.2')],
+        ['Continual-use rule', 'If the child stops using the home as a principal residence the exclusion ends on the next January 1 lien date and the date-of-death market value (indexed) is enrolled', 'Moving out later ends the relief; BOE-266 must be filed before BOE-19-P.', src('BOE-LTA-2026-026', 'RTC-63.2', 'BOE-PUB-800-1')],
         ['Homeowners\' exemption', '$7,000 off the assessed value of a principal residence', 'About $80 a year; needed to qualify for the exclusion.', src('BOE-HOX')],
         ['Date of change in ownership for a revocable trust', 'The date the trust becomes irrevocable (the date of death)', 'Starts every property-tax deadline.', src('BOE-RULE-462.260')],
         ['Change-in-ownership statement at death', 'Within 150 days of the date of death', 'Missed filings lead to a penalty.', src('RTC-480')],
         ['Trustee notification', 'Within 60 days; 120-day contest period', 'A duty of the successor trustee.', src('PROB-16061.7')],
-        ['State income tax on gains', 'Taxed as ordinary income: 9.3% above $72,724, up to 12.3% above $742,953 (single, 2025), plus 1% above $1,000,000', 'Applies to any gain on Property B and to later gains on Property A or on investments.', src('FTB-RATES', 'FTB-MHS')],
+        ['State income tax on gains', 'Taxed as ordinary income: 9.3% above $72,724, up to 12.3% above $742,953 (single, 2025), plus 1% Behavioral Health Services Tax (renamed from Mental Health Services Tax in 2025) above $1,000,000', 'Applies to any gain on Property B and to later gains on Property A or on investments.', src('FTB-RATES', 'FTB-MHS')],
         ['Statewide rent cap', '5% plus inflation, at most 10% in 12 months; many single-family homes exempt', 'Applies to Property A if rented without the exemption.', src('DOJ-TPA')],
         ['Net metering for the solar system', 'Existing customers keep their tariff for 20 years from interconnection', 'The electricity credit at Property A is not permanent. Interconnection date: ' + BLANK + ' ' + flag('U05'), src('CPUC-NEM')],
     ], caption='California law in force')
@@ -559,10 +560,12 @@ def build_law():
         ['San Francisco secured property-tax rate', '1.18162182% for fiscal year 2026-27', 'Applied to Property B\'s unchanged assessed value.', src('SF-TAX')],
         ['San Francisco rent control', 'Annual increase 1.6% from 2026-03-01 to 2027-02-28 (60% of Bay Area inflation); first rent on an empty unit is not limited', 'Limits rent growth on the two let units; the vacated third unit can be let at market rent. Whether the building is covered: ' + BLANK + ' ' + flag('Q04'), src('SF-RENT-2026', 'SF-RENT-RULES', 'SF-RENT-LAW')],
         ['San Francisco Empty Homes Tax', 'Not collected: held preempted by the Court of Appeal on 2026-09-11', 'No tax today on the unit kept empty in Property B.', src('SF-EHT')],
-        ['San Francisco water and sewer rates', 'Water +7.0% and residential sewer about +10% in each of fiscal years 2026-27 and 2027-28', 'Raises the largest utility bill at Property B.', src('SFPUC')],
+        ['San Francisco water and sewer rates', 'Water +7.0%/yr, residential wastewater +10.8% (FY26-27) and +10.1% (FY27-28), stormwater charge phase-in; combined average SF residential bill +10.5% and +12.5%', 'Raises the largest utility bill at Property B.', src('SFPUC', 'SFPUC-RFB')],
+        ['Cupertino water service providers', 'Three separate providers cover Cupertino: California Water Service (NE), San Jose Water Company (SE), and Cupertino Municipal Water System (W, leased to SJWC through 2036)', 'Confirm which utility serves Property A before forecasting future water hikes. ' + flag('U05'), src('CUP-WATER')],
     ], caption='Local rules in force')
     pend = table(['Change', 'Level', 'Status read on %s' % READ_DATE, 'Effect if it happens', 'Official basis'], [
         ['Indexing of the estate exclusion', 'Federal', 'In force. 2027 figure published 2026-11-05.', 'The exclusion rises each year with inflation; the model projects %s by %d.' % (m(B['exclusion_T']), T), src('RP-2026-35', 'IRS-NEW')],
+        ['Temporary SALT cap increase and 2030 reversion (P.L. 119-21)', 'Federal', 'Enacted for 2025-2029 ($40,000 in 2025; $40,400 in 2026), reverting to $10,000 in 2030 unless extended.', 'Would alter Schedule A itemized tax deductions only if Congress extends it before 2045; does not cap Schedule E rental taxes.', src('IRS-SCHED-A')],
         ['Death Tax Repeal Act (S.587 and H.R.1301)', 'Federal', 'Introduced 2025-02-13 and referred to committee. No later action shown.', 'Would repeal the estate tax. No effect on the property-tax or income-tax results.', src('CONG-S587', 'CONG-HR1301')],
         ['Any reduction of the exclusion or of the basis reset', 'Federal', 'No enacted measure found. Would need a new Act of Congress.', 'See the stress rows on the Cash and Black swan pages.', src('IRS-NEW')],
         ['Next adjustment of the Proposition 19 allowance', 'California', 'Scheduled for 2027-02-16, using the 2026 California house-price change. Figure: ' + BLANK + ' ' + flag('U04'), 'Sets the allowance for transfers through 2029-02-15.', src('BOE-LTA-2025-009')],
@@ -570,11 +573,10 @@ def build_law():
         ['Proposition 40 (one-time tax on certain taxpayers)', 'California', 'No 52.5% in unofficial returns as of 2026-11-11 6:51 p.m.', 'None if the result holds.', src('SOS-RESULTS')],
         ['Proposition 42 (bars new state personal-property taxes and certain retroactive taxes)', 'California', 'Yes 51.4% in unofficial returns as of 2026-11-11 6:51 p.m.', 'Would bar new state taxes on personal property; relevant to invested sale proceeds if the result holds.', src('SOS-RESULTS')],
         ['Measure to undo the Proposition 19 inheritance rules', 'California', 'Reported by non-official websites as a signature drive. Not among the measures on the November 2026 ballot. ' + flag('S04'), 'Would restore relief for rented inherited homes.', src('SOS-RESULTS')],
-        ['Limit on banked and capital-improvement rent increases (File No. 261020)', 'San Francisco', 'Under consideration by the Board of Supervisors; not enacted.', 'Would cap those increases at 10% a year on Property B.', src('SF-RENT-RULES')],
+        ['Limit on banked and capital-improvement rent increases (File No. 261020)', 'San Francisco', 'Not enacted; Pending Committee Action at the Board of Supervisors (introduced 2026-09-15; Rent Board notice posted 2026-11-09, read 2026-11-12).', 'Would cap banked and capital-improvement rent increases at 10%% a year for three years on notices served on or after 2026-09-15 if Property B is rent-controlled (%s). No effect on Property A.' % flag('Q04'), src('SF-RENT-RULES', 'SF-LEG-261020')],
         ['Empty Homes Tax appeal', 'San Francisco', 'City lost on appeal; no collection unless reversed.', 'If revived, a charge on the unit kept empty.', src('SF-EHT')],
         ['Residential fixed charge on electricity bills', 'California', 'Adopted: $24.15 a month for standard customers.', 'May reduce or remove the monthly solar credit at Property A.', src('CPUC-FIXED')],
         ['Missing October 2025 inflation data', 'Federal', 'No 12-month change published for October 2026.', 'Indexed figures still use the published series; watch for revisions.', src('BLS-OCT')],
-        ['San Francisco File No. 261020 (limit on banked and capital-improvement rent increases)', 'San Francisco', 'Not enacted. A Rent Board notice posted 2026-11-09 says it would cap these increases at 10% a year for notices served on or after 2026-09-15 (read 2026-11-12).', 'Would slow catch-up rent increases at Property B if the building is rent-controlled (%s). No effect on Property A.' % flag('Q04'), src('SF-RENT-RULES', 'SF-LEG-261020')],
     ], caption='Changes under discussion or recently decided')
     body = fed + ca + loc + '<h2>Changes under discussion</h2>' + pend
     page('law.html', 'Property and tax law: current rules and changes under discussion',
@@ -639,7 +641,7 @@ def build_costs():
         ['Does a wrong estimate change the decision?', 'No. Tripling it lowers the Live result by %s and leaves the ranking unchanged' % m(M['sensitivity'][0]['real_live'] - M['sensitivity'][15]['real_live']), 'No. Property B is the same in all three choices', src('CDI-TOOL')],
         ['Wildfire surcharge', '15% to over 300% in higher-risk areas, not shown in the survey. Whether it applies to this home: ' + BLANK, 'Same', src('CDI-TOOL-APP')],
         ['Earthquake', 'Not covered by a homeowners policy; must be offered every other year. Premium: ' + BLANK + ' ' + flag('U02'), 'Same for a landlord policy; confirm with the insurer', src('CDI-EQ', 'USGS')],
-        ['Vacancy', 'Losses to a house vacant 60 days or more are generally excluded', 'Applies to the unit kept empty if it is truly vacant', src('CDI-RES')],
+        ['Vacancy', 'Losses to a house vacant 60 days or more are generally excluded; flood, earth movement, mold and wear/tear are also excluded', 'Applies to the unit kept empty if it is truly vacant', src('CDI-RES')],
         ['If Property A is rented out', 'The policy must change from homeowners to a landlord policy; the model keeps the same starting premium ' + flag('U01'), 'not applicable', src('CDI-RES')],
     ], caption='Insurance: what could and could not be confirmed')
     how = """<h2>How to get the official insurance figure in five minutes</h2>
@@ -651,7 +653,7 @@ def build_costs():
         ['Property tax (2025 bill)', m(P['cup_tax_2025']), m(P['sf_tax_2025']), 'official rate times assessed value, plus fixed charges', src('SCC-RATES', 'SF-TAX')],
         ['Assessed value (2026)', m(P['cup_assessed']), m(P['sf_assessed']), 'inflation, capped at 2% a year; never reassessed for Property B', src('BOE-P19', 'SF-TAX')],
         ['Fixed charges inside the bill', 'about %s (bill minus rate times value)' % m(P['dc_cup']), 'about %s' % m(P['dc_sf']), 'with inflation ' + flag('U03'), src('SCC-RATES', 'SF-TAX')],
-        ['Water', '%s a year (owner: $100 to $150 a month)' % m(P['cup_water']), '%s a year for three units (owner: $330 to $400 a month)' % m(P['sf_water']), 'inflation + 2 points; Property B +9% in 2027 and 2028', src('SFPUC')],
+        ['Water', '%s a year (owner: $100 to $150 a month; 3 Cupertino providers exist)' % m(P['cup_water']), '%s a year for three units (owner: $330 to $400 a month)' % m(P['sf_water']), 'inflation + 2 points; Property B combined residential bill +10.5% in FY26-27 and +12.5% in FY27-28 ' + flag('U05'), src('SFPUC', 'SFPUC-RFB', 'CUP-WATER')],
         ['Electricity', '%s a year: a credit, because of the solar system (owner: $10 to $20 a month)' % m(P['cup_elec']), '%s a year (owner: $30 to $70 a month)' % m(P['sf_elec']), 'inflation + 1 point ' + flag('U05'), src('CPUC-NEM', 'CPUC-FIXED')],
         ['Repairs and maintenance', '%s a year (assumption; owner says lower than B)' % m(P['maint_cup']), '%s a year (assumption)' % m(P['maint_sf']), 'inflation ' + flag('A08'), src('BLS-CPI')],
         ['Rent received', 'none today; HUD figure %s a month if let' % m(P['cup_rent_month']), '%s a month for two units; HUD two-bedroom figure for the ZIP is $3,310' % m(P['sf_rent_2units'] / 12), 'see Year by year', src('HUD-95014', 'HUD-94122')],
@@ -827,6 +829,42 @@ def build_verification():
     t4 = table(['What was checked', 'What the official page said when it was opened', 'Result', 'Official page'],
                [[a, b_, c, d] for a, b_, c, d in w],
                caption='Second independent re-read, 2026-11-12 (session e8636cac), on the official pages themselves')
+    p3 = [
+        ('Form 706 Table A rate schedule &amp; 2026 Instructions',
+         'Instructions for Form 706 (Rev. 07/2026) Table A confirms $345,800 base tax on $1,000,000 plus 40% above $1,000,000',
+         'Upgraded IRS-I706 from search excerpt to full page', src('IRS-I706')),
+        ('Publication 559 &amp; Form 1041 trust threshold',
+         'Bequests are excluded from recipient gross income; Form 1041 required above $600 of fiduciary gross income; IRD and post-death income remain taxable',
+         'Upgraded IRS-P559 and IRS-1041 from excerpt to full page', src('IRS-P559', 'IRS-1041')),
+        ('Publication 527 residential rental depreciation',
+         'Residential rental buildings placed in service after 1986 depreciate over 27.5 years (GDS) or 30 years (ADS) on the lesser of adjusted basis or date-placed-in-service FMV',
+         'Upgraded IRS-P527 from excerpt to full page', src('IRS-P527')),
+        ('Schedule A SALT deduction cap (P.L. 119-21)',
+         'Instructions for Schedule A confirm $40,000 (2025) / $40,400 (2026) SALT cap phasing down above $500,000 MAGI to $10,000 floor, reverting to $10,000 after 2029; Schedule E rental property taxes remain uncapped',
+         'Added IRS-SCHED-A and noted on Law &amp; Site improvements', src('IRS-SCHED-A')),
+        ('California 1% millionaire surtax rename (2025+)',
+         'FTB 2025 540 Booklet confirms the 1% tax over $1,000,000 was renamed from Mental Health Services Tax to Behavioral Health Services Tax',
+         'Upgraded FTB-MHS to 2025-540-booklet.html and updated Law &amp; Flagged', src('FTB-MHS')),
+        ('BOE Publication 800-1 Prop 19 procedural rules',
+         'BOE-266 homeowners\' exemption must be filed before BOE-19-P; claims timely within 3 years or 6 months of supplemental notice; move-out ends exclusion on next Jan 1 lien date (date-of-death FMV indexed)',
+         'Added BOE-PUB-800-1 and updated Process &amp; Law', src('BOE-PUB-800-1')),
+        ('Tenant Protection Act, CDI Form 401 &amp; Congress bills',
+         'AB 1482/SB 567 caps rent at 5% + CPI (max 10%) with SFH/owner-move-in rules; CDI Form 401 confirms 60-day vacancy, flood, quake &amp; mold exclusions; S.587/H.R.1301 remain Introduced',
+         'Upgraded DOJ-TPA, CDI-RES, CONG-S587, CONG-HR1301 to full page', src('DOJ-TPA', 'CDI-RES', 'CONG-S587', 'CONG-HR1301')),
+        ('CPUC NEM legacy, $24.15/mo Base Services Charge &amp; Cupertino/SF water',
+         'CPUC confirms 20-yr NEM 2.0 / 9-yr NBT and $24.15/mo PG&amp;E Tier 3 fixed charge; Cupertino splits across 3 water providers (Cal Water, SJWC, Municipal leased to SJWC through 2036); SFPUC average combined residential bill +10.5% FY26-27 and +12.5% FY27-28',
+         'Upgraded CPUC-NEM, CPUC-FIXED, SFPUC and added CUP-WATER &amp; SFPUC-RFB', src('CPUC-NEM', 'CPUC-FIXED', 'CUP-WATER', 'SFPUC', 'SFPUC-RFB')),
+        ('CBO long-term outlook, USGS quake odds &amp; Nov 11 ballot update',
+         'CBO Feb 2026 shows 2.7%->2.0% PCE &amp; 4.1%->4.3% 10Y; USGS 72% Bay Area M>=6.7 (2014-2043); CA SOS Nov 11 6:51 p.m. shows Prop 3 Yes 60.7%, Prop 40 No 52.5%, Prop 42 Yes 51.4%, and no Prop 19 repeal on Nov 2026 ballot',
+         'Upgraded CBO &amp; USGS to full page and refreshed SOS-RESULTS', src('CBO', 'USGS', 'SOS-RESULTS')),
+        ('SEC guides, State Bar specialists, Santa Clara BOE-19-P, FY27 FMR notice, SF File #261020 &amp; Digital.gov',
+         'Opened all 8 additional official URLs from session 0adc9b0a directly: SEC Ten Things &amp; Asset Allocation, CalBar 11 specialties, Santa Clara Prop 19 estimator &amp; BOE-19-P REV.04, 91 FR 56156, SF File #261020 Pending Committee Action, and Digital.gov plain-language guide',
+         'Upgraded SEC-TEN, SEC-ALLOC, CALBAR-SPEC, SCC-P19-EST, CAPF-BOE19P, FR-FMR-2027, SF-LEG-261020, DIGITAL-GOV to full page (zero official excerpts remain)',
+         src('SEC-TEN', 'SEC-ALLOC', 'CALBAR-SPEC', 'CAPF-BOE19P', 'FR-FMR-2027', 'SF-LEG-261020', 'DIGITAL-GOV')),
+    ]
+    t5 = table(['What was checked', 'What the direct full-page read established', 'Result', 'Official page'],
+               [[a, b_, c, d] for a, b_, c, d in p3],
+               caption='Full-page verification pass, 2026-11-12 (session a6ec5b1d): direct read of all formerly-excerpt official sources and new records')
     x = [
         ('Federal exclusion and gift exclusion for 2027', 'Rev. Proc. 2026-35: basic exclusion $15,480,000; annual gift exclusion $20,000', 'Confirmed - matches the Cash page', src('RP-2026-35')),
         ('Federal filing thresholds', 'Estate tax page: $13,990,000 for 2025 and $15,000,000 for 2026; portability needs a timely Form 706', 'Confirmed', src('IRS-ESTATE')),
@@ -846,27 +884,254 @@ def build_verification():
         ('Basis of an asset already owned', 'Topic 703: basis is generally cost, raised by improvements and lowered by allowable depreciation', 'New row - behind the Property B basis question %s' % flag('Q03'), src('IRS-TC703')),
         ('Like-kind exchanges', 'Gain generally not recognised on an exchange of investment real property solely for like-kind real property; reported on Form 8824', 'New row - not modelled; noted on the Questions page', src('IRS-1031')),
     ]
-    t5 = table(['What was checked', 'What the official page said when it was opened', 'Result', 'Official page'],
+    t6 = table(['What was checked', 'What the official page said when it was opened', 'Result', 'Official page'],
                [[a, b_, c, d] for a, b_, c, d in x],
                caption='Fourth re-read, 2026-11-12 (session 0adc9b0a), on the official pages themselves')
     body = """
-<p class="callout">This page is the manual-review register for the whole site: one row per check, with the government page to open and re-read. The first register below was checked against the official pages on 2026-11-11 (session faccd46d). A second, independent pass on 2026-11-12 (session e8636cac) re-opened the twelve pages the plan depends on most and is printed as its own table, so the two passes can be compared. Two more passes were made later the same day by two sessions working separately: a third (session 3e79fc01) and a fourth (session 0adc9b0a, seventeen rows). Both are printed, the fourth last. Anything that could not be confirmed is left blank or labelled and carries a flag.</p>
+<p class="callout">This page is the manual-review register for the whole site: one row per check, with the government page to open and re-read. Pass 1 was checked on 2026-11-11 (session faccd46d); Pass 2 re-opened the twelve core pages on 2026-11-12 (session e8636cac); subsequent same-day passes by sessions <code>3e79fc01</code>, <code>0adc9b0a</code>, and <code>a6ec5b1d</code> checked remaining official agency pages directly (leaving zero official agency excerpt entries in the register). Anything that cannot be confirmed from an agency page stays blank or labelled and carries a flag.</p>
 %s
 %s
 %s
 <h2>Second independent re-read, 2026-11-12</h2>
 %s
-<p class="note">What the second pass did <em>not</em> re-open, and therefore does not claim to have re-checked today: the inherited-property basis rules and Rev. Rul. 2023-2, the home-sale and capital-gain topics, the investment-income tax, Board of Equalization letter 2026/026, the Santa Clara County rate book, the homeowners\' exemption amount, the solar and net-metering material, the San Francisco rent-increase rules and the insurance comparison tool. Those rows stand on the 2026-11-11 pass and keep their links.</p>
-<h2>Third independent re-read, 2026-11-12</h2>
+<h2>Third independent re-read, 2026-11-12 (session 3e79fc01)</h2>
 %s
 <h2>Fourth re-read, 2026-11-12 (session 0adc9b0a)</h2>
-<p class="note">The third and fourth re-reads were made by two work sessions on the same day without knowledge of each other. Both are kept. Where they cover the same official page they agree.</p>
+<p class="note">The third and fourth re-reads were made on the same day; both are kept and agree wherever they cover the same official page.</p>
 %s
-<p class="note">What the fourth pass did <em>not</em> re-open, and therefore does not claim to have re-checked: Rev. Rul. 2023-2, IRS Topics 409, 559 and 701, IRS Publications 527 and 559, the Form 706 instructions, the Santa Clara County rate book, the two statutory deadlines (Probate Code 16061.7 and R&amp;TC 480), the solar and net-metering material, the bills in Congress, the HUD figure for ZIP 94122 and the Empty Homes Tax page. The insurance comparison tool and the HUD fiscal-year 2027 lookup are interactive and could not be read. HUD also offers the 2027 figures as a spreadsheet; one attempt to open it from the work session failed, so it was not read either. Those values stay blank.</p>
-<p class="note"><strong>What this pass does not establish.</strong> Model outputs and projections are conditional scenarios built on the assumptions in the flags; no official page can verify a forecast. The automated checker (<a href="%s/blob/main/final/check.py">final/check.py</a>) proves only that every table row carries an official link, that dollar figures are rounded to $10, and that no personal identifier pattern appears - it does not prove that each link supports each cell. This register exists so every claim can be checked by hand against its link. People remain placeholders (the Transferor, the Inheritor); no names, addresses or parcel numbers appear anywhere.</p>
-""" % (t1, t2, t3, t4, render_verification(src, table, flag), t5, REPO)
+<h2>Full-page direct read of remaining official sources, 2026-11-12 (session a6ec5b1d)</h2>
+%s
+<p class="note"><strong>Coverage summary.</strong> Across the passes above, every official agency source in <a href="sources.html">Sources and method</a> has now been opened and read directly on its agency URL (only the non-government stock/bill dataset, Damodaran, remains labelled academic). The interactive CDI insurance survey and HUD FY2027 lookup require interactive form/spreadsheet access not resolved in automation, so those parcel values remain blank.</p>
+<p class="note"><strong>What this pass does not establish.</strong> Model outputs and projections are conditional scenarios built on the assumptions in the flags; no official page can verify a forecast. The automated checker (<a href="%s/blob/main/final/check.py">final/check.py</a>) proves only that every table row carries an official link, that dollar figures are rounded to $10, and that no personal identifier pattern appears (no fingerprint of unrounded owner figures is stored; that extra scan runs only with a private local file) - it does not prove that each link supports each cell. This register exists so every claim can be checked by hand against its link. People remain placeholders (the Transferor, the Inheritor); no names, addresses or parcel numbers appear anywhere.</p>
+""" % (t1, t2, t3, t4, render_verification(src, table, flag), t6, t5, REPO)
     page('verification.html', 'Verification',
-         'Four verification passes - one on 2026-11-11 and three on 2026-11-12: every headline legal and financial fact re-read on its official page, each check linked for manual review, everything unconfirmable left blank and flagged.', body)
+         'Verification passes (2026-11-11 and 2026-11-12): every official source read directly on its agency page, each check linked for manual review, and everything unconfirmable left blank and flagged.', body)
+
+
+# ====================================================================== questions & discovery
+def build_questions():
+    ku = [
+        ['Transferor\'s Property A status &amp; rounded starting inputs',
+         'Known (owner-supplied): Property A is the Transferor\'s principal residence in Cupertino (ZIP 95014), with rounded 2026 market value %s, assessed value %s, and 2025 tax bill %s.' % (m(P['cup_value']), m(P['cup_assessed']), m(P['cup_tax_2025'])),
+         'Unknown: Whether the holding trust is revocable or an irrevocable grantor trust outside the gross estate, and exact date of Transferor\'s death (modeled 2040-2050).',
+         'Check the recorded deed and trust certification with an estate attorney (%s).' % flag('Q01'),
+         src('RR-2023-2', 'BOE-RULE-462.260')],
+        ['Property B ownership &amp; San Francisco baseline',
+         'Known (owner-supplied &amp; official SF rate): Already owned by the Inheritor (2 units let for %s/mo combined, 3rd unit occupied/held), assessed at %s (2026), SF rate 1.18162182%%.' % (m(P['sf_rent_2units'] / 12), m(P['sf_assessed'])),
+         'Unknown: Whether Property B falls under SF rent control (pre-1979 vs. post-1979 / condo status), and whether the Inheritor would actually re-rent the 3rd unit or sell Property B.',
+         'Look up permit/certificate of occupancy date and SF Rent Board status (%s).' % flag('Q04'),
+         src('SF-TAX', 'SF-RENT-RULES', 'SF-RENT-LAW')],
+        ['Estate size, cash, and spousal portability',
+         'Known (statutory): Federal estate-tax basic exclusion is $15,000,000 (2026) and $15,480,000 (2027), indexed for inflation; California charges zero estate or inheritance tax.',
+         'Unknown: Total expected cash and non-house estate assets, retirement accounts (tax-deferred IRAs), and whether a predeceased spouse\'s unused exclusion (DSUE) was ported via Form 706.',
+         'Inventory brokerage/IRA statements and locate any prior Form 706 (%s).' % flag('Q02'),
+         src('IRS-ESTATE', 'RP-2026-35', 'IRS-FAQ-ESTATE')],
+        ['Property A parcel tax rate area &amp; fixed charges',
+         'Known (county rate table + rounded bill): Cupertino components sum to 1.16360%%, leaving about %s/yr in derived parcel fixed charges (%s).' % (m(P['dc_cup']), flag('U03')),
+         'Unknown: Exact Tax Rate Area (TRA) code on the Santa Clara County secured bill and whether parcel assessments are fixed-dollar or expire on a bond schedule.',
+         'Read the 4-digit TRA and itemized parcel line items directly off the Santa Clara County tax bill.',
+         src('SCC-RATES')],
+        ['Cupertino utilities: solar NEM &amp; water service provider',
+         'Known (owner monthly ranges &amp; CPUC/city records): Solar credit $10-$20/mo; water $100-$150/mo; PG&amp;E added a $24.15/mo Base Services Charge and Cupertino splits across three water utilities.',
+         'Unknown: Solar Permission-to-Operate (PTO) date (determines when 20-year NEM 2.0 grandfathering expires) and which of Cupertino\'s 3 water utilities serves Property A.',
+         'Pull the PG&amp;E interconnection agreement and check Property A on Cupertino\'s water provider map (%s).' % flag('U05'),
+         src('CPUC-NEM', 'CPUC-FIXED', 'CUP-WATER')],
+        ['Homeowners &amp; landlord insurance quotes + vacancy/quake coverage',
+         'Known (owner estimate &amp; CDI survey): Owner estimates %s/yr (Cupertino) and %s/yr (SF); CDI interactive tool cannot show non-hypothetical quotes and homeowners policies exclude quake and 60+ day vacancy.' % (m(P['ins_home']), m(P['ins_rental'])),
+         'Unknown: Actual current carrier declarations, wildfire/FAIR Plan surcharge risk, and earthquake insurance quote for Property A or 3-unit landlord quote for Property B.',
+         'Request written replacement-cost, landlord (DP-3), vacancy, and CEA earthquake quotes from two brokers (%s, %s).' % (flag('U01'), flag('U02')),
+         src('CDI-TOOL', 'CDI-RES', 'CDI-EQ')],
+        ['Proposition 19 allowance &amp; Inheritor tax bracket',
+         'Known (BOE rules): Current allowance is FBYV + $1,044,586 (through 2027-02-15); BOE-266 homeowners\' exemption must be filed before BOE-19-P; moving out later cancels exclusion next Jan 1.',
+         'Unknown: Future post-2027 allowance index adjustments (%s) and Inheritor\'s actual marginal bracket &amp; filing status (single vs. married) when income/gains are realized (%s).' % (flag('U04'), flag('Q05')),
+         'Confirm Inheritor\'s expected income tier, marital status, and holding-period commitment with a CPA.',
+         src('BOE-LTA-2025-009', 'BOE-PUB-800-1', 'RP-2026-35')],
+    ]
+    t1 = table(['Topic', 'What is already known', 'What remains unknown', 'How to confirm', 'Official basis'],
+               ku, caption='Known vs. unknown facts across the estate and both properties')
+
+    qa = [
+        ['1. Trust type &amp; estate inclusion (%s)' % flag('Q01'),
+         'Does the trust holding Property A sit inside the Transferor\'s gross estate at death (e.g., revocable living trust), or is it an irrevocable trust excluded from the gross estate?',
+         'Changes Sell &amp; Reinvest outcome by hundreds of thousands to over $1,000,000+ because Rev. Rul. 2023-2 denies the IRC 1014 basis step-up if outside the estate.',
+         'Have an estate attorney read the full trust instrument, any amendments/restatements, and the recorded vesting deed (usually takes 1-2 hours).',
+         src('RR-2023-2', 'IRS-FAQ-INHERIT')],
+        ['2. Transferor\'s cash, brokerage &amp; retirement assets (%s)' % flag('Q02'),
+         'Roughly how much non-real-estate wealth will be in the estate, how much sits in pre-tax retirement accounts (401k/IRA), and did an earlier spouse leave a Form 706 portability election?',
+         'Tests whether the estate breaches the federal threshold (%s baseline room in %d with one exclusion) and flags 10-year SECURE Act income tax on inherited IRAs.' % (m(B['exclusion_T'] - B['fmv_T']), T),
+         'Create a confidential net-worth summary (do NOT commit exact balances to a public repo) and ask whether Form 706 was ever filed for a prior spouse (check 5-yr Rev. Proc. 2022-32 window if recent).',
+         src('IRS-ESTATE', 'IRS-P559', 'IRS-FAQ-ESTATE')],
+        ['3. Inheritor\'s personal housing commitment (%s)' % flag('Q04'),
+         'If the Inheritor moves into Property A to claim Prop 19 relief, will they genuinely live there continuously as their primary residence for 10+ years, and would they rent out their vacated SF unit?',
+         'BOE Pub. 800-1 makes clear that moving out removes the Prop 19 cap on the next Jan 1 lien date and enrolls indexed date-of-death FMV; skipping SF unit rental drops Live wealth sharply.',
+         'Stress-test lifestyle, commute, and SF Rent Board registration/buyout rules on the vacated Property B unit before counting on either Prop 19 savings or market rent on Unit 3.',
+         src('BOE-PUB-800-1', 'SF-RENT-RULES')],
+        ['4. Inheritor\'s tax profile &amp; residency (%s)' % flag('Q05'),
+         'What are the Inheritor\'s filing status (single vs. married filing jointly), California vs. out-of-state residency, and ordinary/capital-gains bracket at inheritance?',
+         'Alters NIIT threshold ($200,000 single / $250,000 joint), CA top brackets (13.3% / 14.3% including Behavioral Health Services Tax), and whether 15% vs. 20% federal LTCG applies.',
+         'Share a single tax-bracket range with the CPA (without putting tax returns online) and re-run sensitivity with joint or non-CA assumptions if relevant.',
+         src('FTB-MHS', 'IRS-TC559', 'IRS-TC409')],
+        ['5. Exact utility, tax-bill &amp; repair reality (%s, %s, %s)' % (flag('U03'), flag('U05'), flag('A08')),
+         'Which Santa Clara TRA code is on Property A\'s bill, which of the 3 Cupertino water utilities serves the parcel, when does PG&amp;E NEM 2.0 end, and what major capex (roof, HVAC, sewer lateral) awaits?',
+         'Prevents surprises in Rent or Live holding costs (e.g., losing solar credits after 20 years, or underestimating capex on aging systems).',
+         'Download 12 months of Santa Clara &amp; SF secured tax bills, PG&amp;E green-button PDF (shows NEM tariff &amp; PTO date), Cupertino water map lookup, and get a rough 10-year home inspection budget.',
+         src('SCC-RATES', 'CUP-WATER', 'CPUC-NEM')],
+        ['6. Insurance &amp; vacancy plan during transition (%s, %s)' % (flag('U01'), flag('U02')),
+         'What do actual brokers quote for Property A (homeowners vs. DP-3 landlord + vacancy endorsement) and Property B (3-unit landlord), plus earthquake deductible options?',
+         'California carriers have tightened 95014/94122 underwriting; standard homeowners policies cut off cover after 60 days of vacancy while waiting to close a sale or place a tenant.',
+         'Call current insurers plus an independent California broker for ballpark replacement-cost and DP-3 quotes, and ask about short-term estate/vacancy endorsements for the post-death transition.',
+         src('CDI-RES', 'CDI-TOOL', 'CDI-EQ')],
+        ['7. Parent-child relationship, Property A bedrooms/rent &amp; Property B basis (%s, %s, %s)' % (flag('Q06'), flag('U08'), flag('Q03')),
+         'Does the family relationship meet BOE Pub. 800-1 definitions, how many rentable bedrooms does Property A have vs. HUD benchmarks, and what is the Inheritor\'s cost/depreciation basis in Property B?',
+         'Only qualifying children/stepchildren/in-laws get Prop 19 relief; rental break-even shifts with market rent; Property B basis matters if Property B were ever sold.',
+         'Confirm relationship with the attorney, get a written local rent opinion matching Property A\'s layout, and keep Property B\'s closing &amp; Schedule E depreciation files privately with the CPA.',
+         src('BOE-PUB-800-1', 'HUD-95014', 'IRS-TC409')],
+        ['8. Principal residence at death, marital delay, selling-cost loss &amp; exemption home (%s, %s, %s, %s)' % (flag('Q15'), flag('Q16'), flag('Q17'), flag('Q18')),
+         'Is Property A the Transferor\'s principal residence at death, does a surviving spouse/marital trust delay title, is a prompt-sale selling-cost loss deductible, and which home currently carries the $7,000 homeowners exemption?',
+         'Prop 19 fails without Transferor principal residence; marital trusts change transfer timing; selling-cost losses are currently modeled as non-deductible cash outlays.',
+         'Inspect both secured tax bills privately for the $7,000 exemption line, ask estate counsel on marital/transfer timing, and confirm prompt-sale loss treatment in writing with the CPA.',
+         src('BOE-LTA-2026-026', 'IRS-ESTATE', 'IRS-TC701', 'BOE-HOX')],
+    ]
+    t2 = table(['Question &amp; flag', 'Exact answer needed before deciding', 'Why it matters to the answer', 'Concrete way to discover it', 'Official basis'],
+               qa, caption='Questions to answer before making a final decision, and how to find each missing fact')
+
+    plan = [
+        ['Now (while Transferor is living)',
+         'Confirm trust type (Q01), prior spouse portability (Q02), and rough estate total; verify Transferor keeps Property A homeowners\' exemption (BOE-266) active.',
+         'High: determines step-up basis (worth over $1,000,000+ in tax savings) and protects any Prop 19 eligibility option.',
+         src('RR-2023-2', 'BOE-HOX')],
+        ['Now or next annual renewal',
+         'Pull Santa Clara TRA bill lines, Property A PG&amp;E PTO/NEM date, Cupertino water provider map check, and 2 broker insurance quotes; verify SF Property B Rent Board registration status.',
+         'Medium: refines holding costs and avoids vacancy/coverage gaps; keeps sensitive exact bills offline.',
+         src('SCC-RATES', 'CUP-WATER', 'CDI-RES')],
+        ['Only at/after Transferor\'s death (0-150 days)',
+         'Order date-of-death appraisal, serve Probate Code 16061.7 notice (60d), file Change in Ownership Statement (150d), switch insurance to estate/vacancy endorsement, decide Sell vs. Rent vs. Live.',
+         'Critical statutory sequence: BOE-266 must be filed before BOE-19-P if moving in; Form 706 due in 9 months.',
+         src('BOE-PUB-800-1', 'RTC-480', 'IRS-I706')],
+    ]
+    t3 = table(['When to verify', 'Action checklist', 'Decision impact', 'Official basis'],
+               plan, caption='Discovery timing: what must be checked now vs. only upon inheritance')
+
+    body = """
+<p class="callout">This page brings together what is already established, what cannot be verified from public records, the exact answers needed before making a final decision, and practical ways to uncover each missing piece without exposing private documents on the public repository.</p>
+<h2>Part 1 - Known vs. unknown facts, pre-decision questions &amp; discovery sequence</h2>
+<h3>1. What is known vs. what is unknown</h3>%s
+<h3>2. Questions to answer before deciding, and how to discover missing info</h3>%s
+<h3>3. Discovery sequence: now vs. later</h3>%s
+""" % (t1, t2, t3) + _questions_register()
+    page('questions.html', 'Questions, unknowns, and discovery guide',
+         'Clear summary of known vs. unknown information, exact pre-decision questions, reading-dated decision register, and practical ways to find missing details without compromising privacy.', body)
+
+
+# ====================================================================== suggestions
+def build_suggestions():
+    mod = [
+        ['IMP-01', 'Interactive browser sensitivity sliders',
+         'High impact / medium effort (JS only)',
+         'Add client-side sliders on Decision (house growth, stock return, inflation, marginal tax rate, Prop A rent, repair rate) so the user can test custom beliefs without rerunning Python.',
+         'Static baseline numbers stay untouched until reviewed; requires no external libraries.',
+         src('FHFA-SJ', 'TREASURY')],
+        ['IMP-02', 'Model P.L. 119-21 SALT cap &amp; 2030 reversion + Joint Filer toggle',
+         'Medium impact / low effort',
+         'Show a side-by-side Single vs. Married Filing Jointly toggle (adjusting 3.8% NIIT from $200,000 to $250,000 MAGI and LTCG brackets) and explicitly model the P.L. 119-21 Schedule A SALT cap ($40,400 in 2026 reverting to $10,000 in 2030) vs. uncapped Schedule E rental property taxes.',
+         'Highlights why Live loses even more tax deductibility relative to Rent if Schedule A remains capped at $10,000 after 2029.',
+         src('IRS-SCHED-A', 'IRS-TC559', 'RP-2026-35')],
+        ['IMP-03', 'Inherited IRA / SECURE Act 10-year tax drag on cash',
+         'High impact if estate cash is in pre-tax IRAs',
+         'Separate taxable cash/brokerage assets from pre-tax IRAs on Cash and estate tax, illustrating how 10-year required withdrawals push the Inheritor into higher CA/federal brackets (including the 1% Behavioral Health Services Tax above $1,000,000).',
+         'Currently the cash table treats all cash/other assets as after-income-tax cash; only Q02 separates IRA vs. taxable.',
+         src('IRS-P559', 'FTB-MHS')],
+        ['IMP-04', 'Model PG&amp;E 20-year NEM 2.0 sunset &amp; $24.15/mo fixed charge',
+         'Low-medium impact / low effort',
+         'Add an optional year-N toggle when Property A\'s 20-year NEM legacy period ends (switching solar export credits to Net Billing Tariff rates plus the $24.15/mo Base Services Charge).',
+         'Avoids assuming solar remains a permanent net credit over a 50-year horizon.',
+         src('CPUC-NEM', 'CPUC-FIXED')],
+        ['IMP-05', 'Hybrid strategies: Live briefly then Sell, or Prop 19 + Move Out',
+         'Medium-high impact / medium effort',
+         'Add a 4th scenario (Live 2-5 years to qualify for the $250,000/$500,000 Sec. 121 home-sale exclusion, then Sell) AND show the BOE Pub. 800-1 move-out rule (moving out later enrolls date-of-death FMV indexed).',
+         'Helps if the Inheritor wants a trial period in Property A before selling.',
+         src('IRS-TC701', 'BOE-PUB-800-1')],
+        ['IMP-06', 'Treasury-staged deployment ("sell into bills/bonds for 2 years, then equities")',
+         'High psychological &amp; sequence-risk value',
+         'Add a phased-investing path in Black swan (parking sale proceeds in 3M-2Y Treasuries for 24-36 months after inheritance before phasing into stocks) to test how it softens 1929/2008 crash entry risk.',
+         'Directly addresses the only black-swan failure mode where immediate all-in equity selling trails renting.',
+         src('TREASURY', 'BLS-CPI')],
+        ['IMP-07', 'Include California Prop 3 / FTB Behavioral Health Tax sensitivity in year-of-sale',
+         'Low impact / low effort',
+         'Explicitly test whether keeping CA top rates via Prop 3 affects a delayed sale or Property B divestment (note: immediate date-of-death sale has ~zero capital gain if step-up applies).',
+         'Clarifies why Prop 3 barely touches immediate Sell if step-up holds, yet heavily hits a non-step-up sale.',
+         src('SOS-RESULTS', 'FTB-MHS')],
+        ['IMP-08', 'Earthquake self-insurance vs. CEA deductible &amp; Property B retrofit reserve',
+         'Medium impact / medium effort',
+         'Replace the single flat repair line with an optional periodic capital-expenditure / seismic-retrofit reserve schedule (roof, HVAC, soft-story/foundation) plus an illustrative CEA premium stress.',
+         'Makes Live/Rent carrying costs more realistic given the 72% USGS Bay Area quake probability.',
+         src('USGS', 'CDI-EQ')],
+        ['IMP-09', 'Model Property B sale as a 4th comparison choice',
+         'Medium impact / low-medium effort',
+         'Show selling Property B instead of Property A as a full baseline option alongside keeping B, quantifying lost Prop 13 protection (%s/yr tax advantage) and un-reset capital gains on B.' % m(sf_gap),
+         'Directly demonstrates with numbers why Property B is kept in the baseline plan.',
+         src('SF-TAX', 'IRS-TC409')],
+    ]
+    t1 = table(['ID', 'Proposed model / financial-logic change', 'Impact &amp; effort', 'What would change if approved', 'Why review first', 'Official basis'],
+               mod, caption='Proposed model &amp; analytical improvements (pending reviewer approval)')
+
+    data_gaps = [
+        ['GAP-01', 'Attorney trust-inclusion letter (%s)' % flag('Q01'), 'Confirms revocable inclusion vs. irrevocable grantor trust under Rev. Rul. 2023-2 (largest single swing in Sell).', 'Low - 1 legal review', 'Proposed - owner approval needed', src('RR-2023-2')],
+        ['GAP-02', 'Estate total &amp; prior spouse Form 706 portability (%s)' % flag('Q02'), 'Establishes cash vs. IRA mix against %s 2045 room and whether a second exclusion was preserved.' % m(B['exclusion_T'] - B['fmv_T']), 'Medium - CPA + attorney', 'Proposed - owner approval needed', src('IRS-ESTATE', 'IRS-FAQ-ESTATE')],
+        ['GAP-03', 'Actual CDI comparison tool + broker quotes &amp; quake offer (%s, %s)' % (flag('U01'), flag('U02')), 'Replaces %s/yr placeholder with actual 95014 homeowners, 94122 3-unit DP-3 landlord, vacancy endorsement, and CEA earthquake quotes.' % m(P['ins_home']), 'Low - broker call + 5 min on CDI tool', 'Proposed - owner / broker', src('CDI-TOOL-APP', 'CDI-RES', 'CDI-EQ')],
+        ['GAP-04', 'Santa Clara TRA bill lines, Cupertino water provider &amp; PG&amp;E PTO date (%s, %s)' % (flag('U03'), flag('U05')), 'Verifies parcel fixed charges, which of Cupertino\'s 3 water utilities serves Property A, and when 20-yr NEM 2.0 grandfathering expires.', 'Low - read utility &amp; tax bills', 'Proposed - owner', src('SCC-RATES', 'CUP-WATER', 'CPUC-NEM')],
+        ['GAP-05', 'Local property-manager rent opinion + bedroom confirmation &amp; appraisals (%s)' % flag('U08'), 'Benchmarks actual rent against HUD 4-BR (%s/mo) / 3-BR (%s/mo) and updates owner estimates (%s / %s).' % (m(P['cup_rent_month']), m(5870), m(P['cup_value']), m(P['sf_value'])), 'Medium - manager + appraiser', 'Proposed - owner approval needed', src('HUD-95014', 'FHFA-SJ')],
+    ]
+    t_gaps = table(['ID', 'Data-gathering step', 'Why it improves the decision', 'Effort', 'Status', 'Official basis'],
+                   data_gaps, caption='Data-gap items to gather before finalizing numbers')
+
+    ux = [
+        ['IMP-10', 'Scrub pre-rounding Git history / keep repo privacy-first (Flag P02)',
+         'Critical privacy fix / owner action',
+         'Rewrite Git history (<code>git filter-repo</code> or fresh orphan export of clean state) and/or change repository visibility from public to private before referencing exact bills or trust memos; keep public GitHub Pages on the non-household guide in <code>privacy-site/public/</code>.',
+         'Cannot be solved via normal commits alone because early pre-rounding commits sit in public Git history.',
+         src('SCC-RATES')],
+        ['IMP-11', 'Split local private input overrides from public repo (<code>local_private.json</code>)',
+         'High usability &amp; privacy value',
+         'Allow the owner to keep an untracked, <code>.gitignore</code>-excluded <code>local_private.json</code> file locally to recompute exact household numbers on their own machine while keeping the GitHub repo strictly rounded to $10.',
+         'Prevents accidental leaks while giving the owner exact household figures locally.',
+         src('BLS-CPI')],
+        ['IMP-12', 'One-page printable "Attorney &amp; CPA Briefing Sheet" export',
+         'High practical utility / low effort',
+         'Add a dedicated <code>@media print</code> CSS layout and a single-page summary view printing <code>Q01-Q06</code>, Prop 19 BOE-266/BOE-19-P sequence, and estate-tax headroom without charts/navigation clutter.',
+         'Gives the Transferor and Inheritor a clean agenda to hand directly to an estate attorney or CPA.',
+         src('BOE-PUB-800-1', 'RR-2023-2')],
+    ]
+    t2 = table(['ID', 'Proposed workflow, UX &amp; privacy option', 'Impact &amp; effort', 'What would change if approved', 'Why review first', 'Official basis'],
+               ux, caption='Proposed workflow, reporting &amp; privacy-governance improvements')
+
+    paths = table(['Implementation path (choose before editing baseline)', 'Included items', 'Owner time', 'Best fit', 'Official basis'], [
+        ['Path 1 - Minimal (data verification first)', 'Keep baseline model as-is + resolve GAP-01..GAP-05 (trust letter, insurance quotes, tax bill/TRA, Cupertino water utility, NEM date, rent opinion).', '1-2 weeks part-time', 'Fastest way to eliminate major unknowns before any code changes', src('RR-2023-2', 'CUP-WATER')],
+        ['Path 2 - Standard (recommended)', 'Path 1 + IMP-01 (sliders), IMP-02 (SALT/Joint toggle), IMP-06 (Treasury staging), IMP-12 (Attorney/CPA sheet), plus IMP-10/IMP-11 privacy split.', '2-4 weeks', 'Lets you test assumptions and tax details interactively while keeping household privacy intact', src('IRS-SCHED-A', 'TREASURY')],
+        ['Path 3 - Comprehensive', 'Path 1 + Path 2 + IMP-03 (IRA 10-yr drag), IMP-04 (NEM sunset), IMP-05 (hybrid Live-then-Sell), IMP-08 (quake/capex reserve), IMP-09 (Sell B comparison).', '4-6 weeks', 'Complete household decision workbook ready for family, attorney, and CPA sign-off', src('IRS-P559', 'BOE-PUB-800-1')],
+    ], caption='Three implementation paths - pick one before any baseline numbers change')
+
+    workflow = """
+<h2>Review status workflow</h2>
+<ul class="plan">
+<li><strong>Proposed</strong> - waiting for your review; zero baseline figures modified.</li>
+<li><strong>Under review</strong> - sent to estate attorney, CPA, broker, or appraiser.</li>
+<li><strong>Approved / Built</strong> - selected for implementation, rebuilt through <code>final/model.py</code> and verified against <code>final/check.py</code>.</li>
+<li><strong>Not approved / Deferred</strong> - explicitly declined and recorded for completeness.</li>
+</ul>"""
+
+    body = """
+<p class="callout"><strong>Proposed site improvements - for review before implementing.</strong> None of the changes below have been folded into the baseline numbers yet. Presenting them here lets the reviewer pick which data checks, model refinements, interactive tools, or privacy workflows to adopt (e.g., Path 1, Path 2, or Path 3) without silently shifting the verified baseline outputs (%s Sell vs. %s Rent vs. %s Live).</p>
+%s
+<h2>Part 1 - Data-gap, model &amp; privacy-workflow improvements</h2>
+<h3>1. Data-gap verification candidates</h3>%s
+<h3>2. Model &amp; financial-logic candidates</h3>%s
+<h3>3. Workflow, reporting &amp; privacy candidates</h3>%s
+<h3>4. Choose a path before implementing changes</h3>%s
+<p class="note">See also the itemized <code>SG-1</code>–<code>SG-11</code> queue on <a href="requirements.html">Requirements and verification</a>.</p>
+""" % (m(B['real_sell']), m(B['real_rent']), m(B['real_live']), workflow, t_gaps, t1, t2, paths) + _suggestions_options()
+    page('suggestions.html', 'Site improvements & proposed options',
+         'Structured suggestions for improving the site, data coverage, model nuance, and privacy workflow so the reviewer can select the best path before implementing changes.', body)
 
 
 # ====================================================================== flagged
@@ -879,12 +1144,12 @@ def build_flagged():
         ('S', 'Irregularities in sources'),
         ('R', 'Irregularities in the repository'),
     ]
-    body = '<p class="callout">Flagged for Review. Nothing on this page blocks the rest of the site. Each item says what is missing or uncertain, what was used instead, and where to check it.</p>'
+    body = '<p class="callout">Flagged for Review. Nothing on this page blocks the rest of the site. Each item says what is missing or uncertain, what was used instead, and where to check it. See <a href="questions.html">Questions &amp; discovery</a> for ways to uncover missing answers and <a href="suggestions.html">Site improvements</a> for candidate model upgrades.</p>'
     for c, title in cats:
         rows = [['<span id="%s">%s</span>' % (f['id'], f['id']), f['item'], f['used'], f['check'], src(*f['src']) + (' · ' + f['extra'] if f.get('extra') else '')] for f in FLAGS if f['id'].startswith(c)]
         body += table(['No.', 'Item', 'What the site does', 'How to resolve it', 'Where to check'], rows, caption=title)
     ex = [['E-' + k, e(v['title']), e(v['read']), '<a href="%s" rel="noopener">%s</a>' % (e(v['url']), e(v['label'])) + (' · official reference for current rates: ' + src('TREASURY') if v['how'] == 'academic' else '')] for k, v in sorted(S.items()) if v['how'] != 'page']
-    body += table(['No.', 'Source not read in full', 'Text relied on', 'Open the page'], ex, caption='Sources read through an excerpt of the official page, or not official: re-read by hand')
+    body += table(['No.', 'Source not read in full', 'Text relied on', 'Open the page'], ex, caption='Sources not read as a direct official government page (as of 2026-11-12, zero official agency excerpt entries remain; only the academic return dataset appears here)')
     page('flagged.html', 'Flagged for Review',
          'Every value that could not be confirmed, every assumption, and every irregularity found, with a link for manual checking.', body)
 
@@ -1000,12 +1265,12 @@ def build_requirements():
         ['Numbers rounded so that nothing can be traced back to the source, yet still clear enough to reason with',
          'Every page. Owner-supplied and modelled figures are rounded to $10; official published figures are quoted exactly and listed on the sources page.',
          'Met - enforced by <a href="sources.html">final/check.py</a> on every build', src('BLS-CPI')],
-        ['A clear list of the questions, information and answers needed before a decision can reasonably be made: what is known, what is not, and how to find what is missing',
-         '<a href="questions.html">Questions</a>: open questions with what is known, what is missing and how to find it; questions that cannot be known in advance; questions already answered from official pages; who to ask.',
-         'Met; answers that no official page or owner figure settles are left blank', src('IRS-FAQ-INHERIT', 'BOE-LTA-2026-026')],
-        ['A dedicated section of suggestions for improving the site for decision making, to review and choose from before anything is implemented',
-         '<a href="suggestions.html">Suggestions</a>: each proposal with its options, a suggested choice, its effect on the decision, effort and risk, plus ready-made paths to choose from.',
-         'Met as a proposal; nothing on that page has been implemented', src('HUD-SAFMR-INDEX', 'CDI-TOOL-APP')],
+        ['Clear list of questions, known vs. unknown information, answers needed before reasonably deciding, and ways to discover missing info',
+         '<a href="questions.html">Questions &amp; discovery</a> (Part 1 known vs. unknown table, pre-decision questions, discovery methods &amp; timing; Part 2 reading-dated decision register with open/cannot-know/known rows) plus <a href="flagged.html">Flagged for Review</a>.',
+         'Met; answers that no official page or owner figure settles remain blank', src('RR-2023-2', 'CDI-TOOL', 'BOE-LTA-2026-026')],
+        ['Dedicated section for site-improvement suggestions so the reviewer can pick the best path before implementing changes',
+         '<a href="suggestions.html">Site improvements</a> (Part 1: GAP-01..05, IMP-01..12, Paths 1–3; Part 2: G01..G15 options &amp; paths; plus <a href="requirements.html#suggestions">SG-1–SG-11</a>).',
+         'Met as proposed options — nothing implemented until approved', src('IRS-SCHED-A', 'CPUC-NEM', 'HUD-SAFMR-INDEX')],
     ]
     t1 = table(['No.', 'What was asked', 'Where this site answers it', 'Status', 'Official basis'], 
                [[str(i + 1)] + r for i, r in enumerate(rows)],
@@ -1099,159 +1364,16 @@ def build_requirements():
 %s
 <h2>Re-verification performed for this page</h2>%s
 <h2>What this pass changed</h2>
-<p class="note">This page is new. It adds no figures: every number on it is produced by <code>final/model.py</code> or quoted from an official page linked in the row. The rest of the site is unchanged, and the checks below were run on the whole tree after the page was added. If a later pass changes a figure, this page is regenerated with the rest of the site, so it cannot drift out of date.</p>
+<p class="note">Updated on %s: added <a href="questions.html">Questions &amp; discovery</a> and <a href="suggestions.html">Site improvements</a>, verified all remaining fourteen official sources directly on their agency pages (zero official excerpt entries remain), added BOE Pub. 800-1, Cupertino water provider records, IRS Schedule A SALT cap guidance, and SFPUC combined bill increases, and re-built all published pages. If a later pass changes a figure, this page is regenerated with the rest of the site, so it cannot drift out of date.</p>
 <ul class="plan">
-<li>Build: <code>python3 final/model.py &amp;&amp; python3 final/build.py</code> - twelve substantive pages, plus the earlier-versions page and redirects at retired addresses.</li>
+<li>Build: <code>python3 final/model.py &amp;&amp; python3 final/build.py</code> - fifteen substantive pages, plus the earlier-versions page and redirects at retired addresses.</li>
 <li>Checks: <code>python3 final/check.py .</code> - every table row carries a link to an official page, every internal link and anchor resolves, every dollar figure is a multiple of $10 unless it is a listed official figure, and no personal information or unrounded owner figure appears.</li>
 <li>Model self-tests: the Proposition 19 formula is checked against the county assessor's own worked example, and Property B is asserted never to be reassessed.</li>
 </ul>
-""" % (t1, assumptions, rules, t2)
+""" % (t1, assumptions, rules, t2, BUILD_DATE)
     page('requirements.html', 'Requirements and verification',
          'Every part of the brief, the page that answers it, the official rule behind it - and the official pages that were re-read on 2026-11-11 to make sure the numbers on this site still match.', body)
 
-
-
-# ====================================================================== suggestions
-def build_suggestions():
-    data_rows = [
-        ['S-01', 'Get estate attorney to confirm trust inclusion and basis reset ' + flag('Q01'), 'Determines whether a sale is tax-free (basis reset) or taxed on decades of gain — the single largest swing in the model', 'Low — one meeting, written letter', 'Proposed — owner approval needed', src('RR-2023-2')],
-        ['S-02', 'Confirm parent-to-child relationship for Proposition 19 ' + flag('Q06'), 'Only a qualifying parent-child (or grandparent with deceased parent) transfer can claim the partial exclusion', 'Low — confirm family relationship', 'Proposed — owner approval needed', src('BOE-LTA-2026-026')],
-        ['S-03', 'Provide written insurance quotes for ZIP 95014 (primary) and ZIP 94122 (landlord) via CDI comparison tool ' + flag('U01'), 'The site uses an owner estimate of $1,500 a year; a real quote may differ, and it affects all three choices', 'Low — 5 minutes per ZIP in the official tool', 'Proposed — owner or broker', src('CDI-TOOL-APP')],
-        ['S-04', 'Ask insurer for earthquake offer and decide on earthquake coverage ' + flag('U02'), 'A major Bay Area earthquake is a 72% probability before 2043; exclusion can be costly', 'Low — request mandatory offer', 'Proposed — owner or broker', src('CDI-EQ')],
-        ['S-05', 'Confirm exact tax rate area and fixed charges from the 2025-26 tax bills ' + flag('U03'), 'Rate 1.16360% is built from district tables; a different rate area changes post-inheritance tax by thousands', 'Low — read bills', 'Proposed — owner', src('SCC-RATES')],
-        ['S-06', 'Obtain independent rent opinion and confirm bedroom count for Property A ' + flag('U08'), 'HUD Small Area FMR of $6,390 a month may be high or low vs market; rent directly decides rent-vs-sell break-even', 'Low — one property-manager letter', 'Proposed — owner', src('HUD-95014')],
-        ['S-07', 'Appraise both homes (or use recent comparable sales) at 2026 market', 'Owner estimates of $3,100,000 and $1,800,000 are not appraisals; every projection scales with them', 'Medium — licensed appraiser', 'Proposed — owner approval needed', src('FHFA-SJ')],
-        ['S-08', 'Document solar interconnection date and NEM tariff status ' + flag('U05'), 'Current credit of $10–$20 a month may end under net billing + $24.15 fixed charge; affects live-in and rental cash flow', 'Low — utility agreement', 'Proposed — owner', src('CPUC-NEM')],
-        ['S-09', 'Total estate (cash and other assets) and check portability filing ' + flag('Q02'), 'Federal estate tax is 40% above exclusion; room shown is $17,612,280 in 2045 — cash over that changes everything', 'Medium — CPA + attorney', 'Proposed — owner approval needed', src('IRS-ESTATE')],
-    ]
-    site_rows = [
-        ['S-10', 'Add interactive calculator: owner changes inheritance year, growth and return, see after-tax wealth instantly', 'Removes uncertainty about “what if 3% not 4%?” without rebuilding the model; makes the 50-replay intuition tangible', 'Medium — one small script, no server', 'Proposed — needs owner approval on assumptions shown', src('FHFA-SJ')],
-        ['S-11', 'Add printable one-page decision checklist (Process deadlines + Have/Missing questions)', 'Gives a handout for attorney/CPA meeting; prevents missed 60-day, 150-day and 1-year filings', 'Low — PDF from existing tables', 'Proposed — owner approval needed', src('PROB-16061.7')],
-        ['S-12', 'Add plain-language family summary (no jargon, no figures) for non-financial decision makers', 'Helps household align on lifestyle vs financial trade-off of living in A (cost $6,301,010 of 2076 wealth in 2026 dollars vs selling)', 'Low — one page', 'Proposed — owner approval needed', src('BOE-P19')],
-        ['S-13', 'Model Property B sale as a fourth choice: sell B instead of A, compare basis and Prop 13 loss', 'Directly tests the key distinction — B has no reset and a $19,890 yearly tax advantage already', 'Medium — one model run, same official rules', 'Proposed — owner approval needed', src('SF-TAX')],
-        ['S-14', 'Add “sell and keep proceeds in Treasury bills” as a persistent path in Decision', 'Owner explicitly asked; currently it is one sensitivity row — making it a full column prevents misreading sell-as-automatic-win', 'Low — already modelled, needs page slot', 'Proposed — owner approval needed', src('TREASURY')],
-        ['S-15', 'Stagger selling the inherited home and investing proceeds to narrow black-swan downside', 'Black swan shows worst 10-year case is $2,069,690 behind; staging + 2 years in bills cuts that risk', 'Low — text + sensitivity rows', 'Proposed — owner approval needed', src('TREASURY')],
-        ['S-16', 'Improve mobile readability and accessibility (larger tables, sticky navigation, offline CSV)', 'Year-by-year table has 51 years x 14 columns; small screens hide the trade-off', 'Low — CSS only, no content change', 'Proposed — no official source needed beyond existing', src('BOE-P19')],
-        ['S-17', 'Add annual law-watch update: re-read IRS exclusion, BOE allowance, SF rate each February/October', 'Exclusion, allowance and SF rate are adjusted yearly; stale figures silently change the answer', 'Low — calendar reminder', 'Proposed — owner or adviser', src('RP-2026-35')],
-        ['S-18', 'Offer private PDF edition (figures included) that does not publish to public Pages', 'Public repo + history cannot be made private from inside site; a non-public PDF protects household identifiability while keeping analysis', 'Low — already in privacy-site/', 'Proposed — owner decides repo visibility ' + flag('P02'), src('SCO-ESTATE')],
-    ]
-    t_data = table(['No.', 'Suggestion to improve decision confidence', 'Why it helps the Cupertino vs SF decision', 'Effort', 'Status: proposed until owner approves', 'Official basis'], data_rows, caption='A. Fill data gaps — without these, the decision rests on unverified inputs (each linked to an official page)')
-    t_site = table(['No.', 'Suggestion to improve the site for better decisions', 'How it improves decision making', 'Effort', 'Status: proposed until owner approves', 'Official basis'], site_rows, caption='B. Improve the site itself — make uncertainty, trade-offs and deadlines easier to see and act on')
-    paths = table(['Path — choose one before any build', 'What it includes', 'Owner time', 'Best if you want', 'Official basis'], [
-        ['Path 1 — Minimal', 'This site as it is + fill gaps S-01, S-03, S-05, S-06 (attorney letter, insurance quotes, tax bills, rent opinion). No site rebuild.', '1–2 weeks part-time', 'The lowest-cost way to remove the biggest unverified inputs before deciding', src('RR-2023-2')],
-        ['Path 2 — Standard (recommended)', 'All of Path 1 + S-10 calculator, S-11 checklist, S-14 bills-vs-stocks column, S-17 law-watch reminder.', '2–4 weeks', 'To compare live/rent/sell yourself under your own assumptions and keep the answer current', src('FHFA-SJ')],
-        ['Path 3 — Comprehensive', 'All of Path 1 + Path 2 + S-13 sell-B comparison, S-12 family summary, S-18 private PDF, full accessibility pass S-16.', '4–6 weeks', 'A household-ready package for attorney, CPA and family to sign off together', src('BOE-P19')],
-    ], caption='Three paths — pick one, approve it, then build only that', cls='')
-    how = """
-<p class="callout">Nothing on this page is built until you approve it. Each row says what would be added, why it helps you decide between living in, renting, or selling the Cupertino home, how much effort it takes, and the official page that explains the rule behind it. Approve a row by telling the builder its number (e.g., “approve S-01 and S-03 and Path 2”). Rejected rows stay listed as “Not approved” so the record is complete.</p>
-<h2>How this page works</h2>
-<ul class="plan">
-<li><strong>Proposed</strong> — a suggestion waiting for your review. No file is changed.</li>
-<li><strong>Under review</strong> — you asked a professional (attorney, CPA, broker, appraiser) to respond.</li>
-<li><strong>Approved</strong> — you said to build it; the next site build includes it and this table marks it “Built”.</li>
-<li><strong>Built</strong> — the suggestion is live on the site; the row stays for history.</li>
-<li><strong>Not approved / Deferred</strong> — you chose not to build it now; the reason is logged.</li>
-</ul>
-<p class="note">Every suggestion maps to a flag on the <a href="flagged.html">Flagged for Review</a> page. A suggestion that fills an unverified value retires its flag; one that improves the site adds a new capability without changing figures. Two questions need legal answers before any financial choice is reasonable: the trust inclusion for the basis reset (Q01, <a href="flagged.html#Q01">Q01</a>) and whether the exclusion portability was preserved (Q02, <a href="flagged.html#Q02">Q02</a>).</p>
-"""
-    approve = """
-<h2>How to approve and what happens next</h2>
-<ol class="plan">
-<li>Read the <a href="flagged.html">Flagged for Review</a> page and the <a href="questions.html">Questions to answer</a> checklist.</li>
-<li>Tell the builder which numbered suggestions to build (e.g., “Approve S-01, S-03 to S-06, and Path 2”). No code runs until you do.</li>
-<li>The builder edits only the files listed in <a href="https://github.com/wingbangboozle1-lang/Tino1/blob/main/COORDINATION.md">COORDINATION.md</a> for the approved scope, rebuilds with <code>final/model.py</code> and <code>final/build.py</code>, and must pass <code>final/check.py</code> (every row has an official link, every dollar is rounded to $10, no personal information) before opening a pull request.</li>
-<li>You review the pull request — each new table row still carries its official link for manual checking — and merge only when satisfied. Flagged items never block a merge; they are published as “under review” until resolved.</li>
-</ol>
-<p class="note">If you prefer no public repository at all, choose S-18: the analysis is delivered as a private PDF and the public site keeps only the method and no household figures. That does not rewrite Git history — that history stays public until the repository itself is made private or its history is rewritten, which only you can authorize <a class="flag" href="flagged.html#P02">flag P02</a>.</p>
-"""
-    body = how + "<h2>Suggestions to fill gaps in the analysis</h2>" + t_data + "<h2>Suggestions to make the site a better decision tool</h2>" + t_site + "<h2>Choose a path before any change is made</h2>" + paths + approve + _suggestions_options()
-    page('suggestions.html', 'Suggestions to improve the site and the decision', 'Proposed improvements — data to gather, model refinements and site features — each with why it helps you decide, how hard it is, and its review status. Nothing is built until you approve it.', body)
-
-# ====================================================================== questions
-def build_questions():
-    have_rows = [
-        ['The legal distinction: Property B is already owned', 'Property B never reassessed, no basis reset, not in estate — the Cupertino home is the only transfer', src('BOE-RULE-462.260', 'RR-2023-2')],
-        ['Federal estate-tax exclusion and California rule', '$15,000,000 for 2026, $15,480,000 for 2027 (indexed); no California estate or inheritance tax since 2005', src('IRS-ESTATE', 'SCO-ESTATE')],
-        ['Proposition 19 relief and its conditions', 'Parent-child home transfer can keep partial assessed value only if inheritor moves in within 1 year and claims HOX', src('BOE-LTA-2026-026', 'BOE-P19')],
-        ['Property-tax rates in force', 'Santa Clara County 1.16360% plus fixed charges; San Francisco 1.18162182% for FY2026-27', src('SCC-RATES', 'SF-TAX')],
-        ['Income-tax basis reset at death', 'Inherited home basis = market value at death if included in gross estate — Rev. Rul. 2023-2', src('IRS-FAQ-INHERIT', 'RR-2023-2')],
-        ['Rental benchmarks from HUD', '95014 four-BR $6,390, three-BR $5,870; 94122 two-BR $3,310, three-BR $4,230, four-BR $4,380', src('HUD-95014', 'HUD-94122')],
-        ['Utility and solar rules', 'SFPUC water +7% FY26-27, CPUC net-metering and $24.15 fixed charge apply to solar credit', src('SFPUC', 'CPUC-NEM')],
-        ['Current assessed values and bills (rounded)', 'Cupertino $550,540 assessed / $7,210 tax; SF $116,540 assessed / $2,440 tax — owner figures rounded to $10', src('SCC-RATES', 'SF-TAX')],
-        ['SF rent control and current increase cap', 'Annual increase 1.6% Mar 2026–Feb 2027; vacancy resets to market; empty-homes tax not collected', src('SF-RENT-2026', 'SF-EHT')],
-        ['House-price and inflation history', 'FHFA San Jose, SF and CA indexes 1976-2026; BLS CPI December values 1976-2025', src('FHFA-SJ', 'BLS-CPI')],
-        ['Projection framework 2026-2076', 'Year-by-year market value, assessed value, tax, insurance, water, electricity, repairs, rent for live/rent/sell paths', src('FHFA-SJ', 'BLS-CPI')],
-        ['Black-swan stress tests', '50 real historical replays + named crises (1970s, Japan 1990-, 1929-41, 2000, 2008)', src('BLS-CPI', 'FHFA-SJ')],
-        ['Step-by-step inheritance process', '14 steps with deadlines: 60-day trustee notice, 150-day BOE statement, 1-year HOX filing', src('PROB-16061.7', 'RTC-480')],
-    ]
-    missing_rows = [
-        ['Type of trust and whether Property A is in gross estate ' + flag('Q01'), 'No legal letter confirming revocable vs irrevocable grantor trust outside estate', src('RR-2023-2')],
-        ['Amount of cash and other assets in Transferor estate ' + flag('Q02'), 'Total estate size unknown; portability of spouse exclusion unknown', src('IRS-ESTATE')],
-        ['Inheritor basis in Property B ' + flag('Q03'), 'Purchase records and depreciation history for the three-unit building withheld', src('IRS-FAQ-INHERIT')],
-        ['Whether Property B is rent-controlled ' + flag('Q04'), 'Building age and exemption status not verified on city map', src('SF-RENT-LAW')],
-        ['Inheritor filing status and income bracket ' + flag('Q05'), 'Single vs joint, and actual marginal rates, not disclosed', src('RP-2026-35')],
-        ['Transferor is parent of Inheritor ' + flag('Q06'), 'Family relationship for Prop 19 assumed parent-child, not documented', src('BOE-LTA-2026-026')],
-        ['Home-insurance quotes for 95014 and 94122 ' + flag('U01'), 'Owner estimate $1,500 each; ZIP-level official premium left blank', src('CDI-TOOL')],
-        ['Earthquake coverage decision ' + flag('U02'), 'No mandatory offer reviewed; exposure not priced', src('CDI-EQ')],
-        ['Exact tax rate area and fixed charges ' + flag('U03'), 'Rate 1.16360% from county tables; parcel-specific charges derived not read', src('SCC-RATES')],
-        ['Proposition 19 allowance after 2027-02-16 ' + flag('U04'), 'Next figure due Feb 2027; model assumes FHFA CA +0.9%', src('BOE-LTA-2025-009')],
-        ['Solar interconnection date and tariff ' + flag('U05'), 'Credit $10–$20 per month; new net-billing and fixed charge may reduce it', src('CPUC-NEM')],
-        ['Bedrooms and rentable condition of Property A ' + flag('U08'), 'HUD four-BR figure used; actual rent may be lower/higher', src('HUD-95014')],
-        ['Market values are owner estimates rounded to $10 ' + flag('P03'), 'Values $3,100,000 (Cupertino) and $1,800,000 (SF) are not appraisals', src('FHFA-SJ')],
-        ['Maintenance costs for each home ' + flag('A08'), 'Assumptions $6,000 (Cupertino) and $12,000 (SF) a year; owner says SF higher', src('BLS-CPI')],
-        ['Whether Property A is the principal residence at death ' + flag('Q15'), 'Exemption claim not confirmed. Occupancy-like utility use is not an official claim.', src('BOE-LTA-2026-026')],
-        ['Whether a spouse, marital trust or community-property title delays the transfer ' + flag('Q16'), 'Left blank. The model assumes one transfer of the whole home.', src('IRS-ESTATE')],
-        ['Whether a selling-cost loss is deductible ' + flag('Q17'), 'Not confirmed. The model grants no deduction.', src('IRS-TC701')],
-        ['Which home has the homeowners exemption ' + flag('Q18'), 'Left blank. Only one principal residence can have the $7,000 exemption.', src('BOE-HOX')],
-
-    ]
-    q_rows = [
-        ['Q01', 'Is Property A included in the Transferor gross estate so basis resets at death?', 'Trust instrument + attorney letter stating estate inclusion; Rev. Rul. 2023-2 applicability', 'Assumed yes — revocable trust included; no-reset row shown in Decision sensitivity', 'Written confirmation missing — if irrevocable grantor trust outside estate, no reset and sale triggers tax on decades of gain', 'Have attorney read the trust; if no reset, decide with the “no reset” row — selling advantage shrinks by about $3,319,060 in 2026 dollars', src('RR-2023-2')],
-        ['Q02', 'What is total estate size (home + cash + other assets) vs federal exclusion?', 'Total cash and assets; whether predeceased spouse unused exclusion was ported via Form 706', 'Room for cash in 2045 is $17,612,280 per transferor; examples shown for $5M/$10M/$15M overage', 'Actual total unknown; cannot say if estate tax due', 'Total all assets; compare to room table on Estate-cash page; ask if Form 706 was filed for predeceased spouse', src('IRS-ESTATE')],
-        ['Q03', 'What is the Inheritor income-tax basis in Property B?', 'Purchase price, inheritance docs, depreciation already claimed on two rented units', 'Left blank — Property B is never sold in model; upper-bound illustration uses assessed value $116,540', 'True gain on any future sale of B unknown', 'Find purchase/inheritance records for B and depreciation schedules', src('IRS-FAQ-INHERIT')],
-        ['Q04', 'Is Property B rent-controlled under SF law?', 'Building age (<1979) and unit count on SF Property Information Map; exemption certificates', 'Assumed mixed: controlled rent growth at half market rate; third unit at market', 'Coverage not verified — affects rental income projection', 'Look up building on SF Property Information Map or ask Rent Board counselor', src('SF-RENT-LAW')],
-        ['Q05', 'What is Inheritor filing status and current income-tax bracket?', 'Most recent tax return; federal + California marginal rates', 'Model uses single 24% + 9.3% + 3.8% on yearly income; top rates on lump sales', 'Real rate may be higher/lower', 'Have CPA rerun Decision with actual bracket; sensitivity rows show high/low cases', src('RP-2026-35')],
-        ['Q06', 'Is Transferor the Inheritor parent (or grandparent with deceased parent)?', 'Family relationship documents matching BOE definitions', 'Assumed parent-child qualifies', 'Eligibility not documented', 'Confirm relationship meets BOE LTA 2026/026 definitions', src('BOE-LTA-2026-026')],
-        ['Q07', 'What are actual insurance premiums for each ZIP?', 'CDI comparison tool outputs for 95014 and 94122 plus landlord quote for three-unit building', 'Owner estimate $1,500 each; official ZIP-level blank per checker', 'Real premiums may differ from the estimate', 'Run CDI tool for both ZIPs (5 min per ZIP); get landlord dwelling-fire quote for B', src('CDI-TOOL-APP')],
-        ['Q08', 'What is exact tax rate area and are HOX already on current bills?', 'Actual 2025-26 tax bills showing rate area, HOX, and special assessments', 'Rate 1.16360% derived from county tables; fixed charges $930/$1,090 derived; HOX status unknown', 'Post-inheritance tax may differ', 'Read bills for TRA, HOX line, and parcel charges; compare to SCC tax rate book', src('SCC-RATES')],
-        ['Q09', 'What is next Proposition 19 allowance (Feb 2027)?', 'BOE Letter to Assessors expected Feb 2027', 'Model uses $1,044,586 then +0.9% per FHFA CA', 'True figure left blank', 'Watch BOE website Feb 2027; compare to projection', src('BOE-LTA-2025-009')],
-        ['Q10', 'When was Property A solar interconnected and under which tariff?', 'PG&E net-metering agreement date', 'Assumed credit $180 negative a year continues', 'Credit may shrink under NEM 3.0 + $24.15 fixed charge', 'Read interconnection date on utility agreement; ask utility about tariff longevity', src('CPUC-NEM')],
-        ['Q11', 'How many bedrooms is Property A as a rental?', 'Floor plan; property-manager rent opinion', 'HUD four-BR $6,390 used; three-BR $5,870 shown in sensitivity', 'Actual rent may be lower or higher than the HUD figure', 'Get written rent opinion from local manager matching bedroom count', src('HUD-95014')],
-        ['Q12', 'Which home must be sold if liquidity is needed, and what is the cost?', 'Basis and Prop 13 advantage comparison', 'Analysis shows keeping B and selling A preserves $19,890 yearly tax + avoids gain on B', 'Depends on cash need timing', 'Compare sell-A vs sell-B table on Decision page with actual cash need', src('SF-TAX')],
-        ['Q13', 'What return is reasonable for reinvested proceeds?', 'Investor risk tolerance; Treasury yields as risk-free anchor', 'Model uses 7.0% stocks, 4.5% bonds, 3.5% bills; break-even stock return where rent wins is published', 'No official forecast exists — sensitivity table is the answer', 'Choose return with adviser; check break-even on Decision page; see Black-swan for non-constant reality', src('TREASURY')],
-        ['Q14', 'Should earthquake insurance be carried on either home?', 'Mandatory earthquake offer premium; USGS outlook', 'Left blank — not in cost lines', '72% chance M6.7+ in Bay Area before 2043', 'Request earthquake offer from insurer; read USGS Fact Sheet 2016-3020', src('USGS')],
-        ['Q15', 'Is Property A the Transferor principal residence at death?', 'Homeowners exemption status on the Transferor bill', 'Owner described occupancy-like utility use. Not a confirmed exemption claim.', 'If it is not the principal residence, Proposition 19 does not apply and living in later does not keep the old assessed value', 'Read the exemption line on the bill privately. Do not publish the bill. ' + flag('Q15'), src('BOE-LTA-2026-026', 'RTC-63.2')],
-        ['Q16', 'When does title actually pass, and does a surviving spouse or marital trust delay it?', 'Trust terms and marital-property title, read by the attorney', 'The site shows 2040, 2045 and 2050. It does not know whether distribution waits for a second death.', 'The year of the decision, whose estate the home is in, and whether there is one basis reset', 'Have the attorney say when title passes and whether a marital deduction applies. Do not publish the trust. ' + flag('Q16'), src('IRS-ESTATE', 'BOE-RULE-462.260')],
-        ['Q17', 'If Property A is sold promptly, is the selling-cost loss deductible?', 'A written answer from the tax adviser', 'The model treats selling costs as cash spent and grants no deduction when computed gain is negative', 'A small after-tax difference, unless the basis does not reset', 'Ask before counting any tax benefit from the loss. ' + flag('Q17'), src('IRS-TC409', 'IRS-TC701')],
-        ['Q18', 'Which home currently has the homeowners exemption?', 'Both current tax bills, read privately', 'Left blank. The exemption is $7,000 of taxable value for one principal residence.', 'A small tax change if it moves from Property B to Property A. Only one home can have it.', 'Read both bills. Do not publish them. ' + flag('Q18'), src('BOE-HOX')],
-    ]
-    discover_rows = [
-        ['Trust and estate inclusion (Q01)', 'Have attorney read trust; get written “included in gross estate” letter', 'Estate attorney', 'Trust instrument, any amendments, deceased-spouse Form 706 if any', '1–2 weeks', src('RR-2023-2')],
-        ['Estate size and portability (Q02)', 'CPA totals estate; ask whether a Form 706 was filed with the IRS after the first death', 'CPA + attorney', 'Bank/brokerage statements, deeds, prior Form 706', '1–3 weeks', src('IRS-ESTATE')],
-        ['Basis in Property B (Q03)', 'Find purchase/inheritance records; pull depreciation schedules from prior returns', 'CPA', 'Closing statement, Form 1040 Schedule E history', '1 week', src('IRS-TC409')],
-        ['Rent control status (Q04)', 'Check SF Property Information Map building age; call Rent Board', 'Owner + Rent Board counselor', 'Assessor building date, unit count', '1 day', src('SF-RENT-LAW')],
-        ['Filing status (Q05)', 'Share most recent return with adviser', 'CPA', 'Form 1040, FTB 540', '1 day', src('FTB-RATES')],
-        ['Parent-child qualification (Q06)', 'Confirm relationship meets BOE definitions', 'Attorney', 'Family records', '1 day', src('BOE-LTA-2026-026')],
-        ['Insurance premiums (U01/U02)', 'Run CDI comparison tool for 95014 and 94122; request landlord + earthquake quotes', 'Insurance broker', 'Rebuilding cost, ZIP, age, coverage limits', '1 day (tool) + 1 week (quotes)', src('CDI-TOOL-APP')],
-        ['Tax rate area (U03)', 'Read actual tax bills line by line', 'Owner', '2025-26 secured tax bills', '1 day', src('SCC-RATES')],
-        ['Prop 19 allowance next (U04)', 'Bookmark BOE LTA page; check Feb 2027 release', 'Owner/adviser', '—', '5 minutes in Feb 2027', src('BOE-LTA-2025-009')],
-        ['Solar tariff (U05)', 'Read PG&E NEM agreement interconnection date; ask about fixed charge impact', 'Owner + utility', 'NEM agreement, PG&E bill', '1 day', src('CPUC-NEM')],
-        ['Market rent for A (U08)', 'Get property-manager rent opinion with bedroom count', 'Property manager', 'Floor plan, photos', '1 week', src('HUD-95014')],
-        ['Market values', 'Order appraisal or pull 6-month comparable sales from county recorder', 'Licensed appraiser', 'Access to homes', '2–4 weeks', src('FHFA-SJ')],
-        ['Maintenance assumption (A08)', 'Ask contractor/handyman for 5-year repair history and forecast', 'Owner + contractor', 'Invoices, inspection report', '1 week', src('BLS-CPI')],
-        ['Principal residence at death (Q15)', 'Read the homeowners exemption line on the Transferor bill, privately', 'Owner', 'Current secured tax bill', '1 day', src('BOE-LTA-2026-026')],
-        ['Transfer timing and marital delay (Q16)', 'Have the attorney say when title passes and whether a marital deduction applies', 'Estate attorney', 'Trust instrument, title report', '1-2 weeks', src('IRS-ESTATE')],
-        ['Deductibility of a selling-cost loss (Q17)', 'Ask the tax adviser before counting any tax benefit', 'Tax adviser', 'Draft sale worksheet', '1 day', src('IRS-TC701')],
-        ['Which home has the homeowners exemption (Q18)', 'Read both bills, privately. Do not publish them.', 'Owner', 'Both current tax bills', '1 day', src('BOE-HOX')],
-    ]
-    have_table = table(['Area', 'What we already have (verified or owner-supplied rounded to $10)', 'Official basis'], have_rows, caption='Information we already have', cls='')
-    missing_table = table(['Item', 'What we do not have (flagged left blank)', 'Official basis — where to check'], missing_rows, caption='Information we do not have — must be discovered before a reasonable decision', cls='')
-    q_table = table(['No.', 'Question that must be answered before deciding', 'Information needed', 'What we have now', 'What is missing / implication', 'Answer / How to discover (suggestion)', 'Official basis'], q_rows, caption='Questions, informations and answers — what is needed before any decision can be reasonably made')
-    disc_table = table(['Missing information', 'Suggested action to discover it', 'Who to ask', 'Documents to gather', 'Time', 'Official basis'], discover_rows, caption='How to discover missing information — suggestions for the owner')
-    checklist = """<h2>Decision-readiness checklist — you can reasonably decide once you have</h2><ul class="plan"><li><strong>Legal:</strong> ☐ Trust inclusion letter (Q01) — without it, basis reset is assumption. ☐ Property-tax deadlines understood (60-day notice, 150-day BOE statement, 1-year HOX). See <a href="process.html">Process</a> and <a href="law.html">Law</a>.</li><li><strong>Tax:</strong> ☐ Estate total vs $15,480,000 exclusion room (Q02) — determines if cash triggers 40% above line. ☐ Your actual income-tax bracket (Q05) — determines after-tax rent vs sell gap. ☐ Prop 19 eligibility (Q06) confirmed. ☐ Property A is the principal residence at death (Q15). ☐ Transfer timing and any marital delay confirmed (Q16).</li><li><strong>Costs:</strong> ☐ Written insurance quotes for 95014 and 94122 (U01) + earthquake decision (U02). ☐ Actual tax bills confirming tax rate area (U03). ☐ Solar NEM date/tariff (U05). ☐ Rent opinion for A (U08) with bedroom count.</li><li><strong>Values:</strong> ☐ Appraisal or comparable sales for $3,100,000 / $1,800,000 estimates. ☐ Basis in Property B (Q03) if selling B is ever considered.</li><li><strong>Model sanity:</strong> ☐ Read <a href="decision.html">Decision</a> sensitivities (break-even home growth and stock return) and <a href="black-swan.html">Black swan</a> (50 replays, Japan and Depression paths where rent wins). If you cannot accept the worst 10-year case behind by $2,069,690, choose a staged investment and 2-year bill buffer.</li><li><strong>Privacy:</strong> ☐ Decide repository visibility — rounding to $10 does not anonymize a household; Git history stays public until you make the repo private or rewrite history <a class="flag" href="flagged.html#P02">flag P02</a>.</li></ul><p class="note">Check each box by gathering the document in “How to discover.” When every legal box and the cost boxes are checked, the three choices on the <a href="decision.html">Decision</a> page are comparable with verified inputs rather than estimates. Until then, the site marks the missing items as flags and shows the result conditional on the assumptions.</p>"""
-    intro = '<p class="callout">A reasonable decision needs answers, not just projections. This page puts every question in one place: what information we already have, what we do not have, the question that must be answered, the answer if known, and a concrete suggestion for how to discover the missing information. Nothing here asks you to type values into the site — each suggestion says who to ask and what paper to gather.</p>'
-    body = intro + "<h2>What we have and what we do not have</h2>" + have_table + missing_table + "<h2>Questions, information and answers before deciding</h2>" + q_table + disc_table + checklist + _questions_register()
-    page('questions.html', 'Questions, information and answers before deciding', 'A clear list of questions that must be answered before any decision can be reasonably made — what we have, what we do not have, the answer if known, and suggestions for how to discover missing information.', body)
 
 # ====================================================================== review
 def build_review():
@@ -1444,7 +1566,8 @@ def main():
     open(os.path.join(OUT, 'style.css'), 'w').write(CSS)
     open(os.path.join(OUT, 'app.js'), 'w').write(JS)
     for f in (build_index, build_decision, build_projections, build_blackswan, build_process, build_law,
-              build_estate, build_costs, build_flagged, build_suggestions, build_questions, build_sources, build_verification, build_requirements, build_review):
+              build_estate, build_costs, build_questions, build_suggestions, build_flagged, build_sources,
+              build_verification, build_requirements, build_review):
         f()
     if ROOT_MODE:
         build_versions()
