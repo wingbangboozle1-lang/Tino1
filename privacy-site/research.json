@@ -142,16 +142,6 @@
       "url": "https://www.ftb.ca.gov/forms/2025/2025-540-booklet.html",
       "finding": "Beginning tax year 2025, California renamed the 1% millionaire surtax on taxable income over $1,000,000 from Mental Health Services Tax to Behavioral Health Services Tax."
     },
-    "cupwater": {
-      "title": "City of Cupertino · Water Service Areas",
-      "url": "https://www.cupertino.gov/Residents/Utilities/Water",
-      "finding": "Cupertino is divided across three separate water utilities: California Water Service (NE), San Jose Water Company (SE), and Cupertino Municipal Water System (W, leased to SJWC through 2036)."
-    },
-    "sfpuc": {
-      "title": "SFPUC · Water & Sewer Rate Adjustments",
-      "url": "https://www.sfpuc.gov/sites/default/files/agendas-minutes-rate-fairness-board/6a-Rates-Presentation.pdf",
-      "finding": "Approved FY2026-27 and FY2027-28 adjustments raise water +7.0%/yr, residential wastewater +10.8%/+10.1%, stormwater +53.3%/+43.1%, and average combined SF residential bills +10.5% and +12.5%."
-    },
     "sos26": {
       "title": "CA Secretary of State · 2026 Ballot Measures",
       "url": "https://electionresults.sos.ca.gov/returns/ballot-measures",
@@ -165,7 +155,7 @@
     "cpucfixed": {
       "title": "CPUC · Resolution E-5354 (Base Services Charge)",
       "url": "https://docs.cpuc.ca.gov/PublishedDocs/Published/G000/M555/K816/555816677.pdf",
-      "finding": "Implements AB 205 income-graduated electric fixed Base Services Charge (Q1 2026 PG&E rollout) with reduced fixed tiers for CARE/FERA and a standard Tier 3 fixed monthly charge."
+      "finding": "Implements AB 205 income-graduated electric fixed Base Services Charge (Q1 2026 rollout) with reduced fixed tiers for CARE/FERA and a standard Tier 3 fixed monthly charge."
     }
   },
   "rejected_links": [
