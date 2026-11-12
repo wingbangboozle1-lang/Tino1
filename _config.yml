@@ -55,3 +55,4 @@ exclude:
   - 'privacy-site/illustrations.py'
   - 'privacy-site/research.json'
   - 'privacy-site/test_illustrations.py'
+  - 'privacy-site/__pycache__'

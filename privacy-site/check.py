@@ -6,7 +6,7 @@ import json
 import re
 
 ROOT = Path(__file__).parent/'public'
-NAV = {'index.html','decision.html','projection.html','stress.html','process.html','law.html','costs.html','questions.html','suggestions.html','flagged.html'}
+NAV = {'index.html','decision.html','projection.html','stress.html','process.html','law.html','costs.html','questions.html','suggestions.html','suggestions-detail.html','flagged.html'}
 FILES = NAV | {'style.css'}
 SOURCES = {s['url'] for s in json.loads((ROOT.parent/'research.json').read_text())['sources'].values()}
 
