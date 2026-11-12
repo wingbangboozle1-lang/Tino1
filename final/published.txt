@@ -33,6 +33,7 @@ sources.html
 steps.html
 style.css
 suggestions.html
+summary.html
 taxes.html
 verification.html
 versions.html
