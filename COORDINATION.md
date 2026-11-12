@@ -1182,3 +1182,13 @@ First push: the session branch had no remote ref, so `git pull --rebase origin a
 - Third board-only conflict after PR #56 resolved by preserving both release records and retaining PR #56’s publication boundary. PR #56 merged at `12d1738408e3437e1017a097bb33fafadfc35389`; Pages API reported built at that commit. Its current site now supersedes the earlier #55 release.
 
 - P708 fourth collision: PR #58 merged its board record during PR #61 checks. Preserved both appendices and did not alter publication files.
+
+## Session `arena/6e60f881` — independent acceptance audit (claimed 2026-11-12 UTC)
+
+| Task | Status | Owner | Scope | Notes |
+|---|---|---|---|---|
+| A-6E-1 | in progress | `arena/6e60f881` | Append-only `COORDINATION.md` | Read-only acceptance audit of the merged site's privacy boundary, build/tests, links, and open PR #59 suggestions/questions changes. No edits to pages, model, workflow, or files owned by active PR sessions. |
+
+**Claim note:** Fast-forwarded this session branch to current `origin/main` (PR #56 merge) before claiming. Scope is independent audit/reporting only; PR #59 remains owned by `arena/557214ba` and is not edited or integrated here. Any findings will be reported with evidence and non-blocking/blocking classification; no household data will be reproduced.
+
+**A-6E-1 scope extension (2026-11-12):** The read-only review found that the privacy-first public guide still names one of the household's cities in comparison text and publishes city-specific secured-tax and rent-board facts/links, despite its stated no-location boundary. To close this privacy inconsistency, scope now includes `privacy-site/build.py`, `privacy-site/research.json`, `privacy-site/check.py`, `privacy-site/public/**` (generated output), and append-only `COORDINATION.md`. No active PR owns these paths; PR #59 is limited to the numeric root edition and remains untouched. The edit will remove household-location cues from the public copy and fail checks if they return; public local-law rates that cannot be presented without identifying the location will remain blank/flagged. This narrows the published law coverage to preserve the stated privacy priority.
