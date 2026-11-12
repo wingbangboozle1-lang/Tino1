@@ -89,6 +89,7 @@ NAV = [
     ('costs.html', 'Insurance and costs'),
     ('flagged.html', 'Flagged for Review'),
     ('sources.html', 'Sources and method'),
+    ('verification.html', 'Verification'),
     ('requirements.html', 'Requirements'),
     ('review.html', 'Repo review'),
 ] + ([('versions.html', 'Earlier versions')] if os.environ.get('ROOT_MODE') else [])
@@ -188,7 +189,7 @@ def kpi(label, value, sub=''):
 def build_index():
     by = M['by_T']
     cards = ''.join([
-        kpi('Best financial outcome', 'Sell Property A, keep Property B', 'ahead in the baseline; across 50 real historical sequences it leads in %d after 10 years and in %d after 20' % (RH['10']['wins']['sell'], RH['20']['wins']['sell'])),
+        kpi('Best financial outcome (conditional)', 'Sell Property A, keep Property B', 'ahead in the baseline; across 50 real historical sequences it leads in %d after 10 years and in %d after 20 - a model result on the assumptions flagged %s and %s, not a verified forecast' % (RH['10']['wins']['sell'], RH['20']['wins']['sell'], flag('A01'), flag('A02'))),
         kpi('Property A at inheritance (%d)' % T, m(B['fmv_T']), 'from %s today at 4.0%% a year (assumption)' % m(P['cup_value'])),
         kpi('Property A tax: today / if lived in / if rented', '%s / %s / %s' % (m(P['cup_tax_2025']), m(B['tax_live_T']), m(B['tax_rent_T'])), 'per year; first year after inheritance'),
         kpi('Property B tax advantage kept by not selling', m(sf_gap) + ' a year', 'difference between tax on market value and on the current assessed value'),
@@ -219,14 +220,14 @@ def build_index():
             ['Property-tax reassessment', 'Yes. Full market value if rented or left empty; partial relief only if the Inheritor moves in within one year.', 'None. The assessed value stays on its current base with at most 2% a year.', src('BOE-P19', 'RTC-63.2')],
             ['Income-tax basis', 'Reset to market value at the date of death if the home is included in the Transferor\'s gross estate. A sale soon after has almost no taxable gain.', 'No reset. The Inheritor keeps the existing basis, so a sale is taxed on the whole gain since acquisition.', src('IRS-FAQ-INHERIT', 'RR-2023-2')],
             ['Counted in the Transferor\'s taxable estate', 'Yes, with the cash.', 'No.', src('IRS-ESTATE')],
-            ['Value today / assessed value today', '%s / %s' % (m(P['cup_value']), m(P['cup_assessed'])), '%s / %s' % (m(P['sf_value']), m(P['sf_assessed'])), src('SCC-RATES', 'SF-TAX')],
-            ['What it earns today', 'Nothing (the Transferor lives in it).', '%s a year from two rented units; the third unit is free for the Inheritor.' % m(P['sf_rent_2units']), src('SF-RENT-RULES')],
+            ['Value today / assessed value today', '%s / %s' % (m(P['cup_value']), m(P['cup_assessed'])), '%s / %s' % (m(P['sf_value']), m(P['sf_assessed'])), src('SCC-RATES', 'SF-TAX') + ' &middot; owner-supplied figures, rounded to $10 and not confirmable on an official page %s' % flag('P03')],
+            ['What it earns today', 'Nothing (the Transferor lives in it).', '%s a year from two rented units; the third unit is free for the Inheritor.' % m(P['sf_rent_2units']), src('SF-RENT-RULES') + ' &middot; owner-supplied figure, rounded to $10 and not confirmable on an official page %s' % flag('P03')],
         ], caption='Why the two homes must be treated differently')
     plan = """
 <ol class="plan">
 <li><strong>Keep Property B and keep living in its third unit.</strong> Its assessed value is %s against a market value of %s, which saves about %s of property tax every year, and that saving is lost for good if it is sold. It also has no basis reset, so selling it would tax the whole gain. It already produces %s a year.</li>
 <li><strong>Sell Property A within a few months of inheriting it and invest the proceeds in a diversified stock fund.</strong> With the basis reset to the date-of-death value the sale has no taxable gain (the model shows a small loss of %s from selling costs). About %s is released. In the baseline it grows to %s by 2076 after all taxes (%s in 2026 dollars), against %s if rented and %s if lived in.</li>
-<li><strong>Expect the first ten years to be the risky ones.</strong> Replaying the real 1976-2025 record from each of its 50 starting years, selling is ahead of renting in %d of 50 cases ten years after the inheritance and in all 50 after twenty. In the worst ten-year case selling is behind by %s (2026 dollars). A long stagnation of the kind Japan had after 1990 is the one tested path where selling into stocks ends up behind keeping the house. Investing the proceeds in stages and keeping a few years of spending in Treasury bills narrows that risk.</li>
+<li><strong>Expect the first ten years to be the risky ones.</strong> Replaying the real 1976-2025 record from each of its 50 starting years, selling is ahead of renting in %d of 50 cases ten years after the inheritance and in all 50 after twenty. In the worst ten-year case selling is behind by %s (2026 dollars). A long stagnation of the kind Japan had after 1990 is the worst tested path for selling into stocks: renting ends ahead in it, and renting also edges ahead in the 1929-1941 Depression path - the only two named paths where selling into stocks loses to renting (see the Black swan section). Investing the proceeds in stages and keeping a few years of spending in Treasury bills narrows that risk.</li>
 <li><strong>Do not sell and park the money in savings.</strong> If the proceeds would sit in savings or Treasury bills at about 3.5%%, keeping the house as a rental comes out ahead (%s against %s in 2026 dollars).</li>
 <li><strong>Living in Property A is a lifestyle choice with a price.</strong> The assessed value jumps from %s to %s even with the Proposition 19 relief, so the tax bill rises from about %s to about %s a year. Compared with selling, living there costs about %s of 2076 wealth in 2026 dollars.</li>
 <li><strong>Before anything else, have the trust read by an estate attorney.</strong> The whole result depends on the home being included in the Transferor's gross estate so that the basis resets. If it is not, selling triggers tax on decades of gain (the model shows %s less wealth in 2026 dollars). See the <a href="flagged.html">Flagged for Review</a> page.</li>
@@ -248,19 +249,21 @@ def build_index():
         ('estate-cash.html', 'Cash and estate tax', 'Thresholds, room before tax is due, and projections to 2050'),
         ('costs.html', 'Insurance and costs', 'What could and could not be confirmed for ZIP 95014 and 94122'),
         ('flagged.html', 'Flagged for Review', 'Every unconfirmed value, assumption and irregularity, with links'),
+        ('verification.html', 'Verification', 'Line-by-line check register: what was re-read on which official page, and what stays flagged'),
         ('requirements.html', 'Requirements', 'Every part of the brief, the page that answers it, and the official pages re-read on 2026-11-11'),
     ])
     body = """
 <section class="kpis">%s</section>
-<h2>Best plan and why</h2>%s
+<h2>Best plan and why - conditional on the assumptions in the flags</h2>%s
 <h2>After-tax wealth in 2076, in 2026 dollars (baseline, inheritance in %d)</h2>%s
 <p class="note">Wealth counts only what differs between the choices: Property A itself, every cash flow it causes, and rent from the Inheritor's vacated unit in Property B when the Inheritor moves to Property A. The two units already rented in Property B are the same in all three choices and are left out. All figures assume everything is sold and taxed at the end so that the choices can be compared like for like.</p>
 <h2>Dashboard</h2>
 <div class="seg" id="tsel" aria-label="Year of inheritance"><span>Year of inheritance:</span>%s</div>
 %s
+<p class="note"><strong>How to read the numbers.</strong> Three kinds of figures appear on this site. <strong>Official facts</strong> are quoted from the government page linked on the row. <strong>Owner-supplied figures</strong> (market values, rents, utilities, tax bills, insurance estimates) are the owner's own numbers: they are rounded to the nearest $10 for privacy, cannot be confirmed on an official page (%s), and the link on their row shows only the rule or index the calculation follows, not verification of the figure. <strong>Model outputs</strong> are projections from the assumptions on the <a href="flagged.html">Flagged for Review</a> page - conditional scenarios, not forecasts. Every headline fact was re-read on its official page in one pass: see the <a href="verification.html">Verification</a> register.</p>
 <h2>The two homes are not the same case</h2>%s
 <h2>Sections</h2><div class="cards">%s</div>
-""" % (cards, plan, T, chart, opts, dash, diff, links)
+""" % (cards, plan, T, chart, opts, dash, flag('P03'), diff, links)
     page('index.html', 'Executive summary',
          'Property A (Cupertino, 95014) will pass to the Inheritor through a trust some time around 2040 to 2050. Property B (San Francisco, 94122) is already owned by the Inheritor. This site works out, with official sources on every table row, whether to live in Property A, rent it out, or sell it and reinvest.', body)
 
@@ -437,6 +440,7 @@ def build_blackswan():
         ['Baseline (constant rates) for comparison', m(B['real_live']), m(B['real_rent']), m(B['real_sell']), src('FHFA-SJ', 'BLS-CPI')],
     ], caption='Replay of the real 1976-2025 sequence from every possible starting year (wrapped around to fill 2027-2076)', cls='num',
         note='Each replay keeps the real year-to-year order, so inflation, home prices and stocks move together as they actually did. The spread is very wide because the order of good and bad years matters: a boom just after the sale helps the seller, a crash just after hurts. Ten years after the inheritance selling is behind renting in %d of the 50 histories, by as much as %s; after twenty years it is ahead in every one. The 1976-2025 period was an unusually good one for United States stocks, which is why the Depression and Japan paths below are shown as well.' % (RH['10']['wins']['rent'], m(-RH['10']['sell_minus_rent_worst'])))
+    PD = {x['key']: x['summary'] for x in M['paths']}
     named = table(['Path', 'Market value at inheritance', 'Tax if lived in / rented, first year', 'Live in it', 'Rent it out', 'Sell and reinvest', 'Best', 'Official basis'], [
         [e(x['label']), m(x['summary']['fmv_T']), '%s / %s' % (m(x['summary']['tax_live_T']), m(x['summary']['tax_rent_T'])),
          m(x['summary']['real_live']), m(x['summary']['real_rent']), m(x['summary']['real_sell']), NAME[x['summary']['best']],
@@ -444,7 +448,7 @@ def build_blackswan():
         for x in M['paths']
     ] + [['Baseline (constant rates)', m(B['fmv_T']), '%s / %s' % (m(B['tax_live_T']), m(B['tax_rent_T'])), m(B['real_live']), m(B['real_rent']), m(B['real_sell']), NAME[B['best']], src('FHFA-SJ', 'BLS-CPI')]],
         caption='Named paths (wealth in 2076, in 2026 dollars; inheritance in %d)' % T, cls='num',
-        note='The Depression path uses national home-price data because no local index goes back that far (%s). The Japan path is the one case where selling into stocks fails outright: with the proceeds in stocks, renting ends ahead; had the proceeds been kept in savings instead, selling would have ended at %s against %s for renting (%s).' % (flag('S02'), m(JS_['real_sell']), m(JS_['real_rent']), flag('S08')))
+        note='The Depression path uses national home-price data because no local index goes back that far (%s). Selling into stocks ends behind renting in two of the named paths: the 1929-1941 Depression sequence (renting %s against %s for selling) and Japan-style stagnation (renting %s against %s), the worse of the two. In the Japan path, had the proceeds been kept in savings instead of stocks, selling would have ended at %s against %s for renting (%s).' % (flag('S02'), m(PD['depression_at_T']['real_rent']), m(PD['depression_at_T']['real_sell']), m(PD['japan_at_T']['real_rent']), m(PD['japan_at_T']['real_sell']), m(JS_['real_sell']), m(JS_['real_rent']), flag('S08')))
     PATHS = {x['key']: x for x in M['paths']}
     ch = lines([
         ('Baseline', COL['before'], {r['year']: r['cup_value'] / r['cpi'] for r in ROWS}),
@@ -652,6 +656,132 @@ def build_costs():
     body = ins + how + op + hist
     page('costs.html', 'Insurance and running costs',
          'Home insurance for ZIP 95014, rental-property insurance for ZIP 94122, and the utility and repair figures used in the projections.', body)
+
+
+# ====================================================================== verification
+def build_verification():
+    v = [
+        ('Federal estate-tax filing threshold, year of death 2026',
+         'A return is required when the gross estate plus adjusted taxable gifts exceeds $15,000,000 (2026)',
+         'Confirmed on the page', src('IRS-ESTATE')),
+        ('Federal basic exclusion for 2027',
+         'Rev. Proc. 2026-35 section 3.44: $15,480,000 for calendar year 2027',
+         'Confirmed - the figure the estate projections start from', src('RP-2026-35')),
+        ('Annual gift exclusion for 2027',
+         'Rev. Proc. 2026-35 section 3.46: $20,000',
+         'Confirmed on the page', src('RP-2026-35')),
+        ('The 2026 exclusion is set by statute',
+         'Public Law 119-21 (signed 2025-07-04) raises the basic exclusion to $15,000,000 for 2026',
+         'Confirmed on the page', src('IRS-NEW')),
+        ('Basis of inherited property',
+         'Generally the fair market value at the date of death (or the alternate valuation date if elected on Form 706); a sale above basis is a taxable gain',
+         'Confirmed - the basis reset the plan depends on', src('IRS-FAQ-INHERIT')),
+        ('Trusts outside the gross estate',
+         'Rev. Rul. 2023-2: the section 1014 basis adjustment generally does not apply to assets of an irrevocable grantor trust not included in the deceased grantor\'s gross estate',
+         'Confirmed - the basis of flag Q01', src('RR-2023-2')),
+        ('Home-sale exclusion',
+         'Up to $250,000 ($500,000 on a joint return); ownership and use tests of 24 months in the 5 years before the sale',
+         'Confirmed on the page', src('IRS-TC701')),
+        ('Capital-gain rates',
+         '0%, 15% or 20% by income; unrecaptured section 1250 gain taxed at up to 25%',
+         'Confirmed on the page', src('IRS-TC409')),
+        ('Net investment income tax',
+         '3.8% on rents, dividends, interest and gains above $200,000 single / $250,000 joint modified AGI',
+         'Confirmed on the page', src('IRS-TC559')),
+        ('Form 706 deadline and portability',
+         'Nine months after the date of death; Form 4768 gives six months more; Rev. Proc. 2022-32 allows a late portability election to the fifth anniversary',
+         'Confirmed - matches the Process page', src('IRS-FAQ-ESTATE')),
+        ('California estate or inheritance tax',
+         'No California estate tax return is required for deaths on or after 2005-01-01',
+         'Confirmed - California adds no death tax', src('SCO-ESTATE')),
+        ('Proposition 13 growth cap',
+         'R&TC 51(a)(1)(D): in no event shall the annual inflation increase exceed 2 percent of the prior year\'s value',
+         'Confirmed - the 2% cap used in every projection', src('RTC-51')),
+        ('Proposition 19 family-home exclusion',
+         'Principal residence of transferor and transferee; value limit = current taxable value plus $1,000,000, adjusted every two years; homeowners\' exemption within one year; claim within three years',
+         'Confirmed - the rule the model applies', src('BOE-P19')),
+        ('Proposition 19 allowance amount',
+         '$1,044,586 for transfers 2025-02-16 through 2027-02-15; adjusted every other February 16 by the FHFA California house-price change (2.15% for 2024); next adjustment February 2027',
+         'Confirmed - matches the model input', src('BOE-LTA-2025-009')),
+        ('Proposition 19 formula, definitions',
+         'LTA 2026/026 (2026-08-03): excluded amount = factored base year value plus the adjusted $1 million; new taxable value = factored base year value plus the excess; transfers through a trust are covered; continual use required',
+         'Confirmed - the formula tested against the worked example', src('BOE-LTA-2026-026')),
+        ('Trustee notification after death',
+         'Within 60 days after a revocable trust becomes irrevocable by death; the notice must carry the 120-day / 60-day contest warning',
+         'Confirmed - matches the Process page', src('PROB-16061.7')),
+        ('Change in ownership statement',
+         'Filed by the trustee or transferee within 150 days after the date of death for a transfer through a trust',
+         'Confirmed on the page', src('RTC-480')),
+        ('Homeowners\' exemption',
+         '$7,000 off the taxable value for an owner-occupied home; one-time claim BOE-266; file by February 15 for the full year',
+         'Confirmed on the page', src('BOE-HOX')),
+        ('San Francisco secured property-tax rate',
+         'The secured rate for fiscal year 2026-27 is 1.18162182%',
+         'Confirmed - the rate used for Property B', src('SF-TAX')),
+        ('Santa Clara County tax rates',
+         'Tax Rate Book FY2025-26: 1% maximum levy plus voter-approved bond rates; the Cupertino-area school and college components are listed in the summary tables',
+         'Book and components confirmed. The exact tax rate area of Property A is unknown, so its composite rate stays flagged %s' % flag('U03'), src('SCC-RATES')),
+        ('HUD rent standard, ZIP 95014',
+         'FY2026 Small Area Fair Market Rent: four-bedroom $6,390 a month (three-bedroom $5,870)',
+         'Confirmed - the rent input on the Decision page', src('HUD-95014')),
+        ('Estate-tax closing-letter fee',
+         'What\'s New: TD 10055 raised the fee from $56 to $76 on 2026-10-26. The FAQ page still calls the earlier fee $67 (TD 9957)',
+         'The two IRS pages disagree with each other - irregularity %s; the fee is used in no calculation' % flag('S01'), src('IRS-NEW', 'IRS-FAQ-ESTATE')),
+    ]
+    t1 = table(['What was checked', 'What the official page says', 'Result', 'Official page (open it to re-check by hand)'],
+               [[a, b_, c, d] for a, b_, c, d in v],
+               caption='Re-verified on the official page itself on 2026-11-11 (independent pass, session faccd46d)')
+    u = [
+        ('Home-insurance premium for ZIP 95014 and landlord premium for ZIP 94122',
+         'The Department of Insurance comparison tool is interactive; its ZIP-level results are not published as a readable page, and the tool states its results are not quotes',
+         'ZIP-level figure left blank. The model uses the owner\'s estimate of $1,500 a year beside the official statewide average, and shows that tripling it does not change the ranking',
+         src('CDI-TOOL') + ' ' + flag('U01')),
+        ('Earthquake-insurance premium',
+         'Published only through the same interactive tool',
+         'Left blank and not included in any cost line',
+         src('CDI-EQ') + ' ' + flag('U02')),
+        ('Exact tax rate area and fixed charges of Property A',
+         'The rate area is printed on the tax bill; it is not published per parcel',
+         'Rate built from the county-wide table; fixed charges derived as bill minus rate times assessed value',
+         src('SCC-RATES') + ' ' + flag('U03')),
+        ('Proposition 19 allowance from 2027-02-16',
+         'The next Board of Equalization letter has not been published',
+         'Left blank; the model applies the official mechanism (one year of California house-price change every second February) as a labelled stand-in',
+         src('BOE-LTA-2025-009') + ' ' + flag('U04')),
+        ('Solar interconnection date and tariff at Property A',
+         'Recorded in the utility agreement, not on a public page',
+         'Keeps the owner\'s credit of $10 to $20 a month; the credit may shrink when the 20-year net-metering period ends',
+         src('CPUC-NEM') + ' ' + flag('U05')),
+        ('Owner-supplied figures (market values, rents, utilities, tax bills)',
+         'The owner\'s own numbers cannot be verified against an official source; the assessment roll publishes assessed values, not the figures supplied here',
+         'Shown only rounded to $10 and labelled owner-supplied; the year-by-year history is not published',
+         src('SCC-RATES') + ' ' + flag('P03')),
+    ]
+    t2 = table(['What was checked', 'Why no official page can confirm it', 'What the site does', 'Where to check'],
+               [[a, b_, c, d] for a, b_, c, d in u],
+               caption='Not confirmable from an official source - left blank or labelled, and flagged')
+    s = [
+        ('S01', 'Two IRS pages disagree on the earlier estate-tax closing-letter fee: the FAQ page says $67 (TD 9957) while What\'s New says the fee was $56 before TD 10055 raised it to $76',
+         'Recorded; the fee is used in no calculation', src('IRS-NEW', 'IRS-FAQ-ESTATE')),
+        ('S03', 'The Santa Clara County Assessor\'s Proposition 19 page says the $1 million allowance is adjusted "annually"; the Board of Equalization letter says every other February 16',
+         'The Board of Equalization letter is followed', src('SCC-P19', 'BOE-LTA-2025-009')),
+        ('S05', 'November 2026 ballot results are unofficial until certification',
+         'Shown as unofficial with the date read; re-read after 2026-12-11', src('SOS-RESULTS')),
+        ('U03', 'The Santa Clara tax rate book sets rate names and numbers in two columns; the pairing used for the Cupertino components is an inference, corroborated by reproducing the rounded current bill',
+         'Kept as a labelled inference and flagged', src('SCC-RATES')),
+    ]
+    t3 = table(['No.', 'Irregularity in the source itself', 'What the site does', 'Sources'],
+               [[a, b_, c, d] for a, b_, c, d in s],
+               caption='Irregularities found in the sources themselves')
+    body = """
+<p class="callout">This page is the manual-review register for the whole site: one row per check, with the government page to open and re-read. Every row was checked against the official page itself on 2026-11-11 in a single independent pass (session faccd46d). Anything that could not be confirmed is left blank or labelled and carries a flag.</p>
+%s
+%s
+%s
+<p class="note"><strong>What this pass does not establish.</strong> Model outputs and projections are conditional scenarios built on the assumptions in the flags; no official page can verify a forecast. The automated checker (<a href="%s/blob/main/final/check.py">final/check.py</a>) proves only that every table row carries an official link, that dollar figures are rounded to $10, and that no stored fingerprint of an unrounded owner figure appears in the tree - it does not prove that each link supports each cell. This register exists so every claim can be checked by hand against its link. People remain placeholders (the Transferor, the Inheritor); no names, addresses or parcel numbers appear anywhere.</p>
+""" % (t1, t2, t3, REPO)
+    page('verification.html', 'Verification',
+         'Independent verification pass of 2026-11-11: every headline legal and financial fact re-read on its official page, each check linked for manual review, everything unconfirmable left blank and flagged.', body)
 
 
 # ====================================================================== flagged
@@ -1001,7 +1131,7 @@ def main():
     open(os.path.join(OUT, 'style.css'), 'w').write(CSS)
     open(os.path.join(OUT, 'app.js'), 'w').write(JS)
     for f in (build_index, build_decision, build_projections, build_blackswan, build_process, build_law,
-              build_estate, build_costs, build_flagged, build_sources, build_requirements, build_review):
+              build_estate, build_costs, build_flagged, build_sources, build_verification, build_requirements, build_review):
         f()
     if ROOT_MODE:
         build_versions()
