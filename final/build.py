@@ -176,7 +176,7 @@ for x in M['replays']:
 rep_sorted = lambda k: sorted(x['real_' + k] for x in M['replays'])
 RH = M['replay_horizons']
 JS_ = M['japan_savings']
-VERIFY = REPO + '/blob/main/verify-4395771d/site/index.html'   # superseded copy lives in the repository, not on the site
+VERIFY = REPO + '/blob/main/verify-4395771d/site/index.html'   # repository file, never a published path
 NAME = {'live': 'Live in it', 'rent': 'Rent it out', 'sell': 'Sell and reinvest'}
 SRC_MODEL_TAX = ('SCC-RATES', 'BOE-LTA-2026-026')
 
@@ -260,7 +260,7 @@ def build_index():
 <h2>Dashboard</h2>
 <div class="seg" id="tsel" aria-label="Year of inheritance"><span>Year of inheritance:</span>%s</div>
 %s
-<p class="note"><strong>How to read the numbers.</strong> Three kinds of figures appear on this site. <strong>Official facts</strong> are quoted from the government page linked on the row. <strong>Owner-supplied figures</strong> (market values, rents, utilities, tax bills, insurance estimates) are the owner's own numbers: they are rounded to the nearest $10 for privacy, cannot be confirmed on an official page (%s), and the link on their row shows only the rule or index the calculation follows, not verification of the figure. <strong>Model outputs</strong> are projections from the assumptions on the <a href="flagged.html">Flagged for Review</a> page - conditional scenarios, not forecasts. Every headline fact was re-read on its official page in one pass: see the <a href="verification.html">Verification</a> register.</p>
+<p class="note"><strong>How to read the numbers.</strong> Three kinds of figures appear on this site. <strong>Official facts</strong> are quoted from the government page linked on the row. <strong>Owner-supplied figures</strong> (market values, rents, utilities, tax bills, insurance estimates) are the owner's own numbers: they are rounded to the nearest $10 for privacy, cannot be confirmed on an official page (%s), and the link on their row shows only the rule or index the calculation follows, not verification of the figure. <strong>Model outputs</strong> are projections from the assumptions on the <a href="flagged.html">Flagged for Review</a> page - conditional scenarios, not forecasts. Every headline fact was re-read on its official page in two independent passes, on 2026-11-11 and again on 2026-11-12: see the <a href="verification.html">Verification</a> register.</p>
 <h2>The two homes are not the same case</h2>%s
 <h2>Sections</h2><div class="cards">%s</div>
 """ % (cards, plan, T, chart, opts, dash, flag('P03'), diff, links)
@@ -773,15 +773,59 @@ def build_verification():
     t3 = table(['No.', 'Irregularity in the source itself', 'What the site does', 'Sources'],
                [[a, b_, c, d] for a, b_, c, d in s],
                caption='Irregularities found in the sources themselves')
+    w = [
+        ('Federal filing threshold for a 2026 death',
+         'The FAQ table ends at 2026: $15,000,000, and the return is required above it (gross estate plus adjusted taxable gifts)',
+         'Confirmed today', src('IRS-ESTATE')),
+        ('Basic exclusion and annual gift exclusion for 2027',
+         'IR-2026-133 of 2026-11-05: basic exclusion $15,480,000 for 2027 decedents; first $20,000 of gifts per person excluded (up from $19,000 for 2026)',
+         'Confirmed today - matches Rev. Proc. 2026-35 as quoted', src('RP-2026-35')),
+        ('The 2026 exclusion is statutory',
+         'What\'s New: Public Law 119-21 (signed 2025-07-04) amends section 2010(c)(3), raising the basic exclusion to $15,000,000 for calendar 2026',
+         'Confirmed today', src('IRS-NEW')),
+        ('Form 706 deadline and the late portability route',
+         'Nine months after death; Form 4768 gives an automatic six months; Rev. Proc. 2022-32 allows a portability election up to the fifth anniversary where there is no filing requirement',
+         'Confirmed today - matches the Process page', src('IRS-FAQ-ESTATE')),
+        ('Estate-tax closing-letter fee (flag S01)',
+         'The FAQ still prints $67 (TD 9957, 2021) while What\'s New prints $76 effective 2026-10-26 (TD 10055, up from $56)',
+         'Disagreement confirmed today on both pages; the fee enters no calculation', src('IRS-FAQ-ESTATE', 'IRS-NEW')),
+        ('California estate tax',
+         'No California estate tax return is required for decedents dying on or after 2005-01-01; the state death tax credit was eliminated from that date',
+         'Confirmed today - California adds no death tax', src('SCO-ESTATE')),
+        ('Proposition 13 cap',
+         'R&amp;TC 51(a)(1)(D): the annual inflation increase shall not exceed 2 percent of the prior year\'s value',
+         'Confirmed today word for word', src('RTC-51')),
+        ('Proposition 19 allowance in force now',
+         'NR 25-02: $1,044,586 for transfers from 2025-02-16 through 2027-02-15, a 2.15% rise from $1,022,600; the homeowner\'s or disabled veteran\'s exemption must be claimed within one year',
+         'Confirmed today - the model input', src('BOE-LTA-2025-009')),
+        ('Trustee notification deadline',
+         'Probate Code 16061.7(f): served not later than 60 days after the event, or 60 days after the trustee learns of a person entitled to notice',
+         'Confirmed today - the first deadline on the Process page', src('PROB-16061.7')),
+        ('Change in ownership statement deadline',
+         'R&amp;TC 480(e): where the change in ownership occurred by reason of death, the statement is filed within 150 days after the date of death',
+         'Confirmed today', src('RTC-480')),
+        ('San Francisco secured tax rate',
+         'The secured property tax rate for fiscal year 2026-27 is 1.18162182%',
+         'Confirmed today - the rate applied to Property B in every projection', src('SF-TAX')),
+        ('Cupertino market-rent benchmark',
+         'FY2026 Small Area Fair Market Rent for ZIP 95014: four-bedroom $6,390 a month, three-bedroom $5,870',
+         'Confirmed today - the rent used in the rent-it-out case', src('HUD-95014')),
+    ]
+    t4 = table(['What was checked', 'What the official page said when it was opened', 'Result', 'Official page'],
+               [[a, b_, c, d] for a, b_, c, d in w],
+               caption='Second independent re-read, 2026-11-12 (session e8636cac), on the official pages themselves')
     body = """
-<p class="callout">This page is the manual-review register for the whole site: one row per check, with the government page to open and re-read. Every row was checked against the official page itself on 2026-11-11 in a single independent pass (session faccd46d). Anything that could not be confirmed is left blank or labelled and carries a flag.</p>
+<p class="callout">This page is the manual-review register for the whole site: one row per check, with the government page to open and re-read. The first register below was checked against the official pages on 2026-11-11 (session faccd46d). A second, independent pass on 2026-11-12 (session e8636cac) re-opened the twelve pages the plan depends on most and is printed as its own table, so the two passes can be compared. Anything that could not be confirmed is left blank or labelled and carries a flag.</p>
 %s
 %s
 %s
+<h2>Second independent re-read, 2026-11-12</h2>
+%s
+<p class="note">What the second pass did <em>not</em> re-open, and therefore does not claim to have re-checked today: the inherited-property basis rules and Rev. Rul. 2023-2, the home-sale and capital-gain topics, the investment-income tax, Board of Equalization letter 2026/026, the Santa Clara County rate book, the homeowners\' exemption amount, the solar and net-metering material, the San Francisco rent-increase rules and the insurance comparison tool. Those rows stand on the 2026-11-11 pass and keep their links.</p>
 <p class="note"><strong>What this pass does not establish.</strong> Model outputs and projections are conditional scenarios built on the assumptions in the flags; no official page can verify a forecast. The automated checker (<a href="%s/blob/main/final/check.py">final/check.py</a>) proves only that every table row carries an official link, that dollar figures are rounded to $10, and that no stored fingerprint of an unrounded owner figure appears in the tree - it does not prove that each link supports each cell. This register exists so every claim can be checked by hand against its link. People remain placeholders (the Transferor, the Inheritor); no names, addresses or parcel numbers appear anywhere.</p>
-""" % (t1, t2, t3, REPO)
+""" % (t1, t2, t3, t4, REPO)
     page('verification.html', 'Verification',
-         'Independent verification pass of 2026-11-11: every headline legal and financial fact re-read on its official page, each check linked for manual review, everything unconfirmable left blank and flagged.', body)
+         'Two independent verification passes - 2026-11-11 and 2026-11-12: every headline legal and financial fact re-read on its official page, each check linked for manual review, everything unconfirmable left blank and flagged.', body)
 
 
 # ====================================================================== flagged
@@ -1040,7 +1084,7 @@ LEGACY = [
 
 
 def build_versions():
-    rows = [['<a href="%s/blob/main/%s">%s</a>' % (REPO, h, e(t)), 'Superseded - kept for the record, carries a notice at the top', e(why), src(*s_)] for h, t, why, s_ in LEGACY]
+    rows = [['<a href="%s/blob/main/%s" rel="noopener">%s</a>' % (REPO, h, e(t)), 'Superseded - kept for the record in the repository, not published on this site', e(why), src(*s_)] for h, t, why, s_ in LEGACY]
     t = table(['Earlier version', 'Status', 'Why it should not be relied on', 'Rule it is measured against'], rows, caption='Earlier versions kept in the repository')
     body = '<p class="callout">This site is the only current version. The pages below were written by earlier or parallel work sessions. They are kept so that nothing is lost, each carries a notice pointing back here, and none is linked from anywhere else on this site. Their numbers differ from this site because their assumptions and, in places, their reading of the rules differ.</p>' + t + '<p class="note">Details of each finding are on the <a href="review.html">Repo review</a> page and in <a href="%s/blob/main/COORDINATION.md">COORDINATION.md</a>.</p>' % REPO
     page('versions.html', 'Earlier versions', 'Older editions of this analysis that remain in the repository, and why this site replaces them.', body)
