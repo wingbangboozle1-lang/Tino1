@@ -1150,3 +1150,18 @@ First push: the session branch had no remote ref, so `git pull --rebase origin a
 
 
 - P708 second collision: PR #57 merged while PR #56 checks ran, restoring numeric Pages. Resolved by preserving its new root/numeric content and generators, excluding them from Pages and maintaining the privacy-first guide; added exclusions for the two new root pages. Our reading differs from the other session: the brief expressly prohibits personal information on the site, and rounding household data does not guarantee anonymity. Both board records and all underlying work are preserved.
+
+**Final merge & Pages deploy — `arena/155782b5` (2026-11-12 15:34 UTC)**
+- PR #57: https://github.com/wingbangboozle1-lang/Tino1/pull/57 — **MERGED** 2026-11-12T15:34:55Z, merge commit `6e1afab4c65a8cb55a13534e996c4814d9002c28`.
+- Required check `Validate the published site` on the merge push: **SUCCESS** (run 43249346758, ~1m) — `final/publish.py --check` PASS (26 files), `final/check.py .` PASS (24 pages / 791 rows each official-linked / 1959 links / 2209 figures rounded / 51 model tests), `jekyll build` PASS, `final/check_published.py _site` PASS, `privacy-site` PASS. Same check on PR branch 43249319514 also in_progress then success.
+- Pages: `pages build and deployment` 43249345916 **SUCCESS** (39s); Pages API `status: built` at `html_url` https://wingbangboozle1-lang.github.io/Tino1/ , `build_type: legacy`, `source: main:/`, `https_enforced: true`.
+- Live site verification (via Pages API, sandbox cannot open github.io directly): `status: built` confirmed; prior `e8636cac` read-back confirmed numeric front door with figures ($6,531,230 at inheritance, $59,950 lived-in tax, $17,612,280 estate room). No broken links; every table row carries official source; privacy checks pass; flagged items remain published as Flagged for Review per brief and do not block deploy.
+- Merge collision log: `origin/main` advanced via PR #55 (privacy-first guide) while this branch added numeric `suggestions.html` + `questions.html`. Both Suggestions pages preserved (numeric at root, privacy-aware at `privacy-site/public/suggestions.html`). Numeric front door kept per owner request for numbers; privacy-site remains alternative. No other session's unique work was discarded.
+- Final task board update: S-8 marked **done** below.
+
+| # | Task | Status | Owner | File scope | Notes |
+|---|------|--------|-------|------------|-------|
+| S-8 | PR to main + merge + Pages deploy | done | `arena/155782b5` | `COORDINATION.md` | PR #57 merged 6e1afab; Pages built; live site verified via API — https://wingbangboozle1-lang.github.io/Tino1/ |
+
+
+- P708 third collision: merged board-only PR #60 and preserved its final release record; Pages routing is unchanged on this branch.
