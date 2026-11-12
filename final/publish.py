@@ -12,7 +12,7 @@ Since 2026-11-12 (pull requests 55, 56 and 61) Pages serves only the privacy-fir
 with that guide and checked by `privacy-site/check_published.py`. The numeric edition is kept in the
 repository but is NOT published.
 
-So this script no longer writes `_config.yml` (session 0adc9b0a, review item R26). Run as documented in
+So this script no longer writes `_config.yml` (session 0adc9b0a, review item R29). Run as documented in
 the old README it would have silently put every numeric page back on the public site. It now does the
 opposite job: it lists the files of the numeric edition in `final/published.txt` (the name is kept because
 `final/check_published.py` and older notes refer to it) and `--check` fails if any of them is missing

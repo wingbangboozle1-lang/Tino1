@@ -57,7 +57,7 @@ See the [Process page](./process.html): what to do before the death, in the firs
 
 ## What is verified, and what is not
 
-- Every table row on the site links to an official page; three passes (2026-11-11 and two on 2026-11-12) re-read the headline facts on the government pages, and all three are printed on the [Verification page](./verification.html).
+- Every table row on the site links to an official page; four passes (one on 2026-11-11 and three on 2026-11-12) re-read the headline facts on the government pages, and all four are printed on the [Verification page](./verification.html).
 - Owner-supplied figures (market values, rents, utility bills, insurance estimates) cannot be confirmed on an official page and are labelled (P03). Projections are conditional scenarios (A01-A10).
 - Open items are on the [Flagged for Review page](./flagged.html): the trust terms and basis (Q01), the estate contents (Q02), the tax rate area (U03), the Proposition 19 allowance after 2027-02-16 (U04), the solar tariff (U05), and the repository's public history (P01/P02).
 

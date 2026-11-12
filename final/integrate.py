@@ -21,7 +21,7 @@ CURRENT = ['summary.html', 'decision.html', 'projections.html', 'black-swan.html
            'estate-cash.html', 'costs.html', 'flagged.html', 'suggestions.html', 'questions.html', 'sources.html', 'verification.html', 'requirements.html',
            'review.html', 'versions.html']
 # The root index.html is the redirect to the privacy-first guide. It is not generated here and must never be archived or
-# overwritten by this script (session 0adc9b0a, review item R26).
+# overwritten by this script (session 0adc9b0a, review item R29).
 FRONT_DOOR = 'index.html'
 ATTR = re.compile(r'((?:href|src)=")([^"]*)(")')
 

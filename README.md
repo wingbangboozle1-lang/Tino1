@@ -24,7 +24,7 @@ The pages at the repository root are the only current edition. They are generate
 | `costs.html` | Insurance for both ZIP codes and running costs |
 | `flagged.html` | Flagged for Review: every unconfirmed value, assumption and irregularity, with links |
 | `sources.html` | Source register, method, cross-check against a second model |
-| `verification.html` | Verification: three check registers (2026-11-11 and two on 2026-11-12), every fact with its official link for manual review |
+| `verification.html` | Verification: four check registers (one on 2026-11-11 and three on 2026-11-12), every fact with its official link for manual review |
 | `requirements.html` | Every part of the brief, the page that answers it, and the official pages re-read on 2026-11-11 |
 | `review.html` | Repository review findings |
 | `suggestions.html` | Suggestions for review before anything is implemented, in two parts: S-01 to S-18, and an options register G01 to G15 |

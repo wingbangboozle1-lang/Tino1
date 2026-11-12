@@ -109,8 +109,8 @@ before the first property-tax bill, and in the first year, each step with its le
 
 ## What is verified, and what is not
 
-- Every table row on the site links to an official page; three passes (2026-11-11 and two on 2026-11-12) re-read the \
-headline facts on the government pages, and all three are printed on the [Verification page]({pages}/verification.html).
+- Every table row on the site links to an official page; four passes (one on 2026-11-11 and three on 2026-11-12) re-read the \
+headline facts on the government pages, and all four are printed on the [Verification page]({pages}/verification.html).
 - Owner-supplied figures (market values, rents, utility bills, insurance estimates) cannot be confirmed on an official \
 page and are labelled (P03). Projections are conditional scenarios (A01-A10).
 - Open items are on the [Flagged for Review page]({pages}/flagged.html): the trust terms and basis (Q01), the estate contents \

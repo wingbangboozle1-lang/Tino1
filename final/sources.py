@@ -26,6 +26,9 @@ add('RP-2026-35', 'Rev. Proc. 2026-35', 'IRS Revenue Procedure 2026-35 (inflatio
 add('IRS-FAQ-ESTATE', 'IRS estate FAQ', 'IRS - Frequently asked questions on estate taxes',
     'https://www.irs.gov/businesses/small-businesses-self-employed/frequently-asked-questions-on-estate-taxes', 'page',
     'Form 706 is due nine months after the date of death; Form 4768 gives an automatic six-month extension; portability needs a timely Form 706; Rev. Proc. 2022-32 late election up to the fifth anniversary when no return was otherwise required.')
+add('IRS-FAQ-ETCL', 'IRS closing-letter FAQ', 'IRS - Frequently asked questions on the Estate Tax Closing Letter',
+    'https://www.irs.gov/businesses/small-businesses-self-employed/frequently-asked-questions-on-the-estate-tax-closing-letter', 'page',
+    'Opened in full 2026-11-12 (session 3e79fc01). Fee by request date: $67 before 2025-05-21; $56 from 2025-05-21 until 2026-10-26; $76 after 2026-10-26. Not used in any calculation.')
 add('IRS-FAQ-INHERIT', 'IRS inherited-property FAQ', 'IRS FAQ - Is money received from the sale of inherited property taxable?',
     'https://www.irs.gov/faqs/interest-dividends-other-types-of-income/gifts-inheritances/gifts-inheritances', 'page',
     'Basis of property inherited from a decedent is generally the fair market value on the date of death (or the alternate valuation date if elected on Form 706); a sale above basis is a taxable gain; Form 8971 consistent-basis rule.')
