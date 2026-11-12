@@ -819,3 +819,33 @@ Scan used: every owner figure as a digit sequence with any optional separator be
 - **`faccd46d`:** your base predates PRs #34 and #36. Pages now builds through Jekyll with the exclude list in `_config.yml`, so none of the canonical root pages is served at the moment, and a new root file such as `verification.html` or `EXECUTIVE-SUMMARY.md` that is not in that list would be published on its own and fails the published-file check in CI. Your claim on `final/build.py` (FAC-1, FAC-2) is 27 seconds older than K3, so it holds: K3 waits for your PR and builds on top of it. `_config.yml` and the published-file list stay with K3 unless you say here that you take them.
 - **`8f259271`:** unchanged from above — K3 waits for your PR as well.
 - **All:** please do not re-add a fingerprint or hash file in any form (K1 finding 1).
+
+---
+
+## Session `e8636cac` (`arena/e8636cac-tino1`) — front-door reconciliation and publication (claimed 2026-11-12 04:20 UTC)
+
+**Branch:** `arena/e8636cac-tino1` (platform-fixed name; `session-<id>/<task>` cannot be used). **Base:** `main` @ `11ae16e` (PR #40).
+
+**State found at 04:15–04:25 UTC** (board read in full, all branches listed, PRs and Pages API read):
+
+| Fact | Evidence |
+|---|---|
+| `main` publishes only the edition **without** household figures (`privacy-site/public/`), through a Jekyll exclude list | `_config.yml`; Pages API `build_type: legacy`, source `main:/`; `privacy-site/check_published.py` |
+| The owner's brief requires the opposite: rounded figures, year-by-year projections, a black-swan section and a stated best plan on the site | owner brief (this session's task) |
+| PR #41 (`faccd46d`, integration: `verification.html`, `EXECUTIVE-SUMMARY.md`, provenance flags) is open but its required check **fails** | `gh pr checks 41` → `verify fail`; job 130562216201 step 5 |
+| PR #31 (`de9174cd`) is open, `CONFLICTING`, audit-only; its report is already carried in PR #41 | `gh pr view 31` |
+| Task K3 (reconcile the front door) was claimed by `8fc06844` and never completed; that claim is >60 min old with no commits | K3 row above; branch `arena/8fc06844-tino1` @ `0fc6636` |
+| Pages build type cannot be changed from this sandbox (HTTP 403), so publication stays Jekyll + exclude list | `gh api -X PUT .../pages -f build_type=workflow` → 403 |
+
+This session therefore takes over **K3/K4 only** (handoff recorded here), and nothing else:
+
+| # | Task | Status | Owner | File scope |
+|---|------|--------|-------|------------|
+| W1 | Take over K3: publish the owner-requested numeric edition at the front door — rounded figures, projections, black swan, stated plan — with the no-figures edition retained, and an exact publication allowlist so nothing else in the repository is served | claimed | `e8636cac` | `final/**`, root `*.html`, `_config.yml`, `.github/workflows/privacy-pages.yml`, `README.md` |
+| W2 | Diagnose and repair the failing Pages check so the deploy gate is green and self-diagnosing | claimed | `e8636cac` | `.github/workflows/privacy-pages.yml`, `final/check_published.py` (new) |
+| W3 | Independent re-verification of the headline legal and financial facts on the official pages, one pass, links recorded | claimed | `e8636cac` | `final/sources.py`, `final/verification.py` (new), `verification.html` |
+| W4 | PR → `main`, merge, confirm the Pages deploy, read the live pages, record here | claimed | `e8636cac` | `COORDINATION.md` |
+
+**Not touched:** `privacy-site/**` (kept unchanged as the edition without household figures), other sessions' audit directories, PR #31 (left to its owner; PR #41's content arrives by merge, nothing discarded).
+
+**Privacy position restated:** publishing rounded figures is the owner's explicit instruction. Rounding to $10, placeholders, no addresses/parcel numbers and `noindex` reduce but do not remove identifiability, and the public repository plus its Git history remain exposed. That limitation is already flagged (P01/P02) and stays flagged.
