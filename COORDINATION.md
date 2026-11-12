@@ -1180,7 +1180,6 @@ First push: the session branch had no remote ref, so `git pull --rebase origin a
 - Collision: PR #57 merged after PR #55 and restored the numeric front door. Its merge caused an append-only board conflict in PR #58; resolved by keeping both sessions’ complete records and all incoming files. The active privacy integrator on PR #56 has been notified and asked to restore the privacy-first boundary; this session will not alter that integrator’s claimed publishing files. The #55 deployment result above is historical, not a claim about the current front door.
 - A second board-only conflict occurred after PR #60; both complete appendices were preserved, without modifying incoming publication files.
 - Third board-only conflict after PR #56 resolved by preserving both release records and retaining PR #56’s publication boundary. PR #56 merged at `12d1738408e3437e1017a097bb33fafadfc35389`; Pages API reported built at that commit. Its current site now supersedes the earlier #55 release.
-
 - P708 fourth collision: PR #58 merged its board record during PR #61 checks. Preserved both appendices and did not alter publication files.
 
 ## Session `arena/6e60f881` — independent acceptance audit (claimed 2026-11-12 UTC)
@@ -1251,6 +1250,8 @@ Open PRs #62 (`arena/a6ec5b1d-tino1`) and #59 (`arena/557214ba-tino1`) also touc
 - GitHub Pages build for that merge commit succeeded: https://github.com/wingbangboozle1-lang/Tino1/actions/runs/43252758204 . Pages builds API reports `built` at `cc1138ef760d4708cbbae9e5fb9d050a032fb7cf` (updated 2026-11-12T15:54:36Z). Site: https://wingbangboozle1-lang.github.io/Tino1/
 - This merge does not change the privacy-first front door. `index.html`, `_config.yml`, the Pages workflow and `privacy-site/**` were not edited. The new questions and suggestions are on the numeric requirements page, which the current Pages exclude list does not publish. Suggestions remain proposed and not implemented. Flagged items do not block the deploy.
 - Local checks before merge: `python3 final/check.py .` passed (24 pages, 831 official-linked rows, figures rounded to $10, 51 model tests). `python3 privacy-site/check.py` passed. `python3 final/publish.py --check` still disagrees with the privacy exclude list and was not used to rewrite `_config.yml`.
+
+---
 
 ---
 
@@ -1582,3 +1583,43 @@ enforce the union allowlist from `final/publish.py` (39 files): exact set, byte-
 to repository sources, link integrity, noindex, PII scan, fresh-build identity. R29's
 concern is answered by those gates rather than by withholding the analysis the owner
 briefed. Owner-reversible exactly as D1's revert path says.
+
+
+<!-- CONCURRENT-BLOCK-SEAM: board union during the third integration merge; nothing discarded -->
+
+---
+
+## Session `arena/a6ec5b1d-tino1` — Nov 12 full-page verification pass, privacy-first Pages enrichment & repository reconciliation (2026-11-12 UTC)
+
+**Branch:** `arena/a6ec5b1d-tino1` (originally branched from `609d23f`, merged with `origin/main` @ `f82fbdf`, `3dbe7cb`, and `7b02eb8` after PR #56/#57/#58/#60/#61/#63/#64/#65/#66/#67/#68).
+
+**Reconciliation with `origin/main` (`7b02eb8`):**
+- While this branch completed a direct full-page verification of all remaining official sources and added `questions.html` + `suggestions.html`, `origin/main` merged PR #55/#56/#57/#58/#60/#61/#63/#64/#65/#66/#67/#68 — establishing the **privacy-first, locality-free GitHub Pages boundary** (`index.html`, `_config.yml`, `.github/workflows/pages.yml`, `privacy-site/check.py` locality guards), adding PR #64's `final/review_queue.py`, `IRS-FAQ-ETCL`, `Q15`–`Q18`, `S01` dated schedule, and `R19`–`R21`, and adding PR #66/#68's `summary.html` numeric home (`_config.yml` exclude + non-destructive `final/integrate.py`/`final/publish.py`), `final/questions.py`, `final/suggestions.py`, `READ_DATE`/`BUILD_DATE` split, `4th re-read` on `verification.html`, `HUD-SAFMR-INDEX`/`SF-LEG-261020`/`FR-FMR-2027`/SEC/CalBar/Digital.gov sources, `U09`, and `R22`–`R30` (`R31` assigned to `arena/a6ec5b1d`'s excerpt/deliverable audit).
+- **Boundary respected (addressing `arena/6e60f881` review on PR #62 & preserving PR #66 `FRONT_DOOR = 'index.html'`):** Removed city/utility-specific entries from `privacy-site/` (`cupwater`, `sfpuc`, `taxsf`, `sf`) and preserved `origin/main`'s privacy-first, city-agnostic Pages front door (`index.html`, `_config.yml` with `- 'summary.html'`, `.github/workflows/pages.yml`, `privacy-site/check.py` locality-cue assertions, `README.md` top publication update) completely intact — no household-derived figures or locality cues are published to GitHub Pages.
+- **Both layers enriched & merged cleanly:**
+  1. **`privacy-site/` (live GitHub Pages site):** Added 6 statewide/federal verified official 2026-11-12 entries to `privacy-site/research.json` (`sched_a`, `boepub`, `ftb540`, `sos26`, `cdires`, `cpucfixed` — preserving PR #63's city-agnostic `tenantlaw` and removing `taxsf`/`sf` locality cues) and updated `privacy-site/build.py` (`process.html`, `law.html`, `costs.html`, `suggestions.html`) + regenerated `privacy-site/public/**` (11 pages, 316 official-context rows, zero household figures or locality cues).
+  2. **`final/` (preserved numeric analysis at `summary.html`, excluded from Pages):** Opened all 8 additional official URLs from PR #66 (`SEC-TEN`, `SEC-ALLOC`, `CALBAR-SPEC`, `SCC-P19-EST`, `CAPF-BOE19P`, `FR-FMR-2027`, `SF-LEG-261020`, `DIGITAL-GOV`) directly on their agency domains and upgraded them alongside our 14 earlier sources in `final/sources.py` so **zero** official `excerpt` sources remain (`74` `page` + `1` `academic` `DAMODARAN`), preserved `final/review_queue.py` (`SG-1..SG-11`), PR #64 (`Q15`–`Q18`, `R19`–`R21`), and PR #66 (`HOME = 'summary.html'`, `READ_DATE`, `U09`, `R22`–`R30`, Part 2 `final/questions.py` & `final/suggestions.py`), unified `final/build.py` (`Pass 1`, `Pass 2`, PR #64 `Pass 3`, PR #66 `Fourth re-read`, and `a6ec5b1d` full-page direct-read register on `verification.html`; 2026-11-12 tax/water/ballot/File #261020 updates; unified Part 1 + Part 2 `questions.html` and `suggestions.html`), and updated `final/exec_summary.py` + `EXECUTIVE-SUMMARY.md`.
+
+| # | Task | Status | Owner | Scope | Notes |
+|---|---|---|---|---|---|
+| A6-1 | Add/unify pre-implementation **Site improvements** (`suggestions.html`) for reviewer selection | done | `arena/a6ec5b1d` | `final/build.py`, `final/suggestions.py`, `suggestions.html`, `privacy-site/build.py`, `privacy-site/public/suggestions.html` | Part 1 (`GAP-01..05`, `IMP-01..12`, Paths 1–3) + Part 2 (`G01..G15`), plus cross-link to `SG-1..SG-11`; privacy-safe summary updated too |
+| A6-2 | Add/unify **Questions & discovery** (`questions.html`) with known vs. unknown info & discovery steps | done | `arena/a6ec5b1d` | `final/build.py`, `final/questions.py`, `questions.html` | Part 1 (`Q01..Q06`, `Q15..Q18`, `U01..U09`, `BOE-266`-before-`BOE-19-P`, Cupertino 3 water utilities, timing plan) + Part 2 reading-dated decision register |
+| A6-3 | Full-page verification on `2026-11-12` of all remaining `excerpt` official sources (14 prior + 8 from PR #66) + 4 new official sources + Nov 11 ballot update | done | `arena/a6ec5b1d` | `final/sources.py`, `final/flags.py`, `final/build.py`, `privacy-site/research.json`, `privacy-site/build.py`, `privacy-site/public/*`, `verification.html`, `law.html`, `process.html`, `costs.html`, `flagged.html`, `requirements.html`, `sources.html`, `EXECUTIVE-SUMMARY.md` | 0 official `excerpt` sources remain (`74` `page` + `1` `academic`); `IRS-SCHED-A`, `BOE-PUB-800-1`, `CUP-WATER`, `SFPUC-RFB`, `FTB-MHS`, `SOS-RESULTS` updated across both layers |
+| A6-4 | Reconcile with `origin/main` (`7b02eb8`), verify `privacy-site` & `final` checks, push PR #62, verify CI, merge & confirm Pages | done (PR #62) | `arena/a6ec5b1d` | `COORDINATION.md` | `privacy-site/check.py` PASS (`11` pages, `316` rows, `0` locality cues); `test_illustrations.py` `8/8` OK; simulated `check_published.py` PASS (`13` files); `final/publish.py --check` PASS (`26` files excluded); `final/check.py .` PASS (`25` pages, `912` rows, `2,362` links, `2,358` `$10`-rounded figures, `51` model tests) |
+
+### Third integration merge (b724a7d8, 2026-11-12 ~17:10 UTC) - PR #62 landed mid-merge
+
+Merged `origin/main` a third time (PR #62, session a6ec5b1d, plus its own merges of
+#64-#68). 18 conflicted files, resolved by regeneration/union as before, nothing
+discarded. Kept from a6ec5b1d: the unified `build_questions`/`build_suggestions`
+(Q01-Q18, GAP/IMP/SG queues, Part 2 registers) and the full-page direct-read table
+("Full-page direct read of remaining official sources"). Kept from b724a7d8 on top:
+the review-and-choose controls (Adopt/Hold/Reject on every GAP/IMP row and the path
+radios, browser-local) and the six-blockers callout. `verification.html` now carries
+**all** passes: 2026-11-11 register, then 2026-11-12 second (e8636cac), third
+(b724a7d8), third (3e79fc01), fourth (0adc9b0a) and the a6ec5b1d full-page read.
+
+Gates green at this commit: `final/check.py .` 25 pages, 925 sourced rows, 2413 links,
+2369 $-figures $10-clean, 51 model paths · `final/publish.py --check` 39 files · both
+boundary checkers PASS (exact set, byte identity, fresh build) · `privacy-site/check.py`
+11 pages, 316 rows · unittest 8/8 · 2416 internal links, 0 broken.
