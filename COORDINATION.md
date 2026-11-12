@@ -1165,3 +1165,10 @@ First push: the session branch had no remote ref, so `git pull --rebase origin a
 
 
 - P708 third collision: merged board-only PR #60 and preserved its final release record; Pages routing is unchanged on this branch.
+
+#### P708 / P709 close-out — 2026-11-12
+
+- PR [#56](https://github.com/wingbangboozle1-lang/Tino1/pull/56) merged at 15:38:36 UTC; merge commit `12d1738408e3437e1017a097bb33fafadfc35389`.
+- Actual Jekyll build and exact publication-boundary check passed in [PR run 43249827793](https://github.com/wingbangboozle1-lang/Tino1/actions/runs/43249827793) and [main run 43250020095](https://github.com/wingbangboozle1-lang/Tino1/actions/runs/43250020095). The [Pages deployment run](https://github.com/wingbangboozle1-lang/Tino1/actions/runs/43250018945) succeeded; Pages API reports `built` at the merge commit. Root and the new questions page were read back from the live site after deployment.
+- Final published guide: 11 pages, 311 context-linked data rows, internal-link checks, $10 rounding checks and 8 passing tests. Context links do not verify hypothetical examples or personal inputs. The user-facing flagged page records missing evidence, incomplete historical audit and the public repository exposure. P708 remains **needs review**; P709 is **done** for the bounded release. No claim of whole-repository verification or complete privacy of public Git is made.
+- Future concurrent releases must not restore household-derived values to Pages: rounding and noindex are not anonymization. In particular, numeric files and history still exist in this public repository and require separate, coordinated remediation; publication changes cannot erase prior copies.
