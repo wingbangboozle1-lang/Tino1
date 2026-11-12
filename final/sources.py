@@ -72,6 +72,9 @@ add('BOE-LTA-2025-009', 'BOE LTA 2025/009', 'BOE Letter to Assessors 2025/009 - 
 add('BOE-LTA-2026-026', 'BOE LTA 2026/026', 'BOE Letter to Assessors 2026/026 - Prop 19 intergenerational exclusion FAQ (2026-08-03)',
     'https://www.boe.ca.gov/proptaxes/pdf/lta26026.pdf', 'page',
     'Definitions: excluded amount = factored base year value + adjusted $1 million; new taxable value = factored base year value + excess; transfers through a trust are covered; the home must be continually used as the family home or the full new base year value is enrolled.')
+add('RTC-51', 'R&TC 51', 'California Revenue and Taxation Code section 51 (base year value, annual inflation factor)',
+    'https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=RTC&sectionNum=51.', 'page',
+    'Taxable value is the base year value compounded by the annual inflation factor (California CPI, subparagraph (B)-(C)); subparagraph (D): in no event shall the percentage increase for any assessment year exceed 2 percent of the prior year\'s value. Re-read in full on 2026-11-11 (session faccd46d).')
 add('RTC-63.2', 'R&TC 63.2', 'California Revenue and Taxation Code section 63.2',
     'https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=RTC&sectionNum=63.2.', 'page',
     'Principal residence of the transferor; becomes the transferee\'s principal residence within one year; homeowners\' exemption filed within a year; exclusion removed when the transferee is no longer eligible.')

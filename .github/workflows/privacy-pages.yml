@@ -1,4 +1,4 @@
-name: Validate Pages build (current edition, exact allowlist)
+name: Validate privacy-first Pages build
 on:
   pull_request:
   push:
@@ -15,9 +15,10 @@ jobs:
           ruby-version: '3.2'
       - name: Install GitHub Pages Jekyll
         run: gem install github-pages --no-document
-      - name: Verify the current edition (repository gate, unrounded-figure scan skipped without private file)
-        run: python3 final/check.py .
       - name: Build and validate isolated public site
         run: |
+          python3 privacy-site/build.py
+          git diff --exit-code -- privacy-site/public
+          python3 privacy-site/check.py
           jekyll build
           python3 privacy-site/check_published.py _site

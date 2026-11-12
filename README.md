@@ -20,6 +20,7 @@ The pages at the repository root are the only current edition. They are generate
 | `costs.html` | Insurance for both ZIP codes and running costs |
 | `flagged.html` | Flagged for Review: every unconfirmed value, assumption and irregularity, with links |
 | `sources.html` | Source register, method, cross-check against a second model |
+| `verification.html` | Verification: the independent 2026-11-11 check register, every fact with its official link for manual review |
 | `requirements.html` | Every part of the brief, the page that answers it, and the official pages re-read on 2026-11-11 |
 | `review.html` | Repository review findings |
 | `versions.html` | Earlier editions and why they were replaced |

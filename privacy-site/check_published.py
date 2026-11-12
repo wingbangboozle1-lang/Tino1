@@ -1,48 +1,38 @@
-"""Fail closed if Jekyll publishes anything outside the allowlist, or if a published page has a broken local link.
+"""Fail closed unless Jekyll publishes exactly the reviewed public edition.
 
-Usage: python3 privacy-site/check_published.py _site
-
-Session 1e0d3aeb (K3): the published edition is the current root edition (see _config.yml).
+This is a file-boundary check, not a proof of anonymization or source accuracy.
 """
 from pathlib import Path
-import re
 import sys
-from html.parser import HTMLParser
 
-ROOT_DIR = Path(__file__).resolve().parent.parent
-site = Path(sys.argv[1])
-CURRENT = ['index.html', 'decision.html', 'projections.html', 'black-swan.html', 'process.html', 'law.html',
-           'estate-cash.html', 'costs.html', 'flagged.html', 'sources.html', 'requirements.html', 'review.html',
-           'versions.html', 'style.css', 'app.js']
-expected = set(CURRENT)
-actual = {str(p.relative_to(site)) for p in site.rglob('*') if p.is_file()}
-assert actual == expected, f'Unexpected or missing published files: {sorted(actual ^ expected)}'
-for name in CURRENT:
-    assert (site / name).read_bytes() == (ROOT_DIR / name).read_bytes(), f'Content changed by Jekyll: {name}'
+PUBLIC_FILES = frozenset({
+    'index.html', 'decision.html', 'projection.html', 'stress.html',
+    'process.html', 'law.html', 'costs.html', 'flagged.html', 'style.css',
+})
 
 
-class Links(HTMLParser):
-    def __init__(self):
-        super().__init__()
-        self.out = []
+def check_published(root, public=None):
+    root = Path(root)
+    public = Path(public) if public is not None else Path(__file__).parent / 'public'
+    assert root.is_dir() and public.is_dir(), 'Missing Jekyll output or public source directory'
+    source_entries = list(public.iterdir())
+    assert all(p.is_file() and not p.is_symlink() for p in source_entries), 'Unexpected public directory entry'
+    source_files = {p.name for p in source_entries}
+    assert source_files == PUBLIC_FILES, f'Unexpected or missing public source files: {source_files ^ PUBLIC_FILES}'
+    expected = {'index.html'} | {f'privacy-site/public/{name}' for name in PUBLIC_FILES}
+    entries = list(root.rglob('*'))
+    assert not any(p.is_symlink() for p in entries), 'Symlinks are forbidden in the published output'
+    actual = {p.relative_to(root).as_posix() for p in entries if p.is_file()}
+    assert actual == expected, f'Unexpected or missing published files: {actual ^ expected}'
+    for name in PUBLIC_FILES:
+        assert (root / 'privacy-site/public' / name).read_bytes() == (public / name).read_bytes(), f'Content changed by Jekyll: {name}'
+    redirect = (root / 'index.html').read_bytes()
+    assert redirect == (Path(__file__).parent.parent / 'index.html').read_bytes(), 'Root landing differs from reviewed source'
+    assert b'privacy-site/public/index.html' in redirect, 'Root landing must link to the privacy-first guide'
+    print(f'PASS: exact publication allowlist, {len(actual)} files')
 
-    def handle_starttag(self, tag, attrs):
-        for k, v in attrs:
-            if k in ('href', 'src') and v:
-                self.out.append(v)
 
-
-broken = []
-for name in CURRENT:
-    if not name.endswith('.html'):
-        continue
-    parser = Links()
-    parser.feed((site / name).read_text(encoding='utf-8'))
-    for u in parser.out:
-        if re.match(r'^(?:[a-z][a-z0-9+.-]*:|//|#|mailto:)', u, flags=re.I):
-            continue                      # external link or in-page anchor
-        target = u.split('#')[0].split('?')[0]
-        if target == '' or not (site / target).is_file():
-            broken.append((name, u))
-assert not broken, f'Broken local links on the published site: {broken}'
-print(f'PASS: exact publication allowlist, {len(actual)} files, no broken local links')
+if __name__ == '__main__':
+    if len(sys.argv) != 2:
+        raise SystemExit('Usage: python3 privacy-site/check_published.py _site')
+    check_published(sys.argv[1])
