@@ -6,7 +6,7 @@ import json
 import re
 
 ROOT = Path(__file__).parent/'public'
-NAV = {'index.html','decision.html','projection.html','stress.html','process.html','law.html','costs.html','flagged.html'}
+NAV = {'index.html','decision.html','projection.html','stress.html','process.html','law.html','costs.html','questions.html','suggestions.html','suggestions-detail.html','flagged.html'}
 FILES = NAV | {'style.css'}
 SOURCES = {s['url'] for s in json.loads((ROOT.parent/'research.json').read_text())['sources'].values()}
 
@@ -69,10 +69,13 @@ def main():
         assert 'noindex,nofollow' in text and 'no-referrer' in text
         assert 'Content-Security-Policy' in text
         assert 'CHECKED 12 NOV 2026' in text
-        # Defense in depth against known rounded household signatures. Not a claim
-        # that these tokens capture all possible identifying combinations/history.
+        # Defense in depth against known rounded household signatures and location
+        # cues. These checks cover only the public build, not Git history or every
+        # possible inference from public context.
         for token in ('3,100,000','1,800,000','550,540','539,740','114,250','7,150','85,800','94122','95014'):
             assert token not in text, f'Household signature in {name}'
+        for token in ('Cupertino','San Francisco','sftreasurer.org','sf.gov'):
+            assert token.casefold() not in text.casefold(), f'Household-locality cue in {name}'
         for amount in re.findall(r'\$([\d,]+)(?![\d,])', text):
             assert int(amount.replace(',','')) % 10 == 0, (name,amount)
         p = Check(); p.feed(text)
@@ -85,7 +88,7 @@ def main():
             if fragment: assert target in pages and fragment in pages[target].ids, (name,target,fragment)
     css = (ROOT/'style.css').read_text()
     assert '@import' not in css and 'url(' not in css, 'Remote CSS resource'
-    print(f'PASS: 8 public pages, {sum(p.rows for p in pages.values())} official-context-linked data rows, '
+    print(f'PASS: {len(NAV)} public pages, {sum(p.rows for p in pages.values())} official-context-linked data rows, '
           'captions, anchors, local resources, $10 display rounding and known household-signature checks. '
           'Not a privacy audit of Git history or a verification of synthetic assumptions.')
 

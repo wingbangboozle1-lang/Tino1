@@ -23,14 +23,14 @@ def sections(h):
 
     # ------------------------------------------------------------------ 1. privacy and housekeeping
     privacy = [
-        ['G01', 'Decide what to do about the public repository and its history',
-         'The site shows figures rounded to $10 and no names. The repository behind it is public, and its Git history still holds the first pages, written before rounding. ' + flag('P01') + ' ' + flag('P02'),
-         opts('Leave as it is. The exposure stays.',
-              'Make the repository private. On a free GitHub plan a Pages site needs a public repository, so the site would stop unless the plan is upgraded; on a paid plan the site itself stays public.',
-              'Create a fresh repository holding only the current generator and pages, with no history, then delete the old one. The site keeps working, possibly at a new address.',
-              'Publish only the edition without figures and keep the numeric edition on a private computer.'),
-         'C, because it keeps the numeric site and removes the history. D if any published figure is too much.',
-         'None on the result. It decides how much of the analysis can stay online.',
+        ['G01', 'Settle where the numeric analysis may live',
+         'On 2026-11-12 the public address changed hands several times between this numeric edition and a guide without household figures. It now serves the guide only; the numeric pages are repository files. The repository itself is public, and its Git history still holds the first pages, written before rounding. ' + flag('P01') + ' ' + flag('P02'),
+         opts('Leave as it is: public guide without figures, numeric pages readable only in the public repository. The exposure in the repository stays.',
+              'Make the repository private. On a free GitHub plan a Pages site needs a public repository, so the public guide would stop unless the plan is upgraded.',
+              'Move the numeric edition and its generator to a new private repository with no history, keep only the guide in the public one, then delete or replace the old repository so its history is gone.',
+              'Publish the numeric edition again, with figures rounded to $10. Other work sessions judged that rounding does not make a household unidentifiable.'),
+         'C. It keeps the numbers for the owner, keeps a public guide, and is the only option that removes the history.',
+         'None on the result. It decides who can read the figures behind it.',
          'Owner-only actions; about an hour. B and C drop the pull-request trail. Copies already made by others cannot be recalled.',
          GH + ' · ' + src('BOE-P19', 'SCC-RATES')],
         ['G02', 'Clear out superseded branches and directories',

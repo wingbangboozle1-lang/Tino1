@@ -7,7 +7,7 @@ import sys
 
 PUBLIC_FILES = frozenset({
     'index.html', 'decision.html', 'projection.html', 'stress.html',
-    'process.html', 'law.html', 'costs.html', 'flagged.html', 'style.css',
+    'process.html', 'law.html', 'costs.html', 'questions.html', 'suggestions.html', 'suggestions-detail.html', 'flagged.html', 'style.css',
 })
 
 
@@ -28,7 +28,8 @@ def check_published(root, public=None):
         assert (root / 'privacy-site/public' / name).read_bytes() == (public / name).read_bytes(), f'Content changed by Jekyll: {name}'
     redirect = (root / 'index.html').read_bytes()
     assert redirect == (Path(__file__).parent.parent / 'index.html').read_bytes(), 'Root landing differs from reviewed source'
-    assert b'privacy-site/public/index.html' in redirect, 'Root landing must link to the privacy-first guide'
+    expected_redirect = b'''<!doctype html>\n<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex,nofollow"><meta http-equiv="refresh" content="0; url=privacy-site/public/index.html"><title>Inheritance decision guide</title></head><body><main><h1>Inheritance decision guide</h1><p>Continue to the <a href="privacy-site/public/index.html">privacy-first decision guide</a>.</p></main></body></html>\n'''
+    assert redirect == expected_redirect, 'Root landing must match the privacy-first redirect exactly'
     print(f'PASS: exact publication allowlist, {len(actual)} files')
 
 
