@@ -101,7 +101,7 @@ add('FTB-MHS', 'FTB Form 540 booklet', 'Franchise Tax Board - Form 540 booklet, 
     'Additional 1% tax on taxable income over $1,000,000.')
 add('SOS-RESULTS', 'CA Secretary of State', 'California Secretary of State - 2026 General Election, state ballot measures (unofficial)',
     'https://electionresults.sos.ca.gov/returns/ballot-measures', 'page',
-    'Unofficial results as of 2026-11-10 5:31 p.m.; certification by 2026-12-11. Prop 3 Yes 60.6%; Prop 40 No 52.6%; Prop 41 No 55.0%; Prop 42 Yes 51.5%; Prop 43 No 57.4%. Fourteen measures listed (1-5, 37-45).')
+    'Unofficial results as of 2026-11-11 6:51 p.m. (re-read 2026-11-12, session 0adc9b0a; the 2026-11-10 5:31 p.m. reading was Prop 3 Yes 60.6%, Prop 40 No 52.6%, Prop 42 Yes 51.5%); certification by 2026-12-11. Prop 3 Yes 60.7%; Prop 40 No 52.5%; Prop 41 No 55.1%; Prop 42 Yes 51.4%; Prop 43 No 57.4%. Fourteen measures listed (1-5, 37-45).')
 add('DOJ-TPA', 'CA Attorney General', 'California Department of Justice - Tenant Protection Act consumer alert',
     'https://oag.ca.gov/system/files/media/Tenant-Protection-Act-Landlords-and-Property-Managers-English.pdf', 'excerpt',
     'Rent may not rise more than 5% plus the change in CPI, or 10% total, whichever is lower, in any 12 months; exemptions include certain single-family homes not owned by a corporation or REIT.')
@@ -194,3 +194,43 @@ add('FRED-JP', 'Japan series (FRED)', 'Japan: BIS residential property prices, N
 add('DAMODARAN', 'NYU Stern returns table', 'NYU Stern (A. Damodaran) - Historical returns on stocks, bonds and bills 1928-2025',
     'https://pages.stern.nyu.edu/~adamodar/New_Home_Page/datafile/histretSP.html', 'academic',
     'Annual S&P 500 total return, 3-month T-bill, 10-year T-bond and national real-estate returns. Not a government source.')
+
+
+# ---- Added 2026-11-12 by session 0adc9b0a (Questions and Suggestions pages; third verification pass) -------------
+add('FDIC', 'FDIC deposit insurance', 'Federal Deposit Insurance Corporation - Deposit insurance at a glance',
+    'https://www.fdic.gov/resources/deposit-insurance/brochures/deposits-at-a-glance', 'page',
+    'Standard insurance amount $250,000 per depositor, per insured bank, for each account ownership category; a trust owner with five or more beneficiaries is covered up to $1,250,000 at one bank; stocks, bonds and mutual funds are not insured; Treasury bills, bonds and notes are not FDIC-insured but are backed by the full faith and credit of the U.S. government.')
+add('SEC-TEN', 'SEC investing basics', 'U.S. Securities and Exchange Commission - Ten things to consider before you make investing decisions',
+    'https://www.sec.gov/investor/pubs/tenthingstoconsider.htm', 'excerpt',
+    'Dollar cost averaging: adding money in a consistent pattern over a long period protects against the risk of investing all of the money at the wrong time.')
+add('SEC-ALLOC', 'SEC diversification guide', "U.S. Securities and Exchange Commission - Beginners' guide to asset allocation, diversification and rebalancing",
+    'https://www.sec.gov/files/investor/pubs/assetallocation.htm', 'excerpt',
+    'A diversified portfolio is diversified between asset categories and within them; rebalancing returns a portfolio to its chosen mix.')
+add('IRS-TC703', 'IRS Topic 703', 'IRS Topic no. 703 - Basis of assets',
+    'https://www.irs.gov/taxtopics/tc703', 'page',
+    'Basis is generally cost; for property acquired other than by purchase (a gift or an inheritance) the rules are in Publication 551; basis is increased by improvements and decreased by allowable depreciation.')
+add('IRS-1031', 'IRS like-kind exchanges', 'IRS - Like-kind exchanges, real estate tax tips',
+    'https://www.irs.gov/businesses/small-businesses-self-employed/like-kind-exchanges-real-estate-tax-tips', 'page',
+    'Gain is generally not recognised when real property held for business or investment is exchanged solely for like-kind real property; money or other property received is taxed; reported on Form 8824; property held primarily for sale does not qualify.')
+add('CALBAR-SPEC', 'State Bar specialists', 'State Bar of California - Frequently asked questions: legal specialization',
+    'https://www.calbar.ca.gov/frequently-asked-questions-legal-specialization', 'excerpt',
+    'The State Bar certifies specialists in eleven areas including Estate Planning, Trust and Probate Law, and Taxation Law; certified specialists can be found through the Attorney Search page.')
+add('SCC-P19-EST', 'Santa Clara Prop 19 estimator', 'Santa Clara County Assessor - Proposition 19 assessment estimator (parent-child transfer)',
+    'https://asr.santaclaracounty.gov/online-services/prop-19-assessment-estimator-parent-childgrandparent-grandchild-transfer', 'excerpt',
+    "Address of the calculator as printed on the Assessor's Proposition 19 page, which was read in full on 2026-11-12. The calculator itself is interactive and was not opened.")
+add('CAPF-BOE19P', 'Claim form BOE-19-P', 'California Assessors - form BOE-19-P for Santa Clara County (parent-child exclusion claim)',
+    'https://www.capropeforms.org/counties/santa_clara/form/BOE-19-P', 'excerpt',
+    "Address of the claim form as printed on the Assessor's Proposition 19 page, which was read in full on 2026-11-12. The form itself was not opened.")
+add('HUD-SAFMR-INDEX', 'HUD SAFMR releases', 'HUD - Small Area Fair Market Rents, list of yearly releases',
+    'https://www.huduser.gov/portal/datasets/fmr/smallarea/index.html', 'page',
+    'A fiscal year 2027 release is listed with an interactive lookup and a data file. The fiscal year 2026 file is listed twice: effective October 1, 2025 and a revision effective May 21, 2026. ZIP-level 2027 figures need the interactive lookup and could not be read by this automated session.')
+add('FR-FMR-2027', 'Federal Register FMR notice', 'Federal Register 2026-09-01 - Fair Market Rents, fiscal year 2027 (notice 2026-17891)',
+    'https://www.federalregister.gov/documents/2026/09/01/2026-17891/fair-market-rents-for-the-housing-choice-voucher-program-moderate-rehabilitation-single-room', 'excerpt',
+    'Fiscal year 2027 fair market rents are effective October 1, 2026 unless a valid request for re-evaluation is received.')
+add('SF-LEG-261020', 'SF File No. 261020', 'San Francisco Board of Supervisors - File No. 261020 (limit on banked and capital-improvement rent increases)',
+    'https://sfgov.legistar.com/LegislationDetail.aspx?ID=8217304&GUID=7EDA4662-EBFB-4AF5-962F-C669B64AA770', 'excerpt',
+    "Address of the legislation file as printed in the Rent Board notice posted 2026-11-09, which says the legislation has not been enacted. The file page itself was not opened.")
+add('DIGITAL-GOV', 'Digital.gov content guide', 'U.S. General Services Administration, Digital.gov - An introduction to content',
+    'https://digital.gov/resources/an-introduction-to-content', 'excerpt',
+    'Federal guidance for public websites: write in plain language, default to web pages, keep content current, clearly label non-governmental content.')
+

@@ -5,7 +5,6 @@ decision.html
 estate-cash.html
 estate-tax.html
 flagged.html
-index.html
 law.html
 methodology.html
 mirror-archived-2026-11-10.html
@@ -21,6 +20,7 @@ sources.html
 steps.html
 style.css
 suggestions.html
+summary.html
 taxes.html
 verification.html
 versions.html
