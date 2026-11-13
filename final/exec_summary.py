@@ -107,7 +107,7 @@ before the first property-tax bill, and in the first year, each step with its le
 
 - Every table row on the site links to an official page; across the `2026-11-11` pass and the `2026-11-12` passes (`e8636cac`, `3e79fc01`, `0adc9b0a`, and `a6ec5b1d`), every official agency source in [`final/sources.py`]({pages}/final/sources.py) has been opened and read directly on its agency URL (leaving **zero** official `excerpt` sources; read-extent notes and the interactive CDI/HUD-FY27 tools that require interactive lookup are recorded on the [Verification page]({pages}/verification.html)).
 - Owner-supplied figures (market values, rents, utility bills, insurance estimates) cannot be confirmed on an official \
-page and are labelled (P03). Projections are conditional scenarios (A01-A10).
+page and are labelled (P03). Projections are conditional scenarios (A01-A11).
 - Open items are on the [Flagged for Review page]({pages}/flagged.html): the trust terms and basis (Q01), the estate contents \
 (Q02), the tax rate area (U03), the Proposition 19 allowance after 2027-02-16 (U04), the solar tariff and water provider (U05), HUD 2027 rents (U09), and the \
 repository's public history (P01/P02).

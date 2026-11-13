@@ -12,7 +12,7 @@ The decision: Property A (Cupertino, 95014, $3,100,000) will pass to the Inherit
 |---|---|---|
 | Sell and reinvest | $9,747,210 | Basis resets to date-of-death value, so the sale carries almost no taxable gain |
 | Rent it out | $5,582,450 | Full reassessment to market value, plus rental income and depreciation recapture |
-| Live in it | $3,446,200 | Proposition 19 relief is partial: the assessed value still jumps to $5,031,080 |
+| Live in it | $2,259,640 | Proposition 19 relief is partial: the assessed value still jumps to $5,031,080 |
 
 | Headline number | Value | Source or flag |
 |---|---|---|
@@ -24,7 +24,7 @@ The decision: Property A (Cupertino, 95014, $3,100,000) will pass to the Inherit
 
 ## Why not the alternatives
 
-- **Living in Property A** is a lifestyle choice with a price: about $6,301,010 of 2076 wealth in 2026 dollars against selling.
+- **Living in Property A** is a lifestyle choice with a price: about $7,487,570 of 2076 wealth in 2026 dollars against selling.
 - **Selling and parking the proceeds in savings or Treasury bills** loses to keeping the house as a rental ($3,554,580 against $5,118,360).
 - **Renting Property A out** is the most tax-expensive route, because the transfer is reassessed at market value in full.
 
@@ -44,7 +44,7 @@ Inflation, house prices and stock returns do not compound evenly over 50 years. 
 The [Questions page](./questions.html) lists what must be answered first in two complementary sections: **Part 1** (known vs. unknown information, `Q01–Q18`, `U01–U08`, and concrete ways to discover each missing answer offline — trust inclusion, prior-spouse Form 706 portability, exact Santa Clara & SF tax bills, Cupertino's three water providers, PG&E solar interconnection date, actual broker insurance quotes, SF Rent Board registration) and **Part 2** (a reading-dated decision register grouped into open, unknowable, and answered rows). Three open questions matter far more than the rest:
 
 1. **What the trust says about the home** — is Property A inside the Transferor's gross estate? Without the basis reset, selling falls from $9,747,210 to $6,428,140. (Q01)
-2. **Whether the Inheritor wants to live there** — a personal choice with a known price ($6,301,010) and a one-year move-in limit that has no exception.
+2. **Whether the Inheritor wants to live there** — a personal choice with a known price ($7,487,570) and a one-year move-in limit that has no exception.
 3. **How sale proceeds would be invested** — the one input that reverses the ranking in the cases tested: left in savings, selling ($3,554,580) falls behind renting ($5,118,360).
 
 ## Suggestions for the site — for review, nothing implemented
@@ -58,7 +58,7 @@ See the [Process page](./process.html): what to do before the death, in the firs
 ## What is verified, and what is not
 
 - Every table row on the site links to an official page; across the `2026-11-11` pass and the `2026-11-12` passes (`e8636cac`, `3e79fc01`, `0adc9b0a`, and `a6ec5b1d`), every official agency source in [`final/sources.py`](./final/sources.py) has been opened and read directly on its agency URL (leaving **zero** official `excerpt` sources; read-extent notes and the interactive CDI/HUD-FY27 tools that require interactive lookup are recorded on the [Verification page](./verification.html)).
-- Owner-supplied figures (market values, rents, utility bills, insurance estimates) cannot be confirmed on an official page and are labelled (P03). Projections are conditional scenarios (A01-A10).
+- Owner-supplied figures (market values, rents, utility bills, insurance estimates) cannot be confirmed on an official page and are labelled (P03). Projections are conditional scenarios (A01-A11).
 - Open items are on the [Flagged for Review page](./flagged.html): the trust terms and basis (Q01), the estate contents (Q02), the tax rate area (U03), the Proposition 19 allowance after 2027-02-16 (U04), the solar tariff and water provider (U05), HUD 2027 rents (U09), and the repository's public history (P01/P02).
 
 **Privacy.** Names, addresses and parcel numbers are replaced by placeholders; owner figures are stored and shown only rounded to $10; no year-by-year bill history is published; the pages ask search engines not to index them. Rounding does not make a household unidentifiable, and a public repository plus its Git history stay readable whatever the site serves — only the owner can change that.
