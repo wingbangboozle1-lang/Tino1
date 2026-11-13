@@ -2367,3 +2367,18 @@ builder, so both sessions' content is present. No file from either session was d
 - **Kept on top of the merged baseline:** the recorded property-tax and assessed-value history on `projections.html` (owner figures, rounded to the nearest $10, labelled owner-supplied, flag P03, official basis link per row) per the owner brief's clarity requirement; the Sixth independent re-read table (13 official reads, all matching) on the verification page.
 - **Pages:** "pages build and deployment" succeeded after the merge (run 43427161110). Live site verified: https://wingbangboozle1-lang.github.io/Tino1/ serves the six-category decision dashboard with the rounded figures, the privacy disclosure, the recorded history tables on the projections page, and the figure-free guide; `noindex`/`no-referrer` meta on every page; boundary enforced by `final/check_published.py` and `privacy-site/check_published.py` (32 files).
 - **PR reconciliation:** PR #91 (rounded-figures edition) and PR #95 (privacy audit) merged by parallel sessions and were merged here in; PR #93 and #96 were board records. PR #92 (de-identified numeric edition) is superseded by the merged boundary and is closed with a comment preserving its branch. PR #97 (law-change register work) is a different scope and is left open for its own session.
+
+
+## Session `arena/3eb2dccc-tino1` — final verification, live-site confirmation, PR and merge (claimed 2026-11-13)
+
+Branch fixed by workspace: `arena/3eb2dccc-tino1`. Claimed at base `a974452` (merge of PR #98). `main` is also at `a974452`, so this session's branch starts identical to `main`; all work below lands on `arena/3eb2dccc-tino1` only, then a PR is opened from this branch into `main` and merged. No open PRs at claim time. No task below is claimed by another session.
+
+| Task | Status | Owner session | Files / scope | Verification / handoff |
+|---|---|---|---|---|
+| T3-0 Claim and coordination | in progress | arena/3eb2dccc-tino1 | COORDINATION.md (append only) | This entry; commit + push immediately. |
+| T3-1 Re-run full verification suite (final/check.py, final/publish.py --check, privacy-site/build.py + check.py, unittest, Jekyll build + both check_published checkers) | unclaimed | arena/3eb2dccc-tino1 | final/check.py, final/publish.py, final/published.txt, root published pages, privacy-site/public | Local suite green; mirrors the CI `verify` job. |
+| T3-2 Executive summary currency vs the owner brief | unclaimed | arena/3eb2dccc-tino1 | summary.html, EXECUTIVE-SUMMARY.md, root index.html dashboard | Manual review against brief: best plan & why, black swan section, step-by-step process, $10 rounding, placeholders, inheritance tax thresholds. |
+| T3-3 Live-site confirmation after deploy | unclaimed | arena/3eb2dccc-tino1 | https://wingbangboozle1-lang.github.io/Tino1/ (Pages source: main, path /) | gh pages API `status: built`; live fetches of index.html, summary.html, black-swan.html, process.html, flagged.html, privacy-site/public/index.html. |
+| T3-4 PR from arena/3eb2dccc-tino1 to main + merge + Pages deploy confirmation | unclaimed | arena/3eb2dccc-tino1 | GitHub PR | `gh pr create`/`gh pr merge <num> --merge`; pages build success recorded in COORDINATION.md. |
+
+Scope note: this session edits only COORDINATION.md (claim log) plus whatever is needed to make the verification suite green. No verified figures are altered; unverified values stay blank or flagged on flagged.html; no PII is added to any published page.
