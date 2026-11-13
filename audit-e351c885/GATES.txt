@@ -1,0 +1,41 @@
+== GATES on audited tree, session arena/e351c885-tino1, 2026-11-13 UTC ==
+(final run on merged tree origin/main 5ffe94a (PRs #73-#79) + this session's commits; boundary per PR #79: privacy-first 13 files)
+
+--- python3 privacy-site/build.py ---
+Built 11 privacy-first public pages; no private inputs read.
+--- git diff --exit-code -- privacy-site/public ---
+no diff (reproducible)
+
+--- python3 privacy-site/check.py ---
+PASS: 11 public pages, 318 official-context-linked data rows, captions, anchors, local resources, PII-pattern checks, $10 display rounding and known household-signature checks. Not a privacy audit of Git history or a verification of synthetic assumptions.
+
+--- unittest ---
+Ran 9 tests in 0.179s
+
+OK
+
+--- final/publish.py --check ---
+OK - _config.yml and final/published.txt match the privacy-first allowlist of 13 files
+
+--- final/check.py . ---
+OK - 25 pages, 983 table rows each with an official link, 2522 links, 2398 dollar figures rounded to $10, secret-list scan SKIPPED, see the secretless scan, 6-digit scan against 14491 model numbers clean, model self-tests passed on 51 paths
+
+--- final/integrate.py ---
+exit=0
+
+--- published allowlist ---
+index.html
+privacy-site/public/costs.html
+privacy-site/public/decision.html
+privacy-site/public/flagged.html
+privacy-site/public/index.html
+privacy-site/public/law.html
+privacy-site/public/process.html
+privacy-site/public/projection.html
+privacy-site/public/questions.html
+privacy-site/public/stress.html
+privacy-site/public/style.css
+privacy-site/public/suggestions-detail.html
+privacy-site/public/suggestions.html
+--- _config.yml audit-dir exclusion ---
+16:  - 'audit-e351c885'
