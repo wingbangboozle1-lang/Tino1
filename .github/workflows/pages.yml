@@ -1,4 +1,4 @@
-name: Validate the published site
+name: Validate the privacy-first Pages boundary
 on:
   pull_request:
   push:
@@ -15,7 +15,7 @@ jobs:
           ruby-version: '3.2'
       - name: Install the GitHub Pages Jekyll
         run: gem install github-pages --no-document
-      - name: Rebuild and check public guide, numeric edition and model tests
+      - name: Rebuild and check the public guide and decision model
         run: |
           python3 privacy-site/build.py
           git diff --exit-code -- privacy-site/public
@@ -25,7 +25,7 @@ jobs:
           python3 final/check.py .
       - name: Build the site the way GitHub Pages will
         run: jekyll build --trace
-      - name: Verify exact publication boundary and published pages
+      - name: Verify that Jekyll publishes only the privacy-first allowlist
         run: |
           python3 final/check_published.py _site
           python3 privacy-site/check_published.py _site

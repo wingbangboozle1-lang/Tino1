@@ -22,9 +22,9 @@ B = M['baseline']['summary']
 ROWS = M['baseline']['rows']
 OUT = os.path.abspath(os.environ.get('OUT_DIR', os.path.join(HERE, 'site')))
 ROOT_MODE = bool(os.environ.get('ROOT_MODE'))
-# Since 2026-11-12 the root index.html is the redirect to the privacy-first guide (privacy-site/), which is the only
-# edition GitHub Pages serves. Built into the repository root, this edition therefore writes its summary to
-# summary.html and never touches index.html (session 0adc9b0a, review item R29).
+# ROOT_MODE builds the household-specific numeric analysis into its historical root files,
+# with its executive summary at summary.html. The public index.html is a generic landing
+# page that links only to privacy-site/public; final/publish.py excludes all numeric pages.
 HOME = 'summary.html' if ROOT_MODE else 'index.html'
 Y0 = 2026
 T = P['T']
@@ -1884,80 +1884,34 @@ def choice_table():
 
 
 def build_home_choice():
-    """Root index.html: the site's front door and dashboard.  Written only in ROOT_MODE
-    (the staging tree uses HOME = index.html).
+    """Write the generic, privacy-first root landing page in ROOT_MODE.
 
-    Layout: the answer first, then one card per category, then the two editions (the
-    privacy-first guide with no household figures, and this rounded-figures analysis).
-    Every number on the page is generated from the model; links are internal or to the
-    official pages already listed on the Sources page."""
-    by = M['by_T']
-    nav = ''.join('<a href="#%s">%s</a>' % (i, t_) for i, t_ in (
-        ('answer', 'The answer'), ('editions', 'Two editions'), ('categories', 'Sections'), ('numbers', 'Key numbers'),
-        ('open', 'Open before deciding'), ('found', 'Found in this review')))
-    cells = []
-    for cat, items in NAV_CARDS:
-        lis = ''.join('<li><a href="%s">%s</a> - %s</li>' % (h, t_, d) for h, t_, d in items)
-        cells.append('<section class="card"><h3>%s</h3><ul class="dex">%s</ul></section>' % (cat, lis))
-    kinds = {}
-    for f in FLAGS:
-        kinds[f['id'][0]] = kinds.get(f['id'][0], 0) + 1
-    open_items = ''.join('<li>%s %s</li>' % (flag(i), txt) for i, txt in DECISIVE)
-    found = ''.join('<li><a class="flag" href="review.html#%s" title="Repository review finding">%s</a> %s</li>' % (i, i, txt) for i, txt in NEW_FINDINGS)
-    doc = """<!doctype html>
+    The public Pages site contains no link to the household-specific numeric edition.
+    That edition and its inputs remain in this public repository, so exclusion from
+    Pages is not represented as repository privacy or anonymization.
+    """
+    open(os.path.join(OUT, 'index.html'), 'w', encoding='utf-8').write("""<!doctype html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<title>Two-home inheritance analysis - dashboard</title>
-<link rel="stylesheet" href="style.css"></head>
-<body>
-<header class="top"><div class="wrap"><span class="brand">Two-home inheritance analysis</span>
-<nav aria-label="Sections">%(nav)s</nav></div></header>
-<main class="wrap">
-<h1>Dashboard</h1>
-<p class="lead">A future trust inheritance of one home (Property A, the Cupertino home) and a second home the Inheritor already owns (Property B, the San Francisco three-unit home). This page is the front door: the answer first, then the two editions, every section by category, and what still has to be settled before the answer can be relied on.</p>
-
-<h2 id="answer">The answer, and what it depends on</h2>
-<div class="kpis">
-<div class="kpi"><div class="k">Conditional best financial outcome</div><div class="v">Sell Property A, keep Property B</div><div class="s">a model result on the assumptions flagged %(a1)s and %(a2)s, not a forecast</div></div>
-<div class="kpi"><div class="k">After-tax wealth in 2076, 2026 dollars</div><div class="v">%(sell)s</div><div class="s">selling, against %(rent)s renting and %(live)s living in it</div></div>
-<div class="kpi"><div class="k">Property A market value at inheritance (%(T)d)</div><div class="v">%(fmv)s</div><div class="s">from %(v26)s today at %(g)s a year (assumption)</div></div>
-<div class="kpi"><div class="k">First-year property tax</div><div class="v">%(tl)s lived in / %(tr)s rented</div><div class="s">against %(tb)s today; the lived-in figure already includes the Proposition 19 relief</div></div>
-</div>
-<p class="note">Property B is <strong>already owned</strong> by the Inheritor: it is never reassessed, it receives no basis reset, and it is not part of the Transferor's estate. That is why the plan keeps it and never treats it as an inheritance. Every dollar figure below is rounded to the nearest $10; the rounding is a disclosure-minimisation measure, not anonymisation. People are placeholders.</p>
-
-<h2 id="editions">Two editions of this work</h2>
-<div class="cards">
-<article class="card"><b>No-figures decision guide (privacy first)</b><span>The rules, the process and the decision framework with none of this household's figures. Every number there is invented for teaching. Start here if you want the analysis without the household's data.</span><p><a href="privacy-site/public/index.html">Open the no-figures guide</a></p></article>
-<article class="card"><b>Rounded-figures analysis (this edition)</b><span>The full decision analysis: executive dashboard, year-by-year projections, the live / rent / sell comparison, the black-swan replays, the cash-and-estate-tax position, and the suggestions and questions registers.</span><p><a href="summary.html">Executive summary</a> &middot; <a href="sources.html">Sources and method</a></p></article>
-</div>
-
-<h2 id="categories">Every section, by category</h2>
-<div class="cards">%(cards)s</div>
-
-<h2 id="numbers">The three choices, side by side</h2>
-%(tchoice)s
-<p class="note">Wealth counts only what differs between the choices: Property A itself, every cash flow it causes, and the rent from the Inheritor's vacated unit in Property B when the Inheritor moves. The two units already let in Property B are identical in all three choices and are excluded. All three are compared after tax, with everything sold at the end of the horizon.</p>
-
-<h2 id="open">Before any decision can reasonably be made</h2>
-<p>The register holds <strong>%(nq)d question and data flags</strong>, <strong>%(nrev)d repository review findings</strong> and the assumption flags A01-A10. These change the answer; the rest are refinements.</p>
-<ul class="plan">%(open_items)s</ul>
-<p><a href="questions.html">Questions, known versus missing information, and how to discover each missing answer</a> &middot; <a href="flagged.html">Every flag with its source</a></p>
-
-<h2 id="found">Found in this session's review</h2>
-<ul class="plan">%(found)s</ul>
-<p class="note">These are new flags added on 2026-11-13 after reading the official pages again and checking the model against them. None of them blocks publication; each is on the <a href="flagged.html">Flagged for Review</a> page with its official link. The repository review findings R38-R43 record what was found and what was changed.</p>
-
-<p class="note">Not legal, tax, investment or insurance advice. This prepares the questions for a licensed estate attorney, a tax adviser and an insurance broker. The public repository and its history are a separate privacy exposure from what the site serves.</p>
-</main>
-<footer class="wrap"><p>Built %(build)s from <a href="%(repo)s/tree/main/final">final/</a>. Sources on every row: <a href="sources.html">Sources and method</a>. Verification passes: <a href="verification.html">Verification</a>.</p></footer>
-</body></html>
-""" % dict(nav=nav, cards=''.join(cells), a1=flag('A01'), a2=flag('A02'), sell=m(B['real_sell']), rent=m(B['real_rent']),
-           live=m(B['real_live']), T=T, fmv=m(B['fmv_T']), v26=m(P['cup_value']), g=pc(P['g_cup']), tl=m(B['tax_live_T']),
-           tr=m(B['tax_rent_T']), tb=m(B['tax_before_T']), tchoice=choice_table(),
-           nq=len([f for f in FLAGS if f['id'][0] in 'QUP']), nrev=len(REVIEW),
-           open_items=open_items, found=found, build=BUILD_DATE, repo=REPO)
-    open(os.path.join(OUT, 'index.html'), 'w').write(doc)
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'">
+<title>Privacy-first inheritance decision guide</title>
+<style>
+:root{color-scheme:light;--ink:#173334;--green:#24574f;--muted:#657572;--line:#dce6df;--paper:#f5f7f2}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.65 system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:760px;margin:10vh auto;padding:40px 28px;background:#fff;border:1px solid var(--line)}
+.eyebrow{font-size:.75rem;letter-spacing:.14em;font-weight:700;color:#5b786c}h1{font:500 clamp(2rem,5vw,3rem)/1.15 Georgia,serif;margin:.8rem 0 1rem}
+p{color:var(--muted)}a.button{display:inline-block;margin:16px 0;padding:13px 19px;background:var(--green);color:#fff;text-decoration:none;font-weight:700;border-radius:4px}
+a:focus-visible{outline:3px solid #c98d25;outline-offset:3px}.note{border-top:1px solid var(--line);padding-top:18px;font-size:.9rem}
+</style></head><body><main><p class="eyebrow">PUBLIC EDITION · PRIVACY FIRST</p>
+<h1>Inheritance decision guide</h1>
+<p>A general guide to the legal process, the information still needed, operating-cost categories, and the choices that should be compared before a future trust transfer.</p>
+<p>The public guide uses fictional teaching examples only. It does not publish household-specific property figures, tax histories, utility costs or forecasts.</p>
+<p><a class="button" href="privacy-site/public/index.html">Open the decision guide</a></p>
+<p class="note">Rounding is not anonymization. This page only describes the GitHub Pages publication boundary; the public source repository and its history are separate exposure surfaces.</p>
+</main></body></html>
+""")
 
 
 def main():
