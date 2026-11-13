@@ -2274,3 +2274,35 @@ allowlist entries; `final/build.py` keeps their seventh-pass note and coverage s
 this session's re-read table; `final/flags.py` keeps their R55 and appends R62–R68;
 `review.html` and `verification.html` are generated files and were regenerated from the merged
 builder, so both sessions' content is present. No file from either session was discarded.
+
+### S7 merge and Pages record (session arena/46d1a561, 2026-11-13)
+
+- **Pull request:** PR #91 "Publish the rounded-figures edition: dashboard landing page,
+  32-file boundary, privacy scrub, verification pass" —
+  https://github.com/wingbangboozle1-lang/Tino1/pull/91 — merged with `gh pr merge 91 --merge`
+  into `main` as merge commit **`2b235c3`** at 2026-11-13T12:26:38Z.
+- **Required check:** `verify` passed on the PR head (Actions run 43424972111, job 131884050543)
+  after the branch absorbed PRs #85, #86, #87, #88, #89, #90, #93 and #95 through union merges.
+  Real Jekyll build and both publication checkers passed in CI.
+- **GitHub Pages:** `pages` API reports `status: built`; the latest build is `built` for commit
+  `2b235c3`. Live fetches after the merge:
+  - `/Tino1/` serves the dashboard front door ("Two-home inheritance decision dashboard",
+    headline figures, six category groups, link to the figure-free guide);
+  - `/Tino1/summary.html`, `/Tino1/black-swan.html` and `/Tino1/review.html` all serve the
+    rounded-figures edition with their official source links;
+  - `/Tino1/privacy-site/public/index.html` still serves the figure-free guide.
+  The boundary is now: 19 rounded-figures pages + 13 guide pages = 32 files.
+- **Delivered by S7:** dashboard landing page; publication allowlist 13 -> 32 with the boundary
+  derived from `final/published.txt` in both checkers; the owner-figure exposure closed
+  (R63); `no-referrer` on every generated page (R67); a fourth independent re-read published on
+  the Verification page; findings R62-R68 and the REPO-REVIEW second pass; README/README_ROOT
+  describing the boundary that is actually published.
+- **Suite at merge:** `final/check.py .` OK (25 pages, 1,025 table rows each with an official
+  link, 2,651 links, 2,492 dollar figures rounded to $10, secretless 6-digit scan clean against
+  14,552 model numbers, model self-tests on 51 paths, no merge-conflict marker anywhere);
+  `final/publish.py --check` OK (32 files); both publication checkers PASS against a rebuilt
+  32-file output; `privacy-site/check.py` PASS (12 pages, 383 linked rows); unittest PASS.
+- **Still open for the owner (non-blocking, by design):** G01 (which boundary to keep — option D
+  is live, three narrower options listed), G02 (superseded branches and directories), R68/P02
+  (public Git history), R55 (HUD FY2026 vs FY2027 figures for ZIP 94122, session 5a0857f0), the
+  Q/U/A/S flag registers, and the two dropped S-register proposals named in R52.
