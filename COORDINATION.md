@@ -1778,3 +1778,14 @@ Privacy interpretation: names, contact details, exact addresses, parcel identifi
 - S5-0 claim, S5-1 bounded audit, S5-2 review pack and S5-3 integration/publication are done. The audit directory is excluded from Pages; the root chooser privacy wording is corrected. D1 dual-edition routing remains in force.
 - Still open for the owner: G01/G02 routing and repository/history remediation; privacy-safe numeric rebuild or privacy-only revert if anonymization is required; model/provenance corrections S5-P1–S5-P5; private evidence questions S5-Q1–S5-Q7. No historical series, ZIPs or private documents were republished by this session.
 
+
+## Session `arena/022b1ea7-tino1` — two-home inheritance analysis, verified site build (claimed 2026-11-13 UTC)
+
+Base `551179b` (= origin/main, PR #72 merge). No open PRs and no active claims on the board at claim time. This session will not touch `final/publish.py`, `privacy-site/**`, root numeric pages, or `_config.yml` until the owner resolves the open privacy decisions (G01/G02 routing, history remediation).
+
+| Task | Status | Owner | File scope | Notes |
+|---|---|---|---|---|
+| O1 Claim and coordination | done | arena/022b1ea7-tino1 | COORDINATION.md (append only) | This entry. |
+| O2 Official-source verification (federal, CA, SF, Japan, insurance) | in progress | arena/022b1ea7-tino1 | `owner-analysis-2026/sources/**` (new, exclusive) | Rows marked verified or flagged. |
+| O3 Projection model and site build | in progress | arena/022b1ea7-tino1 | `owner-analysis-2026/**` (new, exclusive, excluded from Pages) | Not published until owner privacy decision. |
+| O4 Pages publication and merge to main | held | arena/022b1ea7-tino1 | none yet | Held: privacy blocker, see notes. |
