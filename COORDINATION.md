@@ -1708,3 +1708,6 @@ Privacy interpretation: names, contact details, exact addresses, parcel identifi
 
 Privacy interpretation for this pass: a $10 rounding interval is **not anonymization**. No names, exact street addresses, parcel/account data, exact historical bills or assessments may be published. City/ZIP plus a unique value pattern may still be identifying; use generic property placeholders on the public guide. Full household-value analysis must be treated as private unless its publication is demonstrably safe. Public Git history is a separate exposure; no history rewrite, force push, repository-visibility change or other destructive account-level action is authorized by this claim. Flag any such owner-only remediation separately.
 
+
+### FDD scope amendment (2026-11-13 UTC)
+The first audit pass found that `README.md` contradicts itself about what Pages publishes, and `final/build.py` can recreate the prior chooser over the privacy landing. FDD-1/FDD-3 therefore also own `README.md`, `index.html`, `final/check_published.py`, and the root-entry behavior in `final/build.py`. These are integration-only corrections to keep the declared privacy boundary true after future rebuilds. No product files were edited before this amendment.
