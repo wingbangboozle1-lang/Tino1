@@ -2099,3 +2099,15 @@ The owner's latest brief asks for a live site with household numbers rounded to 
 - **Required check:** `verify` succeeded on the PR head `4f1851e` (run 43420319367; real Jekyll build, `final/check_published.py` and `privacy-site/check_published.py` on `_site`; published files 13, builder outputs compared 1). It also succeeded on `main` after the merge (run 43420471565).
 - **GitHub Pages:** the Pages API reports `status: built`, `error: null`, latest build commit `a619a88`. Live fetch of https://wingbangboozle1-lang.github.io/Tino1/privacy-site/public/flagged.html returns the refreshed Flagged page (2026-11-13 "Opened" dates, the IRS 2027 figure, the LTA rows). The root path `/Tino1/flagged.html` returns 404 by design: the guide is published under `privacy-site/public/`.
 - **Still open for the owner (non-blocking, by design):** R-A (repository visibility is public; make it private or move household-specific files out before any further publication, because history and forks cannot be rewritten by this session); the household-numbers publication decision (G01/G02); R-B refresh of the repo-root and `final/` numeric pages to the 12 Nov 2026 8:46 p.m. ballot reading.
+## Session `bd0afb0a` (`arena/bd0afb0a-tino1`) — published-guide verification, executive summary, discovery plan (claimed 2026-11-13 UTC)
+
+**Branch:** `arena/bd0afb0a-tino1` (fixed by the workspace; based on `1896295`, which is current `main`). Every earlier session record above is retained unchanged. This session does not touch `final/**` numbers, `data/**`, `research/**`, `docs/**`, `archive/**`, or any earlier edition.
+
+| Task | Status | Owner session | Files / scope | Acceptance / verification |
+|---|---|---|---|---|
+| B0-1 Claim and coordination | in progress | `arena/bd0afb0a-tino1` | `COORDINATION.md` (append only) | Claim committed and pushed before product edits. |
+| B0-2 Independent re-verification of every published-guide source claim | claimed | `arena/bd0afb0a-tino1` | `session-bd0afb0a/VERIFICATION.md` (new, audit only) | Each published claim checked against the official page in this session; discrepancies flagged; nothing certified from memory. |
+| B0-3 Executive summary page + questions/discovery plan + stress-history evidence | claimed | `arena/bd0afb0a-tino1` | `privacy-site/build.py`, `privacy-site/research.json`, `privacy-site/public/**`, `privacy-site/check.py`, `privacy-site/check_published.py`, `final/publish.py` | Figure-free, no household/identifier data, every table row links an official page, unknowns stay blank. |
+| B0-4 Gates, PR, merge, Pages record | claimed | `arena/bd0afb0a-tino1` | branch + `COORDINATION.md` | Rebuild is byte-identical, all checkers pass, CI green, Pages deployed, outcome recorded here. |
+
+Privacy boundary unchanged: GitHub Pages keeps the privacy-first allowlist (generic landing + figure-free guide). No household figures, histories, location cues or identifiers may be added. Rounding is not anonymisation.
