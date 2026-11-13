@@ -24,7 +24,10 @@ OTHER_OK = ('github.com', 'pages.stern.nyu.edu')
 OFFICIAL_ODD = {'38,915.87', '8,455.35', '14,217,212,455', '324,973', '1,176', '601', '1,044,586', '72,724', '371,479', '445,771', '742,953', '109,125', '208,325', '661,375',
                 '56', '67', '76', '1.10', '0.55', '24.15',
                 # HUD's own FY2026 reference row printed on the FY2027 zip-calc page for 94122 (read 2026-11-13, finding R55)
-                '2,485', '2,977', '3,604', '4,604', '4,772'}
+                '2,485', '2,977', '3,604', '4,604', '4,772',
+                # R&TC 63.2(g): the one-time Proposition 19 claim-processing fee is capped at the lesser of the
+                # county's actual cost or $175 (read on the statute page 2026-11-13); it is a statutory ceiling, not a model figure.
+                '175'}
 errors = []
 # A git merge-conflict marker left in a file publishes as literal text. R38: a marker and a duplicated fragment were
 # live on the published Verification page while every other check passed. Scan pages and repository files alike.
