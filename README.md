@@ -13,11 +13,12 @@ GitHub Pages publishes the **no-figures guide** in [`privacy-site/public/`](priv
 | `index.html` | The published front door: a generic landing page linking the no-figures guide (the numeric pages are repository files, not served) |
 | `summary.html` | Executive summary, dashboard, best plan and why (rounded-figures numeric edition) |
 | `decision.html` | Live, rent or sell: cash flows, after-tax wealth, sensitivities, break-even points |
-| `questions.html` | Questions, known vs. unknown info, and discovery guide — Part 1: Q01–Q18, U01–U10, the S5-Q1–S5-Q7 evidence checklist & discovery sequence; Part 2: reading-dated decision register (open, unknowable, answered) |
+| `questions.html` | Questions, known vs. unknown info, and discovery guide — Part 1: Q01–Q18, U01–U11, the S5-Q1–S5-Q7 evidence checklist & discovery sequence; Part 2: reading-dated decision register (open, unknowable, answered) |
 | `projections.html` | Year by year 2026 to 2076: value, assessed value, property tax, insurance, water, electricity, repairs, rental insurance |
-| `black-swan.html` | Non-constant growth and inflation: 50 replays of the real 1976-2025 record and named crisis paths, with a provenance table separating official statistics, academic returns and hypothetical constructions |
+| `black-swan.html` | Non-constant growth and inflation: 50 replays of the real 1976-2025 record, named crisis paths, and a 400-path block resampling of the same record with the whole distribution of outcomes for each choice, with a provenance table separating official statistics, academic returns and hypothetical constructions |
+| `pending.html` | Law changes: enacted, pending and due to move - SB 293 and the SB 974 trust amendment, all fourteen November 2026 measures with their unofficial returns, the watch list, what each legal change does to the answer, an estate-tax counterfactual, and the re-check calendar |
 | `process.html` | Step-by-step process with legal deadlines (`BOE-266` before `BOE-19-P` per BOE Pub. 800-1) |
-| `law.html` | Federal, California (`Behavioral Health Services Tax`), and local law in force, plus pending measures & Nov 11 ballot updates |
+| `law.html` | Federal, California (`Behavioral Health Services Tax`), and local law in force, plus pending measures; the full law-change register and re-check calendar are on `pending.html` |
 | `estate-cash.html` | Cash inheritance: thresholds at each level, room before tax, projections |
 | `costs.html` | Insurance for both ZIP codes and running costs (CPUC NEM / `$24.15` fixed charge, water, rent) |
 | `suggestions.html` | Proposed site, data & privacy improvements to review before implementing — Part 1: GAP/IMP/Paths; Part 2: options register G01–G15; review controls now cover nine proposals |
@@ -26,7 +27,7 @@ GitHub Pages publishes the **no-figures guide** in [`privacy-site/public/`](priv
 | `sources.html` | Source register (zero official `excerpt` sources remain), method, cross-check against a second model |
 | `verification.html` | Verification passes (2026-11-11, 2026-11-12 and 2026-11-13): every official agency source opened and read directly |
 | `requirements.html` | Every part of the brief, the page that answers it, the official pages re-read, and `SG-1`–`SG-11` queue |
-| `review.html` | Repository review findings (`R01`–`R54`) |
+| `review.html` | Repository review findings (`R01`–`R60`; the sequence skips `R34`–`R37`, folded into other rows during the 2026-11-13 merges, see `R55`) |
 | `versions.html` | Earlier editions and why they were replaced |
 
 ## Reproduce
