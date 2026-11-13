@@ -1,6 +1,6 @@
 {
-  "checked": "2026-11-12",
-  "method": "Official pages opened and substantive passages read using fetch_page. This is a bounded claim audit, not a complete audit of every historic repository edition. Most sources were read on 2026-11-12; sources newly re-read on 2026-11-13 carry an individual checked date. Official-context links do not verify household data or synthetic assumptions. Error pages were rejected, not counted as verification.",
+  "checked": "2026-11-13",
+  "method": "Official pages opened and substantive passages read with page_fetch on 2026-11-12 and again on 2026-11-13 for every claim published in this edition (session bd0afb0a, audit file session-bd0afb0a/VERIFICATION.md). Three published statements were corrected after that re-read: the 2026 SALT amount's supporting link, a ballot percentage, and the label applied to the 1% surtax. This remains a bounded audit of the public guide, not of Git history, forks or prior editions. Official-context links do not verify household data, private bills or synthetic assumptions.",
   "sources": {
     "estate": {
       "title": "IRS · Estate tax",
@@ -17,7 +17,8 @@
     "faq": {
       "title": "IRS · Estate tax FAQ",
       "url": "https://www.irs.gov/businesses/small-businesses-self-employed/frequently-asked-questions-on-estate-taxes",
-      "finding": "Form 706 generally due nine months after death; six-month filing extension; portability requires filing; nonresident noncitizens require separate rules."
+      "finding": "Form 706 generally due nine months after death; six-month filing extension; portability requires filing; nonresident noncitizens require separate rules.",
+      "checked": "2026-11-13"
     },
     "boe": {
       "title": "California BOE · Proposition 19",
@@ -28,7 +29,8 @@
     "allow": {
       "title": "BOE · 2025 allowance notice",
       "url": "https://www.boe.ca.gov/news/2025/nr-25-02.htm",
-      "finding": "Allowance is $1,044,586 for transfers February 16, 2025 through February 15, 2027. Indexed every other year using California FHFA HPI, not general CPI."
+      "finding": "Allowance is $1,044,586 for transfers February 16, 2025 through February 15, 2027. Indexed every other year using California FHFA HPI, not general CPI.",
+      "checked": "2026-11-13"
     },
     "rtc": {
       "title": "California · RTC §51",
@@ -39,7 +41,8 @@
     "trust": {
       "title": "California · Probate Code §16061.7",
       "url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=16061.7.&lawCode=PROB",
-      "finding": "Trustee notification triggered by specified events; generally 60 days, with awareness/vacancy exceptions. Does not itself establish all appraisal/insurance steps."
+      "finding": "Trustee notification triggered by specified events; generally 60 days, with awareness/vacancy exceptions. Does not itself establish all appraisal/insurance steps.",
+      "checked": "2026-11-13"
     },
     "sco": {
       "title": "California Controller · Estate tax",
@@ -74,12 +77,14 @@
     "ftb": {
       "title": "California FTB · Capital gains",
       "url": "https://www.ftb.ca.gov/file/personal/income-types/capital-gains-and-losses.html",
-      "finding": "California has no preferential lower capital-gains rate; gains taxed as ordinary income."
+      "finding": "California has no preferential lower capital-gains rate; gains taxed as ordinary income.",
+      "checked": "2026-11-13"
     },
     "insurance": {
       "title": "California DOI · Residential insurance",
       "url": "https://www.insurance.ca.gov/01-consumers/105-type/5-residential/index.cfm",
-      "finding": "Compare coverage and premiums; official comparison tools linked. FAIR Plan limited perils and possible separate DIC coverage. No property-specific premium verified."
+      "finding": "Compare coverage and premiums; official comparison tools linked. FAIR Plan limited perils and possible separate DIC coverage. No property-specific premium verified.",
+      "checked": "2026-11-13"
     },
     "cpuc": {
       "title": "California PUC · Customer generation",
@@ -90,7 +95,8 @@
     "tenantlaw": {
       "title": "California Legislature · Civil Code §1947.12",
       "url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=1947.12.&lawCode=CIV",
-      "finding": "California's statewide residential rent cap has statutory exceptions, including housing subject to lower local limits. Applicability depends on facts; this source does not establish any household property coverage."
+      "finding": "California's statewide residential rent cap has statutory exceptions, including housing subject to lower local limits. Applicability depends on facts; this source does not establish any household property coverage.",
+      "checked": "2026-11-13"
     },
     "bill": {
       "title": "California Legislature · SB 974",
@@ -107,37 +113,50 @@
     "fdic": {
       "title": "FDIC · Deposit insurance",
       "url": "https://www.fdic.gov/resources/deposit-insurance/understanding-deposit-insurance",
-      "finding": "$250,000 per depositor per insured bank per ownership category; deposits aggregated within category; stocks, mutual funds, bonds not covered."
+      "finding": "$250,000 per depositor per insured bank per ownership category; deposits aggregated within category; stocks, mutual funds, bonds not covered.",
+      "checked": "2026-11-13"
     },
     "inflation": {
       "title": "Federal Reserve History · Great Inflation",
       "url": "https://www.federalreservehistory.org/essays/great-inflation",
-      "finding": "1965–1982 inflation regime included recessions and energy shocks; inflation exceeded 14% in 1980. Narrative context, not local property/portfolio returns."
+      "finding": "1965–1982 inflation regime included recessions and energy shocks; inflation exceeded 14% in 1980. Narrative context, not local property/portfolio returns.",
+      "checked": "2026-11-13"
     },
     "recession": {
       "title": "Federal Reserve History · Great Recession",
       "url": "https://www.federalreservehistory.org/essays/great-recession-of-200709",
-      "finding": "National home prices approximately -30% mid-2006 to mid-2009; S&P500 price index -57% October 2007 to March 2009. Different peak/trough windows, not annual total returns or local forecasts."
+      "finding": "National home prices approximately -30% mid-2006 to mid-2009; S&P500 price index -57% October 2007 to March 2009. Different peak/trough windows, not annual total returns or local forecasts.",
+      "checked": "2026-11-13"
     },
     "cpi": {
       "title": "BLS · Historical CPI-U",
       "url": "https://www.bls.gov/cpi/tables/historical-cpi-u-201710.pdf",
-      "finding": "Historical monthly and annual CPI table includes deflation and inflation; not a 50-year forecast or California statutory indexing series."
+      "finding": "Historical monthly and annual CPI-U table; the annual-percent-change column is the source of the decade table on the black-swan page. Arithmetic only: not a 50-year forecast and not California's statutory indexing series.",
+      "checked": "2026-11-13"
     },
     "pages": {
       "title": "GitHub Docs · Pages and data collection",
       "url": "https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages",
-      "finding": "Pages publishes static repository files through a build; GitHub states visitor IP addresses are logged for security, even when visitors are not signed in."
+      "finding": "Pages publishes static repository files through a build; GitHub states visitor IP addresses are logged for security, even when visitors are not signed in.",
+      "checked": "2026-11-13"
     },
     "history": {
       "title": "GitHub Docs · Sensitive-data removal",
       "url": "https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/removing-sensitive-data-from-a-repository",
-      "finding": "Rewriting history alone does not remove clones/forks, cached views or PR references. Removal requires coordination; other users’ clones cannot be erased by the repository owner. No history rewrite is performed here."
+      "finding": "Rewriting history alone does not remove clones/forks, cached views or PR references. Removal requires coordination; other users’ clones cannot be erased by the repository owner. No history rewrite is performed here.",
+      "checked": "2026-11-13"
     },
     "sched_a": {
       "title": "IRS · Schedule A Instructions (SALT cap)",
       "url": "https://www.irs.gov/instructions/i1040sca",
-      "finding": "P.L. 119-21 raised the Schedule A itemized SALT cap to $40,000 (2025) and $40,400 (2026), phasing down above $500,000 MAGI to a $10,000 floor and reverting to $10,000 after 2029 unless extended. Schedule E rental property taxes remain uncapped."
+      "finding": "The 2025 Schedule A instructions state the overall state and local tax limit is $40,000 ($20,000 if married filing separately), reduced when modified AGI exceeds $500,000 but never below $10,000. This link does not state the later-year amount; that is flagged separately.",
+      "checked": "2026-11-13"
+    },
+    "saltlaw": {
+      "title": "Congress.gov · Public Law 119-21 §70120 (individual SALT limit)",
+      "url": "https://www.congress.gov/bill/119th-congress/house-bill/1/text",
+      "finding": "Section 70120 amends IRC §164(b)(6)-(7): the individual SALT itemized-deduction cap is $40,000 for 2025 and $40,400 for 2026, with 101% annual increases for 2027-2029; after 2029 it is $10,000. For 2025-2029 the cap is reduced by 30% of modified AGI above $500,000 (2025), $505,000 (2026), then a 101%-indexed threshold, but not below $10,000; MFS amounts are half. Applies to tax years beginning after Dec. 31, 2024. Statutory schedule, not a forecast or property-specific rental-tax calculation.",
+      "checked": "2026-11-13"
     },
     "boepub": {
       "title": "BOE · Publication 800-1 (Prop 19)",
@@ -148,12 +167,38 @@
     "ftb540": {
       "title": "CA FTB · 2025 Form 540 Booklet",
       "url": "https://www.ftb.ca.gov/forms/2025/2025-540-booklet.html",
-      "finding": "Beginning tax year 2025, California renamed the 1% millionaire surtax on taxable income over $1,000,000 from Mental Health Services Tax to Behavioral Health Services Tax."
+      "finding": "2025 Form 540 booklet. Used only for the California treatment of capital gains as ordinary income context; the 1% surtax itself is cited to Revenue and Taxation Code section 17043.",
+      "checked": "2026-11-13"
     },
     "sos26": {
       "title": "CA Secretary of State · 2026 Ballot Measures",
       "url": "https://electionresults.sos.ca.gov/returns/ballot-measures",
-      "finding": "Nov 11 (6:51 p.m.) unofficial returns show Prop 3 Yes 60.7%, Prop 40 No 52.5%, Prop 42 Yes 51.4%; no Prop 19 repeal appeared on the Nov 2026 ballot. Unofficial until certified by Dec 11."
+      "finding": "Unofficial returns read 2026-11-13: as of November 12, 2026, 8:46 p.m., 23,860 of 23,860 precincts, Prop 3 Yes 60.7%, Prop 40 Yes 47.6% / No 52.4%, Prop 42 Yes 51.4%; certification is due by December 11, 2026. No Prop 19 repeal appeared on the November 2026 ballot.",
+      "checked": "2026-11-13"
+    },
+    "revproc": {
+      "title": "IRS · Rev. Proc. 2026-35 (2027 adjustments)",
+      "url": "https://www.irs.gov/pub/irs-drop/rp-26-35.pdf",
+      "finding": "Section 3.44: basic exclusion amount for estate tax under §2010(c)(3) is $15,480,000 for 2027. Section 3.46: 2027 annual gift exclusion is $20,000. Federal figures only; not a per-heir allowance.",
+      "checked": "2026-11-13"
+    },
+    "lta26002": {
+      "title": "California BOE · LTA 2026/002 (2026-27 CCPI)",
+      "url": "https://www.boe.ca.gov/proptaxes/pdf/lta26002.pdf",
+      "finding": "2026-27 assessment roll inflation factor is 1.02: CCPI +3.307% (August 2024 to August 2025, because October 2025 was not published after the federal shutdown), capped at 2% under Art. XIII A §2(b).",
+      "checked": "2026-11-13"
+    },
+    "lta25009": {
+      "title": "California BOE · LTA 2025/009 (value-cap adjustment)",
+      "url": "https://www.boe.ca.gov/proptaxes/pdf/lta25009.pdf",
+      "finding": "Intergenerational transfer value cap is the factored base-year value plus $1,044,586 for transfers from Feb 16, 2025 to Feb 15, 2027. The amount is next adjusted in February 2027, using the FHFA California House Price Index.",
+      "checked": "2026-11-13"
+    },
+    "lta26026": {
+      "title": "California BOE · Prop 19 FAQ (LTA 2026/026, Aug 3, 2026)",
+      "url": "https://www.boe.ca.gov/proptaxes/pdf/lta26026.pdf",
+      "finding": "Defines a transfer as including transfers at death, whether within or outside a trust. A family home is a dwelling eligible for the homeowners' exemption from the transferor's ownership and occupation, with a reasonable site area. A continual-use requirement applies. Board guidance summary, not statute.",
+      "checked": "2026-11-13"
     },
     "cdires": {
       "title": "CA DOI · Residential Insurance Guide (Form 401)",
@@ -172,6 +217,12 @@
       "url": "https://www.waterboards.ca.gov/drinking_water/certlic/drinkingwater/shutoff-protection.html",
       "finding": "The State Water Board page links an official map to identify a public drinking-water system service area from a residential address. It does not publish the property’s water or wastewater rates; those must be checked with the actual provider.",
       "checked": "2026-11-13"
+    },
+    "t117043": {
+      "title": "California · RTC §17043 (1% additional tax)",
+      "url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=17043.&lawCode=RTC",
+      "finding": "For taxable years beginning on or after January 1, 2005, an additional tax of 1 percent is imposed on the portion of a taxpayer's taxable income above $1,000,000. The threshold is not adjusted for filing status by this section.",
+      "checked": "2026-11-13"
     }
   },
   "rejected_links": [
@@ -186,6 +237,14 @@
     {
       "url": "https://www.bls.gov/opub/ted/2023/consumer-prices-for-all-items-rose-6-5-percent-from-december-2021-to-december-2022.htm",
       "reason": "Error page; no numerical claim taken from it"
+    },
+    {
+      "url": "https://www.boe.ca.gov/proptaxes/faqs/prop19.htm",
+      "reason": "404 page on 2026-11-13; the current BOE Prop 19 page and LTA 2026/026 are used instead"
+    },
+    {
+      "url": "https://sftreasurer.org/payment-options/property-tax-rates",
+      "reason": "404 page on 2026-11-13; not used in the published guide, which withholds city-specific rates"
     }
   ]
 }

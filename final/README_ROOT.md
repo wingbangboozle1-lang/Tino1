@@ -2,15 +2,15 @@
 
 **Live site:** https://wingbangboozle1-lang.github.io/Tino1/
 
-A decision analysis for two California homes. Property A (Cupertino, ZIP 95014) will pass to the Inheritor through a trust around 2040 to 2050. Property B (San Francisco, ZIP 94122) is already owned by the Inheritor. The site answers one question with numbers: live in Property A, rent it out, or sell it and reinvest.
+A decision analysis for two California homes. Property A (the future inherited home) will pass to the Inheritor through a trust around 2040 to 2050. Property B (the home already owned) is not part of the inheritance. The site answers one question with numbers: live in Property A, rent it out, or sell it and reinvest. City, ZIP code and parcel identifiers are deliberately omitted from this front page.
 
 ## What is current
 
-GitHub Pages publishes the **no-figures guide** in [`privacy-site/public/`](privacy-site/public/) behind a generic landing page (privacy first, every illustration invented for teaching; the exact file list is pinned in [`final/published.txt`](final/published.txt)). The **rounded-figures analysis** at the repository root, generated from [`final/`](final/), is repository-only: it is built and checked by CI but deliberately not served, because rounding is disclosure minimisation, not anonymisation (PR #79, 2026-11-13). Pages:
+GitHub Pages publishes the **rounded-figures decision dashboard** at the repository root, generated from [`final/`](final/), together with the **no-figures guide** in [`privacy-site/public/`](privacy-site/public/) (every illustration invented for teaching; the exact file list is pinned in [`final/published.txt`](final/published.txt)). This boundary resolves owner questions G01 and G02 in the owner's favour: the owner brief of 2026-11-13 requires the figures in the decision analysis "to provide clarity", and $10 rounding, placeholders for people and document identifiers, `noindex` and `no-referrer` are disclosure minimisation, labelled as such on every page (PR #94, 2026-11-13). Pages:
 
 | Page | Content |
 |---|---|
-| `index.html` | The published front door: a generic landing page linking the no-figures guide (the numeric pages are repository files, not served) |
+| `index.html` | The published front door: the decision dashboard landing, linking every section and the no-figures guide |
 | `summary.html` | Executive summary, dashboard, best plan and why (rounded-figures numeric edition) |
 | `decision.html` | Live, rent or sell: cash flows, after-tax wealth, sensitivities, break-even points |
 | `questions.html` | Questions, known vs. unknown info, and discovery guide — Part 1: Q01–Q18, U01–U10, the S5-Q1–S5-Q7 evidence checklist & discovery sequence; Part 2: reading-dated decision register (open, unknowable, answered) |
@@ -34,11 +34,11 @@ GitHub Pages publishes the **no-figures guide** in [`privacy-site/public/`](priv
 python3 final/model.py && python3 final/integrate.py && python3 final/check.py .
 ```
 
-Standard library only. `final/check.py` fails if a table row has no link to an official page, if an internal link is broken, if a dollar figure is not a multiple of $10 (listed official figures excepted), or if a street address, e-mail address, parcel-number or telephone pattern appears. GitHub Pages serves only the privacy-first allowlist in [`final/published.txt`](final/published.txt) (generic landing + no-figures guide), enforced in CI by `final/check_published.py` and `privacy-site/check_published.py`; the numeric pages stay repository files, built and checked but not published.
+Standard library only. `final/check.py` fails if a table row has no link to an official page, if an internal link is broken, if a dollar figure is not a multiple of $10 (listed official figures excepted), or if a street address, e-mail address, parcel-number or telephone pattern appears. GitHub Pages serves the reviewed allowlist in [`final/published.txt`](final/published.txt) (decision dashboard + no-figures guide), enforced in CI by `final/check_published.py` and `privacy-site/check_published.py`.
 
 ## Rules followed
 
-- **Privacy first.** No names, addresses or parcel numbers. People are "the Transferor" and "the Inheritor". Owner-supplied figures are stored and shown only rounded to $10; no year-by-year history is listed. Pages ask search engines not to index them.
+- **Privacy first.** No names, addresses or parcel numbers. People are "the Transferor" and "the Inheritor". Owner-supplied figures are stored and shown only rounded to $10 and labelled owner-supplied (flag P03); the recorded tax and assessment history appears only in that rounded form. Pages ask search engines not to index them.
 - **Official sources.** Every table row links to an official page. A value that could not be confirmed is left blank and listed on the Flagged for Review page. Assumptions are labelled as assumptions.
 - **Not advice.** The site prepares questions for a licensed estate attorney and tax adviser.
 
