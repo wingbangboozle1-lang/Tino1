@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'">
+<title>Sources and method | Two-home inheritance decision guide</title>
+<style>
+:root{color-scheme:light;--ink:#12262b;--ink2:#33474b;--muted:#61757a;--line:#dfe7e4;--paper:#f4f7f5;
+--card:#ffffff;--accent:#1f5f55;--accent2:#0f3f38;--warn:#8a4b12;--warnbg:#fdf5e8;--ok:#1f5f3a;
+--okbg:#eef7f1;--stop:#7d2b2b;--stopbg:#fbeeee;--chip:#e7efe9}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+a{color:var(--accent);text-decoration-thickness:1px;text-underline-offset:2px}
+a:hover{color:var(--accent2)}
+header.top{background:var(--accent2);color:#eef4f0}
+header.top .in{max-width:1180px;margin:0 auto;padding:14px 22px;display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;justify-content:space-between}
+.brand{font-weight:700;letter-spacing:.02em;font-size:.95rem}
+.brand small{display:block;font-weight:400;opacity:.8;letter-spacing:.08em;font-size:.68rem;text-transform:uppercase}
+nav.primary{display:flex;flex-wrap:wrap;gap:4px 6px;font-size:.84rem}
+nav.primary a{color:#dce9e2;text-decoration:none;padding:5px 8px;border-radius:4px;white-space:nowrap}
+nav.primary a:hover,nav.primary a[aria-current=page]{background:#215247;color:#fff}
+main{max-width:1180px;margin:0 auto;padding:26px 22px 60px}
+.crumb{font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:700}
+h1{font:600 clamp(1.7rem,3.4vw,2.5rem)/1.18 Georgia,"Times New Roman",serif;margin:.5rem 0 .4rem;color:var(--accent2)}
+h2{font:600 1.28rem/1.3 Georgia,serif;margin:2rem 0 .5rem;color:var(--accent2);padding-bottom:.3rem;border-bottom:1px solid var(--line)}
+h3{font:600 1.05rem/1.3 system-ui,sans-serif;margin:1.4rem 0 .4rem}
+p.lead{font-size:1.08rem;color:var(--ink2);max-width:78ch}
+p,li{max-width:88ch}
+.note{font-size:.86rem;color:var(--muted)}
+.banner{margin:18px 0;padding:13px 16px;border-left:4px solid var(--accent);background:#eaf2ee;font-size:.9rem;color:var(--ink2)}
+.banner.warn{border-color:var(--warn);background:var(--warnbg)}
+.banner.stop{border-color:var(--stop);background:var(--stopbg)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin:22px 0}
+.kpi{background:var(--card);border:1px solid var(--line);border-top:3px solid var(--accent);padding:14px 16px;border-radius:3px}
+.kpi .l{font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.kpi .v{font:600 1.55rem/1.2 Georgia,serif;margin:.35rem 0 .2rem;color:var(--accent2)}
+.kpi .s{font-size:.82rem;color:var(--muted)}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);padding:16px 18px;border-radius:3px}
+.card h3{margin:0 0 .35rem;font-size:1.02rem}
+.card h3 a{text-decoration:none}
+.card p{margin:.2rem 0 0;font-size:.87rem;color:var(--muted)}
+.cat{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);font-weight:700;margin:26px 0 -6px}
+.tablewrap{overflow-x:auto;margin:14px 0 6px;border:1px solid var(--line);background:var(--card);border-radius:3px}
+table{border-collapse:collapse;width:100%;font-size:.86rem}
+caption{caption-side:top;text-align:left;padding:10px 12px 4px;font-weight:700;font-size:.85rem;color:var(--accent2)}
+th,td{padding:8px 11px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+thead th{background:#eef3f0;font-size:.76rem;letter-spacing:.05em;text-transform:uppercase;color:var(--ink2);position:sticky;top:0}
+tbody tr:nth-child(even){background:#fbfcfb}
+table.num td:not(:last-child),table.num th:not(:last-child){font-variant-numeric:tabular-nums}
+td.src,th.src{font-size:.78rem;white-space:nowrap}
+a.src{font-size:.78rem;text-decoration:none;border-bottom:1px dotted var(--accent)}
+.pill{display:inline-block;font-size:.72rem;font-weight:700;padding:1px 7px;border-radius:10px;background:var(--chip);color:var(--accent2);white-space:nowrap}
+.pill.open{background:var(--warnbg);color:var(--warn)}
+.pill.stop{background:var(--stopbg);color:var(--stop)}
+.pill.ok{background:var(--okbg);color:var(--ok)}
+.split{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:18px;margin:16px 0}
+ol.steps{counter-reset:s;list-style:none;padding:0}
+ol.steps>li{counter-increment:s;position:relative;padding:0 0 16px 46px;border-left:2px solid var(--line);margin-left:14px}
+ol.steps>li::before{content:counter(s);position:absolute;left:-15px;top:0;width:28px;height:28px;border-radius:50%;background:var(--accent);color:#fff;font-weight:700;font-size:.85rem;display:grid;place-items:center}
+ol.steps h3{margin:.1rem 0 .2rem}
+.q{border:1px solid var(--line);background:var(--card);border-radius:3px;padding:14px 16px;margin:12px 0}
+.q .id{font-size:.74rem;font-weight:700;letter-spacing:.1em;color:var(--accent);text-transform:uppercase}
+.q h3{margin:.15rem 0 .5rem;font-size:1rem}
+.q dl{display:grid;grid-template-columns:150px 1fr;gap:4px 12px;margin:0;font-size:.87rem}
+.q dt{color:var(--muted);font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;font-weight:700;padding-top:2px}
+.q dd{margin:0}
+.budget{display:flex;flex-wrap:wrap;gap:10px;margin:8px 0 0}
+.budget label{display:inline-flex;align-items:center;gap:6px;font-size:.82rem;border:1px solid var(--line);padding:4px 9px;border-radius:12px;background:#fff;cursor:pointer}
+.path{background:#eef3f0;border:1px solid var(--line);padding:12px 15px;border-radius:3px;margin:12px 0;font-size:.9rem}
+.path b{color:var(--accent2)}
+footer{margin-top:40px;border-top:1px solid var(--line);padding-top:16px;font-size:.8rem;color:var(--muted)}
+footer p{max-width:none}
+.skip{position:absolute;left:-9999px}
+:target{scroll-margin-top:70px}
+@media (max-width:640px){.q dl{grid-template-columns:1fr}th,td{padding:7px 8px}}
+@media print{header.top,nav.primary{display:none}main{max-width:none}}
+</style></head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top"><div class="in">
+<span class="brand">Two-home inheritance decision guide<small>Numbered property edition · built 2026-11-13</small></span>
+<nav class="primary" aria-label="Sections"><a href="index.html">Overview</a><a href="decision.html">Decision</a><a href="projections.html">Projections</a><a href="black-swan.html">Black swan</a><a href="process.html">Process</a><a href="law.html">Tax &amp; law</a><a href="costs.html">Costs</a><a href="estate.html">Cash &amp; estate</a><a href="questions.html">Questions</a><a href="suggestions.html">Suggestions</a><a href="flagged.html">Flagged</a><a href="sources.html" aria-current="page">Sources &amp; method</a><a href="requirements.html">Requirements</a></nav>
+</div></header>
+<main id="main">
+<p class="crumb">How this was checked / 12</p>
+<h1>Sources and method</h1>
+<p class="lead">Every page read, every assumption used, what was verified directly and what was not - so that any number on this site can be traced or rejected.</p>
+<div class="banner "><b>How this edition was built.</b> A single Python generator reads one model output file and writes every page. The generator has no access to any document, address or bill: the only household inputs it can see are the model's rounded parameters and results. That is a structural privacy control, not a promise.</div><h2>The source register</h2><p>Every page this session opened directly is listed below with the date it was read. Sources described as "re-read by session da3f2b99" were read live in an earlier session today and are cited on that basis; they were not re-opened here.</p><div class="tablewrap"><table class="num">
+<caption>Every source used in this edition</caption>
+<thead><tr><th scope="col">Key</th><th scope="col">Page</th><th scope="col">What it was used for</th><th scope="col">Type</th><th scope="col">Link</th></tr></thead><tbody>
+<tr><td>IRS-ESTATE</td><td>IRS - Estate tax (filing-threshold table)</td><td>read 2026-11-13</td><td>official</td><td><a href="https://www.irs.gov/businesses/small-businesses-self-employed/estate-tax" rel="noopener noreferrer" target="_blank">IRS-ESTATE</a></td></tr>
+<tr><td>IRS-WHATS-NEW</td><td>IRS - What is new: estate and gift tax</td><td>read 2026-11-13</td><td>official</td><td><a href="https://www.irs.gov/businesses/small-businesses-self-employed/whats-new-estate-and-gift-tax" rel="noopener noreferrer" target="_blank">IRS-WHATS-NEW</a></td></tr>
+<tr><td>RP-2026-35</td><td>IRS Rev. Proc. 2026-35, 2027 adjusted amounts</td><td>read 2026-11-13</td><td>official</td><td><a href="https://www.irs.gov/pub/irs-drop/rp-26-35.pdf" rel="noopener noreferrer" target="_blank">RP-2026-35</a></td></tr>
+<tr><td>IRS-INHERIT-FAQ</td><td>IRS - Gifts and inheritances FAQ (basis of inherited property)</td><td>read 2026-11-13</td><td>official</td><td><a href="https://www.irs.gov/faqs/interest-dividends-other-types-of-income/gifts-inheritances/gifts-inheritances" rel="noopener noreferrer" target="_blank">IRS-INHERIT-FAQ</a></td></tr>
+<tr><td>IRS-TC409</td><td>IRS Topic 409 - capital gains and losses</td><td>read 2026-11-13</td><td>official</td><td><a href="https://www.irs.gov/taxtopics/tc409" rel="noopener noreferrer" target="_blank">IRS-TC409</a></td></tr>
+<tr><td>IRS-TC701</td><td>IRS Topic 701 - sale of your home</td><td>read 2026-11-13</td><td>official</td><td><a href="https://www.irs.gov/taxtopics/tc701" rel="noopener noreferrer" target="_blank">IRS-TC701</a></td></tr>
+<tr><td>SCO-ESTATE</td><td>California State Controller - California estate tax</td><td>read 2026-11-13</td><td>official</td><td><a href="https://www.sco.ca.gov/ardtax_estate_tax.html" rel="noopener noreferrer" target="_blank">SCO-ESTATE</a></td></tr>
+<tr><td>BOE-P19</td><td>BOE - Proposition 19 comparison charts</td><td>read 2026-11-13</td><td>official</td><td><a href="https://www.boe.ca.gov/prop19/" rel="noopener noreferrer" target="_blank">BOE-P19</a></td></tr>
+<tr><td>BOE-LTA-2025-009</td><td>BOE LTA 2025/009 - intergenerational transfer $1 million adjustment</td><td>read 2026-11-13</td><td>official</td><td><a href="https://www.boe.ca.gov/proptaxes/pdf/lta25009.pdf" rel="noopener noreferrer" target="_blank">BOE-LTA-2025-009</a></td></tr>
+<tr><td>BOE-LTA-2026-026</td><td>BOE LTA 2026/026 - Prop 19 intergenerational transfer FAQ</td><td>read 2026-11-13</td><td>official</td><td><a href="https://www.boe.ca.gov/proptaxes/pdf/lta26026.pdf" rel="noopener noreferrer" target="_blank">BOE-LTA-2026-026</a></td></tr>
+<tr><td>BOE-HOX</td><td>BOE - Homeowners' exemption (BOE-266)</td><td>read 2026-11-13</td><td>official</td><td><a href="https://www.boe.ca.gov/proptaxes/homeowners_exemption.htm" rel="noopener noreferrer" target="_blank">BOE-HOX</a></td></tr>
+<tr><td>RTC-51</td><td>R&TC section 51 - annual inflation factor, 2% cap</td><td>read 2026-11-13</td><td>official</td><td><a href="https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=RTC&sectionNum=51" rel="noopener noreferrer" target="_blank">RTC-51</a></td></tr>
+<tr><td>RTC-63.2</td><td>R&TC section 63.2 - parent-child exclusion and value test</td><td>read 2026-11-13</td><td>official</td><td><a href="https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=RTC&sectionNum=63.2." rel="noopener noreferrer" target="_blank">RTC-63.2</a></td></tr>
+<tr><td>PROB-16061.7</td><td>Probate Code 16061.7 - notification by trustee, 60 days</td><td>read 2026-11-13</td><td>official</td><td><a href="https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=PROB&sectionNum=16061.7" rel="noopener noreferrer" target="_blank">PROB-16061.7</a></td></tr>
+<tr><td>CIV-1947.12</td><td>Civil Code 1947.12 - Tenant Protection Act rent cap</td><td>read 2026-11-13</td><td>official</td><td><a href="https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1947.12" rel="noopener noreferrer" target="_blank">CIV-1947.12</a></td></tr>
+<tr><td>IRS-I706</td><td>IRS - instructions for Form 706 (estate tax return)</td><td>referenced; full text not re-read in this pass</td><td>official</td><td><a href="https://www.irs.gov/instructions/i706" rel="noopener noreferrer" target="_blank">IRS-I706</a></td></tr>
+<tr><td>FTB-RATES</td><td>California FTB - 2025 tax rate schedules</td><td>read 2026-11-13</td><td>official</td><td><a href="https://www.ftb.ca.gov/forms/2025/2025-540-tax-rate-schedules.pdf" rel="noopener noreferrer" target="_blank">FTB-RATES</a></td></tr>
+<tr><td>SCC-P19</td><td>the county Assessor - parent-child transfer (Prop 19)</td><td>read 2026-11-13</td><td>official</td><td><a href="https://asr.santaclaracounty.gov/tax-savings/transferring-your-assessed-value/parent-to-child-2" rel="noopener noreferrer" target="_blank">SCC-P19</a></td></tr>
+<tr><td>SCC-RATES</td><td>the county - compilation of tax rates FY 2025-26</td><td>read 2026-11-13</td><td>official</td><td><a href="https://files.santaclaracounty.gov/exjcpb1531/2025-11/tax-rate-book-2025-2026.pdf" rel="noopener noreferrer" target="_blank">SCC-RATES</a></td></tr>
+<tr><td>SF-TAX</td><td>SF Treasurer - secured property taxes, FY 2026-27 rate 1.18162182%</td><td>read 2026-11-13</td><td>official</td><td><a href="https://sftreasurer.org/property/secured-property-taxes" rel="noopener noreferrer" target="_blank">SF-TAX</a></td></tr>
+<tr><td>SF-EHT</td><td>SF Treasurer - Empty Homes Tax (enforcement stayed)</td><td>read 2026-11-13</td><td>official</td><td><a href="https://sftreasurer.org/business/taxes-fees/empty-homes-tax-eht" rel="noopener noreferrer" target="_blank">SF-EHT</a></td></tr>
+<tr><td>SF-RENT</td><td>SF Rent Board - 1.6% allowable increase 3/1/2026-2/28/2027</td><td>read 2026-11-13</td><td>official</td><td><a href="https://www.sf.gov/news--annual-rent-increase-3126-22827-announced" rel="noopener noreferrer" target="_blank">SF-RENT</a></td></tr>
+<tr><td>SF-RENT-LAW</td><td>SF.gov - the Property B metro area rental laws and Rent Ordinance</td><td>read 2026-11-13</td><td>official</td><td><a href="https://www.sf.gov/learn-about-san-francisco-rental-laws/" rel="noopener noreferrer" target="_blank">SF-RENT-LAW</a></td></tr>
+<tr><td>CUP-WATER</td><td>City of Property A - water service and providers</td><td>read 2026-11-13</td><td>official</td><td><a href="https://www.cupertino.gov/Residents/Utilities/Water" rel="noopener noreferrer" target="_blank">CUP-WATER</a></td></tr>
+<tr><td>CPUC-NEM</td><td>CPUC - net energy metering and net billing</td><td>read 2026-11-13</td><td>official</td><td><a href="https://www.cpuc.ca.gov/industries-and-topics/electrical-energy/demand-side-management/customer-generation/net-energy-metering-and-net-billing" rel="noopener noreferrer" target="_blank">CPUC-NEM</a></td></tr>
+<tr><td>CPUC-FIXED</td><td>CPUC Resolution E-5354 - PG&E income-graduated fixed charge</td><td>read 2026-11-13</td><td>official</td><td><a href="https://docs.cpuc.ca.gov/PublishedDocs/Published/G000/M555/K816/555816677.pdf" rel="noopener noreferrer" target="_blank">CPUC-FIXED</a></td></tr>
+<tr><td>CDI-RES</td><td>California Department of Insurance - Residential Insurance guide (Form 401)</td><td>read 2026-11-13</td><td>official</td><td><a href="https://www.insurance.ca.gov/01-consumers/105-type/95-guides/03-res/res-ins-guide.cfm" rel="noopener noreferrer" target="_blank">CDI-RES</a></td></tr>
+<tr><td>HUD-SAFMR</td><td>HUD - FY2026 Small Area Fair Market Rents, national release (the community-level table for the relevant area)</td><td>release read 2026-11-13 by session da3f2b99; figures quoted from it</td><td>official</td><td><a href="https://www.huduser.gov/portal/datasets/fmr/smallarea/index.html" rel="noopener noreferrer" target="_blank">HUD-SAFMR</a></td></tr>
+<tr><td>CBO-OUTLOOK</td><td>CBO - Budget and Economic Outlook 2026 to 2036</td><td>read 2026-11-13</td><td>official</td><td><a href="https://www.cbo.gov/publication/62105" rel="noopener noreferrer" target="_blank">CBO-OUTLOOK</a></td></tr>
+<tr><td>FED-GREAT-INFL</td><td>Federal Reserve History - The Great Inflation 1965-1982</td><td>read 2026-11-13</td><td>official</td><td><a href="https://www.federalreservehistory.org/essays/great-inflation" rel="noopener noreferrer" target="_blank">FED-GREAT-INFL</a></td></tr>
+<tr><td>FHFA-SJ</td><td>FHFA all-transactions house price index, the Property A metro area metro (FRED)</td><td>re-read 2026-11-13 by session da3f2b99</td><td>official</td><td><a href="https://fred.stlouisfed.org/series/ATNHPIUS41940Q" rel="noopener noreferrer" target="_blank">FHFA-SJ</a></td></tr>
+<tr><td>BLS-CPI</td><td>BLS Consumer Price Index for All Urban Consumers (FRED)</td><td>re-read 2026-11-13 by session da3f2b99</td><td>official</td><td><a href="https://fred.stlouisfed.org/series/CPIAUCSL" rel="noopener noreferrer" target="_blank">BLS-CPI</a></td></tr>
+<tr><td>DAMODARAN</td><td>NYU Stern / Damodaran historical S&P 500 and T-bill returns (academic dataset)</td><td>cited as academic; not a government statistic</td><td>academic</td><td><a href="https://pages.stern.nyu.edu/~adamodar/New_Home_Page/datafile/histretSP.html" rel="noopener noreferrer" target="_blank">DAMODARAN</a></td></tr>
+</tbody></table></div><h2>How the numbers are produced</h2><table class="num"><caption>The calculation chain</caption><thead><tr><th scope="col">Step</th><th scope="col">What happens</th><th scope="col">Where it is checked</th></tr></thead><tbody><tr><td>1</td><td>A single model script holds every input, every formula and every assumption, including the property-tax cap, the transfer assessment, the estate calculation and the historical replays.</td><td>Its own self-tests, including the Proposition 19 formula against the county assessor's worked example</td></tr><tr><td>2</td><td>The model writes one JSON file containing every intermediate number.</td><td>The build fails if a page needs a number the model does not produce</td></tr><tr><td>3</td><td>This generator formats every household amount to the nearest $10 and quotes statutory amounts exactly.</td><td>A gate fails on any household dollar figure that is not a multiple of $10</td></tr><tr><td>4</td><td>Every table row is checked for an https link to an official host.</td><td>A row without one fails the build</td></tr><tr><td>5</td><td>Locality names and ZIP codes are replaced with Property A and Property B after generation.</td><td>A gate fails if any published page still names a city or a ZIP code</td></tr><tr><td>6</td><td>The generated pages are compared byte for byte against a fresh build, and the published set is compared against an explicit allowlist.</td><td>Both run in continuous integration on every change</td></tr></tbody></table><h2>The assumptions, in one place</h2><div class="tablewrap"><table class="num">
+<caption>Every assumption that moves a number</caption>
+<thead><tr><th scope="col">Assumption</th><th scope="col">Value used</th><th scope="col">Why this value</th><th scope="col">Official source</th></tr></thead><tbody>
+<tr><td>Growth of both housing markets</td><td>4.0% a year</td><td>close to, but below, the long-run real average on the official index; an assumption</td><td><a class="src" href="https://fred.stlouisfed.org/series/ATNHPIUS41940Q" rel="noopener noreferrer" target="_blank" title="official source: FHFA-SJ">FHFA-SJ</a></td></tr>
+<tr><td>Inflation</td><td>2.5% a year</td><td>above the recent average and below the 1976-2025 average</td><td><a class="src" href="https://fred.stlouisfed.org/series/CPIAUCSL" rel="noopener noreferrer" target="_blank" title="official source: BLS-CPI">BLS-CPI</a></td></tr>
+<tr><td>Stock-market return</td><td>7.0% a year</td><td>an academic long-run average, not a forecast</td><td><a class="src" href="https://pages.stern.nyu.edu/~adamodar/New_Home_Page/datafile/histretSP.html" rel="noopener noreferrer" target="_blank" title="official source: DAMODARAN">DAMODARAN</a></td></tr>
+<tr><td>Short-term Treasury return</td><td>3.5% a year</td><td>used for the alternative-to-stocks case</td><td><a class="src" href="https://pages.stern.nyu.edu/~adamodar/New_Home_Page/datafile/histretSP.html" rel="noopener noreferrer" target="_blank" title="official source: DAMODARAN">DAMODARAN</a></td></tr>
+<tr><td>Property-tax annual factor</td><td>lesser of inflation or 2%</td><td>statutory cap, not an assumption</td><td><a class="src" href="https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=RTC&amp;sectionNum=51" rel="noopener noreferrer" target="_blank" title="official source: RTC-51">RTC-51</a></td></tr>
+<tr><td>Property B rent growth</td><td>60% of inflation for covered units</td><td>the local rent board sets an annual percentage; the model uses a rule-shaped proxy</td><td><a class="src" href="https://www.sf.gov/news--annual-rent-increase-3126-22827-announced" rel="noopener noreferrer" target="_blank" title="official source: SF-RENT">SF-RENT</a></td></tr>
+<tr><td>Vacancy allowance</td><td>5.0%</td><td>a long-run allowance for a three-unit building</td><td><a class="src" href="https://www.huduser.gov/portal/datasets/fmr/smallarea/index.html" rel="noopener noreferrer" target="_blank" title="official source: HUD-SAFMR">HUD-SAFMR</a></td></tr>
+<tr><td>Management allowance</td><td>6.0%</td><td>the cost of not managing the property yourself</td><td><a class="src" href="https://www.insurance.ca.gov/01-consumers/105-type/95-guides/03-res/res-ins-guide.cfm" rel="noopener noreferrer" target="_blank" title="official source: CDI-RES">CDI-RES</a></td></tr>
+<tr><td>Selling cost</td><td>5.0%</td><td>a standard allowance including commission and closing costs</td><td><a class="src" href="https://www.irs.gov/taxtopics/tc409" rel="noopener noreferrer" target="_blank" title="official source: IRS-TC409">IRS-TC409</a></td></tr>
+<tr><td>Property A rent</td><td>$5,870 a month</td><td>the HUD small-area fair-market rent for a three-bedroom in the same ZIP code</td><td><a class="src" href="https://www.huduser.gov/portal/datasets/fmr/smallarea/index.html" rel="noopener noreferrer" target="_blank" title="official source: HUD-SAFMR">HUD-SAFMR</a></td></tr>
+<tr><td>Federal exclusion after 2027</td><td>indexed</td><td>statutory indexing; the amount itself is an assumption</td><td><a class="src" href="https://www.irs.gov/pub/irs-drop/rp-26-35.pdf" rel="noopener noreferrer" target="_blank" title="official source: RP-2026-35">RP-2026-35</a></td></tr>
+<tr><td>Property A value today</td><td>$3,100,000</td><td>an estimate, not an appraisal</td><td><a class="src" href="https://fred.stlouisfed.org/series/ATNHPIUS41940Q" rel="noopener noreferrer" target="_blank" title="official source: FHFA-SJ">FHFA-SJ</a></td></tr>
+<tr><td>Property B value today</td><td>$1,800,000</td><td>an estimate, not an appraisal</td><td><a class="src" href="https://fred.stlouisfed.org/series/ATNHPIUS41940Q" rel="noopener noreferrer" target="_blank" title="official source: FHFA-SJ">FHFA-SJ</a></td></tr>
+</tbody></table></div><h2>What was verified directly, and what was not</h2><div class="split"><div><h3>Verified on 2026-11-13, in this session</h3><ul><li>The federal estate-tax filing-threshold table, including $15,000,000 for 2026.</li><li>The 2027 inflation adjustments, including a $15,480,000 exclusion and a $20,000 annual gift exclusion, read from the revenue procedure itself rather than from a summary.</li><li>That California has no estate or inheritance tax for deaths on or after 1 January 2005.</li><li>The Proposition 19 comparison and the intergenerational transfer FAQ, including the three-year claim, the one-year occupancy and the continual-use rule.</li><li>The value cap of $1,044,586 for transfers through 15 February 2027.</li><li>The parent-child worked example published by the assessor, which the model reproduces.</li><li>The homeowners' exemption and its filing deadline.</li><li>The statutory 2% cap and the California consumer price index as the factor.</li><li>The county rate book: 1% general levy plus voter-approved charges, and the instalment deadlines.</li><li>The city secured rate for fiscal 2026-27: 1.18162182%.</li><li>The 1.6% allowable rent increase for covered units from 1 March 2026.</li><li>Rent control coverage for units built on or before 13 June 1979.</li><li>The Statewide rent cap under the civil code.</li><li>HUD's FY2026 small-area fair-market rents for both ZIP codes, at every bedroom size.</li><li>The net-metering tariff structure, including the 20-year NEM 2.0 transition period and the fixed charge.</li><li>The insurance regulator's residential guide, including the exclusions.</li><li>The federal budget office's inflation path, as context for the baseline.</li><li>The Federal Reserve History account of the Great Inflation.</li><li>That the city's empty-homes tax is not being enforced after the appellate decision.</li><li>The trust notification deadline and the basis rule for inherited property.</li></ul></div><div><h3>Not verified, and said so</h3><ul><li>Any insurance premium. No quote was obtained; all premiums are placeholders.</li><li>The current assessed values and the bill history. Supplied by the owner, withheld from this edition by design, and not independently confirmed.</li><li>The market value of either property. An estimate, not an appraisal.</li><li>The rent for Property A. A published benchmark, not a valuation.</li><li>The solar interconnection terms. The agreement was not read.</li><li>Estate and legal fees. Not modelled.</li><li>The future Proposition 19 allowance. Not published yet.</li><li>Any future tax law. Only the law in force is stated.</li></ul><h3>Where the earlier editions are</h3><p>Earlier editions are retained in the repository and are not republished here. The original no-figures guide remains live and is linked from the front door; this edition is additive.</p></div></div><div class="banner warn"><b>The professional help this site is not.</b> Nothing here is legal, tax, investment or insurance advice. The site prepares the questions and the arithmetic for a licensed estate attorney, a tax adviser and an insurance broker, and it is written so that each of them can check a number rather than take it on trust.</div>
+<footer>
+<p><b>De-identification method.</b> People, the trust, the parcels and the addresses appear only as placeholders and are never published. Household amounts are household or model outputs rounded to the nearest $10 and are labelled as such; statutory amounts are quoted exactly as the official page publishes them and are labelled official. No year-by-year bill history is published. Nothing on this site is legal, tax, investment or insurance advice.</p>
+<p><b>Sources.</b> Every table row links the official page it came from. A value that could not be confirmed from an official source is left blank and listed on the <a href="flagged.html">Flagged for review</a> page. Built 2026-11-13 · <a href="sources.html">source register and method</a>.</p>
+</footer>
+</main></body></html>

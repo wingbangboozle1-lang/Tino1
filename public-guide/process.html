@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'">
+<title>From trust to decision | Two-home inheritance decision guide</title>
+<style>
+:root{color-scheme:light;--ink:#12262b;--ink2:#33474b;--muted:#61757a;--line:#dfe7e4;--paper:#f4f7f5;
+--card:#ffffff;--accent:#1f5f55;--accent2:#0f3f38;--warn:#8a4b12;--warnbg:#fdf5e8;--ok:#1f5f3a;
+--okbg:#eef7f1;--stop:#7d2b2b;--stopbg:#fbeeee;--chip:#e7efe9}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+a{color:var(--accent);text-decoration-thickness:1px;text-underline-offset:2px}
+a:hover{color:var(--accent2)}
+header.top{background:var(--accent2);color:#eef4f0}
+header.top .in{max-width:1180px;margin:0 auto;padding:14px 22px;display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;justify-content:space-between}
+.brand{font-weight:700;letter-spacing:.02em;font-size:.95rem}
+.brand small{display:block;font-weight:400;opacity:.8;letter-spacing:.08em;font-size:.68rem;text-transform:uppercase}
+nav.primary{display:flex;flex-wrap:wrap;gap:4px 6px;font-size:.84rem}
+nav.primary a{color:#dce9e2;text-decoration:none;padding:5px 8px;border-radius:4px;white-space:nowrap}
+nav.primary a:hover,nav.primary a[aria-current=page]{background:#215247;color:#fff}
+main{max-width:1180px;margin:0 auto;padding:26px 22px 60px}
+.crumb{font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:700}
+h1{font:600 clamp(1.7rem,3.4vw,2.5rem)/1.18 Georgia,"Times New Roman",serif;margin:.5rem 0 .4rem;color:var(--accent2)}
+h2{font:600 1.28rem/1.3 Georgia,serif;margin:2rem 0 .5rem;color:var(--accent2);padding-bottom:.3rem;border-bottom:1px solid var(--line)}
+h3{font:600 1.05rem/1.3 system-ui,sans-serif;margin:1.4rem 0 .4rem}
+p.lead{font-size:1.08rem;color:var(--ink2);max-width:78ch}
+p,li{max-width:88ch}
+.note{font-size:.86rem;color:var(--muted)}
+.banner{margin:18px 0;padding:13px 16px;border-left:4px solid var(--accent);background:#eaf2ee;font-size:.9rem;color:var(--ink2)}
+.banner.warn{border-color:var(--warn);background:var(--warnbg)}
+.banner.stop{border-color:var(--stop);background:var(--stopbg)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin:22px 0}
+.kpi{background:var(--card);border:1px solid var(--line);border-top:3px solid var(--accent);padding:14px 16px;border-radius:3px}
+.kpi .l{font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.kpi .v{font:600 1.55rem/1.2 Georgia,serif;margin:.35rem 0 .2rem;color:var(--accent2)}
+.kpi .s{font-size:.82rem;color:var(--muted)}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);padding:16px 18px;border-radius:3px}
+.card h3{margin:0 0 .35rem;font-size:1.02rem}
+.card h3 a{text-decoration:none}
+.card p{margin:.2rem 0 0;font-size:.87rem;color:var(--muted)}
+.cat{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);font-weight:700;margin:26px 0 -6px}
+.tablewrap{overflow-x:auto;margin:14px 0 6px;border:1px solid var(--line);background:var(--card);border-radius:3px}
+table{border-collapse:collapse;width:100%;font-size:.86rem}
+caption{caption-side:top;text-align:left;padding:10px 12px 4px;font-weight:700;font-size:.85rem;color:var(--accent2)}
+th,td{padding:8px 11px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+thead th{background:#eef3f0;font-size:.76rem;letter-spacing:.05em;text-transform:uppercase;color:var(--ink2);position:sticky;top:0}
+tbody tr:nth-child(even){background:#fbfcfb}
+table.num td:not(:last-child),table.num th:not(:last-child){font-variant-numeric:tabular-nums}
+td.src,th.src{font-size:.78rem;white-space:nowrap}
+a.src{font-size:.78rem;text-decoration:none;border-bottom:1px dotted var(--accent)}
+.pill{display:inline-block;font-size:.72rem;font-weight:700;padding:1px 7px;border-radius:10px;background:var(--chip);color:var(--accent2);white-space:nowrap}
+.pill.open{background:var(--warnbg);color:var(--warn)}
+.pill.stop{background:var(--stopbg);color:var(--stop)}
+.pill.ok{background:var(--okbg);color:var(--ok)}
+.split{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:18px;margin:16px 0}
+ol.steps{counter-reset:s;list-style:none;padding:0}
+ol.steps>li{counter-increment:s;position:relative;padding:0 0 16px 46px;border-left:2px solid var(--line);margin-left:14px}
+ol.steps>li::before{content:counter(s);position:absolute;left:-15px;top:0;width:28px;height:28px;border-radius:50%;background:var(--accent);color:#fff;font-weight:700;font-size:.85rem;display:grid;place-items:center}
+ol.steps h3{margin:.1rem 0 .2rem}
+.q{border:1px solid var(--line);background:var(--card);border-radius:3px;padding:14px 16px;margin:12px 0}
+.q .id{font-size:.74rem;font-weight:700;letter-spacing:.1em;color:var(--accent);text-transform:uppercase}
+.q h3{margin:.15rem 0 .5rem;font-size:1rem}
+.q dl{display:grid;grid-template-columns:150px 1fr;gap:4px 12px;margin:0;font-size:.87rem}
+.q dt{color:var(--muted);font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;font-weight:700;padding-top:2px}
+.q dd{margin:0}
+.budget{display:flex;flex-wrap:wrap;gap:10px;margin:8px 0 0}
+.budget label{display:inline-flex;align-items:center;gap:6px;font-size:.82rem;border:1px solid var(--line);padding:4px 9px;border-radius:12px;background:#fff;cursor:pointer}
+.path{background:#eef3f0;border:1px solid var(--line);padding:12px 15px;border-radius:3px;margin:12px 0;font-size:.9rem}
+.path b{color:var(--accent2)}
+footer{margin-top:40px;border-top:1px solid var(--line);padding-top:16px;font-size:.8rem;color:var(--muted)}
+footer p{max-width:none}
+.skip{position:absolute;left:-9999px}
+:target{scroll-margin-top:70px}
+@media (max-width:640px){.q dl{grid-template-columns:1fr}th,td{padding:7px 8px}}
+@media print{header.top,nav.primary{display:none}main{max-width:none}}
+</style></head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top"><div class="in">
+<span class="brand">Two-home inheritance decision guide<small>Numbered property edition · built 2026-11-13</small></span>
+<nav class="primary" aria-label="Sections"><a href="index.html">Overview</a><a href="decision.html">Decision</a><a href="projections.html">Projections</a><a href="black-swan.html">Black swan</a><a href="process.html" aria-current="page">Process</a><a href="law.html">Tax &amp; law</a><a href="costs.html">Costs</a><a href="estate.html">Cash &amp; estate</a><a href="questions.html">Questions</a><a href="suggestions.html">Suggestions</a><a href="flagged.html">Flagged</a><a href="sources.html">Sources &amp; method</a><a href="requirements.html">Requirements</a></nav>
+</div></header>
+<main id="main">
+<p class="crumb">Practical roadmap / 05</p>
+<h1>From trust to decision</h1>
+<p class="lead">Every step from reading the trust to recording the deed, in order, with the statutory clock that governs each one.</p>
+<div class="banner "><b>This is a sequence, not legal advice.</b> The order matters because three of the steps have statutory clocks that run from the same event, and one of them - the homeowners' exemption - is also an eligibility condition for the other. Missing it does not just cost an exemption; it can cost the whole intergenerational relief.</div><h2>Step by step from trust to decision</h2><div class="tablewrap"><table class="">
+<caption>Thirteen steps, with the authoritative page for each</caption>
+<thead><tr><th scope="col">#</th><th scope="col">When</th><th scope="col">What happens</th><th scope="col">Why it matters or what the clock is</th><th scope="col">Official source</th></tr></thead><tbody>
+<tr><td>1</td><td>Now, and every year until the transfer</td><td>Read the trust and keep it current. Confirm who the trustee is, whether the home is a trust asset, who the beneficiaries are, and whether the transferor holds a retained interest.</td><td>Planning action. A trust is not a tax exemption, and a trust that does not hold the home transfers nothing.</td><td><a class="src" href="https://www.irs.gov/businesses/small-businesses-self-employed/estate-tax" rel="noopener noreferrer" target="_blank" title="official source: IRS-ESTATE">IRS-ESTATE</a></td></tr>
+<tr><td>2</td><td>Now: ask whether the home will be in the gross estate</td><td>This is the single fact that decides the case for selling. If the home is included, the basis resets at death. If it is outside the estate, the inheritor takes the transferor's basis and selling loses its advantage.</td><td>Not a filing deadline. It is a question for the estate attorney, answered from the trust document.</td><td><a class="src" href="https://www.irs.gov/faqs/interest-dividends-other-types-of-income/gifts-inheritances/gifts-inheritances" rel="noopener noreferrer" target="_blank" title="official source: IRS-INHERIT-FAQ">IRS-INHERIT-FAQ</a></td></tr>
+<tr><td>3</td><td>At death: the trustee takes control</td><td>The trustee secures the property, insures it, collects the documents and keeps the records. Contact the insurer about occupancy: a policy can exclude a loss after a long vacancy.</td><td>Practical safeguard. California does not publish a single statutory deadline for this step; the policy wording controls.</td><td><a class="src" href="https://www.insurance.ca.gov/01-consumers/105-type/95-guides/03-res/res-ins-guide.cfm" rel="noopener noreferrer" target="_blank" title="official source: CDI-RES">CDI-RES</a></td></tr>
+<tr><td>4</td><td>Within 60 days: notification by the trustee</td><td>The trustee serves the statutory notification on each beneficiary and each heir of the deceased settlor.</td><td>Statutory. The notification must be served not later than 60 days after the event, with a defined rule when a trustee is appointed late.</td><td><a class="src" href="https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=PROB&amp;sectionNum=16061.7" rel="noopener noreferrer" target="_blank" title="official source: PROB-16061.7">PROB-16061.7</a></td></tr>
+<tr><td>5</td><td>Before the first property-tax instalment: confirm the assessed value and the roll</td><td>Ask the county assessor for the current assessed value and confirm the parcel is on the secured roll. The value you inherit is the starting point for the Proposition 19 calculation.</td><td>Deadlines for the secured roll are set by the county: the first instalment is delinquent after 10 December, the second after 10 April.</td><td><a class="src" href="https://files.santaclaracounty.gov/exjcpb1531/2025-11/tax-rate-book-2025-2026.pdf" rel="noopener noreferrer" target="_blank" title="official source: SCC-RATES">SCC-RATES</a></td></tr>
+<tr><td>6</td><td>Within 1 year: file BOE-266, the homeowners' exemption</td><td>The exemption reduces taxable value and is also an eligibility condition for the intergenerational exclusion. File it even if the plan is to sell, because it is what proves the home is the inheritor's principal residence.</td><td>Statutory. The claim must be filed within one year of the transfer for the Proposition 19 exclusion to apply. Filing late can forfeit the relief.</td><td><a class="src" href="https://www.boe.ca.gov/proptaxes/homeowners_exemption.htm" rel="noopener noreferrer" target="_blank" title="official source: BOE-HOX">BOE-HOX</a> · <a class="src" href="https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=RTC&amp;sectionNum=63.2." rel="noopener noreferrer" target="_blank" title="official source: RTC-63.2">RTC-63.2</a></td></tr>
+<tr><td>7</td><td>Within 1 year: the home must actually become the principal residence</td><td>The transferee must occupy the home as a principal residence within one year of the transfer. Occupancy is a fact the assessor can check; a claim alone does not establish it.</td><td>Statutory condition of the exclusion, not a filing step.</td><td><a class="src" href="https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=RTC&amp;sectionNum=63.2." rel="noopener noreferrer" target="_blank" title="official source: RTC-63.2">RTC-63.2</a></td></tr>
+<tr><td>8</td><td>Within 3 years: file BOE-19-P, the intergenerational transfer claim</td><td>The claim for the parent-child exclusion. It is not a public document. The claim asks for the facts that establish eligibility: the relationship, the transferor's residence, the transferee's occupancy and the value test.</td><td>Statutory. The claim must be filed within three years of the transfer, or before the property is transferred to a third party, whichever is earlier.</td><td><a class="src" href="https://www.boe.ca.gov/proptaxes/pdf/lta26026.pdf" rel="noopener noreferrer" target="_blank" title="official source: BOE-LTA-2026-026">BOE-LTA-2026-026</a> · <a class="src" href="https://asr.santaclaracounty.gov/tax-savings/transferring-your-assessed-value/parent-to-child-2" rel="noopener noreferrer" target="_blank" title="official source: SCC-P19">SCC-P19</a></td></tr>
+<tr><td>9</td><td>When the assessor rules: check the new taxable value</td><td>The new taxable value is the prior factored base year value plus the amount by which market value exceeds the prior value plus the allowance. If the assessor's figure differs from the calculation, appeal it.</td><td>Statutory formula. The allowance is $1,044,586 for transfers from 16 February 2025 through 15 February 2027; the next adjustment is published in February 2027.</td><td><a class="src" href="https://www.boe.ca.gov/proptaxes/pdf/lta25009.pdf" rel="noopener noreferrer" target="_blank" title="official source: BOE-LTA-2025-009">BOE-LTA-2025-009</a> · <a class="src" href="https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=RTC&amp;sectionNum=63.2." rel="noopener noreferrer" target="_blank" title="official source: RTC-63.2">RTC-63.2</a></td></tr>
+<tr><td>10</td><td>If the property is sold: record the deed and pay the transfer tax</td><td>The sale is recorded at the county recorder. The documentary transfer tax is paid at recording.</td><td>County process. The recorder publishes what is required for recording.</td><td><a class="src" href="https://asr.santaclaracounty.gov/tax-savings/transferring-your-assessed-value/parent-to-child-2" rel="noopener noreferrer" target="_blank" title="official source: SCC-P19">SCC-P19</a></td></tr>
+<tr><td>11</td><td>By the tax deadline: report the sale on the income-tax return</td><td>Report the sale on Schedule D and Form 8949 if a return is required. The basis is the date-of-death value, so the gain is small if the sale follows the transfer closely.</td><td>Federal. The return is due on the normal filing date for the year of sale; estimated tax may apply.</td><td><a class="src" href="https://www.irs.gov/faqs/interest-dividends-other-types-of-income/gifts-inheritances/gifts-inheritances" rel="noopener noreferrer" target="_blank" title="official source: IRS-INHERIT-FAQ">IRS-INHERIT-FAQ</a> · <a class="src" href="https://www.irs.gov/taxtopics/tc409" rel="noopener noreferrer" target="_blank" title="official source: IRS-TC409">IRS-TC409</a></td></tr>
+<tr><td>12</td><td>If the estate is large: the executor files Form 706</td><td>A federal estate-tax return is required if the gross estate exceeds the filing threshold for the year of death. Portability of a deceased spouse's unused exclusion requires a timely return.</td><td>Federal. The 2026 threshold is $15,000,000 and the 2027 figure is $15,480,000; California has no separate estate or inheritance tax for deaths after 2004.</td><td><a class="src" href="https://www.irs.gov/businesses/small-businesses-self-employed/estate-tax" rel="noopener noreferrer" target="_blank" title="official source: IRS-ESTATE">IRS-ESTATE</a> · <a class="src" href="https://www.irs.gov/pub/irs-drop/rp-26-35.pdf" rel="noopener noreferrer" target="_blank" title="official source: RP-2026-35">RP-2026-35</a> · <a class="src" href="https://www.sco.ca.gov/ardtax_estate_tax.html" rel="noopener noreferrer" target="_blank" title="official source: SCO-ESTATE">SCO-ESTATE</a></td></tr>
+<tr><td>13</td><td>If the inheritor moves in: keep the exclusion alive</td><td>The exclusion is removed if the home stops being the transferee's principal residence or the exemption lapses. Moving out and renting the home can trigger a new base year value.</td><td>Statutory. This is why "move in, then rent it later" is a different plan from "rent it now".</td><td><a class="src" href="https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=RTC&amp;sectionNum=63.2." rel="noopener noreferrer" target="_blank" title="official source: RTC-63.2">RTC-63.2</a></td></tr>
+</tbody></table></div>
+<p class="note">Dates are the statutory deadlines where a statute sets one. Where no statute sets a deadline, the table says so rather than inventing one.</p><h2>The three clocks that matter</h2><div class="split"><div><h3>60 days - tell the beneficiaries</h3><p>The trustee must serve the statutory notification within 60 days of the event that makes the trust irrevocable, or of a change of trustee. This is the first clock and it is about information, not tax.</p><h3>1 year - the exemption and the occupancy</h3><p>Two conditions run on the same one-year clock: the transferee must file for the homeowners' exemption, and the home must become the transferee's principal residence. Both are conditions of the Proposition 19 exclusion, not optional extras.</p></div><div><h3>3 years - the transfer claim</h3><p>The BOE-19-P claim must be filed within three years of the transfer, or before a transfer to a third party if that comes first. Selling the home before filing can end the relief.</p><h3>What this means for the plan</h3><p>The recommendation is to sell within the year. The process is consistent with that: the claim and the exemption are filed, the assessor rules, and the sale follows. What the plan must not do is sell first and file later, because the claim is a condition of the relief and not a formality.</p></div></div><h2>What the inheritor needs to collect</h2><div class="tablewrap"><table class="">
+<caption>The document set that answers most of the open questions</caption>
+<thead><tr><th scope="col">Document</th><th scope="col">Who holds it</th><th scope="col">Why it is needed</th><th scope="col">Official source</th></tr></thead><tbody>
+<tr><td>The trust and every amendment</td><td>The transferor or the attorney</td><td>Decides inclusion, basis and who can act</td><td><a class="src" href="https://www.irs.gov/businesses/small-businesses-self-employed/estate-tax" rel="noopener noreferrer" target="_blank" title="official source: IRS-ESTATE">IRS-ESTATE</a></td></tr>
+<tr><td>The deed and the vesting</td><td>County recorder</td><td>Shows how title is held and what interest passes</td><td><a class="src" href="https://asr.santaclaracounty.gov/tax-savings/transferring-your-assessed-value/parent-to-child-2" rel="noopener noreferrer" target="_blank" title="official source: SCC-P19">SCC-P19</a></td></tr>
+<tr><td>The current property-tax bill</td><td>The transferor</td><td>Shows the assessed value and the base year</td><td><a class="src" href="https://files.santaclaracounty.gov/exjcpb1531/2025-11/tax-rate-book-2025-2026.pdf" rel="noopener noreferrer" target="_blank" title="official source: SCC-RATES">SCC-RATES</a></td></tr>
+<tr><td>The homeowners' exemption history</td><td>County assessor</td><td>Needed for the one-year condition</td><td><a class="src" href="https://www.boe.ca.gov/proptaxes/homeowners_exemption.htm" rel="noopener noreferrer" target="_blank" title="official source: BOE-HOX">BOE-HOX</a></td></tr>
+<tr><td>The insurance policy and its exclusions</td><td>The transferor</td><td>Occupancy and vacancy terms control cover</td><td><a class="src" href="https://www.insurance.ca.gov/01-consumers/105-type/95-guides/03-res/res-ins-guide.cfm" rel="noopener noreferrer" target="_blank" title="official source: CDI-RES">CDI-RES</a></td></tr>
+<tr><td>The solar interconnection agreement</td><td>The transferor</td><td>Sets the tariff period behind the electricity credit</td><td><a class="src" href="https://www.cpuc.ca.gov/industries-and-topics/electrical-energy/demand-side-management/customer-generation/net-energy-metering-and-net-billing" rel="noopener noreferrer" target="_blank" title="official source: CPUC-NEM">CPUC-NEM</a></td></tr>
+<tr><td>The prior year tax returns of the estate</td><td>The executor</td><td>Needed for the gross-estate figure and portability</td><td><a class="src" href="https://www.irs.gov/businesses/small-businesses-self-employed/estate-tax" rel="noopener noreferrer" target="_blank" title="official source: IRS-ESTATE">IRS-ESTATE</a></td></tr>
+</tbody></table></div>
+<p class="note">Collect these privately. Do not upload them to this site or add them to this repository: it is public.</p><div class="banner stop"><b>Do not put any of these documents in this repository.</b> It is a public repository. It is also not a record-keeping system: an access-controlled folder with a documented backup is the right place for deeds, statements and tax returns.</div>
+<footer>
+<p><b>De-identification method.</b> People, the trust, the parcels and the addresses appear only as placeholders and are never published. Household amounts are household or model outputs rounded to the nearest $10 and are labelled as such; statutory amounts are quoted exactly as the official page publishes them and are labelled official. No year-by-year bill history is published. Nothing on this site is legal, tax, investment or insurance advice.</p>
+<p><b>Sources.</b> Every table row links the official page it came from. A value that could not be confirmed from an official source is left blank and listed on the <a href="flagged.html">Flagged for review</a> page. Built 2026-11-13 · <a href="sources.html">source register and method</a>.</p>
+</footer>
+</main></body></html>

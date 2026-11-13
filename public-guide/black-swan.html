@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'">
+<title>When the baseline breaks | Two-home inheritance decision guide</title>
+<style>
+:root{color-scheme:light;--ink:#12262b;--ink2:#33474b;--muted:#61757a;--line:#dfe7e4;--paper:#f4f7f5;
+--card:#ffffff;--accent:#1f5f55;--accent2:#0f3f38;--warn:#8a4b12;--warnbg:#fdf5e8;--ok:#1f5f3a;
+--okbg:#eef7f1;--stop:#7d2b2b;--stopbg:#fbeeee;--chip:#e7efe9}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+a{color:var(--accent);text-decoration-thickness:1px;text-underline-offset:2px}
+a:hover{color:var(--accent2)}
+header.top{background:var(--accent2);color:#eef4f0}
+header.top .in{max-width:1180px;margin:0 auto;padding:14px 22px;display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;justify-content:space-between}
+.brand{font-weight:700;letter-spacing:.02em;font-size:.95rem}
+.brand small{display:block;font-weight:400;opacity:.8;letter-spacing:.08em;font-size:.68rem;text-transform:uppercase}
+nav.primary{display:flex;flex-wrap:wrap;gap:4px 6px;font-size:.84rem}
+nav.primary a{color:#dce9e2;text-decoration:none;padding:5px 8px;border-radius:4px;white-space:nowrap}
+nav.primary a:hover,nav.primary a[aria-current=page]{background:#215247;color:#fff}
+main{max-width:1180px;margin:0 auto;padding:26px 22px 60px}
+.crumb{font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:700}
+h1{font:600 clamp(1.7rem,3.4vw,2.5rem)/1.18 Georgia,"Times New Roman",serif;margin:.5rem 0 .4rem;color:var(--accent2)}
+h2{font:600 1.28rem/1.3 Georgia,serif;margin:2rem 0 .5rem;color:var(--accent2);padding-bottom:.3rem;border-bottom:1px solid var(--line)}
+h3{font:600 1.05rem/1.3 system-ui,sans-serif;margin:1.4rem 0 .4rem}
+p.lead{font-size:1.08rem;color:var(--ink2);max-width:78ch}
+p,li{max-width:88ch}
+.note{font-size:.86rem;color:var(--muted)}
+.banner{margin:18px 0;padding:13px 16px;border-left:4px solid var(--accent);background:#eaf2ee;font-size:.9rem;color:var(--ink2)}
+.banner.warn{border-color:var(--warn);background:var(--warnbg)}
+.banner.stop{border-color:var(--stop);background:var(--stopbg)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin:22px 0}
+.kpi{background:var(--card);border:1px solid var(--line);border-top:3px solid var(--accent);padding:14px 16px;border-radius:3px}
+.kpi .l{font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.kpi .v{font:600 1.55rem/1.2 Georgia,serif;margin:.35rem 0 .2rem;color:var(--accent2)}
+.kpi .s{font-size:.82rem;color:var(--muted)}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px;margin:20px 0}
+.card{background:var(--card);border:1px solid var(--line);padding:16px 18px;border-radius:3px}
+.card h3{margin:0 0 .35rem;font-size:1.02rem}
+.card h3 a{text-decoration:none}
+.card p{margin:.2rem 0 0;font-size:.87rem;color:var(--muted)}
+.cat{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);font-weight:700;margin:26px 0 -6px}
+.tablewrap{overflow-x:auto;margin:14px 0 6px;border:1px solid var(--line);background:var(--card);border-radius:3px}
+table{border-collapse:collapse;width:100%;font-size:.86rem}
+caption{caption-side:top;text-align:left;padding:10px 12px 4px;font-weight:700;font-size:.85rem;color:var(--accent2)}
+th,td{padding:8px 11px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+thead th{background:#eef3f0;font-size:.76rem;letter-spacing:.05em;text-transform:uppercase;color:var(--ink2);position:sticky;top:0}
+tbody tr:nth-child(even){background:#fbfcfb}
+table.num td:not(:last-child),table.num th:not(:last-child){font-variant-numeric:tabular-nums}
+td.src,th.src{font-size:.78rem;white-space:nowrap}
+a.src{font-size:.78rem;text-decoration:none;border-bottom:1px dotted var(--accent)}
+.pill{display:inline-block;font-size:.72rem;font-weight:700;padding:1px 7px;border-radius:10px;background:var(--chip);color:var(--accent2);white-space:nowrap}
+.pill.open{background:var(--warnbg);color:var(--warn)}
+.pill.stop{background:var(--stopbg);color:var(--stop)}
+.pill.ok{background:var(--okbg);color:var(--ok)}
+.split{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:18px;margin:16px 0}
+ol.steps{counter-reset:s;list-style:none;padding:0}
+ol.steps>li{counter-increment:s;position:relative;padding:0 0 16px 46px;border-left:2px solid var(--line);margin-left:14px}
+ol.steps>li::before{content:counter(s);position:absolute;left:-15px;top:0;width:28px;height:28px;border-radius:50%;background:var(--accent);color:#fff;font-weight:700;font-size:.85rem;display:grid;place-items:center}
+ol.steps h3{margin:.1rem 0 .2rem}
+.q{border:1px solid var(--line);background:var(--card);border-radius:3px;padding:14px 16px;margin:12px 0}
+.q .id{font-size:.74rem;font-weight:700;letter-spacing:.1em;color:var(--accent);text-transform:uppercase}
+.q h3{margin:.15rem 0 .5rem;font-size:1rem}
+.q dl{display:grid;grid-template-columns:150px 1fr;gap:4px 12px;margin:0;font-size:.87rem}
+.q dt{color:var(--muted);font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;font-weight:700;padding-top:2px}
+.q dd{margin:0}
+.budget{display:flex;flex-wrap:wrap;gap:10px;margin:8px 0 0}
+.budget label{display:inline-flex;align-items:center;gap:6px;font-size:.82rem;border:1px solid var(--line);padding:4px 9px;border-radius:12px;background:#fff;cursor:pointer}
+.path{background:#eef3f0;border:1px solid var(--line);padding:12px 15px;border-radius:3px;margin:12px 0;font-size:.9rem}
+.path b{color:var(--accent2)}
+footer{margin-top:40px;border-top:1px solid var(--line);padding-top:16px;font-size:.8rem;color:var(--muted)}
+footer p{max-width:none}
+.skip{position:absolute;left:-9999px}
+:target{scroll-margin-top:70px}
+@media (max-width:640px){.q dl{grid-template-columns:1fr}th,td{padding:7px 8px}}
+@media print{header.top,nav.primary{display:none}main{max-width:none}}
+</style></head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top"><div class="in">
+<span class="brand">Two-home inheritance decision guide<small>Numbered property edition · built 2026-11-13</small></span>
+<nav class="primary" aria-label="Sections"><a href="index.html">Overview</a><a href="decision.html">Decision</a><a href="projections.html">Projections</a><a href="black-swan.html" aria-current="page">Black swan</a><a href="process.html">Process</a><a href="law.html">Tax &amp; law</a><a href="costs.html">Costs</a><a href="estate.html">Cash &amp; estate</a><a href="questions.html">Questions</a><a href="suggestions.html">Suggestions</a><a href="flagged.html">Flagged</a><a href="sources.html">Sources &amp; method</a><a href="requirements.html">Requirements</a></nav>
+</div></header>
+<main id="main">
+<p class="crumb">Black swan and regime risk / 04</p>
+<h1>When the baseline breaks</h1>
+<p class="lead">Growth and inflation are never constant for fifty years. This page replays the real record instead of averaging it, and names the crises that change the answer.</p>
+<div class="banner "><b>Why a separate section.</b> The baseline projection compounds one growth rate and one inflation rate for fifty years. The real record does not look like that: from 1976 to 2025 the same economy produced inflation of 13% and deflation, house-price years of +29% and -15%, and stock-market years of +52% and -37%. A decision that only works on the average is not a decision, it is a bet on the average.</div><div class="kpis"><div class="kpi"><div class="l">Historical sequences replayed</div><div class="v">50</div><div class="s">the real 1976-2025 record, started from each year in turn</div></div><div class="kpi"><div class="l">Selling wins after 20 years</div><div class="v">50 of 50</div><div class="s">and 43 of 50 after 10</div></div><div class="kpi"><div class="l">Worst 10-year gap, selling minus renting</div><div class="v">-$2.07M</div><div class="s">the risk a short horizon actually carries</div></div><div class="kpi"><div class="l">Named crisis paths where renting wins</div><div class="v">2</div><div class="s">the Japan-style stagnation path and the Depression path</div></div></div><h2>The real record, not the average</h2><div class="tablewrap"><table class="num">
+<caption>The real record the assumptions are checked against, 1976-2025 and 2000-2025</caption>
+<thead><tr><th scope="col">Measure</th><th scope="col">Value</th><th scope="col">What it says</th><th scope="col">Provenance</th><th scope="col">Official source</th></tr></thead><tbody>
+<tr><td>House-price growth, 1977-2025</td><td>6.71%</td><td>the long-run average the baseline growth rate is checked against; the 1976 level is the base year, so no 1976 return exists</td><td>Official statistics: FHFA all-transactions house-price index, the Property A metro area metro (Q4/Q4) via FRED</td><td><a class="src" href="https://fred.stlouisfed.org/series/ATNHPIUS41940Q" rel="noopener noreferrer" target="_blank" title="official source: FHFA-SJ">FHFA-SJ</a></td></tr>
+<tr><td>House-price growth, 2001-2025</td><td>4.13%</td><td>much lower: this century so far has not repeated the last one</td><td>Official statistics: FHFA all-transactions house-price index, the Property A metro area metro (Q4/Q4) via FRED</td><td><a class="src" href="https://fred.stlouisfed.org/series/ATNHPIUS41940Q" rel="noopener noreferrer" target="_blank" title="official source: FHFA-SJ">FHFA-SJ</a></td></tr>
+<tr><td>Inflation, 1977-2025 (consumer prices)</td><td>3.57%</td><td>the average the model's inflation assumption is checked against</td><td>Official statistics: BLS Consumer Price Index (Dec/Dec) via FRED</td><td><a class="src" href="https://fred.stlouisfed.org/series/CPIAUCSL" rel="noopener noreferrer" target="_blank" title="official source: BLS-CPI">BLS-CPI</a></td></tr>
+<tr><td>Inflation, 2001-2025</td><td>2.53%</td><td>the recent regime; the 2022 surge is inside it</td><td>Official statistics: BLS Consumer Price Index (Dec/Dec) via FRED</td><td><a class="src" href="https://fred.stlouisfed.org/series/CPIAUCSL" rel="noopener noreferrer" target="_blank" title="official source: BLS-CPI">BLS-CPI</a></td></tr>
+<tr><td>Worst single year for house prices</td><td>-14.5% (2008)</td><td>the largest one-year fall in the record</td><td>Official statistics: FHFA all-transactions house-price index, the Property A metro area metro (Q4/Q4) via FRED</td><td><a class="src" href="https://fred.stlouisfed.org/series/ATNHPIUS41940Q" rel="noopener noreferrer" target="_blank" title="official source: FHFA-SJ">FHFA-SJ</a></td></tr>
+<tr><td>Best single year for house prices</td><td>29.3% (1977)</td><td>the largest one-year rise in the record</td><td>Official statistics: FHFA all-transactions house-price index, the Property A metro area metro (Q4/Q4) via FRED</td><td><a class="src" href="https://fred.stlouisfed.org/series/ATNHPIUS41940Q" rel="noopener noreferrer" target="_blank" title="official source: FHFA-SJ">FHFA-SJ</a></td></tr>
+<tr><td>Worst single year for the stock index</td><td>-36.5% (2008)</td><td>the worst calendar year in the 1928-2025 academic series, which is wider than the replay window</td><td>ACADEMIC dataset (NYU Stern / Damodaran) - NOT a government statistic and not officially verified</td><td><a class="src" href="https://pages.stern.nyu.edu/~adamodar/New_Home_Page/datafile/histretSP.html" rel="noopener noreferrer" target="_blank" title="official source: DAMODARAN">DAMODARAN</a></td></tr>
+<tr><td>Highest single year of inflation</td><td>13.3% (1979)</td><td>the inflation peak of the 1976-2025 record</td><td>Official statistics: BLS Consumer Price Index (Dec/Dec) via FRED</td><td><a class="src" href="https://fred.stlouisfed.org/series/CPIAUCSL" rel="noopener noreferrer" target="_blank" title="official source: BLS-CPI">BLS-CPI</a></td></tr>
+</tbody></table></div>
+<p class="note">House-price and inflation rows are nominal annual rates compounded over the period. A single-year row says so. The 1976 value is the base year of the model's history, so the returns run from 1977. The stock figures come from an academic dataset and are never presented as a government statistic.</p><h2>Named regimes</h2><p>Each regime is a constructed sequence, not a forecast: it takes the shape of a known period and applies it to this decision. The provenance of every element is in the table on the <a href="sources.html">sources and method page</a>.</p><div class="tablewrap"><table class="num">
+<caption>Named regimes, and what each one does to the three choices</caption>
+<thead><tr><th scope="col">Regime</th><th scope="col">What happened</th><th scope="col">What it does to this decision</th><th scope="col">Official source</th></tr></thead><tbody>
+<tr><td>The Great Inflation, 1965-1982</td><td>Four recessions, two energy shortages, inflation above 14% in 1980, and a long climb down to about 3.5% in the late 1980s</td><td>Property tax rises at its 2% cap while the general price level rises much faster, so the real tax burden falls - this is the path where a fixed, capped assessment is most valuable</td><td><a class="src" href="https://www.federalreservehistory.org/essays/great-inflation" rel="noopener noreferrer" target="_blank" title="official source: FED-GREAT-INFL">FED-GREAT-INFL</a></td></tr>
+<tr><td>Stagflation</td><td>Inflation and unemployment high together; real asset returns poor</td><td>The model replays the 1970s order and finds selling still leads, because the stock fund is also priced in nominal terms, but by a thinner margin</td><td><a class="src" href="https://pages.stern.nyu.edu/~adamodar/New_Home_Page/datafile/histretSP.html" rel="noopener noreferrer" target="_blank" title="official source: DAMODARAN">DAMODARAN</a></td></tr>
+<tr><td>A lost decade</td><td>Ten to fifteen years with no real house-price gain</td><td>This is where renting closes the gap: the house keeps producing rent while a sale would have bought into a flat market</td><td><a class="src" href="https://fred.stlouisfed.org/series/ATNHPIUS41940Q" rel="noopener noreferrer" target="_blank" title="official source: FHFA-SJ">FHFA-SJ</a></td></tr>
+<tr><td>Depression</td><td>Asset prices fall for years and unemployment is high</td><td>Selling loses to renting here, because the proceeds are invested into the fall</td><td><a class="src" href="https://pages.stern.nyu.edu/~adamodar/New_Home_Page/datafile/histretSP.html" rel="noopener noreferrer" target="_blank" title="official source: DAMODARAN">DAMODARAN</a></td></tr>
+<tr><td>Japan-style stagnation</td><td>A very long period of weak growth and near-zero returns</td><td>The one path where renting wins comfortably. It is the strongest argument against selling everything at once</td><td><a class="src" href="https://pages.stern.nyu.edu/~adamodar/New_Home_Page/datafile/histretSP.html" rel="noopener noreferrer" target="_blank" title="official source: DAMODARAN">DAMODARAN</a></td></tr>
+</tbody></table></div><h2>The stress paths, run through the model</h2><div class="tablewrap"><table class="num">
+<caption>Named crisis paths, nominal after-tax wealth in 2076, for comparison with the baseline only</caption>
+<thead><tr><th scope="col">Named path</th><th scope="col">Kind</th><th scope="col">Live in A</th><th scope="col">Rent A out</th><th scope="col">Sell and reinvest</th><th scope="col">Best</th><th scope="col">Official source</th></tr></thead><tbody>
+<tr><td>Real 1976-2025 sequence in order (high inflation first)</td><td>Hypothetical construction</td><td>$25,596,410</td><td>$62,568,520</td><td>$236,549,530</td><td>Sell</td><td><a class="src" href="https://fred.stlouisfed.org/series/ATNHPIUS41940Q" rel="noopener noreferrer" target="_blank" title="official source: FHFA-SJ">FHFA-SJ</a> · <a class="src" href="https://fred.stlouisfed.org/series/CPIAUCSL" rel="noopener noreferrer" target="_blank" title="official source: BLS-CPI">BLS-CPI</a></td></tr>
+<tr><td>Real sequence starting in 2000 (dot-com bust and 2008 crisis first)</td><td>Hypothetical construction</td><td>$1,227,360</td><td>$77,070,910</td><td>$513,151,400</td><td>Sell</td><td><a class="src" href="https://fred.stlouisfed.org/series/ATNHPIUS41940Q" rel="noopener noreferrer" target="_blank" title="official source: FHFA-SJ">FHFA-SJ</a> · <a class="src" href="https://fred.stlouisfed.org/series/CPIAUCSL" rel="noopener noreferrer" target="_blank" title="official source: BLS-CPI">BLS-CPI</a></td></tr>
+<tr><td>Real sequence starting in 1990 (early-1990s California housing slump first)</td><td>Hypothetical construction</td><td>$24,378,230</td><td>$74,821,640</td><td>$233,897,260</td><td>Sell</td><td><a class="src" href="https://fred.stlouisfed.org/series/ATNHPIUS41940Q" rel="noopener noreferrer" target="_blank" title="official source: FHFA-SJ">FHFA-SJ</a> · <a class="src" href="https://fred.stlouisfed.org/series/CPIAUCSL" rel="noopener noreferrer" target="_blank" title="official source: BLS-CPI">BLS-CPI</a></td></tr>
+<tr><td>Real sequence starting in 1982 (long boom first, busts near the end)</td><td>Hypothetical construction</td><td>$29,531,690</td><td>$58,378,170</td><td>$98,550,030</td><td>Sell</td><td><a class="src" href="https://fred.stlouisfed.org/series/ATNHPIUS41940Q" rel="noopener noreferrer" target="_blank" title="official source: FHFA-SJ">FHFA-SJ</a> · <a class="src" href="https://fred.stlouisfed.org/series/CPIAUCSL" rel="noopener noreferrer" target="_blank" title="official source: BLS-CPI">BLS-CPI</a></td></tr>
+<tr><td>Baseline, then the real 2007-2012 housing and stock bust starting the year of inheritance</td><td>Hypothetical construction</td><td>$3,400,910</td><td>$15,256,980</td><td>$23,986,750</td><td>Sell</td><td><a class="src" href="https://fred.stlouisfed.org/series/ATNHPIUS41940Q" rel="noopener noreferrer" target="_blank" title="official source: FHFA-SJ">FHFA-SJ</a> · <a class="src" href="https://fred.stlouisfed.org/series/CPIAUCSL" rel="noopener noreferrer" target="_blank" title="official source: BLS-CPI">BLS-CPI</a></td></tr>
+<tr><td>Baseline, then the real 1977-1982 inflation years starting the year of inheritance</td><td>Hypothetical construction</td><td>$14,675,720</td><td>$31,629,930</td><td>$52,117,150</td><td>Sell</td><td><a class="src" href="https://fred.stlouisfed.org/series/ATNHPIUS41940Q" rel="noopener noreferrer" target="_blank" title="official source: FHFA-SJ">FHFA-SJ</a> · <a class="src" href="https://fred.stlouisfed.org/series/CPIAUCSL" rel="noopener noreferrer" target="_blank" title="official source: BLS-CPI">BLS-CPI</a></td></tr>
+<tr><td>Baseline, then the real 2000-2009 "lost decade" for stocks starting the year of inheritance</td><td>Hypothetical construction</td><td>$7,600,520</td><td>$18,384,020</td><td>$22,259,740</td><td>Sell</td><td><a class="src" href="https://fred.stlouisfed.org/series/ATNHPIUS41940Q" rel="noopener noreferrer" target="_blank" title="official source: FHFA-SJ">FHFA-SJ</a> · <a class="src" href="https://fred.stlouisfed.org/series/CPIAUCSL" rel="noopener noreferrer" target="_blank" title="official source: BLS-CPI">BLS-CPI</a></td></tr>
+<tr><td>Baseline, then the real 1990-1996 California housing slump starting the year of inheritance</td><td>Hypothetical construction</td><td>$3,707,150</td><td>$17,158,640</td><td>$48,991,840</td><td>Sell</td><td><a class="src" href="https://fred.stlouisfed.org/series/ATNHPIUS41940Q" rel="noopener noreferrer" target="_blank" title="official source: FHFA-SJ">FHFA-SJ</a> · <a class="src" href="https://fred.stlouisfed.org/series/CPIAUCSL" rel="noopener noreferrer" target="_blank" title="official source: BLS-CPI">BLS-CPI</a></td></tr>
+<tr><td>Baseline, then the real 1929-1941 national Depression sequence starting the year of inheritance (national data)</td><td>Hypothetical construction</td><td>$3,554,890</td><td>$11,212,050</td><td>$10,751,770</td><td>Rent</td><td><a class="src" href="https://fred.stlouisfed.org/series/ATNHPIUS41940Q" rel="noopener noreferrer" target="_blank" title="official source: FHFA-SJ">FHFA-SJ</a> · <a class="src" href="https://fred.stlouisfed.org/series/CPIAUCSL" rel="noopener noreferrer" target="_blank" title="official source: BLS-CPI">BLS-CPI</a></td></tr>
+<tr><td>Baseline, then the real 2007-2012 bust ending the year before inheritance</td><td>Hypothetical construction</td><td>$4,328,310</td><td>$15,013,160</td><td>$20,989,010</td><td>Sell</td><td><a class="src" href="https://fred.stlouisfed.org/series/ATNHPIUS41940Q" rel="noopener noreferrer" target="_blank" title="official source: FHFA-SJ">FHFA-SJ</a> · <a class="src" href="https://fred.stlouisfed.org/series/CPIAUCSL" rel="noopener noreferrer" target="_blank" title="official source: BLS-CPI">BLS-CPI</a></td></tr>
+<tr><td>Baseline, then Japan's real 1991-2020 stagnation starting the year of inheritance (home prices, Nikkei without dividends, consumer prices)</td><td>Hypothetical construction</td><td>$477,730</td><td>$7,677,130</td><td>$7,041,890</td><td>Rent</td><td><a class="src" href="https://fred.stlouisfed.org/series/ATNHPIUS41940Q" rel="noopener noreferrer" target="_blank" title="official source: FHFA-SJ">FHFA-SJ</a> · <a class="src" href="https://fred.stlouisfed.org/series/CPIAUCSL" rel="noopener noreferrer" target="_blank" title="official source: BLS-CPI">BLS-CPI</a></td></tr>
+</tbody></table></div>
+<p class="note">Kind separates a replay of the real record from a construction. A construction is labelled one because it is not a forecast and has no probability attached.</p><h2>What the stress tests actually say</h2><div class="split"><div><h3>Selling survives every twenty-year window</h3><p>Replaying the real record from each of its 50 starting years, selling leads after twenty years in all 50 and after ten years in 43. The median ten-year advantage is $3,317,670; the worst is -$2,068,710. That is the risk being accepted: a bad decade is possible, a bad twenty years is not in the sample.</p><h3>Two paths invert the answer</h3><p>If the next fifty years look like Japan after 1990, or like the Depression, renting wins. Both are long-period, low-return environments where a house that produces rent beats a portfolio that does not. The practical response is not to reject selling; it is to <b>invest the proceeds in stages</b> and keep a few years of spending in short-term Treasury bills, so that a fall in the first years does not force a sale at the bottom.</p></div><div><h3>The right response to a black swan</h3><ol class="steps"><li><h3>Do not rely on one sale date</h3><p>Invest in tranches over twelve to twenty-four months rather than all at once. The model is a single-date calculation; the real plan does not have to be.</p></li><li><h3>Keep a cash and bill reserve</h3><p>The replays show the damage in a bad decade comes from being forced to sell investments to live. A reserve removes that forcing.</p></li><li><h3>Insure the risks that are insurable</h3><p>Earthquake is excluded from a standard California homeowners policy. If the house is kept, the uninsured loss is a real black swan; if it is sold, it is transferred with the house.</p></li><li><h3>Re-check after a regime change</h3><p>If inflation runs above 4% for several years, or house prices fall more than 20%, the ranking should be recomputed rather than assumed.</p></li></ol></div></div><div class="banner warn"><b>What a black-swan section cannot do.</b> It cannot give a probability to a named crisis. The figures below are conditional outcomes - "if this happened, this is what the three paths would produce" - and they are labelled by provenance so that a government statistic is never confused with a construction. The 1976-2025 replays are the closest thing here to evidence, and they are 50 observations from one history.</div>
+<footer>
+<p><b>De-identification method.</b> People, the trust, the parcels and the addresses appear only as placeholders and are never published. Household amounts are household or model outputs rounded to the nearest $10 and are labelled as such; statutory amounts are quoted exactly as the official page publishes them and are labelled official. No year-by-year bill history is published. Nothing on this site is legal, tax, investment or insurance advice.</p>
+<p><b>Sources.</b> Every table row links the official page it came from. A value that could not be confirmed from an official source is left blank and listed on the <a href="flagged.html">Flagged for review</a> page. Built 2026-11-13 · <a href="sources.html">source register and method</a>.</p>
+</footer>
+</main></body></html>
