@@ -41,6 +41,16 @@ review them; F4–F7 are process records.
   resolvable by any session.
 - **F7 — Gates.** All local gates green on the final audited tree (origin/main `4ea8bf7` — PRs #73 #74 #75 #76 #77 #78 — plus this session's commits): `privacy-site/build.py` reproducible (no diff), `privacy-site/check.py` PASS (11 pages, 316 rows), unittest 8/8, `final/publish.py --check` PASS (39 files), `final/check.py .` PASS (25 pages, 989 sourced rows, 2,573 links, 2,425 dollar figures $10-clean, 51 model paths), `final/integrate.py` clean. Two earlier gate runs during concurrent merges (938/2451/2375 pre-#75; 966/2543/2419 post-#75) are superseded; raw output of the final run in GATES.txt. Three board conflicts during this session (PRs #75, #77, #78 landing concurrently) were all resolved by union; every other session's entry is preserved (verified by count greps).
 
+- **F8 — Board corruption found on main and repaired here.** `origin/main`'s `COORDINATION.md`
+  (tip `2b727aa`, merged via PR #81) contained unresolved conflict-marker lines
+  (`<<<<<<< HEAD` / `=======` / `>>>>>>> origin/main`) inside the da3f2b99 close-out region.
+  This session's merge inherited the corruption as a malformed hunk; the markers were removed
+  with a line-level repair, all sessions' entries verified present by content probes
+  (da3f2b99 D-0…D-6 close-out, f8de1d0b F8 entry, 022b1ea7 record, owner-analysis-2026, this
+  session's entry), and the repaired board is what this PR proposes to merge. No published
+  page is affected (the board is Jekyll-excluded), but future sessions should diff the board
+  for stray markers before appending.
+
 ## What this pass did not do
 
 - It did not edit any published page, the model, the flags register, or any file claimed by
