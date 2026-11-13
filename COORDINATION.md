@@ -1737,7 +1737,46 @@ asks for; what remains is `P02` — the public Git **history** — which only th
 
 ### D4 — decision-readiness additions (published analysis)
 
-To be filled in at the end of the session with the exact rows added.
+Kept deliberately small: three changes, no model output, assumption or recommendation altered.
+
+1. **Summary · "What would change the answer."** The model's own break-even points, printed from the same run
+   that produces every other figure, so they cannot drift: home growth above **7.0%** a year would make renting
+   better than selling (the real 1976-2025 record for this area was **6.71%**, so this is live, not remote); a
+   stock return below **4.6%** a year; rent above about **$16,650** a month. Beside them, flagged rather than
+   modelled, the three facts that decide whether the assumed tax rules apply at all — gross-estate inclusion
+   (`Q01`, worth about **$3,319,060** of 2026-dollar wealth), the parent-child test (`Q06`) and principal
+   residence (`Q15`).
+2. **Summary · "What to settle before 2044, and why it cannot wait."** Including the Form 706 portability window
+   (`Q02`) — the only item on the site with a deadline that may **already be running**, and the one where the
+   money at stake is a second exclusion.
+3. **Estate-tax key figure** now names its dollar year and carries the 2026-dollar twin: **$17,612,280 in 2045
+   dollars** is **$11,016,970 in 2026 dollars**, and the sub-line says which to compare a figure measured today
+   against. Recorded as review item `R33`.
+
+Also recorded as review item `R32`: the gate repair from D3, stated for a public reader without quoting any
+private figure. The first draft of that sentence *did* quote two of them; the new gate caught it, and the
+sentence was rewritten rather than the number whitelisted. That is the repair working.
+
+### D5 — publish record
+
+- Branch pushed and rebased; **PR #73** https://github.com/wingbangboozle1-lang/Tino1/pull/73.
+- Required `verify` check **passed** on the PR head (run **43380840399**, 51 s) — the repaired gate ran in CI.
+- Merged **2026-11-13T06:45:58Z** as **`671bedd001c0537874d2ca42d6cc9093c9baa72e`**; merge commit CI passed
+  (run **43380979912**).
+- GitHub Pages build/deployment run **43380979152** succeeded; Pages API reports `built`, no error, for
+  `671bedd` (updated 2026-11-13T06:46:33Z).
+- Live check after the CDN caught up: `summary.html` serves the new key-figure wording, the "What would change
+  the answer" break-even table and the "What to settle before 2044" table. Confirmed by fetching the page with a
+  cache-busting query; the un-busted URL was still serving the previous build at the time of the check.
+- Local gates all green before the push: `final/check.py .` (25 pages, 938 sourced rows, 2,451 links, `$10`
+  rounding, 6-digit scan clean, model self-tests on 51 paths); `privacy-site/build.py` reproducible with no diff
+  and `privacy-site/check.py` PASS (11 pages, 316 rows); 8/8 unit tests; `final/publish.py --check` (39 files);
+  and both boundary checkers PASS on a simulated Jekyll build (39 files, byte-identical).
+
+**Still open for the owner after this session:** `P02` (public Git history holds the earliest unrounded drafts;
+only the owner can make the repository private or have the history rewritten), and `Q01`, `Q02`, `Q04`-`Q06`,
+`Q15`-`Q18`, `U01`-`U09`, `A01`-`A10`, `S01`-`S05` on the Flagged for Review page. No historical series, ZIP
+list or private document was republished.
 
 ## Session `arena/5ea93a0e-tino1` — independent analysis and integration (claimed 2026-11-12 15:35 UTC)
 
