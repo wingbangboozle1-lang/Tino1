@@ -2,7 +2,7 @@
 
 **Live site:** https://wingbangboozle1-lang.github.io/Tino1/
 
-A decision analysis for two California homes. Property A (Cupertino, ZIP 95014) will pass to the Inheritor through a trust around 2040 to 2050. Property B (San Francisco, ZIP 94122) is already owned by the Inheritor. The site answers one question with numbers: live in Property A, rent it out, or sell it and reinvest.
+A decision analysis for two California homes. Property A (the future inherited home) will pass to the Inheritor through a trust around 2040 to 2050. Property B (the home already owned) is not part of the inheritance. The site answers one question with numbers: live in Property A, rent it out, or sell it and reinvest. City, ZIP code and parcel identifiers are deliberately omitted from this front page.
 
 ## What is current
 
@@ -20,7 +20,8 @@ GitHub Pages publishes the **no-figures guide** in [`privacy-site/public/`](priv
 | `law.html` | Federal, California (`Behavioral Health Services Tax`), and local law in force, plus pending measures & Nov 11 ballot updates |
 | `estate-cash.html` | Cash inheritance: thresholds at each level, room before tax, projections |
 | `costs.html` | Insurance for both ZIP codes and running costs (CPUC NEM / `$24.15` fixed charge, water, rent) |
-| `suggestions.html` | Proposed site, data & privacy improvements to review before implementing — Part 1: GAP/IMP/Paths; Part 2: options register G01–G15 |
+| `suggestions.html` | Proposed site, data & privacy improvements to review before implementing — Part 1: GAP/IMP/Paths; Part 2: options register G01–G15; review controls now cover nine proposals |
+| `issues.html` | **Published guide page.** Every open question this analysis found (I01–I24): what is unresolved, what would close it, and the official context. Blank means unverified, never zero |
 | `flagged.html` | Flagged for Review: every unconfirmed value, assumption and irregularity, with links |
 | `sources.html` | Source register (zero official `excerpt` sources remain), method, cross-check against a second model |
 | `verification.html` | Verification passes (2026-11-11, 2026-11-12 and 2026-11-13): every official agency source opened and read directly |
@@ -35,6 +36,23 @@ python3 final/model.py && python3 final/integrate.py && python3 final/check.py .
 ```
 
 Standard library only. `final/check.py` fails if a table row has no link to an official page, if an internal link is broken, if a dollar figure is not a multiple of $10 (listed official figures excepted), or if a street address, e-mail address, parcel-number or telephone pattern appears. GitHub Pages serves only the privacy-first allowlist in [`final/published.txt`](final/published.txt) (generic landing + no-figures guide), enforced in CI by `final/check_published.py` and `privacy-site/check_published.py`; the numeric pages stay repository files, built and checked but not published.
+
+## Verification in this edition (session bd0afb0a)
+
+Every substantive claim published in `privacy-site/public/` was re-read on its official page on 2026-11-13 and logged
+claim by claim in [`session-bd0afb0a/VERIFICATION.md`](session-bd0afb0a/VERIFICATION.md). Three published statements did not
+survive that re-read and were corrected:
+
+- a ballot percentage that did not match the Secretary of State's returns page (now 52.4%, with the current timestamp and
+  precinct count; still unofficial until certification);
+- a 2026 personal state-and-local-tax amount asserted from a link that only supports the 2025 amount (the row now states
+  only what the linked IRS instructions say, and the gap is flagged as P10);
+- a rename label applied to the 1% California additional tax that the linked FTB page did not confirm (the row now cites
+  Revenue and Taxation Code section 17043 only, flagged as P12).
+
+Four additions came out of the same pass: an executive summary on the landing page, an explicit baseline table separating
+the already-owned home from the inherited home, six ordered decision gates on the Open questions page, and an official
+BLS CPI-U decade table on the Black swan page showing why a single constant inflation rate is not a baseline (P13).
 
 ## Rules followed
 

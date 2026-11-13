@@ -29,6 +29,7 @@ GUIDE = [
     'privacy-site/public/questions.html',
     'privacy-site/public/suggestions.html',
     'privacy-site/public/suggestions-detail.html',
+    'privacy-site/public/issues.html',
     'privacy-site/public/flagged.html',
     'privacy-site/public/style.css',
 ]
@@ -65,6 +66,40 @@ def current_entries():
     return [name for name in sorted(os.listdir(ROOT)) if name != '.git']
 
 
+def build_mismatches(allow):
+    """Fail if the guide's generated output and the allowlist disagree.
+
+    The guide builder writes exactly one HTML file per navigation entry plus a fixed
+    CSS file. If a page is added to the builder and not to the allowlist (or the
+    reverse), Pages would silently publish a stale set. Checked here so the two
+    cannot drift apart without a red gate; Jekyll itself is only available in CI.
+    """
+    import re
+    builder = os.path.join(ROOT, 'privacy-site', 'build.py')
+    checker = os.path.join(ROOT, 'privacy-site', 'check.py')
+    problems = []
+    if not os.path.isfile(builder):
+        return ['privacy-site/build.py is missing']
+    text = open(builder, encoding='utf-8').read()
+    nav = re.search(r"^nav=\[(.*?)\]\s*$", text, re.M | re.S)
+    if not nav:
+        return ['could not read the navigation table in privacy-site/build.py']
+    generated = {f"privacy-site/public/{name}"
+                 for name in re.findall(r"\('([^']+\.html)'", nav.group(1))}
+    generated.add('privacy-site/public/style.css')
+    if generated != set(GUIDE):
+        problems.append('privacy-site/build.py pages and the allowlist disagree: %s'
+                        % ', '.join(sorted(generated ^ set(GUIDE))))
+    if os.path.isfile(checker):
+        check_text = open(checker, encoding='utf-8').read()
+        nav_set = re.search(r"^NAV = \{(.*?)\}\s*$", check_text, re.M | re.S)
+        if nav_set:
+            checked = set(re.findall(r"'([^']+\.html)'", nav_set.group(1)))
+            if checked != {os.path.basename(f) for f in generated if f.endswith('.html')}:
+                problems.append('privacy-site/check.py NAV and the builder disagree')
+    return problems
+
+
 def main():
     check = '--check' in sys.argv[1:]
     cfg = config(current_entries())
@@ -78,7 +113,12 @@ def main():
             stale.append(os.path.relpath(path, ROOT))
             if not check:
                 open(path, 'w', encoding='utf-8').write(text)
+    mismatches = build_mismatches(ALLOW)
     if check:
+        if mismatches:
+            for m in mismatches:
+                print('::error::' + m)
+            return 1
         if stale:
             print('::error::privacy-first publication list is out of date: %s (run python3 final/publish.py)' % ', '.join(stale))
             return 1
