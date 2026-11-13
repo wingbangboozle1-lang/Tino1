@@ -1,4 +1,5 @@
 == GATES on audited tree, session arena/e351c885-tino1, 2026-11-13 UTC ==
+(re-run after rebasing onto origin/main 2823819, which merged PR #75: dashboard, fifth re-read, flags R33-R37)
 
 --- python3 privacy-site/build.py ---
 Built 11 privacy-first public pages; no private inputs read.
@@ -10,18 +11,20 @@ no diff (reproducible)
 PASS: 11 public pages, 316 official-context-linked data rows, captions, anchors, local resources, $10 display rounding and known household-signature checks. Not a privacy audit of Git history or a verification of synthetic assumptions.
 
 --- unittest ---
-Ran 8 tests in 0.142s
+Ran 8 tests in 0.125s
 
 OK
-
---- final/publish.py (regenerate boundary for audit dir) ---
-updated 39 published file(s); _config.yml rewritten (/home/user/Tino1/_config.yml, /home/user/Tino1/final/published.txt)
 
 --- final/publish.py --check ---
 OK - _config.yml and final/published.txt match the declared allowlist of 39 published files
 
 --- final/check.py . ---
-OK - 25 pages, 938 table rows each with an official link, 2451 links, 2375 dollar figures rounded to $10, secret-list scan SKIPPED, see the secretless scan, 6-digit scan against 14833 model numbers clean, model self-tests passed on 51 paths
+OK - 25 pages, 966 table rows each with an official link, 2543 links, 2419 dollar figures rounded to $10, secret-list scan SKIPPED, see the secretless scan, 6-digit scan against 14833 model numbers clean, model self-tests passed on 51 paths
 
 --- _config.yml audit-dir exclusion ---
 15:  - 'audit-e351c885'
+
+--- final/integrate.py (link scan) ---
+7. fingerprinted figure shown to the nearest $100 / withheld in: no file
+8. README.md already current
+9. EXECUTIVE-SUMMARY.md regenerated from the model

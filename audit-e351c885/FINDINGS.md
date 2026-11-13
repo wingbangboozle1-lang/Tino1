@@ -39,10 +39,13 @@ review them; F4–F7 are process records.
   `session-5ea93a0e/`), and `final/published.txt` allowlist is unchanged (39 files). The
   durable repository/history exposures remain owner decisions (flags P01/P02) and are not
   resolvable by any session.
-- **F7 — Gates.** All local gates green on the audited tree: `privacy-site/build.py`
+- **F7 — Gates.** All local gates green on the audited tree. First run (pre-rebase, main at
+  `11cf93c`): `final/check.py .` PASS (25 pages, 938 sourced rows, 2,451 links, 2,375 dollar
+  figures $10-clean). Re-run after rebasing onto `2823819` (PR #75 merged): `privacy-site/build.py`
   reproducible (no diff), `privacy-site/check.py` PASS (11 pages, 316 rows), unittest 8/8,
-  `final/publish.py --check` PASS (39 files), `final/check.py .` PASS (25 pages, 938 sourced
-  rows, 2,451 links, 2,375 dollar figures $10-clean, 51 model paths). Raw output in GATES.txt.
+  `final/publish.py --check` PASS (39 files), `final/check.py .` PASS (25 pages, **966** sourced
+  rows, **2,543** links, **2,419** dollar figures $10-clean, 51 model paths), `final/integrate.py`
+  clean. Raw output of the final run in GATES.txt.
 
 ## What this pass did not do
 
