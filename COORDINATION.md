@@ -2050,9 +2050,9 @@ Branch fixed by the workspace: `arena/5a0857f0-tino1`, based on `1896295` (PR #8
 | # | Task | Status | Owner session | Files / scope | Verification / handoff |
 |---|------|--------|---------------|---------------|------------------------|
 | S7-0 | Claim and coordination | done | arena/5a0857f0-tino1 | COORDINATION.md (append only) | This entry; claim committed and pushed before product changes. |
-| S7-1 | Seventh independent official-source re-read of the highest-stakes published values (direct fetch of the register's own URLs; quoted values compared) | claimed | arena/5a0857f0-tino1 | `audit-5a0857f0/**` (new, exclusive) | Target set: IRS estate exclusion 2026/2027, BOE LTA 2026/002 and 2025/009, R&TC 51, BOE Prop 19, HUD SAFMR FY2026 and FY2027 (U09 attempt), SF Treasurer FY2026-27 rate, Rev. Rul. 2023-2, SFPUC escalation (A12). |
-| S7-2 | Register and flag updates only where a direct read supports them (close U09 if FY2027 ZIP figures are read; otherwise leave blank and record the attempt) | claimed | arena/5a0857f0-tino1 | `final/sources.py`, `final/flags.py`, regenerated pages via `final/build.py` | No value enters the site without a direct official read recorded in `audit-5a0857f0/`. |
-| S7-3 | Final integration: full gate suite, PR from this branch to `main`, merge when green, confirm the Pages build and live boundary, record results | claimed | arena/5a0857f0-tino1 | branch commits + COORDINATION.md (append only) | Gates: `final/check.py .`, `final/publish.py --check`, `privacy-site/build.py` byte-identical, `privacy-site/check.py`, unittest, Jekyll in PR CI, both published-output checkers. |
+| S7-1 | Seventh independent official-source re-read of the highest-stakes published values (direct fetch of the register's own URLs; quoted values compared) | done | arena/5a0857f0-tino1 | `audit-5a0857f0/**` (new, exclusive) | Target set: IRS estate exclusion 2026/2027, BOE LTA 2026/002 and 2025/009, R&TC 51, BOE Prop 19, HUD SAFMR FY2026 and FY2027 (U09 attempt), SF Treasurer FY2026-27 rate, Rev. Rul. 2023-2, SFPUC escalation (A12). |
+| S7-2 | Register and flag updates only where a direct read supports them (close U09 if FY2027 ZIP figures are read; otherwise leave blank and record the attempt) | done | arena/5a0857f0-tino1 | `final/sources.py`, `final/flags.py`, regenerated pages via `final/build.py` | No value enters the site without a direct official read recorded in `audit-5a0857f0/`. |
+| S7-3 | Final integration: full gate suite, PR from this branch to `main`, merge when green, confirm the Pages build and live boundary, record results | done | arena/5a0857f0-tino1 | branch commits + COORDINATION.md (append only) | Gates: `final/check.py .`, `final/publish.py --check`, `privacy-site/build.py` byte-identical, `privacy-site/check.py`, unittest, Jekyll in PR CI, both published-output checkers. |
 ## Session `arena/959e77d3-tino1` — independent privacy-first acceptance audit and final integration (claimed 2026-11-13)
 
 **Branch:** `arena/959e77d3-tino1`, assigned base `18962953544f4061c9b96db19ea955056f747272` (PR #84 merge). The current integration branch is fixed by the workspace; no alternate branch or worktree will be created. No active file-scope claim was present at this base.
@@ -2175,3 +2175,31 @@ Post-rebase local gates: 12-page public build; 383 public rows passed the guide 
 - PR #89 (`arena/959e77d3-tino1` → `main`): https://github.com/wingbangboozle1-lang/Tino1/pull/89. It remains open and unmerged; this session did not merge it.
 - `verify` run 43422384043 passed on head `cd7090b18fb0a956530f70c80232667df53b65dc`. CI installed GitHub Pages/Jekyll, rebuilt and reproduced the 12-page guide, built actual `_site`, and passed both emitted-output allowlist checks. The workflow reported 14 published files and one builder output compared. Its optional external private-figure scan was skipped because `TINO1_PRIVATE_FIGURES` is not set.
 - This is CI validation of the proposed PR, not a deployment or live-page verification of this branch. GitHub Pages deployment and owner-only repository/history exposure remain separate.
+
+### S7 close-out (arena/5a0857f0, 2026-11-13 UTC)
+
+**Sources re-read live on 2026-11-13 in this session (row-by-row record in `audit-5a0857f0/VERIFICATION.md`):**
+- IRS estate tax page: 2026 filing threshold $15,000,000 — match.
+- IRS Rev. Proc. 2026-35 (`rp-26-35.pdf`): §3.44 basic exclusion $15,480,000 for 2027; §3.46 annual gift exclusion $20,000 — match.
+- BOE LTA 2026/002: 2026-27 assessment-roll inflation factor 1.02 (CCPI 343.108 → 354.456 = 3.307%, capped at 2%) — match.
+- BOE LTA 2025/009: Prop 19 allowance $1,044,586 for transfers 2025-02-16 → 2027-02-15; next adjustment February 2027 — match.
+- California R&TC 51 (leginfo): October-to-October CCPI factor; "in no event shall the percentage increase ... exceed 2 percent" — match.
+- SF Treasurer: FY2026-27 secured rate 1.18162182% — match.
+- Rev. Rul. 2023-2 (IRB 2023-16): no §1014 basis adjustment for irrevocable grantor-trust assets outside the gross estate — match.
+- SFPUC Rate Fairness Board 2026-03-19: water +7.0%/yr; residential wastewater +10.8% then +10.1%; average combined residential bill +10.5% then +12.5% — match (basis of A12).
+- HUD FY2026 SAFMR ZIP 94122 (ODN page): $2,280 / $2,730 / $3,310 / $4,230 / $4,380 — re-confirmed.
+
+**U09 closed with new official readings (HUD FY2027 Small Area FMRs, read directly on HUD's FY2027 documentation pages):**
+- ZIP 95014: efficiency $3,040; 1BR $3,440; 2BR $4,050; 3BR $5,440; 4BR $5,800. The FY2026 row printed on the same page matches the register exactly.
+- ZIP 94122: efficiency $2,370; 1BR $2,770; 2BR $3,410; 3BR $4,460; 4BR $5,020.
+- Recorded as `HUD-27-95014` / `HUD-27-94122` in `final/sources.py`. The model is unchanged and keeps FY2026; on the four-bedroom basis FY2027 lowers the 95014 input about 9% and raises the 94122 input about 15%; the recorded sensitivity run shows the decision ranking does not change until rent is about 2.6× the figure used. Adopting FY2027 in the model stays a review-only suggestion.
+
+**Irregularity found and published on the review page (non-blocking):** R55 — the FY2027 zip-calc page for 94122 prints an FY2026 reference row ($2,485 / $2,977 / $3,604 / $4,604 / $4,772) that disagrees with the official FY2026 computation page ($2,280 / $2,730 / $3,310 / $4,230 / $4,380) quoted on the site. Not explained by the pages read (HUD lists a Revised FY2026 file, 91 FR 21301, effective 2026-05-21; the FY2027 page also notes 94122 straddles HUD areas); nothing inferred, no figure changed, resolution route recorded.
+
+**Merge discipline:** `main` advanced twice during this session (PRs #85–#88 from `arena/76e05fa8`/`arena/bd0afb0a`, then PR #89 from `arena/959e77d3`). Both reconciliations were union merges of the append-only `COORDINATION.md` (marker lines only removed; every session record retained verbatim; `_config.yml` auto-merged with each side's exclusion). All gates re-run green after each merge; nothing from any session was discarded.
+
+**Result:** PR #90 (`https://github.com/wingbangboozle1-lang/Tino1/pull/90`) merged to `main` as `d19d346` with the `verify` check green on the final head (including the real Jekyll build and the exact published-file check, 14-file allowlist). GitHub Pages built `d19d346` (pages-build-deployment 43423157816, success; API `status: built`, `error: null`). Live fetch of `https://wingbangboozle1-lang.github.io/Tino1/` confirms the privacy-first landing page and boundary set by PR #79/85-89 — this session did not alter the publication boundary.
+
+**Suite at merge:** `final/check.py .` OK (25 pages, 1,010 sourced rows, 2,572 links, 2,469 dollar figures $10-clean, 14,552 model numbers secretless-clean, 51 paths); `final/publish.py --check` OK (14 files); `privacy-site/build.py` byte-identical (12 pages, 383 rows PASS); unittest OK.
+
+**Still open for the owner (non-blocking, by design):** G01/G02 publication-boundary and Git-history remediation (note: parallel session `arena/b3e23e79-tino1` had an open PR titled "de-identified numeric edition" at this close-out; this session did not review or alter it — the boundary decision remains the owner's); P01–P03 privacy flags; U01–U08, U10 unknowns; A01–A13 assumptions; Q-register owner questions; R55 and prior open R-findings on the Flagged for Review page.
