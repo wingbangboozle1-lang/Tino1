@@ -73,15 +73,16 @@ def config(entries):
     pg = os.path.join(ROOT, 'public-guide')
     if os.path.isdir(pg):
         for name in sorted(os.listdir(pg)):
+            if name == '__pycache__' or name.startswith('.'):
+                continue  # interpreter and editor droppings: never published, never allowlisted
             rel = 'public-guide/%s' % name
             if rel in ALLOW:
                 continue
             out.append("  - '%s'" % rel)
     ps = os.path.join(ROOT, 'privacy-site')
     if os.path.isdir(ps):
-        out.append("  - 'privacy-site/__pycache__'")
         for name in sorted(os.listdir(ps)):
-            if name in ('public', '__pycache__'):
+            if name in ('public', '__pycache__') or name.startswith('.'):
                 continue
             out.append("  - 'privacy-site/%s'" % name)
     out.append('')
@@ -89,7 +90,11 @@ def config(entries):
 
 
 def current_entries():
-    return [name for name in sorted(os.listdir(ROOT)) if name != '.git']
+    # The allowlist must depend only on what is tracked, never on what a local run left behind:
+    # a build that writes .pyc files into public-guide/__pycache__ used to add an exclude line that
+    # CI never saw, so publish.py --check passed here and failed there.
+    return [name for name in sorted(os.listdir(ROOT))
+            if name != '.git' and name != '__pycache__']
 
 
 def build_mismatches(allow):
