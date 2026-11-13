@@ -2040,3 +2040,55 @@ Scope held: `privacy-site/**` untouched; no publication boundary change (PR #79 
 - **Delivered by S6:** official BOE factor table for replay assessments (S5-P3, flag A11 updated), permanent conflict-marker gate in `final/check.py`, evidence checklist S5-Q1..S5-Q7 on the Questions page, dangling S-register cross-references remapped (R52), README publication-boundary truth (R53), exec summary register/verification updates (R54), new flags A12/A13/U10. S5-P1/P2/P4/P5 and the published conflict-marker repair were already closed on main by `da3f2b99`/`f8de1d0b` and were not duplicated.
 - **Suite at merge:** `final/check.py .` OK (25 pages, 996 rows, 2,551 links, 2,398 dollar figures, 14,552 model numbers secretless-clean, 51 paths); `final/publish.py --check` OK (13 files); privacy-site byte-identical, PASS (11 pages, 318 rows), unittest 8/8.
 - **Still open for the owner (non-blocking):** G01/G02 publication-boundary and history remediation; P01-P03 privacy flags; U09/U10, A12/A13 evidence and assumption rows; the two dropped S-register proposals named in R52.
+
+---
+
+## Session `arena/76e05fa8-tino1` — claim, focused official re-read, publication-boundary decision, PR and Pages record (claimed 2026-11-13 UTC)
+
+**Branch fixed by workspace:** `arena/76e05fa8-tino1` (base `1896295` = origin/main after PR #84). The board's `session-<id>/<task>` branch pattern is superseded by the Arena branch rule for this session; no other branch is created or pushed. `gh pr list --state open` returned no open PRs at claim time; no other active claim is on the board.
+
+**Scope claimed (non-overlapping):** `COORDINATION.md` (append only), `privacy-site/research.json` (source registry: new `.gov` rows and dated re-reads), `privacy-site/build.py` (the one hard-coded ballot line, line 121), and the regenerated `privacy-site/public/**` files. Not touched: `final/**`, the repo-root numeric pages, `_config.yml`, `final/published.txt`, `.github/**`, and every earlier session's record.
+
+| Task | Status | Files / scope | Handoff |
+|---|---|---|---|
+| G-0 Claim, board append, push before shared edits | in progress | `COORDINATION.md` | This entry. |
+| G-1 Focused official re-read (below), dated 2026-11-13 | in progress | none (read-only) | Results in the table below. |
+| G-2 Registry update: add four `.gov` sources (BOE LTA 2026/002, BOE LTA 2025/009, BOE LTA 2026/026, IRS Rev. Proc. 2026-35); refresh the ballot reading to the 2026-11-12 8:46 p.m. official page; add the 2026-11-13 check date to the rows re-read | in progress | `privacy-site/research.json`, `privacy-site/build.py` line 121 | Statewide and federal only. No city, county or SF-specific source added, because the published guide deliberately withholds locality cues (see `privacy-site/check.py`). |
+| G-3 Build and gates: `privacy-site/build.py`, `check.py`, unittest, `final/publish.py --check`, `final/check.py .` | pending | `privacy-site/public/**` | Jekyll cannot run in this sandbox (no Ruby gem host allowed); the CI `verify` job runs the real Jekyll build and the exact-output check. |
+| G-4 Pull request to `main`, merge only when `verify` is green, confirm Pages, record PR and result here | pending | `COORDINATION.md` | Flagged items do not block the merge. |
+
+### G-1 · Official pages opened and read on 2026-11-13 (this session)
+
+| Authority | Page read | What it confirmed |
+|---|---|---|
+| IRS | https://www.irs.gov/businesses/small-businesses-self-employed/estate-tax | Filing threshold for 2026 deaths: $15,000,000. |
+| IRS | https://www.irs.gov/pub/irs-drop/rp-26-35.pdf (Rev. Proc. 2026-35, §3.44 and §3.46) | 2027 basic exclusion amount for estate tax under §2010(c)(3): $15,480,000; 2027 annual gift exclusion: $20,000. |
+| IRS | https://www.irs.gov/newsroom/irs-releases-tax-inflation-adjustments-for-tax-year-2027-taxpayers-continue-to-benefit-from-the-working-families-tax-cuts (IR-2026-133, Nov. 5, 2026) | Same 2027 estate figure, 2026 comparison $15,000,000, and gift exclusion $19,000 (2026) to $20,000 (2027). |
+| CA State Board of Equalization | https://www.boe.ca.gov/proptaxes/pdf/lta26002.pdf (LTA 2026/002) | 2026-27 inflation factor 1.02. The CCPI rose 3.307% (August 2024 to August 2025, because October 2025 was not published after the federal shutdown); the 2% cap under Art. XIII A §2(b) applies. |
+| CA State Board of Equalization | https://www.boe.ca.gov/proptaxes/pdf/lta25009.pdf (LTA 2025/009) | Intergenerational transfer value cap adjusted to $1,044,586 for transfers from 16 Feb 2025 to 15 Feb 2027. The next adjustment is due in February 2027. |
+| CA State Board of Equalization | https://www.boe.ca.gov/proptaxes/pdf/lta26026.pdf (LTA 2026/026, dated 3 Aug 2026) | Transfers "at death, whether within or outside a trust" are covered; the family home is the dwelling eligible for the homeowners' exemption, with the site limited to a reasonable area; the continual-use rule applies. |
+| CA State Board of Equalization | https://www.boe.ca.gov/prop19/ | Filing periods: homeowners' exemption within 1 year of transfer; exclusion claim within 3 years or before transfer to a third party. |
+| CA State Controller | https://www.sco.ca.gov/ardtax_estate_tax.html | No California estate tax return for deaths on or after 1 Jan 2005. The inheritance tax still applies only to deaths before 8 June 1982. |
+| CA Secretary of State | https://electionresults.sos.ca.gov/returns/ballot-measures | Unofficial results, reporting as of 12 Nov 2026 8:46 p.m., certification by 11 Dec 2026: Prop 3 Yes 60.7%; Prop 40 No 52.4%; Prop 42 Yes 51.4%. No Prop 19 measure is on the 2026 list. |
+
+**Rejected candidate URLs (404, not used):** `https://www.boe.ca.gov/proptaxes/faqs/prop19.htm`; `https://sftreasurer.org/payment-options/property-tax-rates`. The SF Treasurer secured-tax page (https://sftreasurer.org/property/secured-property-taxes) was read and shows the FY2026-27 rate of 1.18162182%. It is recorded here only and is not added to the published guide, which withholds city-specific rates.
+
+### G-1 findings and irregularities (flagged, none blocking)
+
+- **R-A (new, owner action, most urgent). The repository is public.** The GitHub API reports `private: false`. Public Pages serves only the allowlisted guide, but the repository itself publishes household-derived numeric pages (repo-root `decision.html`, `projections.html`, `summary.html`, `estate-cash.html`, `costs.html`, `law.html`, the `final/` and `owner-analysis-2026/` folders and this board). Anyone can read those raw files on GitHub. The README already states that Pages exclusions do not hide repository files. This session did **not** change visibility or delete any file, because that is an owner decision and deleting files does not remove history. Recommended owner action: make the repository private, or move household-specific files to a private location, before any further publication.
+- **R-B (new, numeric pages, not served). The 2026 ballot reading is superseded.** Repo-root and `final/` numeric pages still carry the 11 Nov 2026 6:51 p.m. snapshot (Prop 40 No 52.5%). The official page now shows the 12 Nov 2026 8:46 p.m. reading (Prop 40 No 52.4%). Both are unofficial until certified on 11 Dec 2026. Refreshing the numeric pages requires their rebuild; that is logged as a change request for the next numeric rebuild, not done here.
+- **R-C (new, informational). Two URLs in earlier notes return 404** (listed above). Neither is cited in the published registry, so no published row is affected.
+- **R-D (informational). The 2026 California inflation factor uses an August-to-August proxy** because October 2025 CCPI was not published (LTA 2026/002). The published guide's Prop 13 wording should say so if it states the factor; the new registry row says so.
+
+### Publication boundary (owner decision, not taken here)
+
+The owner's latest brief asks for a live site with household numbers rounded to $10. The repository's standing privacy boundary (PR #79 and every later record) allows only the generic, figure-free guide to be published. This session keeps that boundary. Reasons: (1) the owner's own top priority is that personal information not appear on the website; (2) rounding to $10 is disclosure minimisation, not anonymisation, as the existing README states; (3) the public repository already exposes unrounded history (R-A), so publishing rounded numbers would add exposure that cannot be withdrawn from caches, forks or history. Enabling household numbers requires a separate owner decision recorded on this board, followed by an allowlist change, which the CI gates enforce.
+
+
+### arena/76e05fa8-tino1 · G-2 and G-3 record (2026-11-13 UTC)
+
+- **G-2 done.** `privacy-site/research.json`: four new official `.gov` source rows (`revproc` IRS Rev. Proc. 2026-35; `lta26002` BOE LTA 2026/002; `lta25009` BOE LTA 2025/009; `lta26026` BOE LTA 2026/026), each with the 2026-11-13 read date and a statewide or federal scope only. The `sos26` row now carries the 12 Nov 2026 8:46 p.m. unofficial reading and the 2026-11-13 date. Two 404 URLs added to `rejected_links`. `privacy-site/build.py` line 121 (law page ballot row) updated to the same reading. Nothing else changed in the build.
+- **Verification performed:** the nine official pages in G-1 were opened and read on 2026-11-13 in this session; the table above gives the exact passages. Every new published row links only to the page that was read. The two new 404 URLs are recorded as rejected.
+- **G-3 gates (local):** `privacy-site/build.py` regenerated the 11 public pages; `privacy-site/check.py` PASS (11 pages, 322 official-context-linked rows, $10 display rounding, PII-pattern and household-signature checks); `python3 -m unittest discover -s privacy-site -p 'test_*.py'` 9/9 OK; `final/publish.py --check` OK (13-file allowlist unchanged); `final/check.py .` OK (25 pages, 996 rows, 2,551 links, 2,398 dollar figures rounded to $10, 14,552 model numbers secretless-clean, 51 paths). The first `check.py` run failed on a bare `$1` in a new source title; the title was reworded and the rerun passed. Jekyll and `final/check_published.py` / `privacy-site/check_published.py` (exact `_site` output) can only run in CI, which installs the GitHub Pages gem.
+- **Irregularities logged (see G-1 list):** R-A repository visibility (public, most urgent, owner action); R-B ballot reading superseded in repo-root and `final/` numeric pages (change request for the next numeric rebuild); R-C two 404 URLs; R-D August-to-August 2026 CCPI proxy.
+- **Change requests logged for other owners:** the repo-root and `final/` numeric pages should refresh the ballot line to the 12 Nov 2026 8:46 p.m. reading in their next rebuild (no session currently owns those files; owner to assign).

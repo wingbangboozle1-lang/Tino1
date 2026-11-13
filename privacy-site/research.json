@@ -153,7 +153,32 @@
     "sos26": {
       "title": "CA Secretary of State · 2026 Ballot Measures",
       "url": "https://electionresults.sos.ca.gov/returns/ballot-measures",
-      "finding": "Nov 11 (6:51 p.m.) unofficial returns show Prop 3 Yes 60.7%, Prop 40 No 52.5%, Prop 42 Yes 51.4%; no Prop 19 repeal appeared on the Nov 2026 ballot. Unofficial until certified by Dec 11."
+      "finding": "Unofficial results reporting as of Nov 12, 2026, 8:46 p.m. (all 23,860 precincts, partially reporting): Prop 3 Yes 60.7%, Prop 40 No 52.4%, Prop 42 Yes 51.4%; no Prop 19 measure is on the 2026 list. Unofficial until certified by Dec 11, 2026.",
+      "checked": "2026-11-13"
+    },
+    "revproc": {
+      "title": "IRS · Rev. Proc. 2026-35 (2027 adjustments)",
+      "url": "https://www.irs.gov/pub/irs-drop/rp-26-35.pdf",
+      "finding": "Section 3.44: basic exclusion amount for estate tax under §2010(c)(3) is $15,480,000 for 2027. Section 3.46: 2027 annual gift exclusion is $20,000. Federal figures only; not a per-heir allowance.",
+      "checked": "2026-11-13"
+    },
+    "lta26002": {
+      "title": "California BOE · LTA 2026/002 (2026-27 CCPI)",
+      "url": "https://www.boe.ca.gov/proptaxes/pdf/lta26002.pdf",
+      "finding": "2026-27 assessment roll inflation factor is 1.02: CCPI +3.307% (August 2024 to August 2025, because October 2025 was not published after the federal shutdown), capped at 2% under Art. XIII A §2(b).",
+      "checked": "2026-11-13"
+    },
+    "lta25009": {
+      "title": "California BOE · LTA 2025/009 (value-cap adjustment)",
+      "url": "https://www.boe.ca.gov/proptaxes/pdf/lta25009.pdf",
+      "finding": "Intergenerational transfer value cap is the factored base-year value plus $1,044,586 for transfers from Feb 16, 2025 to Feb 15, 2027. The amount is next adjusted in February 2027, using the FHFA California House Price Index.",
+      "checked": "2026-11-13"
+    },
+    "lta26026": {
+      "title": "California BOE · Prop 19 FAQ (LTA 2026/026, Aug 3, 2026)",
+      "url": "https://www.boe.ca.gov/proptaxes/pdf/lta26026.pdf",
+      "finding": "Defines a transfer as including transfers at death, whether within or outside a trust. A family home is a dwelling eligible for the homeowners' exemption from the transferor's ownership and occupation, with a reasonable site area. A continual-use requirement applies. Board guidance summary, not statute.",
+      "checked": "2026-11-13"
     },
     "cdires": {
       "title": "CA DOI · Residential Insurance Guide (Form 401)",
@@ -186,6 +211,14 @@
     {
       "url": "https://www.bls.gov/opub/ted/2023/consumer-prices-for-all-items-rose-6-5-percent-from-december-2021-to-december-2022.htm",
       "reason": "Error page; no numerical claim taken from it"
+    },
+    {
+      "url": "https://www.boe.ca.gov/proptaxes/faqs/prop19.htm",
+      "reason": "404 page on 2026-11-13; the current BOE Prop 19 page and LTA 2026/026 are used instead"
+    },
+    {
+      "url": "https://sftreasurer.org/payment-options/property-tax-rates",
+      "reason": "404 page on 2026-11-13; not used in the published guide, which withholds city-specific rates"
     }
   ]
 }
