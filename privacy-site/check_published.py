@@ -1,8 +1,20 @@
-"""Fail closed unless Jekyll emits exactly the reviewed privacy-first edition.
+"""Fail closed unless Jekyll emits exactly the reviewed public pages, and nothing else.
 
 This check validates the Pages output boundary, not the safety of the public Git
-repository, its history, or third-party copies. The numeric household analysis is
-intentionally not part of the public allowlist; $10 rounding is not anonymization.
+repository, its history, or third-party copies.
+
+Two editions are published, and they are different kinds of document:
+
+  * the guide edition (privacy-site/public) carries no household amounts at all;
+  * the numeric edition (public-guide) carries household amounts rounded to the nearest
+    ten dollars, statutory amounts quoted exactly, and no locality, address, parcel
+    number or year-by-year bill history.
+
+Rounding is disclosure minimisation, not anonymisation; the content rules for the numeric
+edition are enforced by final/check_public_guide.py. This file enforces the boundary:
+which files exist, that Jekyll changed none of them, and that every local link stays inside
+the published set. Nothing outside the allowlist may reach the artifact - in particular no
+legacy numeric page at the repository root.
 """
 from html.parser import HTMLParser
 from pathlib import Path
@@ -18,8 +30,15 @@ GUIDE_FILES = frozenset({
     'process.html', 'projection.html', 'questions.html', 'stress.html',
     'suggestions-detail.html', 'suggestions.html', 'style.css',
 })
+NUMERIC_FILES = frozenset({
+    'index.html', 'decision.html', 'projections.html', 'black-swan.html', 'process.html',
+    'law.html', 'costs.html', 'estate.html', 'questions.html', 'suggestions.html',
+    'flagged.html', 'sources.html', 'requirements.html',
+})
 EXPECTED_FILES = frozenset({'index.html'} | {
     f'privacy-site/public/{name}' for name in GUIDE_FILES
+} | {
+    f'public-guide/{name}' for name in NUMERIC_FILES
 })
 class LocalLinks(HTMLParser):
     def __init__(self):
@@ -60,7 +79,7 @@ def check_published(root, public=None):
     assert source_files == GUIDE_FILES, f'Unexpected or missing public guide files: {source_files ^ GUIDE_FILES}'
 
     allow = _allowlist()
-    assert allow == EXPECTED_FILES, f'Published allowlist is not privacy-only: {allow ^ EXPECTED_FILES}'
+    assert allow == EXPECTED_FILES, f'Published allowlist does not match the two reviewed editions: {allow ^ EXPECTED_FILES}'
     entries = list(root.rglob('*'))
     assert not any(p.is_symlink() for p in entries), 'Symlinks are forbidden in the published output'
     actual = {p.relative_to(root).as_posix() for p in entries if p.is_file()}
@@ -90,7 +109,7 @@ def check_published(root, public=None):
             resolved = posixpath.normpath(posixpath.join(base, target))
             assert resolved in EXPECTED_FILES, f'{name} links to non-published path {raw!r}'
 
-    print(f'PASS: exact privacy-only allowlist, {len(actual)} files, byte-identical, local links resolve')
+    print(f'PASS: exact public allowlist, {len(actual)} files, byte-identical, local links resolve, guide edition figure-free, no legacy page')
 
 
 if __name__ == '__main__':

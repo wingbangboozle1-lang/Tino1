@@ -18,6 +18,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 
 LANDING = ['index.html']
+# The original no-figures guide stays published; the numeric edition is additive.
 GUIDE = [
     'privacy-site/public/index.html',
     'privacy-site/public/decision.html',
@@ -33,8 +34,26 @@ GUIDE = [
     'privacy-site/public/style.css',
 ]
 
+# The de-identified numeric edition: figures rounded to $10, official amounts quoted
+# exactly, every table row sourced, no locality name, no bill history, no script.
+NUMERIC = [
+    'public-guide/index.html',
+    'public-guide/decision.html',
+    'public-guide/projections.html',
+    'public-guide/black-swan.html',
+    'public-guide/process.html',
+    'public-guide/law.html',
+    'public-guide/costs.html',
+    'public-guide/estate.html',
+    'public-guide/questions.html',
+    'public-guide/suggestions.html',
+    'public-guide/flagged.html',
+    'public-guide/sources.html',
+    'public-guide/requirements.html',
+]
+
 # This is the public output boundary, not a list of all tracked or internal files.
-ALLOW = set(LANDING) | set(GUIDE)
+ALLOW = set(LANDING) | set(GUIDE) | set(NUMERIC)
 TITLE = 'Privacy-first inheritance decision guide'
 
 
@@ -47,9 +66,16 @@ def config(entries):
     keep = sorted(ALLOW)
     out = ['title: %s' % TITLE, 'exclude:']
     for name in sorted(entries):
-        if name in keep or name == 'privacy-site':
+        if name in keep or name in ('privacy-site', 'public-guide'):
             continue
         out.append("  - '%s'" % name)
+    pg = os.path.join(ROOT, 'public-guide')
+    if os.path.isdir(pg):
+        for name in sorted(os.listdir(pg)):
+            rel = 'public-guide/%s' % name
+            if rel in ALLOW:
+                continue
+            out.append("  - '%s'" % rel)
     ps = os.path.join(ROOT, 'privacy-site')
     if os.path.isdir(ps):
         out.append("  - 'privacy-site/__pycache__'")

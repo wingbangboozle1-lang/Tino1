@@ -15,7 +15,7 @@ jobs:
           ruby-version: '3.2'
       - name: Install the GitHub Pages Jekyll
         run: gem install github-pages --no-document
-      - name: Rebuild and check the public guide and decision model
+      - name: Rebuild and check the published editions and the decision model
         run: |
           python3 privacy-site/build.py
           git diff --exit-code -- privacy-site/public
@@ -23,6 +23,15 @@ jobs:
           python3 -m unittest discover -s privacy-site -p 'test_*.py' -v
           python3 final/publish.py --check
           python3 final/check.py .
+      - name: Rebuild the numeric edition and prove it is byte-stable
+        run: |
+          # Every generated page is committed. A rebuild that changes a byte means the
+          # committed page and the generator disagree, which is how a hand-edit slips in.
+          python3 public-guide/_build.py
+          git diff --exit-code -- public-guide index.html
+          # Content rules: $10 rounding, official source in every row, no locality cue,
+          # no PII pattern, no script or form, noindex and CSP on every page.
+          python3 final/check_public_guide.py --fresh
       - name: Build the site the way GitHub Pages will
         run: jekyll build --trace
       - name: Verify that Jekyll publishes only the privacy-first allowlist

@@ -53,13 +53,16 @@ def build():
          'the early years are where renting can win', src('FHFA-SJ')],
         ['Living in it wins', '%d of 50' % horizons['10']['wins']['live'], '%d of 50' % horizons['20']['wins']['live'],
          'never first on wealth alone; the benefit is housing, which the model does not price', src('BLS-CPI')],
-        ['Worst ten-year gap, selling minus renting', m(horizons['10']['sell_minus_rent_worst']), '',
+        ['Worst ten-year gap, selling minus renting', m(horizons['10']['sell_minus_rent_worst']),
+         'not measured at 20 years',
          'the one bad decade in fifty: this is the risk being accepted', src('FHFA-SJ')],
-        ['Median ten-year gap, selling minus renting', m(horizons['10']['sell_minus_rent_median']), '', '',
-         src('FHFA-SJ')],
-        ['Worst twenty-year gap, selling minus renting', '', m(horizons['20']['sell_minus_rent_worst']),
-         'positive in every replay', src('FHFA-SJ')],
-        ['Median twenty-year gap, selling minus renting', '', m(horizons['20']['sell_minus_rent_median']), '',
+        ['Median ten-year gap, selling minus renting', m(horizons['10']['sell_minus_rent_median']),
+         'not measured at 20 years', 'the typical case is positive by this much', src('FHFA-SJ')],
+        ['Worst twenty-year gap, selling minus renting', 'not measured at 10 years',
+         m(horizons['20']['sell_minus_rent_worst']), 'positive in every replay', src('FHFA-SJ')],
+        ['Median twenty-year gap, selling minus renting', 'not measured at 10 years',
+         m(horizons['20']['sell_minus_rent_median']), 'about %s times the ten-year median'
+         % ('%.1f' % (horizons['20']['sell_minus_rent_median'] / horizons['10']['sell_minus_rent_median'])),
          src('FHFA-SJ')],
     ]
 
@@ -68,7 +71,7 @@ def build():
             % (mm(w10['sell'] - w10['rent']), mm(M['replay_horizons']['10']['sell_minus_rent_worst']), Y0),
             src('IRS-TC409')]
     at20 = ['After-tax wealth at %d (20 years after inheritance)' % w20['year'], m(w20['live']), m(w20['rent']), m(w20['sell']),
-            '', src('IRS-TC409')]
+            'selling leads by %s here' % mm(w20['sell'] - w20['rent']), src('IRS-TC409')]
 
     body = ''.join([
         banner('<b>What this page does and does not say.</b> It prices three choices on one set of stated assumptions. '

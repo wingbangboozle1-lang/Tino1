@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Build the de-identified edition pages. Standard library only.
+"""Build the published pages. Standard library only.
 
-  python3 public-guide/_gen.py            # builds every page
-  python3 public-guide/_gen.py index.py   # builds only the named modules
+  python3 public-guide/_build.py            # builds every page, including the root landing page
+  python3 public-guide/_build.py index.py   # builds only the named modules
 """
 import importlib.util
 import os
@@ -12,7 +12,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 
 MODULES = [
-    'p_index.py', 'p_decision.py', 'p_projections.py', 'p_blackswan.py', 'p_process.py',
+    'p_landing.py', 'p_index.py', 'p_decision.py', 'p_projections.py', 'p_blackswan.py', 'p_process.py',
     'p_law.py', 'p_costs.py', 'p_estate.py', 'p_questions.py', 'p_suggestions.py',
     'p_flagged.py', 'p_sources.py', 'p_requirements.py',
 ]
@@ -32,7 +32,8 @@ def main(argv):
     for name in MODULES:
         if name in wanted:
             built.append(run(name))
-    print('built %d de-identified page(s): %s' % (len(built), ', '.join(built)))
+    print('built %d page(s): %s (root landing page + %d edition pages)'
+          % (len(built), ', '.join(built), len(built) - 1))
     return 0
 
 

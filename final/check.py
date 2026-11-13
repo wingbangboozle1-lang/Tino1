@@ -18,7 +18,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 SITE = os.path.abspath(sys.argv[1]) if len(sys.argv) > 1 else os.path.join(HERE, 'site')
 # official = any .gov host (federal, state, county, city) plus these public-agency hosts
 OFFICIAL = ('gov', 'sftreasurer.org', 'fred.stlouisfed.org', 'sccassessor.org', 'valleywater.org', 'sfgov.legistar.com',
-            'capropeforms.org')
+            'capropeforms.org', 'federalreservehistory.org')
 OTHER_OK = ('github.com', 'pages.stern.nyu.edu')
 # official published figures that are not multiples of $10 (each is quoted from the linked page)
 OFFICIAL_ODD = {'38,915.87', '8,455.35', '14,217,212,455', '324,973', '1,176', '601', '1,044,586', '72,724', '371,479', '445,771', '742,953', '109,125', '208,325', '661,375',
@@ -73,7 +73,7 @@ PII = [
 # This invariant needs no secret because it is a property of the site, not of the private
 # numbers. Every owner-supplied dollar input is stored rounded to the nearest $10, so it can
 # only ever be published ending in 0. County assessed values and tax bills, the values that
-# identify a parcel, are not round numbers (550,537 / 114,248 / 7,207 are typical). Therefore:
+# identify a parcel, are not round numbers (480,000 / 96,000 / 6,000 are typical shapes). Therefore:
 #
 #   any 6-digit integer published in a page that does NOT end in 0, is not an official
 #   published figure, and is not a model output, is a probable unrounded owner figure.
@@ -82,6 +82,10 @@ PII = [
 # index values, rates, years and file numbers (the independent run found only false positives
 # at those lengths), and a noisy gate gets switched off. 6 digits is the range of a California
 # assessed value and of a large tax bill.
+#
+# PRIVACY NOTE (session b3e23e79, 2026-11-13): this comment used to quote two real assessed values as
+# examples. A public repository exposes every tracked file, so the examples are now invented round
+# numbers. See flag P01 on public-guide/flagged.html.
 # ---------------------------------------------------------------------------------------------
 SAFE_6DIGIT = {
     '155782',   # "Session 155782b5" on the repo-review page: a session id, not a figure
@@ -120,7 +124,7 @@ def scan_unrounded_pages(pages, raw):
         t = raw[p]
         text = re.sub(r'<(script|style)[^>]*>.*?</\1>', ' ', t, flags=re.S)
         text = html.unescape(re.sub(r'<[^>]+>', ' ', text))
-        # normalise thousands separators first: "550,537" must be tested as 550537
+        # normalise thousands separators first: "480,000" must be tested as 480000
         text = re.sub(r'(?<=\d)[, _\u00a0](?=\d{3}(?!\d))', '', text)
         for tok in sorted(set(re.findall(r'(?<![\d.])\d{6}(?![\d.])', text))):
             if tok in SAFE_6DIGIT or tok in OFFICIAL_ODD:

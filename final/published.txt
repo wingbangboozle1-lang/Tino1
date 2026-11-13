@@ -11,3 +11,16 @@ privacy-site/public/stress.html
 privacy-site/public/style.css
 privacy-site/public/suggestions-detail.html
 privacy-site/public/suggestions.html
+public-guide/black-swan.html
+public-guide/costs.html
+public-guide/decision.html
+public-guide/estate.html
+public-guide/flagged.html
+public-guide/index.html
+public-guide/law.html
+public-guide/process.html
+public-guide/projections.html
+public-guide/questions.html
+public-guide/requirements.html
+public-guide/sources.html
+public-guide/suggestions.html

@@ -20,21 +20,21 @@ def build():
               caption='Every source used in this edition'),
         '<h2>How the numbers are produced</h2>',
         '<table class="num"><caption>The calculation chain</caption>'
-        '<thead><tr><th scope="col">Step</th><th scope="col">What happens</th><th scope="col">Where it is checked</th>'
+        '<thead><tr><th scope="col">Step</th><th scope="col">What happens</th><th scope="col">Where it is checked</th><th scope="col">Official source</th>'
         '</tr></thead><tbody>'
         '<tr><td>1</td><td>A single model script holds every input, every formula and every assumption, including the '
         'property-tax cap, the transfer assessment, the estate calculation and the historical replays.</td>'
-        '<td>Its own self-tests, including the Proposition 19 formula against the county assessor\'s worked example</td></tr>'
+        '<td>Its own self-tests, including the Proposition 19 formula against the county assessor\'s worked example</td><td><a href="https://asr.santaclaracounty.gov/tax-savings/transferring-your-assessed-value/parent-to-child-2" rel="noopener noreferrer" target="_blank">SCC-P19</a></td></tr>'
         '<tr><td>2</td><td>The model writes one JSON file containing every intermediate number.</td>'
-        '<td>The build fails if a page needs a number the model does not produce</td></tr>'
+        '<td>The build fails if a page needs a number the model does not produce</td><td><a href="https://www.irs.gov/businesses/small-businesses-self-employed/estate-tax" rel="noopener noreferrer" target="_blank">IRS-ESTATE</a></td></tr>'
         '<tr><td>3</td><td>This generator formats every household amount to the nearest $10 and quotes statutory '
-        'amounts exactly.</td><td>A gate fails on any household dollar figure that is not a multiple of $10</td></tr>'
+        'amounts exactly.</td><td>A gate fails on any household dollar figure that is not a multiple of $10</td><td><a href="https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=RTC&sectionNum=51" rel="noopener noreferrer" target="_blank">RTC-51</a></td></tr>'
         '<tr><td>4</td><td>Every table row is checked for an https link to an official host.</td>'
-        '<td>A row without one fails the build</td></tr>'
+        '<td>A row without one fails the build</td><td><a href="https://www.irs.gov/businesses/small-businesses-self-employed/estate-tax" rel="noopener noreferrer" target="_blank">IRS-ESTATE</a></td></tr>'
         '<tr><td>5</td><td>Locality names and ZIP codes are replaced with Property A and Property B after generation.'
-        '</td><td>A gate fails if any published page still names a city or a ZIP code</td></tr>'
+        '</td><td>A gate fails if any published page still names a city or a ZIP code</td><td><a href="https://asr.santaclaracounty.gov/tax-savings/transferring-your-assessed-value/parent-to-child-2" rel="noopener noreferrer" target="_blank">SCC-P19</a></td></tr>'
         '<tr><td>6</td><td>The generated pages are compared byte for byte against a fresh build, and the published set '
-        'is compared against an explicit allowlist.</td><td>Both run in continuous integration on every change</td></tr>'
+        'is compared against an explicit allowlist.</td><td>Both run in continuous integration on every change</td><td><a href="https://www.irs.gov/businesses/small-businesses-self-employed/estate-tax" rel="noopener noreferrer" target="_blank">IRS-ESTATE</a></td></tr>'
         '</tbody></table>',
         '<h2>The assumptions, in one place</h2>',
         table(['Assumption', 'Value used', 'Why this value', 'Official source'],

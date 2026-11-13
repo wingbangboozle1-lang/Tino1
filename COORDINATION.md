@@ -366,7 +366,7 @@ This is the **ninth** session started on 2026-11-11 (it is not in the Q0 table b
 ### Collision note (added during rebase, 2026-11-11 ~04:35 UTC)
 - This session's claim commit (04:06:55) was written after a fetch at 04:05 UTC that showed only `origin/main`; the other 2026-11-11 claim commits (04:06:14–04:09:40) were pushed concurrently and were not visible then. Genuine claim collision, logged per protocol. The Q0 register above (session `b65fda2c`) is acknowledged: per "earlier claim holds", `48784797` (04:06:26) holds the first integration claim; this session's completed integration (PR #14) is **interim and additive** — it deletes no session's files (archives preserved) — and `48784797`/`07a57a05` (F4) may reconcile or supersede it on top.
 - Rebase conflict in this file resolved by keeping **both** sides: `b65fda2c` Q0–Q3 and `4395771d` P0–P3 sections first (main), then this session's blocks. Nothing discarded.
-- Privacy hotfix compliance (P0 rule by `4395771d`): this session's outputs round every owner-supplied figure to $10 (`AV_A_2026=550,540`, `AV_B_2026=114,250`); the archived root mirror (`mirror-archived-2026-11-10.html`) was re-scanned and scrubbed to the same rule after the rebase (see completion log).
+- Privacy hotfix compliance (P0 rule by `4395771d`): this session's outputs round every owner-supplied figure to $10 (`AV_A_2026=550,540`); the archived root mirror (`mirror-archived-2026-11-10.html`) was re-scanned and scrubbed to the same rule after the rebase (see completion log).
 
 ### PR & deploy record (`arena/62c87525`)
 - **PR:** https://github.com/wingbangboozle1-lang/Tino1/pull/14 — `arena/62c87525-tino1` → `main` (this session's changes only; branch cut from `2a16da8`, includes the claim commit + integration commit).
@@ -1664,7 +1664,7 @@ entries above are historical records, not active claims.
 |---|---|---|---|---|
 | D1 Board claim | done | `767b3f51` | `COORDINATION.md` (append only) | This entry. Pushed before any shared file was touched. |
 | D2 Independent line-by-line re-verification of every load-bearing official figure | done | `767b3f51` | read-only | See D2 register below: each figure re-opened on its own agency page this session. |
-| D3 **Silent gate repair** — the unrounded-owner-figure scan was skipped in CI | done | `767b3f51` | `final/check.py` | New secretless 6-digit invariant; proven to fail on an injected `550,537` and on a bare `114248`, and to pass on the clean tree. See D3 below. |
+| D3 **Silent gate repair** — the unrounded-owner-figure scan was skipped in CI | done | `767b3f51` | `final/check.py` | New secretless 6-digit invariant; proven to fail on an injected exact owner value and on its unseparated form, and to pass on the clean tree. See D3 below. |
 | D4 Decision-readiness additions to the published analysis | done | `767b3f51` | `final/build.py` (Summary), regenerated root pages | See D4 below. |
 | D5 Publish, PR and merge | in progress | `767b3f51` | shared outputs | PR from this branch to `main`, merged only with both gate sets green, then Pages confirmed. |
 
@@ -1727,13 +1727,26 @@ Repair: a secretless invariant added to `check.py` — any 6-digit integer on a 
 not a listed official published figure, and is not a model output, fails the build. It is scoped to 6 digits
 because 4- and 5-digit integers collide with index values, rates, years and file numbers (an independent run
 found nothing but false positives at those lengths) and a noisy gate gets switched off. Proven in both
-directions the same session: injected `550,537` → FAIL; injected bare `114248` → FAIL; clean tree → OK.
+directions the same session: injected exact owner value → FAIL; injected unseparated form → FAIL; clean
+tree → OK.
 
 **Privacy finding, re-checked and narrowed:** the owner's year-by-year assessed-value and tax-bill series is
-**not stored anywhere in the working tree**. The Cupertino series (`539,743` … `440,305`) matches nothing but
-an unrelated model output; the San Francisco series matches nothing. The only owner values in the tree are the
-current-year figures the model actually needs, already rounded to `$10`. So the site is in the state the brief
-asks for; what remains is `P02` — the public Git **history** — which only the owner can close.
+**not stored anywhere in the working tree**. Exact values from both properties were tested against every tracked
+document; the reported matches were unrelated model outputs (a `$1,740` row, an SVG path fragment), not the
+history. The only owner values in the tree are the current-year figures the model actually needs, already
+rounded to `$10`. So the site is in the state the brief asks for; what remains is `P02` — the public Git
+**history** — which only the owner can close.
+
+**S7 correction to that finding (2026-11-13).** The literal values were never in the working tree, but the
+*series* was: `archive/root-site-2026-11-11/properties.html` still printed the whole year-by-year table in
+`$10`-rounded form and divided an exact rounded value by another to show an effective rate, which recovers the
+unrounded figure. `$10` rounding does not anonymise a monotone roll: a unique starting value plus a steady 2%
+is a lookup key on a public assessment roll. Privacy decision T5 says the history is withheld, so the archived
+page was edited to withhold it (a four-row table that says what is withheld and why, with the 2% cap and the
+current-year anchor still public). `docs/`, `site/`, `dashboard/` and `verify-4395771d/` carry the same history
+in superseded editions; they are excluded from publication in `_config.yml` and are not regenerated, so they
+were left byte-identical rather than cosmetically masked. `final/scrub_figures.py` is the tool that finds and
+masks this class of leak, and it reads its value list from **outside** the repository.
 
 ### D4 — decision-readiness additions (published analysis)
 

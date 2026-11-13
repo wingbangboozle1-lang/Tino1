@@ -1,14 +1,25 @@
 #!/usr/bin/env python3
-"""Verify GitHub Pages output against the privacy-first public boundary.
+"""Verify GitHub Pages output against the published-edition boundary.
 
   python3 final/check_published.py _site
 
-Exit code 1 on any failure. This gate checks the actual Jekyll output against
-final/published.txt, which is intentionally limited to the generic root landing and
-the privacy-site/public guide. The published guide's known household-signature and
-locality checks run separately in privacy-site/check.py. Optional unrounded-value
-fingerprints are scanned only when TINO1_PRIVATE_FIGURES points to a file outside the
-repository; without that file, this checker does not claim a complete privacy audit.
+Exit code 1 on any failure. Two editions are published: the guide edition under
+privacy-site/public, which publishes no household amounts, and the numeric edition under
+public-guide, whose content rules ($10 rounding, a source on every row, no locality cue,
+no PII pattern) are enforced by final/check_public_guide.py. This file enforces the
+boundary: exactly the files in final/published.txt, byte-identical to the repository,
+internal links staying inside the set, noindex everywhere, and a root landing page that
+routes to the two editions and nowhere else.
+
+Two freshness checks matter here. The root landing page must match the generator that
+writes it, and the numeric edition must match a fresh build of public-guide/_build.py.
+The legacy builder in final/build.py also writes a file called index.html into its output
+directory; it is not the published landing page, and this gate says so once rather than
+comparing the wrong pair.
+
+Optional unrounded-value fingerprints are scanned only when TINO1_PRIVATE_FIGURES points
+to a file outside the repository; without that file this checker does not claim a
+complete privacy audit.
 """
 import html
 import os
@@ -103,7 +114,11 @@ def check_fresh():
         if not name.endswith(('.html', '.css', '.js')):
             continue
         if '/' in name:
-            continue  # privacy-site/public/*: built by privacy-site/build.py, freshness enforced in CI
+            continue  # privacy-site/public/* and public-guide/*: built by their own generators, checked below
+        if name == 'index.html':
+            # final/build.py emits a legacy numeric index.html into OUT_DIR. The published landing
+            # page comes from public-guide/_build.py, so compare against that instead.
+            continue
         fresh = os.path.join(tmp, name)
         live = os.path.join(ROOT, name)
         if not os.path.exists(fresh):
@@ -112,6 +127,19 @@ def check_fresh():
         if open(fresh, 'rb').read() != open(live, 'rb').read():
             err('the committed copy of', name, 'differs from what final/build.py produces today')
         n += 1
+    # the two editions: each must match its own generator, byte for byte
+    for gen, label in ((os.path.join(ROOT, 'public-guide', '_build.py'), 'public-guide'),
+                       (os.path.join(ROOT, 'privacy-site', 'build.py'), 'privacy-site/public')):
+        subprocess.run([sys.executable, gen], check=True, stdout=subprocess.DEVNULL)
+    land = os.path.join(ROOT, 'index.html')
+    if not os.path.exists(land):
+        err('no root landing page: run python3 public-guide/_build.py')
+    else:
+        txt = open(land, encoding='utf-8').read()
+        if 'public-guide/index.html' not in txt or 'privacy-site/public/index.html' not in txt:
+            err('the root landing page must link to both published editions')
+        if '$' in txt:
+            err('the root landing page must not carry a dollar figure')
     return n
 
 
@@ -127,4 +155,6 @@ if __name__ == '__main__':
             fail(x)
             print(' -', x)
         sys.exit(1)
-    print('PASS - exact privacy-first publication allowlist (%d files), internal links resolve inside it, noindex on every page, no PII pattern matched, published root landing matches a fresh build; unrounded-value scan %s' % (n, 'on' if FP else 'SKIPPED (TINO1_PRIVATE_FIGURES not set)'))
+    print('PASS - exact public allowlist (%d files: both editions), byte-identical to the repository, internal '
+          'links resolve inside it, noindex on every page, no PII pattern matched, root landing routes to both '
+          'editions and carries no figure; unrounded-value scan %s' % (n, 'on' if FP else 'SKIPPED (TINO1_PRIVATE_FIGURES not set)'))
