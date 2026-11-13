@@ -181,7 +181,13 @@ add('HUD-95014', 'HUD SAFMR 95014', 'HUD - FY2026 Small Area Fair Market Rents, 
     'FY2026: efficiency $3,340; one-bedroom $3,800; two-bedroom $4,440; three-bedroom $5,870; four-bedroom $6,390 per month (40th-percentile gross rent).')
 add('HUD-94122', 'HUD SAFMR 94122', 'HUD - FY2026 Small Area Fair Market Rents, ZIP 94122',
     'https://www.huduser.gov/portal/datasets/fmr/fmrs/FY2026_code/2026zip_code_calc.odn?zcta=94122&metro_code=METRO41860MM7360&year=2026', 'page',
-    'FY2026: efficiency $2,280; one-bedroom $2,730; two-bedroom $3,310; three-bedroom $4,230; four-bedroom $4,380 per month.')
+    'FY2026: efficiency $2,280; one-bedroom $2,730; two-bedroom $3,310; three-bedroom $4,230; four-bedroom $4,380 per month. Re-read 2026-11-13 (session arena/5a0857f0): unchanged.')
+add('HUD-27-95014', 'HUD SAFMR FY2027 95014', 'HUD - FY2027 Small Area Fair Market Rents, ZIP 95014',
+    'https://www.huduser.gov/datasets/fmr/fmr2027/zip-calc?year=2027&zip=95014&cbsasub=METRO41940M41940', 'page',
+    'Read directly 2026-11-13 (session arena/5a0857f0): FY2027 efficiency $3,040; one-bedroom $3,440; two-bedroom $4,050; three-bedroom $5,440; four-bedroom $5,800 per month (40th-percentile gross rent). The FY2026 reference row printed on the same official page ($3,340 / $3,800 / $4,440 / $5,870 / $6,390) matches the FY2026 figures recorded under HUD-95014.')
+add('HUD-27-94122', 'HUD SAFMR FY2027 94122', 'HUD - FY2027 Small Area Fair Market Rents, ZIP 94122',
+    'https://www.huduser.gov/datasets/fmr/fmr2027/zip-calc?year=2027&zip=94122&cbsasub=METRO41860M41884', 'page',
+    'Read directly 2026-11-13 (session arena/5a0857f0): FY2027 efficiency $2,370; one-bedroom $2,770; two-bedroom $3,410; three-bedroom $4,460; four-bedroom $5,020 per month. The FY2026 reference row printed on the same page ($2,485 / $2,977 / $3,604 / $4,604 / $4,772) differs from the FY2026 computation page recorded under HUD-94122; see finding R55.')
 add('FHFA-SJ', 'FHFA index, San Jose', 'FHFA all-transactions house price index, San Jose-Sunnyvale-Santa Clara MSA (via FRED ATNHPIUS41940Q)',
     'https://fred.stlouisfed.org/series/ATNHPIUS41940Q', 'page',
     'Fourth-quarter values 1976-2025 (23.21 to 560.05); 2026 Q2 558.75 against 564.26 a year earlier.')

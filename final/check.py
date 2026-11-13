@@ -25,7 +25,9 @@ OTHER_OK = ('github.com', 'pages.stern.nyu.edu')
 # '3,439' is the HUD FY2026 two-bedroom base rent for ZIP 95014 shown in its published calculation
 OFFICIAL_ODD = {'38,915.87', '8,455.35', '14,217,212,455', '324,973', '1,176', '601', '1,044,586', '72,724', '371,479', '445,771', '742,953', '109,125', '208,325', '661,375',
                 '56', '67', '76', '1.10', '0.55', '24.15',
-                '3,439'}
+                '3,439',
+                # HUD's own FY2026 reference row printed on the FY2027 zip-calc page for 94122 (read 2026-11-13, finding R55)
+                '2,485', '2,977', '3,604', '4,604', '4,772'}
 errors = []
 # A git merge-conflict marker left in a file publishes as literal text. R38: a marker and a duplicated fragment were
 # live on the published Verification page while every other check passed. Scan pages and repository files alike.

@@ -1085,6 +1085,22 @@ def build_verification():
     t8 = table(['What was checked', 'What the official page said when it was opened', 'Result', 'Official page'], r8,
                caption='Fifth independent re-read, 2026-11-13 (session arena/f8de1d0b), on the official pages themselves')
 
+    r9 = [
+        ('Federal filing threshold, 2026', 'Estate tax page: $15,000,000 for 2026; portability needs a timely filed Form 706', 'Confirmed again - unchanged', src('IRS-ESTATE')),
+        ('Federal basic and gift exclusions for 2027', 'Rev. Proc. 2026-35: basic exclusion $15,480,000 (section 3.44); annual gift exclusion $20,000 (section 3.46)', 'Confirmed again - unchanged', src('RP-2026-35')),
+        ('Proposition 13 inflation factor, 2026-27 roll', 'LTA 2026/002: factor 1.02 (CCPI 3.307% August 2024 to August 2025, capped at 2%)', 'Confirmed again - unchanged', src('BOE-LTA-2026-002')),
+        ('Proposition 19 allowance', 'LTA 2025/009: $1,044,586 for transfers 2025-02-16 through 2027-02-15; next adjustment February 2027', 'Confirmed again - unchanged', src('BOE-LTA-2025-009')),
+        ('R&amp;TC 51 formula', 'Inflation factor = October-to-October California CPI change; "in no event shall the percentage increase ... exceed 2 percent"', 'Confirmed again - unchanged', src('RTC-51')),
+        ('San Francisco secured rate, FY2026-27', 'Treasurer page: 1.18162182%', 'Confirmed again - unchanged', src('SF-TAX')),
+        ('Trusts outside the gross estate', 'Rev. Rul. 2023-2: no section 1014 basis adjustment for assets of an irrevocable grantor trust not included in the deceased grantor\'s gross estate', 'Confirmed again - unchanged', src('RR-2023-2')),
+        ('SFPUC adopted rate increases', 'Rate Fairness Board 2026-03-19: water +7.0% each year; residential wastewater +10.8% then +10.1%; average combined residential bill +10.5% then +12.5%', 'Confirmed again - the basis of assumption A12', src('SFPUC-RFB')),
+        ('HUD FY2026 SAFMR, ZIP 94122', 'Official FY2026 page: $2,280 / $2,730 / $3,310 / $4,230 / $4,380 (efficiency to four-bedroom)', 'Confirmed again - the figures quoted on the site', src('HUD-94122')),
+        ('HUD FY2027 SAFMR, ZIP 95014', 'Official FY2027 page: $3,040 / $3,440 / $4,050 / $5,440 / $5,800; its FY2026 row ($3,340 / $3,800 / $4,440 / $5,870 / $6,390) matches the register exactly', 'New reading - flag U09 closed for this ZIP; the model is unchanged', src('HUD-27-95014')),
+        ('HUD FY2027 SAFMR, ZIP 94122', 'Official FY2027 page: $2,370 / $2,770 / $3,410 / $4,460 / $5,020; its FY2026 reference row ($2,485 / $2,977 / $3,604 / $4,604 / $4,772) differs from the FY2026 page', 'New reading - flag U09 closed; the discrepancy is recorded as irregularity <a class="flag" href="review.html#R55">R55</a>; no figure changed', src('HUD-27-94122')),
+    ]
+    t9 = table(['What was checked', 'What the official page said when it was opened', 'Result', 'Official page'], r9,
+               caption='Independent re-read, 2026-11-13 (session arena/5a0857f0): flag U09 closed with the FY2027 ZIP rows read directly on the official pages')
+
     body = """
 <p class="callout">This page is the manual-review register for the whole site: one row per check, with the government page to open and re-read. Pass 1 was checked on 2026-11-11 (session faccd46d); Pass 2 re-opened the twelve core pages on 2026-11-12 (session e8636cac); subsequent same-day passes by sessions <code>3e79fc01</code>, <code>0adc9b0a</code>, and <code>a6ec5b1d</code> checked remaining official agency pages directly (leaving zero official agency excerpt entries in the register). Anything that cannot be confirmed from an agency page stays blank or labelled and carries a flag.</p>
 %s
@@ -1107,14 +1123,16 @@ def build_verification():
 %s
 <h2>Fifth independent re-read, 2026-11-13 (session arena/f8de1d0b)</h2>
 %s
+<h2>Independent re-read, 2026-11-13 (session arena/5a0857f0)</h2>
+%s
+<p class="note">This pass re-opened the highest-stakes federal, California, local and HUD pages above on their own agency URLs and closed flag U09: the fiscal year 2027 Small Area Fair Market Rent rows for both ZIPs are now read directly and recorded in the source register. The model is unchanged and keeps the fiscal year 2026 figures. One new irregularity is recorded - <a class="flag" href="review.html#R55">R55</a>. The pass log is in <code>audit-5a0857f0/VERIFICATION.md</code> in the repository.</p>
 <p class="note">This pass re-opened the federal, California and local pages above on their own agency URLs. Two of them changed the picture rather than confirming it: the CPUC page limits the net-metering tariff behind the solar credit to 20 years, and the Department of Insurance tool states that its figures are illustrations rather than quotes. Both are recorded as flags. What was not re-opened today stands on the earlier passes and keeps its links.</p>
 <h2>Fourth independent re-read, 2026-11-13 (session arena/46d1a561)</h2>
 %s
 <p class="note">This pass opened the eight official pages in its table on their own agency URLs and read them in full; the quoted wording is what each page says today. It did not re-open the inherited-property basis FAQ, Rev. Rul. 2023-2, Topics 409/559/701, the California Controller page, the Franchise Tax Board schedules, the CPUC net-metering material, the San Francisco rent-increase rules or the Department of Insurance tool - those stand on the earlier passes and keep their links. One arithmetic check was added rather than a read: the Santa Clara rate components were summed by hand and do add to 1.16360.</p>
-<p class="note"><strong>Coverage summary.</strong> Across the passes above, every official agency source in <a href="sources.html">Sources and method</a> has now been opened and read directly on its agency URL (only the non-government stock/bill dataset, Damodaran, remains labelled academic). The interactive CDI insurance survey and HUD FY2027 lookup require interactive form/spreadsheet access not resolved in automation, so those parcel values remain blank.</p>
+<p class="note"><strong>Coverage summary.</strong> Across the passes above, every official agency source in <a href="sources.html">Sources and method</a> has now been opened and read directly on its agency URL (only the non-government stock/bill dataset, Damodaran, remains labelled academic). The interactive CDI insurance survey still requires interactive form access that automation has not resolved, so the ZIP-level insurance premiums remain blank. The HUD fiscal year 2027 lookup was resolved on 2026-11-13 (session arena/5a0857f0): both ZIP rows are now read directly, recorded in the register, and flag U09 is closed.</p>
 <p class="note"><strong>What this pass does not establish.</strong> Model outputs and projections are conditional scenarios built on the assumptions in the flags; no official page can verify a forecast. The automated checker (<a href="%s/blob/main/final/check.py">final/check.py</a>) proves only that every table row carries an official link, that dollar figures are rounded to $10, and that no personal identifier pattern appears (no fingerprint of unrounded owner figures is stored; that extra scan runs only with a private local file) - it does not prove that each link supports each cell. This register exists so every claim can be checked by hand against its link. People remain placeholders (the Transferor, the Inheritor); no names, addresses or parcel numbers appear anywhere.</p>
-""" % (t1, t2, t3, t4, tw3, render_verification(src, table, flag), t6, t5, t7, t8,
-           s7_verification_table(), REPO)
+""" % (t1, t2, t3, t4, tw3, render_verification(src, table, flag), t6, t5, t7, t8, t9, s7_verification_table(), REPO)
     page('verification.html', 'Verification',
          'Verification passes (2026-11-11 register, four re-reads on 2026-11-12, and the full-page direct read): every official source read directly on its agency page, each check linked for manual review, and everything unconfirmable left blank and flagged.', body)
 
