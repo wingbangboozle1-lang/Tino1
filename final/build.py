@@ -28,7 +28,7 @@ ROOT_MODE = bool(os.environ.get('ROOT_MODE'))
 HOME = 'summary.html' if ROOT_MODE else 'index.html'
 Y0 = 2026
 T = P['T']
-BUILD_DATE = '2026-11-12'
+BUILD_DATE = '2026-11-13'
 READ_DATE = '2026-11-11'   # first full read of the source register; later passes are dated on the Verification page
 REGISTER_DATE = READ_DATE  # the name used by the b724a7d8 lines below
 REPO = 'https://github.com/wingbangboozle1-lang/Tino1'
@@ -98,8 +98,6 @@ NAV = [
     ('law.html', 'Law'),
     ('estate-cash.html', 'Cash and estate tax'),
     ('costs.html', 'Insurance and costs'),
-    ('questions.html', 'Questions & discovery'),
-    ('suggestions.html', 'Site improvements'),
     ('flagged.html', 'Flagged for Review'),
     ('sources.html', 'Sources and method'),
     ('verification.html', 'Verification'),
@@ -273,7 +271,7 @@ def build_index():
 <section class="kpis">%s</section>
 <h2>Best plan and why - conditional on the assumptions in the flags</h2>%s
 <h2>After-tax wealth in 2076, in 2026 dollars (baseline, inheritance in %d)</h2>%s
-<p class="note">Wealth counts only what differs between the choices: Property A itself, every cash flow it causes, and rent from the Inheritor's vacated unit in Property B when the Inheritor moves to Property A. The two units already rented in Property B are the same in all three choices and are left out. All figures assume everything is sold and taxed at the end so that the choices can be compared like for like.</p>
+<p class="note">Wealth counts only what differs between the choices: Property A itself and every cash flow it causes. The two units already rented in Property B are the same in all three choices and are left out, and so is the third unit: no rent was ever supplied for it, so the baseline counts none (nothing is inferred). The upside of letting the third unit when the Inheritor moves to Property A appears only as one labelled scenario in the sensitivity table. All figures assume everything is sold and taxed at the end so that the choices can be compared like for like.</p>
 <h2>Dashboard</h2>
 <div class="seg" id="tsel" aria-label="Year of inheritance"><span>Year of inheritance:</span>%s</div>
 %s
@@ -292,7 +290,7 @@ def build_decision():
     s = B
     at = table(['Item at inheritance in %d' % T, 'Amount', 'How it is worked out', 'Official basis'], [
         ['Market value of Property A', m(s['fmv_T']), '%s today, growing 4.0%% a year (assumption %s)' % (m(P['cup_value']), flag('A01')), src('FHFA-SJ')],
-        ['Assessed value just before death', m(s['fbyv_T']), '%s in 2026, growing 2%% a year' % m(P['cup_assessed']), src('BOE-P19')],
+        ['Assessed value just before death', m(s['fbyv_T']), '%s in 2026, growing with the California CPI capped at 2%% a year (R&TC 51); future California CPI is unknown, so national inflation is used as a labelled proxy %s' % (m(P['cup_assessed']), flag('A11')), src('BOE-P19', 'RTC-51')],
         ['Proposition 19 allowance (the adjusted $1 million)', m(s['cap_T']), '$1,044,586 until February 2027, then raised every second year by one year of California house-price change %s' % flag('A03'), src('BOE-LTA-2025-009')],
         ['Excluded amount', m(s['excluded_T']), 'assessed value plus allowance', src('BOE-LTA-2026-026')],
         ['New assessed value if the Inheritor moves in', m(s['taxable_live_T']), 'assessed value plus (market value minus excluded amount)', src('BOE-LTA-2026-026', 'SCC-P19')],
@@ -307,10 +305,10 @@ def build_decision():
         ['Property tax', m(-rT['live_tax']), m(-rT['rent_tax']), 'none after the sale', src('SCC-RATES', 'BOE-P19')],
         ['Insurance, repairs, water, electricity, management', m(-(rT['live_cost'] - rT['live_tax'])), m(-(rT['rent_collected'] - rT['rent_noi'] - rT['rent_tax'])), 'none after the sale', src('CDI-TOOL')],
         ['Income tax on the rent (after depreciation)', '$0', m(-rT['rent_income_tax']), '$0', src('IRS-P527', 'IRS-TC559')],
-        ['Rent from the vacated unit in Property B, after tax', m(rT['live_unit3']), '$0 (the Inheritor lives there)', '$0 (the Inheritor lives there)', src('SF-RENT-RULES', 'HUD-94122')],
+        ['Rent from a third unit at Property B, after tax (baseline)', '$0 (nothing is inferred: no rent was ever supplied for the third unit)', '$0 (the Inheritor lives there)', '$0 (the Inheritor lives there)', src('SF-RENT-RULES', 'HUD-94122')],
         ['Net cash for the year', m(rT['live_unit3'] - rT['live_cost']), m(rT['rent_after_tax']), 'investment income on %s' % m(s['sell_net']), src('IRS-TC559')],
     ], caption='Cash flow in the first year', cls='num',
-        note='The rent for Property A is the HUD four-bedroom Small Area Fair Market Rent for ZIP 95014 (%s a month in fiscal year 2026) grown with inflation plus 0.5 point. The number of bedrooms was not supplied (%s); the rent itself is an assumption (%s).' % (m(P['cup_rent_month']), flag('U08'), flag('A07')))
+        note='The baseline counts no rent for the vacated third unit at Property B: nothing is inferred where no rent was ever supplied. Letting it at the average of the two known unit rents is shown only as one labelled scenario in the sensitivity table below. The rent for Property A is the HUD four-bedroom Small Area Fair Market Rent for ZIP 95014 (%s a month in fiscal year 2026) grown with inflation plus 0.5 point - the 40th-percentile HUD rent standard is a benchmark, not a verified rent for this home. The number of bedrooms and the rentable condition were not supplied (%s); the stand-in is an assumption (%s).' % (m(P['cup_rent_month']), flag('U08'), flag('A07')))
     w = table(['After-tax wealth from Property A', 'Live in it', 'Rent it out', 'Sell and reinvest', 'Official basis'], [
         ['%d (10 years after)' % s['w10']['year'], m(s['w10']['live']), m(s['w10']['rent']), m(s['w10']['sell']), src('IRS-TC409', 'IRS-TC701')],
         ['%d (20 years after)' % s['w20']['year'], m(s['w20']['live']), m(s['w20']['rent']), m(s['w20']['sell']), src('IRS-TC409', 'IRS-TC701')],
@@ -325,7 +323,7 @@ def build_decision():
         for x, sb in zip(M['sensitivity'], [
             ('FHFA-SJ', 'BLS-CPI'), ('FHFA-SJ',), ('FHFA-SJ',), ('FHFA-SJ', 'FHFA-CA'), ('TREASURY',), ('TREASURY',),
             ('TREASURY',), ('TREASURY',), ('BLS-CPI', 'CBO'), ('HUD-95014',), ('HUD-95014',), ('SCC-DTT',),
-            ('RP-2026-35', 'FTB-RATES'), ('RP-2026-35', 'FTB-RATES'), ('SF-RENT-RULES',), ('CDI-TOOL',), ('CDI-RES',), ('RR-2023-2',)])
+            ('RP-2026-35', 'FTB-RATES'), ('RP-2026-35', 'FTB-RATES'), ('SF-RENT-RULES', 'HUD-94122'), ('CDI-TOOL',), ('CDI-RES',), ('RR-2023-2',)])
     ], caption='Sensitivity: after-tax wealth in 2076, in 2026 dollars', cls='num',
         note='Stock-return assumptions have no official source; the Treasury yield is linked as the risk-free reference and the historical S&P 500 series is academic (%s).' % flag('A02'))
     be = table(['Break-even question', 'Answer', 'Compare with', 'Official basis'], [
@@ -411,7 +409,7 @@ def build_projections():
     assum = table(['Line', 'Starting figure (2026)', 'Growth each year', 'Kind', 'Official basis'], [
         ['Property A market value', m(P['cup_value']), '4.0%', 'owner figure; growth is an assumption ' + flag('A01'), src('FHFA-SJ')],
         ['Property B market value', m(P['sf_value']), '4.0%', 'owner figure; growth is an assumption ' + flag('A01'), src('FHFA-SF')],
-        ['Assessed values', '%s (A), %s (B)' % (m(P['cup_assessed']), m(P['sf_assessed'])), 'inflation, capped at 2%; never above market value', 'owner figures; rule is official', src('BOE-P19')],
+        ['Assessed values', '%s (A), %s (B)' % (m(P['cup_assessed']), m(P['sf_assessed'])), 'California CPI, capped at 2%; never above market value', 'owner figures; rule is official. The statutory index is the California CPI (R&TC 51); future California CPI is unknown, so each path\'s inflation rate is a labelled proxy %s (official BOE factor for 2026 rolls: 1.02)' % flag('A11'), src('BOE-P19', 'RTC-51', 'BOE-LTA-2026-002')],
         ['Property-tax rate', '1.16360% (A), 1.18162182% (B)', 'held constant', 'official rates; fixed charges %s (A) and %s (B) derived from the bills %s' % (m(P['dc_cup']), m(P['dc_sf']), flag('U03')), src('SCC-RATES', 'SF-TAX')],
         ['Home and landlord insurance', m(P['ins_home']) + ' each', 'inflation + 1 point', 'owner estimate, not confirmed ' + flag('U01'), src('CDI-TOOL')],
         ['Water', '%s (A), %s (B, three units)' % (m(P['cup_water']), m(P['sf_water'])), 'inflation + 2 points; Property B +9% in 2027 and 2028', 'owner figures; growth is an assumption ' + flag('A09'), src('SFPUC')],
@@ -460,12 +458,23 @@ def build_blackswan():
     ], caption='Replay of the real 1976-2025 sequence from every possible starting year (wrapped around to fill 2027-2076)', cls='num',
         note='Each replay keeps the real year-to-year order, so inflation, home prices and stocks move together as they actually did. The spread is very wide because the order of good and bad years matters: a boom just after the sale helps the seller, a crash just after hurts. Ten years after the inheritance selling is behind renting in %d of the 50 histories, by as much as %s; after twenty years it is ahead in every one. The 1976-2025 period was an unusually good one for United States stocks, which is why the Depression and Japan paths below are shown as well.' % (RH['10']['wins']['rent'], m(-RH['10']['sell_minus_rent_worst'])))
     PD = {x['key']: x['summary'] for x in M['paths']}
-    named = table(['Path', 'Market value at inheritance', 'Tax if lived in / rented, first year', 'Live in it', 'Rent it out', 'Sell and reinvest', 'Best', 'Official basis'], [
-        [e(x['label']), m(x['summary']['fmv_T']), '%s / %s' % (m(x['summary']['tax_live_T']), m(x['summary']['tax_rent_T'])),
+    PV = M['provenance']
+    prov = table(['Series or construction', 'Provenance (what kind of source this is)', 'Official basis'], [
+        ['Inflation, every path', e(PV['infl']), src('BLS-CPI')],
+        ['Home-price changes: San Jose / San Francisco / California', e(PV['g_cup']) + '<br>' + e(PV['g_sf']) + '<br>' + e(PV['g_ca']), src('FHFA-SJ', 'FHFA-SF', 'FHFA-CA')],
+        ['Stock, bond and bill returns', e(PV['r_stock']) + ' ' + flag('S02'), src('TREASURY') + ' &middot; ' + src('DAMODARAN')],
+        ['National home prices 1929-1950 (Depression path)', e(PV['nat_re_early']) + ' ' + flag('S02'), src('BLS-CPI') + ' &middot; ' + src('DAMODARAN')],
+        ['Japan 1991-2020 series (Japan path)', e(PV['japan']) + ' ' + flag('S08'), src('FRED-JP')],
+        ['Proposition 13 assessment factor, every path', e(PV['prop13_factor']) + ' ' + flag('A11'), src('RTC-51', 'BOE-LTA-2026-002')],
+        ['The fifty replays and every named path', e(PV['paths']), src('BLS-CPI', 'FHFA-SJ')],
+    ], caption='Provenance: official statistics, one academic dataset, and hypothetical constructions are three different things and are never presented as one',
+        note='Everything on this page is a stress test built from the series above. The official columns link the government index the numbers come from; the stock, bond and bill returns come from an academic table and are labelled as such; the paths themselves are constructions and are not forecasts.')
+    named = table(['Path', 'Kind of path', 'Market value at inheritance', 'Tax if lived in / rented, first year', 'Live in it', 'Rent it out', 'Sell and reinvest', 'Best', 'Official basis'], [
+        [e(x['label']), e(x['kind_label']), m(x['summary']['fmv_T']), '%s / %s' % (m(x['summary']['tax_live_T']), m(x['summary']['tax_rent_T'])),
          m(x['summary']['real_live']), m(x['summary']['real_rent']), m(x['summary']['real_sell']), NAME[x['summary']['best']],
          (src('FRED-JP') if x['key'] == 'japan_at_T' else src('FHFA-SJ', 'BLS-CPI') + ' · ' + src('DAMODARAN'))]
         for x in M['paths']
-    ] + [['Baseline (constant rates)', m(B['fmv_T']), '%s / %s' % (m(B['tax_live_T']), m(B['tax_rent_T'])), m(B['real_live']), m(B['real_rent']), m(B['real_sell']), NAME[B['best']], src('FHFA-SJ', 'BLS-CPI')]],
+    ] + [['Baseline (constant rates)', 'Baseline assumption (constant rates), kept apart from the stress paths', m(B['fmv_T']), '%s / %s' % (m(B['tax_live_T']), m(B['tax_rent_T'])), m(B['real_live']), m(B['real_rent']), m(B['real_sell']), NAME[B['best']], src('FHFA-SJ', 'BLS-CPI')]],
         caption='Named paths (wealth in 2076, in 2026 dollars; inheritance in %d)' % T, cls='num',
         note='The Depression path uses national home-price data because no local index goes back that far (%s). Selling into stocks ends behind renting in two of the named paths: the 1929-1941 Depression sequence (renting %s against %s for selling) and Japan-style stagnation (renting %s against %s), the worse of the two. In the Japan path, had the proceeds been kept in savings instead of stocks, selling would have ended at %s against %s for renting (%s).' % (flag('S02'), m(PD['depression_at_T']['real_rent']), m(PD['depression_at_T']['real_sell']), m(PD['japan_at_T']['real_rent']), m(PD['japan_at_T']['real_sell']), m(JS_['real_sell']), m(JS_['real_rent']), flag('S08')))
     PATHS = {x['key']: x for x in M['paths']}
@@ -497,8 +506,8 @@ def build_blackswan():
         ['Change to Proposition 19', 'A voter measure would be needed. None of the fourteen state measures on the November 2026 ballot changes it.', 'A return to the old rule would mainly help Rent (no reassessment); the first-year tax would drop from %s to about %s.' % (m(B['tax_rent_T']), m(B['tax_before_T'])), src('SOS-RESULTS', 'BOE-P19')],
         ['Stricter rent rules', 'Statewide cap of 5% plus inflation (10% maximum) with an exemption for many single-family homes; San Francisco allows 60% of inflation on controlled units.', 'Lowers the Rent result for Property A if the exemption is lost, and limits Property B rent growth in every case.', src('DOJ-TPA', 'SF-RENT-RULES')],
     ], caption='Shocks that no price history captures')
-    body = ("""<p class="callout">This section is kept apart from the baseline on purpose. The baseline uses constant rates so that the three choices can be compared cleanly. Here nothing is constant: every path uses real recorded years, in their real order, for inflation, local home prices, stocks, bonds and bills.</p>"""
-            + rep + named + '<h2>Property A market value in 2026 dollars under six paths</h2>' + ch + stats + other + yr + yr2 + hist)
+    body = ("""<p class="callout">This section is kept apart from the baseline on purpose. The baseline uses constant rates so that the three choices can be compared cleanly. Here nothing is constant: every path uses real recorded years, in their real order, for inflation, local home prices, stocks, bonds and bills. Read the provenance table first: official statistics, the academic return dataset and the hypothetical constructions below are three different kinds of material.</p>"""
+            + prov + rep + named + '<h2>Property A market value in 2026 dollars under six paths</h2>' + ch + stats + other + yr + yr2 + hist)
     page('black-swan.html', 'Black swan section: non-constant growth and inflation over 50 years',
          'What happens to the decision when inflation, home prices and markets behave the way they really have: in bursts, busts and long flat stretches.', body)
 
@@ -940,6 +949,35 @@ def build_verification():
     t6 = table(['What was checked', 'What the official page said when it was opened', 'Result', 'Official page'],
                [[a, b_, c, d] for a, b_, c, d in x],
                caption='Fourth re-read, 2026-11-12 (session 0adc9b0a), on the official pages themselves')
+    f5 = [
+        ('Proposition 13 inflation factor (re-read 2026-11-13)',
+         'BOE LTA 2026/002 of 2026-01-13: "please prepare your 2026 assessment roll using an inflation factor of 1.02"; the CCPI rose 3.307 percent from August 2024 to August 2025 (October 2025 CCPI was not published due to the federal shutdown) and the increase is capped at 2 percent. R&amp;TC 51 (re-read the same day): the inflation factor is the October-to-October change in the California CPI and "in no event shall the percentage increase ... exceed 2 percent of the prior year\'s value".',
+         'Confirmed on the pages. The model\'s future factor is each path\'s inflation rate and is now explicitly labelled a proxy for the California CPI %s; the statutory rule and the official 2026 factor are quoted beside it (S5-P3).' % flag('A11'),
+         src('RTC-51', 'BOE-LTA-2026-002')),
+        ('HUD rent standards, ZIP 95014 and 94122 (re-read 2026-11-13)',
+         'FY2026 Small Area Fair Market Rents: 95014 - two-bedroom $4,440, three-bedroom $5,870, four-bedroom $6,390; 94122 - two-bedroom $3,310, three-bedroom $4,230, four-bedroom $4,380. HUD derives the standard from the 40th-percentile gross rent, adjusted.',
+         'Confirmed on the pages; the full bedroom-size tables read this time match every figure quoted on the site. The four-bedroom figure is now labelled a benchmark, not a verified rent for Property A %s, with the three-bedroom figure kept as the downside gate. The fiscal year 2027 lookup remains unread %s.' % (flag('U08'), flag('U09')),
+         src('HUD-95014', 'HUD-94122', 'HUD-SAFMR-INDEX')),
+        ('Baseline rent for the vacated third unit at Property B',
+         'No official page supplies a rent for the third unit. The brief says never infer a value, and the no-figures guide\'s own method rule says: do not invent a new tenancy, rent for a vacated space, title status or legal-unit status.',
+         'Corrected (S5-P1): the baseline counts no third-unit rent. The upside of letting it at the average of the two known unit rents now appears only as one labelled sensitivity scenario.',
+         src('SF-RENT-RULES', 'HUD-94122')),
+        ('Provenance of the Black swan series',
+         'The stock, bond and bill return series is an academic dataset (NYU Stern), not a government statistic; the CPI and house-price indexes are official (BLS, FHFA); the Japan path uses official foreign series through FRED.',
+         'Corrected (S5-P4): the Black swan page opens with a provenance table separating official statistics, the academic dataset and the hypothetical constructions, and every named path carries a Kind label.',
+         src('BLS-CPI', 'FHFA-SJ') + ' &middot; ' + src('DAMODARAN')),
+        ('Figures on the Suggestions page, Part 1',
+         'Model-derived figures must be generated from the model data rather than typed into the page text, so the review page cannot drift from the model.',
+         'Corrected (S5-P5): the HUD three-bedroom figure and the SALT cap amounts are now read from the model parameter set.',
+         src('HUD-95014', 'IRS-SCHED-A')),
+        ('Page text and menu after earlier merges',
+         'A conflict marker and a truncated duplicated sentence had been left in this page\'s own text; the Questions and Suggestions pages each appeared twice in the page menu; the source register carried a stray trailing period on the R&amp;TC 51 link.',
+         'Corrected 2026-11-13 (findings R32 to R34 on the Repo review page).',
+         src('RTC-51')),
+    ]
+    t7 = table(['What was checked', 'What the official page says (or why nothing can confirm it)', 'Result', 'Official page'],
+               [[a, b_, c, d] for a, b_, c, d in f5],
+               caption='Fifth pass, 2026-11-13 (session da3f2b99): direct re-read of the sources behind the corrected claims, and the corrections themselves')
     body = """
 <p class="callout">This page is the manual-review register for the whole site: one row per check, with the government page to open and re-read. Pass 1 was checked on 2026-11-11 (session faccd46d); Pass 2 re-opened the twelve core pages on 2026-11-12 (session e8636cac); subsequent same-day passes by sessions <code>3e79fc01</code>, <code>0adc9b0a</code>, and <code>a6ec5b1d</code> checked remaining official agency pages directly (leaving zero official agency excerpt entries in the register). Anything that cannot be confirmed from an agency page stays blank or labelled and carries a flag.</p>
 %s
@@ -947,8 +985,7 @@ def build_verification():
 %s
 <h2>Second independent re-read, 2026-11-12</h2>
 %s
-<<<<<<< HEAD
-<p class="note">What the s<p class="note">What the second pass did <em>not</em> re-open, and therefore does not claim to have re-checked on 2026-11-12: the inherited-property basis rules and Rev. Rul. 2023-2, the home-sale and capital-gain topics, the investment-income tax, Board of Equalization letter 2026/026, the Santa Clara County rate book, the homeowners\' exemption amount, the solar and net-metering material, the San Francisco rent-increase rules and the insurance comparison tool. Those rows stand on the 2026-11-11 pass and keep their links.</p>
+<p class="note">What the second pass did <em>not</em> re-open, and therefore does not claim to have re-checked on 2026-11-12: the inherited-property basis rules and Rev. Rul. 2023-2, the home-sale and capital-gain topics, the investment-income tax, Board of Equalization letter 2026/026, the Santa Clara County rate book, the homeowners\' exemption amount, the solar and net-metering material, the San Francisco rent-increase rules and the insurance comparison tool. Those rows stand on the 2026-11-11 pass and keep their links.</p>
 <h2>Third independent re-read, 2026-11-12 (session b724a7d8)</h2>
 %s
 <p class="note">The third pass (session b724a7d8) opened the pages listed in its own table and recorded what they said. One row could not be re-read today (the HUD documentation page is interactive and did not render its ZIP-level results in the fetch) and is labelled as such rather than re-marked confirmed. What the later passes did not re-open stands on the 2026-11-11 register and keeps its links for manual review.</p>
@@ -959,9 +996,11 @@ def build_verification():
 %s
 <h2>Full-page direct read of remaining official sources, 2026-11-12 (session a6ec5b1d)</h2>
 %s
+<h2>Fifth pass, 2026-11-13 (session da3f2b99): model and provenance corrections</h2>
+%s
 <p class="note"><strong>Coverage summary.</strong> Across the passes above, every official agency source in <a href="sources.html">Sources and method</a> has now been opened and read directly on its agency URL (only the non-government stock/bill dataset, Damodaran, remains labelled academic). The interactive CDI insurance survey and HUD FY2027 lookup require interactive form/spreadsheet access not resolved in automation, so those parcel values remain blank.</p>
 <p class="note"><strong>What this pass does not establish.</strong> Model outputs and projections are conditional scenarios built on the assumptions in the flags; no official page can verify a forecast. The automated checker (<a href="%s/blob/main/final/check.py">final/check.py</a>) proves only that every table row carries an official link, that dollar figures are rounded to $10, and that no personal identifier pattern appears (no fingerprint of unrounded owner figures is stored; that extra scan runs only with a private local file) - it does not prove that each link supports each cell. This register exists so every claim can be checked by hand against its link. People remain placeholders (the Transferor, the Inheritor); no names, addresses or parcel numbers appear anywhere.</p>
-""" % (t1, t2, t3, t4, tw3, render_verification(src, table, flag), t6, t5, REPO)
+""" % (t1, t2, t3, t4, tw3, render_verification(src, table, flag), t6, t5, t7, REPO)
     page('verification.html', 'Verification',
          'Verification passes (2026-11-11 register, four re-reads on 2026-11-12, and the full-page direct read): every official source read directly on its agency page, each check linked for manual review, and everything unconfirmable left blank and flagged.', body)
 
@@ -1084,6 +1123,8 @@ def build_questions():
 
 # ====================================================================== suggestions
 def build_suggestions():
+    # S5-P5: every model-derived figure on this page comes from model.json (P / B / sf_gap),
+    # never from a hand-typed literal; official published figures are quoted and linked.
     mod = [
         ['IMP-01', 'Interactive browser sensitivity sliders',
          'High impact / medium effort (JS only)',
@@ -1092,7 +1133,7 @@ def build_suggestions():
          src('FHFA-SJ', 'TREASURY')],
         ['IMP-02', 'Model P.L. 119-21 SALT cap &amp; 2030 reversion + Joint Filer toggle',
          'Medium impact / low effort',
-         'Show a side-by-side Single vs. Married Filing Jointly toggle (adjusting 3.8% NIIT from $200,000 to $250,000 MAGI and LTCG brackets) and explicitly model the P.L. 119-21 Schedule A SALT cap ($40,400 in 2026 reverting to $10,000 in 2030) vs. uncapped Schedule E rental property taxes.',
+         'Show a side-by-side Single vs. Married Filing Jointly toggle (adjusting 3.8%% NIIT from $200,000 to $250,000 MAGI and LTCG brackets) and explicitly model the P.L. 119-21 Schedule A SALT cap ($%s in 2026 reverting to $%s in 2030) vs. uncapped Schedule E rental property taxes.' % (format(P['salt_cap_2026'], ','), format(P['salt_cap_floor'], ',')),
          'Highlights why Live loses even more tax deductibility relative to Rent if Schedule A remains capped at $10,000 after 2029.',
          src('IRS-SCHED-A', 'IRS-TC559', 'RP-2026-35')],
         ['IMP-03', 'Inherited IRA / SECURE Act 10-year tax drag on cash',
@@ -1139,7 +1180,7 @@ def build_suggestions():
         ['GAP-02', 'Estate total &amp; prior spouse Form 706 portability (%s)' % flag('Q02'), 'Establishes cash vs. IRA mix against %s 2045 room and whether a second exclusion was preserved.' % m(B['exclusion_T'] - B['fmv_T']), 'Medium - CPA + attorney', 'Proposed - owner approval needed', src('IRS-ESTATE', 'IRS-FAQ-ESTATE')],
         ['GAP-03', 'Actual CDI comparison tool + broker quotes &amp; quake offer (%s, %s)' % (flag('U01'), flag('U02')), 'Replaces %s/yr placeholder with actual 95014 homeowners, 94122 3-unit DP-3 landlord, vacancy endorsement, and CEA earthquake quotes.' % m(P['ins_home']), 'Low - broker call + 5 min on CDI tool', 'Proposed - owner / broker', src('CDI-TOOL-APP', 'CDI-RES', 'CDI-EQ')],
         ['GAP-04', 'Santa Clara TRA bill lines, Cupertino water provider &amp; PG&amp;E PTO date (%s, %s)' % (flag('U03'), flag('U05')), 'Verifies parcel fixed charges, which of Cupertino\'s 3 water utilities serves Property A, and when 20-yr NEM 2.0 grandfathering expires.', 'Low - read utility &amp; tax bills', 'Proposed - owner', src('SCC-RATES', 'CUP-WATER', 'CPUC-NEM')],
-        ['GAP-05', 'Local property-manager rent opinion + bedroom confirmation &amp; appraisals (%s)' % flag('U08'), 'Benchmarks actual rent against HUD 4-BR (%s/mo) / 3-BR (%s/mo) and updates owner estimates (%s / %s).' % (m(P['cup_rent_month']), m(5870), m(P['cup_value']), m(P['sf_value'])), 'Medium - manager + appraiser', 'Proposed - owner approval needed', src('HUD-95014', 'FHFA-SJ')],
+        ['GAP-05', 'Local property-manager rent opinion + bedroom confirmation &amp; appraisals (%s)' % flag('U08'), 'Benchmarks actual rent against HUD 4-BR (%s/mo) / 3-BR (%s/mo) and updates owner estimates (%s / %s).' % (m(P['cup_rent_month']), m(P['cup_rent_month_3br']), m(P['cup_value']), m(P['sf_value'])), 'Medium - manager + appraiser', 'Proposed - owner approval needed', src('HUD-95014', 'FHFA-SJ')],
     ]
     t_gaps = table(['ID', 'Data-gathering step', 'Why it improves the decision', 'Effort', 'Status', 'Your decision (saved in this browser only)', 'Official basis'],
                    [r[:5] + [_sg(r[0])] + [r[5]] for r in data_gaps], caption='Data-gap items to gather before finalizing numbers')
@@ -1225,7 +1266,7 @@ def build_sources():
 <ul>
 <li><strong>One model.</strong> <a href="%s/blob/main/final/model.py">final/model.py</a> projects both homes year by year from 2026 to 2076 and compares three choices for Property A from the year of inheritance. It uses only the Python standard library.</li>
 <li><strong>Like-for-like comparison.</strong> Each choice has an investment account that receives every dollar the choice produces or costs, invested the same way. At each year-end the model works out what would be left if everything were sold and all taxes paid.</li>
-<li><strong>Property B is never inherited in the model.</strong> Its assessed value, basis and rent continue unchanged. It enters the comparison only through the third unit, which is let when the Inheritor moves to Property A.</li>
+<li><strong>Property B is never inherited in the model.</strong> Its assessed value, basis and rent continue unchanged. It enters the comparison only through the option of letting the third unit when the Inheritor moves to Property A: the baseline counts no rent for the third unit (nothing is inferred), and the letting upside appears only as one labelled scenario in the sensitivity table.</li>
 <li><strong>Property tax.</strong> Assessed values rise with inflation up to 2%% a year and never exceed market value. At inheritance Property A is set to market value, or to the Proposition 19 partial value if lived in.</li>
 <li><strong>Income tax.</strong> Yearly income at 24%% federal, 9.3%% California and the 3.8%% investment-income tax. One-off sales at 20%% + 3.8%% + 13.3%%. Depreciation taken on a rental is taxed back at 25%% federal on sale.</li>
 <li><strong>Non-constant paths.</strong> Real recorded years 1976-2025 are replayed in order from each possible start; named paths insert real crisis years into the baseline.</li>
