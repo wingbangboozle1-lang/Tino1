@@ -30,7 +30,7 @@ The decision: Property A (Cupertino, 95014, $3,100,000) will pass to the Inherit
 
 ## Risk is not a smooth line
 
-Inflation, house prices and stock returns do not compound evenly over 50 years. The Black swan page replays the real 1976-2025 record from each of its 50 possible starting years, and adds named crisis paths (1929-1941, 1970s stagflation, 1990 Japan, 2000 and 2008 crashes). Selling is ahead of renting in 43 of the 50 ten-year horizons and in 50 of the 50 twenty-year horizons; the worst ten-year case is behind by $2,069,690. Renting ends ahead in exactly two named paths: the Japan stagnation and the Depression. Staging the investment and holding a few years of spending in Treasury bills narrows that gap.
+Inflation, house prices and stock returns do not compound evenly over 50 years. The Black swan page replays the real 1976-2025 record from each of its 50 possible starting years, and adds named crisis paths (1929-1941, 1970s stagflation, 1990 Japan, 2000 and 2008 crashes). Selling is ahead of renting in 43 of the 50 ten-year horizons and in 50 of the 50 twenty-year horizons; the worst ten-year case is behind by $2,068,710. Renting ends ahead in exactly two named paths: the Japan stagnation and the Depression. Staging the investment and holding a few years of spending in Treasury bills narrows that gap.
 
 ## Before anything else
 
@@ -41,7 +41,7 @@ Inflation, house prices and stock returns do not compound evenly over 50 years. 
 
 ## Questions to settle before deciding
 
-The [Questions page](./questions.html) lists what must be answered first in two complementary sections: **Part 1** (known vs. unknown information, `Q01–Q18`, `U01–U08`, and concrete ways to discover each missing answer offline — trust inclusion, prior-spouse Form 706 portability, exact Santa Clara & SF tax bills, Cupertino's three water providers, PG&E solar interconnection date, actual broker insurance quotes, SF Rent Board registration) and **Part 2** (a reading-dated decision register grouped into open, unknowable, and answered rows). Three open questions matter far more than the rest:
+The [Questions page](./questions.html) lists what must be answered first in two complementary sections: **Part 1** (known vs. unknown information, `Q01–Q18`, `U01–U10`, the `S5-Q1–S5-Q7` evidence checklist carried from the independent audit, and concrete ways to discover each missing answer offline — trust inclusion, prior-spouse Form 706 portability, exact Santa Clara & SF tax bills, Cupertino's three water providers, PG&E solar interconnection date, actual broker insurance quotes, SF Rent Board registration) and **Part 2** (a reading-dated decision register grouped into open, unknowable, and answered rows). Three open questions matter far more than the rest:
 
 1. **What the trust says about the home** — is Property A inside the Transferor's gross estate? Without the basis reset, selling falls from $9,747,210 to $6,428,140. (Q01)
 2. **Whether the Inheritor wants to live there** — a personal choice with a known price ($7,487,570) and a one-year move-in limit that has no exception.
@@ -57,7 +57,7 @@ See the [Process page](./process.html): what to do before the death, in the firs
 
 ## What is verified, and what is not
 
-- Every table row on the site links to an official page; across the `2026-11-11` pass and the `2026-11-12` passes (`e8636cac`, `3e79fc01`, `0adc9b0a`, and `a6ec5b1d`), every official agency source in [`final/sources.py`](./final/sources.py) has been opened and read directly on its agency URL (leaving **zero** official `excerpt` sources; read-extent notes and the interactive CDI/HUD-FY27 tools that require interactive lookup are recorded on the [Verification page](./verification.html)).
+- Every table row on the site links to an official page; across the `2026-11-11` pass, the `2026-11-12` passes (`e8636cac`, `3e79fc01`, `0adc9b0a`, and `a6ec5b1d`) and the `2026-11-13` passes (`767b3f51`, `da3f2b99`, `f8de1d0b`, `831d7baf`), every official agency source in [`final/sources.py`](./final/sources.py) has been opened and read directly on its agency URL (leaving **zero** official `excerpt` sources; read-extent notes and the interactive CDI/HUD-FY27 tools that require interactive lookup are recorded on the [Verification page](./verification.html)).
 - Owner-supplied figures (market values, rents, utility bills, insurance estimates) cannot be confirmed on an official page and are labelled (P03). Projections are conditional scenarios (A01-A11).
 - Open items are on the [Flagged for Review page](./flagged.html): the trust terms and basis (Q01), the estate contents (Q02), the tax rate area (U03), the Proposition 19 allowance after 2027-02-16 (U04), the solar tariff and water provider (U05), HUD 2027 rents (U09), and the repository's public history (P01/P02).
 

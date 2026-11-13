@@ -106,7 +106,8 @@ def load_hist():
         H[y] = dict(infl=infl, g_cup=g_sj, g_sf=g_sf, g_ca=g_ca,
                     r_stock=float(ret[y]['sp500_total_return_pct']) / 100,
                     r_bond=float(ret[y]['tbond_10y_return_pct']) / 100,
-                    r_bill=float(ret[y]['tbill_3m_pct']) / 100)
+                    r_bill=float(ret[y]['tbill_3m_pct']) / 100,
+                    f_p13=FACTORS[y])   # official BOE R&TC 51 factor for this roll year
     # 1929-1950: national data only (no local index exists that far back)
     N = {}
     for y in range(1929, 1951):
@@ -127,6 +128,20 @@ def load_hist():
     return H, N, J
 
 
+def load_factors():
+    """Official BOE R&TC 51 inflation factors by assessment roll year, 1976-2026.
+
+    Source: final/data/hist_prop13_factor.csv (Letter to Assessors 2026/002 enclosure,
+    cross-checked against LTA 2020/067 and LTA 2021/065). Used only where a real
+    assessment year exists - the historical replays. The baseline after 2026 and the
+    Japan / Depression counterfactuals have no California factor and keep the labelled
+    proxy (flag A11).
+    """
+    return {int(r['year']): float(r['factor'])
+            for r in csv.DictReader(open(os.path.join(HERE, 'data', 'hist_prop13_factor.csv')))}
+
+
+FACTORS = load_factors()
 HIST, NAT, JPN = load_hist()
 KEYS = ('infl', 'g_cup', 'g_sf', 'g_ca', 'r_stock', 'r_bond', 'r_bill')
 
@@ -211,9 +226,11 @@ def simulate(path, p=P):
             cpi *= 1 + e['infl']
             Vc *= 1 + e['g_cup']
             Vs *= 1 + e['g_sf']
-            f = 1 + min(0.02, max(e['infl'], 0.0))            # Prop 13 annual factor.  Statute (R&TC 51) indexes by
-            #   the CALIFORNIA CPI capped at 2%; future California CPI is unknowable, so each path's inflation rate
-            #   stands in as a LABELLED PROXY (flag A11).  Official BOE factor for 2026: 1.02 (LTA 2026/002).
+            # Proposition 13 annual factor (R&TC 51): replayed real years carry the official
+            # BOE factor from the LTA 2026/002 enclosure (flag A11); where no California factor
+            # exists - the baseline after 2026 and the Japan / Depression counterfactuals -
+            # the statutory structure applies with the path's inflation as a LABELLED PROXY.
+            f = e['f_p13'] if 'f_p13' in e else (1 + min(0.02, max(e['infl'], 0.0)))
             fby_c *= f
             fby_s *= f
             if base_L is not None:
@@ -492,7 +509,7 @@ def main():
         cpi_early='Official statistics: BLS CPI (1929-1950)',
         nat_re_early='ACADEMIC dataset (Damodaran national real-estate returns, 1929-1950) - no official local index exists that far back',
         japan='Official series via FRED: BIS residential property prices, OECD CPI; Nikkei 225 PRICE index (dividends excluded)',
-        prop13_factor='Statutory index: California CPI capped at 2% (R&TC 51). Future California CPI is unknowable, so each path\'s inflation rate is used as a LABELLED PROXY (flag A11). Official BOE factor for 2026: 1.02 (LTA 2026/002).',
+        prop13_factor='Statutory index: California CPI capped at 2% (R&TC 51). Replayed years 1976-2025 use the official BOE factor table (LTA 2026/002 enclosure; cross-checked against LTA 2020/067 and 2021/065). Future California CPI is unknowable, so baseline years after 2026 and the Japan/Depression counterfactuals use each path\'s inflation as a LABELLED PROXY (flag A11). Official BOE factor for 2026: 1.02.',
         paths='The fifty replays and every named path are HYPOTHETICAL constructions from the series above: illustrative stress tests, not forecasts.',
     )
     os.makedirs(os.path.join(HERE, 'out'), exist_ok=True)
