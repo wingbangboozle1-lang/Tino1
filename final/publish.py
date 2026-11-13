@@ -1,15 +1,20 @@
 #!/usr/bin/env python3
-"""Declare and generate the privacy-first GitHub Pages file boundary.
+"""Declare and generate the GitHub Pages file boundary.
 
 Run:
   python3 final/publish.py            # update final/published.txt and _config.yml
   python3 final/publish.py --check    # fail if either file is stale
 
-Only the generic root landing page and the figure-free guide under
-privacy-site/public/ are in the public allowlist. Household-specific numeric
-analysis and earlier editions are deliberately excluded from Pages: rounded
-values are not anonymized, and this repository is public. The allowlist is
-checked against the actual Jekyll output in CI by both publication checkers.
+The published site is the decision dashboard and its subpages (the rounded-figures
+analysis the owner's brief requires to be reported for clarity, with people kept as
+placeholders and every owner or model dollar figure rounded to the nearest $10),
+together with the no-figures general guide under privacy-site/public/. This boundary
+settles the open publication decisions G01/G02 from the owner's brief: costs and
+numbers are reported rounded to $10, personal information stays anonymised, and
+rounding is labelled disclosure-minimisation rather than anonymisation. The
+repository and its history remain public and are described as such on the landing
+page. The allowlist is checked against the actual Jekyll output in CI by both
+publication checkers.
 """
 import os
 import sys
@@ -17,7 +22,39 @@ import sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 
-LANDING = ['index.html']
+# The decision dashboard at the root: landing, the analysis pages, the generated
+# assets, and the redirect stubs that keep older addresses working.
+SITE = [
+    'index.html',
+    'summary.html',
+    'decision.html',
+    'questions.html',
+    'suggestions.html',
+    'projections.html',
+    'black-swan.html',
+    'process.html',
+    'law.html',
+    'estate-cash.html',
+    'costs.html',
+    'flagged.html',
+    'sources.html',
+    'verification.html',
+    'requirements.html',
+    'review.html',
+    'versions.html',
+    'style.css',
+    'app.js',
+    # redirect stubs written by final/build.py for retired addresses
+    'properties.html',
+    'scenarios.html',
+    'taxes.html',
+    'estate-tax.html',
+    'methodology.html',
+    'pending-changes.html',
+    'steps.html',
+    'mirror-archived-2026-11-10.html',
+]
+# The figure-free general guide: same rules and process, invented teaching examples.
 GUIDE = [
     'privacy-site/public/index.html',
     'privacy-site/public/decision.html',
@@ -34,12 +71,12 @@ GUIDE = [
 ]
 
 # This is the public output boundary, not a list of all tracked or internal files.
-ALLOW = set(LANDING) | set(GUIDE)
-TITLE = 'Privacy-first inheritance decision guide'
+ALLOW = set(SITE) | set(GUIDE)
+TITLE = 'Two-home inheritance analysis - decision dashboard'
 
 
 def config(entries):
-    """Exclude every root entry except the safe landing and privacy-site guide.
+    """Exclude every root entry except the published site and the privacy-site guide.
 
     privacy-site/ must remain traversable so that its public/ subdirectory can be
     published; its builder, source registry and other files are excluded one by one.
@@ -78,16 +115,13 @@ def main():
             stale.append(os.path.relpath(path, ROOT))
             if not check:
                 open(path, 'w', encoding='utf-8').write(text)
-    if check:
-        if stale:
-            print('::error::privacy-first publication list is out of date: %s (run python3 final/publish.py)' % ', '.join(stale))
-            return 1
-        print('OK - _config.yml and final/published.txt match the privacy-first allowlist of %d files' % len(ALLOW))
-        return 0
-    print('updated %d privacy-first published file(s); rewrote %s' % (
-        len(ALLOW), ', '.join(os.path.relpath(path, ROOT) for path, _ in targets)))
-    return 0
+    if stale and check:
+        print('STALE - regenerate with: python3 final/publish.py')
+        for name in stale:
+            print(' ', name)
+        sys.exit(1)
+    print('OK - _config.yml and final/published.txt match the allowlist of %d files' % len(ALLOW))
 
 
 if __name__ == '__main__':
-    sys.exit(main())
+    main()

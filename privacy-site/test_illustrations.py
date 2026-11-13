@@ -85,13 +85,17 @@ class PublicationTests(unittest.TestCase):
         repo=here.parent
         with tempfile.TemporaryDirectory() as folder:
             root=Path(folder)
-            # Fixture mirrors the privacy-only allowlist: generic root landing plus
-            # the no-household-figures guide. Numeric household pages are not allowed.
+            # Fixture mirrors the reviewed allowlist: the rounded-figures decision
+            # dashboard at the root plus the no-figures general guide. The boundary
+            # settles the owner brief's open publication decisions G01/G02: costs and
+            # numbers are published rounded to $10 for clarity, people stay
+            # placeholders, and rounding is labelled disclosure-minimisation.
             names=(repo/'final'/'published.txt').read_text().split()
             self.assertIn('index.html',names)
             self.assertIn('privacy-site/public/index.html',names)
-            self.assertNotIn('summary.html',names)
-            self.assertNotIn('decision.html',names)
+            self.assertIn('summary.html',names)
+            self.assertIn('decision.html',names)
+            self.assertIn('black-swan.html',names)
             for name in names:
                 dst=root/name
                 dst.parent.mkdir(parents=True,exist_ok=True)

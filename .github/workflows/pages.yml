@@ -1,4 +1,4 @@
-name: Validate the privacy-first Pages boundary
+name: Validate the published Pages boundary
 on:
   pull_request:
   push:
@@ -25,7 +25,7 @@ jobs:
           python3 final/check.py .
       - name: Build the site the way GitHub Pages will
         run: jekyll build --trace
-      - name: Verify that Jekyll publishes only the privacy-first allowlist
+      - name: Verify that Jekyll publishes exactly the reviewed allowlist
         run: |
           python3 final/check_published.py _site
           python3 privacy-site/check_published.py _site
