@@ -60,3 +60,9 @@ Other registry sources retain their earlier 2026-11-12 per-source checked dates;
 3. Local fee and rental-law application, future law, long-run appreciation/inflation and future investment returns are not confirmed. The black-swan illustrations are labeled synthetic and historical episodes are context, not assigned probabilities.
 4. No personal “best path” is certified. The public recommendation is conditional; a secure private analysis requires verified inputs and qualified professional review.
 5. Pages deployment status and actual Jekyll output remain pending until the PR checks and post-merge Pages build complete.
+
+## Current-main synchronization and revalidation
+
+While PR #79 was open, `main` advanced from the assigned base `551179b` to `11cf93c` through PRs #73, #74 and #77. The new main-line coordination entries showed those sessions closed. I merged current `origin/main` into the same assigned branch, preserving their records and the `owner-analysis-2026/` directory; the latter is generated into the Jekyll exclusion list and remains outside Pages. The root landing changes merged with the newer `final/build.py` changes without discarding them. The Pages allowlist remains exactly 13 files.
+
+After synchronization, local validation passed again: `privacy-site/check.py` (11 pages, 318 linked rows), 8 unit tests, `final/publish.py --check` (13 files), `final/check.py .` (25 pages, 938 rows, 2,447 links, 2,374 displayed amounts rounded to $10, 51 model paths, secretless six-digit scan clean against 14,833 model values), and both output checkers against a scratch fixture. The external unrounded-owner-value scan remains skipped because the private input file was not supplied. The real GitHub Pages Jekyll build, PR CI, and deployment check have not yet completed.

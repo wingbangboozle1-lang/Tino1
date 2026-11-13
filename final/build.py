@@ -206,7 +206,9 @@ def build_index():
         kpi('Property A at inheritance (%d)' % T, m(B['fmv_T']), 'from %s today at 4.0%% a year (assumption)' % m(P['cup_value'])),
         kpi('Property A tax: today / if lived in / if rented', '%s / %s / %s' % (m(P['cup_tax_2025']), m(B['tax_live_T']), m(B['tax_rent_T'])), 'per year; first year after inheritance'),
         kpi('Property B tax advantage kept by not selling', m(sf_gap) + ' a year', 'difference between tax on market value and on the current assessed value'),
-        kpi('Federal estate-tax room for cash in %d' % T, m(B['exclusion_T'] - B['fmv_T']), 'projected exclusion %s minus Property A; per transferor' % m(B['exclusion_T'])),
+        kpi('Federal estate-tax room for cash in %d, in %d dollars' % (T, T), m(B['exclusion_T'] - B['fmv_T']),
+            'projected exclusion %s minus Property A; per transferor. That is about %s in 2026 dollars - compare a cash figure measured today against the second number, not the first'
+            % (m(B['exclusion_T']), m((B['exclusion_T'] - B['fmv_T']) / B['cpi_T']))),
         kpi('California and local inheritance tax', 'None', 'no California estate or inheritance tax return for deaths since 2005'),
     ])
     opts = ''.join('<button type="button" data-t="%s"%s>%s</button>' % (k, ' class="on"' if int(k) == T else '', k) for k in sorted(by))
@@ -252,6 +254,67 @@ def build_index():
         m(B['fbyv_T']), m(B['taxable_live_T']), m(B['tax_before_T']), m(B['tax_live_T']),
         m(B['real_sell'] - B['real_live']),
         m(B['real_sell'] - M['sensitivity'][-1]['real_sell']))
+    # ---- what would overturn the ranking, and what is cheaper to settle now than in 2045 ----
+    # Each lever is the model's own break-even point, so this table cannot drift from the pages.
+    # The three answers that no model can supply are listed beside them, because they are the
+    # ones that actually decide the outcome (flags Q01, Q06, Q15).
+    overturn = table(
+        ['Lever', 'Baseline assumption', 'What it would take to make renting better than selling', 'How to settle it', 'Official basis'],
+        [
+            ['Growth of Property A', '4.0%% a year (assumption %s)' % flag('A01'),
+             'Home prices rising more than %s a year on average to 2076. The real 1976-2025 record for this area was 6.71%% a year, so this is possible, not remote.' % pc(BE['g_cup_rent_vs_sell']),
+             'An appraisal now settles the starting value; the growth rate stays an assumption and is re-run at the decision date.',
+             src('FHFA-SJ')],
+            ['Return on the reinvested proceeds', '7.0%% a year on stocks (assumption %s)' % flag('A02'),
+             'A stock return below %s a year on average. In savings or Treasury bills (%s a year) renting already wins, which is why the plan says not to park the money.' % (pc(BE['r_stock_rent_vs_sell']), pc(P['r_bill'])),
+             'Nothing to discover: this is a choice about risk, not a missing fact.',
+             src('TREASURY', 'DAMODARAN')],
+            ['Rent Property A would command', 'HUD four-bedroom small-area rent for ZIP 95014, %s a month (assumption %s)' % (m(P['cup_rent_month']), flag('A07')),
+             'Rent above about %s a month to 2076. That is far above the HUD benchmark, and the bedroom count is unconfirmed (%s).' % (m(BE['rent_month_rent_vs_sell']), flag('U08')),
+             'A written rent opinion from a local manager, obtained privately. It does not need the address on this site.',
+             src('HUD-95014')],
+            ['Is the home in the Transferor gross estate?', 'Assumed yes, so the basis resets (flag %s)' % 'Q01',
+             '<strong>Not a sensitivity: this can reverse the entire plan.</strong> If the trust sits outside the gross estate there is no basis reset and a prompt sale is taxed on decades of gain, which costs about %s of 2026-dollar wealth.' % m(B['real_sell'] - M['sensitivity'][-1]['real_sell']),
+             '<strong>Settle first.</strong> An estate attorney reads the trust and writes one paragraph. A legal fee now is small against the amount at stake.',
+             src('RR-2023-2', 'IRS-FAQ-INHERIT')],
+            ['Does the parent-child test pass?', 'Assumed yes (flag %s)' % 'Q06',
+             'If the relationship does not meet the definitions, the Proposition 19 relief is lost and the lived-in path becomes materially worse.',
+             'Confirm the relationship against the Board of Equalization definitions. No names need to be published.',
+             src('BOE-LTA-2026-026', 'BOE-PUB-800-1')],
+            ['Is Property A the Transferor principal residence?', 'Assumed yes (flag %s)' % 'Q15',
+             'If it is not, there is no family-home relief at all and the lived-in path loses its only tax advantage.',
+             'Read the homeowners exemption on the Transferor bill, privately.',
+             src('BOE-HOX', 'RTC-63.2')],
+        ],
+        caption='What would change the answer, and what no amount of modelling can settle',
+        note='The first three rows are the model break-even points, computed by the same run that produces every other figure on this page. The last three are not sensitivities at all: they are the facts that decide whether the tax rules assumed here apply, and each one costs one letter or one document to settle. Flags Q01, Q06 and Q15 are open until then.')
+
+    before = table(
+        ['Before the inheritance (now to %d)' % (T - 1), 'Why it cannot wait until %d' % T, 'Cost of doing it now', 'Official basis'],
+        [
+            ['Have the trust read, and get the gross-estate answer in writing (%s)' % flag('Q01'),
+             'It decides the basis reset, and the basis reset is most of the reason selling wins. It also decides whether a Form 706 is needed at all.',
+             'One attorney consultation. Nothing on this site needs to be published to answer it.',
+             src('RR-2023-2', 'IRS-FAQ-INHERIT')],
+            ['Ask whether a Form 706 was filed for a predeceased spouse (%s)' % flag('Q02'),
+             'A portability election can sometimes still be made up to the fifth anniversary of the first death. Once the window is gone it cannot be reopened, and the amount at stake is a second exclusion.',
+             'Locate one filed return, or ask the preparer. This is the only item on the site with a deadline that may already be running.',
+             src('IRS-FAQ-ESTATE', 'RP-2026-35')],
+            ['Record the monthly figures as they change (water, electricity, insurance, rent)',
+             'This site uses the current figures. A written record of the next ten years replaces the owner estimates with observed numbers, and observed numbers are what a lender, an insurer and an appraiser ask for.',
+             'A spreadsheet. Do not publish it.',
+             src('CDI-RPI', 'SFPUC')],
+            ['Get one real insurance quote for each home (%s)' % flag('U01'),
+             'The premium is the weakest number on the site. It is the owner estimate, and no official page publishes a ZIP-level premium. Tripling it does not change the ranking, but a real quote replaces an assumption.',
+             'One broker call per property. Ask for a landlord policy on the three-unit building as well.',
+             src('CDI-TOOL', 'CDI-EQ')],
+            ['Read the bills for the things that are already knowable (the solar interconnection date, the tax rate area, which home has the homeowners exemption)',
+             'These are flags %s, %s and %s. Each one fixes a number that is currently derived rather than read, and each takes minutes.' % (flag('U05'), flag('U03'), flag('Q18')),
+             'Open three documents, privately.',
+             src('CPUC-NEM', 'SCC-RATES', 'BOE-HOX')],
+        ],
+        caption='Decisions that are cheaper and safer to settle before the inheritance than after it')
+
     chart = bars([(NAME[k], B['real_' + k], COL[k]) for k in ('sell', 'rent', 'live')])
     links = ''.join('<a class="card" href="%s"><b>%s</b><span>%s</span></a>' % x for x in [
         ('decision.html', 'Decision', 'Live, rent or sell: numbers, sensitivities and break-even points'),
@@ -272,6 +335,8 @@ def build_index():
     body = """
 <section class="kpis">%s</section>
 <h2>Best plan and why - conditional on the assumptions in the flags</h2>%s
+<h2>What would change the answer</h2>%s
+<h2>What to settle before %d, and why it cannot wait</h2>%s
 <h2>After-tax wealth in 2076, in 2026 dollars (baseline, inheritance in %d)</h2>%s
 <p class="note">Wealth counts only what differs between the choices: Property A itself, every cash flow it causes, and rent from the Inheritor's vacated unit in Property B when the Inheritor moves to Property A. The two units already rented in Property B are the same in all three choices and are left out. All figures assume everything is sold and taxed at the end so that the choices can be compared like for like.</p>
 <h2>Dashboard</h2>
@@ -282,7 +347,7 @@ def build_index():
 <h2>The two homes are not the same case</h2>%s
 <p class="callout"><strong>Looking for the version with no household figures?</strong> A separate <a href="privacy-site/public/index.html">no-figures decision guide</a> publishes the same rules, process and decision framework without any of this household's numbers - every illustration there is invented for teaching. This summary page carries the rounded (nearest $10) figures the owner asked to see in the decision analysis.</p>
 <h2>Sections</h2><div class="cards">%s</div>
-""" % (cards, plan, T, chart, opts, dash, flag('P03'), diff, links)
+""" % (cards, plan, overturn, T - 1, before, T, chart, opts, dash, flag('P03'), diff, links)
     page(HOME, 'Executive summary',
          'Property A (Cupertino, 95014) will pass to the Inheritor through a trust some time around 2040 to 2050. Property B (San Francisco, 94122) is already owned by the Inheritor. This site works out, with official sources on every table row, whether to live in Property A, rent it out, or sell it and reinvest.', body)
 
