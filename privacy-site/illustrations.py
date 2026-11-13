@@ -121,3 +121,80 @@ def ledger(gross=36000, net_return=.05, house_growth=.03, years=30):
 def threshold(year, rate):
     """Arithmetic scenario, NOT statutory CPI indexing or an IRS future amount."""
     return 15480000*(1+rate)**(year-2027)
+
+
+# Annual change in the CPI-U (U.S. city average, all items), percent, copied from
+# the BLS historical table linked in research.json ('cpi'). These are OFFICIAL
+# observations, not assumptions and not a forecast. Transcribed once, checked by
+# test_illustrations.py against the published decade ranges, and never extrapolated.
+CPI_ANNUAL = {
+    1970: 5.7, 1971: 4.4, 1972: 3.2, 1973: 6.2, 1974: 11.0, 1975: 9.1,
+    1976: 5.8, 1977: 6.5, 1978: 7.6, 1979: 11.3, 1980: 13.5, 1981: 10.3,
+    1982: 6.2, 1983: 3.2, 1984: 4.3, 1985: 3.6, 1986: 1.9, 1987: 3.6,
+    1988: 4.1, 1989: 4.8, 1990: 5.4, 1991: 4.2, 1992: 3.0, 1993: 3.0,
+    1994: 2.6, 1995: 2.8, 1996: 3.0, 1997: 2.3, 1998: 1.6, 1999: 2.2,
+    2000: 3.4, 2001: 2.8, 2002: 1.6, 2003: 2.3, 2004: 2.7, 2005: 3.4,
+    2006: 3.2, 2007: 2.8, 2008: 3.8, 2009: -0.4, 2010: 1.6, 2011: 3.2,
+    2012: 2.1, 2013: 1.5, 2014: 1.6, 2015: 0.1, 2016: 1.3,
+}
+
+
+def cpi_decades(values=None):
+    """Plain arithmetic over the official annual CPI-U changes.
+
+    Returns one row per decade plus an overall row. Nothing here is a forecast:
+    the point is only to show that a single constant rate is a simplification.
+    """
+    values = CPI_ANNUAL if values is None else values
+
+    def block(label, years):
+        series = [values[y] for y in years]
+        return dict(label=label, count=len(series), low=min(series),
+                    high=max(series), mean=sum(series) / len(series),
+                    at_least_5=sum(1 for v in series if v >= 5),
+                    below_2=sum(1 for v in series if v < 2))
+
+    years = sorted(values)
+    rows = []
+    for start in range(1970, 2020, 10):
+        chunk = [y for y in years if start <= y < start + 10]
+        if chunk:
+            rows.append(block(f'{start}s', chunk))
+    rows.append(block(f'{years[0]}–{years[-1]} total', years))
+    return rows
+
+
+def cpi_extremes(values=None, threshold=8.0):
+    """Official years at or above a threshold, and any negative years."""
+    values = CPI_ANNUAL if values is None else values
+    high = [y for y in sorted(values) if values[y] >= threshold]
+    negative = [y for y in sorted(values) if values[y] < 0]
+    return high, negative
+
+
+def cpi_display_rows(values=None):
+    """Display rows for the official CPI table. Formatting only; no new numbers."""
+    values = CPI_ANNUAL if values is None else values
+    negative = [y for y in values if values[y] < 0]
+
+    def signed(x, places):
+        return ('+' if x >= 0 else '−') + f'{abs(x):.{places}f}%'
+
+    rows = []
+    for r in cpi_decades(values):
+        label = r['label']
+        if label.endswith('s'):
+            start = int(label[:4])
+            neg = len([y for y in negative if y // 10 * 10 == start])
+        else:
+            neg = len(negative)
+        five = 'none' if r['at_least_5'] == 0 else str(r['at_least_5'])
+        if r['below_2'] == 0:
+            under = 'none'
+        elif neg:
+            under = f"{r['below_2']} (1 is a deflation year)"
+        else:
+            under = str(r['below_2'])
+        rows.append((label, str(r['count']), signed(r['low'], 1), signed(r['high'], 1),
+                     signed(r['mean'], 2), five, under))
+    return rows
