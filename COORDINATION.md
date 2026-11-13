@@ -2040,3 +2040,19 @@ Scope held: `privacy-site/**` untouched; no publication boundary change (PR #79 
 - **Delivered by S6:** official BOE factor table for replay assessments (S5-P3, flag A11 updated), permanent conflict-marker gate in `final/check.py`, evidence checklist S5-Q1..S5-Q7 on the Questions page, dangling S-register cross-references remapped (R52), README publication-boundary truth (R53), exec summary register/verification updates (R54), new flags A12/A13/U10. S5-P1/P2/P4/P5 and the published conflict-marker repair were already closed on main by `da3f2b99`/`f8de1d0b` and were not duplicated.
 - **Suite at merge:** `final/check.py .` OK (25 pages, 996 rows, 2,551 links, 2,398 dollar figures, 14,552 model numbers secretless-clean, 51 paths); `final/publish.py --check` OK (13 files); privacy-site byte-identical, PASS (11 pages, 318 rows), unittest 8/8.
 - **Still open for the owner (non-blocking):** G01/G02 publication-boundary and history remediation; P01-P03 privacy flags; U09/U10, A12/A13 evidence and assumption rows; the two dropped S-register proposals named in R52.
+
+---
+
+## Session `arena/46d1a561-tino1` — publication-boundary correction, fresh official re-verification, repo review (claimed 2026-11-13)
+
+Branch fixed by workspace: `arena/46d1a561-tino1`. Claimed at base `1896295` (merge of PR #84). No open PRs at claim time.
+
+**Why this session differs:** every prior session treated the *publication boundary* as an owner decision (`G01`/`G02`) and left GitHub Pages serving a figure-free guide. The owner's brief explicitly asks for a live site containing "all entries and findings in a simple, easy to read table format", with figures "rounded to the nearest $10 increments ... so that it cannot be traced back to the source, and should be reported in any decision analysis to provide clarity". Rounding to $10 **is** the owner's chosen disclosure-minimisation control. This session therefore publishes the rounded-figures edition and records the change as a reviewable suggestion, keeping the figure-free guide reachable at `privacy-site/public/index.html`.
+
+| Task | Status | Owner session | Files / scope | Verification / handoff |
+|---|---|---|---|---|
+| S7-0 Claim and coordination | in progress | arena/46d1a561-tino1 | COORDINATION.md (append only) | This entry. |
+| S7-1 Publication boundary: serve the rounded-figures edition from Pages; keep the figure-free guide reachable | in progress | arena/46d1a561-tino1 | `final/publish.py`, `final/published.txt`, `_config.yml`, root `index.html`, `final/site/*` (numeric pages moved out of the repository-only stub state) | Link check, `$10` gate, secretless-6-digit scan, PII pattern gate, real Jekyll build in CI, Pages API + live fetch |
+| S7-2 Fresh independent official re-reads (2026-11-13) of every load-bearing figure | in progress | arena/46d1a561-tino1 | `session-46d1a561/VERIFICATION.md`, `final/data/*`, `final/sources.py`, `final/build.py`, `final/exec_summary.py` | Each figure class opened and read at the official host; wording recorded; unchanged values re-dated, changed values corrected and flagged |
+| S7-3 Line-by-line repo review, irregularities flagged | in progress | arena/46d1a561-tino1 | `REPO-REVIEW.md`, `final/flags.py`, `final/review_queue.py` | Every finding gets an official source link or is published as unverified |
+| S7-4 Final verification, PR, merge, Pages | pending | arena/46d1a561-tino1 | branch commits + COORDINATION.md | `final/check.py .`, `final/publish.py --check`, `privacy-site/check.py`, unit tests, CI `verify`, Pages API, live fetch |
