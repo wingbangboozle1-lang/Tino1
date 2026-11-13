@@ -1838,6 +1838,14 @@ Base `551179b` (= origin/main, PR #72 merge). No open PRs and no active claims o
 - Publication: no change to the published set (39 files). `final/publish.py --check` passes; `_config.yml` gained one exclude line for `owner-analysis-2026`. Household projections are not published; the owner's privacy decision (G01/G02, history remediation) is still required before any household numeric page changes.
 - O4 Pages publication and merge: PR from `arena/022b1ea7-tino1` to `main` is limited to this folder, `_config.yml`, and this board entry. Merge result and PR link are recorded in the PR.
 
+### arena/022b1ea7-tino1 merge record (2026-11-13 UTC)
+
+- PR: https://github.com/wingbangboozle1-lang/Tino1/pull/74 (`arena/022b1ea7-tino1` → `main`), merged with `gh pr merge 74 --merge` at 2026-11-13T06:49:29Z as merge commit `e4f7d29`.
+- Verification: required `verify` check passed on the PR head `801e0fe` (run 43381167246). Pages API reports `built` for `e4f7d29` (created 2026-11-13T06:49:30Z) at `https://wingbangboozle1-lang.github.io/Tino1/`; the live URL was not opened from this sandbox.
+- Scope merged: `owner-analysis-2026/**` (excluded from Pages), `_config.yml` (one exclude line), this board. Published set unchanged at 39 files.
+- Open for the owner: privacy decision on household-derived pages (G01/G02, history remediation); repair, Cupertino rent, water provider and vacancy inputs; historical CPI chunks 2–4; official county-level FHFA HPI files; Japan residency question. Full list in `owner-analysis-2026/FLAGS.md`.
+- Household projections were computed privately outside the repository; they are not committed.
+
 ---
 
 ## Session `arena/f8de1d0b-tino1` — independent re-verification, dashboard landing page, suggestions review path, integration (claimed 2026-11-13 UTC)
