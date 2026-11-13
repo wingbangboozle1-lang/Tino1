@@ -19,6 +19,7 @@
 "rate_sf": 0.0118162182,
 "hox": 7000,
 "p19_cap": 1044586,
+"p19_undone": false,
 "excl_2026": 15000000,
 "excl_2027": 15480000,
 "estate_rate": 0.4,
@@ -6461,6 +6462,55 @@
 }
 },
 {
+"label": "Insurance scaled from the official statewide average premium per dollar of Coverage A",
+"change": {
+"ins_home": 3230,
+"ins_rental": 1880
+},
+"T": 2045,
+"fmv_T": 6531232.445580387,
+"fbyv_T": 802032.8229234543,
+"cap_T": 1500152.5372261202,
+"excluded_T": 2302185.3601495745,
+"taxable_live_T": 5031079.908354267,
+"taxable_rent_T": 6531232.445580387,
+"exclusion_T": 24143516.950096667,
+"tax_live_T": 59946.93848626397,
+"tax_rent_T": 77484.1654094271,
+"tax_before_T": 10819.198600191039,
+"sell_proceeds": 6197486.467611228,
+"sell_gain": -333745.97796915844,
+"sell_tax": 0.0,
+"sell_hold": 46642.8728891947,
+"sell_net": 6150843.5947220335,
+"w_live": 7359117.803063284,
+"w_rent": 19114796.930288147,
+"w_sell": 33493159.985918924,
+"h_live": 11650976.693902254,
+"h_rent": 27412165.10103165,
+"h_sell": 45787562.05648685,
+"real_live": 2141077.9824555665,
+"real_rent": 5561301.224110498,
+"real_sell": 9744573.918746402,
+"best": "sell",
+"cpi_end": 3.437108719703537,
+"cpi_T": 1.5986501856491653,
+"w10": {
+"year": 2055,
+"live": 7053837.954582018,
+"rent": 8528393.515049703,
+"sell": 10195349.160985976,
+"cpi": 2.0464073942261325
+},
+"w20": {
+"year": 2065,
+"live": 7604707.013298689,
+"rent": 12170328.23644524,
+"sell": 17579672.872282255,
+"cpi": 2.619574476478013
+}
+},
+{
 "label": "Maintenance doubled",
 "change": {
 "maint_cup": 12000
@@ -6553,6 +6603,199 @@
 "live": 5547650.181779616,
 "rent": 9851104.759980068,
 "sell": 11596675.410154294,
+"cpi": 2.619574476478013
+}
+},
+{
+"label": "Proposition 19 claim refused (the Inheritor keeps another principal residence, or moves in or files late)",
+"change": {
+"p19_cap": 0
+},
+"T": 2045,
+"fmv_T": 6531232.445580387,
+"fbyv_T": 802032.8229234543,
+"cap_T": 0.0,
+"excluded_T": 802032.8229234543,
+"taxable_live_T": 6531232.445580387,
+"taxable_rent_T": 6531232.445580387,
+"exclusion_T": 24143516.950096667,
+"tax_live_T": 77402.71340942712,
+"tax_rent_T": 77484.1654094271,
+"tax_before_T": 10819.198600191039,
+"sell_proceeds": 6197486.467611228,
+"sell_gain": -333745.97796915844,
+"sell_tax": 0.0,
+"sell_hold": 44979.909249679775,
+"sell_net": 6152506.558361548,
+"w_live": 6002669.7530451575,
+"w_rent": 19187476.814191233,
+"w_sell": 33502215.314081874,
+"h_live": 9945997.322127989,
+"h_rent": 27505678.835030735,
+"h_sell": 45799941.34229856,
+"real_live": 1746429.991764389,
+"real_rent": 5582446.8700094605,
+"real_sell": 9747208.495916173,
+"best": "sell",
+"cpi_end": 3.437108719703537,
+"cpi_T": 1.5986501856491653,
+"w10": {
+"year": 2055,
+"live": 6839858.279508316,
+"rent": 8536902.288348723,
+"sell": 10198105.611330679,
+"cpi": 2.0464073942261325
+},
+"w20": {
+"year": 2065,
+"live": 7023164.2460676385,
+"rent": 12197659.67937541,
+"sell": 17584425.774275452,
+"cpi": 2.619574476478013
+}
+},
+{
+"label": "Proposition 19 undone by a later measure: the whole home excluded, as before 2021",
+"change": {
+"p19_cap": 1000000000000,
+"p19_undone": true
+},
+"T": 2045,
+"fmv_T": 6531232.445580387,
+"fbyv_T": 802032.8229234543,
+"cap_T": 1436121618733.278,
+"excluded_T": 1436122420766.101,
+"taxable_live_T": 802032.8229234543,
+"taxable_rent_T": 802032.8229234543,
+"exclusion_T": 24143516.950096667,
+"tax_live_T": 10737.746600191038,
+"tax_rent_T": 10819.198600191039,
+"tax_before_T": 10819.198600191039,
+"sell_proceeds": 6197486.467611228,
+"sell_gain": -333745.97796915844,
+"sell_tax": 0.0,
+"sell_hold": 11647.425845061742,
+"sell_net": 6185839.041766167,
+"w_live": 12739399.176967967,
+"w_rent": 23831303.154631767,
+"w_sell": 33683720.53075762,
+"h_live": 18386142.244722478,
+"h_rent": 33403700.81780351,
+"h_sell": 46048072.046466544,
+"real_live": 3706428.924967723,
+"real_rent": 6933531.959002828,
+"real_sell": 9800016.024416871,
+"best": "sell",
+"cpi_end": 3.437108719703537,
+"cpi_T": 1.5986501856491653,
+"w10": {
+"year": 2055,
+"live": 7866934.926466647,
+"rent": 9223781.67968593,
+"sell": 10253355.968697017,
+"cpi": 2.0464073942261325
+},
+"w20": {
+"year": 2065,
+"live": 9861972.159786966,
+"rent": 14149934.866781417,
+"sell": 17679693.056762807,
+"cpi": 2.619574476478013
+}
+},
+{
+"label": "California surtax of 1% on the one-off gain (taxable income above $1,000,000)",
+"change": {
+"t_ca_lump": 0.143
+},
+"T": 2045,
+"fmv_T": 6531232.445580387,
+"fbyv_T": 802032.8229234543,
+"cap_T": 1500152.5372261202,
+"excluded_T": 2302185.3601495745,
+"taxable_live_T": 5031079.908354267,
+"taxable_rent_T": 6531232.445580387,
+"exclusion_T": 24143516.950096667,
+"tax_live_T": 59946.93848626397,
+"tax_rent_T": 77484.1654094271,
+"tax_before_T": 10819.198600191039,
+"sell_proceeds": 6197486.467611228,
+"sell_gain": -333745.97796915844,
+"sell_tax": 0.0,
+"sell_hold": 44979.909249679775,
+"sell_net": 6152506.558361548,
+"w_live": 7678669.94644379,
+"w_rent": 18996251.374156952,
+"w_sell": 33170740.21898169,
+"h_live": 12155992.723599872,
+"h_rent": 27505678.835030735,
+"h_sell": 45799941.34229856,
+"real_live": 2234049.1886174907,
+"real_rent": 5526811.318262707,
+"real_sell": 9650768.39985521,
+"best": "sell",
+"cpi_end": 3.437108719703537,
+"cpi_T": 1.5986501856491653,
+"w10": {
+"year": 2055,
+"live": 7087851.122205631,
+"rent": 8504800.312659385,
+"sell": 10149073.450045245,
+"cpi": 2.0464073942261325
+},
+"w20": {
+"year": 2065,
+"live": 7714117.932208387,
+"rent": 12108722.622627374,
+"sell": 17445872.324104615,
+"cpi": 2.619574476478013
+}
+},
+{
+"label": "Solar credit does not transfer: electricity costs the official minimum fixed charge instead of earning",
+"change": {
+"cup_elec": 290
+},
+"T": 2045,
+"fmv_T": 6531232.445580387,
+"fbyv_T": 802032.8229234543,
+"cap_T": 1500152.5372261202,
+"excluded_T": 2302185.3601495745,
+"taxable_live_T": 5031079.908354267,
+"taxable_rent_T": 6531232.445580387,
+"exclusion_T": 24143516.950096667,
+"tax_live_T": 59946.93848626397,
+"tax_rent_T": 77484.1654094271,
+"tax_before_T": 10819.198600191039,
+"sell_proceeds": 6197486.467611228,
+"sell_gain": -333745.97796915844,
+"sell_tax": 0.0,
+"sell_hold": 44979.909249679775,
+"sell_net": 6152506.558361548,
+"w_live": 7655923.851356451,
+"w_rent": 19187476.814191233,
+"w_sell": 33502215.314081874,
+"h_live": 12018791.836919017,
+"h_rent": 27505678.835030735,
+"h_sell": 45799941.34229856,
+"real_live": 2227431.3894897113,
+"real_rent": 5582446.8700094605,
+"real_sell": 9747208.495916173,
+"best": "sell",
+"cpi_end": 3.437108719703537,
+"cpi_T": 1.5986501856491653,
+"w10": {
+"year": 2055,
+"live": 7093861.864646243,
+"rent": 8536902.288348723,
+"sell": 10198105.611330679,
+"cpi": 2.0464073942261325
+},
+"w20": {
+"year": 2065,
+"live": 7722535.269308501,
+"rent": 12197659.67937541,
+"sell": 17584425.774275452,
 "cpi": 2.619574476478013
 }
 }
@@ -35100,6 +35343,314 @@
 "sell_minus_rent_median": 26444909.438207597
 }
 },
+"mc": {
+"draws": 400,
+"block": 8,
+"seed": 20261113,
+"horizons": {
+"10": {
+"pct": {
+"live": {
+"10": 2803970,
+"25": 3683060,
+"50": 4869900,
+"75": 6734580,
+"90": 8577130
+},
+"rent": {
+"10": 3706370,
+"25": 4582070,
+"50": 5888740,
+"75": 7770480,
+"90": 9512130
+},
+"sell": {
+"10": 4744380,
+"25": 6271220,
+"50": 9126160,
+"75": 12729490,
+"90": 17295210
+}
+},
+"lead": {
+"live": 0,
+"rent": 69,
+"sell": 331
+},
+"sell_minus_rent": {
+"worst": -7544940,
+"median": 3077280,
+"best": 27688970,
+"sell_ahead_of_rent_in": 331
+},
+"gap_10th": -938690
+},
+"20": {
+"pct": {
+"live": {
+"10": 1643210,
+"25": 2866460,
+"50": 4504990,
+"75": 6845290,
+"90": 9751120
+},
+"rent": {
+"10": 4521680,
+"25": 5737460,
+"50": 7384740,
+"75": 9763900,
+"90": 12524380
+},
+"sell": {
+"10": 7384550,
+"25": 10916130,
+"50": 18655450,
+"75": 25443900,
+"90": 37509010
+}
+},
+"lead": {
+"live": 0,
+"rent": 36,
+"sell": 364
+},
+"sell_minus_rent": {
+"worst": -12092450,
+"median": 10715110,
+"best": 61577000,
+"sell_ahead_of_rent_in": 364
+},
+"gap_10th": 617410
+},
+"end": {
+"pct": {
+"live": {
+"10": -2161100,
+"25": -172170,
+"50": 2942950,
+"75": 6937080,
+"90": 11829870
+},
+"rent": {
+"10": 6248400,
+"25": 7931270,
+"50": 10369990,
+"75": 13828320,
+"90": 18114490
+},
+"sell": {
+"10": 14238350,
+"25": 21897830,
+"50": 37767810,
+"75": 64840360,
+"90": 101713200
+}
+},
+"lead": {
+"live": 0,
+"rent": 23,
+"sell": 377
+},
+"sell_minus_rent": {
+"worst": -11352130,
+"median": 26243210,
+"best": 309461600,
+"sell_ahead_of_rent_in": 377
+},
+"gap_10th": 3230500
+}
+},
+"econ": {
+"infl50": {
+"min": 0.020353753098790263,
+"p10": 0.025476882186494416,
+"median": 0.03159549069714738,
+"p90": 0.04116156668645001,
+"max": 0.05501869370542888
+},
+"hpi_to_T": {
+"min": 0.007225842661253601,
+"p10": 0.03702379280082896,
+"median": 0.06701828902767966,
+"p90": 0.09871065539086422,
+"max": 0.13104667644187323
+},
+"stock_after_T": {
+"min": 0.05242580645161291,
+"p10": 0.09669999999999998,
+"median": 0.12976774193548385,
+"p90": 0.16040967741935488,
+"max": 0.192583870967742
+}
+}
+},
+"estate_alt": {
+"anchor": 5490000,
+"rows": [
+{
+"T": 2040,
+"cash_today": 2000000,
+"alt_excl": 10461143.424762543,
+"as_law_excl": 21339350.974315993,
+"gross": 8194144.6295162225,
+"tax_alt": 0.0,
+"tax_law": 0.0
+},
+{
+"T": 2040,
+"cash_today": 5000000,
+"alt_excl": 10461143.424762543,
+"as_law_excl": 21339350.974315993,
+"gross": 12433066.09243752,
+"tax_alt": 788769.067069991,
+"tax_law": 0.0
+},
+{
+"T": 2040,
+"cash_today": 10000000,
+"alt_excl": 10461143.424762543,
+"as_law_excl": 21339350.974315993,
+"gross": 19497935.19730635,
+"tax_alt": 3614716.7090175226,
+"tax_law": 0.0
+},
+{
+"T": 2040,
+"cash_today": 15000000,
+"alt_excl": 10461143.424762543,
+"as_law_excl": 21339350.974315993,
+"gross": 26562804.302175175,
+"tax_alt": 6440664.350965053,
+"tax_law": 2089381.3311436728
+},
+{
+"T": 2040,
+"cash_today": 20000000,
+"alt_excl": 10461143.424762543,
+"as_law_excl": 21339350.974315993,
+"gross": 33627673.40704401,
+"tax_alt": 9266611.992912587,
+"tax_law": 4915328.9730912065
+},
+{
+"T": 2040,
+"cash_today": 30000000,
+"alt_excl": 10461143.424762543,
+"as_law_excl": 21339350.974315993,
+"gross": 47757411.61678166,
+"tax_alt": 14918507.276807649,
+"tax_law": 10567224.256986268
+},
+{
+"T": 2045,
+"cash_today": 2000000,
+"alt_excl": 11835823.587003097,
+"as_law_excl": 24143516.950096667,
+"gross": 9728532.816878717,
+"tax_alt": 0.0,
+"tax_law": 0.0
+},
+{
+"T": 2045,
+"cash_today": 5000000,
+"alt_excl": 11835823.587003097,
+"as_law_excl": 24143516.950096667,
+"gross": 14524483.373826213,
+"tax_alt": 1075463.9147292466,
+"tax_law": 0.0
+},
+{
+"T": 2045,
+"cash_today": 10000000,
+"alt_excl": 11835823.587003097,
+"as_law_excl": 24143516.950096667,
+"gross": 22517734.30207204,
+"tax_alt": 4272764.286027578,
+"tax_law": 0.0
+},
+{
+"T": 2045,
+"cash_today": 15000000,
+"alt_excl": 11835823.587003097,
+"as_law_excl": 24143516.950096667,
+"gross": 30510985.230317865,
+"tax_alt": 7470064.657325908,
+"tax_law": 2546987.3120884793
+},
+{
+"T": 2045,
+"cash_today": 20000000,
+"alt_excl": 11835823.587003097,
+"as_law_excl": 24143516.950096667,
+"gross": 38504236.158563696,
+"tax_alt": 10667365.02862424,
+"tax_law": 5744287.683386812
+},
+{
+"T": 2045,
+"cash_today": 30000000,
+"alt_excl": 11835823.587003097,
+"as_law_excl": 24143516.950096667,
+"gross": 54490738.01505534,
+"tax_alt": 17061965.7712209,
+"tax_law": 12138888.425983472
+},
+{
+"T": 2050,
+"cash_today": 2000000,
+"alt_excl": 13391148.012659874,
+"as_law_excl": 27316173.365403373,
+"gross": 11563694.810329605,
+"tax_alt": 0.0,
+"tax_law": 0.0
+},
+{
+"T": 2050,
+"cash_today": 5000000,
+"alt_excl": 13391148.012659874,
+"as_law_excl": 27316173.365403373,
+"gross": 16989872.659077365,
+"tax_alt": 1439489.8585669966,
+"tax_law": 0.0
+},
+{
+"T": 2050,
+"cash_today": 10000000,
+"alt_excl": 13391148.012659874,
+"as_law_excl": 27316173.365403373,
+"gross": 26033502.4069903,
+"tax_alt": 5056941.757732172,
+"tax_law": 0.0
+},
+{
+"T": 2050,
+"cash_today": 15000000,
+"alt_excl": 13391148.012659874,
+"as_law_excl": 27316173.365403373,
+"gross": 35077132.15490324,
+"tax_alt": 8674393.656897347,
+"tax_law": 3104383.515799947
+},
+{
+"T": 2050,
+"cash_today": 20000000,
+"alt_excl": 13391148.012659874,
+"as_law_excl": 27316173.365403373,
+"gross": 44120761.90281618,
+"tax_alt": 12291845.556062521,
+"tax_law": 6721835.414965122
+},
+{
+"T": 2050,
+"cash_today": 30000000,
+"alt_excl": 13391148.012659874,
+"as_law_excl": 27316173.365403373,
+"gross": 62208021.39864205,
+"tax_alt": 19526749.354392868,
+"tax_law": 13956739.213295473
+}
+]
+},
 "hist_stats": {
 "sj_1976_2025": 0.06712511202859739,
 "sf_1976_2025": 0.06476129602361702,
@@ -35892,6 +36443,9 @@
 "nat_re_early": "ACADEMIC dataset (Damodaran national real-estate returns, 1929-1950) - no official local index exists that far back",
 "japan": "Official series via FRED: BIS residential property prices, OECD CPI; Nikkei 225 PRICE index (dividends excluded)",
 "prop13_factor": "Statutory index: California CPI capped at 2% (R&TC 51). Replayed years 1976-2025 use the official BOE factor table (LTA 2026/002 enclosure; cross-checked against LTA 2020/067 and 2021/065). Future California CPI is unknowable, so baseline years after 2026 and the Japan/Depression counterfactuals use each path's inflation as a LABELLED PROXY (flag A11). Official BOE factor for 2026: 1.02.",
-"paths": "The fifty replays and every named path are HYPOTHETICAL constructions from the series above: illustrative stress tests, not forecasts."
+"paths": "The fifty replays and every named path are HYPOTHETICAL constructions from the series above: illustrative stress tests, not forecasts.",
+"bootstrap": "HYPOTHETICAL construction, drawn by computer: 400 fifty-year paths made of eight-year blocks sampled from the same official 1976-2025 record, with a fixed seed so the run repeats exactly. It shows the spread the historical record supports; it is not a forecast and not a probability of anything.",
+"estate_alt": "Counterfactual built on one official published figure (the $5,490,000 basic exclusion for 2017 on the IRS estate-tax page) indexed forward by the model's own inflation path. Not a proposal, not a forecast, not a pending bill.",
+"ins_scaled": "Derived from two official statewide averages on the Department of Insurance page (average Coverage A and average earned premium per policy). The building share it is applied to is an assumption, so the result is a sensitivity, not a quote."
 }
 }

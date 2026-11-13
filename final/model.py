@@ -47,6 +47,8 @@ P = dict(
     rate_sf=0.0118162182,       # SF Treasurer FY2026-27 secured rate
     hox=7_000,                  # homeowners' exemption (BOE)
     p19_cap=1_044_586,          # BOE LTA 2025/009, transfers 2025-02-16..2027-02-15
+    p19_undone=False,         # sensitivity only: a later measure restoring the pre-2021 rule, under which a qualifying
+                              #   family home kept its base year value whether or not the heir let it (see BOE-P19)
     excl_2026=15_000_000, excl_2027=15_480_000,  # IRS; Rev. Proc. 2026-35 s.3.44
     estate_rate=0.40,           # Form 706 instructions, Table A top rate
     sec121=250_000,             # IRS Topic 701 (single; 500,000 joint)
@@ -83,6 +85,26 @@ P = dict(
 # derived, shown rounded.  Scenario input only (S5-P1): letting the third unit at the average of the two known
 # rents is an INFERENCE, so it never enters the baseline; it is used only by the labelled sensitivity scenario.
 P['sf_unit3_rent'] = r10(P['sf_rent_2units'] / 2)                                # average of the two rented units
+
+# ----------------------------------------------------------------------------
+# Two figures derived from official published averages rather than invented.
+#   * California Department of Insurance, SB 824 statewide residential summary (source CDI-SB824):
+#     average Coverage A (the main structure) $324,973 and about $1,130 of earned premium per policy
+#     across all residential forms in 2023.  The ratio is the average cents of premium per dollar of
+#     insured dwelling value; applying it to this household's modelled building share of each property
+#     value gives a premium that scales with the house instead of the owner's flat estimate.  The
+#     building share (30%) is itself an assumption (flag A02), so the result is a labelled sensitivity
+#     only and never a baseline figure (flag A14).
+#   * CPUC Resolution E-5354 / D.24-05-028 (source CPUC-FIXED): the standard-tier Base Services Charge
+#     is $24.15 a month.  A solar customer whose tariff does not follow the house still pays at least
+#     that, so 12 x $24.15 is a floor on the electricity cost, not an estimate of the bill.
+# ----------------------------------------------------------------------------
+CDI_COV_A, CDI_AVG_PREM = 324_973, 1_130
+CDI_RATIO = CDI_AVG_PREM / CDI_COV_A
+INS_SCALED_CUP = r10(CDI_RATIO * P['bldg_share'] * P['cup_value'])
+INS_SCALED_SF = r10(CDI_RATIO * P['bldg_share'] * P['sf_value'])
+FIXED_CHARGE_YR = r10(24.15 * 12)
+                                # average of the two rented units
 
 
 # ----------------------------------------------------------------------------
@@ -268,7 +290,10 @@ def simulate(path, p=P):
             if y == T:
                 fb = min(fby_c, Vc)
                 base_L = prop19_taxable(fb, Vc, cap)
-                base_R = Vc
+                # Under current law a home the heir lets is reassessed in full: section 63.2 conditions the
+                # family-home exclusion on it becoming the transferee's principal residence. The p19_undone
+                # sensitivity lifts that condition, which is what a measure restoring the pre-2021 rule would do.
+                base_R = fb if p['p19_undone'] else Vc
                 basis = Vc if p['step_up'] else min(float(p['cup_assessed']), Vc)
                 summary.update(T=T, fmv_T=Vc, fbyv_T=fb, cap_T=cap, excluded_T=fb + cap, taxable_live_T=base_L,
                                taxable_rent_T=base_R, exclusion_T=excl, cpi_T=cpi,
@@ -405,8 +430,13 @@ def main():
         ('Top tax bracket (37% federal, 12.3% state)', dict(t_fed_ord=0.37, t_ca=0.123, t_fed_ltcg=0.20)),
         ('Third unit at Property B let at the average of the two known unit rents (scenario only; the baseline counts none)', dict(rent_sf_unit3=True)),
         ('Insurance three times the owner estimate', dict(ins_home=4500, ins_rental=4500)),
+        ('Insurance scaled from the official statewide average premium per dollar of Coverage A', dict(ins_home=INS_SCALED_CUP, ins_rental=INS_SCALED_SF)),
         ('Maintenance doubled', dict(maint_cup=12000)),
         ('No basis step-up (trust assets outside the estate)', dict(step_up=False)),
+        ('Proposition 19 claim refused (the Inheritor keeps another principal residence, or moves in or files late)', dict(p19_cap=0)),
+        ('Proposition 19 undone by a later measure: the whole home excluded, as before 2021', dict(p19_cap=10 ** 12, p19_undone=True)),
+        ('California surtax of 1% on the one-off gain (taxable income above $1,000,000)', dict(t_ca_lump=0.143)),
+        ('Solar credit does not transfer: electricity costs the official minimum fixed charge instead of earning', dict(cup_elec=FIXED_CHARGE_YR)),
     ]
     out['sensitivity'] = [dict(label=l, change=c, **pick(run(with_(**c))[1])) for l, c in sens]
     out['breakeven'] = dict(
@@ -462,6 +492,75 @@ def main():
         gaps = sorted(get(x)['sell'] / get(x)['cpi'] - get(x)['rent'] / get(x)['cpi'] for x in replays)
         hz[name] = dict(wins=cnt, worst=worst, sell_minus_rent_worst=gaps[0], sell_minus_rent_median=gaps[len(gaps) // 2])
     out['replay_horizons'] = hz
+    # ---------------- block bootstrap: the 50 years drawn in pieces, not one order ----------------
+    # The owner's brief asks for a black-swan section that behaves like the real world, where growth and
+    # inflation are never consistent for fifty years.  The fifty replays use the real order; this draws the
+    # same real years in eight-year blocks, so a stretch of high inflation can land next to a flat stretch,
+    # the way it does in life.  Deterministic: the seed and block length are recorded and the draws are not
+    # a forecast, they are the spread of what the historical record supports.
+    import random
+    n, block = 400, 8
+    rng = random.Random(20261113)
+    hy = list(range(1976, 2026))
+    span = len(hy) - block
+    mc = {'draws': n, 'block': block, 'seed': 20261113, 'horizons': {}, 'econ': {}}
+    acc = {'10': {'live': [], 'rent': [], 'sell': []}, '20': {'live': [], 'rent': [], 'sell': []},
+           'end': {'live': [], 'rent': [], 'sell': []}, 'infl': [], 'hpi': [], 'stock': []}
+    for _ in range(n):
+        path, y = {}, Y0 + 1
+        while y <= Y1:
+            s0 = rng.randint(0, span)
+            for i in range(block):
+                if y > Y1:
+                    break
+                path[y] = dict(HIST[hy[(s0 + i) % len(hy)]])
+                y += 1
+        rows, s_ = run(P, path)
+        for tag, off in (('10', 10), ('20', 20), ('end', None)):
+            rr = rows[-1] if off is None else rows[min(T + off - Y0, len(rows) - 1)]
+            c = rr['cpi']
+            for k in ('live', 'rent', 'sell'):
+                acc[tag][k].append((rr['w_' + k] if off is None else rr['w_' + k]) / c)
+        infl = [path[y]['infl'] for y in range(Y0 + 1, Y1 + 1)]
+        acc['infl'].append(sum(infl) / len(infl))
+        acc['hpi'].append(sum(path[y]['g_cup'] for y in range(Y0 + 1, T + 1)) / float(T - Y0))
+        acc['stock'].append(sum(path[y]['r_stock'] for y in range(T + 1, Y1 + 1)) / float(Y1 - T))
+    pct = lambda vals, q: sorted(vals)[min(len(vals) - 1, int(q * len(vals)))]
+    for tag in ('10', '20', 'end'):
+        lead = {'live': 0, 'rent': 0, 'sell': 0}
+        for i in range(n):
+            d = {k: acc[tag][k][i] for k in ('live', 'rent', 'sell')}
+            lead[max(d, key=lambda k: d[k])] += 1
+        gap = sorted((acc[tag]['sell'][i] - acc[tag]['rent'][i]) * 1.0 for i in range(n))
+        mc['horizons'][tag] = {
+            'pct': {k: {q: r10(pct(acc[tag][k], q / 100.0)) for q in (10, 25, 50, 75, 90)} for k in ('live', 'rent', 'sell')},
+            'lead': lead, 'sell_minus_rent': {'worst': r10(gap[0]), 'median': r10(gap[len(gap) // 2]),
+                                                'best': r10(gap[-1]),
+                                                'sell_ahead_of_rent_in': sum(1 for g in gap if g > 0)},
+            'gap_10th': r10(gap[int(0.1 * n)]),
+        }
+    mc['econ'] = {k: {'min': min(v), 'p10': pct(v, .1), 'median': pct(v, .5), 'p90': pct(v, .9), 'max': max(v)}
+                  for k, v in (('infl50', acc['infl']), ('hpi_to_T', acc['hpi']), ('stock_after_T', acc['stock']))}
+    out['mc'] = mc
+    # ---------------- estate tax if the exclusion reverted to the pre-2018 level ----------------
+    # The pre-2018 basic exclusion, $5,490,000 for 2017, is a published IRS figure (source IRS-ESTATE).
+    # Indexing it forward by the same consumer-price path the model already uses shows what a repeal of
+    # the 2017 doubling, or of P.L. 119-21, would do to this estate.  Labelled counterfactual, not a forecast.
+    k17 = 1.0
+    for y in range(2018, 2026):
+        k17 *= 1 + HIST[y]['infl']
+    k17 *= 1 + P['infl']
+    alt = []
+    for Tn in (2040, 2045, 2050):
+        rr = run(with_(T=Tn))[0][Tn - Y0]
+        for cash in (2_000_000, 5_000_000, 10_000_000, 15_000_000, 20_000_000, 30_000_000):
+            real_cash = cash * rr['cpi']
+            gross = rr['cup_value'] + real_cash
+            ae = 5_490_000 * k17 * rr['cpi']
+            alt.append(dict(T=Tn, cash_today=cash, alt_excl=ae, as_law_excl=rr['exclusion'],
+                            gross=gross, tax_alt=max(0.0, gross - ae) * P['estate_rate'],
+                            tax_law=max(0.0, gross - rr['exclusion']) * P['estate_rate']))
+    out['estate_alt'] = dict(anchor=5_490_000, rows=alt)
     # historical summary statistics used on the site
     def cagr(vals):
         prod = 1.0
@@ -511,6 +610,9 @@ def main():
         japan='Official series via FRED: BIS residential property prices, OECD CPI; Nikkei 225 PRICE index (dividends excluded)',
         prop13_factor='Statutory index: California CPI capped at 2% (R&TC 51). Replayed years 1976-2025 use the official BOE factor table (LTA 2026/002 enclosure; cross-checked against LTA 2020/067 and 2021/065). Future California CPI is unknowable, so baseline years after 2026 and the Japan/Depression counterfactuals use each path\'s inflation as a LABELLED PROXY (flag A11). Official BOE factor for 2026: 1.02.',
         paths='The fifty replays and every named path are HYPOTHETICAL constructions from the series above: illustrative stress tests, not forecasts.',
+        bootstrap='HYPOTHETICAL construction, drawn by computer: 400 fifty-year paths made of eight-year blocks sampled from the same official 1976-2025 record, with a fixed seed so the run repeats exactly. It shows the spread the historical record supports; it is not a forecast and not a probability of anything.',
+        estate_alt='Counterfactual built on one official published figure (the $5,490,000 basic exclusion for 2017 on the IRS estate-tax page) indexed forward by the model\'s own inflation path. Not a proposal, not a forecast, not a pending bill.',
+        ins_scaled='Derived from two official statewide averages on the Department of Insurance page (average Coverage A and average earned premium per policy). The building share it is applied to is an assumption, so the result is a sensitivity, not a quote.',
     )
     os.makedirs(os.path.join(HERE, 'out'), exist_ok=True)
     json.dump(out, open(os.path.join(HERE, 'out', 'model.json'), 'w'), indent=0)
