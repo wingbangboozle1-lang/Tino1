@@ -118,7 +118,7 @@ laws=[
 ('Rental income','Taxable with qualifying expenses and depreciation','Mixed-use allocation, capital improvements, passive losses and possible NIIT matter. Gross rent is not profit.','rent'),
 ('Savings insurance','$250,000 per depositor / insured bank / ownership category','Aggregate deposits in same category; investments such as stocks and mutual funds are not FDIC insured.','fdic'),
 ('Law watch · SB 974','Chaptered September 27, 2026, Chapter 665','Enacted special-needs-trust transfer-medium amendment, not a pending blanket restoration of the old parent-child exclusion. Household relevance unknown; confirm effective application with counsel.','bill'),
-('Nov 2026 California ballot (unofficial)','Nov 11 (6:51 p.m.): Prop 3 Yes 60.7%, Prop 40 No 52.5%, Prop 42 Yes 51.4%','No Prop 19 repeal appeared on the Nov 2026 ballot; unofficial until Dec 11 certification. Recheck federal legislation and BOE updates at decision time.','sos26')]
+('Nov 2026 California ballot (unofficial)','Nov 12 (8:46 p.m.): Prop 3 Yes 60.7%, Prop 40 No 52.4%, Prop 42 Yes 51.4%','No Prop 19 repeal appeared on the Nov 2026 ballot; unofficial until Dec 11 certification. Recheck federal legislation and BOE updates at decision time.','sos26')]
 future=[]
 for year in (2040,2045,2050):
     future.append((str(year),'',money(threshold(year,0)),money(threshold(year,.02)),money(threshold(year,.04)),'irs27'))
