@@ -6,22 +6,26 @@ A decision analysis for two California homes. Property A (Cupertino, ZIP 95014) 
 
 ## What is current
 
-The pages at the repository root are the only current edition. They are generated from [`final/`](final/):
+The current site has two published editions (integration decision D1): the **no-figures guide** in [`privacy-site/public/`](privacy-site/public/) (privacy first, every illustration invented for teaching) and the **rounded-figures analysis** at the repository root, generated from [`final/`](final/):
 
 | Page | Content |
 |---|---|
-| `index.html` | Executive summary, dashboard, best plan and why |
+| `index.html` | The site's front door: a two-way chooser (integration decision D1) — the no-figures guide first, the rounded-figures analysis second. Written by `final/build.py` in `ROOT_MODE` |
+| `summary.html` | Executive summary, dashboard, best plan and why (rounded-figures numeric edition) |
 | `decision.html` | Live, rent or sell: cash flows, after-tax wealth, sensitivities, break-even points |
+| `questions.html` | Questions, known vs. unknown info, and discovery guide — Part 1: Q01–Q18, U01–U08 & checklist; Part 2: reading-dated decision register (open, unknowable, answered) |
 | `projections.html` | Year by year 2026 to 2076: value, assessed value, property tax, insurance, water, electricity, repairs, rental insurance |
-| `black-swan.html` | Non-constant growth and inflation: 50 replays of the real 1976-2025 record and named crisis paths |
-| `process.html` | Step-by-step process with legal deadlines |
-| `law.html` | Federal, California and local law in force, and changes under discussion |
+| `black-swan.html` | Non-constant growth and inflation: 50 replays of the real 1976-2025 record and named crisis paths, with a provenance table separating official statistics, academic returns and hypothetical constructions |
+| `process.html` | Step-by-step process with legal deadlines (`BOE-266` before `BOE-19-P` per BOE Pub. 800-1) |
+| `law.html` | Federal, California (`Behavioral Health Services Tax`), and local law in force, plus pending measures & Nov 11 ballot updates |
 | `estate-cash.html` | Cash inheritance: thresholds at each level, room before tax, projections |
-| `costs.html` | Insurance for both ZIP codes and running costs |
+| `costs.html` | Insurance for both ZIP codes and running costs (CPUC NEM / `$24.15` fixed charge, water, rent) |
+| `suggestions.html` | Proposed site, data & privacy improvements to review before implementing — Part 1: GAP/IMP/Paths; Part 2: options register G01–G15 |
 | `flagged.html` | Flagged for Review: every unconfirmed value, assumption and irregularity, with links |
-| `sources.html` | Source register, method, cross-check against a second model |
-| `verification.html` | Verification: the independent 2026-11-11 check register, every fact with its official link for manual review |
-| `review.html` | Repository review findings |
+| `sources.html` | Source register (zero official `excerpt` sources remain), method, cross-check against a second model |
+| `verification.html` | Verification passes (2026-11-11, 2026-11-12 and 2026-11-13): every official agency source opened and read directly |
+| `requirements.html` | Every part of the brief, the page that answers it, the official pages re-read, and `SG-1`–`SG-11` queue |
+| `review.html` | Repository review findings (`R01`–`R40`) |
 | `versions.html` | Earlier editions and why they were replaced |
 
 ## Reproduce
@@ -30,7 +34,7 @@ The pages at the repository root are the only current edition. They are generate
 python3 final/model.py && python3 final/integrate.py && python3 final/check.py .
 ```
 
-Standard library only. `final/check.py` fails if a table row has no link to an official page, if an internal link is broken, if a dollar figure is not a multiple of $10 (listed official figures excepted), or if a fingerprint of an unrounded owner figure appears.
+Standard library only. `final/check.py` fails if a table row has no link to an official page, if an internal link is broken, if a dollar figure is not a multiple of $10 (listed official figures excepted), or if a street address, e-mail address, parcel-number or telephone pattern appears. Both editions publish (decision D1): the no-figures guide at `privacy-site/public/` and the rounded-figures pages at the root, pinned file-by-file by the allowlist in [`final/published.txt`](final/published.txt) and enforced in CI by `final/check_published.py` and `privacy-site/check_published.py`.
 
 ## Rules followed
 
@@ -52,8 +56,10 @@ Work sessions, claims, change requests and merge records are in [`COORDINATION.m
 
 ---
 
-## History: README of the earlier editions (kept unchanged except for two corrected source links)
+## History: README of the earlier editions (kept unchanged except for corrected source links and publication notes)
 
+> **Publication update (2026-11-13):** Integration decision D1 (2026-11-12) serves both editions from GitHub Pages behind a two-way chooser, under the pinned allowlist in [`final/published.txt`](final/published.txt). The note below describes the boundary as it stood earlier that day (guide only).
+>
 > **Publication update (2026-11-12):** Pages now serves the privacy-first guide under `privacy-site/public/`, reached through the root redirect. Earlier numeric-edition publication instructions below are historical and do not describe the current front door. Household-derived figures and earlier files remain in this public repository and its history; excluding them from Pages does not remove that exposure. Review the [GitHub sensitive-data removal guidance](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/removing-sensitive-data-from-a-repository) and repository visibility. Synthetic examples in the guide are not household projections.
 
 ### Two-home inheritance analysis
@@ -68,8 +74,8 @@ The pages at the repository root are the only current edition. They are generate
 
 | Page | Content |
 |---|---|
-| `index.html` | Redirect to the privacy-first guide (`privacy-site/public/`), the only edition GitHub Pages serves. Not generated by `final/` |
-| `summary.html` | Executive summary, dashboard, best plan and why (numeric edition; repository file, not published) |
+| `index.html` | The site's front door: a two-way chooser (integration decision D1) — the no-figures guide first, the rounded-figures analysis second. Written by `final/build.py` in `ROOT_MODE` |
+| `summary.html` | Executive summary, dashboard, best plan and why (rounded-figures numeric edition) |
 | `decision.html` | Live, rent or sell: cash flows, after-tax wealth, sensitivities, break-even points |
 | `questions.html` | Questions, known vs. unknown info, and discovery guide — Part 1: Q01–Q18, U01–U08 & checklist; Part 2: reading-dated decision register (open, unknowable, answered) |
 | `projections.html` | Year by year 2026 to 2076: value, assessed value, property tax, insurance, water, electricity, repairs, rental insurance |
@@ -81,9 +87,9 @@ The pages at the repository root are the only current edition. They are generate
 | `suggestions.html` | Proposed site, data & privacy improvements to review before implementing — Part 1: S-01–S-18 & Paths 1–3; Part 2: options register G01–G15 |
 | `flagged.html` | Flagged for Review: every unconfirmed value, assumption and irregularity, with links |
 | `sources.html` | Source register (zero official `excerpt` sources remain), method, cross-check against a second model |
-| `verification.html` | Verification passes (2026-11-11 and 2026-11-12): every official agency source opened and read directly |
+| `verification.html` | Verification passes (2026-11-11, 2026-11-12 and 2026-11-13): every official agency source opened and read directly |
 | `requirements.html` | Every part of the brief, the page that answers it, the official pages re-read, and `SG-1`–`SG-11` queue |
-| `review.html` | Repository review findings (`R01`–`R31`) |
+| `review.html` | Repository review findings (`R01`–`R40`) |
 | `versions.html` | Earlier editions and why they were replaced |
 
 ## Reproduce
