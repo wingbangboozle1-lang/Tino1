@@ -1845,6 +1845,7 @@ Base `551179b` (= origin/main, PR #72 merge). No open PRs and no active claims o
 - Scope merged: `owner-analysis-2026/**` (excluded from Pages), `_config.yml` (one exclude line), this board. Published set unchanged at 39 files.
 - Open for the owner: privacy decision on household-derived pages (G01/G02, history remediation); repair, Cupertino rent, water provider and vacancy inputs; historical CPI chunks 2–4; official county-level FHFA HPI files; Japan residency question. Full list in `owner-analysis-2026/FLAGS.md`.
 - Household projections were computed privately outside the repository; they are not committed.
+<<<<<<< HEAD
 ---
 
 ## Session `arena/da3f2b99-tino1` — outstanding model/provenance corrections (S5-P1–P5), fifth verification pass (claimed 2026-11-13 UTC)
@@ -1863,3 +1864,40 @@ Base `551179b` (= origin/main, PR #72 merge). No open PRs and no active claims o
 | D-7 PR → main, merge green only, confirm Pages, record result | in progress | arena/da3f2b99-tino1 | COORDINATION.md | Preserve all prior sessions' work; nothing discarded. |
 
 Privacy interpretation unchanged: no names, addresses, parcel numbers or exact household histories enter the published product; owner-supplied figures stay rounded to $10; P01/P02 (repository/history exposure) remain owner actions. Flagged items stay open on the Flagged for Review page and do not block anything.
+=======
+
+---
+
+## Session `arena/f8de1d0b-tino1` — independent re-verification, dashboard landing page, suggestions review path, integration (claimed 2026-11-13 UTC)
+
+**Branch fixed by workspace:** `arena/f8de1d0b-tino1`; base commit `551179b` (merge of PR #72). Board read before claiming; no open PRs at claim time (`gh pr list --state open` returned none). No other session is active on the board in the last 60 minutes; all earlier claims are recorded as done/closed. This session therefore takes the integration role.
+
+**Privacy posture for this session.** Owner priority: personal information must not appear in the published product. Interpretation carried forward from S5: names, contact details, exact street addresses, parcel/APN numbers, account numbers and private documents never enter the product. Owner-supplied amounts are shown only rounded to $10, and $10 rounding is labelled as **disclosure minimization, not anonymization**. This session performs **no parcel lookup, no identity research and no address research**. It adds no new table of the owner's historical bill series.
+
+| # | Task | Status | Owner session | Files / scope | Verification / handoff |
+|---|------|--------|---------------|---------------|-------------------------|
+| F8-1 | Claim, board append, push before content work | in progress | arena/f8de1d0b-tino1 | `COORDINATION.md` (append only) | Claim committed and pushed before any shared file is touched |
+| F8-2 | Independent line-by-line re-read of the headline official sources (federal, California, Santa Clara, San Francisco, insurance, utilities, pending law) in this session; corrections only where an official page requires one | claimed | arena/f8de1d0b-tino1 | `final/sources.py`, `final/flags.py` (append only), `final/build.py` (`build_verification` fourth-pass table) | Only pages actually opened today are marked confirmed; everything else stays on the earlier passes |
+| F8-3 | Dashboard landing page organised by category, with the decision, the projections, the black-swan finding, the questions and the suggestions reachable in one click; both editions kept | claimed | arena/f8de1d0b-tino1 | `final/build.py` (`build_home_choice`, `NAV`), generated root `index.html` | Follows the standing rules: official link on every table row, $10 rounding, placeholders only |
+| F8-4 | Suggestions section: confirm the review-and-choose workflow (Adopt / Hold / Reject, path choice) is complete and that nothing on it is implemented; add any missing proposal with effort/risk/effect and a decision status | claimed | arena/f8de1d0b-tino1 | `final/suggestions.py`, `final/build.py` (`build_suggestions`), generated `suggestions.html` | Suggestions remain proposals; no baseline number changes without a recorded owner decision |
+| F8-5 | Questions / known-vs-missing register audit: every open question has what we hold, what is missing, and a concrete way to discover it | claimed | arena/f8de1d0b-tino1 | `final/questions.py`, `final/build.py` (`build_questions`), generated `questions.html` | No value filled from inference; unconfirmed stays blank and flagged |
+| F8-6 | Build and gate run: `final/model.py`, `final/integrate.py`, `final/check.py .`, `final/publish.py --check`, `privacy-site/build.py` + `check.py` + unittest, link scan | claimed | arena/f8de1d0b-tino1 | whole tree | A broken build is not merged |
+| F8-7 | PR to `main`, merge without waiting, confirm the Pages deploy, record PR link, merge commit and Pages status here | claimed | arena/f8de1d0b-tino1 | `COORDINATION.md` | Flagged items do not block the merge; they stay on the Flagged for Review page |
+
+**Not claimed / not touched:** `privacy-site/**` content and the published-boundary files are only touched if a gate requires it, and any such change is logged below before it is made. No earlier edition, archive, audit directory or other session's file is deleted.
+
+### F8 progress and gate results (2026-11-13)
+
+- **F8-1 claim** pushed at `0cc1a47` before any shared file was touched.
+- **F8-2 verification pass (done).** Fifth independent re-read of the official pages on 2026-11-13, recorded as a new table on `verification.html` (15 rows, each with its agency link): IRS Rev. Proc. 2026-35 s.3.44/3.46 ($15,480,000 basic exclusion and $20,000 annual exclusion for 2027), 26 U.S.C. 2010(c)(3) as amended by P.L. 119-21 s.70106(a), IRS inherited-property basis FAQ, IRS Topic 409, State Controller (no California estate tax for deaths on or after 2005-01-01), BOE LTA 2025/009 ($1,044,586), BOE LTA 2026/026 (claim deadlines, family-home land definition, occupancy rule), R&TC 63.2, BOE homeowners' exemption, SF Treasurer FY2026-27 rate 1.18162182%, SF Rent Board 1.6% and File No. 261020, CPUC NEM/NBT, CDI comparison tool, HUD FY2027 address (404). Two pages changed the picture rather than confirming it and are recorded as new flags.
+- **New findings, all on the Flagged for Review page with links (F8-2).** R32 committed merge-conflict marker on the verification page (closed - removed). R33 Property B tax input is about 2.14% of assessed value against an official 1.18162182%, leaving a ~$1,090 residual carried every year (open). R34 third SF unit rent inferred as half the two-unit total (open). R35 Cupertino solar credit carried 50 years when NEM 2.0 lasts 20 years from interconnection (open). R36 Proposition 19 applied to the whole parcel although the family home is only the dwelling plus its site (open). R37 order of the two Prop 19 claim forms is practical guidance, not statute (open, wording only).
+- **F8-3 dashboard (done).** Root `index.html` is now a categorised dashboard: answer cards, the two editions one click away, five sections by category (17 pages), a three-choice table, the four decisive open flags and this session's findings. Generated by `final/build.py::build_home_choice`, so it cannot drift from the model.
+- **F8-4 suggestions (done).** Part 1 (GAP-01..05, IMP-01..12, Paths 1-3) already had Adopt/Hold/Reject controls. Part 2 (G01-G15) did not; every one of the 32 suggestion rows now carries a browser-local Adopt/Hold/Reject control and the three path choices remain. Nothing is implemented: no baseline number changed in this session.
+- **F8-5 questions (audited, no change needed).** `questions.html` already splits known / open-decisive / open-amounts / lookups / unknowable, each row with an answer held, what is missing and how to discover it, plus the Part 2 decision register with reading dates. No value was filled from inference.
+- **F8-6 gates (all green).** `final/model.py` and `final/integrate.py` clean; `final/check.py .` OK - 25 pages, 953 table rows each with an official link, 2,506 links, 2,413 dollar figures all $10-rounded, 51 model paths; `final/publish.py --check` OK (39 files); `privacy-site/build.py` reproducible and `privacy-site/check.py` PASS (11 pages, 316 rows); unittest 8/8; whole-repository link scan 2,458 internal links, 0 broken; local HTTP server returned 200 for all 18 pages; a simulated Jekyll output built from `_config.yml` (Ruby is not installed in this sandbox, so real Jekyll runs in CI) gives 39 files and **both** `final/check_published.py` and `privacy-site/check_published.py` PASS on exact set and byte identity.
+- **Privacy.** No address, parcel number, name, e-mail or phone was added or looked up. No historical bill series was republished. R33/R34 describe the owner's own rounded figures and add no precision; the resolution paths say "read the bill privately" rather than publishing it.
+
+### F8 pull request and merge (2026-11-13)
+
+- PR opened from `arena/f8de1d0b-tino1` to `main`; result and Pages status recorded below after the merge.
+>>>>>>> origin/main

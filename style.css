@@ -33,6 +33,9 @@ a.flag{font-size:12px;background:var(--warnbg);color:var(--warn);border:1px soli
 .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px}
 .card{display:block;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px;text-decoration:none;color:var(--ink)}
 .card:hover{border-color:var(--acc)}.card b{display:block;color:var(--acc);margin-bottom:4px}.card span{font-size:14px;color:var(--mut)}
+section.card h3{margin:0 0 8px;font-size:16px;color:var(--ink)}
+ul.dex{margin:0;padding-left:18px;font-size:14px}ul.dex li{margin:0 0 7px;color:var(--mut)}
+ul.dex a{font-weight:600;text-decoration:none}ul.dex a:hover{text-decoration:underline}
 .seg{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:10px 0}.seg span{font-size:14px;color:var(--mut)}
 .seg button{font:inherit;font-size:14px;padding:5px 12px;border:1px solid var(--line);background:#fff;border-radius:6px;cursor:pointer}
 .seg button.on{background:var(--acc);color:#fff;border-color:var(--acc)}
