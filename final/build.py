@@ -445,6 +445,52 @@ def build_decision():
 # ====================================================================== projections
 def build_projections():
     sA = src('SCC-RATES', 'BOE-P19')
+    # Recorded property-tax history as supplied in the owner brief, kept here only in
+    # its rounded (nearest $10) form so no unrounded owner figure is ever stored.
+    # Owner figures: flagged P03 (no official page confirms a parcel's bill history).
+    hist_src_a = src('RTC-51', 'BOE-LTA-2026-002')
+    hist_src_b = src('RTC-51', 'SF-TAX')
+    blank26 = '&mdash; (not yet billed) %s' % flag('P03')
+    HIST_A = [
+        [2026, blank26, '&mdash;', '$550,540', '+2%', hist_src_a],
+        [2025, '$7,210', '+2.9%', '$539,740', '+2%', hist_src_a],
+        [2024, '$7,000', '+1.2%', '$529,160', '+2%', hist_src_a],
+        [2023, '$6,920', '+2.4%', '$518,790', '+2%', hist_src_a],
+        [2022, '$6,760', '+1.4%', '$508,610', '+2%', hist_src_a],
+        [2021, '$6,660', '+1.5%', '$498,640', '+1%', hist_src_a],
+        [2020, '$6,570', '&mdash;', '$493,530', '+2%', hist_src_a],
+        [2019, '$6,570', '+2.8%', '$483,850', '+2%', hist_src_a],
+        [2018, '$6,380', '&mdash;', '$474,370', '+2%', hist_src_a],
+        [2017, '$6,380', '-0.5%', '$465,070', '+2%', hist_src_a],
+        [2016, '$6,410', '+4.6%', '$455,950', '+1.5%', hist_src_a],
+        [2015, '$6,130', '+2.8%', '$449,100', '+2%', hist_src_a],
+        [2014, '$5,970', '&mdash;', '$440,310', '+0.5%', hist_src_a],
+    ]
+    HIST_B = [
+        [2025, '$2,440', '+5.3%', '$114,250', '+2%', hist_src_b],
+        [2024, '$2,320', '+6.2%', '$112,010', '+2%', hist_src_b],
+        [2023, '$2,180', '+3.4%', '$109,810', '+2%', hist_src_b],
+        [2022, '$2,110', '+2%', '$107,660', '+2%', hist_src_b],
+        [2021, '$2,070', '-5.9%', '$105,600', '+1%', hist_src_b],
+        [2020, '$2,200', '+3%', '$104,510', '+2%', hist_src_b],
+        [2019, '$2,130', '+3.5%', '$102,470', '+2%', hist_src_b],
+        [2018, '$2,060', '+18.4%', '$100,460', '+2%', hist_src_b],
+        [2017, '$1,740', '+3.9%', '$98,490', '+2%', hist_src_b],
+        [2016, '$1,680', '+1.6%', '$96,560', '+1.5%', hist_src_b],
+    ]
+    hist_hdr = ['Year', 'Property taxes', 'Change (as given)', 'Tax assessment', 'Change (as given)', 'Official basis']
+    hist_a = table(hist_hdr, HIST_A,
+                   caption='Property A recorded history (owner figures, rounded to the nearest $10)', cls='num yr', tid='hist-a')
+    hist_b = table(hist_hdr, HIST_B,
+                   caption='Property B recorded history (owner figures, rounded to the nearest $10)', cls='num yr', tid='hist-b')
+    hist = ('<h2>Recorded history, before the projections</h2>'
+            '<p class="note">The owner supplied the property-tax and assessed-value record below for each home. '
+            'It is shown rounded to the nearest $10 (%s) so the figures cannot be searched back to a bill: no official '
+            'page publishes a particular parcel&rsquo;s bill history, and the change columns are the owner&rsquo;s own '
+            'percentages. What the record does show officially is its pattern: the assessment grows by about 2 percent a '
+            'year, the Proposition 13 cap (%s). The 2026 Property A bill had not been issued when the record was supplied. '
+            'The projections below start from these rounded records.</p>' % (flag('P03'), src('RTC-51'))
+            + hist_a + hist_b)
     pre = table(['Year', 'Market value', 'Assessed value', 'Property tax', 'Home insurance', 'Water', 'Electricity (solar credit)', 'Repairs', 'Official basis'], [
         [r['year'], m(r['cup_value']), m(r['cup_assessed_pre']), m(r['cup_tax_pre']), m(r['ins_home']), m(r['cup_water']), m(r['cup_elec']), m(r['cup_maint']), sA]
         for r in ROWS if r['year'] < T
@@ -487,7 +533,7 @@ def build_projections():
         ['Inflation', '2.5%', 'constant in the baseline', 'assumption; the CPI rose %s a year 2000-2025 %s' % (pc(HS['cpi_2000_2025']), flag('A01')), src('BLS-CPI', 'CBO')],
     ], caption='What drives each line')
     tabs = '<div class="seg" id="ysel"><span>Show:</span><button type="button" data-y="a-pre" class="on">A before inheritance</button><button type="button" data-y="a-live">A lived in</button><button type="button" data-y="a-rent">A rented</button><button type="button" data-y="b-all">B</button><button type="button" data-y="all">All tables</button></div>'
-    body = ('<h2>Property tax by year</h2>' + chart + '<h2>Market and assessed values</h2>' + chart2 + assum
+    body = (hist + '<h2>Property tax by year</h2>' + chart + '<h2>Market and assessed values</h2>' + chart2 + assum
             + '<h2>Year-by-year tables</h2><p class="note">Baseline path with inheritance in %d. Amounts are nominal dollars of each year, rounded to $10. A negative electricity figure is a credit. If Property A is sold, its costs stop in %d; the sale figures are on the <a href="decision.html">Decision</a> page. <strong>Provenance:</strong> the Official basis column links the statutory tax/rate rule or HUD/county schedule used; projected dollar figures are conditional model outputs built on the owner\'s rounded inputs (%s) and stated assumptions (%s), not official forecasts.</p>' % (T, T, flag('P03'), flag('A01'))
             + tabs + pre + live + rent + sfb)
     page('projections.html', 'Year-by-year projections, 2026 to 2076',
@@ -1100,6 +1146,36 @@ def build_verification():
     ]
     t9 = table(['What was checked', 'What the official page said when it was opened', 'Result', 'Official page'], r9,
                caption='Independent re-read, 2026-11-13 (session arena/5a0857f0): flag U09 closed with the FY2027 ZIP rows read directly on the official pages')
+    r10 = [
+        ('Federal filing threshold for 2026', 'IRS estate-tax page, filing-threshold table: 2025 $13,990,000; 2026 $15,000,000; portability needs a timely Form 706',
+         'Confirmed today word for word', src('IRS-ESTATE')),
+        ('Federal basic exclusion and gift exclusion for 2027', 'Rev. Proc. 2026-35 section 3.44: $15,480,000 for calendar year 2027; section 3.46(1): first $20,000 of annual gifts excluded',
+         'Confirmed today word for word - the figures the estate projections use', src('RP-2026-35')),
+        ('California estate and inheritance tax', 'State Controller: no California estate tax return for decedents dying on or after 2005-01-01; the state death tax credit was eliminated effective that date',
+         'Confirmed today - California adds no death tax', src('SCO-ESTATE')),
+        ('Proposition 19 comparison charts', 'BOE: principal residence of transferor and transferee; value limit is current taxable value plus $1,000,000 as biennially adjusted; homeowners\' exemption within one year; claim within three years; R&amp;TC 63.2; effective 2021-02-16',
+         'Confirmed today', src('BOE-P19')),
+        ('Proposition 19 adjusted $1 million', 'BOE LTA 2025/015: "As of February 2025, the $1 million amount is adjusted to $1,044,586"; Rule 462.520: an exemption filed after one year gives prospective relief only; no exceptions to the one-year move-in',
+         'Confirmed today - same figure as LTA 2025/009, the model input', src('BOE-LTA-2025-015', 'BOE-LTA-2025-009')),
+        ('Proposition 19 exclusion formula', 'BOE LTA 2026/026: excluded amount = factored base year value immediately before the transfer plus the adjusted $1 million; excess amount is added to the taxable value; transfers through a trust are covered; continual-use requirement',
+         'Confirmed today', src('BOE-LTA-2026-026')),
+        ('Proposition 13 inflation cap', 'R&amp;TC 51(a)(1)(D): "In no event shall the percentage increase for any assessment year ... exceed 2 percent of the prior year\'s value"',
+         'Confirmed today', src('RTC-51')),
+        ('2026-27 assessment-roll factor', 'BOE LTA 2026/002: "please prepare your 2026 assessment roll using an inflation factor of 1.02"; CCPI 343.108 (Aug 2024) to 354.456 (Aug 2025) = 3.307%, capped at 2%; full factor table 1976-77 to 2026-27 enclosed',
+         'Confirmed today', src('BOE-LTA-2026-002')),
+        ('Santa Clara County tax rates behind the 1.1636% rate', 'Tax Rate Book FY2025-26, pages A-4 to A-6 read directly: 1% levy 1.00000; county retirement 0.03880; library retirement 0.00240; VMC 2008 0.00520; housing bond 0.00560; Cupertino Elementary 0.00010 + 0.01650 + 0.01690; Fremont Union High 0.01040 + 0.00880 + 0.01070 + 0.01180; Foothill-De Anza 0.01010 + 0.01350 + 0.00750; SCVWD State Water 0.00390; Midpen 0.00140',
+         'Confirmed today - the components sum to 1.16360 per $100 of value, exactly the rate the model applies to Property A', src('SCC-RATES')),
+        ('San Francisco secured property-tax rate', 'SF Treasurer: "The secured property tax rate for Fiscal Year 2026-27 is 1.18162182%"',
+         'Confirmed today', src('SF-TAX')),
+        ('San Francisco rent increase and the pending cap', 'SF Rent Board: 1.6% allowed increase for 2026-03-01 through 2027-02-28 (60% of Bay Area CPI). The notice posted 2026-11-09 describes File No. 261020, which would cap combined banked and capital-improvement increases at 10% a year; not enacted',
+         'Confirmed today - matches the Law page', src('SF-RENT-RULES', 'SF-LEG-261020')),
+        ("Homeowners' exemption", 'BOE: $7,000 reduction in taxable value for an owner-occupied home; one-time claim BOE-266; file by February 15 for the full year',
+         'Confirmed today', src('BOE-HOX')),
+        ('HUD rent standard, ZIP 95014', 'FY2026 Small Area Fair Market Rents, full bedroom table read: three-bedroom $5,870; four-bedroom $6,390',
+         'Confirmed today - matches the benchmark used for Property A %s' % flag('A07'), src('HUD-95014')),
+    ]
+    t10 = table(['What was checked', 'What the official page said when it was opened', 'Result', 'Official page'], r10,
+               caption='Sixth independent re-read, 2026-11-13 (session arena/c61749ed), on the official pages themselves')
 
     body = """
 <p class="callout">This page is the manual-review register for the whole site: one row per check, with the government page to open and re-read. Pass 1 was checked on 2026-11-11 (session faccd46d); Pass 2 re-opened the twelve core pages on 2026-11-12 (session e8636cac); subsequent same-day passes by sessions <code>3e79fc01</code>, <code>0adc9b0a</code>, and <code>a6ec5b1d</code> checked remaining official agency pages directly (leaving zero official agency excerpt entries in the register). Anything that cannot be confirmed from an agency page stays blank or labelled and carries a flag.</p>
@@ -1130,11 +1206,14 @@ def build_verification():
 <h2>Fourth independent re-read, 2026-11-13 (session arena/46d1a561)</h2>
 %s
 <p class="note">This pass opened the eight official pages in its table on their own agency URLs and read them in full; the quoted wording is what each page says today. It did not re-open the inherited-property basis FAQ, Rev. Rul. 2023-2, Topics 409/559/701, the California Controller page, the Franchise Tax Board schedules, the CPUC net-metering material, the San Francisco rent-increase rules or the Department of Insurance tool - those stand on the earlier passes and keep their links. One arithmetic check was added rather than a read: the Santa Clara rate components were summed by hand and do add to 1.16360.</p>
+<h2>Sixth independent re-read, 2026-11-13 (session arena/c61749ed)</h2>
+%s
+<p class="note">The closing integration pass re-opened the decision-critical pages one final time: the federal exclusion for both years, the California death-tax rule, the Proposition 19 charts, allowance and formula letters, the Proposition 13 cap and the 2026-27 roll factor, both county rate pages (the Santa Clara components were summed by hand and give exactly 1.16360 per $100), the San Francisco rent notice, the homeowners\' exemption, and the HUD rent table for ZIP 95014. Every figure matched the site. Nothing new was marked verified without a page read today.</p>
 <p class="note"><strong>Coverage summary.</strong> Across the passes above, every official agency source in <a href="sources.html">Sources and method</a> has now been opened and read directly on its agency URL (only the non-government stock/bill dataset, Damodaran, remains labelled academic). The interactive CDI insurance survey still requires interactive form access that automation has not resolved, so the ZIP-level insurance premiums remain blank. The HUD fiscal year 2027 lookup was resolved on 2026-11-13 (session arena/5a0857f0): both ZIP rows are now read directly, recorded in the register, and flag U09 is closed.</p>
 <p class="note"><strong>What this pass does not establish.</strong> Model outputs and projections are conditional scenarios built on the assumptions in the flags; no official page can verify a forecast. The automated checker (<a href="%s/blob/main/final/check.py">final/check.py</a>) proves only that every table row carries an official link, that dollar figures are rounded to $10, and that no personal identifier pattern appears (no fingerprint of unrounded owner figures is stored; that extra scan runs only with a private local file) - it does not prove that each link supports each cell. This register exists so every claim can be checked by hand against its link. People remain placeholders (the Transferor, the Inheritor); no names, addresses or parcel numbers appear anywhere.</p>
-""" % (t1, t2, t3, t4, tw3, render_verification(src, table, flag), t6, t5, t7, t8, t9, s7_verification_table(), REPO)
+""" % (t1, t2, t3, t4, tw3, render_verification(src, table, flag), t6, t5, t7, t8, t9, s7_verification_table(), t10, REPO)
     page('verification.html', 'Verification',
-         'Verification passes (2026-11-11 register, four re-reads on 2026-11-12, and the full-page direct read): every official source read directly on its agency page, each check linked for manual review, and everything unconfirmable left blank and flagged.', body)
+         'Verification passes (the 2026-11-11 register and the independent re-read passes through 2026-11-13): every official source read directly on its agency page, each check linked for manual review, and everything unconfirmable left blank and flagged.', body)
 
 
 def s7_verification_table():

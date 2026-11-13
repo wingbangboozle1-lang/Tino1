@@ -2043,6 +2043,57 @@ Scope held: `privacy-site/**` untouched; no publication boundary change (PR #79 
 
 ---
 
+## Session `arena/c61749ed-tino1` — final integration: official re-verification pass, publication-boundary resolution (G01/G02), Pages close-out (claimed 2026-11-13 UTC)
+
+Branch fixed by workspace: `arena/c61749ed-tino1`, based on `1896295` (PR #84 merge). No active claims existed at claim time (all prior session records closed). As the final integration session this session owns shared outputs (site index/navigation, publish boundary, board) and will not rewrite or delete any prior session's work.
+
+| Task | Status | Owner session | Files / scope | Notes |
+|---|---|---|---|---|
+| C1 Claim and coordination | done | arena/c61749ed-tino1 | COORDINATION.md (append only) | This entry. |
+| C2 Line-by-line official re-verification pass (2026-11-13) | in progress | arena/c61749ed-tino1 | `final/review_queue.py` (verification register), record in COORDINATION.md | Decision-critical official pages re-read directly today; every figure confirmed or flagged. Mechanical gates re-run (`final/check.py .`: every table row links to an official page; $10 rounding; PII patterns; conflict markers). |
+| C3 Publication-boundary resolution (G01/G02) + site integration | in progress | arena/c61749ed-tino1 | `final/publish.py`, `final/check_published.py`, `privacy-site/check_published.py`, `final/build.py` (landing), generated root pages, `_config.yml` | Resolution recorded below. |
+| C4 PR to main, merge, Pages confirmation | pending | arena/c61749ed-tino1 | branch commits + COORDINATION.md | Runs only after C2/C3 gates are green. |
+
+### G01/G02 resolution (publication boundary) — decided from the owner's project brief, 2026-11-13
+
+The owner brief requires BOTH: (a) "Personal information privacy is top priority... Anonymize any personal information and use placeholders... must not appear in the final website product"; and (b) "Costs and numbers should be used but rounded to the nearest $10 increments such as in the following property tax, assessed value tables, etc so that it cannot be traced back to the source... and should be reported in any decision analysis to provide clarity. I want clear numbers and projections for the reasoning behind decisions." The brief also states "There should be no manual input on my part" — so the open owner decisions G01/G02 are settled from the brief itself:
+
+1. **Publish the rounded-figures analysis.** The numeric root edition (placeholders only: Property A/B, Transferor, Inheritor; every owner/model dollar figure rounded to the nearest $10) becomes the published site, with its no-figures general guide (`privacy-site/public/`) kept alongside it. A figure-free site alone fails explicit requirement (b).
+2. **Personal information stays out.** No names, street addresses, APNs, account numbers, phone numbers or e-mails anywhere in published output (machine-checked). City/ZIP scope (Cupertino 95014, San Francisco 94122) is analysis context the owner's brief itself supplies and asks to research; it is not personal identification. Rounding remains labelled disclosure-minimisation, not anonymisation.
+3. **Git history is out of scope for the website product.** Prior history-remediation flags (P01-P03, F24-F25) stay published on the Flagged for Review page for the owner; no history rewrite is performed (it would destroy parallel-session records).
+
+### C2 verification log (2026-11-13, this session) - done
+
+Sixth independent re-read (13 decision-critical sources opened directly on their agency URLs today; every figure matched the site). Recorded as a new table on `verification.html` ("Sixth independent re-read, 2026-11-13 (session arena/c61749ed)") and in `final/sources.py`:
+
+| # | Source (official URL) | What was read today | Result |
+|---|---|---|---|
+| 1 | https://www.irs.gov/businesses/small-businesses-self-employed/estate-tax | Filing-threshold table: 2025 $13,990,000; 2026 $15,000,000 | Matches site |
+| 2 | https://www.irs.gov/pub/irs-drop/rp-26-35.pdf | §3.44 basic exclusion $15,480,000 (2027); §3.46(1) annual gift exclusion $20,000 | Matches site |
+| 3 | https://www.sco.ca.gov/ardtax_estate_tax.html | No CA estate tax return for deaths on/after 2005-01-01 | Matches site |
+| 4 | https://www.boe.ca.gov/prop19/ | Parent-child rules: both principal residences; cap = taxable value + $1,000,000 (biennial); exemption within 1 yr; claim within 3 yrs; R&TC 63.2 | Matches site |
+| 5 | https://www.boe.ca.gov/proptaxes/pdf/lta25015.pdf | "As of February 2025, the $1 million amount is adjusted to $1,044,586"; Rule 462.520 prospective-only relief | Matches site; new register entry BOE-LTA-2025-015 added |
+| 6 | https://www.boe.ca.gov/proptaxes/pdf/lta26026.pdf | Excluded amount = prior FBYV + adjusted $1M; trust transfers covered; continual use | Matches site |
+| 7 | https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=RTC&sectionNum=51. | R&TC 51(a)(1)(D) 2% cap | Matches site |
+| 8 | https://www.boe.ca.gov/proptaxes/pdf/lta26002.pdf | "prepare your 2026 assessment roll using an inflation factor of 1.02"; factor table 1976-77..2026-27 | Matches site |
+| 9 | https://files.santaclaracounty.gov/exjcpb1531/2025-11/tax-rate-book-2025-2026.pdf | Pages A-4..A-6 components (1% levy, retirement, library, VMC, housing bond, Cupertino Elem 0.00010+0.01650+0.01690, Fremont Union High 0.01040+0.00880+0.01070+0.01180, Foothill-De Anza 0.01010+0.01350+0.00750, SCVWD 0.00390, Midpen 0.00140) | Sum = 1.16360 per $100 = the model's 1.1636% - matches |
+| 10 | https://sftreasurer.org/property/secured-property-taxes | FY2026-27 secured rate 1.18162182% | Matches site |
+| 11 | https://www.sf.gov/learn-about-rent-increases-san-francisco/ | 1.6% (2026-03-01..2027-02-28); File No. 261020 notice (posted 2026-11-09) already on the Law page | Matches site |
+| 12 | https://www.boe.ca.gov/proptaxes/homeowners_exemption.htm | $7,000; BOE-266; file by Feb 15 | Matches site |
+| 13 | https://www.huduser.gov/portal/datasets/fmr/fmrs/FY2026_code/2026zip_code_calc.odn?zcta=95014&metro_code=METRO41940M41940&year=2026 | FY2026 SAFMR 95014: 3BR $5,870, 4BR $6,390 | Matches site (benchmark, flag A07) |
+
+Mechanical gates re-run after the rebuild: `final/check.py .` OK (25 pages, 1,016 table rows each with an official link, 2,619 links, 2,433 dollar figures rounded to $10, secretless 6-digit scan clean vs 14,552 model numbers, 51 model paths, conflict-marker gate clean). No irregularities found in this pass; earlier flags (A/U/Q/R/P series) stand unchanged.
+
+### C3 status (2026-11-13, this session) - done
+
+- Publication boundary resolved per the G01/G02 decision above: the published set is now 39 files - the root decision dashboard (landing + 16 analysis pages + `style.css` + `app.js` + 8 redirect stubs) and the 12-file no-figures guide (`privacy-site/public/`). `final/publish.py` regenerated `_config.yml` + `final/published.txt`.
+- Landing rebuilt as a category dashboard (NAV_CARDS) with the three-choices table, the four decisive open items, the privacy/rounding disclosure, and a link to the no-figures guide. Every page now also sends `no-referrer`.
+- Gates updated and green: `final/check_published.py` (exact set, noindex + no-referrer, PII patterns, link resolution, builder freshness), `privacy-site/check_published.py` (reviewed set hard-coded in both checkers, byte-identity, PII, landing rules), `privacy-site/test_illustrations.py` boundary test updated to the resolved policy, `privacy-site/build.py` reproducible, `privacy-site/check.py` PASS (11 pages, 318 rows), unittest 9/9, simulated Jekyll output passes both publication checkers. Real Jekyll + Pages deploy verified in CI at C4.
+- Workflow `.github/workflows/pages.yml` labels updated; its steps are unchanged and enforce the same gates.
+
+### C4 status
+
+- In progress: PR to `main`, merge after CI, GitHub Pages confirmation, final record below.
 ## Session `arena/5a0857f0-tino1` — seventh official re-read, U09 close-out attempt, final integration (claimed 2026-11-13 UTC)
 
 Branch fixed by the workspace: `arena/5a0857f0-tino1`, based on `1896295` (PR #84, the S6 close-out board record). All earlier session records above are retained unchanged. Every prior claim on this board is closed (done), so this session also performs the shared-output integration role for this pass, per the board rule that shared outputs change only in a final integration session once other tasks are done. If a parallel session opens a new claim while this one works, this session will not edit that session's claimed files and will rebase around its commits.

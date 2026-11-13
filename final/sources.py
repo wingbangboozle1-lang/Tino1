@@ -78,6 +78,9 @@ add('BOE-P19', 'BOE Prop 19', 'California State Board of Equalization - Proposit
 add('BOE-LTA-2025-009', 'BOE LTA 2025/009', 'BOE Letter to Assessors 2025/009 - adjustment of the $1 million amount',
     'https://www.boe.ca.gov/proptaxes/pdf/lta25009.pdf', 'page',
     '$1,044,586 for transfers 2025-02-16 through 2027-02-15; adjusted every other February 16 by the FHFA California House Price Index change for the prior calendar year (2.15% for 2024); next adjustment February 2027.')
+add('BOE-LTA-2025-015', 'BOE LTA 2025/015', 'BOE Letter to Assessors 2025/015 - TRA information sheets on the Prop 19 intergenerational transfer exclusion (2025-05-22)',
+    'https://www.boe.ca.gov/proptaxes/pdf/lta25015.pdf', 'page',
+    'Read directly 2026-11-13 (session arena/c61749ed): "As of February 2025, the $1 million amount is adjusted to $1,044,586"; Rule 462.520 - an exemption claim filed after one year gives prospective relief only; no exceptions to the one-year move-in requirement; date-of-transfer rules differ for sold or gifted property versus inherited property.')
 add('BOE-LTA-2026-026', 'BOE LTA 2026/026', 'BOE Letter to Assessors 2026/026 - Prop 19 intergenerational exclusion FAQ (2026-08-03)',
     'https://www.boe.ca.gov/proptaxes/pdf/lta26026.pdf', 'page',
     'Definitions: excluded amount = factored base year value + adjusted $1 million; new taxable value = factored base year value + excess; transfers through a trust are covered; the home must be continually used as the family home or the full new base year value is enrolled.')
