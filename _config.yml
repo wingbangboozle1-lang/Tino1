@@ -12,6 +12,7 @@ exclude:
   - 'assets'
   - 'audit-708757cf'
   - 'audit-de9174cd'
+  - 'audit-e351c885'
   - 'dashboard'
   - 'data'
   - 'docs'
