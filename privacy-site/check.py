@@ -6,7 +6,7 @@ import json
 import re
 
 ROOT = Path(__file__).parent/'public'
-NAV = {'index.html','decision.html','projection.html','stress.html','process.html','law.html','costs.html','questions.html','suggestions.html','suggestions-detail.html','flagged.html'}
+NAV = {'index.html','decision.html','projection.html','stress.html','process.html','law.html','costs.html','questions.html','suggestions.html','suggestions-detail.html','issues.html','flagged.html'}
 FILES = NAV | {'style.css'}
 REGISTRY = json.loads((ROOT.parent/'research.json').read_text())
 SOURCES = {s['url'] for s in REGISTRY['sources'].values()}
@@ -46,7 +46,7 @@ class Check(HTMLParser):
             assert a.get('type') == 'radio', 'Only local radio review controls are allowed'
             assert 'form' not in a, 'Review controls must not be associated with a submitting form'
             name = a.get('name','')
-            assert name == 'implementation-path' or name in {f'review-s{i}' for i in range(1,7)}, name
+            assert name == 'implementation-path' or name in {f'review-s{i}' for i in range(1,10)}, name
             allowed = {'privacy-guide','private-workspace','pause-pages','rounded-public'} if name == 'implementation-path' else {'adopt','hold','reject'}
             assert a.get('value') in allowed, f'Unexpected review choice: {a.get("value")}'
             self.inputs.append((name,a.get('value'), 'checked' in a))
@@ -119,12 +119,12 @@ def main():
         if name != 'suggestions.html':
             assert not p.inputs, f'Unexpected input controls outside Suggestions: {name}'
     controls=pages['suggestions.html'].inputs
-    assert len(controls)==22, f'Expected six review groups and four path choices, found {len(controls)} controls'
+    assert len(controls)==31, f'Expected nine review groups and four path choices, found {len(controls)} controls'
     selected={}
     for group,value,checked in controls:
         if checked: selected.setdefault(group,[]).append(value)
     assert selected.get('implementation-path')==['privacy-guide'], 'Privacy-first path must be the safe default'
-    for i in range(1,7):
+    for i in range(1,10):
         assert selected.get(f'review-s{i}')==['hold'], f'Suggestion {i} must default to Hold'
     css = (ROOT/'style.css').read_text()
     assert '@import' not in css and 'url(' not in css, 'Remote CSS resource'
