@@ -1838,7 +1838,7 @@ Base `551179b` (= origin/main, PR #72 merge). No open PRs and no active claims o
 - Publication: no change to the published set (39 files). `final/publish.py --check` passes; `_config.yml` gained one exclude line for `owner-analysis-2026`. Household projections are not published; the owner's privacy decision (G01/G02, history remediation) is still required before any household numeric page changes.
 - O4 Pages publication and merge: PR from `arena/022b1ea7-tino1` to `main` is limited to this folder, `_config.yml`, and this board entry. Merge result and PR link are recorded in the PR.
 
-### arena/022b1ea7-tino1 merge record (2026-11-13 UTC)
+---
 
 - PR: https://github.com/wingbangboozle1-lang/Tino1/pull/74 (`arena/022b1ea7-tino1` → `main`), merged with `gh pr merge 74 --merge` at 2026-11-13T06:49:29Z as merge commit `e4f7d29`.
 - Verification: required `verify` check passed on the PR head `801e0fe` (run 43381167246). Pages API reports `built` for `e4f7d29` (created 2026-11-13T06:49:30Z) at `https://wingbangboozle1-lang.github.io/Tino1/`; the live URL was not opened from this sandbox.
@@ -1880,3 +1880,65 @@ Base `551179b` (= origin/main, PR #72 merge). No open PRs and no active claims o
 ### F8 pull request and merge (2026-11-13)
 
 - PR opened from `arena/f8de1d0b-tino1` to `main`; result and Pages status recorded below after the merge.
+
+---
+
+## Session `arena/e351c885-tino1` — fresh-session close-out verification and integration (claimed 2026-11-13 06:55 UTC)
+
+**Branch:** `arena/e351c885-tino1`. The workspace cloned this branch as an orphan snapshot of `551179b`
+(the PR #72 merge point) with no shared history, so `git merge origin/main` refused with
+*unrelated histories*. No remote branch existed for `arena/e351c885-tino1` (verified via
+`git ls-remote`) and the snapshot contained zero unique work, so the branch pointer was aligned in
+place to `origin/main` (`e4f7d29`, i.e. PR #73 + #74 + #76 merged) with `git reset --hard origin/main`.
+This is a branch-pointer alignment, not a history rewrite of any shared branch and not a discard of
+any session's work; recorded here for the audit trail.
+
+**Active-session reconciliation at claim time:** PR #75 (`arena/f8de1d0b-tino1`, open, conflicting —
+front-door/flags/verification files) and PR #77 (`arena/022b1ea7-tino1`, open — board record) were
+created minutes before this claim. Their scopes are respected: this session does not edit
+`final/build.py`, `final/flags.py`, `flagged.html`, `index.html`, `review.html`, `style.css`,
+`suggestions.html`, or `verification.html`. If either session lands first, this branch rebases and
+unions the board entry per the append-only rule.
+
+| # | Task | Status | Owner session | Files / scope | Notes |
+|---|------|--------|---------------|---------------|-------|
+| E1 | Claim, branch alignment record, active-session reconciliation | done | arena/e351c885-tino1 | COORDINATION.md (append only) | This entry; pushed immediately per claim rule. |
+| E2 | Fresh-session independent re-verification of high-stakes official sources (sixth verification pass; direct fetch of the register's own URLs, quoted values compared) | in progress | arena/e351c885-tino1 | audit-e351c885/** (new, exclusive) | No shared page edits; findings recorded as review-only artifacts. |
+| E3 | Live GitHub Pages verification (fetch of the deployed site: chooser, summary, flagged, guide) | in progress | arena/e351c885-tino1 | audit-e351c885/** (new, exclusive) | Confirms what is actually deployed, not just what CI builds. |
+| E4 | Full local gate re-run on the merged tree + integration readiness report | in progress | arena/e351c885-tino1 | audit-e351c885/** (new, exclusive) | Baseline captured 2026-11-13 06:55 UTC: all gates green (25 pages, 938 rows, 2375 $-figures $10-clean, unittest 8/8, publish allowlist 39 files). |
+| E5 | PR from this branch, merge when CI green, confirm Pages build via API, close-out board record | pending | arena/e351c885-tino1 | COORDINATION.md (append only), _config.yml (mechanical regeneration by final/publish.py to exclude the audit dir from Jekyll) | Audit dir must never publish; exclusion added the same commit the dir is created. |
+
+**File-scope guarantee:** this session edits only `audit-e351c885/**` (new), `COORDINATION.md`
+(append-only), and the mechanically regenerated `_config.yml`. `final/published.txt` is regenerated
+by the same script but its allowlist is unchanged (39 files).
+
+---
+
+## Session `arena/e351c885-tino1` — fresh-session close-out verification and integration (claimed 2026-11-13 06:55 UTC)
+
+**Branch:** `arena/e351c885-tino1`. The workspace cloned this branch as an orphan snapshot of `551179b`
+(the PR #72 merge point) with no shared history, so `git merge origin/main` refused with
+*unrelated histories*. No remote branch existed for `arena/e351c885-tino1` (verified via
+`git ls-remote`) and the snapshot contained zero unique work, so the branch pointer was aligned in
+place to `origin/main` (`e4f7d29`, i.e. PR #73 + #74 + #76 merged) with `git reset --hard origin/main`.
+This is a branch-pointer alignment, not a history rewrite of any shared branch and not a discard of
+any session's work; recorded here for the audit trail.
+
+**Active-session reconciliation at claim time:** PR #75 (`arena/f8de1d0b-tino1`, open, conflicting —
+front-door/flags/verification files) and PR #77 (`arena/022b1ea7-tino1`, open — board record) were
+created minutes before this claim. Their scopes are respected: this session does not edit
+`final/build.py`, `final/flags.py`, `flagged.html`, `index.html`, `review.html`, `style.css`,
+`suggestions.html`, or `verification.html`. If either session lands first, this branch rebases and
+unions the board entry per the append-only rule.
+
+| # | Task | Status | Owner session | Files / scope | Notes |
+|---|------|--------|---------------|---------------|-------|
+| E1 | Claim, branch alignment record, active-session reconciliation | done | arena/e351c885-tino1 | COORDINATION.md (append only) | This entry; pushed immediately per claim rule. |
+| E2 | Fresh-session independent re-verification of high-stakes official sources (sixth verification pass; direct fetch of the register's own URLs, quoted values compared) | in progress | arena/e351c885-tino1 | audit-e351c885/** (new, exclusive) | No shared page edits; findings recorded as review-only artifacts. |
+| E3 | Live GitHub Pages verification (fetch of the deployed site: chooser, summary, flagged, guide) | in progress | arena/e351c885-tino1 | audit-e351c885/** (new, exclusive) | Confirms what is actually deployed, not just what CI builds. |
+| E4 | Full local gate re-run on the merged tree + integration readiness report | in progress | arena/e351c885-tino1 | audit-e351c885/** (new, exclusive) | Baseline captured 2026-11-13 06:55 UTC: all gates green (25 pages, 938 rows, 2375 $-figures $10-clean, unittest 8/8, publish allowlist 39 files). |
+| E5 | PR from this branch, merge when CI green, confirm Pages build via API, close-out board record | pending | arena/e351c885-tino1 | COORDINATION.md (append only), _config.yml (mechanical regeneration by final/publish.py to exclude the audit dir from Jekyll) | Audit dir must never publish; exclusion added the same commit the dir is created. |
+
+**File-scope guarantee:** this session edits only `audit-e351c885/**` (new), `COORDINATION.md`
+(append-only), and the mechanically regenerated `_config.yml`. `final/published.txt` is regenerated
+by the same script but its allowlist is unchanged (39 files).
