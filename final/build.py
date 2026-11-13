@@ -112,6 +112,7 @@ def page(slug, title, lead, body):
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
 <title>%s - Two-home inheritance analysis</title>
 <link rel="stylesheet" href="style.css">
 </head><body>
@@ -1082,6 +1083,36 @@ def build_verification():
                               .replace(flag('R43'), '<a class="flag" href="review.html#R43">R43</a>'), d) for a, b_, c_, d in r8]
     t8 = table(['What was checked', 'What the official page said when it was opened', 'Result', 'Official page'], r8,
                caption='Fifth independent re-read, 2026-11-13 (session arena/f8de1d0b), on the official pages themselves')
+    r9 = [
+        ('Federal filing threshold for 2026', 'IRS estate-tax page, filing-threshold table: 2025 $13,990,000; 2026 $15,000,000; portability needs a timely Form 706',
+         'Confirmed today word for word', src('IRS-ESTATE')),
+        ('Federal basic exclusion and gift exclusion for 2027', 'Rev. Proc. 2026-35 section 3.44: $15,480,000 for calendar year 2027; section 3.46(1): first $20,000 of annual gifts excluded',
+         'Confirmed today word for word - the figures the estate projections use', src('RP-2026-35')),
+        ('California estate and inheritance tax', 'State Controller: no California estate tax return for decedents dying on or after 2005-01-01; the state death tax credit was eliminated effective that date',
+         'Confirmed today - California adds no death tax', src('SCO-ESTATE')),
+        ('Proposition 19 comparison charts', 'BOE: principal residence of transferor and transferee; value limit is current taxable value plus $1,000,000 as biennially adjusted; homeowners\' exemption within one year; claim within three years; R&amp;TC 63.2; effective 2021-02-16',
+         'Confirmed today', src('BOE-P19')),
+        ('Proposition 19 adjusted $1 million', 'BOE LTA 2025/015: "As of February 2025, the $1 million amount is adjusted to $1,044,586"; Rule 462.520: an exemption filed after one year gives prospective relief only; no exceptions to the one-year move-in',
+         'Confirmed today - same figure as LTA 2025/009, the model input', src('BOE-LTA-2025-015', 'BOE-LTA-2025-009')),
+        ('Proposition 19 exclusion formula', 'BOE LTA 2026/026: excluded amount = factored base year value immediately before the transfer plus the adjusted $1 million; excess amount is added to the taxable value; transfers through a trust are covered; continual-use requirement',
+         'Confirmed today', src('BOE-LTA-2026-026')),
+        ('Proposition 13 inflation cap', 'R&amp;TC 51(a)(1)(D): "In no event shall the percentage increase for any assessment year ... exceed 2 percent of the prior year\'s value"',
+         'Confirmed today', src('RTC-51')),
+        ('2026-27 assessment-roll factor', 'BOE LTA 2026/002: "please prepare your 2026 assessment roll using an inflation factor of 1.02"; CCPI 343.108 (Aug 2024) to 354.456 (Aug 2025) = 3.307%, capped at 2%; full factor table 1976-77 to 2026-27 enclosed',
+         'Confirmed today', src('BOE-LTA-2026-002')),
+        ('Santa Clara County tax rates behind the 1.1636% rate', 'Tax Rate Book FY2025-26, pages A-4 to A-6 read directly: 1% levy 1.00000; county retirement 0.03880; library retirement 0.00240; VMC 2008 0.00520; housing bond 0.00560; Cupertino Elementary 0.00010 + 0.01650 + 0.01690; Fremont Union High 0.01040 + 0.00880 + 0.01070 + 0.01180; Foothill-De Anza 0.01010 + 0.01350 + 0.00750; SCVWD State Water 0.00390; Midpen 0.00140',
+         'Confirmed today - the components sum to 1.16360 per $100 of value, exactly the rate the model applies to Property A', src('SCC-RATES')),
+        ('San Francisco secured property-tax rate', 'SF Treasurer: "The secured property tax rate for Fiscal Year 2026-27 is 1.18162182%"',
+         'Confirmed today', src('SF-TAX')),
+        ('San Francisco rent increase and the pending cap', 'SF Rent Board: 1.6% allowed increase for 2026-03-01 through 2027-02-28 (60% of Bay Area CPI). The notice posted 2026-11-09 describes File No. 261020, which would cap combined banked and capital-improvement increases at 10% a year; not enacted',
+         'Confirmed today - matches the Law page', src('SF-RENT-RULES', 'SF-LEG-261020')),
+        ("Homeowners' exemption", 'BOE: $7,000 reduction in taxable value for an owner-occupied home; one-time claim BOE-266; file by February 15 for the full year',
+         'Confirmed today', src('BOE-HOX')),
+        ('HUD rent standard, ZIP 95014', 'FY2026 Small Area Fair Market Rents, full bedroom table read: three-bedroom $5,870; four-bedroom $6,390',
+         'Confirmed today - matches the benchmark used for Property A %s' % flag('A07'), src('HUD-95014')),
+    ]
+    t9 = table(['What was checked', 'What the official page said when it was opened', 'Result', 'Official page'], r9,
+               caption='Sixth independent re-read, 2026-11-13 (session arena/c61749ed), on the official pages themselves')
 
     body = """
 <p class="callout">This page is the manual-review register for the whole site: one row per check, with the government page to open and re-read. Pass 1 was checked on 2026-11-11 (session faccd46d); Pass 2 re-opened the twelve core pages on 2026-11-12 (session e8636cac); subsequent same-day passes by sessions <code>3e79fc01</code>, <code>0adc9b0a</code>, and <code>a6ec5b1d</code> checked remaining official agency pages directly (leaving zero official agency excerpt entries in the register). Anything that cannot be confirmed from an agency page stays blank or labelled and carries a flag.</p>
@@ -1106,11 +1137,14 @@ def build_verification():
 <h2>Fifth independent re-read, 2026-11-13 (session arena/f8de1d0b)</h2>
 %s
 <p class="note">This pass re-opened the federal, California and local pages above on their own agency URLs. Two of them changed the picture rather than confirming it: the CPUC page limits the net-metering tariff behind the solar credit to 20 years, and the Department of Insurance tool states that its figures are illustrations rather than quotes. Both are recorded as flags. What was not re-opened today stands on the earlier passes and keeps its links.</p>
+<h2>Sixth independent re-read, 2026-11-13 (session arena/c61749ed)</h2>
+%s
+<p class="note">The closing integration pass re-opened the decision-critical pages one final time: the federal exclusion for both years, the California death-tax rule, the Proposition 19 charts, allowance and formula letters, the Proposition 13 cap and the 2026-27 roll factor, both county rate pages (the Santa Clara components were summed by hand and give exactly 1.16360 per $100), the San Francisco rent notice, the homeowners\' exemption, and the HUD rent table for ZIP 95014. Every figure matched the site. Nothing new was marked verified without a page read today.</p>
 <p class="note"><strong>Coverage summary.</strong> Across the passes above, every official agency source in <a href="sources.html">Sources and method</a> has now been opened and read directly on its agency URL (only the non-government stock/bill dataset, Damodaran, remains labelled academic). The interactive CDI insurance survey and HUD FY2027 lookup require interactive form/spreadsheet access not resolved in automation, so those parcel values remain blank.</p>
 <p class="note"><strong>What this pass does not establish.</strong> Model outputs and projections are conditional scenarios built on the assumptions in the flags; no official page can verify a forecast. The automated checker (<a href="%s/blob/main/final/check.py">final/check.py</a>) proves only that every table row carries an official link, that dollar figures are rounded to $10, and that no personal identifier pattern appears (no fingerprint of unrounded owner figures is stored; that extra scan runs only with a private local file) - it does not prove that each link supports each cell. This register exists so every claim can be checked by hand against its link. People remain placeholders (the Transferor, the Inheritor); no names, addresses or parcel numbers appear anywhere.</p>
-""" % (t1, t2, t3, t4, tw3, render_verification(src, table, flag), t6, t5, t7, t8, REPO)
+""" % (t1, t2, t3, t4, tw3, render_verification(src, table, flag), t6, t5, t7, t8, t9, REPO)
     page('verification.html', 'Verification',
-         'Verification passes (2026-11-11 register, four re-reads on 2026-11-12, and the full-page direct read): every official source read directly on its agency page, each check linked for manual review, and everything unconfirmable left blank and flagged.', body)
+         'Verification passes (the 2026-11-11 register and six re-read passes through 2026-11-13): every official source read directly on its agency page, each check linked for manual review, and everything unconfirmable left blank and flagged.', body)
 
 
 # ====================================================================== questions & discovery
@@ -1761,6 +1795,7 @@ def stub(slug, target, title):
     open(os.path.join(OUT, slug), 'w').write('''<!doctype html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
 <meta http-equiv="refresh" content="0; url=%s">
 <link rel="canonical" href="%s">
 <title>%s - moved</title></head>
@@ -1787,6 +1822,10 @@ h1{font-size:30px;line-height:1.2;margin:28px 0 8px}h2{font-size:21px;margin:34p
 .lead{font-size:18px;color:var(--mut);max-width:900px;margin:0 0 20px}
 .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin:18px 0}
 .kpi{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:14px;margin:18px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 16px}
+.card h2{font-size:1.02rem;margin:.2rem 0 .5rem}.card ul{margin:0;padding-left:20px}
+.card li{margin:0 0 6px}.decisive li{margin:0 0 8px}
 .kpi .k{font-size:13px;color:var(--mut);text-transform:uppercase;letter-spacing:.03em}
 .kpi .v{font-size:22px;font-weight:700;margin:4px 0;font-variant-numeric:tabular-nums}
 .kpi .s{font-size:13px;color:var(--mut)}
@@ -1926,34 +1965,47 @@ def choice_table():
 
 
 def build_home_choice():
-    """Write the generic, privacy-first root landing page in ROOT_MODE.
+    """Write the decision-dashboard root landing page in ROOT_MODE.
 
-    The public Pages site contains no link to the household-specific numeric edition.
-    That edition and its inputs remain in this public repository, so exclusion from
-    Pages is not represented as repository privacy or anonymization.
+    The owner's brief (settling open decisions G01/G02) requires the rounded-figures
+    analysis to be reported on the published site for clarity, with personal
+    information anonymised to placeholders and every owner or model figure rounded
+    to the nearest $10. The no-figures general guide is linked from this page and
+    stays published beside it. Rounding is disclosure-minimisation, not anonymisation:
+    the repository and its history are public and are described as such below.
     """
+    nav = ''.join('<a href="%s">%s</a>' % (h, t) for h, t in NAV)
+    cards = []
+    for cat, items in NAV_CARDS:
+        lis = ''.join('<li><a href="%s">%s</a> - %s</li>' % (h, t, d) for h, t, d in items)
+        cards.append('<section class="card"><h2>%s</h2><ul>%s</ul></section>' % (cat, lis))
+    decisive = ''.join('<li><strong><a class="flag" href="flagged.html#%s">%s</a></strong> - %s</li>'
+                       % (fid, fid, text) for fid, text in DECISIVE)
     open(os.path.join(OUT, 'index.html'), 'w', encoding='utf-8').write("""<!doctype html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'">
-<title>Privacy-first inheritance decision guide</title>
-<style>
-:root{color-scheme:light;--ink:#173334;--green:#24574f;--muted:#657572;--line:#dce6df;--paper:#f5f7f2}
-*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.65 system-ui,-apple-system,"Segoe UI",sans-serif}
-main{max-width:760px;margin:10vh auto;padding:40px 28px;background:#fff;border:1px solid var(--line)}
-.eyebrow{font-size:.75rem;letter-spacing:.14em;font-weight:700;color:#5b786c}h1{font:500 clamp(2rem,5vw,3rem)/1.15 Georgia,serif;margin:.8rem 0 1rem}
-p{color:var(--muted)}a.button{display:inline-block;margin:16px 0;padding:13px 19px;background:var(--green);color:#fff;text-decoration:none;font-weight:700;border-radius:4px}
-a:focus-visible{outline:3px solid #c98d25;outline-offset:3px}.note{border-top:1px solid var(--line);padding-top:18px;font-size:.9rem}
-</style></head><body><main><p class="eyebrow">PUBLIC EDITION · PRIVACY FIRST</p>
-<h1>Inheritance decision guide</h1>
-<p>A general guide to the legal process, the information still needed, operating-cost categories, and the choices that should be compared before a future trust transfer.</p>
-<p>The public guide uses fictional teaching examples only. It does not publish household-specific property figures, tax histories, utility costs or forecasts.</p>
-<p><a class="button" href="privacy-site/public/index.html">Open the decision guide</a></p>
-<p class="note">Rounding is not anonymization. This page only describes the GitHub Pages publication boundary; the public source repository and its history are separate exposure surfaces.</p>
-</main></body></html>
-""")
+<title>Two-home inheritance analysis - decision dashboard</title>
+<link rel="stylesheet" href="style.css">
+</head><body>
+<header class="top"><div class="wrap">
+<a class="brand" href="index.html">Two-home inheritance analysis</a>
+<nav aria-label="Sections">%s</nav></div></header>
+<main class="wrap">
+<h1>Decision dashboard</h1>
+<p class="lead">Property A (the Cupertino home, ZIP 95014) will pass to the Inheritor through a trust around 2040 to 2050; Property B (the San Francisco three-unit home, ZIP 94122) is already owned by the Inheritor. Every section below is grouped by category: the answer first, then the money and projections, the law and process, the open questions and suggestions, and how everything was checked. Every table row carries a link to the official page behind it.</p>
+<p class="callout"><strong>Privacy first.</strong> People are placeholders (the Transferor, the Inheritor). No names, street addresses, parcel numbers, account numbers, telephone numbers or e-mail addresses appear anywhere on this site - that rule is machine-checked before every publish. Owner-supplied and modelled dollar figures are rounded to the nearest $10 as disclosure-minimisation so they cannot be searched back to a bill; rounding is not anonymisation, and the public repository and its history are separate exposure surfaces. Every page is marked noindex and sends no referrer.</p>
+%s
+<h2>The three choices at a glance</h2>
+%s
+<h2>The four open items that change the answer</h2>
+<ul class="decisive">%s</ul>
+<p class="callout"><strong>Looking for the version with no household figures?</strong> The <a href="privacy-site/public/index.html">no-figures decision guide</a> covers the same rules, process and decision framework with invented teaching examples only - every illustration there is fictional.</p>
+</main>
+<footer class="wrap"><p>Built %s from <a href="%s/tree/main/final">final/</a> (model, generator and checker). <a href="versions.html">Earlier versions</a> are superseded. Property A = Cupertino home (ZIP 95014). Property B = San Francisco three-unit home (ZIP 94122). People are placeholders: "the Transferor" (current owner of Property A) and "the Inheritor" (already owns Property B). Owner-supplied and modelled dollar figures are rounded to the nearest $10. This is an analysis to prepare questions for a licensed estate attorney and tax adviser, not legal or tax advice. Open items are on the <a href="flagged.html">Flagged for Review</a> page.</p></footer>
+</body></html>
+""" % (nav, '<div class="cards">%s</div>' % '\n'.join(cards), choice_table(), decisive, BUILD_DATE, REPO))
 
 
 def main():
