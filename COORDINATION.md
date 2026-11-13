@@ -2043,6 +2043,16 @@ Scope held: `privacy-site/**` untouched; no publication boundary change (PR #79 
 
 ---
 
+## Session `arena/5a0857f0-tino1` — seventh official re-read, U09 close-out attempt, final integration (claimed 2026-11-13 UTC)
+
+Branch fixed by the workspace: `arena/5a0857f0-tino1`, based on `1896295` (PR #84, the S6 close-out board record). All earlier session records above are retained unchanged. Every prior claim on this board is closed (done), so this session also performs the shared-output integration role for this pass, per the board rule that shared outputs change only in a final integration session once other tasks are done. If a parallel session opens a new claim while this one works, this session will not edit that session's claimed files and will rebase around its commits.
+
+| # | Task | Status | Owner session | Files / scope | Verification / handoff |
+|---|------|--------|---------------|---------------|------------------------|
+| S7-0 | Claim and coordination | done | arena/5a0857f0-tino1 | COORDINATION.md (append only) | This entry; claim committed and pushed before product changes. |
+| S7-1 | Seventh independent official-source re-read of the highest-stakes published values (direct fetch of the register's own URLs; quoted values compared) | claimed | arena/5a0857f0-tino1 | `audit-5a0857f0/**` (new, exclusive) | Target set: IRS estate exclusion 2026/2027, BOE LTA 2026/002 and 2025/009, R&TC 51, BOE Prop 19, HUD SAFMR FY2026 and FY2027 (U09 attempt), SF Treasurer FY2026-27 rate, Rev. Rul. 2023-2, SFPUC escalation (A12). |
+| S7-2 | Register and flag updates only where a direct read supports them (close U09 if FY2027 ZIP figures are read; otherwise leave blank and record the attempt) | claimed | arena/5a0857f0-tino1 | `final/sources.py`, `final/flags.py`, regenerated pages via `final/build.py` | No value enters the site without a direct official read recorded in `audit-5a0857f0/`. |
+| S7-3 | Final integration: full gate suite, PR from this branch to `main`, merge when green, confirm the Pages build and live boundary, record results | claimed | arena/5a0857f0-tino1 | branch commits + COORDINATION.md (append only) | Gates: `final/check.py .`, `final/publish.py --check`, `privacy-site/build.py` byte-identical, `privacy-site/check.py`, unittest, Jekyll in PR CI, both published-output checkers. |
 ## Session `arena/959e77d3-tino1` — independent privacy-first acceptance audit and final integration (claimed 2026-11-13)
 
 **Branch:** `arena/959e77d3-tino1`, assigned base `18962953544f4061c9b96db19ea955056f747272` (PR #84 merge). The current integration branch is fixed by the workspace; no alternate branch or worktree will be created. No active file-scope claim was present at this base.
