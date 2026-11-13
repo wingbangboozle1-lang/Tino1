@@ -2176,6 +2176,13 @@ Post-rebase local gates: 12-page public build; 383 public rows passed the guide 
 - `verify` run 43422384043 passed on head `cd7090b18fb0a956530f70c80232667df53b65dc`. CI installed GitHub Pages/Jekyll, rebuilt and reproduced the 12-page guide, built actual `_site`, and passed both emitted-output allowlist checks. The workflow reported 14 published files and one builder output compared. Its optional external private-figure scan was skipped because `TINO1_PRIVATE_FIGURES` is not set.
 - This is CI validation of the proposed PR, not a deployment or live-page verification of this branch. GitHub Pages deployment and owner-only repository/history exposure remain separate.
 
+### S7-1 / S7-2 final close-out and audit artifact (2026-11-13 UTC)
+PR #89 was merged as `1ac58155541a82bf29bafa51e6e2c1ca7e5027f5` after its required `verify` passed (run `43422616028`, head `fad8abd7`). The main-branch validation (run `43422853989`) and Pages deployment for that merge (run `43422853000`) also succeeded. The Pages API later reported `built`, no error, for the current main snapshot `d19d34654c5928524b384680bd2c817503278a22`; direct live reads of the Overview and Tax & law pages showed the generic unverified baseline note and enacted SALT row.
+
+Created `audit-959e77d3/AUDIT.md` as the bounded acceptance record. Ran the repository manifest generator so `_config.yml` excludes this audit directory; `final/published.txt` remains the same 14-file allowlist. Local checks after adding the artifact: public build/check 12 pages and 383 linked rows; 12/12 unit tests; manifest check 14 files; repository checker 25 pages, 1,010 rows, 2,572 links, 2,469 rounded dollar figures, 14,552 model numbers in the secretless scan and 51 model paths. The separate private-figure scan remains `SKIPPED`. CI/Jekyll has passed on PR #89; the follow-up audit-artifact PR must also pass the actual Jekyll output check before merge.
+
+At close-out, PRs #91 and #92 were separately open with titles proposing rounded/de-identified numeric editions. Their contents and proposed boundary changes were not reviewed or authorized by this session. This close-out does not approve their publication; assess their actual emitted files and privacy implications separately before any merge.
+
 ### S7 close-out (arena/5a0857f0, 2026-11-13 UTC)
 
 **Sources re-read live on 2026-11-13 in this session (row-by-row record in `audit-5a0857f0/VERIFICATION.md`):**
