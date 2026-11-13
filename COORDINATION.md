@@ -1692,3 +1692,19 @@ Privacy interpretation: names, contact details, exact addresses, parcel identifi
 - S5-0 claim, S5-1 bounded audit, S5-2 review pack and S5-3 integration/publication are done. The audit directory is excluded from Pages; the root chooser privacy wording is corrected. D1 dual-edition routing remains in force.
 - Still open for the owner: G01/G02 routing and repository/history remediation; privacy-safe numeric rebuild or privacy-only revert if anonymization is required; model/provenance corrections S5-P1–S5-P5; private evidence questions S5-Q1–S5-Q7. No historical series, ZIPs or private documents were republished by this session.
 
+
+---
+
+## Session `arena/fdd454a6-tino1` — final integration, privacy boundary and decision-readiness audit (claimed 2026-11-13 UTC)
+
+**Branch:** `arena/fdd454a6-tino1` (fixed by the workspace; based on `551179bc2d97150a2e69b23d28158d50efd1ef4c`). This session is the final integrator on the assigned branch; no alternate branch or worktree will be created. The previously recorded session scopes are closed. This claim does not imply that old exact inputs in public Git history have been erased.
+
+| Task | Status | Owner session | Files / scope | Acceptance / verification |
+|---|---|---|---|---|
+| FDD-0 Read board, claim, and coordinate | in progress | `arena/fdd454a6-tino1` | `COORDINATION.md` append only | Claim committed and pushed before product changes; retain all prior records. |
+| FDD-1 Independently verify the actual GitHub Pages publication boundary against the repo contents and privacy requirements | claimed | `arena/fdd454a6-tino1` | `_config.yml`, `.github/workflows/pages.yml`, `privacy-site/check_published.py`, `final/publish.py`, a new `session-fdd454a6/**` audit note | Build the real Jekyll output and compare every emitted path with an explicit allowlist; do not infer publication from a noindex tag or README claim. No private source data or exact historical series in audit notes. |
+| FDD-2 Recheck and correct public decision-readiness content / gaps without falsely certifying unverified assumptions | claimed | `arena/fdd454a6-tino1` | `privacy-site/**` public guide, only as needed; relevant source registers and review flags if a primary-source re-read requires a correction | Keep household-derived figures and identifiers off the public guide; every factual row has a direct official link; leave unknowns blank and flag them. Suggestions stay proposals. |
+| FDD-3 Final reproducible integration, tests, PR and Pages check | claimed | `arena/fdd454a6-tino1` | `COORDINATION.md`, workflow / publication files only after FDD-1/2; current branch only | Build/check the exact emitted site, verify links and no personal data, run CI, open PR from this branch, merge only if green, verify Pages and record outcome. |
+
+Privacy interpretation for this pass: a $10 rounding interval is **not anonymization**. No names, exact street addresses, parcel/account data, exact historical bills or assessments may be published. City/ZIP plus a unique value pattern may still be identifying; use generic property placeholders on the public guide. Full household-value analysis must be treated as private unless its publication is demonstrably safe. Public Git history is a separate exposure; no history rewrite, force push, repository-visibility change or other destructive account-level action is authorized by this claim. Flag any such owner-only remediation separately.
+
