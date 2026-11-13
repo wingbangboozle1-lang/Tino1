@@ -1,14 +1,18 @@
 #!/usr/bin/env python3
-"""Verify GitHub Pages output against the privacy-first public boundary.
+"""Verify GitHub Pages output against the reviewed publication boundary.
 
   python3 final/check_published.py _site
 
 Exit code 1 on any failure. This gate checks the actual Jekyll output against
-final/published.txt, which is intentionally limited to the generic root landing and
-the privacy-site/public guide. The published guide's known household-signature and
-locality checks run separately in privacy-site/check.py. Optional unrounded-value
-fingerprints are scanned only when TINO1_PRIVATE_FIGURES points to a file outside the
-repository; without that file, this checker does not claim a complete privacy audit.
+final/published.txt, which lists the rounded-figures analysis (placeholders for
+every person and property, every owner-supplied and modelled dollar figure
+rounded to the nearest $10) plus the figure-free guide under privacy-site/public/.
+Rounding is disclosure minimisation, not anonymisation, and the repository is
+public: review item G01 on the Suggestions page records the narrower options.
+The guide's own household-signature and locality checks run separately in
+privacy-site/check.py. Optional unrounded-value fingerprints are scanned only
+when TINO1_PRIVATE_FIGURES points to a file outside the repository; without that
+file, this checker does not claim a complete privacy audit.
 """
 import html
 import os
@@ -127,4 +131,4 @@ if __name__ == '__main__':
             fail(x)
             print(' -', x)
         sys.exit(1)
-    print('PASS - exact privacy-first publication allowlist (%d files), internal links resolve inside it, noindex on every page, no PII pattern matched, published root landing matches a fresh build; unrounded-value scan %s' % (n, 'on' if FP else 'SKIPPED (TINO1_PRIVATE_FIGURES not set)'))
+    print('PASS - exact publication allowlist (%d files), internal links resolve inside it, noindex on every page, no PII pattern matched, published root landing matches a fresh build; unrounded-value scan %s' % (n, 'on' if FP else 'SKIPPED (TINO1_PRIVATE_FIGURES not set)'))

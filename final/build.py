@@ -22,9 +22,10 @@ B = M['baseline']['summary']
 ROWS = M['baseline']['rows']
 OUT = os.path.abspath(os.environ.get('OUT_DIR', os.path.join(HERE, 'site')))
 ROOT_MODE = bool(os.environ.get('ROOT_MODE'))
-# ROOT_MODE builds the household-specific numeric analysis into its historical root files,
-# with its executive summary at summary.html. The public index.html is a generic landing
-# page that links only to privacy-site/public; final/publish.py excludes all numeric pages.
+# ROOT_MODE builds the rounded-figures analysis into its historical root files, with its
+# executive summary at summary.html. The public index.html is the dashboard front door for
+# that edition; final/publish.py pins the exact published file list, which also includes the
+# figure-free guide under privacy-site/public/.
 HOME = 'summary.html' if ROOT_MODE else 'index.html'
 Y0 = 2026
 T = P['T']
@@ -112,6 +113,7 @@ def page(slug, title, lead, body):
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
 <title>%s - Two-home inheritance analysis</title>
 <link rel="stylesheet" href="style.css">
 </head><body>
@@ -1125,11 +1127,102 @@ def build_verification():
 %s
 <p class="note">This pass re-opened the highest-stakes federal, California, local and HUD pages above on their own agency URLs and closed flag U09: the fiscal year 2027 Small Area Fair Market Rent rows for both ZIPs are now read directly and recorded in the source register. The model is unchanged and keeps the fiscal year 2026 figures. One new irregularity is recorded - <a class="flag" href="review.html#R55">R55</a>. The pass log is in <code>audit-5a0857f0/VERIFICATION.md</code> in the repository.</p>
 <p class="note">This pass re-opened the federal, California and local pages above on their own agency URLs. Two of them changed the picture rather than confirming it: the CPUC page limits the net-metering tariff behind the solar credit to 20 years, and the Department of Insurance tool states that its figures are illustrations rather than quotes. Both are recorded as flags. What was not re-opened today stands on the earlier passes and keeps its links.</p>
+<h2>Fourth independent re-read, 2026-11-13 (session arena/46d1a561)</h2>
+%s
+<p class="note">This pass opened the eight official pages in its table on their own agency URLs and read them in full; the quoted wording is what each page says today. It did not re-open the inherited-property basis FAQ, Rev. Rul. 2023-2, Topics 409/559/701, the California Controller page, the Franchise Tax Board schedules, the CPUC net-metering material, the San Francisco rent-increase rules or the Department of Insurance tool - those stand on the earlier passes and keep their links. One arithmetic check was added rather than a read: the Santa Clara rate components were summed by hand and do add to 1.16360.</p>
 <p class="note"><strong>Coverage summary.</strong> Across the passes above, every official agency source in <a href="sources.html">Sources and method</a> has now been opened and read directly on its agency URL (only the non-government stock/bill dataset, Damodaran, remains labelled academic). The interactive CDI insurance survey still requires interactive form access that automation has not resolved, so the ZIP-level insurance premiums remain blank. The HUD fiscal year 2027 lookup was resolved on 2026-11-13 (session arena/5a0857f0): both ZIP rows are now read directly, recorded in the register, and flag U09 is closed.</p>
 <p class="note"><strong>What this pass does not establish.</strong> Model outputs and projections are conditional scenarios built on the assumptions in the flags; no official page can verify a forecast. The automated checker (<a href="%s/blob/main/final/check.py">final/check.py</a>) proves only that every table row carries an official link, that dollar figures are rounded to $10, and that no personal identifier pattern appears (no fingerprint of unrounded owner figures is stored; that extra scan runs only with a private local file) - it does not prove that each link supports each cell. This register exists so every claim can be checked by hand against its link. People remain placeholders (the Transferor, the Inheritor); no names, addresses or parcel numbers appear anywhere.</p>
-""" % (t1, t2, t3, t4, tw3, render_verification(src, table, flag), t6, t5, t7, t8, t9, REPO)
+""" % (t1, t2, t3, t4, tw3, render_verification(src, table, flag), t6, t5, t7, t8, t9, s7_verification_table(), REPO)
     page('verification.html', 'Verification',
          'Verification passes (2026-11-11 register, four re-reads on 2026-11-12, and the full-page direct read): every official source read directly on its agency page, each check linked for manual review, and everything unconfirmable left blank and flagged.', body)
+
+
+def s7_verification_table():
+    """Fourth independent re-read, 2026-11-13 (session arena/46d1a561).
+
+    Every row below was opened on the issuing agency's own URL during this
+    session and read in full; the wording is what the page says today.
+    """
+    rows = [
+        ['Proposition 13 inflation factor for the 2026 roll',
+         'Letter 2026/002, dated 2026-01-13: the California Consumer Price Index rose from '
+         '343.108 in August 2024 to 354.456 in August 2025, an increase of 3.307 percent, so '
+         'the 2026 assessment roll uses the capped inflation factor 1.02. The letter also '
+         'records why the usual October figures were unavailable: because of the federal '
+         'government shutdown in the fall of 2025 the Bureau of Labor Statistics did not '
+         'publish the October 2025 regional indexes, so the Department of Industrial '
+         'Relations issued no October 2025 index and the Board used the closest published period.',
+         'Confirmed, and it matches the 2 percent cap the model applies every year. The '
+         'shutdown note is new provenance: it explains the 2026 factor and is worth re-reading '
+         'if a future shutdown recurs. ' + flag('A11'),
+         src('BOE-LTA-2026-002')],
+        ['Proposition 19 allowance and how often it moves',
+         'Letter 2025/009, dated 2025-03-07: the Federal Housing Finance Agency announced on '
+         '2025-02-25 that the California House Price Index rose 2.15 percent in 2024, so the '
+         '$1 million amount is adjusted to $1,044,586 for transfers from 2025-02-16 through '
+         '2027-02-15. The Constitution requires the adjustment on February 16, 2023 and every '
+         'other February 16 after that, using the prior calendar year\'s California index change. '
+         'The next adjustment is February 2027.',
+         'Confirmed, including the rule the model encodes: the allowance is re-set every odd '
+         'February by the prior calendar year\'s change, so it captures roughly every other '
+         'year of house-price growth, not compound annual growth. The amount after 2027-02-15 '
+         'stays blank. ' + flag('U04'),
+         src('BOE-LTA-2025-009')],
+        ['The one-year residence rule and its exceptions',
+         'Letter 2026/026, dated 2026-08-03, question 7: "the transfer is required to be of a '
+         'principal residence of the transferor that qualifies as the principal residence of '
+         'the transferee within one year after the transfer under section 63.2(a)(1)(A). There '
+         'are no exceptions to this rule." Question 8 adds that the exclusion is removed once '
+         'the home stops being the claimant\'s principal place of residence, and can continue '
+         'only if a different eligible transferee occupies it within one year.',
+         'Confirmed on the letter. This is the single most decision-relevant sentence in the '
+         'register: if the Inheritor keeps living at Property B, the partial exclusion is not '
+         'available at all and Property A is reassessed to full market value, which is exactly '
+         'the "rent it" column. Whether the Inheritor will move is a personal choice, not a '
+         'verifiable fact. ' + flag('Q15'),
+         src('BOE-LTA-2026-026')],
+        ['Federal basic exclusion for 2027',
+         'Rev. Proc. 2026-35 section 3.44: "For calendar year 2027, the basic exclusion amount '
+         'under section 2010(c)(3) is $15,480,000." The same amount sets the generation-skipping '
+         'transfer exemption under section 2631(c).',
+         'Confirmed on the revenue procedure PDF, read in full. It is the starting point of the '
+         'estate projections.', src('RP-2026-35')],
+        ['Federal basic exclusion for 2026',
+         '"The Working Families Tax Cuts Bill (WFTC) was signed into law on July 4, 2025 as '
+         'Public Law 119-21. WFTC amends section 2010(c)(3) by increasing the basic exclusion '
+         'amount to $15,000,000 for calendar year 2026."',
+         'Confirmed on the IRS page. The 2026 amount is statutory, not merely an inflation '
+         'adjustment, which is why it does not move with the chained index.',
+         src('IRS-NEW')],
+        ['San Francisco secured property-tax rate',
+         '"The secured property tax rate for Fiscal Year 2026-27 is 1.18162182%." Secured bills '
+         'are mailed in October; the first installment is delinquent after December 10 and the '
+         'second after April 10, each with a 10 percent penalty, and a supplemental bill follows '
+         'a change in ownership.',
+         'Confirmed. Property B is never reassessed in this analysis, so its rate matters and '
+         'the date of death drives only Property A.', src('SF-TAX')],
+        ['HUD rent benchmark for ZIP 95014',
+         'FY2026 Small Area Fair Market Rents, ZIP 95014: efficiency $3,340, one-bedroom $3,800, '
+         'two-bedroom $4,440, three-bedroom $5,870, four-bedroom $6,390. The published '
+         'calculation shows the two-bedroom base rent of $3,439 multiplied by a recent-mover '
+         'factor of 1.1773, an inflation update of 1.0375 and a trend factor of 1.0576.',
+         'Confirmed on the HUD page, including the arithmetic. These are benchmarks for a '
+         'standard unit, not a valuation of Property A, whose bedroom count and rentable '
+         'condition are unknown. ' + flag('U08') + ' ' + flag('A07'),
+         src('HUD-95014')],
+        ['Santa Clara County composite rate',
+         'FY2025-26 Tax Rate Book, pages A-4 to A-6: the listed components for the Cupertino '
+         'school and district areas are 1.00000, 0.03880, 0.00240, 0.00520, 0.00560, 0.00010, '
+         '0.01650, 0.01690, 0.01040, 0.00880, 0.01070, 0.01180, 0.01010, 0.01350, 0.00750, '
+         '0.00390 and 0.00140 per $100.',
+         'The components sum to 1.16360, which is the rate the model uses. The sum was '
+         're-checked by hand this session. The home\'s own tax rate area was not looked up, '
+         'because doing so would identify the parcel. ' + flag('U03'),
+         src('SCC-RATES')],
+    ]
+    return table(['What was checked', 'What the official page said when opened on 2026-11-13',
+                  'Result', 'Official page'], rows,
+                 caption='Fourth independent re-read, 2026-11-13 (session arena/46d1a561), on the official pages themselves')
 
 
 # ====================================================================== questions & discovery
@@ -1735,7 +1828,7 @@ def _suggestions_options():
 %s
 %s
 %s
-<p class="note">Where a suggestion rests on a rule, the link in the last column is the official page for that rule. For G01 and G02 the behaviour of the hosting service is described in its own documentation, linked beside the official pages cited by the two privacy flags. Since 2026-11-12 the address served by GitHub Pages shows the guide without household figures, and the pages of this edition are repository files only; G01 asks the owner to settle that question for good.</p>
+<p class="note">Where a suggestion rests on a rule, the link in the last column is the official page for that rule. For G01 and G02 the behaviour of the hosting service is described in its own documentation, linked beside the official pages cited by the two privacy flags. From 2026-11-13 the address served by GitHub Pages shows this rounded-figures edition, with the guide without household figures still published one click away; G01 asks the owner to settle that boundary for good.</p>
 """ % (n, t0, t1, t2, t3)
 
 
@@ -1945,34 +2038,120 @@ def choice_table():
 
 
 def build_home_choice():
-    """Write the generic, privacy-first root landing page in ROOT_MODE.
+    """Write the dashboard landing page for the rounded-figures edition.
 
-    The public Pages site contains no link to the household-specific numeric edition.
-    That edition and its inputs remain in this public repository, so exclusion from
-    Pages is not represented as repository privacy or anonymization.
+    This is the front door of the published site. It groups every page by
+    category, shows the headline numbers, and keeps the figure-free guide one
+    click away for anyone who wants the process without household figures.
+
+    Publication boundary: the brief asks for the rounded-figures analysis to be
+    published, with personal information replaced by placeholders and every
+    owner-supplied figure rounded to $10 so it cannot be traced back. Earlier
+    sessions served only the figure-free guide and left this edition
+    unpublished; that boundary is recorded as review item G02 so the owner can
+    still choose the narrower setting.
     """
-    open(os.path.join(OUT, 'index.html'), 'w', encoding='utf-8').write("""<!doctype html>
+    nav_items = [('index.html', 'Home')] + NAV
+    nav = ''.join('<a href="%s"%s>%s</a>' % (
+        h, ' class="on" aria-current="page"' if h == 'index.html' else '', t) for h, t in nav_items)
+
+    kpis = ''.join([
+        kpi('Best financial outcome (conditional)', 'Sell Property A, keep Property B',
+            'ahead in the baseline and across 50 real historical sequences - a model result on the '
+            'flagged assumptions, not a verified forecast (%s, %s)' % (flag('A01'), flag('A02'))),
+        kpi('Property A at inheritance (%d)' % T, m(B['fmv_T']),
+            'from %s today at 4.0%% a year (assumption %s)' % (m(P['cup_value']), flag('A01'))),
+        kpi('Property A tax: today / lived in / rented',
+            '%s / %s / %s' % (m(P['cup_tax_2025']), m(B['tax_live_T']), m(B['tax_rent_T'])),
+            'per year, first year after inheritance (%s)' % src('SCC-RATES', 'BOE-LTA-2026-026')),
+        kpi('Property B tax advantage kept by not selling', m(sf_gap) + ' a year',
+            'difference between tax on market value and on the current assessed value (%s)' % src('SF-TAX')),
+        kpi('Federal estate-tax room for cash in %d' % T, m(B['exclusion_T'] - B['fmv_T']),
+            'projected exclusion %s minus Property A; per transferor, in %d dollars (%s)'
+            % (m(B['exclusion_T']), T, src('RP-2026-35'))),
+        kpi('Open items to review', '%d flagged / %d review findings' % (len(FLAGS), len(REVIEW)),
+            'everything unconfirmed or irregular is on the Flagged page, never filled in'),
+    ])
+
+    def group(title, items):
+        out = ['<section class="card"><h3>%s</h3><div class="cards">' % e(title)]
+        for href, name, blurb in items:
+            out.append('<a class="card" href="%s"><b>%s</b><span>%s</span></a>' % (href, e(name), blurb))
+        out.append('</div></section>')
+        return ''.join(out)
+
+    body = ''.join([
+        '<section class="kpis">%s</section>' % kpis,
+        group('1. Decide', [
+            ('summary.html', 'Executive summary', 'The whole brief in one page: the best plan, '
+             'the numbers behind it, and what would change the answer.'),
+            ('decision.html', 'Live in it, rent it, or sell', 'Cash flows, after-tax wealth, '
+             'sensitivities and break-even points for the three choices.'),
+            ('black-swan.html', 'Black swan', 'Growth and inflation are never constant: 50 replays '
+             'of the real 1976-2025 record plus named crisis paths.'),
+            ('questions.html', 'Questions to answer', 'What is known, what is missing, and how to '
+             'find it before any decision can be made.'),
+            ('suggestions.html', 'Suggestions for review', 'Proposed site, data and privacy '
+             'improvements, with options to choose before anything is implemented.'),
+        ]),
+        group('2. The numbers', [
+            ('projections.html', 'Year by year 2026-2076', 'Value, assessed value, property tax, '
+             'insurance, water, electricity, repairs, rental insurance.'),
+            ('costs.html', 'Insurance and running costs', 'What each cost is, what is confirmed by '
+             'an official source, and what is still an estimate.'),
+            ('estate-cash.html', 'Cash inheritance and estate tax', 'Thresholds at each level, room '
+             'before tax, and projections for the cash part of the estate.'),
+        ]),
+        group('3. The rules', [
+            ('law.html', 'Law in force and pending changes', 'Federal, California and local rules, '
+             'plus measures under discussion that could change the answer.'),
+            ('process.html', 'Step-by-step process', 'What happens at inheritance, in order, with '
+             'the legal deadlines that must not be missed.'),
+        ]),
+        group('4. Evidence', [
+            ('sources.html', 'Sources and method', 'Every official page used, how each figure was '
+             'worked out, and the cross-check against a second model.'),
+            ('verification.html', 'Verification passes', 'What was opened and read on which date, '
+             'and what each pass changed.'),
+            ('requirements.html', 'Requirements coverage', 'Every line of the brief and the page '
+             'that answers it.'),
+            ('review.html', 'Repo review', 'Findings on the repository itself, including earlier '
+             'sessions and their irregularities.'),
+            ('versions.html', 'Earlier versions', 'Older editions kept for the record and why they '
+             'were replaced.'),
+        ]),
+        group('5. Open items', [
+            ('flagged.html', 'Flagged for Review', 'Every unconfirmed value, assumption and '
+             'irregularity, with the official source it needs.'),
+        ]),
+        group('6. No-figures guide', [
+            ('privacy-site/public/index.html', 'Figure-free guide (no household numbers)',
+             'The same process and cost categories taught with invented examples. Use this if you '
+             'want to share the method without publishing any household figure.'),
+        ]),
+    ])
+
+    doc = """<!doctype html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'">
-<title>Privacy-first inheritance decision guide</title>
-<style>
-:root{color-scheme:light;--ink:#173334;--green:#24574f;--muted:#657572;--line:#dce6df;--paper:#f5f7f2}
-*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.65 system-ui,-apple-system,"Segoe UI",sans-serif}
-main{max-width:760px;margin:10vh auto;padding:40px 28px;background:#fff;border:1px solid var(--line)}
-.eyebrow{font-size:.75rem;letter-spacing:.14em;font-weight:700;color:#5b786c}h1{font:500 clamp(2rem,5vw,3rem)/1.15 Georgia,serif;margin:.8rem 0 1rem}
-p{color:var(--muted)}a.button{display:inline-block;margin:16px 0;padding:13px 19px;background:var(--green);color:#fff;text-decoration:none;font-weight:700;border-radius:4px}
-a:focus-visible{outline:3px solid #c98d25;outline-offset:3px}.note{border-top:1px solid var(--line);padding-top:18px;font-size:.9rem}
-</style></head><body><main><p class="eyebrow">PUBLIC EDITION · PRIVACY FIRST</p>
-<h1>Inheritance decision guide</h1>
-<p>A general guide to the legal process, the information still needed, operating-cost categories, and the choices that should be compared before a future trust transfer.</p>
-<p>The public guide uses fictional teaching examples only. It does not publish household-specific property figures, tax histories, utility costs or forecasts.</p>
-<p><a class="button" href="privacy-site/public/index.html">Open the decision guide</a></p>
-<p class="note">Rounding is not anonymization. This page only describes the GitHub Pages publication boundary; the public source repository and its history are separate exposure surfaces.</p>
-</main></body></html>
-""")
+<title>Two-home inheritance analysis</title>
+<link rel="stylesheet" href="style.css">
+</head><body>
+<header class="top"><div class="wrap">
+<a class="brand" href="index.html">Two-home inheritance analysis</a>
+<nav aria-label="Sections">%s</nav></div></header>
+<main class="wrap">
+<h1>Two-home inheritance decision dashboard</h1>
+<p class="lead">Property A (Cupertino, 95014) will pass to the Inheritor through a trust some time around 2040 to 2050. Property B (San Francisco, 94122) is already owned by the Inheritor. This site works out, with an official source on every table row, whether to live in Property A, rent it out, or sell it and reinvest.</p>
+<p class="callout"><b>Privacy:</b> no names, street addresses, parcel numbers or account numbers appear anywhere on this site. People are "the Transferor" and "the Inheritor". Every owner-supplied and modelled dollar figure is rounded to the nearest $10, which is the disclosure-minimisation control the brief asks for. Rounding is not anonymisation, and this repository is public: options G01 and G02 on the <a href="suggestions.html">Suggestions</a> page set out the narrower figure-free boundary if you would rather use it.</p>
+%s
+</main>
+<footer class="wrap"><p>Built %s from <a href="%s/tree/main/final">final/</a> (model, generator and checker). <a href="versions.html">Earlier versions</a> are superseded. Property A = Cupertino home (ZIP 95014). Property B = San Francisco three-unit home (ZIP 94122). People are placeholders: "the Transferor" (current owner of Property A) and "the Inheritor" (already owns Property B). Owner-supplied and modelled dollar figures are rounded to the nearest $10. This is an analysis to prepare questions for a licensed estate attorney and tax adviser, not legal or tax advice. Open items are on the <a href="flagged.html">Flagged for Review</a> page.</p></footer>
+<script src="app.js"></script>
+</body></html>""" % (nav, body, BUILD_DATE, REPO)
+    open(os.path.join(OUT, 'index.html'), 'w').write(doc)
 
 
 def main():

@@ -1,4 +1,11 @@
+app.js
+black-swan.html
+costs.html
+decision.html
+estate-cash.html
+flagged.html
 index.html
+law.html
 privacy-site/public/costs.html
 privacy-site/public/decision.html
 privacy-site/public/flagged.html
@@ -12,3 +19,14 @@ privacy-site/public/stress.html
 privacy-site/public/style.css
 privacy-site/public/suggestions-detail.html
 privacy-site/public/suggestions.html
+process.html
+projections.html
+questions.html
+requirements.html
+review.html
+sources.html
+style.css
+suggestions.html
+summary.html
+verification.html
+versions.html

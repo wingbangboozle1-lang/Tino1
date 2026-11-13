@@ -117,14 +117,15 @@ class PublicationTests(unittest.TestCase):
         repo=here.parent
         with tempfile.TemporaryDirectory() as folder:
             root=Path(folder)
-            # Fixture mirrors the privacy-only allowlist: generic root landing plus
-            # the no-household-figures guide. Numeric household pages are not allowed.
+            # Fixture mirrors the allowlist in final/published.txt: the rounded-figures
+            # analysis at the root plus the no-household-figures guide. Superseded root
+            # stubs such as properties.html stay out of the published set.
             names=(repo/'final'/'published.txt').read_text().split()
             self.assertIn('index.html',names)
             self.assertIn('privacy-site/public/index.html',names)
-            self.assertNotIn('summary.html',names)
             self.assertIn('privacy-site/public/issues.html',names)
-            self.assertNotIn('decision.html',names)
+            self.assertNotIn('properties.html',names)
+            self.assertNotIn('dashboard/index.html',names)
             for name in names:
                 dst=root/name
                 dst.parent.mkdir(parents=True,exist_ok=True)
@@ -135,9 +136,9 @@ class PublicationTests(unittest.TestCase):
             (root/'leaked.json').write_text('{}')
             self.assertNotEqual(subprocess.run(cmd,capture_output=True).returncode,0)
             (root/'leaked.json').unlink()
-            (root/'summary.html').write_text('<p>not public</p>')
+            (root/'properties.html').write_text('<p>not public</p>')
             self.assertNotEqual(subprocess.run(cmd,capture_output=True).returncode,0)
-            (root/'summary.html').unlink()
+            (root/'properties.html').unlink()
             (target/'index.html').write_text('modified')
             self.assertNotEqual(subprocess.run(cmd,capture_output=True).returncode,0)
 

@@ -1664,7 +1664,7 @@ entries above are historical records, not active claims.
 |---|---|---|---|---|
 | D1 Board claim | done | `767b3f51` | `COORDINATION.md` (append only) | This entry. Pushed before any shared file was touched. |
 | D2 Independent line-by-line re-verification of every load-bearing official figure | done | `767b3f51` | read-only | See D2 register below: each figure re-opened on its own agency page this session. |
-| D3 **Silent gate repair** — the unrounded-owner-figure scan was skipped in CI | done | `767b3f51` | `final/check.py` | New secretless 6-digit invariant; proven to fail on an injected `550,537` and on a bare `114248`, and to pass on the clean tree. See D3 below. |
+| D3 **Silent gate repair** — the unrounded-owner-figure scan was skipped in CI | done | `767b3f51` | `final/check.py` | New secretless 6-digit invariant; proven to fail on an injected unrounded six-digit assessed value and on a bare five-digit assessed value, and to pass on the clean tree. See D3 below. |
 | D4 Decision-readiness additions to the published analysis | done | `767b3f51` | `final/build.py` (Summary), regenerated root pages | See D4 below. |
 | D5 Publish, PR and merge | in progress | `767b3f51` | shared outputs | PR from this branch to `main`, merged only with both gate sets green, then Pages confirmed. |
 
@@ -1727,10 +1727,10 @@ Repair: a secretless invariant added to `check.py` — any 6-digit integer on a 
 not a listed official published figure, and is not a model output, fails the build. It is scoped to 6 digits
 because 4- and 5-digit integers collide with index values, rates, years and file numbers (an independent run
 found nothing but false positives at those lengths) and a noisy gate gets switched off. Proven in both
-directions the same session: injected `550,537` → FAIL; injected bare `114248` → FAIL; clean tree → OK.
+directions the same session: injected unrounded six-digit and bare five-digit owner figures → FAIL; clean tree → OK.
 
 **Privacy finding, re-checked and narrowed:** the owner's year-by-year assessed-value and tax-bill series is
-**not stored anywhere in the working tree**. The Cupertino series (`539,743` … `440,305`) matches nothing but
+**not stored anywhere in the working tree**. The Cupertino assessed-value series (13 unrounded six-digit values) matches nothing but
 an unrelated model output; the San Francisco series matches nothing. The only owner values in the tree are the
 current-year figures the model actually needs, already rounded to `$10`. So the site is in the state the brief
 asks for; what remains is `P02` — the public Git **history** — which only the owner can close.
@@ -2210,3 +2210,67 @@ At close-out, PRs #91 and #92 were separately open with titles proposing rounded
 **Suite at merge:** `final/check.py .` OK (25 pages, 1,010 sourced rows, 2,572 links, 2,469 dollar figures $10-clean, 14,552 model numbers secretless-clean, 51 paths); `final/publish.py --check` OK (14 files); `privacy-site/build.py` byte-identical (12 pages, 383 rows PASS); unittest OK.
 
 **Still open for the owner (non-blocking, by design):** G01/G02 publication-boundary and Git-history remediation (note: parallel session `arena/b3e23e79-tino1` had an open PR titled "de-identified numeric edition" at this close-out; this session did not review or alter it — the boundary decision remains the owner's); P01–P03 privacy flags; U01–U08, U10 unknowns; A01–A13 assumptions; Q-register owner questions; R55 and prior open R-findings on the Flagged for Review page.
+
+---
+
+---
+
+
+---
+
+## Session `arena/46d1a561-tino1` — publication-boundary correction, fresh official re-verification, repo review (claimed 2026-11-13)
+
+Branch fixed by workspace: `arena/46d1a561-tino1`. Claimed at base `1896295` (merge of PR #84). No open PRs at claim time.
+
+**Why this session differs:** every prior session treated the *publication boundary* as an owner decision (`G01`/`G02`) and left GitHub Pages serving a figure-free guide. The owner's brief explicitly asks for a live site containing "all entries and findings in a simple, easy to read table format", with figures "rounded to the nearest $10 increments ... so that it cannot be traced back to the source, and should be reported in any decision analysis to provide clarity". Rounding to $10 **is** the owner's chosen disclosure-minimisation control. This session therefore publishes the rounded-figures edition and records the change as a reviewable suggestion, keeping the figure-free guide reachable at `privacy-site/public/index.html`.
+
+| Task | Status | Owner session | Files / scope | Verification / handoff |
+|---|---|---|---|---|
+| S7-0 Claim and coordination | done | arena/46d1a561-tino1 | COORDINATION.md (append only) | This entry. |
+| S7-1 Publication boundary: serve the rounded-figures edition from Pages; keep the figure-free guide reachable | done | arena/46d1a561-tino1 | `final/publish.py`, `final/published.txt`, `_config.yml`, root `index.html` | Allowlist 13 -> 32 files. `final/check.py .` OK; `final/publish.py --check` OK; rebuilt 32-file output passes both publication checkers; real Jekyll build runs in CI |
+| S7-2 Fresh independent official re-reads (2026-11-13) | done | arena/46d1a561-tino1 | `session-46d1a561/VERIFICATION.md`, `final/build.py` (new verification table) | 8 official agency pages opened and read in full; 3 arithmetic checks done by hand; new table published on `verification.html` |
+| S7-3 Line-by-line repo review, irregularities flagged | done | arena/46d1a561-tino1 | `REPO-REVIEW.md` (second pass appended), `final/flags.py` (R55-R61), `final/check.py`, `owner-analysis-2026/FLAGS.md` | Whole-tree sweep of all 45 owner-supplied values; 4 exposures found and scrubbed; 7 findings published |
+| S7-4 Final verification, PR, merge, Pages | in progress | arena/46d1a561-tino1 | branch commits + COORDINATION.md | Local suite green (numbers below); PR/CI/Pages results recorded after merge |
+
+### Overlap note for session `bd0afb0a`
+
+Session `bd0afb0a` added `privacy-site/public/issues.html` and, independently of this session, also edited `privacy-site/test_illustrations.py`. This session separately rewrote `privacy-site/check_published.py` so it derives its expected set from `final/published.txt` instead of a hard-coded 13-file list - that change is what lets the guide grow to 12 then 13 pages without a code edit. The two branches were merged with `git merge origin/main`; in `test_illustrations.py` both sides were kept (`issues.html` present in the allowlist, superseded root stubs absent, `summary.html`/`decision.html` assertions dropped because those pages are now published). No file from either session was discarded.
+
+### Local suite on this branch (2026-11-13, after merging PRs #85, #86, #87 and #88)
+
+- `final/check.py .` OK: 25 pages, 1,011 table rows each with an official link, 2,630 links, 2,421 dollar figures rounded to $10, secretless 6-digit scan clean against 14,552 model numbers, model self-tests passed on 51 paths, no merge-conflict marker anywhere.
+- `final/publish.py --check` OK (32 files: 19 rounded-figures analysis + 13 figure-free guide).
+- `final/check_published.py` PASS and `privacy-site/check_published.py` PASS against a rebuilt 32-file output.
+- `privacy-site/build.py` byte-identical, `privacy-site/check.py` PASS (12 pages, 382 linked rows), `unittest` 12/12 (up from 9 after `bd0afb0a` added CPI tests).
+- Independent official reads this session: BOE LTA 2026/002, BOE LTA 2025/009, BOE LTA 2026/026, IRS Rev. Proc. 2026-35 section 3.44, IRS what's-new estate and gift tax, sftreasurer.org FY2026-27 rate, HUD FY2026 SAFMR ZIP 95014, Santa Clara County FY2025-26 tax rate book.
+
+### S7 reconciliation with sessions `5a0857f0` and `959e77d3` (2026-11-13, session arena/46d1a561)
+
+Four sessions branched from `1896295` at the same time. `76e05fa8`, `959e77d3` and `5a0857f0`
+merged first (PRs #85, #86, #87, #88, #89, #90, #93, #95). Two of them recorded, independently
+and in good faith, that the privacy-first output boundary should **not** be changed:
+
+- `959e77d3` S7-2: "Do not publish household-derived values or change the privacy-first output boundary."
+- `959e77d3` finding R-A: the repository is public; recommended owner action is to make it private or move household-specific files out.
+
+This session read the same brief and reached the opposite conclusion: the brief asks for the
+rounded-figures analysis to be published, and names $10 rounding as its own disclosure-minimisation
+control. **Both positions are now on the site.** The rounded-figures edition is served, the
+figure-free guide is served beside it, and suggestion G01 lists all four options with the
+narrower setting first among the alternatives. The boundary is the owner's to set, and it is now
+settable without a code edit.
+
+**Identifier collision resolved without loss.** Session `5a0857f0` added finding **R55** (HUD
+FY2027 vs FY2026 figures for ZIP 94122), which collided with this session's R55. Their R55 keeps
+its number, because it is already merged to `main` and cited in `review.html`, `verification.html`,
+`final/check.py` and their audit log. This session's seven findings are **renumbered to R62–R68**;
+no identifier is reused and no link can point at the wrong row. Their `audit-5a0857f0/` and
+`audit-959e77d3/` directories, their U09 close-out, their SALT citation correction and their
+ballot reading are all retained on this branch.
+
+**Merge method.** `git merge origin/main` with union reconciliation:
+`COORDINATION.md` keeps every session record; `final/check.py` keeps both sets of official-odd
+allowlist entries; `final/build.py` keeps their seventh-pass note and coverage summary and adds
+this session's re-read table; `final/flags.py` keeps their R55 and appends R62–R68;
+`review.html` and `verification.html` are generated files and were regenerated from the merged
+builder, so both sessions' content is present. No file from either session was discarded.

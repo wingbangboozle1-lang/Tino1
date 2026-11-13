@@ -9,7 +9,7 @@ Each flag names what is unverified or irregular, what was checked and what is ne
 - **F03 Property A rent not verified.** The earlier HUD SAFMR four-bedroom figure used without a confirmed bedroom count is not used here. Status: blank.
 - **F04 Repairs and maintenance blank for both properties.** The owner said Property A is lower than Property B but gave no figure. Status: blank.
 - **F05 Insurance.** The owner's ~$1,500/yr is below the CDI data-call average of $2,339.99 (secondary, flagged in S22) and the FAIR Plan dwelling average of $2,918.18 (secondary). Both benchmarks are shown beside the owner figure. Status: flagged.
-- **F06 Property B property tax reconciliation.** The owner's 2025 bill ($2,439) is about $1,090 above 1.18% of assessed value. The residual is a derived figure that may include bond or direct charges not identified here. Status: flagged, bill needed.
+- **F06 Property B property tax reconciliation.** The owner's 2025 bill ($2,440, rounded to the nearest $10 like every figure on the site) is about $1,090 above 1.18% of assessed value. The residual is a derived figure that may include bond or direct charges not identified here. Status: flagged, bill needed.
 - **F07 Japan.** The owner's location is recorded internally. If the heir is domiciled in Japan, or is a Japanese national who lived in Japan in the last 10 years, Japan inheritance tax may apply to worldwide assets. Secondary sources describe a ¥30M + ¥6M per-heir basic exclusion and 10–55% rates; the National Tax Agency was not fetched. Status: unverified, not modeled.
 
 ## Federal and California law
