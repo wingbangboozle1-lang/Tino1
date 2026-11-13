@@ -112,6 +112,7 @@ def page(slug, title, lead, body):
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
 <title>%s - Two-home inheritance analysis</title>
 <link rel="stylesheet" href="style.css">
 </head><body>
@@ -1716,7 +1717,7 @@ def _suggestions_options():
 %s
 %s
 %s
-<p class="note">Where a suggestion rests on a rule, the link in the last column is the official page for that rule. For G01 and G02 the behaviour of the hosting service is described in its own documentation, linked beside the official pages cited by the two privacy flags. Since 2026-11-12 the address served by GitHub Pages shows the guide without household figures, and the pages of this edition are repository files only; G01 asks the owner to settle that question for good.</p>
+<p class="note">Where a suggestion rests on a rule, the link in the last column is the official page for that rule. For G01 and G02 the behaviour of the hosting service is described in its own documentation, linked beside the official pages cited by the two privacy flags. From 2026-11-13 the address served by GitHub Pages shows this rounded-figures edition, with the guide without household figures still published one click away; G01 asks the owner to settle that boundary for good.</p>
 """ % (n, t0, t1, t2, t3)
 
 
@@ -1926,34 +1927,120 @@ def choice_table():
 
 
 def build_home_choice():
-    """Write the generic, privacy-first root landing page in ROOT_MODE.
+    """Write the dashboard landing page for the rounded-figures edition.
 
-    The public Pages site contains no link to the household-specific numeric edition.
-    That edition and its inputs remain in this public repository, so exclusion from
-    Pages is not represented as repository privacy or anonymization.
+    This is the front door of the published site. It groups every page by
+    category, shows the headline numbers, and keeps the figure-free guide one
+    click away for anyone who wants the process without household figures.
+
+    Publication boundary: the brief asks for the rounded-figures analysis to be
+    published, with personal information replaced by placeholders and every
+    owner-supplied figure rounded to $10 so it cannot be traced back. Earlier
+    sessions served only the figure-free guide and left this edition
+    unpublished; that boundary is recorded as review item G02 so the owner can
+    still choose the narrower setting.
     """
-    open(os.path.join(OUT, 'index.html'), 'w', encoding='utf-8').write("""<!doctype html>
+    nav_items = [('index.html', 'Home')] + NAV
+    nav = ''.join('<a href="%s"%s>%s</a>' % (
+        h, ' class="on" aria-current="page"' if h == 'index.html' else '', t) for h, t in nav_items)
+
+    kpis = ''.join([
+        kpi('Best financial outcome (conditional)', 'Sell Property A, keep Property B',
+            'ahead in the baseline and across 50 real historical sequences - a model result on the '
+            'flagged assumptions, not a verified forecast (%s, %s)' % (flag('A01'), flag('A02'))),
+        kpi('Property A at inheritance (%d)' % T, m(B['fmv_T']),
+            'from %s today at 4.0%% a year (assumption %s)' % (m(P['cup_value']), flag('A01'))),
+        kpi('Property A tax: today / lived in / rented',
+            '%s / %s / %s' % (m(P['cup_tax_2025']), m(B['tax_live_T']), m(B['tax_rent_T'])),
+            'per year, first year after inheritance (%s)' % src('SCC-RATES', 'BOE-LTA-2026-026')),
+        kpi('Property B tax advantage kept by not selling', m(sf_gap) + ' a year',
+            'difference between tax on market value and on the current assessed value (%s)' % src('SF-TAX')),
+        kpi('Federal estate-tax room for cash in %d' % T, m(B['exclusion_T'] - B['fmv_T']),
+            'projected exclusion %s minus Property A; per transferor, in %d dollars (%s)'
+            % (m(B['exclusion_T']), T, src('RP-2026-35'))),
+        kpi('Open items to review', '%d flagged / %d review findings' % (len(FLAGS), len(REVIEW)),
+            'everything unconfirmed or irregular is on the Flagged page, never filled in'),
+    ])
+
+    def group(title, items):
+        out = ['<section class="card"><h3>%s</h3><div class="cards">' % e(title)]
+        for href, name, blurb in items:
+            out.append('<a class="card" href="%s"><b>%s</b><span>%s</span></a>' % (href, e(name), blurb))
+        out.append('</div></section>')
+        return ''.join(out)
+
+    body = ''.join([
+        '<section class="kpis">%s</section>' % kpis,
+        group('1. Decide', [
+            ('summary.html', 'Executive summary', 'The whole brief in one page: the best plan, '
+             'the numbers behind it, and what would change the answer.'),
+            ('decision.html', 'Live in it, rent it, or sell', 'Cash flows, after-tax wealth, '
+             'sensitivities and break-even points for the three choices.'),
+            ('black-swan.html', 'Black swan', 'Growth and inflation are never constant: 50 replays '
+             'of the real 1976-2025 record plus named crisis paths.'),
+            ('questions.html', 'Questions to answer', 'What is known, what is missing, and how to '
+             'find it before any decision can be made.'),
+            ('suggestions.html', 'Suggestions for review', 'Proposed site, data and privacy '
+             'improvements, with options to choose before anything is implemented.'),
+        ]),
+        group('2. The numbers', [
+            ('projections.html', 'Year by year 2026-2076', 'Value, assessed value, property tax, '
+             'insurance, water, electricity, repairs, rental insurance.'),
+            ('costs.html', 'Insurance and running costs', 'What each cost is, what is confirmed by '
+             'an official source, and what is still an estimate.'),
+            ('estate-cash.html', 'Cash inheritance and estate tax', 'Thresholds at each level, room '
+             'before tax, and projections for the cash part of the estate.'),
+        ]),
+        group('3. The rules', [
+            ('law.html', 'Law in force and pending changes', 'Federal, California and local rules, '
+             'plus measures under discussion that could change the answer.'),
+            ('process.html', 'Step-by-step process', 'What happens at inheritance, in order, with '
+             'the legal deadlines that must not be missed.'),
+        ]),
+        group('4. Evidence', [
+            ('sources.html', 'Sources and method', 'Every official page used, how each figure was '
+             'worked out, and the cross-check against a second model.'),
+            ('verification.html', 'Verification passes', 'What was opened and read on which date, '
+             'and what each pass changed.'),
+            ('requirements.html', 'Requirements coverage', 'Every line of the brief and the page '
+             'that answers it.'),
+            ('review.html', 'Repo review', 'Findings on the repository itself, including earlier '
+             'sessions and their irregularities.'),
+            ('versions.html', 'Earlier versions', 'Older editions kept for the record and why they '
+             'were replaced.'),
+        ]),
+        group('5. Open items', [
+            ('flagged.html', 'Flagged for Review', 'Every unconfirmed value, assumption and '
+             'irregularity, with the official source it needs.'),
+        ]),
+        group('6. No-figures guide', [
+            ('privacy-site/public/index.html', 'Figure-free guide (no household numbers)',
+             'The same process and cost categories taught with invented examples. Use this if you '
+             'want to share the method without publishing any household figure.'),
+        ]),
+    ])
+
+    doc = """<!doctype html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'">
-<title>Privacy-first inheritance decision guide</title>
-<style>
-:root{color-scheme:light;--ink:#173334;--green:#24574f;--muted:#657572;--line:#dce6df;--paper:#f5f7f2}
-*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.65 system-ui,-apple-system,"Segoe UI",sans-serif}
-main{max-width:760px;margin:10vh auto;padding:40px 28px;background:#fff;border:1px solid var(--line)}
-.eyebrow{font-size:.75rem;letter-spacing:.14em;font-weight:700;color:#5b786c}h1{font:500 clamp(2rem,5vw,3rem)/1.15 Georgia,serif;margin:.8rem 0 1rem}
-p{color:var(--muted)}a.button{display:inline-block;margin:16px 0;padding:13px 19px;background:var(--green);color:#fff;text-decoration:none;font-weight:700;border-radius:4px}
-a:focus-visible{outline:3px solid #c98d25;outline-offset:3px}.note{border-top:1px solid var(--line);padding-top:18px;font-size:.9rem}
-</style></head><body><main><p class="eyebrow">PUBLIC EDITION · PRIVACY FIRST</p>
-<h1>Inheritance decision guide</h1>
-<p>A general guide to the legal process, the information still needed, operating-cost categories, and the choices that should be compared before a future trust transfer.</p>
-<p>The public guide uses fictional teaching examples only. It does not publish household-specific property figures, tax histories, utility costs or forecasts.</p>
-<p><a class="button" href="privacy-site/public/index.html">Open the decision guide</a></p>
-<p class="note">Rounding is not anonymization. This page only describes the GitHub Pages publication boundary; the public source repository and its history are separate exposure surfaces.</p>
-</main></body></html>
-""")
+<title>Two-home inheritance analysis</title>
+<link rel="stylesheet" href="style.css">
+</head><body>
+<header class="top"><div class="wrap">
+<a class="brand" href="index.html">Two-home inheritance analysis</a>
+<nav aria-label="Sections">%s</nav></div></header>
+<main class="wrap">
+<h1>Two-home inheritance decision dashboard</h1>
+<p class="lead">Property A (Cupertino, 95014) will pass to the Inheritor through a trust some time around 2040 to 2050. Property B (San Francisco, 94122) is already owned by the Inheritor. This site works out, with an official source on every table row, whether to live in Property A, rent it out, or sell it and reinvest.</p>
+<p class="callout"><b>Privacy:</b> no names, street addresses, parcel numbers or account numbers appear anywhere on this site. People are "the Transferor" and "the Inheritor". Every owner-supplied and modelled dollar figure is rounded to the nearest $10, which is the disclosure-minimisation control the brief asks for. Rounding is not anonymisation, and this repository is public: options G01 and G02 on the <a href="suggestions.html">Suggestions</a> page set out the narrower figure-free boundary if you would rather use it.</p>
+%s
+</main>
+<footer class="wrap"><p>Built %s from <a href="%s/tree/main/final">final/</a> (model, generator and checker). <a href="versions.html">Earlier versions</a> are superseded. Property A = Cupertino home (ZIP 95014). Property B = San Francisco three-unit home (ZIP 94122). People are placeholders: "the Transferor" (current owner of Property A) and "the Inheritor" (already owns Property B). Owner-supplied and modelled dollar figures are rounded to the nearest $10. This is an analysis to prepare questions for a licensed estate attorney and tax adviser, not legal or tax advice. Open items are on the <a href="flagged.html">Flagged for Review</a> page.</p></footer>
+<script src="app.js"></script>
+</body></html>""" % (nav, body, BUILD_DATE, REPO)
+    open(os.path.join(OUT, 'index.html'), 'w').write(doc)
 
 
 def main():
