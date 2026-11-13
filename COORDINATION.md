@@ -2099,6 +2099,32 @@ The owner's latest brief asks for a live site with household numbers rounded to 
 - **Required check:** `verify` succeeded on the PR head `4f1851e` (run 43420319367; real Jekyll build, `final/check_published.py` and `privacy-site/check_published.py` on `_site`; published files 13, builder outputs compared 1). It also succeeded on `main` after the merge (run 43420471565).
 - **GitHub Pages:** the Pages API reports `status: built`, `error: null`, latest build commit `a619a88`. Live fetch of https://wingbangboozle1-lang.github.io/Tino1/privacy-site/public/flagged.html returns the refreshed Flagged page (2026-11-13 "Opened" dates, the IRS 2027 figure, the LTA rows). The root path `/Tino1/flagged.html` returns 404 by design: the guide is published under `privacy-site/public/`.
 - **Still open for the owner (non-blocking, by design):** R-A (repository visibility is public; make it private or move household-specific files out before any further publication, because history and forks cannot be rewritten by this session); the household-numbers publication decision (G01/G02); R-B refresh of the repo-root and `final/` numeric pages to the 12 Nov 2026 8:46 p.m. ballot reading.
+## Session `bd0afb0a` (`arena/bd0afb0a-tino1`) — published-guide verification, executive summary, discovery plan (claimed 2026-11-13 UTC)
+
+**Branch:** `arena/bd0afb0a-tino1` (fixed by the workspace; based on `1896295`, which is current `main`). Every earlier session record above is retained unchanged. This session does not touch `final/**` numbers, `data/**`, `research/**`, `docs/**`, `archive/**`, or any earlier edition.
+
+| Task | Status | Owner session | Files / scope | Acceptance / verification |
+|---|---|---|---|---|
+| B0-1 Claim and coordination | in progress | `arena/bd0afb0a-tino1` | `COORDINATION.md` (append only) | Claim committed and pushed before product edits. |
+| B0-2 Independent re-verification of every published-guide source claim | claimed | `arena/bd0afb0a-tino1` | `session-bd0afb0a/VERIFICATION.md` (new, audit only) | Each published claim checked against the official page in this session; discrepancies flagged; nothing certified from memory. |
+| B0-3 Executive summary page + questions/discovery plan + stress-history evidence | claimed | `arena/bd0afb0a-tino1` | `privacy-site/build.py`, `privacy-site/research.json`, `privacy-site/public/**`, `privacy-site/check.py`, `privacy-site/check_published.py`, `final/publish.py` | Figure-free, no household/identifier data, every table row links an official page, unknowns stay blank. |
+| B0-4 Gates, PR, merge, Pages record | claimed | `arena/bd0afb0a-tino1` | branch + `COORDINATION.md` | Rebuild is byte-identical, all checkers pass, CI green, Pages deployed, outcome recorded here. |
+
+Privacy boundary unchanged: GitHub Pages keeps the privacy-first allowlist (generic landing + figure-free guide). No household figures, histories, location cues or identifiers may be added. Rounding is not anonymisation.
+
+### arena/bd0afb0a-tino1 · B0-4 merge and Pages record (2026-11-13 UTC)
+
+- **Pull request:** PR #87 https://github.com/wingbangboozle1-lang/Tino1/pull/87 (`arena/bd0afb0a-tino1` → `main`), merged with `gh pr merge 87 --merge` at 2026-11-13T11:59:03Z as `07b5882a06ab0af9608a9a140a5c22dec5b3e343`.
+- **Conflict resolved, nothing discarded.** `main` had advanced by PR #85/#86 (session `arena/76e05fa8-tino1`), which had independently corrected the same ballot figure and added four official BOE/IRS sources (`revproc`, `lta26002`, `lta25009`, `lta26026`). Rebased onto `main`; the only conflicts were append-only `COORDINATION.md` (both blocks kept, both sessions' logs verbatim) and `research.json`/`law.html`/`flagged.html` (kept the parallel session's four new sources and its ballot finding, which matches this session's corrected reading: Prop 40 No 52.4%, 12 Nov 2026 8:46 p.m.). Net source registry after reconciliation: 36 sources.
+- **Required check:** `verify` passed on the rebased head `0ca968f` (run 43421190749, 1m07s) including the real Jekyll build; `pages build and deployment` succeeded on `07b5882` and the Pages API reports `status: built`, `error: null` for that commit.
+- **Delivered by B0-3 (all published in the guide):** executive summary on the landing page; two-property baseline table; six ordered decision gates; official BLS CPI-U decade table (12 of 47 years at or above 5%, 9 below 2%, five at or above 8%, one deflation year); new page `issues.html` (I01–I24); three added review proposals S7–S9; `final/publish.py` now red if the builder navigation and the Pages allowlist drift apart (negative test performed).
+- **Corrected after the re-read:** ballot figure and timestamp; the 2026 SALT amount is no longer asserted (P10); the 1% surtax is cited to RTC §17043 with no unverified form label (P12); constant inflation is no longer framed as the baseline (P13). Claim-by-claim record: `session-bd0afb0a/VERIFICATION.md`.
+- **Suite at merge:** `final/check.py .` OK (25 pages, 996 sourced rows, 2,551 links, 2,398 $10-rounded figures, 14,552 model numbers, 51 paths); `final/publish.py --check` OK (14-file allowlist); `privacy-site/check.py` PASS (12 pages, 382 official-linked rows); unittest 12/12 OK including reproducible generation; both publication checkers PASS against a byte-exact fixture; `privacy-site/build.py` output byte-identical to the committed `public/`.
+- **Live verification:** https://wingbangboozle1-lang.github.io/Tino1/ and the new `/privacy-site/public/issues.html` were fetched after deployment and render with the full I01–I24 table and official links. The repo-root numeric pages are intentionally not served (404), matching the allowlist.
+- **Still open for the owner (non-blocking):** I01/R-A repository visibility and Git history (public repo; make private and/or rewrite history); I02 2026 SALT; I03 surtax label; I05–I06 future exclusion and post-Feb-2027 allowance; all household-specific facts in I07–I24.
+
+---
+
 
 ---
 
@@ -2110,8 +2136,20 @@ Branch fixed by workspace: `arena/46d1a561-tino1`. Claimed at base `1896295` (me
 
 | Task | Status | Owner session | Files / scope | Verification / handoff |
 |---|---|---|---|---|
-| S7-0 Claim and coordination | in progress | arena/46d1a561-tino1 | COORDINATION.md (append only) | This entry. |
-| S7-1 Publication boundary: serve the rounded-figures edition from Pages; keep the figure-free guide reachable | in progress | arena/46d1a561-tino1 | `final/publish.py`, `final/published.txt`, `_config.yml`, root `index.html`, `final/site/*` (numeric pages moved out of the repository-only stub state) | Link check, `$10` gate, secretless-6-digit scan, PII pattern gate, real Jekyll build in CI, Pages API + live fetch |
-| S7-2 Fresh independent official re-reads (2026-11-13) of every load-bearing figure | in progress | arena/46d1a561-tino1 | `session-46d1a561/VERIFICATION.md`, `final/data/*`, `final/sources.py`, `final/build.py`, `final/exec_summary.py` | Each figure class opened and read at the official host; wording recorded; unchanged values re-dated, changed values corrected and flagged |
-| S7-3 Line-by-line repo review, irregularities flagged | in progress | arena/46d1a561-tino1 | `REPO-REVIEW.md`, `final/flags.py`, `final/review_queue.py` | Every finding gets an official source link or is published as unverified |
-| S7-4 Final verification, PR, merge, Pages | pending | arena/46d1a561-tino1 | branch commits + COORDINATION.md | `final/check.py .`, `final/publish.py --check`, `privacy-site/check.py`, unit tests, CI `verify`, Pages API, live fetch |
+| S7-0 Claim and coordination | done | arena/46d1a561-tino1 | COORDINATION.md (append only) | This entry. |
+| S7-1 Publication boundary: serve the rounded-figures edition from Pages; keep the figure-free guide reachable | done | arena/46d1a561-tino1 | `final/publish.py`, `final/published.txt`, `_config.yml`, root `index.html` | Allowlist 13 -> 32 files. `final/check.py .` OK; `final/publish.py --check` OK; rebuilt 32-file output passes both publication checkers; real Jekyll build runs in CI |
+| S7-2 Fresh independent official re-reads (2026-11-13) | done | arena/46d1a561-tino1 | `session-46d1a561/VERIFICATION.md`, `final/build.py` (new verification table) | 8 official agency pages opened and read in full; 3 arithmetic checks done by hand; new table published on `verification.html` |
+| S7-3 Line-by-line repo review, irregularities flagged | done | arena/46d1a561-tino1 | `REPO-REVIEW.md` (second pass appended), `final/flags.py` (R55-R61), `final/check.py`, `owner-analysis-2026/FLAGS.md` | Whole-tree sweep of all 45 owner-supplied values; 4 exposures found and scrubbed; 7 findings published |
+| S7-4 Final verification, PR, merge, Pages | in progress | arena/46d1a561-tino1 | branch commits + COORDINATION.md | Local suite green (numbers below); PR/CI/Pages results recorded after merge |
+
+### Overlap note for session `bd0afb0a`
+
+Session `bd0afb0a` added `privacy-site/public/issues.html` and, independently of this session, also edited `privacy-site/test_illustrations.py`. This session separately rewrote `privacy-site/check_published.py` so it derives its expected set from `final/published.txt` instead of a hard-coded 13-file list - that change is what lets the guide grow to 12 then 13 pages without a code edit. The two branches were merged with `git merge origin/main`; in `test_illustrations.py` both sides were kept (`issues.html` present in the allowlist, superseded root stubs absent, `summary.html`/`decision.html` assertions dropped because those pages are now published). No file from either session was discarded.
+
+### Local suite on this branch (2026-11-13, after merging PRs #85, #86, #87 and #88)
+
+- `final/check.py .` OK: 25 pages, 1,011 table rows each with an official link, 2,630 links, 2,421 dollar figures rounded to $10, secretless 6-digit scan clean against 14,552 model numbers, model self-tests passed on 51 paths, no merge-conflict marker anywhere.
+- `final/publish.py --check` OK (32 files: 19 rounded-figures analysis + 13 figure-free guide).
+- `final/check_published.py` PASS and `privacy-site/check_published.py` PASS against a rebuilt 32-file output.
+- `privacy-site/build.py` byte-identical, `privacy-site/check.py` PASS (12 pages, 382 linked rows), `unittest` 12/12 (up from 9 after `bd0afb0a` added CPI tests).
+- Independent official reads this session: BOE LTA 2026/002, BOE LTA 2025/009, BOE LTA 2026/026, IRS Rev. Proc. 2026-35 section 3.44, IRS what's-new estate and gift tax, sftreasurer.org FY2026-27 rate, HUD FY2026 SAFMR ZIP 95014, Santa Clara County FY2025-26 tax rate book.

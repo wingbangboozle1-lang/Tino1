@@ -85,3 +85,56 @@ python3 -m http.server 8080  # then open /, /flagged.html, /black-swan.html, …
 ## 8. Bottom line
 
 The repository contained real, good work — four parallel builds that mostly agreed on the law (step-up, Prop 19, $15M, no CA tax) and disagreed on tone and arithmetic. It also contained a live privacy breach (B1) now closed, and a broken-links patchwork now catalogued. The canonical site is self-consistent, privacy-clean, source-linked, regime-tested, and honest about what it cannot verify — which is the whole assignment.
+
+---
+
+# REPO REVIEW — second pass, 2026-11-13 (session `arena/46d1a561-tino1`)
+
+The review above is kept exactly as written. This pass re-reads the repository as it stands
+now and adds what has changed since. Method: whole-tree scans for owner-supplied figures,
+direct reads of eight official agency URLs (recorded in
+[`session-46d1a561/VERIFICATION.md`](session-46d1a561/VERIFICATION.md)), and a line-by-line
+check of the generator, the publication boundary and the checkers.
+
+## 1. What the earlier pass left open, and where it stands
+
+| Earlier finding | Status now |
+|---|---|
+| A1 four overlapping sites | Still four directory trees in the repository (`docs/`, `site/`, `dashboard/`, `analysis/`), all excluded from the published site and all carrying a superseded notice. Nothing links to them from the current site. Kept by design; suggestion G02 asks the owner whether to delete them. |
+| A2 Pages source is `main:/` | Unchanged. The whole repository is readable. `_config.yml` now excludes everything except the 31-file allowlist, so Pages serves only those; the rest is reachable through the repository itself. |
+| B2 exact values in git history | **Still open, owner-only.** Now finding R61. No session can fix this without a destructive rewrite. |
+| B3 ZIP codes published | Unchanged and intentional: the brief supplies both ZIP codes and asks for ZIP-level research. |
+| §7.1–§7.6 owner documents | Unchanged. All remain blank on the site and listed on the Flagged page. |
+
+## 2. New findings (published on `review.html` as R55–R61)
+
+| # | Where | Finding | Severity | Status |
+|---|---|---|---|---|
+| R56 | `final/check.py` comments, `COORDINATION.md`, `owner-analysis-2026/FLAGS.md` | Four exact owner-supplied figures in clear text (Property A 2026 assessed value and 2025 bill, Property B assessed value, Property B 2025 bill), inside documentation describing the scan that is meant to catch exactly those figures. The repository is public. | **High** | Closed this session: documentation reworded, flag note rounded, full-tree sweep for all 45 owner values now returns none. |
+| R57 | `final/published.txt`, `_config.yml` | Pages served 13 files. The 16-page rounded-figures analysis was built and checked in CI and never served, so the live site could not answer the brief. | **High** | Closed: allowlist is now 31 files. Recorded as option D of suggestion G01. |
+| R55 | `README.md`, `final/README_ROOT.md`, `final/build.py`, `final/publish.py` | All four described the numeric edition as deliberately unpublished while the brief asks for it to be published with $10 rounding. The prose stated as fact a boundary that was recorded elsewhere as an open owner decision. | Medium | Closed. |
+| R58 | root `index.html` | Front door was a single card with one button; the brief asks for a dashboard-style landing page with subpages organised by category. | Medium | Closed: dashboard front door with six headline figures and six category groups. |
+| R59 | `privacy-site/check_published.py`, `privacy-site/test_illustrations.py` | Both hard-coded the 13-file set instead of reading `final/published.txt`, so the boundary could not be changed at all without breaking CI, and the root landing was forbidden by test from showing a dollar figure. | Medium | Closed: both derive from `final/published.txt`; guide-specific invariants kept. |
+| R60 | every generated page | `noindex` present, but no referrer policy, so a click from a figure-bearing page to an official site sent the page address as a referrer. | Low | Closed and now enforced on every published file. |
+| R61 | git history, superseded directories | Public history holds pre-rounding pages; `docs/`, `site/`, `dashboard/`, `analysis/`, `integrated/`, `legacy95/`, `verify-4395771d/` hold earlier figures. Excluding a directory from Pages removes nothing. | **Open, owner-only** | Recorded as G02 and privacy flag P02. |
+
+## 3. Verification performed
+
+- Eight official agency URLs opened and read in full: BOE LTA 2026/002, LTA 2025/009, LTA 2026/026, IRS Rev. Proc. 2026-35 §3.44, the IRS "what's new — estate and gift tax" page, the SF Treasurer secured-tax page, HUD FY2026 SAFMR for ZIP 95014, and the Santa Clara County FY2025-26 tax rate book.
+- Three arithmetic checks done by hand: the Santa Clara rate components sum to 1.16360 (matches `rate_cup`); the Proposition 19 allowance roll-forward matches the biennial statutory rule; the BOE factor table matches `final/data/hist_prop13_factor.csv`.
+- Whole-tree scan of all 45 owner-supplied figures (with and without thousands separators), covering every tracked file: no match remains.
+- Gates: `final/check.py .` (25 pages, 1,011 table rows each with an official link, 2,630 links, 2,421 dollar figures rounded to $10, secretless 6-digit scan clean against 14,552 model numbers, model self-tests on 51 paths); `final/publish.py --check`; `final/check_published.py` and `privacy-site/check_published.py` against a rebuilt 31-file output; `privacy-site/check.py` (11 pages, 322 linked rows); `unittest` 9/9.
+- Two matches in that scan were investigated and are **not** leaks: row-label years `2061`/`2066`, and two model outputs (`$6,130` in 2058, `$1,740` in 2057) that happen to equal four-digit owner tax bills.
+
+## 4. Links for manual review
+
+| Page | Purpose |
+|---|---|
+| https://www.boe.ca.gov/proptaxes/pdf/lta26002.pdf | Prop 13 inflation factor 2026-27 and the full factor table |
+| https://www.boe.ca.gov/proptaxes/pdf/lta25009.pdf | Prop 19 allowance $1,044,586 and the every-other-February rule |
+| https://www.boe.ca.gov/proptaxes/pdf/lta26026.pdf | Prop 19 FAQ, including the one-year residence rule and "no exceptions" |
+| https://www.irs.gov/pub/irs-drop/rp-26-35.pdf | 2027 basic exclusion, section 3.44 |
+| https://www.irs.gov/businesses/small-businesses-self-employed/whats-new-estate-and-gift-tax | Public Law 119-21, $15,000,000 for 2026 |
+| https://sftreasurer.org/property/secured-property-taxes | FY2026-27 rate 1.18162182% |
+| https://www.huduser.gov/portal/datasets/fmr/fmrs/FY2026_code/2026zip_code_calc.odn?zcta=95014&metro_code=METRO41940M41940&year=2026 | FY2026 SAFMRs for ZIP 95014 |
+| https://files.santaclaracounty.gov/exjcpb1531/2025-11/tax-rate-book-2025-2026.pdf | Santa Clara County rate components |

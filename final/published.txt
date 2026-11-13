@@ -10,6 +10,7 @@ privacy-site/public/costs.html
 privacy-site/public/decision.html
 privacy-site/public/flagged.html
 privacy-site/public/index.html
+privacy-site/public/issues.html
 privacy-site/public/law.html
 privacy-site/public/process.html
 privacy-site/public/projection.html

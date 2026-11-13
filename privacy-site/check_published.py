@@ -29,7 +29,7 @@ HERE = Path(__file__).parent
 ROOT = HERE.parent
 GUIDE_FILES = frozenset({
     'costs.html', 'decision.html', 'flagged.html', 'index.html', 'law.html',
-    'process.html', 'projection.html', 'questions.html', 'stress.html',
+    'process.html', 'projection.html', 'questions.html', 'stress.html', 'issues.html',
     'suggestions-detail.html', 'suggestions.html', 'style.css',
 })
 GUIDE_PREFIX = 'privacy-site/public/'
