@@ -1817,3 +1817,23 @@ Privacy interpretation: names, contact details, exact addresses, parcel identifi
 - S5-0 claim, S5-1 bounded audit, S5-2 review pack and S5-3 integration/publication are done. The audit directory is excluded from Pages; the root chooser privacy wording is corrected. D1 dual-edition routing remains in force.
 - Still open for the owner: G01/G02 routing and repository/history remediation; privacy-safe numeric rebuild or privacy-only revert if anonymization is required; model/provenance corrections S5-P1–S5-P5; private evidence questions S5-Q1–S5-Q7. No historical series, ZIPs or private documents were republished by this session.
 
+
+## Session `arena/022b1ea7-tino1` — two-home inheritance analysis, verified site build (claimed 2026-11-13 UTC)
+
+Base `551179b` (= origin/main, PR #72 merge). No open PRs and no active claims on the board at claim time. This session will not touch `final/publish.py`, `privacy-site/**`, root numeric pages, or `_config.yml` until the owner resolves the open privacy decisions (G01/G02 routing, history remediation).
+
+| Task | Status | Owner | File scope | Notes |
+|---|---|---|---|---|
+| O1 Claim and coordination | done | arena/022b1ea7-tino1 | COORDINATION.md (append only) | This entry. |
+| O2 Official-source verification (federal, CA, SF, Japan, insurance) | in progress | arena/022b1ea7-tino1 | `owner-analysis-2026/sources/**` (new, exclusive) | Rows marked verified or flagged. |
+| O3 Projection model and site build | in progress | arena/022b1ea7-tino1 | `owner-analysis-2026/**` (new, exclusive, excluded from Pages) | Not published until owner privacy decision. |
+| O4 Pages publication and merge to main | held | arena/022b1ea7-tino1 | none yet | Held: privacy blocker, see notes. |
+
+### arena/022b1ea7-tino1 close-out (2026-11-13 UTC)
+
+- O2 official-source verification: done in part. `owner-analysis-2026/sources/official-sources.csv` holds 24 rows, each with a source URL and status. Verified this session: 2027 basic exclusion $15,480,000 (Rev. Proc. 2026-35 §3.44); 2026 basic exclusion $15,000,000 (IRS estate-tax page); 2026-27 CA roll factor 1.02 (BOE LTA 2026/002); Prop 19 cap $1,044,586 and occupancy/filing conditions (BOE LTA 2025/015); SB 974 chaptered as Stats. 2026 ch. 665 on 2026-09-27 (leginfo); SF FY2026-27 secured rate 1.18162182% (sftreasurer.org); SF 2026-27 rent increase 1.6% (sf.gov Rent Board); NIIT thresholds $200k/$250k (IRS Topic 559); Civ. Code §1947.12 rent cap (leginfo); 10-year Treasury 4.98% (2026-11-10) and 5.10% (2026-11-12) (treasury.gov).
+- O2 still open: historical CPI (FRED CPIAUCSL chunks 2–4 unread), official county-level FHFA HPI files for both properties (metro CSV 404), IRC §1014 citation, federal and CA long-term capital gains brackets, Japan (secondary only).
+- O3 projection: computed privately (outside the repo) from owner inputs; household figures are not committed. Outputs rounded to $10; repair, Cupertino rent and vacancy left blank. `owner-analysis-2026/exemption-projection.csv` is generic and public-safe.
+- Repository irregularities logged in `owner-analysis-2026/FLAGS.md`: F15 (board entry #7 cites SF rate 1.18268325%; official page now shows 1.18162182%); F16 ("$15M permanent" wording not supported by sources); F17–F18 (board projection inputs and "sell wins by ~$1M" unverified); F24–F25 (public numeric pages and pre-rounding history need owner decision).
+- Publication: no change to the published set (39 files). `final/publish.py --check` passes; `_config.yml` gained one exclude line for `owner-analysis-2026`. Household projections are not published; the owner's privacy decision (G01/G02, history remediation) is still required before any household numeric page changes.
+- O4 Pages publication and merge: PR from `arena/022b1ea7-tino1` to `main` is limited to this folder, `_config.yml`, and this board entry. Merge result and PR link are recorded in the PR.
