@@ -8,7 +8,9 @@
 3. every dollar figure is a multiple of $10 unless it is a listed official published figure;
 4. no unrounded owner-supplied figure appears in any published or stored file (needs TINO1_PRIVATE_FIGURES, see below);
 5. no street address, e-mail address, phone number or parcel-number pattern appears;
-6. model self-tests (Proposition 19 formula against the county assessor's worked example; Property B never reassessed).
+6. model self-tests (Proposition 19 formula against the county assessor's worked example; Property B never reassessed);
+7. no git merge-conflict marker in any published page or any repository source file (these markers have reached the
+   deployed site before - finding R38 - while every other check passed).
 """
 import os, re, sys, html, json
 
@@ -22,6 +24,9 @@ OTHER_OK = ('github.com', 'pages.stern.nyu.edu')
 OFFICIAL_ODD = {'38,915.87', '8,455.35', '14,217,212,455', '324,973', '1,176', '601', '1,044,586', '72,724', '371,479', '445,771', '742,953', '109,125', '208,325', '661,375',
                 '56', '67', '76', '1.10', '0.55', '24.15'}
 errors = []
+# A git merge-conflict marker left in a file publishes as literal text. R38: a marker and a duplicated fragment were
+# live on the published Verification page while every other check passed. Scan pages and repository files alike.
+CONFLICT = re.compile(r'^<{7} |^>{7} |^={7}$', flags=re.M)
 
 
 def err(*a):
@@ -183,6 +188,8 @@ def check_site():
                 err(p, 'possible', what + ':', mm_.group(0))
         if 'noindex' not in t:
             err(p, 'missing robots noindex')
+        if CONFLICT.search(t):
+            err(p, 'merge conflict marker published on the page')
         fingerprint_scan(p, text)
     for f in os.listdir(SITE):
         if not f.endswith('.html') and os.path.isfile(os.path.join(SITE, f)):
@@ -198,7 +205,11 @@ def check_repo_files():
         for f in files:
             if f == 'privacy_fingerprints.txt' or f.endswith('.pyc'):
                 continue
-            fingerprint_scan(os.path.relpath(os.path.join(root, f), HERE), open(os.path.join(root, f), encoding='utf-8', errors='ignore').read())
+            data = open(os.path.join(root, f), encoding='utf-8', errors='ignore').read()
+            rel = os.path.relpath(os.path.join(root, f), HERE)
+            if CONFLICT.search(data):
+                err(rel, 'merge conflict marker in a repository source file')
+            fingerprint_scan(rel, data)
 
 
 def check_model():
@@ -240,7 +251,7 @@ if __name__ == '__main__':
         kinds = {}
         for x in errors:
             for k in ('row without an official source link', 'not rounded to $10', 'broken internal link', 'broken anchor',
-                      'non-official domain', 'PRIVACY', 'possible', 'robots', 'non-https', 'empty cell', 'MODEL'):
+                      'non-official domain', 'PRIVACY', 'possible', 'robots', 'non-https', 'empty cell', 'MODEL', 'merge conflict marker'):
                 if k in x:
                     kinds[k] = kinds.get(k, 0) + 1
         print('   by kind:', kinds)
