@@ -2160,3 +2160,8 @@ After rebuilding against this current base: `privacy-site/build.py` PASS (12 pag
 PR #88 advanced `main` with the B0-4 close-out record. Rebased PR #89's assigned branch onto `59d037d`, preserving that complete main record and the S7 session log without dropping or rewriting either. The published guide and 14-file Pages boundary remain unchanged from the PR #87 integration; no unrelated content, private input, or publication rule was altered.
 
 Post-rebase local gates: 12-page public build; 383 public rows passed the guide checker; 12/12 unit tests passed; 14-file publication manifest passed; full repository checker passed (25 pages, 996 linked rows, 2,551 links, 2,398 rounded dollar figures, 14,552 model numbers in the secretless scan, 51 model paths). The optional external private-figure scan is explicitly `SKIPPED`. `git diff --check` passed. Local Ruby/Jekyll remains unavailable; await PR `verify` for the actual output build.
+
+### S7 pull request #89 verification (2026-11-13 UTC)
+- PR #89 (`arena/959e77d3-tino1` → `main`): https://github.com/wingbangboozle1-lang/Tino1/pull/89. It remains open and unmerged; this session did not merge it.
+- `verify` run 43422384043 passed on head `cd7090b18fb0a956530f70c80232667df53b65dc`. CI installed GitHub Pages/Jekyll, rebuilt and reproduced the 12-page guide, built actual `_site`, and passed both emitted-output allowlist checks. The workflow reported 14 published files and one builder output compared. Its optional external private-figure scan was skipped because `TINO1_PRIVATE_FIGURES` is not set.
+- This is CI validation of the proposed PR, not a deployment or live-page verification of this branch. GitHub Pages deployment and owner-only repository/history exposure remain separate.
