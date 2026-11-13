@@ -1217,6 +1217,46 @@ def build_questions():
     t3 = table(['When to verify', 'Action checklist', 'Decision impact', 'Official basis'],
                plan, caption='Discovery timing: what must be checked now vs. only upon inheritance')
 
+    evidence = [
+        ['S5-Q1', 'The trust instrument, estate inclusion and the resulting income-tax basis of Property A',
+         'Known: the model assumes the home is in the gross estate, so the basis resets (Q01, blockers B1-B2). Missing: the instrument itself has never been seen; a trust outside the estate gets no reset (Rev. Rul. 2023-2).',
+         'Estate attorney reads the full trust, amendments and recorded vesting deed privately, then documents inclusion and the date-of-death valuation in writing. The document stays off this site.',
+         'Q01, GAP-01',
+         src('RR-2023-2', 'IRS-FAQ-INHERIT')],
+        ['S5-Q2', 'Whether the Inheritor will occupy Property A within one year and keep it as the principal residence',
+         'Known: the Proposition 19 relief is modelled on a qualifying parent-child transfer (Q06, Q15). Missing: intent, the Transferor\'s occupancy, and the exemption status on the bills.',
+         'Owner decision plus counsel and assessor confirmation; file BOE-266 before BOE-19-P if moving in. Read the exemption line on both bills privately - do not publish the bills.',
+         'Q06, Q15, blockers B5-B6',
+         src('BOE-LTA-2026-026', 'BOE-PUB-800-1')],
+        ['S5-Q3', 'The lawful rentable condition and market rent of Property A and of the vacated third unit at Property B',
+         'Known: HUD benchmarks for both ZIP codes; the two let units earn an owner-supplied figure (A10). Missing: bedroom count, permits, leases, rent-control coverage, and any rent for the third unit - the baseline counts none of it.',
+         'Private inspection, lease review, a property-manager rent opinion, and a Rent Board coverage check. Never derive one unit\'s rent from another unit.',
+         'U08, Q04, A10, GAP-05',
+         src('HUD-95014', 'SF-RENT-LAW')],
+        ['S5-Q4', 'The actual utility accounts, meters, retailer and tax-roll charges for both homes',
+         'Known: adopted rate schedules (SFPUC, county tax rate book) and the owner\'s rounded bill midpoints. Missing: account class, usage, the Cupertino water provider, and whether storm charges already sit on the tax bill (U10).',
+         'Read the bills and the utility agreements privately; confirm retailer and account class with the utility. Avoid double counting charges that already appear on the tax roll.',
+         'U03, U05, U10, GAP-04',
+         src('CUP-WATER', 'SCC-RATES')],
+        ['S5-Q5', 'What insurance is actually available for both homes, and at what price',
+         'Known: the owner\'s rounded insurance estimate and the official statewide averages; tripling the estimate does not change the ranking. Missing: real quotes for homeowners, three-unit landlord cover, vacancy and earthquake (U01, U02).',
+         'Obtain comparable quotes privately through a broker and the Department of Insurance tool. Quotes are personal documents; only rounded totals would ever be used.',
+         'U01, U02, GAP-03',
+         src('CDI-TOOL', 'CDI-EQ')],
+        ['S5-Q6', 'The full estate inventory and the liquidity the family will need',
+         'Known: the federal exclusion and the room the model shows. Missing: other assets, debts, deductions, prior gifts, retirement accounts, portability, and the cash actually expected (Q02).',
+         'Executor and tax adviser prepare a confidential inventory and a Form 706 analysis privately; no balances belong in this repository.',
+         'Q02, GAP-02, blocker B3',
+         src('IRS-ESTATE', 'IRS-FAQ-ESTATE')],
+        ['S5-Q7', 'How sale proceeds would be invested, and what loss the family can tolerate',
+         'Known: the baseline result assumes stocks at 7.0%; break-even points show what would change the answer. Missing: the mix itself - no official forecast exists (A02).',
+         'Read the SEC allocation guidance, choose a mix with the adviser, and re-read the sensitivities: proceeds kept only in savings rank renting ahead of selling in the tested cases.',
+         'D03, A02, GAP-02',
+         src('SEC-ALLOC', 'SEC-TEN')],
+    ]
+    t4 = table(['ID', 'Evidence needed before the decision', 'What is known and what is missing', 'Private discovery route (documents stay off this site)', 'Maps to', 'Official basis'],
+               evidence, caption='Decision-gating evidence checklist carried from the independent audit of 2026-11-12 (S5-Q1 to S5-Q7)')
+
     body = """
 <p class="callout">This page brings together what is already established, what cannot be verified from public records, the exact answers needed before making a final decision, and practical ways to uncover each missing piece without exposing private documents on the public repository.</p>
 <p class="callout"><strong>Six blockers gate the decision.</strong> B1-B2: the trust instrument has never been seen and the basis treatment under Rev. Rul. 2023-2 is unconfirmed (Q01). B3: the estate size and any portability election are unknown against the $15,480,000 exclusion for 2027 (Q02). B4: the Inheritor's own income-tax bracket is unknown (Q05). B5: Proposition 19 parent-child eligibility is unconfirmed (Q06). B6: filing and claim deadlines need the date of death and the transfer timeline (Q15, Q16). Nothing on this page invents an answer: each row says what is known, what is missing, and the official basis.</p>
@@ -1224,7 +1264,9 @@ def build_questions():
 <h3>1. What is known vs. what is unknown</h3>%s
 <h3>2. Questions to answer before deciding, and how to discover missing info</h3>%s
 <h3>3. Discovery sequence: now vs. later</h3>%s
-""" % (t1, t2, t3) + _questions_register()
+<h3>4. Decision-gating evidence checklist from the independent audit (S5-Q1 to S5-Q7)</h3>%s
+<p class="note">The independent audit session of 2026-11-12 recorded seven evidence questions with their private discovery routes. They are reproduced here mapped to this site\'s own registers so nothing is lost between the two works. Every route is private: no trust documents, leases, bills, quotes or balances belong in this repository, and none of them can be answered from an official page - which is why they gate the decision.</p>
+""" % (t1, t2, t3, t4) + _questions_register()
     page('questions.html', 'Questions, unknowns, and discovery guide',
          'Clear summary of known vs. unknown information, exact pre-decision questions, reading-dated decision register, and practical ways to find missing details without compromising privacy.', body)
 

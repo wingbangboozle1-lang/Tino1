@@ -30,7 +30,7 @@ The decision: Property A (Cupertino, 95014, $3,100,000) will pass to the Inherit
 
 ## Risk is not a smooth line
 
-Inflation, house prices and stock returns do not compound evenly over 50 years. The Black swan page replays the real 1976-2025 record from each of its 50 possible starting years, and adds named crisis paths (1929-1941, 1970s stagflation, 1990 Japan, 2000 and 2008 crashes). Selling is ahead of renting in 43 of the 50 ten-year horizons and in 50 of the 50 twenty-year horizons; the worst ten-year case is behind by $2,069,690. Renting ends ahead in exactly two named paths: the Japan stagnation and the Depression. Staging the investment and holding a few years of spending in Treasury bills narrows that gap.
+Inflation, house prices and stock returns do not compound evenly over 50 years. The Black swan page replays the real 1976-2025 record from each of its 50 possible starting years, and adds named crisis paths (1929-1941, 1970s stagflation, 1990 Japan, 2000 and 2008 crashes). Selling is ahead of renting in 43 of the 50 ten-year horizons and in 50 of the 50 twenty-year horizons; the worst ten-year case is behind by $2,068,710. Renting ends ahead in exactly two named paths: the Japan stagnation and the Depression. Staging the investment and holding a few years of spending in Treasury bills narrows that gap.
 
 ## Before anything else
 
