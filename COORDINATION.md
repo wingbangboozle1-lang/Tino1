@@ -1692,3 +1692,23 @@ Privacy interpretation: names, contact details, exact addresses, parcel identifi
 - S5-0 claim, S5-1 bounded audit, S5-2 review pack and S5-3 integration/publication are done. The audit directory is excluded from Pages; the root chooser privacy wording is corrected. D1 dual-edition routing remains in force.
 - Still open for the owner: G01/G02 routing and repository/history remediation; privacy-safe numeric rebuild or privacy-only revert if anonymization is required; model/provenance corrections S5-P1–S5-P5; private evidence questions S5-Q1–S5-Q7. No historical series, ZIPs or private documents were republished by this session.
 
+
+---
+
+## Session `arena/f8de1d0b-tino1` — independent re-verification, dashboard landing page, suggestions review path, integration (claimed 2026-11-13 UTC)
+
+**Branch fixed by workspace:** `arena/f8de1d0b-tino1`; base commit `551179b` (merge of PR #72). Board read before claiming; no open PRs at claim time (`gh pr list --state open` returned none). No other session is active on the board in the last 60 minutes; all earlier claims are recorded as done/closed. This session therefore takes the integration role.
+
+**Privacy posture for this session.** Owner priority: personal information must not appear in the published product. Interpretation carried forward from S5: names, contact details, exact street addresses, parcel/APN numbers, account numbers and private documents never enter the product. Owner-supplied amounts are shown only rounded to $10, and $10 rounding is labelled as **disclosure minimization, not anonymization**. This session performs **no parcel lookup, no identity research and no address research**. It adds no new table of the owner's historical bill series.
+
+| # | Task | Status | Owner session | Files / scope | Verification / handoff |
+|---|------|--------|---------------|---------------|-------------------------|
+| F8-1 | Claim, board append, push before content work | in progress | arena/f8de1d0b-tino1 | `COORDINATION.md` (append only) | Claim committed and pushed before any shared file is touched |
+| F8-2 | Independent line-by-line re-read of the headline official sources (federal, California, Santa Clara, San Francisco, insurance, utilities, pending law) in this session; corrections only where an official page requires one | claimed | arena/f8de1d0b-tino1 | `final/sources.py`, `final/flags.py` (append only), `final/build.py` (`build_verification` fourth-pass table) | Only pages actually opened today are marked confirmed; everything else stays on the earlier passes |
+| F8-3 | Dashboard landing page organised by category, with the decision, the projections, the black-swan finding, the questions and the suggestions reachable in one click; both editions kept | claimed | arena/f8de1d0b-tino1 | `final/build.py` (`build_home_choice`, `NAV`), generated root `index.html` | Follows the standing rules: official link on every table row, $10 rounding, placeholders only |
+| F8-4 | Suggestions section: confirm the review-and-choose workflow (Adopt / Hold / Reject, path choice) is complete and that nothing on it is implemented; add any missing proposal with effort/risk/effect and a decision status | claimed | arena/f8de1d0b-tino1 | `final/suggestions.py`, `final/build.py` (`build_suggestions`), generated `suggestions.html` | Suggestions remain proposals; no baseline number changes without a recorded owner decision |
+| F8-5 | Questions / known-vs-missing register audit: every open question has what we hold, what is missing, and a concrete way to discover it | claimed | arena/f8de1d0b-tino1 | `final/questions.py`, `final/build.py` (`build_questions`), generated `questions.html` | No value filled from inference; unconfirmed stays blank and flagged |
+| F8-6 | Build and gate run: `final/model.py`, `final/integrate.py`, `final/check.py .`, `final/publish.py --check`, `privacy-site/build.py` + `check.py` + unittest, link scan | claimed | arena/f8de1d0b-tino1 | whole tree | A broken build is not merged |
+| F8-7 | PR to `main`, merge without waiting, confirm the Pages deploy, record PR link, merge commit and Pages status here | claimed | arena/f8de1d0b-tino1 | `COORDINATION.md` | Flagged items do not block the merge; they stay on the Flagged for Review page |
+
+**Not claimed / not touched:** `privacy-site/**` content and the published-boundary files are only touched if a gate requires it, and any such change is logged below before it is made. No earlier edition, archive, audit directory or other session's file is deleted.
