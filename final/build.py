@@ -1551,7 +1551,9 @@ def _questions_register():
 def _suggestions_options():
     """Part 2 of suggestions.html (session 0adc9b0a); Part 1 is build_suggestions() by session 155782b5."""
     s = SUGGESTIONS_DATA.sections(_helper())
-    hdr = ['No.', 'Suggestion', 'What the site does today', 'Options', 'Suggested choice', 'Effect on the decision', 'Effort and risk', 'Official basis']
+    hdr = ['No.', 'Suggestion', 'What the site does today', 'Options', 'Suggested choice', 'Effect on the decision', 'Effort and risk', 'Your decision (saved in this browser only)', 'Official basis']
+    for k in ('privacy', 'inputs', 'tools'):
+        s[k] = [r[:7] + [_sg(r[0])] + r[7:] for r in s[k]]
     n = len(s['privacy']) + len(s['inputs']) + len(s['tools'])
     t0 = table(['Path', 'Name', 'Suggestions included', 'What it achieves', 'Effort', 'Official basis'], s['paths'], caption='Ready-made paths for Part 2')
     t1 = table(hdr, _anchor(s['privacy']), caption='Privacy and upkeep', cls='qa')
