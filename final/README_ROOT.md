@@ -2,7 +2,7 @@
 
 **Live site:** https://wingbangboozle1-lang.github.io/Tino1/
 
-A decision analysis for two California homes. Property A (Cupertino, ZIP 95014) will pass to the Inheritor through a trust around 2040 to 2050. Property B (San Francisco, ZIP 94122) is already owned by the Inheritor. The site answers one question with numbers: live in Property A, rent it out, or sell it and reinvest.
+A decision analysis for two California homes. Property A (the future inherited home) will pass to the Inheritor through a trust around 2040 to 2050. Property B (the home already owned) is not part of the inheritance. The site answers one question with numbers: live in Property A, rent it out, or sell it and reinvest. City, ZIP code and parcel identifiers are deliberately omitted from this front page.
 
 ## What is current
 

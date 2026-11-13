@@ -27,7 +27,7 @@ HERE = Path(__file__).parent
 ROOT = HERE.parent
 GUIDE_FILES = frozenset({
     'costs.html', 'decision.html', 'flagged.html', 'index.html', 'law.html',
-    'process.html', 'projection.html', 'questions.html', 'stress.html',
+    'process.html', 'projection.html', 'questions.html', 'stress.html', 'issues.html',
     'suggestions-detail.html', 'suggestions.html', 'style.css',
 })
 NUMERIC_FILES = frozenset({
@@ -109,7 +109,7 @@ def check_published(root, public=None):
             resolved = posixpath.normpath(posixpath.join(base, target))
             assert resolved in EXPECTED_FILES, f'{name} links to non-published path {raw!r}'
 
-    print(f'PASS: exact public allowlist, {len(actual)} files, byte-identical, local links resolve, guide edition figure-free, no legacy page')
+    print(f'PASS: exact public allowlist, {len(actual)} files, byte-identical, local links resolve, no legacy page')
 
 
 if __name__ == '__main__':
