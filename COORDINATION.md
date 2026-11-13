@@ -2043,6 +2043,18 @@ Scope held: `privacy-site/**` untouched; no publication boundary change (PR #79 
 
 ---
 
+## Session `arena/959e77d3-tino1` — independent privacy-first acceptance audit and final integration (claimed 2026-11-13)
+
+**Branch:** `arena/959e77d3-tino1`, assigned base `18962953544f4061c9b96db19ea955056f747272` (PR #84 merge). The current integration branch is fixed by the workspace; no alternate branch or worktree will be created. No active file-scope claim was present at this base.
+
+| Task | Status | Owner session | Files / scope | Acceptance / verification |
+|---|---|---|---|---|
+| S7-0 Read task board and claim | done | `arena/959e77d3-tino1` | `COORDINATION.md` (append only) | Claim committed before audit work; preserve all prior records. |
+| S7-1 Independent acceptance audit of the actual public Pages output, privacy boundary, requirements coverage, and sourced public rows | in progress | `arena/959e77d3-tino1` | new `audit-959e77d3/**`; `COORDINATION.md`; `_config.yml` and `final/published.txt` only via the repository's publication-manifest generator, to keep audit artifacts excluded | Build actual Jekyll output; compare exact emitted files to the 13-file allowlist; rerun public/content/privacy checks; directly re-read the official sources needed to verify public factual rows. Audit notes must contain no household values, identifiers, documents, or newly discovered personal information. |
+| S7-2 Correct any publication or verification blocker found and complete final integration | claimed | `arena/959e77d3-tino1` | current branch only; initially `audit-959e77d3/**` and append-only `COORDINATION.md`; publication-boundary files only if required to keep the documented allowlist true | Do not publish household-derived values or change the privacy-first output boundary. Record all unverified/owner-only items as flagged rather than infer an answer. PR only after the exact Jekyll output, source checks, and CI pass; merge only when checks are green; verify Pages after merge. |
+
+**Privacy constraint:** This pass does not reproduce private household figures in the audit, does not add names/addresses/parcel details, and does not treat $10 rounding as anonymization. Repository history and non-Pages tracked material are audited as distinct exposures; no destructive history rewrite or account-level visibility change is authorized by this claim.
+
 ## Session `arena/76e05fa8-tino1` — claim, focused official re-read, publication-boundary decision, PR and Pages record (claimed 2026-11-13 UTC)
 
 **Branch fixed by workspace:** `arena/76e05fa8-tino1` (base `1896295` = origin/main after PR #84). The board's `session-<id>/<task>` branch pattern is superseded by the Arena branch rule for this session; no other branch is created or pushed. `gh pr list --state open` returned no open PRs at claim time; no other active claim is on the board.
