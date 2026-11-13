@@ -70,11 +70,14 @@ class PublicationTests(unittest.TestCase):
         repo=here.parent
         with tempfile.TemporaryDirectory() as folder:
             root=Path(folder)
-            # Fixture mirrors the union allowlist in final/published.txt (numeric edition
-            # at the root plus the no-figures guide under privacy-site/public/), each file
-            # byte-identical to its repository source - updated for the dual-edition
-            # routing contract, see check_published.py and COORDINATION.md.
-            for name in (repo/'final'/'published.txt').read_text().split():
+            # Fixture mirrors the privacy-only allowlist: generic root landing plus
+            # the no-household-figures guide. Numeric household pages are not allowed.
+            names=(repo/'final'/'published.txt').read_text().split()
+            self.assertIn('index.html',names)
+            self.assertIn('privacy-site/public/index.html',names)
+            self.assertNotIn('summary.html',names)
+            self.assertNotIn('decision.html',names)
+            for name in names:
                 dst=root/name
                 dst.parent.mkdir(parents=True,exist_ok=True)
                 shutil.copyfile(repo/name,dst)
@@ -84,6 +87,9 @@ class PublicationTests(unittest.TestCase):
             (root/'leaked.json').write_text('{}')
             self.assertNotEqual(subprocess.run(cmd,capture_output=True).returncode,0)
             (root/'leaked.json').unlink()
+            (root/'summary.html').write_text('<p>not public</p>')
+            self.assertNotEqual(subprocess.run(cmd,capture_output=True).returncode,0)
+            (root/'summary.html').unlink()
             (target/'index.html').write_text('modified')
             self.assertNotEqual(subprocess.run(cmd,capture_output=True).returncode,0)
 

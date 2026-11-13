@@ -1,251 +1,41 @@
-# Two-home inheritance analysis
+# Privacy-first inheritance decision guide
 
-**Live site:** https://wingbangboozle1-lang.github.io/Tino1/
+**Public site:** <https://wingbangboozle1-lang.github.io/Tino1/>
 
-A decision analysis for two California homes. Property A (Cupertino, ZIP 95014) will pass to the Inheritor through a trust around 2040 to 2050. Property B (San Francisco, ZIP 94122) is already owned by the Inheritor. The site answers one question with numbers: live in Property A, rent it out, or sell it and reinvest.
+A general decision guide for a future trust inheritance when the beneficiary already owns a separate home. It explains the legal process, the questions to resolve, the operating-cost evidence to collect, and the choices to compare. The public Pages edition uses generic property placeholders and fictional examples; it does not publish household-specific values, tax histories, rents, utility bills or forecasts.
 
-## What is current
+## What the public site contains
 
-The pages at the repository root are the only current edition. They are generated from [`final/`](final/):
+- **Overview:** conditional decision framework and the distinction between the future inheritance and the already-owned home.
+- **Decision:** live, rent and sell/reinvest gates; a clearly labeled fictional teaching example.
+- **Projections:** synthetic annual calculations only; actual household forecast fields are blank.
+- **Black swan:** official macroeconomic context plus explicitly invented stress paths, not predictions or probabilities.
+- **Process:** trust-administration steps, filing clocks and legal cautions.
+- **Tax & law:** current federal and California rules; future thresholds, local charges and eligibility are not treated as known.
+- **Costs:** insurance, water, energy, maintenance and property-tax items with no verified household prices filled in.
+- **Questions:** known legal context, unanswered household facts and ways to verify them privately.
+- **Suggestions:** review-only proposals with local Adopt / Hold / Reject radio controls and a path selector. No form or site code stores, submits or transmits selections; the controls do not implement choices.
+- **Flagged for Review:** unverified items, source limitations and privacy risks.
 
-| Page | Content |
-|---|---|
-| `index.html` | Executive summary, dashboard, best plan and why |
-| `decision.html` | Live, rent or sell: cash flows, after-tax wealth, sensitivities, break-even points |
-| `projections.html` | Year by year 2026 to 2076: value, assessed value, property tax, insurance, water, electricity, repairs, rental insurance |
-| `black-swan.html` | Non-constant growth and inflation: 50 replays of the real 1976-2025 record and named crisis paths |
-| `process.html` | Step-by-step process with legal deadlines |
-| `law.html` | Federal, California and local law in force, and changes under discussion |
-| `estate-cash.html` | Cash inheritance: thresholds at each level, room before tax, projections |
-| `costs.html` | Insurance for both ZIP codes and running costs |
-| `flagged.html` | Flagged for Review: every unconfirmed value, assumption and irregularity, with links |
-| `sources.html` | Source register, method, cross-check against a second model |
-| `verification.html` | Verification: the independent 2026-11-11 check register, every fact with its official link for manual review |
-| `review.html` | Repository review findings |
-| `versions.html` | Earlier editions and why they were replaced |
+The public allowlist is intentionally limited to the generic root landing page and `privacy-site/public/`. `final/publish.py --check`, the two published-output checkers, the site privacy gate and the GitHub Actions workflow verify that Jekyll emits no extra file. Noindex is only a request to search engines; it is not access control.
 
-## Reproduce
+## Critical privacy warning
 
-```
-python3 final/model.py && python3 final/integrate.py && python3 final/check.py .
-```
+**The GitHub repository itself is public.** Excluding files from GitHub Pages does not hide those files from repository visitors, and it does not erase commits, pull-request references, forks, caches or prior deployments. The repository currently contains household-derived analysis outside the public Pages edition, and its history may contain still earlier material. Rounding to `$10` is disclosure minimization, not anonymization. Do not treat this repository or its history as private. No account-level visibility change or destructive history rewrite was performed by this work because either could affect the live site and retained references.
 
-Standard library only. `final/check.py` fails if a table row has no link to an official page, if an internal link is broken, if a dollar figure is not a multiple of $10 (listed official figures excepted), or if a fingerprint of an unrounded owner figure appears.
+Keep deeds, statements, bills, account details, names, addresses and exact balances out of this public repository. If a secure household-specific model is required, it needs a separately access-controlled location and an independent security review. Repository visibility/history remediation remains an owner-level action; see the public site's **Flagged for Review** page.
 
-## Rules followed
+## Rebuild and verify
 
-- **Privacy first.** No names, addresses or parcel numbers. People are "the Transferor" and "the Inheritor". Owner-supplied figures are stored and shown only rounded to $10; no year-by-year history is listed. Pages ask search engines not to index them.
-- **Official sources.** Every table row links to an official page. A value that could not be confirmed is left blank and listed on the Flagged for Review page. Assumptions are labelled as assumptions.
-- **Not advice.** The site prepares questions for a licensed estate attorney and tax adviser.
-
-## Not current
-
-Earlier editions (`archive/`, `dashboard/`, `docs/`, `site/`) are kept for the record. Each page carries a notice pointing to the current site. See `versions.html`. An independent second model is in [`verify-4395771d/`](verify-4395771d/); it is a check, not a second front door.
-
-## Owner action still needed for full privacy
-
-This repository is public, and its Git history contains the first versions of the pages, written before the figures were rounded. Rounding the current pages does not remove that history. Only the owner can make the repository private or have the history rewritten.
-
-## Coordination
-
-Work sessions, claims, change requests and merge records are in [`COORDINATION.md`](COORDINATION.md).
-
----
-
-## History: README of the earlier editions (kept unchanged except for two corrected source links)
-
-> **Publication update (2026-11-12):** Pages now serves the privacy-first guide under `privacy-site/public/`, reached through the root redirect. Earlier numeric-edition publication instructions below are historical and do not describe the current front door. Household-derived figures and earlier files remain in this public repository and its history; excluding them from Pages does not remove that exposure. Review the [GitHub sensitive-data removal guidance](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/removing-sensitive-data-from-a-repository) and repository visibility. Synthetic examples in the guide are not household projections.
-
-### Two-home inheritance analysis
-
-**Live site:** https://wingbangboozle1-lang.github.io/Tino1/
-
-A decision analysis for two California homes. Property A (Cupertino, ZIP 95014) will pass to the Inheritor through a trust around 2040 to 2050. Property B (San Francisco, ZIP 94122) is already owned by the Inheritor. The site answers one question with numbers: live in Property A, rent it out, or sell it and reinvest.
-
-## What is current
-
-The pages at the repository root are the only current edition. They are generated from [`final/`](final/):
-
-| Page | Content |
-|---|---|
-| `index.html` | Redirect to the privacy-first guide (`privacy-site/public/`), the only edition GitHub Pages serves. Not generated by `final/` |
-| `summary.html` | Executive summary, dashboard, best plan and why (numeric edition; repository file, not published) |
-| `decision.html` | Live, rent or sell: cash flows, after-tax wealth, sensitivities, break-even points |
-| `questions.html` | Questions, known vs. unknown info, and discovery guide — Part 1: Q01–Q18, U01–U08 & checklist; Part 2: reading-dated decision register (open, unknowable, answered) |
-| `projections.html` | Year by year 2026 to 2076: value, assessed value, property tax, insurance, water, electricity, repairs, rental insurance |
-| `black-swan.html` | Non-constant growth and inflation: 50 replays of the real 1976-2025 record and named crisis paths |
-| `process.html` | Step-by-step process with legal deadlines (`BOE-266` before `BOE-19-P` per BOE Pub. 800-1) |
-| `law.html` | Federal, California (`Behavioral Health Services Tax`), and local law in force, plus pending measures & Nov 11 ballot updates |
-| `estate-cash.html` | Cash inheritance: thresholds at each level, room before tax, projections |
-| `costs.html` | Insurance for both ZIP codes and running costs (CPUC NEM / `$24.15` fixed charge, water, rent) |
-| `suggestions.html` | Proposed site, data & privacy improvements to review before implementing — Part 1: S-01–S-18 & Paths 1–3; Part 2: options register G01–G15 |
-| `flagged.html` | Flagged for Review: every unconfirmed value, assumption and irregularity, with links |
-| `sources.html` | Source register (zero official `excerpt` sources remain), method, cross-check against a second model |
-| `verification.html` | Verification passes (2026-11-11 and 2026-11-12): every official agency source opened and read directly |
-| `requirements.html` | Every part of the brief, the page that answers it, the official pages re-read, and `SG-1`–`SG-11` queue |
-| `review.html` | Repository review findings (`R01`–`R31`) |
-| `versions.html` | Earlier editions and why they were replaced |
-
-## Reproduce
-
-```
-python3 final/model.py && python3 final/integrate.py && python3 final/check.py .
+```sh
+python3 privacy-site/build.py
+python3 privacy-site/check.py
+python3 -m unittest discover -s privacy-site -p 'test_*.py' -v
+python3 final/publish.py --check
+python3 final/check.py .
+jekyll build --trace
+python3 final/check_published.py _site
+python3 privacy-site/check_published.py _site
 ```
 
-Standard library only. `final/check.py` fails if a table row has no link to an official page, if an internal link is broken, if a dollar figure is not a multiple of $10 (listed official figures excepted), or if a street address, e-mail address, parcel-number or telephone pattern appears. The numeric edition is not published; CI checks the published guide with the scripts in `privacy-site/`.
-
-## The executive summary
-
-[`EXECUTIVE-SUMMARY.md`](EXECUTIVE-SUMMARY.md) is the one-page answer: the conditional recommendation, the three choices with their after-tax wealth, the headline tax numbers, the black-swan finding, the process order and the open flags. It is generated by `final/exec_summary.py` from `final/out/model.json`, so its figures cannot drift from the site's; `final/integrate.py` regenerates it and `final/check_published.py` fails if the committed copy is stale. It is not published as a page (`summary.html` is the same summary).
-
-## What is published, exactly
-
-**Since 2026-11-12 GitHub Pages serves only the privacy-first guide**: the redirect in the root `index.html` and the files under `privacy-site/public/`. That boundary is defined by the `exclude` list in `_config.yml`, which is maintained with the guide, and it is enforced on every pull request by `privacy-site/check_published.py` (exact file list, exact redirect). See `.github/workflows/pages.yml`.
-
-The numeric edition described in the table above is **kept in the repository but not published**. To read it, clone the repository and open `summary.html` in a browser.
-
-```
-python3 final/publish.py            # rewrite final/published.txt, the file list of the numeric edition
-python3 final/publish.py --check    # fail if that list is stale, or if any numeric file is NOT excluded from Pages
-```
-
-`final/publish.py` used to generate `_config.yml`. It no longer writes that file: run as previously documented it would have put every numeric page back on the public site. `final/integrate.py` no longer touches the root `index.html`. `final/check_published.py` is the output check of the period when the numeric edition was served; it is kept for the record and is not run by CI.
-
-Whether the numeric edition should be published again is the owner's decision; it is the first item on `suggestions.html` (G01). Not published either: every earlier edition (`archive/`, `dashboard/`, `docs/`, `site/`, `verified/`, `verify-4395771d/`), all research notes, data and model inputs, the coordination log and the audit directories. Excluding files from Pages does not remove them from this public repository or its history.
-
-## Rules followed
-
-- **Privacy first.** No names, addresses or parcel numbers. People are "the Transferor" and "the Inheritor". Owner-supplied figures are stored and shown only rounded to $10; no year-by-year history is listed. Pages ask search engines not to index them.
-- **Official sources.** Every table row links to an official page. A value that could not be confirmed is left blank and listed on the Flagged for Review page. Assumptions are labelled as assumptions.
-- **Not advice.** The site prepares questions for a licensed estate attorney and tax adviser.
-
-## Not current
-
-Earlier editions (`archive/`, `dashboard/`, `docs/`, `site/`) are kept for the record. Each page carries a notice pointing to the current site. See `versions.html`. An independent second model is in [`verify-4395771d/`](verify-4395771d/); it is a check, not a second front door.
-
-## Owner action still needed for full privacy
-
-This repository is public, and its Git history contains the first versions of the pages, written before the figures were rounded. Rounding the current pages does not remove that history. Only the owner can make the repository private or have the history rewritten.
-
-## Coordination
-
-Work sessions, claims, change requests and merge records are in [`COORDINATION.md`](COORDINATION.md).
-
----
-
-## History: README of the earlier editions (kept unchanged except for two corrected source links)
-
-### Tino1 — Cupertino & San Francisco Inheritance Decision Hub
-
-**Live site (GitHub Pages):** https://wingbangboozle1-lang.github.io/Tino1/  
-**Canonical dashboard:** [`dashboard/`](dashboard/index.html) — 15 pages, model-generated, line-verified (linked from the landing page).  
-Landing page: [`index.html`](index.html) (clean entry point with category links). Archive sites preserved at [`docs/`](docs/index.html), [`site/`](site/index.html), and [`mirror-archived-2026-11-10.html`](mirror-archived-2026-11-10.html) — no session's work was discarded.
-
-Anonymized decision-analysis site for a 2040–2050 trust inheritance: two CA houses (Cupertino 95014 ~$3.1M, San Francisco 94122 ~$1.8M), live vs rent vs sell+invest.
-
-> **Privacy:** No personal information on the site — placeholders only (e.g., `Grantor Trust A`, `[Property Address]`, `[APN: ***]`).  
-> **Money:** All dollars rounded to nearest $10.
-
-## Site maps (merged from two parallel sessions — no work discarded)
-
-**Canonical dashboard (session arena/5c7cfaf6 — 9-page lab):** served from `docs/`:
-- `docs/index.html` — Executive Summary dashboard (metrics, charts, decision at-a-glance)
-- `docs/cupertino.html` — Cupertino 95014 detailed profile
-- `docs/sanfrancisco.html` — SF 94122 triplex profile
-- `docs/inheritance.html` — Trust inheritance step-by-step (14 steps, Prop 19 clocks)
-- `docs/taxes.html` — Tax Law Hub (federal/state/local, estate, Prop 13/19, step-up, cap gains)
-- `docs/projections.html` — Projections 2026–2050 (market, assessed, tax, costs, charts + CSV/JSON)
-- `docs/decision.html` — Decision analysis: live vs rent vs sell & reinvest (NPV 10/20/30 yr)
-- `docs/sources.html` — Sources & verification index (every row traced)
-- `docs/flagged.html` — Flagged for Review (unverified items, not blocking)
-
-**Additional pages (session arena/37f99282-tino1 — detailed complements):**
-- `docs/compare-decisions.html` — Side-by-side 10-yr/20-yr wealth model (6.5% portfolio vs housing)
-- `docs/process.html` — Trust administration process with forms/deadlines checklist
-- `docs/inheritance-tax.html` — Expanded federal/state tax tables (gift, GST, NIIT, QBI)
-- `docs/operating-costs.html` — Insurance, water/electric (SFPUC/SJ Water/PG&E), maintenance
-- `index.html` (repo root) — Mirror executive summary for Pages root build
-- `data/assumptions.json`, `data/projections-*.csv`, `data/inheritance-scenarios.json` — machine-readable
-
-**Parallel session model & research (arena/3676d6a0):**
-- `model/project.py` + `model/assumptions.md` — reproducible Python model
-- `research/tax-law.md`, `research/utilities-insurance-market.md` — official-source notes
-- `data/cupertino_projection.csv`, `data/sanfrancisco_projection.csv`, `data/model_summary.json`
-
-## What we built (combined)
-1. **Line-by-line verification** — every table row links to an official source. If unverifiable, left blank/flagged.
-2. **Numbers rounded to $10** per request.
-3. **Projections:** 3.5–4.5% Cupertino / 3.8% SF appreciation (C.A.R. 3.6% statewide, 2–6% Bay Area), 2% Prop 13 cap (RTC §51), Prop 19 cap $1,044,586 (BOE LTA 2025/009) biennially FHFA HPI, 5% insurance inflation, 3% rent/water/electric, 6.5% 70/30 portfolio.
-4. **Three paths (inherit ~2045 → 2055/2065):**
-   - **A. Live in Cupertino** (move in ≤12 mo, Prop 19 partial shield) + rent SF fully
-   - **B. Rent out Cupertino** (full reassessment — weakest; CA taxes rent as ordinary)
-   - **C. Sell promptly** (stepped-up basis IRC §1014 → ~$0 gain if sold near FMV → reinvest → highest liquid wealth, ~$2M+ ahead at 10 yr)
-5. **Inheritance process:** 14 steps, PCOR, BOE-19-P (3 yr), HO exemption (1 yr), Form 706 only above $15M.
-
-See `docs/decision.html` + `docs/compare-decisions.html` for full math.
-
-## Verification
-Key official sources (Source pages list all):
-- IRS Form 709 Instr. 2026 + Rev Proc 2025-32 ($15M exemption, $19k gift) — [IRS](https://www.irs.gov/pub/irs-dft/i709--dft.pdf)
-- BOE Prop 13/19 + LTA 2025/009 ($1,044,586) — [BOE](https://www.boe.ca.gov/prop19/)
-- SCO no CA estate tax — [SCO](https://www.sco.ca.gov/ardtax_estate_tax.html)
-- SCC Assessor Annual Report 2025 — [SCC](https://www.sccassessor.org/)
-- SF Treasurer 1.18268325% FY25-26 — [SF Treasurer](https://sftreasurer.org/property/secured-property-taxes)
-- C.A.R. forecast — [C.A.R.](https://www.car.org/aboutus/newsreleases/2026housingforecast)
-- CDI / NAIC insurance — [CDI](https://www.insurance.ca.gov/), [NAIC](https://content.naic.org/reports/homeowners-insurance-report)
-- FTB, Cal Courts — [FTB](https://www.ftb.ca.gov/), [Courts](https://selfhelp.courts.ca.gov/probate)
-
-## Coordination
-See `COORDINATION.md` for combined 16-task board, file ownership, verification & merge-conflict logs. Built by two parallel sessions + final integrator (arena/5c7cfaf6), now merged with arena/37f99282-tino1 additions — no discarded work.
-
-## Local dev
-```bash
-### no build required — open docs/index.html or index.html
-python -m http.server 8000
-### or Jekyll (Cayman theme via _config.yml in root, .nojekyll in docs/)
-bundle exec jekyll serve
-```
-
-## GitHub Pages
-- Canonical: `docs/` folder via Pages (current live build 1356405344) — `https://wingbangboozle1-lang.github.io/Tino1/`
-- Mirror root `index.html` also builds via legacy Pages source (branch arena/37f99282-tino1 → now main after merge)
-
-## License
-Internal family decision support — not legal/tax advice. Consult CA attorney & CPA.
-
-## Changelog
-- 2026-11-10 — v1.0 initial site (executive summary, projections, decision, tax hub, flagged, data CSVs)
-- 2026-11-10 — v1.1 merged parallel sessions (model/research + 4 complement pages, no discard, integrated Pages deploy)
-- 2026-11-11 — v1.2 final integration (session `arena/62c87525`): **black swan economic conditions section** (user requirement), 50-year variable-rate projections 2026–2076, clean root landing page, one canonical dashboard (`dashboard/`, 15 pages), central flagged list extended to 27 items
-
-## Session `6ea079fa` — verified dataset + after-tax scenario dashboard (`analysis/`, `dashboard/`)
-
-**Live:** https://wingbangboozle1-lang.github.io/Tino1/dashboard/ — 14 pages: dashboard, executive summary, properties, step-by-step process, Prop 19, estate tax, tax law, operating costs, year-by-year projections 2026–2055, six after-tax scenarios with a 27-case sensitivity grid, pending law changes, **Flagged for Review** (23 items), sources, methodology.
-
-- `analysis/data/*.csv` — every fact row carries an official source URL and a status (`verified` / `derived` / `user-supplied` / `assumption` / `unverified`); unverifiable values are blank and flagged, never inferred. Owner-supplied assessment histories are deliberately not published (privacy); all amounts rounded to $10.
-- `analysis/model.py` → `analysis/data/projections/*.csv`, `analysis/data/scenarios.csv`, `dashboard/data/model_output.json`; `analysis/build_site.py` renders `dashboard/`; `analysis/check_site.py` runs link / source / privacy checks.
-- Reproduce: `python3 analysis/model.py && python3 analysis/build_site.py && python3 analysis/check_site.py` (standard library only).
-
-## Canonical consolidated site (2026-11-11, session `arena/944a92cd-tino1`, merged with `arena/62c87525`)
-
-> Root `index.html` is ONE canonical 13-page site. Root navigation covers: executive summary, properties, inheritance steps, projections, live/rent/sell, black swans, estate tax, costs, pending changes, flagged, sources, methodology. Session `62c87525` independently published a complementary **black-swan analysis + dashboard-integrated pages** (`dashboard/black-swan.html`, `analysis/data/blackswan_*.csv`, `research/black-swan-economics.md`) — preserved in full; see the cross-links from the root Black swans page. The root portal design of `arena/62c87525` is preserved at `archive/root-portal-62c87525.html`.
-
-## Canonical site (2026-11-11, session `arena/944a92cd-tino1`)
-
-**Live:** https://wingbangboozle1-lang.github.io/Tino1/ — `index.html` is the canonical **Executive summary**. Nav: Executive summary · Properties · Inheritance steps · Projections 2026–2060 · Live/Rent/Sell · **Black swans** · Estate tax · Tax law · Costs · Pending changes · Flagged for Review · Sources · Methodology.
-
-- Privacy first: placeholders only; every user-supplied dollar figure rounded to the nearest **$10** repo-wide (exact statutory constants excepted); assessment histories withheld/rounded; PII grep-audited.
-- Every table row → official source or a flag on **Flagged for Review** (25 new P-flags + 23 carried X-flags).
-- Headline: sell [Property A] at the step-up (≈ $0 capital-gains tax), reinvest (≈ $5,660,000 net at 2045), live in [Property B]'s vacant unit; keep B's rents. Stagflation is the one regime that flips the answer — see **Black swans** page for the full 7-regime grid and tripwires. Full math: **Live/Rent/Sell** and **Methodology** pages; model: `integrated/model.py`; CSV: `downloads/inheritance-baseline-2026-2060.csv`.
-- Legacy multi-session sites (`/docs/`, `/site/`, `/dashboard/`) are superseded but retained; exact figures purged. See **REPO-REVIEW.md** for the line-by-line repo audit (including two verified-dead government URLs corrected with evidence).
-- Not legal/tax/investment advice.
-
-## Complementary work preserved from `arena/62c87525` (merged via PR #14; recorded in this merge)
-
-**Live:** https://wingbangboozle1-lang.github.io/Tino1/dashboard/black-swan.html — verified economic history (BLS CPI-U 1976–2025, NBER recession dating, FHFA HPI crash magnitudes, Freddie Mac PMMS rate extremes, CBO Feb 2026 baseline) turned into six **variable-growth** economic scenarios over 50 years (2026–2076): baseline control, historical CPI replay, 1970s stagflation, 2006–12 GFC/Bay-Area crash, Japan-style deflation tail, and the 2020–23 COVID whiplash.
-
-- `analysis/blackswan_model.py` → `analysis/data/blackswan_paths.csv` (every yearly rate used, auditable), `blackswan_projection_*.csv` (year-by-year value / assessed / tax / costs, $10-rounded, Prop 8 handling), `blackswan_stress.csv` (sell vs rent vs live × 3 inheritance years × 6 scenarios).
-- Finding: **sell & reinvest at inheritance wins 12 of 18 stress cells and the baseline**; "live in it" wins only housing-boom/replay cells; renting never wins (full reassessment + ordinary-rate rent tax). Crash *timing* vs the death year dominates crash *magnitude*.
-- `analysis/build_blackswan.py` → `dashboard/black-swan.html`. Research log with per-figure provenance: `research/black-swan-economics.md`.
-
-
+The public-guide generator reads only `privacy-site/research.json` and `privacy-site/illustrations.py`; its examples are not household projections. `final/check.py` also validates the separate, non-Pages numeric analysis stored in the public repository. The latter is not a privacy boundary or a public recommendation. Consult qualified estate counsel, a tax professional and an insurance adviser before acting; this guide is not legal, tax, investment or insurance advice.

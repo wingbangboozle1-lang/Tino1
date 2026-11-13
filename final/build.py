@@ -22,9 +22,9 @@ B = M['baseline']['summary']
 ROWS = M['baseline']['rows']
 OUT = os.path.abspath(os.environ.get('OUT_DIR', os.path.join(HERE, 'site')))
 ROOT_MODE = bool(os.environ.get('ROOT_MODE'))
-# Since 2026-11-12 the root index.html is the redirect to the privacy-first guide (privacy-site/), which is the only
-# edition GitHub Pages serves. Built into the repository root, this edition therefore writes its summary to
-# summary.html and never touches index.html (session 0adc9b0a, review item R29).
+# ROOT_MODE builds the household-specific numeric analysis into its historical root files,
+# with its executive summary at summary.html. The public index.html is a generic landing
+# page that links only to privacy-site/public; final/publish.py excludes all numeric pages.
 HOME = 'summary.html' if ROOT_MODE else 'index.html'
 Y0 = 2026
 T = P['T']
@@ -1657,24 +1657,33 @@ JS = """
 
 
 def build_home_choice():
-    """Root index.html: the site's front door.  Privacy first - the primary link goes to
-    the no-figures guide; the second link is the rounded-figures analysis the brief asks
-    for.  Only written in ROOT_MODE (the staging tree uses HOME = index.html)."""
-    open(os.path.join(OUT, 'index.html'), 'w').write("""<!doctype html>
+    """Write the generic, privacy-first root landing page in ROOT_MODE.
+
+    The public Pages site contains no link to the household-specific numeric edition.
+    That edition and its inputs remain in this public repository, so exclusion from
+    Pages is not represented as repository privacy or anonymization.
+    """
+    open(os.path.join(OUT, 'index.html'), 'w', encoding='utf-8').write("""<!doctype html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<title>Two-home inheritance analysis and no-figures guide</title>
-<link rel="stylesheet" href="style.css"></head>
-<body><div class="wrap"><header class="top"><div class="wrap"><span class="brand">Two-home inheritance analysis</span></div></header>
-<h1>Two editions of this analysis</h1>
-<p class="lead">A future trust inheritance of one home, and a second home the Inheritor already owns. Choose how you want to read the work.</p>
-<div class="cards">
-<article><h2>No-figures decision guide (privacy first)</h2><p>The rules, the process and the decision framework with <strong>none of this household's figures</strong>. Every number there is invented for teaching. Start here if you want the analysis without the household's data.</p><p><a href="privacy-site/public/index.html">Open the no-figures guide</a></p></article>
-<article><h2>Rounded-figures analysis (the owner's brief)</h2><p>The full decision analysis with the executive dashboard, year-by-year projections, live / rent / sell comparison and the stated best plan. Household figures are rounded to the nearest $10 as a disclosure-minimization measure; rounding is not anonymization. The numeric edition still contains locality cues and household-derived outputs, and the public repository/Git history is a separate exposure risk.</p><p><a href="summary.html">Open the rounded-figures analysis</a> · <a href="flagged.html">Privacy flags P01/P02</a></p></article>
-</div>
-<p class="note">People are placeholders (the Transferor, the Inheritor). No names, street addresses or parcel numbers appear anywhere, but locality cues remain in the numeric edition. Unverified values and privacy limits are flagged on the <a href="flagged.html">Flagged for Review</a> page. Not legal, tax, investment or insurance advice.</p>
-</div></body></html>
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'">
+<title>Privacy-first inheritance decision guide</title>
+<style>
+:root{color-scheme:light;--ink:#173334;--green:#24574f;--muted:#657572;--line:#dce6df;--paper:#f5f7f2}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.65 system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:760px;margin:10vh auto;padding:40px 28px;background:#fff;border:1px solid var(--line)}
+.eyebrow{font-size:.75rem;letter-spacing:.14em;font-weight:700;color:#5b786c}h1{font:500 clamp(2rem,5vw,3rem)/1.15 Georgia,serif;margin:.8rem 0 1rem}
+p{color:var(--muted)}a.button{display:inline-block;margin:16px 0;padding:13px 19px;background:var(--green);color:#fff;text-decoration:none;font-weight:700;border-radius:4px}
+a:focus-visible{outline:3px solid #c98d25;outline-offset:3px}.note{border-top:1px solid var(--line);padding-top:18px;font-size:.9rem}
+</style></head><body><main><p class="eyebrow">PUBLIC EDITION · PRIVACY FIRST</p>
+<h1>Inheritance decision guide</h1>
+<p>A general guide to the legal process, the information still needed, operating-cost categories, and the choices that should be compared before a future trust transfer.</p>
+<p>The public guide uses fictional teaching examples only. It does not publish household-specific property figures, tax histories, utility costs or forecasts.</p>
+<p><a class="button" href="privacy-site/public/index.html">Open the decision guide</a></p>
+<p class="note">Rounding is not anonymization. This page only describes the GitHub Pages publication boundary; the public source repository and its history are separate exposure surfaces.</p>
+</main></body></html>
 """)
 
 

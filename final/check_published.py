@@ -1,24 +1,14 @@
 #!/usr/bin/env python3
-"""Published-output check (session e8636cac, tasks W1/W2).  Standard library only.
+"""Verify GitHub Pages output against the privacy-first public boundary.
 
   python3 final/check_published.py _site
 
-Exit code 1 on any failure.  Every failure line also starts with `::error::` so that a
-GitHub Actions run shows the exact problem as an annotation (the run log itself is not
-always reachable from a work session).
-
-Checked:
- 1. the files Jekyll actually produced are exactly the files declared in
-    final/published.txt - an unexcluded legacy directory fails here, by name;
- 2. every internal link on a published page resolves inside the published set, so the
-    live site cannot contain a link to a page that is not served;
- 3. every published page asks search engines not to index it;
- 4. no published page contains an owner-supplied figure, a street address, an e-mail
-    address, a phone number or a parcel-number pattern.  The unrounded owner figures
-    are never stored in this repository (a hash of a small number is reversible), so
-    this scan runs only when TINO1_PRIVATE_FIGURES names a file outside the repository;
- 5. the published pages on disk are the ones the model and the builder produce today
-    (no stale hand edit can reach the live site).
+Exit code 1 on any failure. This gate checks the actual Jekyll output against
+final/published.txt, which is intentionally limited to the generic root landing and
+the privacy-site/public guide. The published guide's known household-signature and
+locality checks run separately in privacy-site/check.py. Optional unrounded-value
+fingerprints are scanned only when TINO1_PRIVATE_FIGURES points to a file outside the
+repository; without that file, this checker does not claim a complete privacy audit.
 """
 import html
 import os
@@ -137,4 +127,4 @@ if __name__ == '__main__':
             fail(x)
             print(' -', x)
         sys.exit(1)
-    print('PASS - exact publication allowlist (%d files), internal links resolve inside it, noindex on every page, no personal information found, committed pages match a fresh build' % n)
+    print('PASS - exact privacy-first publication allowlist (%d files), internal links resolve inside it, noindex on every page, no PII pattern matched, published root landing matches a fresh build; unrounded-value scan %s' % (n, 'on' if FP else 'SKIPPED (TINO1_PRIVATE_FIGURES not set)'))
