@@ -1,16 +1,18 @@
 {
   "checked": "2026-11-12",
-  "method": "Official pages opened and substantive passages read using fetch_page. This is a bounded claim audit, not a complete audit of every historic repository edition. Official-context links do not verify household data or synthetic assumptions. Error pages were rejected, not counted as verification.",
+  "method": "Official pages opened and substantive passages read using fetch_page. This is a bounded claim audit, not a complete audit of every historic repository edition. Most sources were read on 2026-11-12; sources newly re-read on 2026-11-13 carry an individual checked date. Official-context links do not verify household data or synthetic assumptions. Error pages were rejected, not counted as verification.",
   "sources": {
     "estate": {
       "title": "IRS · Estate tax",
       "url": "https://www.irs.gov/businesses/small-businesses-self-employed/estate-tax",
-      "finding": "2026 filing threshold $15,000,000; gross estate can include cash, securities, real estate, insurance and trusts; adjusted taxable gifts affect filing; deductions and credits affect liability."
+      "finding": "2026 filing threshold $15,000,000; gross estate can include cash, securities, real estate, insurance and trusts; adjusted taxable gifts affect filing; deductions and credits affect liability.",
+      "checked": "2026-11-13"
     },
     "irs27": {
       "title": "IRS · 2027 inflation adjustments",
       "url": "https://www.irs.gov/newsroom/irs-releases-tax-inflation-adjustments-for-tax-year-2027-taxpayers-continue-to-benefit-from-the-working-families-tax-cuts",
-      "finding": "IR-2026-133 dated November 5, 2026 explicitly states 2027 basic estate exclusion $15,480,000, 2026 $15,000,000. This is published, not a forecast."
+      "finding": "IR-2026-133 dated November 5, 2026 explicitly states 2027 basic estate exclusion $15,480,000, 2026 $15,000,000. This is published, not a forecast.",
+      "checked": "2026-11-13"
     },
     "faq": {
       "title": "IRS · Estate tax FAQ",
@@ -20,7 +22,8 @@
     "boe": {
       "title": "California BOE · Proposition 19",
       "url": "https://www.boe.ca.gov/prop19/",
-      "finding": "Transferor/transferee principal residence, eligible relationship, adjusted value limit; homeowners exemption within one year; exclusion claim within three years or before third-party transfer. Official page lists 2026/026 guidance."
+      "finding": "Transferor/transferee principal residence, eligible relationship, adjusted value limit; homeowners exemption within one year; exclusion claim within three years or before third-party transfer. Official page lists 2026/026 guidance.",
+      "checked": "2026-11-13"
     },
     "allow": {
       "title": "BOE · 2025 allowance notice",
@@ -30,7 +33,8 @@
     "rtc": {
       "title": "California · RTC §51",
       "url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=51.&lawCode=RTC",
-      "finding": "Factored base inflation increase capped at 2%; taxable value generally lesser of factored base and current full cash value. Temporary market reductions need not recover at only 2%."
+      "finding": "Factored base inflation increase capped at 2%; taxable value generally lesser of factored base and current full cash value. Temporary market reductions need not recover at only 2%.",
+      "checked": "2026-11-13"
     },
     "trust": {
       "title": "California · Probate Code §16061.7",
@@ -40,27 +44,32 @@
     "sco": {
       "title": "California Controller · Estate tax",
       "url": "https://www.sco.ca.gov/ardtax_estate_tax.html",
-      "finding": "No California estate tax return for deaths on/after January 1, 2005; inheritance tax administered for pre-June 8, 1982 deaths."
+      "finding": "No California estate tax return for deaths on/after January 1, 2005; inheritance tax administered for pre-June 8, 1982 deaths.",
+      "checked": "2026-11-13"
     },
     "basis": {
       "title": "IRS · Inherited property basis",
       "url": "https://www.irs.gov/faqs/interest-dividends-other-types-of-income/gifts-inheritances/gifts-inheritances",
-      "finding": "Generally date-of-death FMV basis, or elected alternate valuation where applicable; gain on sale above basis may be taxable."
+      "finding": "Generally date-of-death FMV basis, or elected alternate valuation where applicable; gain on sale above basis may be taxable.",
+      "checked": "2026-11-13"
     },
     "trustbasis": {
       "title": "IRS · Revenue Ruling 2023-2",
       "url": "https://www.irs.gov/irb/2023-16_IRB#REV-RUL-2023-2",
-      "finding": "Bulletin synopsis expressly says §1014 adjustment generally does not apply to irrevocable grantor trust assets not included in deceased grantor gross estate."
+      "finding": "Bulletin synopsis expressly says §1014 adjustment generally does not apply to irrevocable grantor trust assets not included in deceased grantor gross estate.",
+      "checked": "2026-11-13"
     },
     "sell": {
       "title": "IRS · Topic 701",
       "url": "https://www.irs.gov/taxtopics/tc701",
-      "finding": "Home-sale exclusion up to $250,000/$500,000 if qualified; generally ownership/use two of five years; inheritance alone does not satisfy use."
+      "finding": "Home-sale exclusion up to $250,000/$500,000 if qualified; generally ownership/use two of five years; inheritance alone does not satisfy use.",
+      "checked": "2026-11-13"
     },
     "rent": {
       "title": "IRS · Topic 414",
       "url": "https://www.irs.gov/taxtopics/tc414",
-      "finding": "Rent taxable, deductible expenses subject to rules, depreciation, personal-use allocation, passive limitations and possible NIIT; capital improvements differ from repairs."
+      "finding": "Rent taxable, deductible expenses subject to rules, depreciation, personal-use allocation, passive limitations and possible NIIT; capital improvements differ from repairs.",
+      "checked": "2026-11-13"
     },
     "ftb": {
       "title": "California FTB · Capital gains",
@@ -75,7 +84,8 @@
     "cpuc": {
       "title": "California PUC · Customer generation",
       "url": "https://www.cpuc.ca.gov/industries-and-topics/electrical-energy/demand-side-management/net-energy-metering",
-      "finding": "NEM bill credits differ from net billing; NBT applies to new interconnection applicants since April 15, 2023. No household cash profit established."
+      "finding": "NEM bill credits differ from net billing; NBT applies to new interconnection applicants since April 15, 2023. No household cash profit established.",
+      "checked": "2026-11-13"
     },
     "tenantlaw": {
       "title": "California Legislature · Civil Code §1947.12",
@@ -85,12 +95,14 @@
     "bill": {
       "title": "California Legislature · SB 974",
       "url": "https://leginfo.legislature.ca.gov/faces/billTextClient.xhtml?bill_id=202520260SB974",
-      "finding": "Chapter 665 approved September 27, 2026; special-needs trusts as eligible transfer medium. Enacted, not pending; household applicability unknown; no blanket Prop 19 repeal."
+      "finding": "Chapter 665 approved September 27, 2026; special-needs trusts as eligible transfer medium. Enacted, not pending; household applicability unknown; no blanket Prop 19 repeal.",
+      "checked": "2026-11-13"
     },
     "sec": {
       "title": "SEC · Asset allocation and diversification",
       "url": "https://www.investor.gov/introduction-investing/getting-started/asset-allocation",
-      "finding": "Allocation depends on time horizon and risk tolerance; diversification and rebalancing; no guaranteed return."
+      "finding": "Allocation depends on time horizon and risk tolerance; diversification and rebalancing; no guaranteed return.",
+      "checked": "2026-11-13"
     },
     "fdic": {
       "title": "FDIC · Deposit insurance",
@@ -130,7 +142,8 @@
     "boepub": {
       "title": "BOE · Publication 800-1 (Prop 19)",
       "url": "https://www.boe.ca.gov/pdf/pub800-1.pdf",
-      "finding": "BOE-266 homeowners exemption must precede BOE-19-P; claims timely within 3 years (before transfer) or 6 months of supplemental notice; moving out cancels exclusion next Jan 1 lien date and enrolls indexed date-of-death FMV."
+      "finding": "BOE-266 homeowners exemption must precede BOE-19-P; claims timely within 3 years (before transfer) or 6 months of supplemental notice; moving out cancels exclusion next Jan 1 lien date and enrolls indexed date-of-death FMV.",
+      "checked": "2026-11-13"
     },
     "ftb540": {
       "title": "CA FTB · 2025 Form 540 Booklet",
@@ -145,12 +158,20 @@
     "cdires": {
       "title": "CA DOI · Residential Insurance Guide (Form 401)",
       "url": "https://www.insurance.ca.gov/01-consumers/105-type/95-guides/03-res/res-ins-guide.cfm",
-      "finding": "Standard homeowners policies exclude earthquake, flood, earth movement, mold, wear/tear and losses to a dwelling vacant 60+ days."
+      "finding": "Standard homeowners policies exclude earthquake, flood, earth movement, mold, wear/tear and losses to a dwelling vacant 60+ days.",
+      "checked": "2026-11-13"
     },
     "cpucfixed": {
       "title": "CPUC · Resolution E-5354 (Base Services Charge)",
       "url": "https://docs.cpuc.ca.gov/PublishedDocs/Published/G000/M555/K816/555816677.pdf",
-      "finding": "Implements AB 205 income-graduated electric fixed Base Services Charge (Q1 2026 rollout) with reduced fixed tiers for CARE/FERA and a standard Tier 3 fixed monthly charge."
+      "finding": "Resolution E-5354 approves with modifications PG&E’s income-graduated fixed-charge implementation plan. It does not state a property-specific bill or establish a universal fixed charge for every utility or rate plan.",
+      "checked": "2026-11-13"
+    },
+    "water": {
+      "title": "California Water Boards · Find your water system",
+      "url": "https://www.waterboards.ca.gov/drinking_water/certlic/drinkingwater/shutoff-protection.html",
+      "finding": "The State Water Board page links an official map to identify a public drinking-water system service area from a residential address. It does not publish the property’s water or wastewater rates; those must be checked with the actual provider.",
+      "checked": "2026-11-13"
     }
   },
   "rejected_links": [

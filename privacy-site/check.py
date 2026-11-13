@@ -8,7 +8,20 @@ import re
 ROOT = Path(__file__).parent/'public'
 NAV = {'index.html','decision.html','projection.html','stress.html','process.html','law.html','costs.html','questions.html','suggestions.html','suggestions-detail.html','flagged.html'}
 FILES = NAV | {'style.css'}
-SOURCES = {s['url'] for s in json.loads((ROOT.parent/'research.json').read_text())['sources'].values()}
+REGISTRY = json.loads((ROOT.parent/'research.json').read_text())
+SOURCES = {s['url'] for s in REGISTRY['sources'].values()}
+REVIEWED_NON_GOV_HOSTS = {'docs.github.com', 'federalreservehistory.org', 'www.federalreservehistory.org'}
+PII_PATTERNS = {
+    'street address': r'\b\d{1,5}\s+[A-Z][A-Za-z-]+(?:\s+[A-Z][A-Za-z-]+)?\s+(?:Street|St\.?|Avenue|Ave\.?|Drive|Dr\.?|Way|Court|Ct\.?|Lane|Ln\.?|Road|Rd\.?|Boulevard|Blvd\.?)\b',
+    'email address': r'[\w.+-]+@[\w-]+\.[\w.-]+',
+    'phone number': r'(?<!\d)(?:\+?1[ .-]?)?(?:\(\d{3}\)|\d{3})[ .-]\d{3}[ .-]\d{4}(?!\d)',
+    'parcel-number pattern': r'\b\d{3}-\d{2}-\d{3}\b',
+}
+
+
+def pii_kinds(text):
+    """Return only PII-pattern categories, never the matched value."""
+    return [label for label, pattern in PII_PATTERNS.items() if re.search(pattern, text)]
 
 
 class Check(HTMLParser):
@@ -24,10 +37,19 @@ class Check(HTMLParser):
         self.current = 0
         self.tables = 0
         self.captions = 0
+        self.inputs = []
 
     def handle_starttag(self, tag, attrs):
         a = dict(attrs)
-        assert tag not in {'script','iframe','object','embed','form','input','video','audio'}, tag
+        assert tag not in {'script','iframe','object','embed','form','video','audio'}, tag
+        if tag == 'input':
+            assert a.get('type') == 'radio', 'Only local radio review controls are allowed'
+            assert 'form' not in a, 'Review controls must not be associated with a submitting form'
+            name = a.get('name','')
+            assert name == 'implementation-path' or name in {f'review-s{i}' for i in range(1,7)}, name
+            allowed = {'privacy-guide','private-workspace','pause-pages','rounded-public'} if name == 'implementation-path' else {'adopt','hold','reject'}
+            assert a.get('value') in allowed, f'Unexpected review choice: {a.get("value")}'
+            self.inputs.append((name,a.get('value'), 'checked' in a))
         assert not any(k.startswith('on') for k in a), 'Inline event handler'
         if a.get('id'):
             assert a['id'] not in self.ids, 'Duplicate ID'
@@ -60,6 +82,12 @@ class Check(HTMLParser):
 
 
 def main():
+    for source in REGISTRY['sources'].values():
+        parsed=urlparse(source['url'])
+        host=(parsed.hostname or '').casefold()
+        assert parsed.scheme=='https', f'Official source must use HTTPS: {source["url"]}'
+        assert host.endswith('.gov') or host in REVIEWED_NON_GOV_HOSTS, \
+            f'Unreviewed non-government source host: {host}'
     actual = {p.name for p in ROOT.iterdir() if p.is_file()}
     assert actual == FILES, f'Unexpected public files: {actual ^ FILES}'
     assert not any(p.is_dir() for p in ROOT.iterdir()), 'Unexpected public directory'
@@ -68,7 +96,9 @@ def main():
         text = (ROOT/name).read_text()
         assert 'noindex,nofollow' in text and 'no-referrer' in text
         assert 'Content-Security-Policy' in text
-        assert 'CHECKED 12 NOV 2026' in text
+        assert 'SOURCE CHECKS <i></i> 12–13 NOV 2026' in text
+        pii = pii_kinds(text)
+        assert not pii, f'Personal-data pattern(s) in {name}: {", ".join(pii)}'
         # Defense in depth against known rounded household signatures and location
         # cues. These checks cover only the public build, not Git history or every
         # possible inference from public context.
@@ -86,10 +116,20 @@ def main():
             target = target or name
             assert target in FILES, (name,target)
             if fragment: assert target in pages and fragment in pages[target].ids, (name,target,fragment)
+        if name != 'suggestions.html':
+            assert not p.inputs, f'Unexpected input controls outside Suggestions: {name}'
+    controls=pages['suggestions.html'].inputs
+    assert len(controls)==22, f'Expected six review groups and four path choices, found {len(controls)} controls'
+    selected={}
+    for group,value,checked in controls:
+        if checked: selected.setdefault(group,[]).append(value)
+    assert selected.get('implementation-path')==['privacy-guide'], 'Privacy-first path must be the safe default'
+    for i in range(1,7):
+        assert selected.get(f'review-s{i}')==['hold'], f'Suggestion {i} must default to Hold'
     css = (ROOT/'style.css').read_text()
     assert '@import' not in css and 'url(' not in css, 'Remote CSS resource'
     print(f'PASS: {len(NAV)} public pages, {sum(p.rows for p in pages.values())} official-context-linked data rows, '
-          'captions, anchors, local resources, $10 display rounding and known household-signature checks. '
+          'captions, anchors, local resources, PII-pattern checks, $10 display rounding and known household-signature checks. '
           'Not a privacy audit of Git history or a verification of synthetic assumptions.')
 
 

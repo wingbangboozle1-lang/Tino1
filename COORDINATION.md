@@ -1866,6 +1866,10 @@ Privacy interpretation unchanged: no names, addresses, parcel numbers or exact h
 
 ---
 
+---
+
+
+
 
 ---
 
@@ -1926,7 +1930,7 @@ unions the board entry per the append-only rule.
 | E1 | Claim, branch alignment record, active-session reconciliation | done | arena/e351c885-tino1 | COORDINATION.md (append only) | This entry; pushed immediately per claim rule. |
 | E2 | Fresh-session independent re-verification of high-stakes official sources (sixth verification pass; direct fetch of the register's own URLs, quoted values compared) | done | arena/e351c885-tino1 | audit-e351c885/** (new, exclusive) | 13/13 direct reads PASS — audit-e351c885/VERIFICATION.md; no shared page edits. |
 | E3 | Live GitHub Pages verification (fetch of the deployed site: chooser, summary, flagged, guide) | done | arena/e351c885-tino1 | audit-e351c885/** (new, exclusive) | 4/4 addresses PASS, no PII in fetched pages — audit-e351c885/LIVE-SITE.md. |
-| E4 | Full local gate re-run on the merged tree + integration readiness report | done | arena/e351c885-tino1 | audit-e351c885/** (new, exclusive) | All gates green on the final merged tree (4ea8bf7): final/check.py 25 pages, 989 sourced rows, 2,573 links, 2,425 $-figures $10-clean, 51 model paths; integrate.py clean (raw output in audit-e351c885/GATES.txt); findings F1-F7 in audit-e351c885/FINDINGS.md, none blocking. |
+| E4 | Full local gate re-run on the merged tree + integration readiness report | done | arena/e351c885-tino1 | audit-e351c885/** (new, exclusive) | All gates green on the final merged tree (5ffe94a, privacy-first boundary per PR #79): final/check.py 25 pages, 983 sourced rows, 2,522 links, 2,398 $-figures $10-clean, 51 model paths; publish allowlist 13 files (audit dir excluded); integrate.py clean (raw output in audit-e351c885/GATES.txt); findings F1-F9 in audit-e351c885/FINDINGS.md, none blocking. |
 | E5 | PR from this branch, merge when CI green, confirm Pages build via API, close-out board record | pending | arena/e351c885-tino1 | COORDINATION.md (append only), _config.yml (mechanical regeneration by final/publish.py to exclude the audit dir from Jekyll) | Audit dir must never publish; exclusion added the same commit the dir is created. |
 
 **File-scope guarantee:** this session edits only `audit-e351c885/**` (new), `COORDINATION.md`
@@ -1936,6 +1940,10 @@ by the same script but its allowlist is unchanged (39 files).
 ---
 
 ---
+
+---
+
+
 
 
 ### Close-out (arena/da3f2b99, 2026-11-13 UTC)
@@ -1950,3 +1958,51 @@ by the same script but its allowlist is unchanged (39 files).
 **Merge discipline:** two in-flight reconciliations of `origin/main` were required (PRs #73/#74/#76/#77 landed before the first CI run; PR #75 landed before the second). Both were resolved by union and regeneration: 767b3f51's overturn/before tables and estate-tax headline (R32/R33) kept; f8de1d0b's fifth independent re-read (t8, R38-R43) kept beside this session's fifth-pass corrections (t7, R44-R51); all generated pages rebuilt from the merged generators; every gate re-run green before each push. Nothing from any session was discarded.
 
 **Result:** PR #78 (`https://github.com/wingbangboozle1-lang/Tino1/pull/78`) merged to `main` as `4ea8bf7` with the `verify` check green. GitHub Pages built `4ea8bf7` at 2026-11-13T07:05:04Z (status `built`, error null) and the live front door (`https://wingbangboozle1-lang.github.io/Tino1/`) serves the two-way chooser (no-figures guide first, rounded-figures analysis second).
+
+
+## Session `arena/fdd454a6-tino1` — final integration, privacy boundary and decision-readiness audit (claimed 2026-11-13 UTC)
+
+**Branch:** `arena/fdd454a6-tino1` (fixed by the workspace; based on `551179bc2d97150a2e69b23d28158d50efd1ef4c`). This session is the final integrator on the assigned branch; no alternate branch or worktree will be created. The previously recorded session scopes are closed. This claim does not imply that old exact inputs in public Git history have been erased.
+
+| Task | Status | Owner session | Files / scope | Acceptance / verification |
+|---|---|---|---|---|
+| FDD-0 Read board, claim, and coordinate | in progress | `arena/fdd454a6-tino1` | `COORDINATION.md` append only | Claim committed and pushed before product changes; retain all prior records. |
+| FDD-1 Independently verify the actual GitHub Pages publication boundary against the repo contents and privacy requirements | claimed | `arena/fdd454a6-tino1` | `_config.yml`, `.github/workflows/pages.yml`, `privacy-site/check_published.py`, `final/publish.py`, a new `session-fdd454a6/**` audit note | Build the real Jekyll output and compare every emitted path with an explicit allowlist; do not infer publication from a noindex tag or README claim. No private source data or exact historical series in audit notes. |
+| FDD-2 Recheck and correct public decision-readiness content / gaps without falsely certifying unverified assumptions | claimed | `arena/fdd454a6-tino1` | `privacy-site/**` public guide, only as needed; relevant source registers and review flags if a primary-source re-read requires a correction | Keep household-derived figures and identifiers off the public guide; every factual row has a direct official link; leave unknowns blank and flag them. Suggestions stay proposals. |
+| FDD-3 Final reproducible integration, tests, PR and Pages check | claimed | `arena/fdd454a6-tino1` | `COORDINATION.md`, workflow / publication files only after FDD-1/2; current branch only | Build/check the exact emitted site, verify links and no personal data, run CI, open PR from this branch, merge only if green, verify Pages and record outcome. |
+
+Privacy interpretation for this pass: a $10 rounding interval is **not anonymization**. No names, exact street addresses, parcel/account data, exact historical bills or assessments may be published. City/ZIP plus a unique value pattern may still be identifying; use generic property placeholders on the public guide. Full household-value analysis must be treated as private unless its publication is demonstrably safe. Public Git history is a separate exposure; no history rewrite, force push, repository-visibility change or other destructive account-level action is authorized by this claim. Flag any such owner-only remediation separately.
+
+
+### FDD scope amendment (2026-11-13 UTC)
+The first audit pass found that `README.md` contradicts itself about what Pages publishes, and `final/build.py` can recreate the prior chooser over the privacy landing. FDD-1/FDD-3 therefore also own `README.md`, `index.html`, `final/check_published.py`, and the root-entry behavior in `final/build.py`. These are integration-only corrections to keep the declared privacy boundary true after future rebuilds. No product files were edited before this amendment.
+
+### FDD progress and bounded verification (2026-11-13 UTC)
+
+- **FDD-0:** done. Claim and scope amendment were committed/pushed on the workspace-assigned branch; no other active session scope was taken over.
+- **FDD-1:** local boundary audit/correction done; real Jekyll CI and post-merge Pages verification pending. The starting manifest contained 39 files including numeric root pages, despite conflicting README prose. Current manifest is exactly 13 files (generic `index.html` plus `privacy-site/public/*`); `final/publish.py` generates exclusions and both output checkers assert the privacy-only set.
+- **FDD-2:** public-guide source/content pass done within the bounded scope. Corrections: water-system lookup is now linked to California Water Boards (not CPUC); rate amounts remain blank; CPUC E-5354 is labeled PG&E-specific; the SALT / rental-expense statement is separated and sourced. The Suggestions page now has non-submitting local radio choices, with Hold and the privacy-first path as defaults. The specific official source URLs and the scope of re-reads are in `session-fdd454a6/AUDIT.md`; sources in the registry retain individual 2026-11-12/13 dates.
+- **FDD-3:** in progress. Local tests: `privacy-site/check.py` PASS (318 linked rows); 8/8 unit tests; `final/publish.py --check` PASS (13 files); `final/check.py .` PASS (25 internal pages, 925 rows, 2,410 links, 51 model paths; external unrounded-value scan skipped); both output checkers PASS against a scratch fixture only. This is not yet the actual Jekyll build or a deployment result.
+- **Privacy blocker remains flagged:** the GitHub repository is public and currently tracked numeric material/history remain outside the Pages allowlist. No repository visibility change or destructive history rewrite was performed. Pages exclusion does not make those files private and cannot promise removal from old Pages copies, forks or caches.
+- **Owner-facing site changes are review-only:** no private workspace, property transaction, financial recommendation or personal-data collection was implemented. Actual insurance/utility/property figures remain blank when no official evidence establishes a household amount.
+
+### FDD synchronization with current main and revalidation (2026-11-13 UTC)
+
+- After PR #79 was opened, `main` advanced from the assigned base `551179b` to `11cf93c` through merged PRs #73, #74 and #77. The PR reported a merge conflict. The scope entries in `COORDINATION.md` showed those sessions closed; I merged current `origin/main` into this same assigned branch and retained all their records and owner-analysis files. No other branch was checked out.
+- Resolved the board conflict by preserving the full current-main history and appending the FDD records. Regenerated `_config.yml` from the current tree; the new `owner-analysis-2026/` directory remains excluded. The exact Pages manifest remains 13 files. The merge also retains the current-main numeric analysis/check changes; those files are not in the Pages allowlist.
+- Post-sync local checks: public guide 11 pages / 318 linked rows; unit tests 8/8; `final/publish.py --check` PASS (13); `final/check.py .` PASS (25 internal pages, 938 rows, 2,447 links, 2,374 displayed dollar amounts rounded to $10, 51 model paths, secretless 6-digit scan clean against 14,833 model values; external unrounded-value scan skipped); both publication-output checkers PASS against a scratch fixture. Ruby/Jekyll remain unavailable locally, so this is not an actual `_site` build.
+- PR #79 remains open pending the synchronized branch's GitHub Actions checks; Pages deployment and live-content checks remain pending.
+
+### FDD synchronization after PRs #75/#78 (2026-11-13 UTC)
+
+- `main` advanced again from `11cf93c` to `4ea8bf7` as PRs #75 and #78 merged. PR #78's `verify` check passed (run 43382929645); Pages API reports the old main build `4ea8bf7` as `built`. At that main commit, `final/published.txt` still declares 39 files, and Pages remains public from `main:/`; the live CDN was not fetched. The new privacy boundary is not deployed yet.
+- Synced `origin/main` into this assigned branch. Preserved PR #75/#78 model, source and provenance work; retained our generic root landing by reapplying only `final/build.py::build_home_choice` and the matching `index.html`/README privacy description. The current `owner-analysis-2026/` and audit folders remain excluded; current branch manifest is 13 files.
+- Main's `COORDINATION.md` contained committed conflict-marker lines between the complete `arena/da3f2b99-tino1` and `arena/f8de1d0b-tino1` session records. Resolved by retaining both records and removing only the marker lines, then appending the FDD records. No session record was dropped.
+- Post-sync validation: `privacy-site/check.py` PASS (11 pages, 318 linked rows, common PII-pattern gate); unit tests PASS (9/9); `final/publish.py --check` PASS (13); `final/check.py .` PASS (25 pages, 983 rows, 2,522 links, 2,398 dollar figures rounded to $10, 51 model paths, secretless 6-digit scan clean against 14,491 model values; external private-value scan skipped); both output checkers PASS against an exact-set scratch fixture. Real Jekyll still must run in PR CI.
+- PR #79 is still open while this synchronized merge is being recorded. Do not merge until its actual Jekyll workflow and exact `_site` output check pass; after merge, record Pages API/build status and attempt a permitted live URL check. The existing Pages API result is only for the pre-change `4ea8bf7` site.
+
+### FDD synchronization after PR #81 and coordination with PR #80 (2026-11-13 UTC)
+
+- `main` advanced from `4ea8bf7` to `2b727aa` through PR #81, which records PR #78's close-out. The intervening main change is the board record; PR #79's earlier Actions run 43383526604 passed on `e835a1a`, but its GitHub mergeability remained dirty because its base had advanced. I merged `origin/main` into this same assigned branch and retained all board records, removing only the upstream's committed merge-marker lines between the complete D-session and F8-session entries.
+- PR #80 (`arena/e351c885-tino1`) remains open/conflicting and contains audit artifacts, a coordination append and an `_config.yml` generated for the former 39-file output. I posted a coordination comment at https://github.com/wingbangboozle1-lang/Tino1/pull/80#issuecomment-6846619155 asking that its audit evidence be retained but its stale 39-file config not restore numeric publication; its live-site observations describe the pre-boundary deployment. No files on that branch were changed or dropped.
+- This synchronization adds no PR #80 audit files because they are not on `main`; the exact 13-file `final/published.txt` and privacy-first Jekyll config remain unchanged. PR #79 must rerun its Jekyll and exact-output CI against this latest base before mergeability/deployment can be re-evaluated.

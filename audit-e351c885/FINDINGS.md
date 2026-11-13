@@ -39,7 +39,7 @@ review them; F4–F7 are process records.
   `session-5ea93a0e/`), and `final/published.txt` allowlist is unchanged (39 files). The
   durable repository/history exposures remain owner decisions (flags P01/P02) and are not
   resolvable by any session.
-- **F7 — Gates.** All local gates green on the final audited tree (origin/main `4ea8bf7` — PRs #73 #74 #75 #76 #77 #78 — plus this session's commits): `privacy-site/build.py` reproducible (no diff), `privacy-site/check.py` PASS (11 pages, 316 rows), unittest 8/8, `final/publish.py --check` PASS (39 files), `final/check.py .` PASS (25 pages, 989 sourced rows, 2,573 links, 2,425 dollar figures $10-clean, 51 model paths), `final/integrate.py` clean. Two earlier gate runs during concurrent merges (938/2451/2375 pre-#75; 966/2543/2419 post-#75) are superseded; raw output of the final run in GATES.txt. Three board conflicts during this session (PRs #75, #77, #78 landing concurrently) were all resolved by union; every other session's entry is preserved (verified by count greps).
+- **F7 — Gates.** All local gates green on the final audited tree (origin/main `5ffe94a` — PRs #73-#79 — plus this session's commits): `privacy-site/build.py` reproducible (no diff), `privacy-site/check.py` PASS (11 pages, **318** rows), unittest 8/8, `final/publish.py --check` PASS (**13 files**, privacy-first boundary), `final/check.py .` PASS (25 pages, **983** sourced rows, **2,522** links, **2,398** dollar figures $10-clean, 51 model paths), `final/integrate.py` clean. Two earlier gate runs during concurrent merges (938/2451/2375 pre-#75; 966/2543/2419 post-#75) are superseded; raw output of the final run in GATES.txt. Three board conflicts during this session (PRs #75, #77, #78 landing concurrently) were all resolved by union; every other session's entry is preserved (verified by count greps).
 
 - **F8 — Board corruption found on main and repaired here.** `origin/main`'s `COORDINATION.md`
   (tip `2b727aa`, merged via PR #81) contained unresolved conflict-marker lines
@@ -50,6 +50,20 @@ review them; F4–F7 are process records.
   session's entry), and the repaired board is what this PR proposes to merge. No published
   page is affected (the board is Jekyll-excluded), but future sessions should diff the board
   for stray markers before appending.
+
+- **F9 — Publication boundary changed mid-session (PR #79, merged as `5ffe94a`).** The final-integrator
+  session `arena/fdd454a6` moved the Pages allowlist from 39 files (dual edition) to **13 files
+  (privacy-first)**: a generic `index.html` plus `privacy-site/public/*`. The numeric edition
+  (`summary.html` etc.) remains in the repository, fully gated by `final/check.py`, but is no longer
+  published to GitHub Pages. This is consistent with the owner's stated top priority (personal
+  information privacy) and with the long-standing G01/G02 and P01/P02 owner decisions recorded on the
+  Flagged for Review page; it is owner-reversible via `final/publish.py` (the generator is the single
+  source of truth). Consequences for this pack: `LIVE-SITE.md` is a point-in-time record of the earlier
+  dual-edition deployment (timestamps preserved) and `summary.html` will stop being served after this
+  PR merges; the official-source reads in `VERIFICATION.md` are unaffected. The site now presents the
+  decision framework and official facts without household figures; the owner's brief also asked for
+  the rounded-figures analysis on the site, so the boundary choice stays an open owner decision, not
+  something this session reverses.
 
 ## What this pass did not do
 
