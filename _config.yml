@@ -20,6 +20,7 @@ exclude:
   - 'integrated'
   - 'legacy95'
   - 'model'
+  - 'owner-analysis-2026'
   - 'research'
   - 'scripts'
   - 'session-5ea93a0e'
