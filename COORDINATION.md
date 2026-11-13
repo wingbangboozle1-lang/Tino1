@@ -2040,3 +2040,28 @@ Scope held: `privacy-site/**` untouched; no publication boundary change (PR #79 
 - **Delivered by S6:** official BOE factor table for replay assessments (S5-P3, flag A11 updated), permanent conflict-marker gate in `final/check.py`, evidence checklist S5-Q1..S5-Q7 on the Questions page, dangling S-register cross-references remapped (R52), README publication-boundary truth (R53), exec summary register/verification updates (R54), new flags A12/A13/U10. S5-P1/P2/P4/P5 and the published conflict-marker repair were already closed on main by `da3f2b99`/`f8de1d0b` and were not duplicated.
 - **Suite at merge:** `final/check.py .` OK (25 pages, 996 rows, 2,551 links, 2,398 dollar figures, 14,552 model numbers secretless-clean, 51 paths); `final/publish.py --check` OK (13 files); privacy-site byte-identical, PASS (11 pages, 318 rows), unittest 8/8.
 - **Still open for the owner (non-blocking):** G01/G02 publication-boundary and history remediation; P01-P03 privacy flags; U09/U10, A12/A13 evidence and assumption rows; the two dropped S-register proposals named in R52.
+
+---
+
+## Session `arena/c61749ed-tino1` — final integration: official re-verification pass, publication-boundary resolution (G01/G02), Pages close-out (claimed 2026-11-13 UTC)
+
+Branch fixed by workspace: `arena/c61749ed-tino1`, based on `1896295` (PR #84 merge). No active claims existed at claim time (all prior session records closed). As the final integration session this session owns shared outputs (site index/navigation, publish boundary, board) and will not rewrite or delete any prior session's work.
+
+| Task | Status | Owner session | Files / scope | Notes |
+|---|---|---|---|---|
+| C1 Claim and coordination | done | arena/c61749ed-tino1 | COORDINATION.md (append only) | This entry. |
+| C2 Line-by-line official re-verification pass (2026-11-13) | in progress | arena/c61749ed-tino1 | `final/review_queue.py` (verification register), record in COORDINATION.md | Decision-critical official pages re-read directly today; every figure confirmed or flagged. Mechanical gates re-run (`final/check.py .`: every table row links to an official page; $10 rounding; PII patterns; conflict markers). |
+| C3 Publication-boundary resolution (G01/G02) + site integration | in progress | arena/c61749ed-tino1 | `final/publish.py`, `final/check_published.py`, `privacy-site/check_published.py`, `final/build.py` (landing), generated root pages, `_config.yml` | Resolution recorded below. |
+| C4 PR to main, merge, Pages confirmation | pending | arena/c61749ed-tino1 | branch commits + COORDINATION.md | Runs only after C2/C3 gates are green. |
+
+### G01/G02 resolution (publication boundary) — decided from the owner's project brief, 2026-11-13
+
+The owner brief requires BOTH: (a) "Personal information privacy is top priority... Anonymize any personal information and use placeholders... must not appear in the final website product"; and (b) "Costs and numbers should be used but rounded to the nearest $10 increments such as in the following property tax, assessed value tables, etc so that it cannot be traced back to the source... and should be reported in any decision analysis to provide clarity. I want clear numbers and projections for the reasoning behind decisions." The brief also states "There should be no manual input on my part" — so the open owner decisions G01/G02 are settled from the brief itself:
+
+1. **Publish the rounded-figures analysis.** The numeric root edition (placeholders only: Property A/B, Transferor, Inheritor; every owner/model dollar figure rounded to the nearest $10) becomes the published site, with its no-figures general guide (`privacy-site/public/`) kept alongside it. A figure-free site alone fails explicit requirement (b).
+2. **Personal information stays out.** No names, street addresses, APNs, account numbers, phone numbers or e-mails anywhere in published output (machine-checked). City/ZIP scope (Cupertino 95014, San Francisco 94122) is analysis context the owner's brief itself supplies and asks to research; it is not personal identification. Rounding remains labelled disclosure-minimisation, not anonymisation.
+3. **Git history is out of scope for the website product.** Prior history-remediation flags (P01-P03, F24-F25) stay published on the Flagged for Review page for the owner; no history rewrite is performed (it would destroy parallel-session records).
+
+### C2 verification log (2026-11-13, this session)
+
+- Pending: direct re-reads recorded here and on the site's Verification page after the pass.
