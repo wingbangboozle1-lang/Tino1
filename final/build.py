@@ -940,6 +940,46 @@ def build_verification():
     t6 = table(['What was checked', 'What the official page said when it was opened', 'Result', 'Official page'],
                [[a, b_, c, d] for a, b_, c, d in x],
                caption='Fourth re-read, 2026-11-12 (session 0adc9b0a), on the official pages themselves')
+    r8 = [
+        ('Federal basic exclusion for 2027', 'Rev. Proc. 2026-35 section 3.44: the basic exclusion amount under section 2010(c)(3) is $15,480,000 for calendar year 2027; section 3.46(1): the first $20,000 of gifts to any person is excluded for 2027',
+         'Confirmed today word for word - the same figures the estate projections use', src('RP-2026-35')),
+        ('The 2026 exclusion is statutory, and how it is indexed', '26 U.S.C. 2010(c)(3): the basic exclusion amount is $15,000,000, increased after 2026 by a cost-of-living adjustment and rounded to the nearest multiple of $10,000, by Pub. L. 119-21 section 70106(a) (2025-07-04)',
+         'Confirmed today - the statute behind the projection method', src('IRS-NEW')),
+        ('Basis of inherited property', 'Fair market value on the date of death, or on the alternate valuation date if a Form 706 is filed and the election is made; a sale above basis is a taxable gain',
+         'Confirmed today - the rule the Sell result depends on, subject to %s' % flag('Q01'), src('IRS-FAQ-INHERIT')),
+        ('Capital-gain rates and the loss limit', '0%, 15% or 20% by taxable income for 2025; unrecaptured section 1250 gain at up to 25%; the capital-loss deduction is limited to $3,000 ($1,500 if married filing separately) a year',
+         'Confirmed today - the loss limit bears on flag %s (selling-cost loss)' % flag('Q17'), src('IRS-TC409')),
+        ('California estate and inheritance tax', 'No California estate tax return is required for decedents dying on or after 2005-01-01; the state death tax credit was eliminated from that date; inheritance tax is collected only for deaths before 1982-06-08',
+         'Confirmed today - California adds no death tax', src('SCO-ESTATE')),
+        ('Proposition 19 allowance in force', 'LTA 2025/009: $1,044,586 for transfers from 2025-02-16 through 2027-02-15 (2.15% up from $1,022,600); the next adjustment is February 2027',
+         'Confirmed today - the model input; the next figure stays blank %s' % flag('U04'), src('BOE-LTA-2025-009')),
+        ('Proposition 19 conditions and claim deadlines', 'LTA 2026/026: the exemption claim within one year of the transfer, the exclusion claim within three years or before a third-party transfer; no exceptions to the one-year occupancy rule; the exclusion is removed if the child moves out; transfers through a trust are covered',
+         'Confirmed today - the deadlines the Process page states. The order the site recommends is practical advice only (%s)' % flag('R37'), src('BOE-LTA-2026-026')),
+        ('Proposition 19: land included in the family home', 'LTA 2026/026 defines a family home as the dwelling plus only that portion of the land of a reasonable size used as its site; of a multi-unit property only the unit occupied as a principal residence qualifies',
+         'Confirmed today - the model applies the exclusion to the whole parcel, flagged as %s' % flag('R36'), src('BOE-LTA-2026-026')),
+        ('Proposition 19 statute', 'R&TC 63.2(a)(1)(A)-(C): transferee must occupy within one year and claim the exemption within a year; the base year value is re-enrolled if the exclusion is later lost',
+         'Confirmed today - matches the Board of Equalization letter', src('RTC-63.2')),
+        ("Homeowners' exemption", '$7,000 off the taxable value for an owner-occupied home; one-time claim, form BOE-266; file no later than February 15 for the full year',
+         'Confirmed today', src('BOE-HOX')),
+        ('San Francisco secured property-tax rate', 'The secured property tax rate for fiscal year 2026-27 is 1.18162182%; the page also confirms that a change in ownership requires the Assessor-Recorder to reappraise',
+         'Confirmed today. The 2025-26 rate used in the model could not be read today and stays flagged %s' % flag('U07'), src('SF-TAX')),
+        ('San Francisco rent increase and the pending cap', 'The allowed annual increase is 1.6% from 2026-03-01 through 2027-02-28 (60% of Bay Area CPI). A notice posted 2026-11-09 describes File No. 261020, which would cap combined banked and capital-improvement increases at 10% a year; it has not been enacted',
+         'Confirmed today - matches the Law page, which lists the cap as a proposal', src('SF-RENT-RULES', 'SF-LEG-261020')),
+        ('Net metering: the 20-year limit behind the solar credit', 'CPUC: NEM 2.0 customers remain on that tariff for 20 years from interconnection (D.14-03-041); the successor net-billing tariff pays export credits usually lower than the retail rate',
+         'Confirmed today. The model carries the credit for 50 years - flagged as %s' % flag('R35'), src('CPUC-NEM')),
+        ('Insurance premiums by ZIP', 'The Department of Insurance comparison tool states that its figures are hypothetical risks for illustration, that wildfire surcharges of 15% to over 300% are not reflected, and that an exact premium requires an agent, broker or insurer quote',
+         'Confirmed today - the reason both insurance amounts stay blank and flagged (%s, %s)' % (flag('U01'), flag('U02')), src('CDI-TOOL-APP')),
+        ('HUD rents for fiscal year 2027', 'The fiscal-year-2027 address in the same documentation format as the 2026 page returned "404 - File or directory not found" when opened today',
+         'Not confirmable today: the 2027 figure stays blank %s and the 2026 figure remains in use' % flag('U09'), src('HUD-SAFMR-INDEX')),
+    ]
+    r8 = [(a, b_, c_.replace(flag('R33'), '<a class="flag" href="review.html#R33">R33</a>')
+                              .replace(flag('R34'), '<a class="flag" href="review.html#R34">R34</a>')
+                              .replace(flag('R35'), '<a class="flag" href="review.html#R35">R35</a>')
+                              .replace(flag('R36'), '<a class="flag" href="review.html#R36">R36</a>')
+                              .replace(flag('R37'), '<a class="flag" href="review.html#R37">R37</a>'), d) for a, b_, c_, d in r8]
+    t8 = table(['What was checked', 'What the official page said when it was opened', 'Result', 'Official page'], r8,
+               caption='Fifth independent re-read, 2026-11-13 (session arena/f8de1d0b), on the official pages themselves')
+
     body = """
 <p class="callout">This page is the manual-review register for the whole site: one row per check, with the government page to open and re-read. Pass 1 was checked on 2026-11-11 (session faccd46d); Pass 2 re-opened the twelve core pages on 2026-11-12 (session e8636cac); subsequent same-day passes by sessions <code>3e79fc01</code>, <code>0adc9b0a</code>, and <code>a6ec5b1d</code> checked remaining official agency pages directly (leaving zero official agency excerpt entries in the register). Anything that cannot be confirmed from an agency page stays blank or labelled and carries a flag.</p>
 %s
@@ -958,9 +998,12 @@ def build_verification():
 %s
 <h2>Full-page direct read of remaining official sources, 2026-11-12 (session a6ec5b1d)</h2>
 %s
+<h2>Fifth independent re-read, 2026-11-13 (session arena/f8de1d0b)</h2>
+%s
+<p class="note">This pass re-opened the federal, California and local pages above on their own agency URLs. Two of them changed the picture rather than confirming it: the CPUC page limits the net-metering tariff behind the solar credit to 20 years, and the Department of Insurance tool states that its figures are illustrations rather than quotes. Both are recorded as flags. What was not re-opened today stands on the earlier passes and keeps its links.</p>
 <p class="note"><strong>Coverage summary.</strong> Across the passes above, every official agency source in <a href="sources.html">Sources and method</a> has now been opened and read directly on its agency URL (only the non-government stock/bill dataset, Damodaran, remains labelled academic). The interactive CDI insurance survey and HUD FY2027 lookup require interactive form/spreadsheet access not resolved in automation, so those parcel values remain blank.</p>
 <p class="note"><strong>What this pass does not establish.</strong> Model outputs and projections are conditional scenarios built on the assumptions in the flags; no official page can verify a forecast. The automated checker (<a href="%s/blob/main/final/check.py">final/check.py</a>) proves only that every table row carries an official link, that dollar figures are rounded to $10, and that no personal identifier pattern appears (no fingerprint of unrounded owner figures is stored; that extra scan runs only with a private local file) - it does not prove that each link supports each cell. This register exists so every claim can be checked by hand against its link. People remain placeholders (the Transferor, the Inheritor); no names, addresses or parcel numbers appear anywhere.</p>
-""" % (t1, t2, t3, t4, tw3, render_verification(src, table, flag), t6, t5, REPO)
+""" % (t1, t2, t3, t4, tw3, render_verification(src, table, flag), t6, t5, t8, REPO)
     page('verification.html', 'Verification',
          'Verification passes (2026-11-11 register, four re-reads on 2026-11-12, and the full-page direct read): every official source read directly on its agency page, each check linked for manual review, and everything unconfirmable left blank and flagged.', body)
 
@@ -1204,8 +1247,19 @@ def build_flagged():
         ('S', 'Irregularities in sources'),
         ('R', 'Irregularities in the repository'),
     ]
+    # Repository review findings R01-R37 are rendered on the repository review page; the flagged
+    # page keeps one pointer row so that a flag link of the form flagged.html#R33 resolves.
+    cats.append(('RY', 'Repository review findings, listed on the review page'))
+    RYNOTE = ('Every repository review finding (R01-R37) is listed in full, with what was found, what was changed and the official link, on the '
+              '<a href="review.html">repository review</a> page.')
     body = '<p class="callout">Flagged for Review. Nothing on this page blocks the rest of the site. Each item says what is missing or uncertain, what was used instead, and where to check it. See <a href="questions.html">Questions &amp; discovery</a> for ways to uncover missing answers and <a href="suggestions.html">Site improvements</a> for candidate model upgrades.</p>'
     for c, title in cats:
+        if c == 'R':
+            body += table(['No.', 'Item', 'What the site does', 'How to resolve it', 'Where to check'],
+                          [['<span id="R01">R01-R37</span>', 'Repository irregularities found by every review pass', RYNOTE,
+                            'Re-read the row on the review page; each one names the file and the official page.', src('SCC-RATES', 'BOE-LTA-2026-026')]],
+                          caption=title)
+            continue
         rows = [['<span id="%s">%s</span>' % (f['id'], f['id']), f['item'], f['used'], f['check'], src(*f['src']) + (' · ' + f['extra'] if f.get('extra') else '')] for f in FLAGS if f['id'].startswith(c)]
         body += table(['No.', 'Item', 'What the site does', 'How to resolve it', 'Where to check'], rows, caption=title)
     ex = [['E-' + k, e(v['title']), e(v['read']), '<a href="%s" rel="noopener">%s</a>' % (e(v['url']), e(v['label'])) + (' · official reference for current rates: ' + src('TREASURY') if v['how'] == 'academic' else '')] for k, v in sorted(S.items()) if v['how'] != 'page']
@@ -1603,6 +1657,9 @@ a.flag{font-size:12px;background:var(--warnbg);color:var(--warn);border:1px soli
 .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px}
 .card{display:block;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px;text-decoration:none;color:var(--ink)}
 .card:hover{border-color:var(--acc)}.card b{display:block;color:var(--acc);margin-bottom:4px}.card span{font-size:14px;color:var(--mut)}
+section.card h3{margin:0 0 8px;font-size:16px;color:var(--ink)}
+ul.dex{margin:0;padding-left:18px;font-size:14px}ul.dex li{margin:0 0 7px;color:var(--mut)}
+ul.dex a{font-weight:600;text-decoration:none}ul.dex a:hover{text-decoration:underline}
 .seg{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:10px 0}.seg span{font-size:14px;color:var(--mut)}
 .seg button{font:inherit;font-size:14px;padding:5px 12px;border:1px solid var(--line);background:#fff;border-radius:6px;cursor:pointer}
 .seg button.on{background:var(--acc);color:#fff;border-color:var(--acc)}
@@ -1655,26 +1712,143 @@ JS = """
 """
 
 
+# ---------------------------------------------------------------- front-door content
+# Every category of the site, with a one-line description.  Used by the dashboard only.
+NAV_CARDS = [
+    ('Start here', [
+        ('summary.html', 'Executive summary', 'the answer, the numbers behind it, and the six steps of the plan'),
+        ('decision.html', 'Decision analysis', 'live, rent or sell: cash flows, after-tax wealth, sensitivities, break-even points'),
+    ]),
+    ('Money and projections', [
+        ('projections.html', 'Year by year, 2026-2076', 'value, assessed value, property tax, insurance, water, electricity, repairs'),
+        ('black-swan.html', 'Black swan', '50 replays of the real 1976-2025 record and named crisis paths'),
+        ('costs.html', 'Insurance and running costs', 'what is quoted, what is assumed, and what is still unconfirmed'),
+        ('estate-cash.html', 'Cash and estate tax', 'the threshold at each level, the room before tax, and projections'),
+    ]),
+    ('Law and process', [
+        ('law.html', 'Law in force and under discussion', 'federal, California and local rules, plus pending measures'),
+        ('process.html', 'Inheritance process, step by step', 'every step with its legal deadline and the official page it comes from'),
+    ]),
+    ('Before you decide', [
+        ('questions.html', 'Questions to answer', 'what is known, what is missing, and how to find each missing answer'),
+        ('suggestions.html', 'Suggestions for review', 'proposed improvements, status and effort - none implemented until chosen'),
+    ]),
+    ('How this was checked', [
+        ('verification.html', 'Verification passes', 'every official page read, with the result, for manual re-check'),
+        ('flagged.html', 'Flagged for Review', 'every unconfirmed value, assumption and irregularity'),
+        ('sources.html', 'Sources and method', 'the source register and the cross-check against a second model'),
+        ('requirements.html', 'Requirements', 'the brief line by line and the page that answers it'),
+        ('review.html', 'Repository review', 'the findings of each review pass, what was changed and why'),
+        ('versions.html', 'Earlier versions', 'superseded editions and why they were replaced'),
+    ]),
+]
+
+# The four items that change the answer rather than refine it (dashboard "open" list).
+DECISIVE = [
+    ('Q01', 'What kind of trust holds Property A, and will the home be included in the Transferor\'s gross estate? Without the basis reset, selling loses its advantage over renting.'),
+    ('Q02', 'How large is the estate, and was a deceased spouse\'s unused exclusion ported? This sets the room before federal estate tax applies.'),
+    ('U04', 'What will the Proposition 19 allowance be for a transfer after 2027-02-16? The official figure is not published yet.'),
+    ('A01', 'Growth, inflation and return assumptions: the ranking between renting and selling is sensitive to these over a 50-year horizon.'),
+]
+
+# Findings added by session arena/f8de1d0b on 2026-11-13 (also on the Flagged page).
+NEW_FINDINGS = [
+    ('R33', 'The Property B property-tax input is about 2.14% of assessed value against an official rate of 1.18162182%, leaving an unexplained residual of about $1,090 a year that the model carries forward.'),
+    ('R35', 'The Cupertino solar credit is carried forward for 50 years, while the CPUC states that the net-metering tariff that creates it lasts 20 years from interconnection.'),
+    ('R34', 'The third San Francisco unit\'s rent is inferred as half of the two let units\' combined rent; no per-unit figure was supplied.'),
+    ('R32', 'A merge-conflict marker had been committed to the verification page and was live on the site. Removed.'),
+]
+
+
+def choice_table():
+    """The three choices on one row, all figures from the model, rounded to $10."""
+    hdr = ['Measure', 'Live in it', 'Rent it out', 'Sell and reinvest', 'Official rule behind it']
+    rows = [
+        ['Property A market value at inheritance (%d)' % T, m(B['fmv_T']), m(B['fmv_T']), m(B['fmv_T']), src('FHFA-SJ')],
+        ['New assessed (taxable) value', m(B['taxable_live_T']), m(B['taxable_rent_T']), 'sold', src('BOE-LTA-2026-026', 'RTC-63.2')],
+        ['Property tax, first year', m(B['tax_live_T']), m(B['tax_rent_T']), m(B['tax_before_T']), src('SCC-RATES', 'BOE-HOX')],
+        ['Cash released at inheritance', '$0', '$0', m(B['sell_net']), src('IRS-FAQ-INHERIT', 'SCC-DTT')],
+        ['After-tax wealth in 2076', m(B['w_live']), m(B['w_rent']), m(B['w_sell']), src('IRS-TC409', 'FTB-RATES')],
+        ['The same in 2026 dollars', m(B['real_live']), m(B['real_rent']), m(B['real_sell']), src('BLS-CPI')],
+    ]
+    return table(hdr, rows, caption='The three choices on the baseline assumptions, inheritance in %d' % T, cls='num')
+
+
 def build_home_choice():
-    """Root index.html: the site's front door.  Privacy first - the primary link goes to
-    the no-figures guide; the second link is the rounded-figures analysis the brief asks
-    for.  Only written in ROOT_MODE (the staging tree uses HOME = index.html)."""
-    open(os.path.join(OUT, 'index.html'), 'w').write("""<!doctype html>
+    """Root index.html: the site's front door and dashboard.  Written only in ROOT_MODE
+    (the staging tree uses HOME = index.html).
+
+    Layout: the answer first, then one card per category, then the two editions (the
+    privacy-first guide with no household figures, and this rounded-figures analysis).
+    Every number on the page is generated from the model; links are internal or to the
+    official pages already listed on the Sources page."""
+    by = M['by_T']
+    nav = ''.join('<a href="#%s">%s</a>' % (i, t_) for i, t_ in (
+        ('answer', 'The answer'), ('editions', 'Two editions'), ('categories', 'Sections'), ('numbers', 'Key numbers'),
+        ('open', 'Open before deciding'), ('found', 'Found in this review')))
+    cells = []
+    for cat, items in NAV_CARDS:
+        lis = ''.join('<li><a href="%s">%s</a> - %s</li>' % (h, t_, d) for h, t_, d in items)
+        cells.append('<section class="card"><h3>%s</h3><ul class="dex">%s</ul></section>' % (cat, lis))
+    kinds = {}
+    for f in FLAGS:
+        kinds[f['id'][0]] = kinds.get(f['id'][0], 0) + 1
+    open_items = ''.join('<li>%s %s</li>' % (flag(i), txt) for i, txt in DECISIVE)
+    found = ''.join('<li><a class="flag" href="review.html#%s" title="Repository review finding">%s</a> %s</li>' % (i, i, txt) for i, txt in NEW_FINDINGS)
+    doc = """<!doctype html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<title>Two-home inheritance analysis and no-figures guide</title>
+<title>Two-home inheritance analysis - dashboard</title>
 <link rel="stylesheet" href="style.css"></head>
-<body><div class="wrap"><header class="top"><div class="wrap"><span class="brand">Two-home inheritance analysis</span></div></header>
-<h1>Two editions of this analysis</h1>
-<p class="lead">A future trust inheritance of one home, and a second home the Inheritor already owns. Choose how you want to read the work.</p>
-<div class="cards">
-<article><h2>No-figures decision guide (privacy first)</h2><p>The rules, the process and the decision framework with <strong>none of this household's figures</strong>. Every number there is invented for teaching. Start here if you want the analysis without the household's data.</p><p><a href="privacy-site/public/index.html">Open the no-figures guide</a></p></article>
-<article><h2>Rounded-figures analysis (the owner's brief)</h2><p>The full decision analysis with the executive dashboard, year-by-year projections, live / rent / sell comparison and the stated best plan. Household figures are rounded to the nearest $10 as a disclosure-minimization measure; rounding is not anonymization. The numeric edition still contains locality cues and household-derived outputs, and the public repository/Git history is a separate exposure risk.</p><p><a href="summary.html">Open the rounded-figures analysis</a> · <a href="flagged.html">Privacy flags P01/P02</a></p></article>
+<body>
+<header class="top"><div class="wrap"><span class="brand">Two-home inheritance analysis</span>
+<nav aria-label="Sections">%(nav)s</nav></div></header>
+<main class="wrap">
+<h1>Dashboard</h1>
+<p class="lead">A future trust inheritance of one home (Property A, the Cupertino home) and a second home the Inheritor already owns (Property B, the San Francisco three-unit home). This page is the front door: the answer first, then the two editions, every section by category, and what still has to be settled before the answer can be relied on.</p>
+
+<h2 id="answer">The answer, and what it depends on</h2>
+<div class="kpis">
+<div class="kpi"><div class="k">Conditional best financial outcome</div><div class="v">Sell Property A, keep Property B</div><div class="s">a model result on the assumptions flagged %(a1)s and %(a2)s, not a forecast</div></div>
+<div class="kpi"><div class="k">After-tax wealth in 2076, 2026 dollars</div><div class="v">%(sell)s</div><div class="s">selling, against %(rent)s renting and %(live)s living in it</div></div>
+<div class="kpi"><div class="k">Property A market value at inheritance (%(T)d)</div><div class="v">%(fmv)s</div><div class="s">from %(v26)s today at %(g)s a year (assumption)</div></div>
+<div class="kpi"><div class="k">First-year property tax</div><div class="v">%(tl)s lived in / %(tr)s rented</div><div class="s">against %(tb)s today; the lived-in figure already includes the Proposition 19 relief</div></div>
 </div>
-<p class="note">People are placeholders (the Transferor, the Inheritor). No names, street addresses or parcel numbers appear anywhere, but locality cues remain in the numeric edition. Unverified values and privacy limits are flagged on the <a href="flagged.html">Flagged for Review</a> page. Not legal, tax, investment or insurance advice.</p>
-</div></body></html>
-""")
+<p class="note">Property B is <strong>already owned</strong> by the Inheritor: it is never reassessed, it receives no basis reset, and it is not part of the Transferor's estate. That is why the plan keeps it and never treats it as an inheritance. Every dollar figure below is rounded to the nearest $10; the rounding is a disclosure-minimisation measure, not anonymisation. People are placeholders.</p>
+
+<h2 id="editions">Two editions of this work</h2>
+<div class="cards">
+<article class="card"><b>No-figures decision guide (privacy first)</b><span>The rules, the process and the decision framework with none of this household's figures. Every number there is invented for teaching. Start here if you want the analysis without the household's data.</span><p><a href="privacy-site/public/index.html">Open the no-figures guide</a></p></article>
+<article class="card"><b>Rounded-figures analysis (this edition)</b><span>The full decision analysis: executive dashboard, year-by-year projections, the live / rent / sell comparison, the black-swan replays, the cash-and-estate-tax position, and the suggestions and questions registers.</span><p><a href="summary.html">Executive summary</a> &middot; <a href="sources.html">Sources and method</a></p></article>
+</div>
+
+<h2 id="categories">Every section, by category</h2>
+<div class="cards">%(cards)s</div>
+
+<h2 id="numbers">The three choices, side by side</h2>
+%(tchoice)s
+<p class="note">Wealth counts only what differs between the choices: Property A itself, every cash flow it causes, and the rent from the Inheritor's vacated unit in Property B when the Inheritor moves. The two units already let in Property B are identical in all three choices and are excluded. All three are compared after tax, with everything sold at the end of the horizon.</p>
+
+<h2 id="open">Before any decision can reasonably be made</h2>
+<p>The register holds <strong>%(nq)d question and data flags</strong>, <strong>%(nrev)d repository review findings</strong> and the assumption flags A01-A10. These change the answer; the rest are refinements.</p>
+<ul class="plan">%(open_items)s</ul>
+<p><a href="questions.html">Questions, known versus missing information, and how to discover each missing answer</a> &middot; <a href="flagged.html">Every flag with its source</a></p>
+
+<h2 id="found">Found in this session's review</h2>
+<ul class="plan">%(found)s</ul>
+<p class="note">These are new flags added on 2026-11-13 after reading the official pages again and checking the model against them. None of them blocks publication; each is on the <a href="flagged.html">Flagged for Review</a> page with its official link. The repository review findings R32-R37 record what was found and what was changed.</p>
+
+<p class="note">Not legal, tax, investment or insurance advice. This prepares the questions for a licensed estate attorney, a tax adviser and an insurance broker. The public repository and its history are a separate privacy exposure from what the site serves.</p>
+</main>
+<footer class="wrap"><p>Built %(build)s from <a href="%(repo)s/tree/main/final">final/</a>. Sources on every row: <a href="sources.html">Sources and method</a>. Verification passes: <a href="verification.html">Verification</a>.</p></footer>
+</body></html>
+""" % dict(nav=nav, cards=''.join(cells), a1=flag('A01'), a2=flag('A02'), sell=m(B['real_sell']), rent=m(B['real_rent']),
+           live=m(B['real_live']), T=T, fmv=m(B['fmv_T']), v26=m(P['cup_value']), g=pc(P['g_cup']), tl=m(B['tax_live_T']),
+           tr=m(B['tax_rent_T']), tb=m(B['tax_before_T']), tchoice=choice_table(),
+           nq=len([f for f in FLAGS if f['id'][0] in 'QUP']), nrev=len(REVIEW),
+           open_items=open_items, found=found, build=BUILD_DATE, repo=REPO)
+    open(os.path.join(OUT, 'index.html'), 'w').write(doc)
 
 
 def main():
