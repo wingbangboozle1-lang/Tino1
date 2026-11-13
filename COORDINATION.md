@@ -2055,6 +2055,9 @@ Scope held: `privacy-site/**` untouched; no publication boundary change (PR #79 
 
 **Privacy constraint:** This pass does not reproduce private household figures in the audit, does not add names/addresses/parcel details, and does not treat $10 rounding as anonymization. Repository history and non-Pages tracked material are audited as distinct exposures; no destructive history rewrite or account-level visibility change is authorized by this claim.
 
+### S7 scope amendment — live official result correction (2026-11-13 UTC)
+The official California Secretary of State live 2026 ballot-results page was directly opened during this audit. Its displayed reporting time is **November 12, 2026, 8:46 p.m.**, not the earlier November 11 snapshot recorded in the source registry; the current official page reports Prop 40 No at **52.4%**, not the previous **52.5%**. To prevent a stale published legal/policy table, S7-2 is amended to permit a narrowly scoped factual correction in `privacy-site/research.json` and `privacy-site/build.py`, then regeneration of `privacy-site/public/**` through its builder. The source is https://electionresults.sos.ca.gov/returns/ballot-measures. The finding will be dated to the page's displayed report time, labeled unofficial, and left subject to the stated certification date. No household information is added.
+
 ## Session `arena/76e05fa8-tino1` — claim, focused official re-read, publication-boundary decision, PR and Pages record (claimed 2026-11-13 UTC)
 
 **Branch fixed by workspace:** `arena/76e05fa8-tino1` (base `1896295` = origin/main after PR #84). The board's `session-<id>/<task>` branch pattern is superseded by the Arena branch rule for this session; no other branch is created or pushed. `gh pr list --state open` returned no open PRs at claim time; no other active claim is on the board.
