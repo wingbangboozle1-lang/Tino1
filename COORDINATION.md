@@ -1845,6 +1845,27 @@ Base `551179b` (= origin/main, PR #72 merge). No open PRs and no active claims o
 - Scope merged: `owner-analysis-2026/**` (excluded from Pages), `_config.yml` (one exclude line), this board. Published set unchanged at 39 files.
 - Open for the owner: privacy decision on household-derived pages (G01/G02, history remediation); repair, Cupertino rent, water provider and vacancy inputs; historical CPI chunks 2–4; official county-level FHFA HPI files; Japan residency question. Full list in `owner-analysis-2026/FLAGS.md`.
 - Household projections were computed privately outside the repository; they are not committed.
+---
+
+## Session `arena/da3f2b99-tino1` — outstanding model/provenance corrections (S5-P1–P5), fifth verification pass (claimed 2026-11-13 UTC)
+
+**Branch:** `arena/da3f2b99-tino1` (fixed by workspace; branched from `551179b`, the merge of PR #72). No alternate branch will be created; scope is non-overlapping with every earlier session (all earlier claims are closed and merged).
+
+| Task | Status | Owner session | Files / scope | Verification / handoff |
+|---|---|---|---|---|
+| D-0 Claim and coordination | done (claim pushed) | arena/da3f2b99-tino1 | COORDINATION.md (append only) | Read board and main before claiming; no open PRs at claim time. |
+| D-1 S5-P1: remove inferred third-unit rent from numeric baseline; show leasing upside as explicit scenario only | in progress | arena/da3f2b99-tino1 | final/model.py, final/build.py, generated root pages | Brief rule: never infer values. |
+| D-2 S5-P2: relabel HUD SAFMR as a benchmark with bedroom/condition gates | in progress | arena/da3f2b99-tino1 | final/model.py, final/build.py, generated root pages | Benchmark ≠ verified property rent. |
+| D-3 S5-P3: Prop 13 indexing via BOE California CCPI factors where verified; national CPI labelled a proxy elsewhere | in progress | arena/da3f2b99-tino1 | final/model.py, final/build.py | BOE LTA factors are official. |
+| D-4 S5-P4: provenance labels on black-swan pages (official vs academic vs hypothetical) | in progress | arena/da3f2b99-tino1 | final/build.py (black-swan), generated black-swan.html | Academic series must not read as official. |
+| D-5 S5-P5: Suggestions Part 1 figures generated from model data, not hand-typed literals | in progress | arena/da3f2b99-tino1 | final/suggestions.py, final/build.py | Removes drift risk. |
+| D-6 Fifth line-by-line verification pass + re-run all gates (final/check.py, final/publish.py --check, privacy-site/check.py, check_published ×2, unittest) | in progress | arena/da3f2b99-tino1 | verification.html register append, COORDINATION.md | Every row official-source linked; $10-clean; no PII. |
+| D-7 PR → main, merge green only, confirm Pages, record result | in progress | arena/da3f2b99-tino1 | COORDINATION.md | Preserve all prior sessions' work; nothing discarded. |
+
+Privacy interpretation unchanged: no names, addresses, parcel numbers or exact household histories enter the published product; owner-supplied figures stay rounded to $10; P01/P02 (repository/history exposure) remain owner actions. Flagged items stay open on the Flagged for Review page and do not block anything.
+
+---
+
 
 ---
 
@@ -1905,12 +1926,14 @@ unions the board entry per the append-only rule.
 | E1 | Claim, branch alignment record, active-session reconciliation | done | arena/e351c885-tino1 | COORDINATION.md (append only) | This entry; pushed immediately per claim rule. |
 | E2 | Fresh-session independent re-verification of high-stakes official sources (sixth verification pass; direct fetch of the register's own URLs, quoted values compared) | done | arena/e351c885-tino1 | audit-e351c885/** (new, exclusive) | 13/13 direct reads PASS — audit-e351c885/VERIFICATION.md; no shared page edits. |
 | E3 | Live GitHub Pages verification (fetch of the deployed site: chooser, summary, flagged, guide) | done | arena/e351c885-tino1 | audit-e351c885/** (new, exclusive) | 4/4 addresses PASS, no PII in fetched pages — audit-e351c885/LIVE-SITE.md. |
-| E4 | Full local gate re-run on the merged tree + integration readiness report | done | arena/e351c885-tino1 | audit-e351c885/** (new, exclusive) | All gates green after rebasing onto 2823819 (PR #75): final/check.py 25 pages, 966 sourced rows, 2,543 links, 2,419 $-figures $10-clean, 51 model paths; integrate.py clean (raw output in audit-e351c885/GATES.txt); findings F1-F7 in audit-e351c885/FINDINGS.md, none blocking. |
+| E4 | Full local gate re-run on the merged tree + integration readiness report | done | arena/e351c885-tino1 | audit-e351c885/** (new, exclusive) | All gates green on the final merged tree (4ea8bf7): final/check.py 25 pages, 989 sourced rows, 2,573 links, 2,425 $-figures $10-clean, 51 model paths; integrate.py clean (raw output in audit-e351c885/GATES.txt); findings F1-F7 in audit-e351c885/FINDINGS.md, none blocking. |
 | E5 | PR from this branch, merge when CI green, confirm Pages build via API, close-out board record | pending | arena/e351c885-tino1 | COORDINATION.md (append only), _config.yml (mechanical regeneration by final/publish.py to exclude the audit dir from Jekyll) | Audit dir must never publish; exclusion added the same commit the dir is created. |
 
 **File-scope guarantee:** this session edits only `audit-e351c885/**` (new), `COORDINATION.md`
 (append-only), and the mechanically regenerated `_config.yml`. `final/published.txt` is regenerated
 by the same script but its allowlist is unchanged (39 files).
+
+---
 
 ---
 

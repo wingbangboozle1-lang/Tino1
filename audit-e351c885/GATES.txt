@@ -1,9 +1,8 @@
 == GATES on audited tree, session arena/e351c885-tino1, 2026-11-13 UTC ==
-(re-run after rebasing onto origin/main 2823819, which merged PR #75: dashboard, fifth re-read, flags R33-R37)
+(final run on the merged tree: origin/main 4ea8bf7 (PRs #73 #74 #75 #76 #77 #78) + this session's audit commits)
 
 --- python3 privacy-site/build.py ---
 Built 11 privacy-first public pages; no private inputs read.
-
 --- git diff --exit-code -- privacy-site/public ---
 no diff (reproducible)
 
@@ -11,7 +10,7 @@ no diff (reproducible)
 PASS: 11 public pages, 316 official-context-linked data rows, captions, anchors, local resources, $10 display rounding and known household-signature checks. Not a privacy audit of Git history or a verification of synthetic assumptions.
 
 --- unittest ---
-Ran 8 tests in 0.125s
+Ran 8 tests in 0.195s
 
 OK
 
@@ -19,12 +18,10 @@ OK
 OK - _config.yml and final/published.txt match the declared allowlist of 39 published files
 
 --- final/check.py . ---
-OK - 25 pages, 966 table rows each with an official link, 2543 links, 2419 dollar figures rounded to $10, secret-list scan SKIPPED, see the secretless scan, 6-digit scan against 14833 model numbers clean, model self-tests passed on 51 paths
+OK - 25 pages, 989 table rows each with an official link, 2573 links, 2425 dollar figures rounded to $10, secret-list scan SKIPPED, see the secretless scan, 6-digit scan against 14491 model numbers clean, model self-tests passed on 51 paths
+
+--- final/integrate.py ---
+exit=0
 
 --- _config.yml audit-dir exclusion ---
 15:  - 'audit-e351c885'
-
---- final/integrate.py (link scan) ---
-7. fingerprinted figure shown to the nearest $100 / withheld in: no file
-8. README.md already current
-9. EXECUTIVE-SUMMARY.md regenerated from the model
