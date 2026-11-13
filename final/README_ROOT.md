@@ -25,7 +25,7 @@ The current site has two published editions (integration decision D1): the **no-
 | `sources.html` | Source register (zero official `excerpt` sources remain), method, cross-check against a second model |
 | `verification.html` | Verification passes (2026-11-11, 2026-11-12 and 2026-11-13): every official agency source opened and read directly |
 | `requirements.html` | Every part of the brief, the page that answers it, the official pages re-read, and `SG-1`–`SG-11` queue |
-| `review.html` | Repository review findings (`R01`–`R40`) |
+| `review.html` | Repository review findings (`R01`–`R42`) |
 | `versions.html` | Earlier editions and why they were replaced |
 
 ## Reproduce

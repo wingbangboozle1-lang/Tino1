@@ -972,7 +972,7 @@ def build_verification():
          src('HUD-95014', 'IRS-SCHED-A')),
         ('Page text and menu after earlier merges',
          'A conflict marker and a truncated duplicated sentence had been left in this page\'s own text; the Questions and Suggestions pages each appeared twice in the page menu; the source register carried a stray trailing period on the R&amp;TC 51 link.',
-         'Corrected 2026-11-13 (findings R32 to R34 on the Repo review page).',
+         'Corrected 2026-11-13 (findings R34 to R36 on the Repo review page).',
          src('RTC-51')),
     ]
     t7 = table(['What was checked', 'What the official page says (or why nothing can confirm it)', 'Result', 'Official page'],
