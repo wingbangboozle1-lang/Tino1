@@ -1879,4 +1879,9 @@ Base `551179b` (= origin/main, PR #72 merge). No open PRs and no active claims o
 
 ### F8 pull request and merge (2026-11-13)
 
-- PR opened from `arena/f8de1d0b-tino1` to `main`; result and Pages status recorded below after the merge.
+- **PR #75** https://github.com/wingbangboozle1-lang/Tino1/pull/75 (`arena/f8de1d0b-tino1` -> `main`), merged with `gh pr merge 75 --merge` at 2026-11-13T06:57:39Z as merge commit `282381964622936f74faa94e82fbd8b4a1da27e9`.
+- **Required check:** `verify` passed on the merged head (`run 43381964250`, 1m03s) and again on `main` after the merge (run 43382307787).
+- **Pages:** the Pages API reports `built`, no error, for `2823819` (2026-11-13T06:57:41Z); pages-build-deployment run 43382307033 succeeded. The live address was opened from this sandbox and serves the new dashboard at `https://wingbangboozle1-lang.github.io/Tino1/index.html` (title "Two-home inheritance analysis - dashboard", sections The answer / Two editions / Every section, by category / The three choices / Open before deciding / Found in this review); the root path is CDN-cached to the earlier chooser, so use the `index.html` address if the root shows the old page.
+- **Concurrent sessions.** While PR #75 was open, PRs #73, #74, #76 and #77 merged. Two merge rounds were needed. `COORDINATION.md` was resolved by keeping both sessions' complete records; `final/flags.py` conflicted because both sessions had added findings numbered R32-R37, so this session's six findings were renumbered to **R38-R43** and no content was discarded. `review.html` was regenerated from `final/flags.py`. Nothing from either side was deleted.
+- **F8 status:** F8-1 to F8-7 done. New open flags R39-R43 are published on the Flagged for Review page with links; R38 is closed. No baseline figure changed and no suggestion was implemented.
+
