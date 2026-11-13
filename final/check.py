@@ -57,6 +57,76 @@ PII = [
     (r'\(\d{3}\)\s*\d{3}-\d{4}|\b\d{3}-\d{3}-\d{4}\b', 'phone number'),
 ]
 
+# ---------------------------------------------------------------------------------------------
+# Unrounded owner-figure scan that needs NO secret (session 767b3f51).
+#
+# Until now the only real scan read the unrounded figures from a file outside the repository
+# named by TINO1_PRIVATE_FIGURES (K1 rule). CI has no such file, so on every pull request the
+# scan printed SKIPPED and exited 0. A page that accidentally published an unrounded owner
+# figure would therefore have passed every gate. That is a silent gate, not a gate.
+#
+# This invariant needs no secret because it is a property of the site, not of the private
+# numbers. Every owner-supplied dollar input is stored rounded to the nearest $10, so it can
+# only ever be published ending in 0. County assessed values and tax bills, the values that
+# identify a parcel, are not round numbers (550,537 / 114,248 / 7,207 are typical). Therefore:
+#
+#   any 6-digit integer published in a page that does NOT end in 0, is not an official
+#   published figure, and is not a model output, is a probable unrounded owner figure.
+#
+# Scoped to pages and to 6 digits on purpose. 4- and 5-digit integers collide heavily with
+# index values, rates, years and file numbers (the independent run found only false positives
+# at those lengths), and a noisy gate gets switched off. 6 digits is the range of a California
+# assessed value and of a large tax bill.
+# ---------------------------------------------------------------------------------------------
+SAFE_6DIGIT = {
+    '155782',   # "Session 155782b5" on the repo-review page: a session id, not a figure
+    # California FTB 2025 tax rate schedule thresholds, tax brackets higher than the federal ones:
+    '109125', '208325', '371479', '445771', '661375', '742953',
+}
+
+
+def load_model_numbers():
+    """Every integer the model produced, so a legitimate model output is never flagged."""
+    nums = set()
+    p = os.path.join(HERE, 'out', 'model.json')
+    if not os.path.isfile(p):
+        return nums
+
+    def walk(o):
+        if isinstance(o, dict):
+            for v in o.values():
+                walk(v)
+        elif isinstance(o, list):
+            for v in o:
+                walk(v)
+        elif isinstance(o, bool):
+            return
+        elif isinstance(o, (int, float)):
+            nums.add(int(round(abs(o))))
+
+    walk(json.load(open(p)))
+    return nums
+
+
+def scan_unrounded_pages(pages, raw):
+    """Fail on a published integer that looks like an unrounded owner figure. No secret needed."""
+    model_nums = load_model_numbers()
+    for p in pages:
+        t = raw[p]
+        text = re.sub(r'<(script|style)[^>]*>.*?</\1>', ' ', t, flags=re.S)
+        text = html.unescape(re.sub(r'<[^>]+>', ' ', text))
+        # normalise thousands separators first: "550,537" must be tested as 550537
+        text = re.sub(r'(?<=\d)[, _\u00a0](?=\d{3}(?!\d))', '', text)
+        for tok in sorted(set(re.findall(r'(?<![\d.])\d{6}(?![\d.])', text))):
+            if tok in SAFE_6DIGIT or tok in OFFICIAL_ODD:
+                continue
+            if int(tok) % 10 == 0:          # owner inputs are stored rounded to $10
+                continue
+            if int(tok) in model_nums:      # a legitimate model output
+                continue
+            err('PRIVACY: probable unrounded owner figure in', p, '-', tok)
+    return model_nums
+
 
 def check_site():
     pages = sorted(f for f in os.listdir(SITE) if f.endswith('.html'))
@@ -117,7 +187,8 @@ def check_site():
     for f in os.listdir(SITE):
         if not f.endswith('.html') and os.path.isfile(os.path.join(SITE, f)):
             fingerprint_scan(f, open(os.path.join(SITE, f), encoding='utf-8', errors='ignore').read())
-    return len(pages), n_rows, n_links, n_money
+    n_safe = len(scan_unrounded_pages(pages, raw))
+    return len(pages), n_rows, n_links, n_money, n_safe
 
 
 def check_repo_files():
@@ -161,7 +232,7 @@ def check_model():
 
 
 if __name__ == '__main__':
-    n = check_site()
+    npages, nrows, nlinks, nmoney, nsafe = check_site()
     check_repo_files()
     npaths = check_model()
     if errors:
@@ -176,4 +247,8 @@ if __name__ == '__main__':
         for x in errors[:int(os.environ.get('SHOW', '80'))]:
             print(' -', x)
         sys.exit(1)
-    print('OK - %d pages, %d table rows each with an official link, %d links, %d dollar figures rounded to $10, %s, model self-tests passed on %d paths' % (n + ('unrounded owner figures: none found' if FP else 'unrounded-figure scan SKIPPED (TINO1_PRIVATE_FIGURES not set)', npaths)))
+    print('OK - %d pages, %d table rows each with an official link, %d links, %d dollar figures rounded to $10, %s, '
+          '6-digit scan against %d model numbers clean, model self-tests passed on %d paths'
+          % (npages, nrows, nlinks, nmoney,
+             'secret-list scan: none found' if FP else 'secret-list scan SKIPPED, see the secretless scan',
+             nsafe, npaths))
