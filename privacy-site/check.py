@@ -11,6 +11,17 @@ FILES = NAV | {'style.css'}
 REGISTRY = json.loads((ROOT.parent/'research.json').read_text())
 SOURCES = {s['url'] for s in REGISTRY['sources'].values()}
 REVIEWED_NON_GOV_HOSTS = {'docs.github.com', 'federalreservehistory.org', 'www.federalreservehistory.org'}
+PII_PATTERNS = {
+    'street address': r'\b\d{1,5}\s+[A-Z][A-Za-z-]+(?:\s+[A-Z][A-Za-z-]+)?\s+(?:Street|St\.?|Avenue|Ave\.?|Drive|Dr\.?|Way|Court|Ct\.?|Lane|Ln\.?|Road|Rd\.?|Boulevard|Blvd\.?)\b',
+    'email address': r'[\w.+-]+@[\w-]+\.[\w.-]+',
+    'phone number': r'(?<!\d)(?:\+?1[ .-]?)?(?:\(\d{3}\)|\d{3})[ .-]\d{3}[ .-]\d{4}(?!\d)',
+    'parcel-number pattern': r'\b\d{3}-\d{2}-\d{3}\b',
+}
+
+
+def pii_kinds(text):
+    """Return only PII-pattern categories, never the matched value."""
+    return [label for label, pattern in PII_PATTERNS.items() if re.search(pattern, text)]
 
 
 class Check(HTMLParser):
@@ -86,6 +97,8 @@ def main():
         assert 'noindex,nofollow' in text and 'no-referrer' in text
         assert 'Content-Security-Policy' in text
         assert 'SOURCE CHECKS <i></i> 12–13 NOV 2026' in text
+        pii = pii_kinds(text)
+        assert not pii, f'Personal-data pattern(s) in {name}: {", ".join(pii)}'
         # Defense in depth against known rounded household signatures and location
         # cues. These checks cover only the public build, not Git history or every
         # possible inference from public context.
@@ -116,7 +129,7 @@ def main():
     css = (ROOT/'style.css').read_text()
     assert '@import' not in css and 'url(' not in css, 'Remote CSS resource'
     print(f'PASS: {len(NAV)} public pages, {sum(p.rows for p in pages.values())} official-context-linked data rows, '
-          'captions, anchors, local resources, $10 display rounding and known household-signature checks. '
+          'captions, anchors, local resources, PII-pattern checks, $10 display rounding and known household-signature checks. '
           'Not a privacy audit of Git history or a verification of synthetic assumptions.')
 
 

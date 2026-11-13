@@ -6,6 +6,21 @@ import sys
 from pathlib import Path
 import shutil
 from illustrations import r10, family_assessment, outlook, investment_path, STRESS, threshold, ledger
+from check import pii_kinds
+
+
+class PrivacyPatternTests(unittest.TestCase):
+    def test_synthetic_pii_patterns_are_detected_without_echoing_values(self):
+        self.assertEqual(pii_kinds('Generic guidance; no contact or property identifier.'), [])
+        examples = {
+            'street address': '123 Example Street',
+            'email address': 'person@example.invalid',
+            'phone number': '(555) 234-6789',
+            'parcel-number pattern': '123-45-678',
+        }
+        for kind, example in examples.items():
+            with self.subTest(kind=kind):
+                self.assertIn(kind, pii_kinds(example))
 
 
 class ArithmeticTests(unittest.TestCase):
