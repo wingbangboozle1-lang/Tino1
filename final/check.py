@@ -21,8 +21,11 @@ OFFICIAL = ('gov', 'sftreasurer.org', 'fred.stlouisfed.org', 'sccassessor.org', 
             'capropeforms.org')
 OTHER_OK = ('github.com', 'pages.stern.nyu.edu')
 # official published figures that are not multiples of $10 (each is quoted from the linked page)
+# official published figures that are not multiples of $10 (each is quoted from the linked page);
+# '3,439' is the HUD FY2026 two-bedroom base rent for ZIP 95014 shown in its published calculation
 OFFICIAL_ODD = {'38,915.87', '8,455.35', '14,217,212,455', '324,973', '1,176', '601', '1,044,586', '72,724', '371,479', '445,771', '742,953', '109,125', '208,325', '661,375',
                 '56', '67', '76', '1.10', '0.55', '24.15',
+                '3,439',
                 # HUD's own FY2026 reference row printed on the FY2027 zip-calc page for 94122 (read 2026-11-13, finding R55)
                 '2,485', '2,977', '3,604', '4,604', '4,772'}
 errors = []
@@ -75,7 +78,8 @@ PII = [
 # This invariant needs no secret because it is a property of the site, not of the private
 # numbers. Every owner-supplied dollar input is stored rounded to the nearest $10, so it can
 # only ever be published ending in 0. County assessed values and tax bills, the values that
-# identify a parcel, are not round numbers (550,537 / 114,248 / 7,207 are typical). Therefore:
+# identify a parcel, are not round numbers (a six-digit assessed value and a four-digit annual
+#   bill are typical). Therefore:
 #
 #   any 6-digit integer published in a page that does NOT end in 0, is not an official
 #   published figure, and is not a model output, is a probable unrounded owner figure.
@@ -122,7 +126,7 @@ def scan_unrounded_pages(pages, raw):
         t = raw[p]
         text = re.sub(r'<(script|style)[^>]*>.*?</\1>', ' ', t, flags=re.S)
         text = html.unescape(re.sub(r'<[^>]+>', ' ', text))
-        # normalise thousands separators first: "550,537" must be tested as 550537
+        # normalise thousands separators first: a comma-grouped figure must also be tested bare
         text = re.sub(r'(?<=\d)[, _\u00a0](?=\d{3}(?!\d))', '', text)
         for tok in sorted(set(re.findall(r'(?<![\d.])\d{6}(?![\d.])', text))):
             if tok in SAFE_6DIGIT or tok in OFFICIAL_ODD:

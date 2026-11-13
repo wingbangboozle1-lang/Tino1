@@ -1,4 +1,4 @@
-name: Validate the published Pages boundary
+name: Validate the Pages publication boundary
 on:
   pull_request:
   push:

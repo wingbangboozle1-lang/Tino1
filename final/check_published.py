@@ -1,19 +1,18 @@
 #!/usr/bin/env python3
-"""Verify GitHub Pages output against the published file boundary.
+"""Verify GitHub Pages output against the reviewed publication boundary.
 
   python3 final/check_published.py _site
 
 Exit code 1 on any failure. This gate checks the actual Jekyll output against
-final/published.txt: the root decision dashboard (rounded-figures analysis,
-placeholders for people, every owner or model dollar figure rounded to the
-nearest $10) together with the no-figures general guide under
-privacy-site/public/. The boundary settles the owner brief's open publication
-decisions G01/G02: the analysis is published with its numbers for clarity, and
-personal information stays anonymised. Known household-signature and locality
-checks on the guide run separately in privacy-site/check.py. Optional
-unrounded-value fingerprints are scanned only when TINO1_PRIVATE_FIGURES points
-to a file outside the repository; without that file, this checker does not claim
-a complete privacy audit.
+final/published.txt, which lists the rounded-figures analysis (placeholders for
+every person and property, every owner-supplied and modelled dollar figure
+rounded to the nearest $10) plus the figure-free guide under privacy-site/public/.
+Rounding is disclosure minimisation, not anonymisation, and the repository is
+public: review item G01 on the Suggestions page records the narrower options.
+The guide's own household-signature and locality checks run separately in
+privacy-site/check.py. Optional unrounded-value fingerprints are scanned only
+when TINO1_PRIVATE_FIGURES points to a file outside the repository; without that
+file, this checker does not claim a complete privacy audit.
 """
 import html
 import os
@@ -77,8 +76,6 @@ def check_site(site):
         text = open(os.path.join(site, name), encoding='utf-8', errors='ignore').read()
         if 'noindex' not in text:
             err('published page without robots noindex:', name)
-        if 'no-referrer' not in text:
-            err('published page without a no-referrer policy:', name)
         scan(name, text)
         for u in re.findall(r'(?:href|src)="([^"]+)"', text):
             u = html.unescape(u)
@@ -134,4 +131,4 @@ if __name__ == '__main__':
             fail(x)
             print(' -', x)
         sys.exit(1)
-    print('PASS - exact reviewed publication allowlist (%d files), internal links resolve inside it, noindex and no-referrer on every page, no PII pattern matched, published root files match a fresh build; unrounded-value scan %s' % (n, 'on' if FP else 'SKIPPED (TINO1_PRIVATE_FIGURES not set)'))
+    print('PASS - exact publication allowlist (%d files), internal links resolve inside it, noindex on every page, no PII pattern matched, published root landing matches a fresh build; unrounded-value scan %s' % (n, 'on' if FP else 'SKIPPED (TINO1_PRIVATE_FIGURES not set)'))

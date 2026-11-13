@@ -1,19 +1,21 @@
 #!/usr/bin/env python3
-"""Declare and generate the GitHub Pages file boundary.
+"""Declare and generate the GitHub Pages publication boundary.
 
 Run:
   python3 final/publish.py            # update final/published.txt and _config.yml
   python3 final/publish.py --check    # fail if either file is stale
 
-The published site is the decision dashboard and its subpages (the rounded-figures
-analysis the owner's brief requires to be reported for clarity, with people kept as
-placeholders and every owner or model dollar figure rounded to the nearest $10),
-together with the no-figures general guide under privacy-site/public/. This boundary
-settles the open publication decisions G01/G02 from the owner's brief: costs and
-numbers are reported rounded to $10, personal information stays anonymised, and
-rounding is labelled disclosure-minimisation rather than anonymisation. The
-repository and its history remain public and are described as such on the landing
-page. The allowlist is checked against the actual Jekyll output in CI by both
+The allowlist is the rounded-figures analysis (placeholders for every person and
+property, every owner-supplied and modelled dollar figure rounded to the nearest
+$10) plus the figure-free guide under privacy-site/public/. It is the
+disclosure-minimisation boundary the brief asks for: no name, street address,
+parcel number or account number is published, and no figure is published to the
+dollar. Rounding is not anonymisation and this repository is public - that is
+recorded as review item G01 on the Suggestions page, together with the narrower
+options.
+
+Earlier editions, audit directories, generators and data files are excluded.
+The allowlist is checked against the actual Jekyll output in CI by both
 publication checkers.
 """
 import os
@@ -22,10 +24,18 @@ import sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 
-# The decision dashboard at the root: landing, the analysis pages, the generated
-# assets, and the redirect stubs that keep older addresses working.
-SITE = [
+LANDING = [
     'index.html',
+    'style.css',
+    'app.js',
+]
+
+# The rounded-figures analysis. Personal information is replaced by placeholders
+# ("the Transferor", "the Inheritor", "Property A", "Property B") and every
+# owner-supplied and modelled dollar figure is rounded to the nearest $10, which
+# is the disclosure-minimisation control the brief asks for. Publishing this set
+# is option D of suggestion G01; the owner can still choose a narrower boundary.
+NUMERIC = [
     'summary.html',
     'decision.html',
     'questions.html',
@@ -42,19 +52,11 @@ SITE = [
     'requirements.html',
     'review.html',
     'versions.html',
-    'style.css',
-    'app.js',
-    # redirect stubs written by final/build.py for retired addresses
-    'properties.html',
-    'scenarios.html',
-    'taxes.html',
-    'estate-tax.html',
-    'methodology.html',
-    'pending-changes.html',
-    'steps.html',
-    'mirror-archived-2026-11-10.html',
 ]
-# The figure-free general guide: same rules and process, invented teaching examples.
+
+# The figure-free guide: the same process and cost categories taught with
+# invented examples, for anyone who wants to share the method without any
+# household figure.
 GUIDE = [
     'privacy-site/public/index.html',
     'privacy-site/public/decision.html',
@@ -72,12 +74,13 @@ GUIDE = [
 ]
 
 # This is the public output boundary, not a list of all tracked or internal files.
-ALLOW = set(SITE) | set(GUIDE)
-TITLE = 'Two-home inheritance analysis - decision dashboard'
+ALLOW = set(LANDING) | set(NUMERIC) | set(GUIDE)
+TITLE = 'Two-home inheritance analysis'
 
 
 def config(entries):
-    """Exclude every root entry except the published site and the privacy-site guide.
+    """Exclude every root entry except the published landing, the rounded-figures
+    pages and privacy-site/public/.
 
     privacy-site/ must remain traversable so that its public/ subdirectory can be
     published; its builder, source registry and other files are excluded one by one.
@@ -157,9 +160,9 @@ def main():
                 print('::error::' + m)
             return 1
         if stale:
-            print('::error::published file list is out of date: %s (run python3 final/publish.py)' % ', '.join(stale))
+            print('::error::publication list is out of date: %s (run python3 final/publish.py)' % ', '.join(stale))
             return 1
-        print('OK - _config.yml and final/published.txt match the reviewed allowlist of %d files' % len(ALLOW))
+        print('OK - _config.yml and final/published.txt match the allowlist of %d files' % len(ALLOW))
         return 0
     print('updated %d published file(s); rewrote %s' % (
         len(ALLOW), ', '.join(os.path.relpath(path, ROOT) for path, _ in targets)))
