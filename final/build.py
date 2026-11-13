@@ -22,9 +22,10 @@ B = M['baseline']['summary']
 ROWS = M['baseline']['rows']
 OUT = os.path.abspath(os.environ.get('OUT_DIR', os.path.join(HERE, 'site')))
 ROOT_MODE = bool(os.environ.get('ROOT_MODE'))
-# ROOT_MODE builds the household-specific numeric analysis into its historical root files,
-# with its executive summary at summary.html. The public index.html is a generic landing
-# page that links only to privacy-site/public; final/publish.py excludes all numeric pages.
+# ROOT_MODE builds the rounded-figures analysis into its historical root files, with its
+# executive summary at summary.html. The public index.html is the dashboard front door for
+# that edition; final/publish.py pins the exact published file list, which also includes the
+# figure-free guide under privacy-site/public/.
 HOME = 'summary.html' if ROOT_MODE else 'index.html'
 Y0 = 2026
 T = P['T']
@@ -1107,11 +1108,103 @@ def build_verification():
 <h2>Fifth independent re-read, 2026-11-13 (session arena/f8de1d0b)</h2>
 %s
 <p class="note">This pass re-opened the federal, California and local pages above on their own agency URLs. Two of them changed the picture rather than confirming it: the CPUC page limits the net-metering tariff behind the solar credit to 20 years, and the Department of Insurance tool states that its figures are illustrations rather than quotes. Both are recorded as flags. What was not re-opened today stands on the earlier passes and keeps its links.</p>
+<h2>Fourth independent re-read, 2026-11-13 (session arena/46d1a561)</h2>
+%s
+<p class="note">This pass opened the eight official pages in its table on their own agency URLs and read them in full; the quoted wording is what each page says today. It did not re-open the inherited-property basis FAQ, Rev. Rul. 2023-2, Topics 409/559/701, the California Controller page, the Franchise Tax Board schedules, the CPUC net-metering material, the San Francisco rent-increase rules or the Department of Insurance tool - those stand on the earlier passes and keep their links. One arithmetic check was added rather than a read: the Santa Clara rate components were summed by hand and do add to 1.16360.</p>
 <p class="note"><strong>Coverage summary.</strong> Across the passes above, every official agency source in <a href="sources.html">Sources and method</a> has now been opened and read directly on its agency URL (only the non-government stock/bill dataset, Damodaran, remains labelled academic). The interactive CDI insurance survey and HUD FY2027 lookup require interactive form/spreadsheet access not resolved in automation, so those parcel values remain blank.</p>
 <p class="note"><strong>What this pass does not establish.</strong> Model outputs and projections are conditional scenarios built on the assumptions in the flags; no official page can verify a forecast. The automated checker (<a href="%s/blob/main/final/check.py">final/check.py</a>) proves only that every table row carries an official link, that dollar figures are rounded to $10, and that no personal identifier pattern appears (no fingerprint of unrounded owner figures is stored; that extra scan runs only with a private local file) - it does not prove that each link supports each cell. This register exists so every claim can be checked by hand against its link. People remain placeholders (the Transferor, the Inheritor); no names, addresses or parcel numbers appear anywhere.</p>
-""" % (t1, t2, t3, t4, tw3, render_verification(src, table, flag), t6, t5, t7, t8, REPO)
+""" % (t1, t2, t3, t4, tw3, render_verification(src, table, flag), t6, t5, t7, t8,
+           s7_verification_table(), REPO)
     page('verification.html', 'Verification',
          'Verification passes (2026-11-11 register, four re-reads on 2026-11-12, and the full-page direct read): every official source read directly on its agency page, each check linked for manual review, and everything unconfirmable left blank and flagged.', body)
+
+
+def s7_verification_table():
+    """Fourth independent re-read, 2026-11-13 (session arena/46d1a561).
+
+    Every row below was opened on the issuing agency's own URL during this
+    session and read in full; the wording is what the page says today.
+    """
+    rows = [
+        ['Proposition 13 inflation factor for the 2026 roll',
+         'Letter 2026/002, dated 2026-01-13: the California Consumer Price Index rose from '
+         '343.108 in August 2024 to 354.456 in August 2025, an increase of 3.307 percent, so '
+         'the 2026 assessment roll uses the capped inflation factor 1.02. The letter also '
+         'records why the usual October figures were unavailable: because of the federal '
+         'government shutdown in the fall of 2025 the Bureau of Labor Statistics did not '
+         'publish the October 2025 regional indexes, so the Department of Industrial '
+         'Relations issued no October 2025 index and the Board used the closest published period.',
+         'Confirmed, and it matches the 2 percent cap the model applies every year. The '
+         'shutdown note is new provenance: it explains the 2026 factor and is worth re-reading '
+         'if a future shutdown recurs. ' + flag('A11'),
+         src('BOE-LTA-2026-002')],
+        ['Proposition 19 allowance and how often it moves',
+         'Letter 2025/009, dated 2025-03-07: the Federal Housing Finance Agency announced on '
+         '2025-02-25 that the California House Price Index rose 2.15 percent in 2024, so the '
+         '$1 million amount is adjusted to $1,044,586 for transfers from 2025-02-16 through '
+         '2027-02-15. The Constitution requires the adjustment on February 16, 2023 and every '
+         'other February 16 after that, using the prior calendar year\'s California index change. '
+         'The next adjustment is February 2027.',
+         'Confirmed, including the rule the model encodes: the allowance is re-set every odd '
+         'February by the prior calendar year\'s change, so it captures roughly every other '
+         'year of house-price growth, not compound annual growth. The amount after 2027-02-15 '
+         'stays blank. ' + flag('U04'),
+         src('BOE-LTA-2025-009')],
+        ['The one-year residence rule and its exceptions',
+         'Letter 2026/026, dated 2026-08-03, question 7: "the transfer is required to be of a '
+         'principal residence of the transferor that qualifies as the principal residence of '
+         'the transferee within one year after the transfer under section 63.2(a)(1)(A). There '
+         'are no exceptions to this rule." Question 8 adds that the exclusion is removed once '
+         'the home stops being the claimant\'s principal place of residence, and can continue '
+         'only if a different eligible transferee occupies it within one year.',
+         'Confirmed on the letter. This is the single most decision-relevant sentence in the '
+         'register: if the Inheritor keeps living at Property B, the partial exclusion is not '
+         'available at all and Property A is reassessed to full market value, which is exactly '
+         'the "rent it" column. Whether the Inheritor will move is a personal choice, not a '
+         'verifiable fact. ' + flag('Q15'),
+         src('BOE-LTA-2026-026')],
+        ['Federal basic exclusion for 2027',
+         'Rev. Proc. 2026-35 section 3.44: "For calendar year 2027, the basic exclusion amount '
+         'under section 2010(c)(3) is $15,480,000." The same amount sets the generation-skipping '
+         'transfer exemption under section 2631(c).',
+         'Confirmed on the revenue procedure PDF, read in full. It is the starting point of the '
+         'estate projections.', src('RP-2026-35')],
+        ['Federal basic exclusion for 2026',
+         '"The Working Families Tax Cuts Bill (WFTC) was signed into law on July 4, 2025 as '
+         'Public Law 119-21. WFTC amends section 2010(c)(3) by increasing the basic exclusion '
+         'amount to $15,000,000 for calendar year 2026."',
+         'Confirmed on the IRS page. The 2026 amount is statutory, not merely an inflation '
+         'adjustment, which is why it does not move with the chained index.',
+         src('IRS-NEW')],
+        ['San Francisco secured property-tax rate',
+         '"The secured property tax rate for Fiscal Year 2026-27 is 1.18162182%." Secured bills '
+         'are mailed in October; the first installment is delinquent after December 10 and the '
+         'second after April 10, each with a 10 percent penalty, and a supplemental bill follows '
+         'a change in ownership.',
+         'Confirmed. Property B is never reassessed in this analysis, so its rate matters and '
+         'the date of death drives only Property A.', src('SF-TAX')],
+        ['HUD rent benchmark for ZIP 95014',
+         'FY2026 Small Area Fair Market Rents, ZIP 95014: efficiency $3,340, one-bedroom $3,800, '
+         'two-bedroom $4,440, three-bedroom $5,870, four-bedroom $6,390. The published '
+         'calculation shows the two-bedroom base rent of $3,439 multiplied by a recent-mover '
+         'factor of 1.1773, an inflation update of 1.0375 and a trend factor of 1.0576.',
+         'Confirmed on the HUD page, including the arithmetic. These are benchmarks for a '
+         'standard unit, not a valuation of Property A, whose bedroom count and rentable '
+         'condition are unknown. ' + flag('U08') + ' ' + flag('A07'),
+         src('HUD-95014')],
+        ['Santa Clara County composite rate',
+         'FY2025-26 Tax Rate Book, pages A-4 to A-6: the listed components for the Cupertino '
+         'school and district areas are 1.00000, 0.03880, 0.00240, 0.00520, 0.00560, 0.00010, '
+         '0.01650, 0.01690, 0.01040, 0.00880, 0.01070, 0.01180, 0.01010, 0.01350, 0.00750, '
+         '0.00390 and 0.00140 per $100.',
+         'The components sum to 1.16360, which is the rate the model uses. The sum was '
+         're-checked by hand this session. The home\'s own tax rate area was not looked up, '
+         'because doing so would identify the parcel. ' + flag('U03'),
+         src('SCC-RATES')],
+    ]
+    return table(['What was checked', 'What the official page said when opened on 2026-11-13',
+                  'Result', 'Official page'], rows,
+                 caption='Fourth independent re-read, 2026-11-13 (session arena/46d1a561), on the official pages themselves')
 
 
 # ====================================================================== questions & discovery

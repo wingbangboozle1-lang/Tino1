@@ -131,4 +131,4 @@ if __name__ == '__main__':
             fail(x)
             print(' -', x)
         sys.exit(1)
-    print('PASS - exact privacy-first publication allowlist (%d files), internal links resolve inside it, noindex on every page, no PII pattern matched, published root landing matches a fresh build; unrounded-value scan %s' % (n, 'on' if FP else 'SKIPPED (TINO1_PRIVATE_FIGURES not set)'))
+    print('PASS - exact publication allowlist (%d files), internal links resolve inside it, noindex on every page, no PII pattern matched, published root landing matches a fresh build; unrounded-value scan %s' % (n, 'on' if FP else 'SKIPPED (TINO1_PRIVATE_FIGURES not set)'))

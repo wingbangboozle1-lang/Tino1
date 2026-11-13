@@ -6,11 +6,13 @@ A decision analysis for two California homes. Property A (Cupertino, ZIP 95014) 
 
 ## What is current
 
-GitHub Pages publishes the **no-figures guide** in [`privacy-site/public/`](privacy-site/public/) behind a generic landing page (privacy first, every illustration invented for teaching; the exact file list is pinned in [`final/published.txt`](final/published.txt)). The **rounded-figures analysis** at the repository root, generated from [`final/`](final/), is repository-only: it is built and checked by CI but deliberately not served, because rounding is disclosure minimisation, not anonymisation (PR #79, 2026-11-13). Pages:
+GitHub Pages publishes the **rounded-figures analysis** at the repository root, generated from [`final/`](final/), behind a dashboard landing page. The **no-figures guide** in [`privacy-site/public/`](privacy-site/public/) is published alongside it, one click away, for anyone who wants the process with invented teaching examples instead of household numbers. The exact published file list is pinned in [`final/published.txt`](final/published.txt) and enforced in CI.
+
+Rounding to the nearest $10 is the disclosure-minimisation control the brief asks for; it is **not** anonymisation, and this repository is public. Options G01 and G02 on the Suggestions page set out the narrower boundary and the history remediation; only the owner can make the repository private or have its history rewritten. Pages:
 
 | Page | Content |
 |---|---|
-| `index.html` | The published front door: a generic landing page linking the no-figures guide (the numeric pages are repository files, not served) |
+| `index.html` | The published front door: a dashboard grouping every page by category, with the headline numbers and a link to the no-figures guide |
 | `summary.html` | Executive summary, dashboard, best plan and why (rounded-figures numeric edition) |
 | `decision.html` | Live, rent or sell: cash flows, after-tax wealth, sensitivities, break-even points |
 | `questions.html` | Questions, known vs. unknown info, and discovery guide — Part 1: Q01–Q18, U01–U10, the S5-Q1–S5-Q7 evidence checklist & discovery sequence; Part 2: reading-dated decision register (open, unknowable, answered) |
@@ -34,11 +36,11 @@ GitHub Pages publishes the **no-figures guide** in [`privacy-site/public/`](priv
 python3 final/model.py && python3 final/integrate.py && python3 final/check.py .
 ```
 
-Standard library only. `final/check.py` fails if a table row has no link to an official page, if an internal link is broken, if a dollar figure is not a multiple of $10 (listed official figures excepted), or if a street address, e-mail address, parcel-number or telephone pattern appears. GitHub Pages serves only the privacy-first allowlist in [`final/published.txt`](final/published.txt) (generic landing + no-figures guide), enforced in CI by `final/check_published.py` and `privacy-site/check_published.py`; the numeric pages stay repository files, built and checked but not published.
+Standard library only. `final/check.py` fails if a table row has no link to an official page, if an internal link is broken, if a dollar figure is not a multiple of $10 (listed official figures excepted), if a git merge-conflict marker survives anywhere, or if a street address, e-mail address, parcel-number or telephone pattern appears. GitHub Pages serves exactly the allowlist in [`final/published.txt`](final/published.txt) (the rounded-figures analysis plus the no-figures guide), enforced against the real Jekyll output in CI by `final/check_published.py` and `privacy-site/check_published.py`.
 
 ## Rules followed
 
-- **Privacy first.** No names, addresses or parcel numbers. People are "the Transferor" and "the Inheritor". Owner-supplied figures are stored and shown only rounded to $10; no year-by-year history is listed. Pages ask search engines not to index them.
+- **Privacy first.** No names, addresses or parcel numbers. People are "the Transferor" and "the Inheritor". Properties are "Property A" (Cupertino) and "Property B" (San Francisco). Owner-supplied figures are stored and shown only rounded to $10; no year-by-year history is listed. Pages ask search engines not to index them and set `no-referrer`.
 - **Official sources.** Every table row links to an official page. A value that could not be confirmed is left blank and listed on the Flagged for Review page. Assumptions are labelled as assumptions.
 - **Not advice.** The site prepares questions for a licensed estate attorney and tax adviser.
 

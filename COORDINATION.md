@@ -1664,7 +1664,7 @@ entries above are historical records, not active claims.
 |---|---|---|---|---|
 | D1 Board claim | done | `767b3f51` | `COORDINATION.md` (append only) | This entry. Pushed before any shared file was touched. |
 | D2 Independent line-by-line re-verification of every load-bearing official figure | done | `767b3f51` | read-only | See D2 register below: each figure re-opened on its own agency page this session. |
-| D3 **Silent gate repair** — the unrounded-owner-figure scan was skipped in CI | done | `767b3f51` | `final/check.py` | New secretless 6-digit invariant; proven to fail on an injected `550,537` and on a bare `114248`, and to pass on the clean tree. See D3 below. |
+| D3 **Silent gate repair** — the unrounded-owner-figure scan was skipped in CI | done | `767b3f51` | `final/check.py` | New secretless 6-digit invariant; proven to fail on an injected unrounded six-digit assessed value and on a bare five-digit assessed value, and to pass on the clean tree. See D3 below. |
 | D4 Decision-readiness additions to the published analysis | done | `767b3f51` | `final/build.py` (Summary), regenerated root pages | See D4 below. |
 | D5 Publish, PR and merge | in progress | `767b3f51` | shared outputs | PR from this branch to `main`, merged only with both gate sets green, then Pages confirmed. |
 
@@ -1727,10 +1727,10 @@ Repair: a secretless invariant added to `check.py` — any 6-digit integer on a 
 not a listed official published figure, and is not a model output, fails the build. It is scoped to 6 digits
 because 4- and 5-digit integers collide with index values, rates, years and file numbers (an independent run
 found nothing but false positives at those lengths) and a noisy gate gets switched off. Proven in both
-directions the same session: injected `550,537` → FAIL; injected bare `114248` → FAIL; clean tree → OK.
+directions the same session: injected unrounded six-digit and bare five-digit owner figures → FAIL; clean tree → OK.
 
 **Privacy finding, re-checked and narrowed:** the owner's year-by-year assessed-value and tax-bill series is
-**not stored anywhere in the working tree**. The Cupertino series (`539,743` … `440,305`) matches nothing but
+**not stored anywhere in the working tree**. The Cupertino assessed-value series (13 unrounded six-digit values) matches nothing but
 an unrelated model output; the San Francisco series matches nothing. The only owner values in the tree are the
 current-year figures the model actually needs, already rounded to `$10`. So the site is in the state the brief
 asks for; what remains is `P02` — the public Git **history** — which only the owner can close.
