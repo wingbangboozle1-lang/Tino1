@@ -7,7 +7,6 @@ exclude:
   - 'README.md'
   - 'REPO-REVIEW.md'
   - '_config.yml'
-  - '_site'
   - 'analysis'
   - 'app.js'
   - 'archive'
