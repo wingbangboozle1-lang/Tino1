@@ -31,7 +31,7 @@ def _sens(fragment):
     """Look a sensitivity row up by the words in its label.
 
     Positional indexing into M['sensitivity'] (this file used rows [-1] and [6]) silently
-    changes meaning whenever a row is added or reordered, which is finding R60. A label
+    changes meaning whenever a row is added or reordered, which is finding R61. A label
     match either finds the intended row or fails loudly here, not in a published figure.
     """
     hits = [x for x in M['sensitivity'] if x['label'] == fragment] or \

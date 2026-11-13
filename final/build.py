@@ -197,7 +197,7 @@ def SEN(frag):
 
     This file and final/exec_summary.py used to read rows by position (M['sensitivity'][-1],
     [6], [15]). Appending or reordering a scenario silently re-points those figures at a
-    different scenario, which is repository finding R60. A label match either finds the row
+    different scenario, which is repository finding R61. A label match either finds the row
     the sentence is about or stops the build here.
     """
     hits = [x for x in M['sensitivity'] if x['label'] == frag] or \
@@ -402,7 +402,7 @@ def build_decision():
     # One official source set per sensitivity row, keyed by the words in its label. This was a
     # positional zip against a fixed list of eighteen entries, so every row added to the model
     # after that list was written was silently dropped from this table and the pairing shifted -
-    # repository finding R60. An unmapped label now stops the build instead.
+    # repository finding R61. An unmapped label now stops the build instead.
     SENS_SRC = [
         ('=Baseline', ('FHFA-SJ', 'BLS-CPI')),   # '=' means: the whole label, not a substring
         ('Home appreciation 3.0%', ('FHFA-SJ',)),
@@ -1353,8 +1353,8 @@ def build_verification():
          'Confirmed today. The model carries the credit for 50 years - flagged as %s' % flag('R41'), src('CPUC-NEM')),
         ('Insurance premiums by ZIP', 'The Department of Insurance comparison tool states that its figures are hypothetical risks for illustration, that wildfire surcharges of 15% to over 300% are not reflected, and that an exact premium requires an agent, broker or insurer quote',
          'Confirmed today - the reason both insurance amounts stay blank and flagged (%s, %s)' % (flag('U01'), flag('U02')), src('CDI-TOOL-APP')),
-        ('HUD rents for fiscal year 2027', 'The fiscal-year-2027 address in the same documentation format as the 2026 page returned "404 - File or directory not found" when opened today',
-         'Not confirmable today: the 2027 figure stays blank %s and the 2026 figure remains in use' % flag('U09'), src('HUD-SAFMR-INDEX')),
+        ('HUD rents for fiscal year 2027', 'The per-ZIP calculator address, tried with a fiscal-year-2027 substitution, returned "404 - File or directory not found"; the release page itself offers only that interactive lookup and a spreadsheet',
+         'Closed later the same day by a different route: the FY2027 ZIP rows were read on HUD\'s FY2027 documentation pages (%s), recorded in the register, and the model still keeps the FY2026 figures by design - see the re-read row below' % src('HUD-SAFMR-INDEX'), src('HUD-27-95014', 'HUD-27-94122')),
     ]
     r8 = [(a, b_, c_.replace(flag('R39'), '<a class="flag" href="review.html#R39">R39</a>')
                               .replace(flag('R40'), '<a class="flag" href="review.html#R40">R40</a>')
@@ -1699,7 +1699,7 @@ def build_flagged():
     # Repository review findings are rendered on the repository review page; the flagged
     # page keeps one pointer row so that a flag link of the form review.html#R38 resolves.
     cats.append(('RY', 'Repository review findings, listed on the review page'))
-    # The label is read out of the registry so it cannot go stale again (finding R55: the two
+    # The label is read out of the registry so it cannot go stale again (finding R56: the two
     # labels on this page and the review page announced ranges the registry did not contain).
     rids = [int(x['id'][1:]) for x in REVIEW]
     gaps = [n for n in range(1, max(rids) + 1) if n not in rids]

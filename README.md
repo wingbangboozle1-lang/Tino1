@@ -27,7 +27,7 @@ GitHub Pages publishes the **no-figures guide** in [`privacy-site/public/`](priv
 | `sources.html` | Source register (zero official `excerpt` sources remain), method, cross-check against a second model |
 | `verification.html` | Verification passes (2026-11-11, 2026-11-12 and 2026-11-13): every official agency source opened and read directly |
 | `requirements.html` | Every part of the brief, the page that answers it, the official pages re-read, and `SG-1`–`SG-11` queue |
-| `review.html` | Repository review findings (`R01`–`R60`; the sequence skips `R34`–`R37`, folded into other rows during the 2026-11-13 merges, see `R55`) |
+| `review.html` | Repository review findings (`R01`–`R61`; the sequence skips `R34`–`R37`, folded into other rows during the 2026-11-13 merges, see `R56`) |
 | `versions.html` | Earlier editions and why they were replaced |
 
 ## Reproduce
