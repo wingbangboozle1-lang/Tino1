@@ -1653,6 +1653,131 @@ and P01-P03 stay open on the Flagged for Review page and do not block anything.
 
 ---
 
+## Session `arena/767b3f51-tino1` — decision-readiness review, silent-gate fix, publish, merge (claimed 2026-11-13)
+
+**Branch:** `arena/767b3f51-tino1`, branched from `main` @ `551179b` (PR #72 merge). **Session ID:** `767b3f51`.
+Read the board and every open PR before claiming; no open PRs, `main` green (run 43261382129 success, Pages
+`built`). This is the only branch this session writes to. No other session holds a live claim; the append-only
+entries above are historical records, not active claims.
+
+| Task | Status | Owner | Files / scope | Verification |
+|---|---|---|---|---|
+| D1 Board claim | done | `767b3f51` | `COORDINATION.md` (append only) | This entry. Pushed before any shared file was touched. |
+| D2 Independent line-by-line re-verification of every load-bearing official figure | done | `767b3f51` | read-only | See D2 register below: each figure re-opened on its own agency page this session. |
+| D3 **Silent gate repair** — the unrounded-owner-figure scan was skipped in CI | done | `767b3f51` | `final/check.py` | New secretless 6-digit invariant; proven to fail on an injected `550,537` and on a bare `114248`, and to pass on the clean tree. See D3 below. |
+| D4 Decision-readiness additions to the published analysis | done | `767b3f51` | `final/build.py` (Summary), regenerated root pages | See D4 below. |
+| D5 Publish, PR and merge | in progress | `767b3f51` | shared outputs | PR from this branch to `main`, merged only with both gate sets green, then Pages confirmed. |
+
+### D2 — re-verification register (opened and read on the agency page this session, 2026-11-13)
+
+| Figure the model depends on | Value used | What the official page says | Page opened |
+|---|---|---|---|
+| Federal estate-tax filing threshold, 2026 | `$15,000,000` | Filing-threshold table, year of death 2026: `$15,000,000` | `https://www.irs.gov/businesses/small-businesses-self-employed/estate-tax` |
+| Basic exclusion, 2027 | `$15,480,000` | Rev. Proc. 2026-35 s.3.44: "For calendar year 2027, the basic exclusion amount under § 2010(c)(3) is $15,480,000." | `https://www.irs.gov/pub/irs-drop/rp-26-35.pdf` |
+| Annual gift exclusion, 2027 | `$20,000` | Rev. Proc. 2026-35 s.3.46(1): first `$20,000` of gifts to any person | same |
+| Basis of inherited property | FMV at date of death | "The basis of property inherited from a decedent is generally ... the FMV of the property on the date of the decedent's death" | `https://www.irs.gov/faqs/interest-dividends-other-types-of-income/gifts-inheritances/gifts-inheritances` |
+| No basis step-up outside the gross estate | model flag Q01 | Rev. Rul. 2023-2: the §1014 adjustment "generally does not apply to the assets of an irrevocable grantor trust not included in the deceased grantor's gross estate" | `https://www.irs.gov/irb/2023-16_IRB` |
+| No California estate or inheritance tax | `$0` | "For decedents that die on or after January 1, 2005, there is no longer a requirement to file a California Estate Tax Return." | `https://www.sco.ca.gov/ardtax_estate_tax.html` |
+| Prop 19 $1M allowance, 2025-02-16 to 2027-02-15 | `$1,044,586` | LTA 2025/009: "$1 million amount is adjusted to $1,044,586 ... for transfers that occur February 16, 2025 through February 15, 2027" | `https://www.boe.ca.gov/proptaxes/pdf/lta25009.pdf` |
+| Prop 19 new-taxable-value formula | `FBYV + max(0, FMV − (FBYV + cap))` | LTA 2026/026 definitions 4, 5 and 10 (excess amount, excluded amount, new taxable value) | `https://www.boe.ca.gov/proptaxes/pdf/lta26026.pdf` |
+| Prop 19 excludes trusts? | transfers "within or outside a trust" | LTA 2026/026 definition 13 | same |
+| Prop 19 conditions | principal residence of transferor and transferee; allowance; 1-year HOX; 3-year claim | BOE Proposition 19 comparison table | `https://www.boe.ca.gov/prop19/` |
+| Prop 13 annual cap | 2% | R&TC 51(a)(1)(D): "In no event shall the percentage increase ... exceed 2 percent of the prior year's value." | `https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=RTC&sectionNum=51` |
+| 2026 roll inflation factor | 2% (CCPI 3.307%) | LTA 2026/002: prepare the 2026 roll at `1.02` | `https://www.boe.ca.gov/proptaxes/pdf/lta26002.pdf` |
+| Homeowners' exemption | `$7,000`; BOE-266; file by Feb 15 | "$7,000 reduction in the taxable value"; "one-time filing"; "no later than February 15" | `https://www.boe.ca.gov/proptaxes/homeowners_exemption.htm` |
+| Trustee notification deadline | 60 days after death | Prob. Code 16061.7(f): "not later than 60 days following the occurrence of the event" | `https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=PROB&sectionNum=16061.7` |
+| Home-sale exclusion | `$250,000` / `$500,000`; 24 of 60 months | IRS Topic 701 | `https://www.irs.gov/taxtopics/tc701` |
+| Net investment income tax | 3.8% above $200,000 single / $250,000 joint | IRS Topic 559 | `https://www.irs.gov/taxtopics/tc559` |
+| Schedule A SALT cap, 2025 | `$40,000` cap, phase-down above `$500,000`, floor `$10,000` | Instructions for Schedule A (Form 1040) 2025, Line 5e worksheet | `https://www.irs.gov/instructions/i1040sca` |
+| San Francisco secured tax rate FY2026-27 | 1.18162182% | "The secured property tax rate for Fiscal Year 2026-27 is 1.18162182%." | `https://sftreasurer.org/property/secured-property-taxes` |
+
+**Two figures reproduced from the model rather than taken on trust**, by recomputing them from the official
+inputs above:
+
+- Proposition 19 new taxable value at inheritance in 2045: assessed `550,540 × 1.02^19 = 802,033`;
+  market `3,100,000 × 1.04^19 = 6,531,232`; allowance `1,044,586` grown every second February 16 by one year of
+  California house-price change (8 adjustments) `= 1,500,153`; new taxable value
+  `802,033 + (6,531,232 − 2,302,186) = 5,031,079`, which is the `$5,031,080` shown on the Summary and Decision
+  pages. Confirmed by direct recomputation.
+- Replay counts on the Black swan page: `43/50` at ten years and `50/50` at twenty years for sell-and-reinvest,
+  and the `−$2,069,687` worst ten-year gap, all reproduced from `final/out/model.json`.
+
+**Growth assumption checked against the real record** (not an error, recorded so it is not mistaken for one):
+the baseline uses 4.0% a year for home prices, while the FHFA index for the same two areas gives 6.71%
+(San Jose) and 6.48% (San Francisco) a year from 1976 to 2025, and 4.13% / 4.18% a year from 2000 to 2025.
+The assumption is therefore conservative, not optimistic, and is labelled `flag A01` on the site.
+
+**Estate-tax room, checked** (this one initially looked wrong and is not): the Summary KPI `$17,612,280`
+is room for cash **in 2045 dollars**, and the Cash page shows the same room as `$11,016,970` in 2026 dollars.
+The example table on that page keys on cash measured in 2026 dollars, which is stated in the table heading.
+A reader who brings a 2026-dollar figure to the 2045-dollar KPI would understate the estate by roughly 60%.
+D4 adds the 2026-dollar twin to the KPI so the two cannot be confused.
+
+### D3 — the gate that was not a gate
+
+`final/check.py` line 4 and its `fingerprint_scan()` read the unrounded owner figures from a file **outside**
+the repository named by `TINO1_PRIVATE_FIGURES`. `.github/workflows/pages.yml` does not set that variable and
+cannot (it is deliberately not in the repository, per the K1 rule), so on every pull request the scan printed
+`unrounded-figure scan SKIPPED` and exited 0. Any page that published an unrounded owner figure would have
+passed every gate on every PR. Running the check by hand with the real list produced exactly two hits, both
+false positives (`$1,740` at 2054 and `$6,130` at 2058 in `projections.html`, being model outputs that coincide
+with 4-digit owner bills).
+
+Repair: a secretless invariant added to `check.py` — any 6-digit integer on a page that does not end in `0`, is
+not a listed official published figure, and is not a model output, fails the build. It is scoped to 6 digits
+because 4- and 5-digit integers collide with index values, rates, years and file numbers (an independent run
+found nothing but false positives at those lengths) and a noisy gate gets switched off. Proven in both
+directions the same session: injected `550,537` → FAIL; injected bare `114248` → FAIL; clean tree → OK.
+
+**Privacy finding, re-checked and narrowed:** the owner's year-by-year assessed-value and tax-bill series is
+**not stored anywhere in the working tree**. The Cupertino series (`539,743` … `440,305`) matches nothing but
+an unrelated model output; the San Francisco series matches nothing. The only owner values in the tree are the
+current-year figures the model actually needs, already rounded to `$10`. So the site is in the state the brief
+asks for; what remains is `P02` — the public Git **history** — which only the owner can close.
+
+### D4 — decision-readiness additions (published analysis)
+
+Kept deliberately small: three changes, no model output, assumption or recommendation altered.
+
+1. **Summary · "What would change the answer."** The model's own break-even points, printed from the same run
+   that produces every other figure, so they cannot drift: home growth above **7.0%** a year would make renting
+   better than selling (the real 1976-2025 record for this area was **6.71%**, so this is live, not remote); a
+   stock return below **4.6%** a year; rent above about **$16,650** a month. Beside them, flagged rather than
+   modelled, the three facts that decide whether the assumed tax rules apply at all — gross-estate inclusion
+   (`Q01`, worth about **$3,319,060** of 2026-dollar wealth), the parent-child test (`Q06`) and principal
+   residence (`Q15`).
+2. **Summary · "What to settle before 2044, and why it cannot wait."** Including the Form 706 portability window
+   (`Q02`) — the only item on the site with a deadline that may **already be running**, and the one where the
+   money at stake is a second exclusion.
+3. **Estate-tax key figure** now names its dollar year and carries the 2026-dollar twin: **$17,612,280 in 2045
+   dollars** is **$11,016,970 in 2026 dollars**, and the sub-line says which to compare a figure measured today
+   against. Recorded as review item `R33`.
+
+Also recorded as review item `R32`: the gate repair from D3, stated for a public reader without quoting any
+private figure. The first draft of that sentence *did* quote two of them; the new gate caught it, and the
+sentence was rewritten rather than the number whitelisted. That is the repair working.
+
+### D5 — publish record
+
+- Branch pushed and rebased; **PR #73** https://github.com/wingbangboozle1-lang/Tino1/pull/73.
+- Required `verify` check **passed** on the PR head (run **43380840399**, 51 s) — the repaired gate ran in CI.
+- Merged **2026-11-13T06:45:58Z** as **`671bedd001c0537874d2ca42d6cc9093c9baa72e`**; merge commit CI passed
+  (run **43380979912**).
+- GitHub Pages build/deployment run **43380979152** succeeded; Pages API reports `built`, no error, for
+  `671bedd` (updated 2026-11-13T06:46:33Z).
+- Live check after the CDN caught up: `summary.html` serves the new key-figure wording, the "What would change
+  the answer" break-even table and the "What to settle before 2044" table. Confirmed by fetching the page with a
+  cache-busting query; the un-busted URL was still serving the previous build at the time of the check.
+- Local gates all green before the push: `final/check.py .` (25 pages, 938 sourced rows, 2,451 links, `$10`
+  rounding, 6-digit scan clean, model self-tests on 51 paths); `privacy-site/build.py` reproducible with no diff
+  and `privacy-site/check.py` PASS (11 pages, 316 rows); 8/8 unit tests; `final/publish.py --check` (39 files);
+  and both boundary checkers PASS on a simulated Jekyll build (39 files, byte-identical).
+
+**Still open for the owner after this session:** `P02` (public Git history holds the earliest unrounded drafts;
+only the owner can make the repository private or have the history rewritten), and `Q01`, `Q02`, `Q04`-`Q06`,
+`Q15`-`Q18`, `U01`-`U09`, `A01`-`A10`, `S01`-`S05` on the Flagged for Review page. No historical series, ZIP
+list or private document was republished.
+
 ## Session `arena/5ea93a0e-tino1` — independent analysis and integration (claimed 2026-11-12 15:35 UTC)
 
 Branch fixed by workspace: `arena/5ea93a0e-tino1`; base `609d23f`. Read the board, main (`c1abff8` at initial fetch), and active PR #56 before claiming. During the claim push main advanced to `6e1afab` (PR #57): a concurrent board conflict was resolved by retaining both complete entries; no other session work was discarded. No alternate branch will be created. `708757cf` is actively editing the privacy-site publication boundary; its scope is respected. The completed `ccd19b78` privacy release is retained and will be incorporated by rebasing this branch, not discarded.
@@ -1692,6 +1817,26 @@ Privacy interpretation: names, contact details, exact addresses, parcel identifi
 - S5-0 claim, S5-1 bounded audit, S5-2 review pack and S5-3 integration/publication are done. The audit directory is excluded from Pages; the root chooser privacy wording is corrected. D1 dual-edition routing remains in force.
 - Still open for the owner: G01/G02 routing and repository/history remediation; privacy-safe numeric rebuild or privacy-only revert if anonymization is required; model/provenance corrections S5-P1–S5-P5; private evidence questions S5-Q1–S5-Q7. No historical series, ZIPs or private documents were republished by this session.
 
+
+## Session `arena/022b1ea7-tino1` — two-home inheritance analysis, verified site build (claimed 2026-11-13 UTC)
+
+Base `551179b` (= origin/main, PR #72 merge). No open PRs and no active claims on the board at claim time. This session will not touch `final/publish.py`, `privacy-site/**`, root numeric pages, or `_config.yml` until the owner resolves the open privacy decisions (G01/G02 routing, history remediation).
+
+| Task | Status | Owner | File scope | Notes |
+|---|---|---|---|---|
+| O1 Claim and coordination | done | arena/022b1ea7-tino1 | COORDINATION.md (append only) | This entry. |
+| O2 Official-source verification (federal, CA, SF, Japan, insurance) | in progress | arena/022b1ea7-tino1 | `owner-analysis-2026/sources/**` (new, exclusive) | Rows marked verified or flagged. |
+| O3 Projection model and site build | in progress | arena/022b1ea7-tino1 | `owner-analysis-2026/**` (new, exclusive, excluded from Pages) | Not published until owner privacy decision. |
+| O4 Pages publication and merge to main | held | arena/022b1ea7-tino1 | none yet | Held: privacy blocker, see notes. |
+
+### arena/022b1ea7-tino1 close-out (2026-11-13 UTC)
+
+- O2 official-source verification: done in part. `owner-analysis-2026/sources/official-sources.csv` holds 24 rows, each with a source URL and status. Verified this session: 2027 basic exclusion $15,480,000 (Rev. Proc. 2026-35 §3.44); 2026 basic exclusion $15,000,000 (IRS estate-tax page); 2026-27 CA roll factor 1.02 (BOE LTA 2026/002); Prop 19 cap $1,044,586 and occupancy/filing conditions (BOE LTA 2025/015); SB 974 chaptered as Stats. 2026 ch. 665 on 2026-09-27 (leginfo); SF FY2026-27 secured rate 1.18162182% (sftreasurer.org); SF 2026-27 rent increase 1.6% (sf.gov Rent Board); NIIT thresholds $200k/$250k (IRS Topic 559); Civ. Code §1947.12 rent cap (leginfo); 10-year Treasury 4.98% (2026-11-10) and 5.10% (2026-11-12) (treasury.gov).
+- O2 still open: historical CPI (FRED CPIAUCSL chunks 2–4 unread), official county-level FHFA HPI files for both properties (metro CSV 404), IRC §1014 citation, federal and CA long-term capital gains brackets, Japan (secondary only).
+- O3 projection: computed privately (outside the repo) from owner inputs; household figures are not committed. Outputs rounded to $10; repair, Cupertino rent and vacancy left blank. `owner-analysis-2026/exemption-projection.csv` is generic and public-safe.
+- Repository irregularities logged in `owner-analysis-2026/FLAGS.md`: F15 (board entry #7 cites SF rate 1.18268325%; official page now shows 1.18162182%); F16 ("$15M permanent" wording not supported by sources); F17–F18 (board projection inputs and "sell wins by ~$1M" unverified); F24–F25 (public numeric pages and pre-rounding history need owner decision).
+- Publication: no change to the published set (39 files). `final/publish.py --check` passes; `_config.yml` gained one exclude line for `owner-analysis-2026`. Household projections are not published; the owner's privacy decision (G01/G02, history remediation) is still required before any household numeric page changes.
+- O4 Pages publication and merge: PR from `arena/022b1ea7-tino1` to `main` is limited to this folder, `_config.yml`, and this board entry. Merge result and PR link are recorded in the PR.
 
 ---
 

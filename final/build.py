@@ -206,7 +206,9 @@ def build_index():
         kpi('Property A at inheritance (%d)' % T, m(B['fmv_T']), 'from %s today at 4.0%% a year (assumption)' % m(P['cup_value'])),
         kpi('Property A tax: today / if lived in / if rented', '%s / %s / %s' % (m(P['cup_tax_2025']), m(B['tax_live_T']), m(B['tax_rent_T'])), 'per year; first year after inheritance'),
         kpi('Property B tax advantage kept by not selling', m(sf_gap) + ' a year', 'difference between tax on market value and on the current assessed value'),
-        kpi('Federal estate-tax room for cash in %d' % T, m(B['exclusion_T'] - B['fmv_T']), 'projected exclusion %s minus Property A; per transferor' % m(B['exclusion_T'])),
+        kpi('Federal estate-tax room for cash in %d, in %d dollars' % (T, T), m(B['exclusion_T'] - B['fmv_T']),
+            'projected exclusion %s minus Property A; per transferor. That is about %s in 2026 dollars - compare a cash figure measured today against the second number, not the first'
+            % (m(B['exclusion_T']), m((B['exclusion_T'] - B['fmv_T']) / B['cpi_T']))),
         kpi('California and local inheritance tax', 'None', 'no California estate or inheritance tax return for deaths since 2005'),
     ])
     opts = ''.join('<button type="button" data-t="%s"%s>%s</button>' % (k, ' class="on"' if int(k) == T else '', k) for k in sorted(by))
@@ -252,6 +254,67 @@ def build_index():
         m(B['fbyv_T']), m(B['taxable_live_T']), m(B['tax_before_T']), m(B['tax_live_T']),
         m(B['real_sell'] - B['real_live']),
         m(B['real_sell'] - M['sensitivity'][-1]['real_sell']))
+    # ---- what would overturn the ranking, and what is cheaper to settle now than in 2045 ----
+    # Each lever is the model's own break-even point, so this table cannot drift from the pages.
+    # The three answers that no model can supply are listed beside them, because they are the
+    # ones that actually decide the outcome (flags Q01, Q06, Q15).
+    overturn = table(
+        ['Lever', 'Baseline assumption', 'What it would take to make renting better than selling', 'How to settle it', 'Official basis'],
+        [
+            ['Growth of Property A', '4.0%% a year (assumption %s)' % flag('A01'),
+             'Home prices rising more than %s a year on average to 2076. The real 1976-2025 record for this area was 6.71%% a year, so this is possible, not remote.' % pc(BE['g_cup_rent_vs_sell']),
+             'An appraisal now settles the starting value; the growth rate stays an assumption and is re-run at the decision date.',
+             src('FHFA-SJ')],
+            ['Return on the reinvested proceeds', '7.0%% a year on stocks (assumption %s)' % flag('A02'),
+             'A stock return below %s a year on average. In savings or Treasury bills (%s a year) renting already wins, which is why the plan says not to park the money.' % (pc(BE['r_stock_rent_vs_sell']), pc(P['r_bill'])),
+             'Nothing to discover: this is a choice about risk, not a missing fact.',
+             src('TREASURY', 'DAMODARAN')],
+            ['Rent Property A would command', 'HUD four-bedroom small-area rent for ZIP 95014, %s a month (assumption %s)' % (m(P['cup_rent_month']), flag('A07')),
+             'Rent above about %s a month to 2076. That is far above the HUD benchmark, and the bedroom count is unconfirmed (%s).' % (m(BE['rent_month_rent_vs_sell']), flag('U08')),
+             'A written rent opinion from a local manager, obtained privately. It does not need the address on this site.',
+             src('HUD-95014')],
+            ['Is the home in the Transferor gross estate?', 'Assumed yes, so the basis resets (flag %s)' % 'Q01',
+             '<strong>Not a sensitivity: this can reverse the entire plan.</strong> If the trust sits outside the gross estate there is no basis reset and a prompt sale is taxed on decades of gain, which costs about %s of 2026-dollar wealth.' % m(B['real_sell'] - M['sensitivity'][-1]['real_sell']),
+             '<strong>Settle first.</strong> An estate attorney reads the trust and writes one paragraph. A legal fee now is small against the amount at stake.',
+             src('RR-2023-2', 'IRS-FAQ-INHERIT')],
+            ['Does the parent-child test pass?', 'Assumed yes (flag %s)' % 'Q06',
+             'If the relationship does not meet the definitions, the Proposition 19 relief is lost and the lived-in path becomes materially worse.',
+             'Confirm the relationship against the Board of Equalization definitions. No names need to be published.',
+             src('BOE-LTA-2026-026', 'BOE-PUB-800-1')],
+            ['Is Property A the Transferor principal residence?', 'Assumed yes (flag %s)' % 'Q15',
+             'If it is not, there is no family-home relief at all and the lived-in path loses its only tax advantage.',
+             'Read the homeowners exemption on the Transferor bill, privately.',
+             src('BOE-HOX', 'RTC-63.2')],
+        ],
+        caption='What would change the answer, and what no amount of modelling can settle',
+        note='The first three rows are the model break-even points, computed by the same run that produces every other figure on this page. The last three are not sensitivities at all: they are the facts that decide whether the tax rules assumed here apply, and each one costs one letter or one document to settle. Flags Q01, Q06 and Q15 are open until then.')
+
+    before = table(
+        ['Before the inheritance (now to %d)' % (T - 1), 'Why it cannot wait until %d' % T, 'Cost of doing it now', 'Official basis'],
+        [
+            ['Have the trust read, and get the gross-estate answer in writing (%s)' % flag('Q01'),
+             'It decides the basis reset, and the basis reset is most of the reason selling wins. It also decides whether a Form 706 is needed at all.',
+             'One attorney consultation. Nothing on this site needs to be published to answer it.',
+             src('RR-2023-2', 'IRS-FAQ-INHERIT')],
+            ['Ask whether a Form 706 was filed for a predeceased spouse (%s)' % flag('Q02'),
+             'A portability election can sometimes still be made up to the fifth anniversary of the first death. Once the window is gone it cannot be reopened, and the amount at stake is a second exclusion.',
+             'Locate one filed return, or ask the preparer. This is the only item on the site with a deadline that may already be running.',
+             src('IRS-FAQ-ESTATE', 'RP-2026-35')],
+            ['Record the monthly figures as they change (water, electricity, insurance, rent)',
+             'This site uses the current figures. A written record of the next ten years replaces the owner estimates with observed numbers, and observed numbers are what a lender, an insurer and an appraiser ask for.',
+             'A spreadsheet. Do not publish it.',
+             src('CDI-RPI', 'SFPUC')],
+            ['Get one real insurance quote for each home (%s)' % flag('U01'),
+             'The premium is the weakest number on the site. It is the owner estimate, and no official page publishes a ZIP-level premium. Tripling it does not change the ranking, but a real quote replaces an assumption.',
+             'One broker call per property. Ask for a landlord policy on the three-unit building as well.',
+             src('CDI-TOOL', 'CDI-EQ')],
+            ['Read the bills for the things that are already knowable (the solar interconnection date, the tax rate area, which home has the homeowners exemption)',
+             'These are flags %s, %s and %s. Each one fixes a number that is currently derived rather than read, and each takes minutes.' % (flag('U05'), flag('U03'), flag('Q18')),
+             'Open three documents, privately.',
+             src('CPUC-NEM', 'SCC-RATES', 'BOE-HOX')],
+        ],
+        caption='Decisions that are cheaper and safer to settle before the inheritance than after it')
+
     chart = bars([(NAME[k], B['real_' + k], COL[k]) for k in ('sell', 'rent', 'live')])
     links = ''.join('<a class="card" href="%s"><b>%s</b><span>%s</span></a>' % x for x in [
         ('decision.html', 'Decision', 'Live, rent or sell: numbers, sensitivities and break-even points'),
@@ -272,6 +335,8 @@ def build_index():
     body = """
 <section class="kpis">%s</section>
 <h2>Best plan and why - conditional on the assumptions in the flags</h2>%s
+<h2>What would change the answer</h2>%s
+<h2>What to settle before %d, and why it cannot wait</h2>%s
 <h2>After-tax wealth in 2076, in 2026 dollars (baseline, inheritance in %d)</h2>%s
 <p class="note">Wealth counts only what differs between the choices: Property A itself, every cash flow it causes, and rent from the Inheritor's vacated unit in Property B when the Inheritor moves to Property A. The two units already rented in Property B are the same in all three choices and are left out. All figures assume everything is sold and taxed at the end so that the choices can be compared like for like.</p>
 <h2>Dashboard</h2>
@@ -282,7 +347,7 @@ def build_index():
 <h2>The two homes are not the same case</h2>%s
 <p class="callout"><strong>Looking for the version with no household figures?</strong> A separate <a href="privacy-site/public/index.html">no-figures decision guide</a> publishes the same rules, process and decision framework without any of this household's numbers - every illustration there is invented for teaching. This summary page carries the rounded (nearest $10) figures the owner asked to see in the decision analysis.</p>
 <h2>Sections</h2><div class="cards">%s</div>
-""" % (cards, plan, T, chart, opts, dash, flag('P03'), diff, links)
+""" % (cards, plan, overturn, T - 1, before, T, chart, opts, dash, flag('P03'), diff, links)
     page(HOME, 'Executive summary',
          'Property A (Cupertino, 95014) will pass to the Inheritor through a trust some time around 2040 to 2050. Property B (San Francisco, 94122) is already owned by the Inheritor. This site works out, with official sources on every table row, whether to live in Property A, rent it out, or sell it and reinvest.', body)
 
@@ -954,9 +1019,9 @@ def build_verification():
         ('Proposition 19 allowance in force', 'LTA 2025/009: $1,044,586 for transfers from 2025-02-16 through 2027-02-15 (2.15% up from $1,022,600); the next adjustment is February 2027',
          'Confirmed today - the model input; the next figure stays blank %s' % flag('U04'), src('BOE-LTA-2025-009')),
         ('Proposition 19 conditions and claim deadlines', 'LTA 2026/026: the exemption claim within one year of the transfer, the exclusion claim within three years or before a third-party transfer; no exceptions to the one-year occupancy rule; the exclusion is removed if the child moves out; transfers through a trust are covered',
-         'Confirmed today - the deadlines the Process page states. The order the site recommends is practical advice only (%s)' % flag('R37'), src('BOE-LTA-2026-026')),
+         'Confirmed today - the deadlines the Process page states. The order the site recommends is practical advice only (%s)' % flag('R43'), src('BOE-LTA-2026-026')),
         ('Proposition 19: land included in the family home', 'LTA 2026/026 defines a family home as the dwelling plus only that portion of the land of a reasonable size used as its site; of a multi-unit property only the unit occupied as a principal residence qualifies',
-         'Confirmed today - the model applies the exclusion to the whole parcel, flagged as %s' % flag('R36'), src('BOE-LTA-2026-026')),
+         'Confirmed today - the model applies the exclusion to the whole parcel, flagged as %s' % flag('R42'), src('BOE-LTA-2026-026')),
         ('Proposition 19 statute', 'R&TC 63.2(a)(1)(A)-(C): transferee must occupy within one year and claim the exemption within a year; the base year value is re-enrolled if the exclusion is later lost',
          'Confirmed today - matches the Board of Equalization letter', src('RTC-63.2')),
         ("Homeowners' exemption", '$7,000 off the taxable value for an owner-occupied home; one-time claim, form BOE-266; file no later than February 15 for the full year',
@@ -966,17 +1031,17 @@ def build_verification():
         ('San Francisco rent increase and the pending cap', 'The allowed annual increase is 1.6% from 2026-03-01 through 2027-02-28 (60% of Bay Area CPI). A notice posted 2026-11-09 describes File No. 261020, which would cap combined banked and capital-improvement increases at 10% a year; it has not been enacted',
          'Confirmed today - matches the Law page, which lists the cap as a proposal', src('SF-RENT-RULES', 'SF-LEG-261020')),
         ('Net metering: the 20-year limit behind the solar credit', 'CPUC: NEM 2.0 customers remain on that tariff for 20 years from interconnection (D.14-03-041); the successor net-billing tariff pays export credits usually lower than the retail rate',
-         'Confirmed today. The model carries the credit for 50 years - flagged as %s' % flag('R35'), src('CPUC-NEM')),
+         'Confirmed today. The model carries the credit for 50 years - flagged as %s' % flag('R41'), src('CPUC-NEM')),
         ('Insurance premiums by ZIP', 'The Department of Insurance comparison tool states that its figures are hypothetical risks for illustration, that wildfire surcharges of 15% to over 300% are not reflected, and that an exact premium requires an agent, broker or insurer quote',
          'Confirmed today - the reason both insurance amounts stay blank and flagged (%s, %s)' % (flag('U01'), flag('U02')), src('CDI-TOOL-APP')),
         ('HUD rents for fiscal year 2027', 'The fiscal-year-2027 address in the same documentation format as the 2026 page returned "404 - File or directory not found" when opened today',
          'Not confirmable today: the 2027 figure stays blank %s and the 2026 figure remains in use' % flag('U09'), src('HUD-SAFMR-INDEX')),
     ]
-    r8 = [(a, b_, c_.replace(flag('R33'), '<a class="flag" href="review.html#R33">R33</a>')
-                              .replace(flag('R34'), '<a class="flag" href="review.html#R34">R34</a>')
-                              .replace(flag('R35'), '<a class="flag" href="review.html#R35">R35</a>')
-                              .replace(flag('R36'), '<a class="flag" href="review.html#R36">R36</a>')
-                              .replace(flag('R37'), '<a class="flag" href="review.html#R37">R37</a>'), d) for a, b_, c_, d in r8]
+    r8 = [(a, b_, c_.replace(flag('R39'), '<a class="flag" href="review.html#R39">R39</a>')
+                              .replace(flag('R40'), '<a class="flag" href="review.html#R40">R40</a>')
+                              .replace(flag('R41'), '<a class="flag" href="review.html#R41">R41</a>')
+                              .replace(flag('R42'), '<a class="flag" href="review.html#R42">R42</a>')
+                              .replace(flag('R43'), '<a class="flag" href="review.html#R43">R43</a>'), d) for a, b_, c_, d in r8]
     t8 = table(['What was checked', 'What the official page said when it was opened', 'Result', 'Official page'], r8,
                caption='Fifth independent re-read, 2026-11-13 (session arena/f8de1d0b), on the official pages themselves')
 
@@ -1247,10 +1312,10 @@ def build_flagged():
         ('S', 'Irregularities in sources'),
         ('R', 'Irregularities in the repository'),
     ]
-    # Repository review findings R01-R37 are rendered on the repository review page; the flagged
-    # page keeps one pointer row so that a flag link of the form flagged.html#R33 resolves.
+    # Repository review findings R01-R43 are rendered on the repository review page; the flagged
+    # page keeps one pointer row so that a flag link of the form review.html#R38 resolves.
     cats.append(('RY', 'Repository review findings, listed on the review page'))
-    RYNOTE = ('Every repository review finding (R01-R37) is listed in full, with what was found, what was changed and the official link, on the '
+    RYNOTE = ('Every repository review finding (R01-R43) is listed in full, with what was found, what was changed and the official link, on the '
               '<a href="review.html">repository review</a> page.')
     body = '<p class="callout">Flagged for Review. Nothing on this page blocks the rest of the site. Each item says what is missing or uncertain, what was used instead, and where to check it. See <a href="questions.html">Questions &amp; discovery</a> for ways to uncover missing answers and <a href="suggestions.html">Site improvements</a> for candidate model upgrades.</p>'
     for c, title in cats:
@@ -1755,10 +1820,10 @@ DECISIVE = [
 
 # Findings added by session arena/f8de1d0b on 2026-11-13 (also on the Flagged page).
 NEW_FINDINGS = [
-    ('R33', 'The Property B property-tax input is about 2.14% of assessed value against an official rate of 1.18162182%, leaving an unexplained residual of about $1,090 a year that the model carries forward.'),
-    ('R35', 'The Cupertino solar credit is carried forward for 50 years, while the CPUC states that the net-metering tariff that creates it lasts 20 years from interconnection.'),
-    ('R34', 'The third San Francisco unit\'s rent is inferred as half of the two let units\' combined rent; no per-unit figure was supplied.'),
-    ('R32', 'A merge-conflict marker had been committed to the verification page and was live on the site. Removed.'),
+    ('R39', 'The Property B property-tax input is about 2.14% of assessed value against an official rate of 1.18162182%, leaving an unexplained residual of about $1,090 a year that the model carries forward.'),
+    ('R41', 'The Cupertino solar credit is carried forward for 50 years, while the CPUC states that the net-metering tariff that creates it lasts 20 years from interconnection.'),
+    ('R40', 'The third San Francisco unit\'s rent is inferred as half of the two let units\' combined rent; no per-unit figure was supplied.'),
+    ('R38', 'A merge-conflict marker had been committed to the verification page and was live on the site. Removed.'),
 ]
 
 
@@ -1839,7 +1904,7 @@ def build_home_choice():
 
 <h2 id="found">Found in this session's review</h2>
 <ul class="plan">%(found)s</ul>
-<p class="note">These are new flags added on 2026-11-13 after reading the official pages again and checking the model against them. None of them blocks publication; each is on the <a href="flagged.html">Flagged for Review</a> page with its official link. The repository review findings R32-R37 record what was found and what was changed.</p>
+<p class="note">These are new flags added on 2026-11-13 after reading the official pages again and checking the model against them. None of them blocks publication; each is on the <a href="flagged.html">Flagged for Review</a> page with its official link. The repository review findings R38-R43 record what was found and what was changed.</p>
 
 <p class="note">Not legal, tax, investment or insurance advice. This prepares the questions for a licensed estate attorney, a tax adviser and an insurance broker. The public repository and its history are a separate privacy exposure from what the site serves.</p>
 </main>
