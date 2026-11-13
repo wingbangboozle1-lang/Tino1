@@ -51,8 +51,12 @@ P = dict(
     estate_rate=0.40,           # Form 706 instructions, Table A top rate
     sec121=250_000,             # IRS Topic 701 (single; 500,000 joint)
     depr_years=27.5,            # IRS Pub 527
-    cup_rent_month=6_390,       # HUD FY2026 SAFMR 95014, 4-bedroom (3-BR 5,870)
+    cup_rent_month=6_390,       # HUD FY2026 SAFMR 95014, 4-bedroom -- BENCHMARK only, not a verified rent for
+                                #   Property A (bedroom count and rentable condition unknown: U08/A07)
+    cup_rent_month_3br=5_870,   # HUD FY2026 SAFMR 95014, 3-bedroom (official figure, used as the downside gate)
     doc_transfer_tax=0.0011,    # Santa Clara County: $0.55 per $500
+    salt_cap_2026=40_400,       # P.L. 119-21 Schedule A SALT cap, 2026 (official figure; IRS) - text only
+    salt_cap_floor=10_000,      # pre-2025 SALT cap the law reverts to (official figure; IRS) - text only
     niit=0.038,                 # IRS Topic 559
     # --- assumptions (flagged; none is an official figure) ---
     infl=0.025, g_cup=0.040, g_sf=0.040, g_ca=0.040,
@@ -69,12 +73,15 @@ P = dict(
     t_fed_ord=0.24, t_ca=0.093, t_fed_ltcg=0.15,
     t_fed_ltcg_lump=0.20, t_ca_lump=0.133, t_recap_fed=0.25,
     w_stock=1.0, w_bond=0.0, w_bill=0.0,
-    rent_sf_unit3=True,         # in "Live" the inheritor's vacated SF unit is rented
+    rent_sf_unit3=False,        # baseline counts NO rent for the vacated third SF unit: no rent was ever supplied
+                                #   for it and nothing may be inferred (brief rule; S5-P1). The leasing upside runs
+                                #   only as one labelled scenario in `sensitivity` below.
     step_up=True,
     T=2045,
 )
 
-# derived, shown rounded
+# derived, shown rounded.  Scenario input only (S5-P1): letting the third unit at the average of the two known
+# rents is an INFERENCE, so it never enters the baseline; it is used only by the labelled sensitivity scenario.
 P['sf_unit3_rent'] = r10(P['sf_rent_2units'] / 2)                                # average of the two rented units
 
 
@@ -204,7 +211,9 @@ def simulate(path, p=P):
             cpi *= 1 + e['infl']
             Vc *= 1 + e['g_cup']
             Vs *= 1 + e['g_sf']
-            f = 1 + min(0.02, max(e['infl'], 0.0))            # Prop 13 annual factor
+            f = 1 + min(0.02, max(e['infl'], 0.0))            # Prop 13 annual factor.  Statute (R&TC 51) indexes by
+            #   the CALIFORNIA CPI capped at 2%; future California CPI is unknowable, so each path's inflation rate
+            #   stands in as a LABELLED PROXY (flag A11).  Official BOE factor for 2026: 1.02 (LTA 2026/002).
             fby_c *= f
             fby_s *= f
             if base_L is not None:
@@ -377,7 +386,7 @@ def main():
         ('Selling costs 7%', dict(sell_cost=0.07)),
         ('Lower tax bracket (12% federal, 6% state, 0% gains)', dict(t_fed_ord=0.12, t_ca=0.06, t_fed_ltcg=0.0, t_fed_ltcg_lump=0.15, t_ca_lump=0.093, niit=0.0)),
         ('Top tax bracket (37% federal, 12.3% state)', dict(t_fed_ord=0.37, t_ca=0.123, t_fed_ltcg=0.20)),
-        ('Vacated SF unit left empty', dict(rent_sf_unit3=False)),
+        ('Third unit at Property B let at the average of the two known unit rents (scenario only; the baseline counts none)', dict(rent_sf_unit3=True)),
         ('Insurance three times the owner estimate', dict(ins_home=4500, ins_rental=4500)),
         ('Maintenance doubled', dict(maint_cup=12000)),
         ('No basis step-up (trust assets outside the estate)', dict(step_up=False)),
@@ -397,22 +406,28 @@ def main():
         replays.append(dict(start=st, **pick(s_)))
     out['replays'] = replays
     named = [
-        ('replay_1976', 'Real 1976-2025 sequence in order (high inflation first)', replay_path(1976)),
-        ('replay_2000', 'Real sequence starting in 2000 (dot-com bust and 2008 crisis first)', replay_path(2000)),
-        ('replay_1990', 'Real sequence starting in 1990 (early-1990s California housing slump first)', replay_path(1990)),
-        ('replay_1982', 'Real sequence starting in 1982 (long boom first, busts near the end)', replay_path(1982)),
-        ('crash_at_T', 'Baseline, then the real 2007-2012 housing and stock bust starting the year of inheritance', overlay_path(P, HIST, 2007, 2012, T)),
-        ('stagflation_at_T', 'Baseline, then the real 1977-1982 inflation years starting the year of inheritance', overlay_path(P, HIST, 1977, 1982, T)),
-        ('lost_decade_at_T', 'Baseline, then the real 2000-2009 "lost decade" for stocks starting the year of inheritance', overlay_path(P, HIST, 2000, 2009, T)),
-        ('slump_at_T', 'Baseline, then the real 1990-1996 California housing slump starting the year of inheritance', overlay_path(P, HIST, 1990, 1996, T)),
-        ('depression_at_T', 'Baseline, then the real 1929-1941 national Depression sequence starting the year of inheritance (national data)', overlay_path(P, NAT, 1929, 1941, T)),
-        ('crash_before_T', 'Baseline, then the real 2007-2012 bust ending the year before inheritance', overlay_path(P, HIST, 2007, 2012, T - 6)),
-        ('japan_at_T', 'Baseline, then Japan\'s real 1991-2020 stagnation starting the year of inheritance (home prices, Nikkei without dividends, consumer prices)', overlay_path(P, JPN, 1991, 2020, T)),
+        ('replay_1976', 'Real 1976-2025 sequence in order (high inflation first)', 'replay', replay_path(1976)),
+        ('replay_2000', 'Real sequence starting in 2000 (dot-com bust and 2008 crisis first)', 'replay', replay_path(2000)),
+        ('replay_1990', 'Real sequence starting in 1990 (early-1990s California housing slump first)', 'replay', replay_path(1990)),
+        ('replay_1982', 'Real sequence starting in 1982 (long boom first, busts near the end)', 'replay', replay_path(1982)),
+        ('crash_at_T', 'Baseline, then the real 2007-2012 housing and stock bust starting the year of inheritance', 'overlay', overlay_path(P, HIST, 2007, 2012, T)),
+        ('stagflation_at_T', 'Baseline, then the real 1977-1982 inflation years starting the year of inheritance', 'overlay', overlay_path(P, HIST, 1977, 1982, T)),
+        ('lost_decade_at_T', 'Baseline, then the real 2000-2009 "lost decade" for stocks starting the year of inheritance', 'overlay', overlay_path(P, HIST, 2000, 2009, T)),
+        ('slump_at_T', 'Baseline, then the real 1990-1996 California housing slump starting the year of inheritance', 'overlay', overlay_path(P, HIST, 1990, 1996, T)),
+        ('depression_at_T', 'Baseline, then the real 1929-1941 national Depression sequence starting the year of inheritance (national data)', 'overlay-national', overlay_path(P, NAT, 1929, 1941, T)),
+        ('crash_before_T', 'Baseline, then the real 2007-2012 bust ending the year before inheritance', 'overlay', overlay_path(P, HIST, 2007, 2012, T - 6)),
+        ('japan_at_T', 'Baseline, then Japan\'s real 1991-2020 stagnation starting the year of inheritance (home prices, Nikkei without dividends, consumer prices)', 'overlay-japan', overlay_path(P, JPN, 1991, 2020, T)),
     ]
+    KIND = {
+        'replay': 'Hypothetical construction: real 1976-2025 years kept in their real order but started in a chosen year (not a forecast)',
+        'overlay': 'Hypothetical construction: real crisis years of the US record dropped into the constant baseline at a chosen moment (illustrative timing; not a forecast)',
+        'overlay-national': 'Hypothetical construction: real 1929-1941 national years (national home prices; academic returns) dropped into the baseline at a chosen moment',
+        'overlay-japan': 'Hypothetical construction: Japan\'s real 1991-2020 official series (via FRED) dropped into the baseline at a chosen moment',
+    }
     out['paths'] = []
-    for key, label, path in named:
+    for key, label, kind, path in named:
         r_, s_ = run(P, path)
-        out['paths'].append(dict(key=key, label=label, summary=pick(s_), rows=r_,
+        out['paths'].append(dict(key=key, label=label, kind=kind, kind_label=KIND[kind], summary=pick(s_), rows=r_,
                                  econ=[dict(year=y, **path[y]) for y in sorted(path)]))
     # the Japan path again with everything kept in savings instead of stocks
     out['japan_savings'] = pick(run(with_(w_stock=0.0, w_bill=1.0), overlay_path(P, JPN, 1991, 2020, T))[1])
@@ -464,6 +479,22 @@ def main():
                             tax_two=max(0.0, rr['cup_value'] + real_cash - 2 * rr['exclusion']) * P['estate_rate'],
                             cpi=rr['cpi']))
     out['estate'] = est
+    # Provenance of every series the model consumes (S5-P4): official statistics, the academic return
+    # dataset, and hypothetical constructions must never be presented as one thing.
+    out['provenance'] = dict(
+        infl='Official statistics: BLS Consumer Price Index (Dec/Dec) via FRED',
+        g_cup='Official statistics: FHFA all-transactions house-price index, San Jose metro (Q4/Q4) via FRED',
+        g_sf='Official statistics: FHFA all-transactions house-price index, San Francisco metro (Q4/Q4) via FRED',
+        g_ca='Official statistics: FHFA all-transactions house-price index, California via FRED',
+        r_stock='ACADEMIC dataset (NYU Stern / Damodaran) - NOT a government statistic and not officially verified',
+        r_bond='ACADEMIC dataset (NYU Stern / Damodaran) - NOT a government statistic and not officially verified',
+        r_bill='ACADEMIC dataset (NYU Stern / Damodaran) - NOT a government statistic and not officially verified',
+        cpi_early='Official statistics: BLS CPI (1929-1950)',
+        nat_re_early='ACADEMIC dataset (Damodaran national real-estate returns, 1929-1950) - no official local index exists that far back',
+        japan='Official series via FRED: BIS residential property prices, OECD CPI; Nikkei 225 PRICE index (dividends excluded)',
+        prop13_factor='Statutory index: California CPI capped at 2% (R&TC 51). Future California CPI is unknowable, so each path\'s inflation rate is used as a LABELLED PROXY (flag A11). Official BOE factor for 2026: 1.02 (LTA 2026/002).',
+        paths='The fifty replays and every named path are HYPOTHETICAL constructions from the series above: illustrative stress tests, not forecasts.',
+    )
     os.makedirs(os.path.join(HERE, 'out'), exist_ok=True)
     json.dump(out, open(os.path.join(HERE, 'out', 'model.json'), 'w'), indent=0)
     return out

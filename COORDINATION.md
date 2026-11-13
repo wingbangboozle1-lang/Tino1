@@ -1845,6 +1845,26 @@ Base `551179b` (= origin/main, PR #72 merge). No open PRs and no active claims o
 - Scope merged: `owner-analysis-2026/**` (excluded from Pages), `_config.yml` (one exclude line), this board. Published set unchanged at 39 files.
 - Open for the owner: privacy decision on household-derived pages (G01/G02, history remediation); repair, Cupertino rent, water provider and vacancy inputs; historical CPI chunks 2–4; official county-level FHFA HPI files; Japan residency question. Full list in `owner-analysis-2026/FLAGS.md`.
 - Household projections were computed privately outside the repository; they are not committed.
+<<<<<<< HEAD
+---
+
+## Session `arena/da3f2b99-tino1` — outstanding model/provenance corrections (S5-P1–P5), fifth verification pass (claimed 2026-11-13 UTC)
+
+**Branch:** `arena/da3f2b99-tino1` (fixed by workspace; branched from `551179b`, the merge of PR #72). No alternate branch will be created; scope is non-overlapping with every earlier session (all earlier claims are closed and merged).
+
+| Task | Status | Owner session | Files / scope | Verification / handoff |
+|---|---|---|---|---|
+| D-0 Claim and coordination | done (claim pushed) | arena/da3f2b99-tino1 | COORDINATION.md (append only) | Read board and main before claiming; no open PRs at claim time. |
+| D-1 S5-P1: remove inferred third-unit rent from numeric baseline; show leasing upside as explicit scenario only | in progress | arena/da3f2b99-tino1 | final/model.py, final/build.py, generated root pages | Brief rule: never infer values. |
+| D-2 S5-P2: relabel HUD SAFMR as a benchmark with bedroom/condition gates | in progress | arena/da3f2b99-tino1 | final/model.py, final/build.py, generated root pages | Benchmark ≠ verified property rent. |
+| D-3 S5-P3: Prop 13 indexing via BOE California CCPI factors where verified; national CPI labelled a proxy elsewhere | in progress | arena/da3f2b99-tino1 | final/model.py, final/build.py | BOE LTA factors are official. |
+| D-4 S5-P4: provenance labels on black-swan pages (official vs academic vs hypothetical) | in progress | arena/da3f2b99-tino1 | final/build.py (black-swan), generated black-swan.html | Academic series must not read as official. |
+| D-5 S5-P5: Suggestions Part 1 figures generated from model data, not hand-typed literals | in progress | arena/da3f2b99-tino1 | final/suggestions.py, final/build.py | Removes drift risk. |
+| D-6 Fifth line-by-line verification pass + re-run all gates (final/check.py, final/publish.py --check, privacy-site/check.py, check_published ×2, unittest) | in progress | arena/da3f2b99-tino1 | verification.html register append, COORDINATION.md | Every row official-source linked; $10-clean; no PII. |
+| D-7 PR → main, merge green only, confirm Pages, record result | in progress | arena/da3f2b99-tino1 | COORDINATION.md | Preserve all prior sessions' work; nothing discarded. |
+
+Privacy interpretation unchanged: no names, addresses, parcel numbers or exact household histories enter the published product; owner-supplied figures stay rounded to $10; P01/P02 (repository/history exposure) remain owner actions. Flagged items stay open on the Flagged for Review page and do not block anything.
+=======
 
 ---
 
@@ -1880,3 +1900,4 @@ Base `551179b` (= origin/main, PR #72 merge). No open PRs and no active claims o
 ### F8 pull request and merge (2026-11-13)
 
 - PR opened from `arena/f8de1d0b-tino1` to `main`; result and Pages status recorded below after the merge.
+>>>>>>> origin/main
