@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<title>What-if controls - Two-home inheritance analysis</title>
+<link rel="stylesheet" href="style.css">
+</head><body>
+<header class="top"><div class="wrap">
+<a class="brand" href="summary.html">Two-home inheritance analysis</a>
+<nav aria-label="Sections"><details class="grp"><summary>Start</summary><div class="grpitems"><a href="summary.html">Summary</a><a href="brief.html">Attorney and CPA brief</a><a href="timeline.html">Deadlines timeline</a><a href="glossary.html">Glossary</a></div></details><details class="grp" open><summary>Decide</summary><div class="grpitems"><a href="decision.html">Decision</a><a href="what-if.html" class="on" aria-current="page">What-if controls</a><a href="black-swan.html">Black swan</a><a href="phased.html">Phased investing</a></div></details><details class="grp"><summary>Facts</summary><div class="grpitems"><a href="projections.html">Year by year</a><a href="process.html">Process</a><a href="law.html">Law</a><a href="estate-cash.html">Cash and estate tax</a><a href="costs.html">Insurance and costs</a></div></details><details class="grp"><summary>Review</summary><div class="grpitems"><a href="questions.html">Questions to answer</a><a href="suggestions.html">Suggestions</a><a href="flagged.html">Flagged for Review</a></div></details><details class="grp"><summary>Evidence</summary><div class="grpitems"><a href="sources.html">Sources and method</a><a href="verification.html">Verification</a><a href="requirements.html">Requirements</a><a href="review.html">Repo review</a><a href="versions.html">Earlier versions</a></div></details></nav></div></header>
+<main class="wrap">
+<h1>What-if controls</h1>
+<p class="lead">Change growth, returns, rent or inflation and see which path comes out ahead, with reinvestment risk beside the headline.</p>
+
+<div class="kpis">
+<div class="kpi"><div class="k">Best path in the chosen case</div><div class="v" id="best">-</div><div class="sub" id="bestsub"></div></div>
+<div class="kpi"><div class="k">Reinvestment risk, beside the headline</div><div class="v" id="rrisk">-</div><div class="sub">Sell path with the proceeds held in Treasury bills at the bill yield, instead of stocks. Shown beside the headline on purpose.</div></div>
+</div>
+<h2>Controls</h2>
+<p>Choose a case. Each choice selects one of 54 precomputed model runs (54 cases in all). The browser does no estimating and sends nothing; the figures were produced by <code>final/extras.py</code> from the model. Defaults are the baseline.</p>
+<div class="ctrl">
+<label>Home growth a year, Property A <select id="c-growth"><option value="0.03">3.0%</option><option value="0.04" selected>4.0% (baseline)</option><option value="0.05">5.0%</option></select></label>
+<label>Stock return a year <select id="c-stock"><option value="0.05">5.0%</option><option value="0.07" selected>7.0% (baseline)</option><option value="0.10">10.0%</option></select></label>
+<label>Cupertino rent a month <select id="c-rent"><option value="3br">HUD 3-bedroom, $5,870</option><option value="4br" selected>HUD 4-bedroom, $6,390 (baseline)</option><option value="up30">HUD 4-bedroom plus 30%, $8,310</option></select></label>
+<label>Inflation a year <select id="c-infl"><option value="0.025" selected>2.5% (baseline)</option><option value="0.04">4.0% (nominal rates raised 1.5 points)</option></select></label>
+</div>
+<h2>Result for the chosen case</h2>
+<div class="tablewrap"><table><caption>Wealth in 2076, nominal and in today's dollars, with the reinvestment check</caption>
+<thead><tr><th scope="col">Path</th><th scope="col">Nominal, 2076</th><th scope="col">Today's dollars, 2076</th><th scope="col">Sell path if proceeds sit in bills (reinvestment check)</th><th scope="col">Source</th></tr></thead>
+<tbody>
+<tr><td>Live in Property A (the Inheritor moves in)</td><td id="w-live"></td><td id="r-live"></td><td>not applicable</td><td><a class="src" href="https://www.huduser.gov/portal/datasets/fmr/fmrs/FY2026_code/2026zip_code_calc.odn?zcta=95014&amp;metro_code=METRO41940M41940&amp;year=2026" title="HUD - FY2026 Small Area Fair Market Rents, ZIP 95014" rel="noopener">HUD SAFMR 95014</a> · <a class="src" href="https://fred.stlouisfed.org/series/CPIAUCSL" title="BLS Consumer Price Index for All Urban Consumers (via FRED CPIAUCSL / CPIAUCNS)" rel="noopener">BLS CPI (FRED)</a></td></tr>
+<tr><td>Rent Property A out</td><td id="w-rent"></td><td id="r-rent"></td><td>not applicable</td><td><a class="src" href="https://www.huduser.gov/portal/datasets/fmr/fmrs/FY2026_code/2026zip_code_calc.odn?zcta=95014&amp;metro_code=METRO41940M41940&amp;year=2026" title="HUD - FY2026 Small Area Fair Market Rents, ZIP 95014" rel="noopener">HUD SAFMR 95014</a> · <a class="src" href="https://fred.stlouisfed.org/series/ATNHPIUS41940Q" title="FHFA all-transactions house price index, San Jose-Sunnyvale-Santa Clara MSA (via FRED ATNHPIUS41940Q)" rel="noopener">FHFA index, San Jose</a></td></tr>
+<tr><td>Sell Property A and reinvest the proceeds</td><td id="w-sell"></td><td id="r-sell"></td><td id="rb-sell"></td><td><a class="src" href="https://pages.stern.nyu.edu/~adamodar/New_Home_Page/datafile/histretSP.html" title="NYU Stern (A. Damodaran) - Historical returns on stocks, bonds and bills 1928-2025" rel="noopener">NYU Stern returns table</a> · <a class="src" href="https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve&amp;field_tdr_date_value_month=202611" title="U.S. Treasury - Daily par yield curve rates, November 2026" rel="noopener">Treasury yields</a></td></tr>
+</tbody></table></div>
+<p class="note">Baseline sell-path net proceeds in the inheritance year (this case): <span id="sellnet"></span>. Only the four controls change; every other input is at its baseline (see the <a href="decision.html">Decision</a> page and <a href="sources.html">Sources and method</a>). Rounded to the nearest $10.</p>
+<h2>What the controls can and cannot show</h2>
+<ul>
+<li>Each control moves one group of inputs together. The controls do not cover every risk; the <a href="black-swan.html">Black swan</a> page covers sequences of years.</li>
+<li>The rent figures are HUD benchmarks, not a quote for Property A. The bedroom count is unknown (<a class="flag" href="flagged.html#U08" title="Flagged for review">flag U08</a>).</li>
+<li>The 4.0% inflation case raises nominal stock, bond, bill and home growth by the same 1.5 points, as the Decision page does.</li>
+</ul>
+<script src="whatif.js"></script>
+
+</main>
+<footer class="wrap"><p>Built 2026-11-13 from <a href="https://github.com/wingbangboozle1-lang/Tino1/tree/main/final">final/</a> (model, generator and checker). <a href="versions.html">Earlier versions</a> are superseded. Property A = Cupertino home (ZIP 95014). Property B = San Francisco three-unit home (ZIP 94122). People are placeholders: "the Transferor" (current owner of Property A) and "the Inheritor" (already owns Property B). Owner-supplied and modelled dollar figures are rounded to the nearest $10. This is an analysis to prepare questions for a licensed estate attorney and tax adviser, not legal or tax advice. Open items are on the <a href="flagged.html">Flagged for Review</a> page.</p></footer>
+<script src="app.js"></script>
+</body></html>
