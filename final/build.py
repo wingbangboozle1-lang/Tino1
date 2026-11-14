@@ -2248,6 +2248,10 @@ def main():
         build_versions()
         for s_, t_, n_ in STUBS:
             stub(s_, t_, n_)
+    # session 1a8bae22: the five added pages are written by the same generator, so that the freshness check
+    # in final/check_published.py (which runs only this file) regenerates every allowlisted page.
+    import build_1a8bae22
+    build_1a8bae22.main()
     print('built', len([x for x in os.listdir(OUT) if x.endswith('.html')]), 'pages in', OUT)
 
 
