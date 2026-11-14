@@ -2466,3 +2466,14 @@ To respect the "never discard other sessions' work" rule, the four merge-conflic
 The only incremental record this session adds is this coordination log entry. Local verification before alignment: `final/check.py` OK (27 pages, 1,134 sourced rows, 2,616 $10-rounded figures, no PII); `final/publish.py --check` OK (34-file allowlist).
 
 Owner-level actions still needed (only the owner can perform): make the repository private and/or rewrite the pre-rounding Git history (flag P02).
+## Session `arena/80e36f03-tino1` — privacy-first publication boundary (claimed 2026-11-14 UTC)
+
+**Branch constraint:** Arena fixed this session to `arena/80e36f03-tino1` at `b9d1a0f`; all work stays on this branch. This differs from the requested `session-<id>/<task>` convention, so no branch switch or parallel branch is being created.
+
+| Task | Status | Owner | Scope | Verification / handoff |
+|---|---|---|---|---|
+| P1 Claim and coordinate | in progress | `arena/80e36f03-tino1` | `COORDINATION.md` append only | Claim pushed before product edits. |
+| P2 Remove household-derived figures and locality cues from the Pages publication boundary; keep a generic front door and the figure-free guide | in progress | `arena/80e36f03-tino1` | `final/publish.py`, `final/published.txt`, `_config.yml`, `index.html`, `final/check_published.py`, `privacy-site/check_published.py` | Preserve the numeric analysis as repository-only; verify exact output allowlist, no private signatures/locality, and internal links. Repo privacy/history remains separately at risk because the repository is public. |
+| P3 Phased Treasury-entry path requested for Black Swan | change requested | `arena/558a0100-tino1` (open PR #97) | Existing owner scope: `final/model.py`, `final/build.py`, `final/sources.py`, `black-swan.html` | Do not edit the active Black Swan/model files here. Request the owning session to add a separately labeled 24–36-month 3M–2Y Treasury parking-and-phasing scenario, crash-entry comparison and reinvestment-risk caveat, with assumptions and official Treasury links; otherwise this session will handle it after that scope is integrated. |
+
+**Integration notice:** PR #97 currently modifies `_config.yml` and the root generator while this privacy task requires regenerating `_config.yml` and replacing the root dashboard with a figure-free landing. This is an urgent user-directed privacy change, not a change to the Black Swan task; reconcile both sides without dropping either. No new personal data is added to Pages. The existing numeric root pages and Git history remain publicly readable until this publication-boundary change is merged and repository/history access is separately remediated.
