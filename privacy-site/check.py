@@ -6,7 +6,7 @@ import json
 import re
 
 ROOT = Path(__file__).parent/'public'
-NAV = {'index.html','decision.html','projection.html','stress.html','process.html','law.html','costs.html','questions.html','suggestions.html','suggestions-detail.html','issues.html','flagged.html'}
+NAV = {'index.html','decision.html','projection.html','stress.html','process.html','law.html','costs.html','questions.html','brief.html','glossary.html','suggestions.html','suggestions-detail.html','issues.html','flagged.html'}
 FILES = NAV | {'style.css'}
 REGISTRY = json.loads((ROOT.parent/'research.json').read_text())
 SOURCES = {s['url'] for s in REGISTRY['sources'].values()}
@@ -82,6 +82,15 @@ class Check(HTMLParser):
 
 
 def main():
+    landing_template = ROOT.parent/'landing.html'
+    root_landing = ROOT.parent.parent/'index.html'
+    assert landing_template.is_file() and root_landing.is_file(), 'Missing privacy-first root landing'
+    assert landing_template.read_bytes() == root_landing.read_bytes(), \
+        'Root landing differs from the privacy-reviewed template'
+    landing_text = landing_template.read_text(encoding='utf-8')
+    assert not pii_kinds(landing_text), 'Personal-data pattern in root landing'
+    for token in ('Cupertino','San Francisco','95014','94122','3,100,000','1,800,000','7,150'):
+        assert token.casefold() not in landing_text.casefold(), 'Known household signature/locality in root landing'
     for source in REGISTRY['sources'].values():
         parsed=urlparse(source['url'])
         host=(parsed.hostname or '').casefold()

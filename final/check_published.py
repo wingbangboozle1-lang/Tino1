@@ -4,15 +4,12 @@
   python3 final/check_published.py _site
 
 Exit code 1 on any failure. This gate checks the actual Jekyll output against
-final/published.txt, which lists the rounded-figures analysis (placeholders for
-every person and property, every owner-supplied and modelled dollar figure
-rounded to the nearest $10) plus the figure-free guide under privacy-site/public/.
-Rounding is disclosure minimisation, not anonymisation, and the repository is
-public: review item G01 on the Suggestions page records the narrower options.
-The guide's own household-signature and locality checks run separately in
-privacy-site/check.py. Optional unrounded-value fingerprints are scanned only
-when TINO1_PRIVATE_FIGURES points to a file outside the repository; without that
-file, this checker does not claim a complete privacy audit.
+final/published.txt: only the generic root landing page and figure-free guide
+under privacy-site/public/ may be published. Household-derived values, home
+locality cues, owner histories and household projections are excluded. The
+repository and its Git history remain a separate exposure surface; this check
+is not a whole-repository privacy audit. The guide's detailed signature and
+locality checks run separately in privacy-site/check.py.
 """
 import html
 import os
@@ -77,6 +74,11 @@ def check_site(site):
         if 'noindex' not in text:
             err('published page without robots noindex:', name)
         scan(name, text)
+        if name == 'index.html':
+            forbidden = ('Cupertino', 'San Francisco', '95014', '94122',
+                         '3,100,000', '1,800,000', '7,150', '550,540', '114,250')
+            if '$' in text or any(token.casefold() in text.casefold() for token in forbidden):
+                err('root landing includes household figures or locality cues')
         for u in re.findall(r'(?:href|src)="([^"]+)"', text):
             u = html.unescape(u)
             if re.match(r'^(?:[a-z][a-z0-9+.-]*:|//|#)', u, flags=re.I):
@@ -106,8 +108,8 @@ def check_fresh():
     for name in sorted(ALLOW_SET):
         if not name.endswith(('.html', '.css', '.js')):
             continue
-        if '/' in name:
-            continue  # privacy-site/public/*: built by privacy-site/build.py, freshness enforced in CI
+        if '/' in name or name == 'index.html':
+            continue  # guide pages are built by privacy-site/build.py; root landing is a reviewed static privacy page
         fresh = os.path.join(tmp, name)
         live = os.path.join(ROOT, name)
         if not os.path.exists(fresh):
@@ -131,4 +133,4 @@ if __name__ == '__main__':
             fail(x)
             print(' -', x)
         sys.exit(1)
-    print('PASS - exact publication allowlist (%d files), internal links resolve inside it, noindex on every page, no PII pattern matched, published root landing matches a fresh build; unrounded-value scan %s' % (n, 'on' if FP else 'SKIPPED (TINO1_PRIVATE_FIGURES not set)'))
+    print('PASS - exact privacy-first publication allowlist (%d files), internal links resolve inside it, noindex on every page, no PII pattern matched, root landing contains no known household signatures; unrounded-value scan %s' % (n, 'on' if FP else 'SKIPPED (TINO1_PRIVATE_FIGURES not set)'))
