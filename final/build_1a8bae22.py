@@ -41,7 +41,7 @@ def build_brief():
  table{page-break-inside:avoid}@page{size:letter;margin:0.35in}}
 </style>"""
     fact = table(['Item (placeholder names only)', 'Figure (rounded to $10)', 'Status', 'Official basis'], [
-        ['Property A: estimated market value, Nov. 2026 (Cupertino, Santa Clara County)', m(P['cup_value']), 'Owner estimate; not an appraisal ' + flag('P03'), src('SCC-P19-EST')],
+        ['Property A: estimated market value, Nov. 2026 (Santa Clara County)', m(P['cup_value']), 'Owner estimate; not an appraisal ' + flag('P03'), src('SCC-P19-EST')],
         ['Property A: assessed value, 2026', m(P['cup_assessed']), 'Owner-supplied roll figure ' + flag('P01'), src('RTC-51', 'SCC-RATES')],
         ['Property A: property tax, 2025 (owner-supplied table)', m(P['cup_tax_2025']), 'Owner-supplied bill ' + flag('U03'), src('SCC-RATES')],
         ['Property B: estimated market value, Nov. 2026 (San Francisco)', m(P['sf_value']), 'Owner estimate ' + flag('P03'), src('SF-TAX')],
