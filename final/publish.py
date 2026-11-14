@@ -1,22 +1,19 @@
 #!/usr/bin/env python3
-"""Declare and generate the GitHub Pages publication boundary.
+"""Declare and generate the privacy-first GitHub Pages publication boundary.
 
 Run:
   python3 final/publish.py            # update final/published.txt and _config.yml
   python3 final/publish.py --check    # fail if either file is stale
 
-The allowlist is the rounded-figures analysis (placeholders for every person and
-property, every owner-supplied and modelled dollar figure rounded to the nearest
-$10) plus the figure-free guide under privacy-site/public/. It is the
-disclosure-minimisation boundary the brief asks for: no name, street address,
-parcel number or account number is published, and no figure is published to the
-dollar. Rounding is not anonymisation and this repository is public - that is
-recorded as review item G01 on the Suggestions page, together with the narrower
-options.
+Only the generic root landing page and the figure-free guide under
+privacy-site/public/ are published. Household-derived values, locality cues,
+owner histories, and household projections stay out of Pages. Rounding is not
+anonymisation, and this allowlist does not hide repository files, Git history,
+forks, or prior copies; repository visibility/history remediation is separate.
 
-Earlier editions, audit directories, generators and data files are excluded.
-The allowlist is checked against the actual Jekyll output in CI by both
-publication checkers.
+The exact allowlist is checked against the actual Jekyll output in CI by both
+publication checkers. The numeric analysis remains in the repository for
+internal review and must not be described as a public-site recommendation.
 """
 import os
 import sys
@@ -24,50 +21,11 @@ import sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 
-LANDING = [
-    'index.html',
-    'style.css',
-    'app.js',
-    'whatif.js',   # precomputed what-if cases and the control logic (session arena/7895b5d7)
-]
-
-# The rounded-figures analysis. Personal information is replaced by placeholders
-# ("the Transferor", "the Inheritor", "Property A", "Property B") and every
-# owner-supplied and modelled dollar figure is rounded to the nearest $10, which
-# is the disclosure-minimisation control the brief asks for. Publishing this set
-# is option D of suggestion G01; the owner can still choose a narrower boundary.
-NUMERIC = [
-    'attorney-cpa-briefing.html',
-    'summary.html',
-    'decision.html',
-    'questions.html',
-    'suggestions.html',
-    'projections.html',
-    'black-swan.html',
-    'glossary.html',
-    'process.html',
-    'law.html',
-    'estate-cash.html',
-    'costs.html',
-    'flagged.html',
-    'sources.html',
-    'verification.html',
-    'requirements.html',
-    'review.html',
-    'versions.html',
-    'brief.html',
-    'glossary.html',
-    'timeline.html',
-    'what-if.html',
-    'phased.html',
-    'paths.html',
-]
-
-# The figure-free guide: the same process and cost categories taught with
-# invented examples, for anyone who wants to share the method without any
-# household figure.
+# The figure-free guide: the decision process taught with invented examples.
+# Household figures and derived projections are intentionally not in this list.
 GUIDE = [
     'privacy-site/public/index.html',
+    'privacy-site/public/brief.html',
     'privacy-site/public/decision.html',
     'privacy-site/public/projection.html',
     'privacy-site/public/stress.html',
@@ -79,17 +37,17 @@ GUIDE = [
     'privacy-site/public/suggestions-detail.html',
     'privacy-site/public/issues.html',
     'privacy-site/public/flagged.html',
+    'privacy-site/public/glossary.html',
     'privacy-site/public/style.css',
 ]
 
 # This is the public output boundary, not a list of all tracked or internal files.
-ALLOW = set(LANDING) | set(NUMERIC) | set(GUIDE)
+ALLOW = {'index.html'} | set(GUIDE)
 TITLE = 'Two-home inheritance analysis'
 
 
 def config(entries):
-    """Exclude every root entry except the published landing, the rounded-figures
-    pages and privacy-site/public/.
+    """Exclude every root entry except the generic landing and privacy-site/public/.
 
     privacy-site/ must remain traversable so that its public/ subdirectory can be
     published; its builder, source registry and other files are excluded one by one.
@@ -129,6 +87,12 @@ def build_mismatches(allow):
     problems = []
     if not os.path.isfile(builder):
         return ['privacy-site/build.py is missing']
+    landing = os.path.join(ROOT, 'privacy-site', 'landing.html')
+    published_landing = os.path.join(ROOT, 'index.html')
+    if not os.path.isfile(landing) or not os.path.isfile(published_landing):
+        problems.append('privacy-first root landing template or published copy is missing')
+    elif open(landing, 'rb').read() != open(published_landing, 'rb').read():
+        problems.append('root index.html differs from privacy-site/landing.html')
     text = open(builder, encoding='utf-8').read()
     nav = re.search(r"^nav=\[(.*?)\]\s*$", text, re.M | re.S)
     if not nav:
