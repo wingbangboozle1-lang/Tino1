@@ -189,6 +189,10 @@ def check_site():
             if '.' in num or int(num.replace(',', '')) % 10 != 0:
                 err(p, 'dollar figure not rounded to $10:', mth.group(0), '...', text[max(0, mth.start() - 40):mth.start()].strip()[-40:])
         # 5 PII
+        # Publication scrub (session 6f85fbe1): the two ZIP codes must not appear in visible text or title/alt
+        # attributes. Official-source URL bodies are exempt because the row must still link to a verifiable page.
+        for mm_ in re.finditer(r'9501[4]|9412[2]', re.sub(r'https?://[^\s"<>\']+', '', text)):
+            err(p, 'PRIVACY: ZIP code in visible text:', text[max(0, mm_.start() - 40):mm_.end() + 10].replace('\n', ' '))
         for rx, what in PII:
             for mm_ in re.finditer(rx, text):
                 err(p, 'possible', what + ':', mm_.group(0))
