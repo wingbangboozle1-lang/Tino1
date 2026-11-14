@@ -28,6 +28,7 @@ LANDING = [
     'index.html',
     'style.css',
     'app.js',
+    'whatif.js',   # precomputed what-if cases and the control logic (session arena/7895b5d7)
 ]
 
 # The rounded-figures analysis. Personal information is replaced by placeholders
@@ -52,10 +53,12 @@ NUMERIC = [
     'requirements.html',
     'review.html',
     'versions.html',
-    'paths.html',
-    'whatif.html',
+    'brief.html',
     'glossary.html',
-    'briefing.html',
+    'timeline.html',
+    'what-if.html',
+    'phased.html',
+    'paths.html',
 ]
 
 # The figure-free guide: the same process and cost categories taught with

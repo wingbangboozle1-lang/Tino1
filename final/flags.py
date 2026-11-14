@@ -205,6 +205,14 @@ FLAGS = [
          used='Used for one stress path only. Cash is assumed to do no better than consumer prices in that path.',
          check='Treat it as an illustration of a long stagnation, not as a forecast for California.',
          src=('FRED-JP',)),
+    dict(id='S-PHASE', item='Phased-investing test: the 2-year Treasury return is not in the repository, so the 3-month bill stands in for the parked cash; the test is annual, gross of tax and costs, and uses an academic stock and bill table.',
+         used='Parked cash earns the 3-month bill return; stocks earn the S&P 500 total return; equal annual tranches; 10-year horizon; 89 entry years from 1928 to 2016.',
+         check='Check the 2-year Treasury yield history on the official Treasury page before relying on dollar differences. The 1929 crash fell mostly inside the calendar year, which annual data understates.',
+         src=('DAMODARAN', 'TREASURY')),
+    dict(id='S-WHATIF', item='What-if cases: each control selects one of 54 precomputed model runs; rent benchmarks are HUD figures, not quotes for Property A.',
+         used='Only the four controls change; each control moves the named input(s) and nothing else. The bills-only check is the same model with proceeds held in Treasury bills.',
+         check='Re-run final/extras.py after any change to model inputs; the page is generated, not typed.',
+         src=('HUD-95014', 'TREASURY')),
 ]
 
 REVIEW = [

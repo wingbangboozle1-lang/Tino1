@@ -1,276 +1,406 @@
 #!/usr/bin/env python3
-"""Mixed paths and phased reinvestment (session arena/88de34f6).  Standard library only.
+"""Pages added by session arena/7895b5d7-tino1 (standard library only).
 
-Built on final/model.py. The per-year rows that model.run() produces for the
-three pure choices (live, rent, sell) are re-used, and this module composes them into:
+Called from final/build.py. Writes:
+  phased.html     phased-investing test on real annual history (black swan)
+  what-if.html    what-if controls over precomputed model cases, reinvestment risk beside the headline
+  glossary.html   glossary, each term linked to its official page where one exists
+  timeline.html   deadlines as a timeline (figures and rules taken from process.html)
+  brief.html      one-page printable Attorney & CPA briefing sheet
 
-  * MIXED PLANS - live in Property A (or rent it out) for K years, then sell it;
-  * PHASED REINVESTMENT - the sale proceeds sit in a 3-month-to-2-year Treasury
-    sleeve and move linearly into stocks over 24 or 36 months after the sale.
-
-The sleeve return is the model's 3-month T-bill series (a proxy for a 3M-2Y
-Treasury ladder; the 2-year series is not loaded - flag A21). Interest on the sleeve is
-taxed as ordinary income; stock growth is taxed as the model taxes it.
-
-Self-check: the pure plans rebuilt here must reproduce model.run()'s summary to
-within $1 for every replay path, or the module refuses to produce output.
-
-Units: every dollar output here is rounded to $10 before it leaves this module.
+Every dollar figure is rounded to $10 (build.r10 / build.m). Every table row ends in a link to an
+official source (build.src). Nothing here stores or prints a name, address or account number.
 """
-import os
-import sys
+import json, os, sys, html
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
-import model as MD  # noqa: E402
-
-P = MD.P
-Y0, Y1 = MD.Y0, MD.Y1
-Acct = MD.Acct
+import model as MD                       # noqa: E402
+import phased as PH                      # noqa: E402
 
 
 def r10(x):
     return int(round(x / 10.0)) * 10
 
 
-# plan key -> (label, mode, years of occupancy K (None = never sold), phase in years (0 = all stocks at once))
-PLANS = [
-    ('live', 'Live in Property A (pure)', 'live', None, 0),
-    ('rent', 'Rent Property A out (pure)', 'rent', None, 0),
-    ('sell', 'Sell at inheritance, all in stocks (pure)', 'sell', 0, 0),
-    ('sell_p24', 'Sell, park in 3M-2Y Treasuries 24 months, then stocks', 'sell', 0, 2),
-    ('sell_p36', 'Sell, park in 3M-2Y Treasuries 36 months, then stocks', 'sell', 0, 3),
-    ('live5_sell', 'Live 5 years, then sell (mixed)', 'live', 5, 0),
-    ('live10_sell', 'Live 10 years, then sell (mixed)', 'live', 10, 0),
-    ('rent5_sell', 'Rent 5 years, then sell (mixed)', 'rent', 5, 0),
-    ('rent10_sell', 'Rent 10 years, then sell (mixed)', 'rent', 10, 0),
-    ('rent5_sell_p24', 'Rent 5 years, sell, park 24 months, then stocks (mixed + phased)', 'rent', 5, 2),
+# ----------------------------------------------------------------- glossary and timeline data
+# (term, definition, [source keys in final/sources.py S] or [] for a model term)
+GLOSSARY = [
+    ('Assessed value', 'The value on which California property tax is calculated. It is not the market value; it is the base year value, adjusted each year under Proposition 13.', ['BOE-P19']),
+    ('Basic exclusion amount', 'The amount of a person\'s estate that is exempt from federal estate tax. It is $15,000,000 for deaths in 2026 under the federal statute as amended in 2025; it is indexed for inflation after 2026.', ['IRS-ESTATE', 'IRS-NEW']),
+    ('Basis (stepped-up)', 'The starting figure for measuring a capital gain. For inherited property the basis is generally its fair market value on the date of death, or on the alternate valuation date if one is elected.', ['IRS-FAQ-INHERIT']),
+    ('Base year value', 'The value fixed when a property last changed ownership. Under Proposition 13 it is adjusted by an inflation factor each year, capped at 2% a year.', ['RTC-51']),
+    ('Break-even', 'A model term: the value of one input at which two paths give the same result, with every other input held at its baseline.', []),
+    ('Black swan', 'A model term: a rare, extreme sequence of economic conditions outside the baseline. On this site it is shown through real historical replays and named stress paths, not as a forecast.', []),
+    ('Change in ownership', 'A transfer that causes property to be reassessed to its current market value under California law, unless an exclusion applies. A transfer at death is a change in ownership.', ['RTC-480', 'BOE-P19']),
+    ('CPI-U', 'The Consumer Price Index for All Urban Consumers, published by the U.S. Bureau of Labor Statistics. It is the common measure used to turn nominal dollars into real dollars.', ['BLS-CPI']),
+    ('Depreciation (residential rental)', 'Yearly deduction for the building part of a rental property, spread over 27.5 years. It reduces taxable rent but is taxed back on a later sale.', ['IRS-P527']),
+    ('Earthquake insurance', 'Separate cover for earthquake damage. Standard homeowners policies generally do not include earthquake damage; the California Department of Insurance explains the options.', ['CDI-EQ']),
+    ('Empty homes tax (San Francisco)', 'A San Francisco tax on certain vacant residential property. Whether it applies to Property B is an open question, not an assumption on this site.', ['SF-EHT']),
+    ('Estate tax', 'A federal tax on the transfer of a large estate at death. California has no estate tax for deaths after 2004.', ['SCO-ESTATE', 'IRS-ESTATE']),
+    ('Form 706', 'The federal estate tax return. It is due nine months after death; a six-month extension is available on Form 4768.', ['IRS-I706', 'IRS-FAQ-ESTATE']),
+    ('Form 1041', 'The income tax return for an estate or trust. It is required when the estate or trust has gross income of $600 or more in a year.', ['IRS-1041']),
+    ('Gross estate', 'The property counted for federal estate tax at death. Whether Property A is in the Transferor\'s gross estate depends on the trust type and is an open question (Q01).', ['RR-2023-2']),
+    ('Grantor trust (irrevocable)', 'A trust whose assets may fall outside the estate for estate tax. Under Revenue Ruling 2023-2, a basis step-up generally does not apply to such assets.', ['RR-2023-2']),
+    ('Homeowners\' exemption', 'A $7,000 reduction in assessed value for an owner-occupied principal residence, claimed on form BOE-266.', ['BOE-HOX']),
+    ('Homeowners insurance', 'Cover for the building and contents of an owner-occupied home. Premiums are set by each insurer; the California Department of Insurance publishes guides and a premium survey.', ['CDI-RES', 'CDI-TOOL']),
+    ('Net-metering (NEM)', 'California billing for rooftop solar that credits exported power against the bill. The rules of the tariff set how long a credit is carried.', ['CPUC-NEM']),
+    ('Net investment income tax (NIIT)', 'A 3.8% federal tax on certain investment income above income thresholds. It can apply to a gain on a sale.', ['IRS-TC559']),
+    ('Parent-child exclusion (Proposition 19)', 'The rule that lets a child keep a parent\'s assessed value on a family home, up to the excluded amount, if the child makes it a principal residence within a year and claims the exclusion within three years.', ['BOE-P19', 'SCC-P19']),
+    ('Phased investing', 'A model term: moving cash into stocks in equal tranches over several years rather than all at once. Tested on the phased-investing page.', []),
+    ('Portability', 'Transfer of a deceased spouse\'s unused federal exclusion to the surviving spouse. It requires a timely Form 706 return.', ['IRS-FAQ-ESTATE']),
+    ('Probate notice (trust)', 'The duty of a successor trustee to notify beneficiaries and heirs after a trust becomes irrevocable at death. The statute sets a 60-day period.', ['PROB-16061.7']),
+    ('Proposition 13', 'The 1978 California constitutional amendment. It caps the property tax rate at 1% of assessed value plus voter-approved debt, and limits assessed-value growth to 2% a year.', ['RTC-51']),
+    ('Real vs nominal', 'Nominal means the dollars of that year. Real means the same amount expressed in dollars of the start year, using CPI. The site shows both.', ['BLS-CPI']),
+    ('Reinvestment risk', 'A model term: the risk that proceeds, or cash waiting to be invested, earn less than the planned return. The what-if page shows it next to the headline.', []),
+    ('Revocable trust', 'A trust the creator can change or revoke while alive. Its assets are generally counted in the creator\'s estate; the trust terms and the attorney decide the specifics.', ['RR-2023-2']),
+    ('Rent control (San Francisco)', 'Limits on yearly rent increases for covered units, set by the San Francisco Rent Board. The limit is tied to inflation.', ['SF-RENT-RULES']),
+    ('Safmr (HUD small-area fair market rent)', 'A federal benchmark rent by ZIP code, published by HUD. It is a benchmark only; it is not a quote for any property.', ['HUD-95014', 'HUD-94122']),
+    ('Secured property tax', 'The annual property tax on real estate, secured by the land. In San Francisco the rate for the year is published by the Treasurer and Tax Collector.', ['SF-TAX']),
+    ('Sequence risk', 'A model term: the risk that the order of good and bad years, not just the average, decides the outcome. It is why the replays use real sequences.', []),
+    ('Section 121 exclusion', 'Exclusion of part of a gain on a principal residence: $250,000 for a single owner, $500,000 for a married couple filing jointly, if the owner-use test is met.', ['IRS-TC701']),
+    ('Step-up in basis', 'See Basis (stepped-up).', ['IRS-FAQ-INHERIT']),
+    ('Supplemental assessment', 'An extra property tax bill for the period after a change in ownership, when the new value is higher than the old one.', ['SF-TAX']),
+    ('Tax rate book', 'The county document that sets the property tax rates for each area for the year.', ['SCC-RATES']),
+    ('Treasury bill, note, bond', 'U.S. government debt. Bills mature within a year; notes run two to ten years; bonds longer. Yields change daily; the Treasury publishes them.', ['TREASURY']),
+    ('Unrecaptured section 1250 gain', 'The part of a gain on depreciated real estate that is taxed at up to 25% federally.', ['IRS-TC409']),
 ]
-PLAN = {k: dict(label=l, mode=m, K=K, phase=ph) for k, l, m, K, ph in PLANS}
+
+TIMELINE = [
+    ('Now, while the Transferor is alive', 'Ask the estate attorney which trust holds Property A and whether it is in the gross estate (Q01). Keep the homeowners\' exemption on file.', ['RR-2023-2', 'BOE-HOX']),
+    ('Date of death (day 0)', 'Record the date. Order a written appraisal as of that date: it sets the basis and the change-in-ownership value.', ['IRS-FAQ-INHERIT']),
+    ('Within 60 days', 'The successor trustee notifies every beneficiary and heir.', ['PROB-16061.7']),
+    ('Within 150 days', 'File the change-in-ownership statement for Property A with the Santa Clara County Assessor.', ['RTC-480']),
+    ('Within 9 months', 'File Form 706 if the estate is above the filing threshold or to elect portability. Form 4768 adds six months.', ['IRS-I706', 'IRS-FAQ-ESTATE']),
+    ('Within 1 year (only if moving in)', 'Become the principal residence and file the homeowners\' exemption (BOE-266) before the exclusion claim.', ['RTC-63.2', 'BOE-PUB-800-1']),
+    ('Within 3 years (only if moving in)', 'File the parent-child exclusion claim (BOE-19-P) with the Assessor, before any transfer to a third party.', ['BOE-P19', 'SCC-P19']),
+    ('February 2027 (rule change date)', 'The Proposition 19 allowance of $1,044,586 applies until 2027-02-15; the next adjustment takes effect on 2027-02-16. Adjustments are made every second year.', ['BOE-LTA-2025-009']),
+    ('Tax year of any sale', 'Report the sale on Form 8949 and Schedule D using the date-of-death basis.', ['IRS-FAQ-INHERIT', 'IRS-TC409']),
+    ('Five years after death', 'Last date for a late portability election under the IRS relief procedure.', ['IRS-FAQ-ESTATE']),
+]
 
 
-def _weights(p, f):
-    """Stock weight f during a year (rest in the Treasury sleeve). f None -> the model's own weights."""
-    q = dict(p)
-    if f is None:
-        return q
-    f = min(1.0, max(0.0, f))
-    q['w_stock'] = f
-    q['w_bill'] = 1.0 - f
-    q['w_bond'] = 0.0
-    return q
+# ----------------------------------------------------------------- helpers
+def r10(x):
+    return int(round(x / 10.0)) * 10
 
 
-def _t_lump(p):
-    return p['t_fed_ltcg_lump'] + p['niit'] + p['t_ca_lump']
+def pc_(x, d=1):
+    return ('%.' + str(d) + 'f%%') % (x * 100)
 
 
-def _t_recap(p):
-    return p['t_recap_fed'] + p['niit'] + p['t_ca_lump']
+def flagged(fid):
+    return '<a class="flag" href="flagged.html#%s" title="Flagged for review">flag %s</a>' % (fid, fid)
 
 
-def _house_tax(p, mode, net_sale, basis, depr_cum, susp, years_owned):
-    """Tax if the house were sold now. Same rules as model.simulate (sale-year wealth)."""
-    if mode == 'live':
-        excl121 = p['sec121'] if years_owned >= 2 else 0.0
-        return max(net_sale - basis - excl121, 0.0) * _t_lump(p), net_sale - basis - excl121
-    g_tot = net_sale - (basis - depr_cum) - susp
-    recap = min(depr_cum, max(g_tot, 0.0))
-    return recap * _t_recap(p) + max(g_tot - recap, 0.0) * _t_lump(p), g_tot
+def _srcs(B, keys):
+    return B.src(*keys) if keys else '<span class="blank">model term - no official page</span>'
 
 
-def run_plan(path, p, key, rows=None):
-    """Rebuild one plan from the model's per-year rows. Returns dollars and real (2026) values."""
-    spec = PLAN[key]
-    mode, K, phase = spec['mode'], spec['K'], spec['phase']
-    T = p['T']
-    if rows is None:
-        rows, _ = MD.run(p, path)
-    R = {r['year']: r for r in rows}
-    sale = T if mode == 'sell' else (None if K is None else T + K)
-    v_T = R[T]['cup_value']
-    basis = v_T if p['step_up'] else min(float(p['cup_assessed']), v_T)
-    occ, cash = Acct(), Acct()          # occupancy portfolio (live / rent) and sale-proceeds portfolio
-    depr_cum, susp = 0.0, 0.0
-    sold = False
-    W = {}
-    sale_info = None
-    for y in range(T, Y1 + 1):
-        e, r = path[y], R[y]
-        Vc = r['cup_value']
-        net_sale = Vc * (1 - p['sell_cost'] - p['doc_transfer_tax'])
-        if sold:
-            if mode in ('live', 'rent'):
-                occ.grow(e, p)
-            cash.grow(e, _weights(p, (y - sale) / float(phase) if phase else None))
-            W[y] = occ.liq(p) + cash.liq(p)
-            continue
-        if mode in ('live', 'rent'):
-            occ.grow(e, p, frac=0.5 if y == sale else 1.0)
-        if sale is not None and y == sale:
-            # sold mid-year: six months of carrying cost, as the model does
-            hold = 0.5 * (r['rent_tax'] + r['ins_home'] + r['cup_maint'])
-            if mode == 'sell':
-                gain = net_sale - basis
-                tax, gain_out = max(gain, 0.0) * _t_lump(p), gain
-            else:
-                tax, gain_out = _house_tax(p, mode, net_sale, basis, depr_cum, susp, y - T)
-            cash.add(net_sale - tax - hold)
-            cash.grow(e, _weights(p, 0.0 if phase else None), frac=0.5)
-            sold = True
-            sale_info = dict(proceeds=net_sale, gain=gain_out, tax=tax, hold=hold, net=net_sale - tax - hold)
-            W[y] = occ.liq(p) + cash.liq(p)
-            continue
-        # still living in it or renting it out during year y
-        if mode == 'rent':
-            ti = r['rent_noi'] - r['rent_depr'] - susp
-            susp = -ti if ti < 0 else 0.0
-            depr_cum += r['rent_depr']
-            occ.add(r['rent_noi'] - r['rent_income_tax'])
-        elif mode == 'live':
-            occ.add(r['live_unit3'] - r['live_cost'])
-        house, _ = _house_tax(p, mode, net_sale, basis, depr_cum, susp, y - T) if mode != 'sell' else (0.0, 0.0)
-        W[y] = occ.liq(p) + (net_sale - house if mode != 'sell' else 0.0)
-    last = Y1
-    out = dict(w_end=W[last], cpi_end=R[last]['cpi'], real_end=W[last] / R[last]['cpi'])
-    for h in (10, 20):
-        if T + h <= Y1:
-            out['w%d' % h] = W[T + h]
-            out['real%d' % h] = W[T + h] / R[T + h]['cpi']
-    out['sale'] = sale_info
-    return out
+def _money(x):
+    v = r10(x)
+    return ('-$' if v < 0 else '$') + format(abs(v), ',')
 
 
-def self_check(path, p, rows):
-    """Pure plans must reproduce the model's own summary (to $1)."""
-    _, s = MD.simulate(path, p)
-    _ = rows
-    for key, field in (('live', 'w_live'), ('rent', 'w_rent'), ('sell', 'w_sell')):
-        mine = run_plan(path, p, key, rows=rows)['w_end']
-        if abs(mine - s[field]) > 1.0:
-            raise SystemExit('self-check failed for %s: %.2f vs model %.2f' % (key, mine, s[field]))
-    return True
+# ----------------------------------------------------------------- what-if cases (precomputed)
+G_OPTS = [0.03, 0.04, 0.05]                         # Property A home growth a year (baseline 4.0%)
+R_OPTS = [0.05, 0.07, 0.10]                         # stock return a year (baseline 7.0%)
+RENT_OPTS = [('3br', 5870), ('4br', 6390), ('up30', r10(6390 * 1.3))]   # Cupertino rent a month (baseline 4br)
+INF_OPTS = [0.025, 0.04]                            # inflation (baseline 2.5%)
 
 
-# ---------------------------------------------------------------------------- scenarios
-def crisis_paths(p):
-    """The crisis paths the Black swan page already uses, reproduced here (same definitions as model.main)."""
-    T = p['T']
-    return [
-        ('crash_at_T', '2007-2012 housing and stock bust starting the year of inheritance (2008-type entry)',
-         MD.overlay_path(p, MD.HIST, 2007, 2012, T)),
-        ('depression_at_T', '1929-1941 national Depression sequence starting the year of inheritance (1929-type entry)',
-         MD.overlay_path(p, MD.NAT, 1929, 1941, T)),
-        ('lost_decade_at_T', '2000-2009 "lost decade" for stocks starting the year of inheritance',
-         MD.overlay_path(p, MD.HIST, 2000, 2009, T)),
-        ('slump_at_T', '1990-1996 California housing slump starting the year of inheritance',
-         MD.overlay_path(p, MD.HIST, 1990, 1996, T)),
-        ('japan_at_T', "Japan's real 1991-2020 stagnation starting the year of inheritance",
-         MD.overlay_path(p, MD.JPN, 1991, 2020, T)),
-        ('replay_2000', 'Real 1976-2025 sequence started in 2000 (dot-com bust and 2008 crisis first)',
-         MD.replay_path(2000)),
+def cell_key(g, r, rent, inf):
+    return '%.2f|%.2f|%s|%.3f' % (g, r, rent, inf)
+
+
+def whatif_cases():
+    cases = {}
+    for g in G_OPTS:
+        for r in R_OPTS:
+            for rk, rent in RENT_OPTS:
+                for inf in INF_OPTS:
+                    d = inf - MD.P['infl']          # 4% inflation raises nominal rates by the same 1.5 points
+                    kw = dict(g_cup=g + d, g_ca=g + d, r_stock=r + d, r_bond=MD.P['r_bond'] + d,
+                              r_bill=MD.P['r_bill'] + d, infl=inf, cup_rent_month=rent)
+                    _, s = MD.run(MD.with_(**kw))
+                    _, sb = MD.run(MD.with_(**dict(kw, w_stock=0.0, w_bill=1.0)))
+                    cases[cell_key(g, r, rk, inf)] = dict(
+                        live=r10(s['w_live']), rent=r10(s['w_rent']), sell=r10(s['w_sell']),
+                        live_real=r10(s['real_live']), rent_real=r10(s['real_rent']), sell_real=r10(s['real_sell']),
+                        best=s['best'], sell_net=r10(s['sell_net']),
+                        sell_bills=r10(sb['w_sell']), sell_bills_real=r10(sb['real_sell']),
+                        bills_gap=r10(s['w_sell'] - sb['w_sell']))
+    return cases
+
+
+def bills_gap():
+    """Baseline reinvestment check: the sell path with proceeds in bills instead of stocks (2076, nominal)."""
+    _, s = MD.run(MD.P)
+    _, sb = MD.run(MD.with_(w_stock=0.0, w_bill=1.0))
+    return dict(sell=r10(s['w_sell']), sell_bills=r10(sb['w_sell']), gap=r10(s['w_sell'] - sb['w_sell']))
+
+
+def bills_gap_text():
+    g = bills_gap()
+    return '%s less' % _money(g['gap'])
+
+
+# ----------------------------------------------------------------- pages
+PATH_NAMES = {'lump': 'Lump sum into stocks on day one (no parking)',
+              'park2_phase2': 'Park 24 months, then 2 equal annual tranches',
+              'park2_phase3': 'Park 24 months, then 3 equal annual tranches',
+              'park3_phase2': 'Park 36 months, then 2 equal annual tranches',
+              'park3_phase3': 'Park 36 months, then 3 equal annual tranches'}
+PATH_ORDER = ['lump', 'park2_phase2', 'park2_phase3', 'park3_phase2', 'park3_phase3']
+EPISODES = ['1929', '1937', '2000', '2007']
+
+
+def phased_claims():
+    res = json.load(open(os.path.join(HERE, 'out', 'phased.json')))
+    s = res['summary'][PH_KEY]
+    return dict(n=s['starts'], not_deeper=s['years_drop_not_deeper'], shallower=s['years_drop_strictly_shallower'],
+                share_higher=s['share_phased_ends_higher'])
+
+
+PH_KEY = 'park2_phase2'
+
+
+def PHASED_SRC(B):
+    return (B.src('TREASURY') + ' (official reference for bill yields) · ' + B.src('DAMODARAN')
+            + ' (stock and bill returns; academic table, not government)')
+
+
+def build_phased(B, res):
+    ep = res['episodes']
+    proceeds = res.get('proceeds') or 0
+    rows = []
+    for k in PATH_ORDER:
+        cells = ['%.2f times; worst drop %s' % (ep[c]['paths'][k]['end'], pc_(ep[c]['paths'][k]['mdd'], 0)) for c in EPISODES]
+        rows.append([PATH_NAMES[k]] + cells + [PHASED_SRC(B)])
+    t1 = B.table(['Path (proceeds start at the entry year)', '1929 entry', '1937 entry', '2000 entry', '2007 entry', 'Source'], rows,
+                 caption='Value 10 years after entry, per 1 dollar of proceeds, and the worst fall from a peak inside those 10 years',
+                 note='A worst drop of -65% means the account fell 65%% from its highest point before recovering. Figures are gross: before tax, costs and inflation. Annual resolution: each calendar year is one step.')
+    drows = [[PATH_NAMES[k]] + [_money(proceeds * ep[c]['paths'][k]['end']) for c in EPISODES] + [PHASED_SRC(B)] for k in PATH_ORDER]
+    t2 = B.table(['Path', '1929 entry', '1937 entry', '2000 entry', '2007 entry', 'Source'], drows,
+                 caption='The same test in dollars: 10 years after entry, starting from baseline net sale proceeds of %s' % _money(proceeds),
+                 note='The starting amount is the model\'s baseline net sale proceeds in the inheritance year, after selling costs, carrying costs and the sale tax, rounded to $10. Real proceeds depend on the actual sale price and tax, which are not yet known.')
+    srows = []
+    for k in PATH_ORDER[1:]:
+        s = res['summary'][k]
+        srows.append([PATH_NAMES[k], pc_(s['share_phased_ends_higher'], 0), pc_(s['median_end_vs_lump'], 0),
+                      pc_(s['median_mdd_lump'], 0) + ' to ' + pc_(s['median_mdd_phased'], 0),
+                      pc_(s['worst_mdd_lump'], 0) + ' to ' + pc_(s['worst_mdd_phased'], 0), PHASED_SRC(B)])
+    nstarts = res['summary'][PATH_ORDER[1]]['starts']
+    t3 = B.table(['Path', 'Share of entry years that end higher than the lump sum', 'Median 10-year result vs lump sum',
+                  'Median worst drop: lump sum to phased', 'Worst drop in any year tested: lump sum to phased', 'Source'], srows,
+                 caption='All %d entry years tested, %d to %d' % (nstarts, res['first_start'], res['last_start']),
+                 note='Reading: in most entry years the lump sum ends higher, because stocks rose in most years. Phasing reduces the worst falls. That is the trade-off the owner is choosing between.')
+    bs = res['bill_stats']
+    body = """
+<h2>What the test asks</h2>
+<ul>
+<li><strong>Question.</strong> If the sale proceeds wait in short Treasuries for 24 or 36 months after the inheritance, and only then move into stocks, how much of a crash that starts at entry is avoided, and what does the wait cost in years with no crash?</li>
+<li><strong>Method.</strong> Real annual history from 1928 to 2025. Cash earns the 3-month Treasury bill return; stocks earn the S&amp;P 500 total return. Each path is followed for 10 years after entry. Tranches are equal and move at the start of each year. %s</li>
+<li><strong>Parked cash is a proxy.</strong> The 2-year Treasury series is not in the repository, so the 3-month bill stands in for the 3-month to 2-year range the brief names. The owner should check the 2-year history on the Treasury page before relying on dollar differences. %s</li>
+</ul>
+""" % (flagged('S-PHASE'), B.src('TREASURY')) + t1 + t2 + t3 + """
+<h2>Reinvestment risk on the parked cash</h2>
+<p>Parked cash earns whatever bills yield in those years, and that is not fixed. The average 3-month bill return was about <strong>%s</strong> a year over 1928 to 2025, about <strong>%s</strong> over 1929 to 1931, and about <strong>%s</strong> over 2009 to 2015. The parked cash earns no stock growth, so a long wait gives up part of any recovery. %s</p>
+""" % (pc_(bs['all_1928_2025'], 1), pc_(bs['y1929_1931'], 1), pc_(bs['y2009_2015'], 2), PHASED_SRC(B)) + """
+<h2>How to read it</h2>
+<ul>
+<li>Phasing does not avoid losses that come after the stocks are bought. In the 1929 test the phased paths still fell about 35% from their peak, because they bought stocks in 1931, before the rebound.</li>
+<li>In the 2007 test the parked cash stayed out of stocks through 2008 and the worst drop was 0%: the wait avoided the crash. Parking was ahead of the lump sum after 10 years.</li>
+<li>@@CLAIM@@</li>
+<li>The test uses one entry date per row. A real decision also depends on tax, cash needed for carrying costs, and how much fall in value the owner can accept.</li>
+</ul>
+<h2>Limits and sources</h2>
+<ul>
+<li>Annual data. A calendar year is one step, so the October 1929 crash appears only in the full-year 1929 return. Intra-year drops are understated.</li>
+<li>Gross of tax, selling costs, carrying costs and inflation. The <a href="decision.html">Decision</a> page carries those; this page isolates timing.</li>
+<li>Stock and bill returns come from an academic table, not a government source. This is flagged for review: <a href="flagged.html#S-PHASE">Flagged for Review</a>.</li>
+<li>Results are historical. Future sequences can differ; the <a href="black-swan.html">Black swan</a> page shows named stress paths.</li>
+</ul>
+"""
+    c = phased_claims()
+    claim = ('Across the %d entry years, the phased worst drop was never deeper than the lump sum&rsquo;s, and it was strictly shallower in %d of them '
+             '(24-month park, 2 tranches). The phased path ends higher than the lump sum in only %s of entry years, so the benefit is protection against one bad entry, not a higher average return.'
+             % (c['n'], c['shallower'], pc_(c['share_higher'], 0)))
+    body = body.replace('@@CLAIM@@', claim)
+    B.page('phased.html', 'Phased investing: parking proceeds before stocks',
+           'Does parking the sale proceeds in short Treasuries for 24 to 36 months soften entry into a crash? Tested on real annual history, 1928 to 2025.', body)
+
+
+def build_whatif(B, cases):
+    d = dict(g='0.04', r='0.07', rent='4br', inf='0.025')
+    controls = """<div class="ctrl">
+<label>Home growth a year, Property A <select id="c-growth"><option value="0.03">3.0%</option><option value="0.04" selected>4.0% (baseline)</option><option value="0.05">5.0%</option></select></label>
+<label>Stock return a year <select id="c-stock"><option value="0.05">5.0%</option><option value="0.07" selected>7.0% (baseline)</option><option value="0.10">10.0%</option></select></label>
+<label>Cupertino rent a month <select id="c-rent"><option value="3br">HUD 3-bedroom, $5,870</option><option value="4br" selected>HUD 4-bedroom, $6,390 (baseline)</option><option value="up30">HUD 4-bedroom plus 30%, $8,310</option></select></label>
+<label>Inflation a year <select id="c-infl"><option value="0.025" selected>2.5% (baseline)</option><option value="0.04">4.0% (nominal rates raised 1.5 points)</option></select></label>
+</div>"""
+    body = """
+<div class="kpis">
+<div class="kpi"><div class="k">Best path in the chosen case</div><div class="v" id="best">-</div><div class="sub" id="bestsub"></div></div>
+<div class="kpi"><div class="k">Reinvestment risk, beside the headline</div><div class="v" id="rrisk">-</div><div class="sub">Sell path with the proceeds held in Treasury bills at the bill yield, instead of stocks. Shown beside the headline on purpose.</div></div>
+</div>
+<h2>Controls</h2>
+<p>Choose a case. Each choice selects one of %d precomputed model runs (%d cases in all). The browser does no estimating and sends nothing; the figures were produced by <code>final/extras.py</code> from the model. Defaults are the baseline.</p>
+%s
+<h2>Result for the chosen case</h2>
+<div class="tablewrap"><table><caption>Wealth in 2076, nominal and in today's dollars, with the reinvestment check</caption>
+<thead><tr><th scope="col">Path</th><th scope="col">Nominal, 2076</th><th scope="col">Today's dollars, 2076</th><th scope="col">Sell path if proceeds sit in bills (reinvestment check)</th><th scope="col">Source</th></tr></thead>
+<tbody>
+<tr><td>Live in Property A (the Inheritor moves in)</td><td id="w-live"></td><td id="r-live"></td><td>not applicable</td><td>%s</td></tr>
+<tr><td>Rent Property A out</td><td id="w-rent"></td><td id="r-rent"></td><td>not applicable</td><td>%s</td></tr>
+<tr><td>Sell Property A and reinvest the proceeds</td><td id="w-sell"></td><td id="r-sell"></td><td id="rb-sell"></td><td>%s</td></tr>
+</tbody></table></div>
+<p class="note">Baseline sell-path net proceeds in the inheritance year (this case): <span id="sellnet"></span>. Only the four controls change; every other input is at its baseline (see the <a href="decision.html">Decision</a> page and <a href="sources.html">Sources and method</a>). Rounded to the nearest $10.</p>
+<h2>What the controls can and cannot show</h2>
+<ul>
+<li>Each control moves one group of inputs together. The controls do not cover every risk; the <a href="black-swan.html">Black swan</a> page covers sequences of years.</li>
+<li>The rent figures are HUD benchmarks, not a quote for Property A. The bedroom count is unknown (%s).</li>
+<li>The 4.0%% inflation case raises nominal stock, bond, bill and home growth by the same 1.5 points, as the Decision page does.</li>
+</ul>
+<script src="whatif.js"></script>
+""" % (len(cases), len(cases), controls,
+       B.src('HUD-95014', 'BLS-CPI'), B.src('HUD-95014', 'FHFA-SJ'), B.src('DAMODARAN', 'TREASURY'), flagged('U08'))
+    B.page('what-if.html', 'What-if controls',
+           'Change growth, returns, rent or inflation and see which path comes out ahead, with reinvestment risk beside the headline.', body)
+    open(os.path.join(B.OUT, 'whatif.js'), 'w').write(
+        '// Generated by final/extras.py from the model. Reads precomputed cases only: no network, no storage.\n'
+        'var WHATIF = ' + json.dumps(dict(cases=cases), sort_keys=True) + ';\n' + WHATIF_JS)
+
+
+WHATIF_JS = """(function () {
+  function fmt(x) { var v = Math.round(x / 10) * 10; return (v < 0 ? '-$' : '$') + Math.abs(v).toLocaleString('en-US'); }
+  function val(id) { return document.getElementById(id).value; }
+  function set(id, t) { var el = document.getElementById(id); if (el) el.textContent = t; }
+  var NAMES = { live: 'Live in Property A', rent: 'Rent Property A out', sell: 'Sell and reinvest' };
+  function show() {
+    var key = [parseFloat(val('c-growth')).toFixed(2), parseFloat(val('c-stock')).toFixed(2), val('c-rent'), parseFloat(val('c-infl')).toFixed(3)].join('|');
+    var c = WHATIF.cases[key];
+    if (!c) { set('best', 'not computed'); return; }
+    set('best', NAMES[c.best]);
+    set('bestsub', 'Nominal wealth in 2076: ' + fmt(c[c.best]) + '. In today\\'s dollars: ' + fmt(c[c.best + '_real']) + '.');
+    set('rrisk', fmt(c.bills_gap) + ' less in 2076, nominal');
+    set('w-live', fmt(c.live)); set('r-live', fmt(c.live_real));
+    set('w-rent', fmt(c.rent)); set('r-rent', fmt(c.rent_real));
+    set('w-sell', fmt(c.sell)); set('r-sell', fmt(c.sell_real));
+    set('rb-sell', fmt(c.sell_bills) + ' (today\\'s dollars: ' + fmt(c.sell_bills_real) + ')');
+    set('sellnet', fmt(c.sell_net));
+  }
+  ['c-growth', 'c-stock', 'c-rent', 'c-infl'].forEach(function (id) {
+    document.getElementById(id).addEventListener('change', show);
+  });
+  show();
+})();
+"""
+
+
+def build_glossary(B):
+    rows = []
+    for term, text, keys in GLOSSARY:
+        rows.append('<div class="gl"><dt>%s</dt><dd>%s <span class="gsrc">%s</span></dd></div>' % (
+            html.escape(term), html.escape(text), _srcs(B, keys)))
+    body = ('<p class="note">Terms marked <em>model term</em> are this site\'s own words for the analysis, not legal or tax terms. '
+            'Read each definition as a pointer to the official page, not as a full statement of the law. '
+            'The attorney and the tax adviser decide how a term applies to this trust.</p>'
+            '<div class="glossary"><dl>%s</dl></div>') % ''.join(rows)
+    B.page('glossary.html', 'Glossary', 'Plain-English meanings of the terms used on this site, each linked to its official page.', body)
+
+
+def build_timeline(B):
+    items = []
+    for when, what, keys in TIMELINE:
+        items.append('<li><div class="tlwhen">%s</div><div class="tlwhat">%s <span class="gsrc">%s</span></div></li>' % (
+            html.escape(when), html.escape(what), B.src(*keys)))
+    body = ('<p class="note">Deadlines are the ones on the <a href="process.html">Process</a> page, arranged in time order. '
+            'Each row links to the statute, form or agency page it comes from. Counting starts from the date of death.</p>'
+            '<ol class="timeline">%s</ol>') % ''.join(items)
+    B.page('timeline.html', 'Deadlines as a timeline',
+           'When each step falls, counted from the date of death. Confirm every date with the attorney and the county office.', body)
+
+
+def build_brief(B, cases):
+    """One printable page for the estate attorney and the tax adviser (no site chrome)."""
+    s = B.B
+    P = B.P
+    T = B.T
+    rows = [
+        ('Market value of Property A in %d (model)' % T, _money(s['fmv_T']), 'Owner estimate %s today, growing at an assumed 4.0%% a year' % _money(P['cup_value']), B.src('FHFA-SJ')),
+        ('Assessed value just before death (model)', _money(s['fbyv_T']), 'Proposition 13 base year value, inflation-adjusted', B.src('RTC-51')),
+        ('Proposition 19 allowance (model)', _money(s['cap_T']), '$1,044,586 until 2027-02-15, then adjusted', B.src('BOE-LTA-2025-009')),
+        ('New assessed value if the Inheritor moves in', _money(s['taxable_live_T']), 'Excluded amount plus the excess over it', B.src('BOE-LTA-2026-026')),
+        ('New assessed value if rented or held for sale', _money(s['taxable_rent_T']), 'Full market value', B.src('BOE-P19')),
+        ('Property tax the first year, if lived in / if rented (model)', '%s / %s' % (_money(s['tax_live_T']), _money(s['tax_rent_T'])), 'Official Santa Clara rate components before fixed charges', B.src('SCC-RATES')),
+        ('Net sale proceeds if sold (model)', _money(s['sell_net']), 'After 5% selling cost and carrying costs; basis reset assumed', B.src('SCC-DTT')),
+        ('Federal estate tax exclusion, 2026', '$15,000,000 per person', 'Estate size unknown (Q02); no California estate tax', B.src('IRS-ESTATE', 'SCO-ESTATE')),
     ]
+    trows = ''.join('<tr><td>%s</td><td class="num">%s</td><td>%s</td><td class="small">%s</td></tr>' % (html.escape(a), html.escape(b), html.escape(c), d) for a, b, c, d in rows)
+    names = {'live': 'live in Property A', 'rent': 'rent Property A out', 'sell': 'sell and reinvest'}
+    n_other = sum(1 for c in cases.values() if c['best'] != s['best'])
+    ranking = ('On the baseline the model ranks <strong>%s</strong> first, after tax. In %d of the %d what-if cases another path ranks first, so the ranking is not settled (site: What-if controls).'
+               % (names[s['best']], n_other, len(cases)))
+    trows = ''.join('<tr><td>%s</td><td class="num">%s</td><td>%s</td><td class="small">%s</td></tr>' % (html.escape(a), html.escape(b), html.escape(c), d) for a, b, c, d in rows)
+    atty = ['Which trust holds Property A, and is it in the gross estate? (Q01: the basis reset depends on it.)',
+            'Does the trust plan to distribute Property A in kind, or sell it first? Who is the successor trustee?',
+            'Is there a deceased spouse whose unused exclusion could be ported? Was a Form 706 filed? (Q02)',
+            'Confirm the 60-day notice and the 150-day change-in-ownership filing dates for this trust.',
+            'Confirm the Transferor is the Inheritor\'s parent (or meets the grandchild rule) for the parent-child exclusion. (Q06)']
+    cpa = ['Rerun the comparison with the Inheritor\'s actual bracket and filing status. (Q05)',
+           'Confirm the basis step-up under the trust type, and the date-of-death appraisal used for basis. (Q01)',
+           'Property B: the owner\'s basis and depreciation already claimed on the rented units. (Q03)',
+           'Form 1041 for the trust or estate while the home is held; treatment of rent received before distribution.',
+           'Whether the solar credit and the rent on Property B are reported as the model assumes. Unverified items are on Flagged for Review.']
+    body = """<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow"><meta name="referrer" content="no-referrer">
+<title>Attorney and CPA briefing sheet - Two-home inheritance analysis</title>
+<style>
+@page{size:letter;margin:.45in}
+body{font:9.3pt/1.28 system-ui,Arial,sans-serif;color:#111;margin:0;background:#fff}
+.sheet{max-width:7.5in;margin:0 auto;padding:.1in 0}
+h1{font-size:15pt;margin:0 0 2px}
+.sub{font-size:8.5pt;color:#333;margin:0 0 6px}
+h2{font-size:10.5pt;margin:8px 0 3px;border-bottom:1px solid #999;padding-bottom:1px}
+table{width:100%%;border-collapse:collapse;font-size:8.2pt}
+td,th{border:1px solid #bbb;padding:2px 4px;vertical-align:top;text-align:left}
+th{background:#eee}
+td.num{white-space:nowrap;text-align:right}
+ol,ul{margin:2px 0 0 16px;padding:0}li{margin:1px 0}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.small{font-size:7.8pt;color:#333}
+.noprint{margin:0 0 8px}
+@media print{.noprint{display:none}}
+</style></head><body><div class="sheet">
+<p class="noprint"><a href="index.html">Back to the site</a> &middot; use your browser's Print command (Ctrl+P / Cmd+P) for one page.</p>
+<h1>Attorney and CPA Briefing Sheet</h1>
+<p class="sub">Two-home inheritance analysis. Property A = the Cupertino home (ZIP 95014) to be inherited by trust around 2040-2050. Property B = the San Francisco three-unit home (ZIP 94122) already owned by the Inheritor. People are placeholders: the Transferor and the Inheritor. Figures are model outputs rounded to the nearest $10 and are not advice; the estate attorney and tax adviser decide the law as it applies.</p>
+<h2>Key figures for the inheritance year (%d, model; assumptions flagged on the site)</h2>
+<table><thead><tr><th>Item</th><th>Amount</th><th>Basis</th><th>Official source</th></tr></thead><tbody>%s</tbody></table>
+<h2>Best path on the model, and why it changes</h2>
+<p>%s If the basis is not reset at death, selling loses its advantage over renting (Q01).</p>
+<div class="two">
+<div><h2>For the estate attorney</h2><ol>%s</ol></div>
+<div><h2>For the CPA / tax adviser</h2><ol>%s</ol></div>
+</div>
+<h2>Deadlines (from the date of death)</h2>
+<p class="small">Notice to beneficiaries within 60 days (Prob. Code 16061.7); change-in-ownership filing within 150 days (R&amp;T Code 480); Form 706 within 9 months, six more with Form 4768; homeowners' exemption and principal-residence move within 1 year and the exclusion claim (BOE-19-P) within 3 years, only if the Inheritor moves in. Full timeline on the site.</p>
+<h2>Official sources to check</h2>
+<p class="small">IRS estate tax (irs.gov/businesses/small-businesses-self-employed/estate-tax) &middot; IRS inherited property FAQ (irs.gov/faqs/interest-dividends-other-types-of-income/gifts-inheritances/gifts-inheritances) &middot; Rev. Rul. 2023-2 (irs.gov/irb/2023-16_IRB) &middot; California Board of Equalization Proposition 19 (boe.ca.gov/prop19/) &middot; BOE LTA 2025/009 (boe.ca.gov/proptaxes/pdf/lta25009.pdf) &middot; BOE Pub. 800-1 (boe.ca.gov/pdf/pub800-1.pdf) &middot; California Controller estate tax (sco.ca.gov/ardtax_estate_tax.html) &middot; Santa Clara County Assessor (asr.santaclaracounty.gov).</p>
+<p class="small">Open questions Q01 to Q06 and the Flagged for Review list are on the site. Nothing here is verified legal or tax advice. Prepared from the site's model; confirm every figure before it is used.</p>
+</div></body></html>""" % (T, trows, ranking, ''.join('<li>%s</li>' % html.escape(x) for x in atty), ''.join('<li>%s</li>' % html.escape(x) for x in cpa))
+    from scrub import scrub   # publication scrub (session 6f85fbe1): ZIP codes and city name in visible text
+    open(os.path.join(B.OUT, 'brief.html'), 'w').write(scrub(body))
 
 
-def window_stock_drawdown(path, p, first, last):
-    """Peak-to-trough fall of the cumulative stock index over the overlay years (from the same series the model uses)."""
-    idx, peak, worst = 1.0, 1.0, 0.0
-    T = p['T']
-    for y in range(T, T + (last - first) + 1):
-        idx *= 1 + path[y]['r_stock']
-        peak = max(peak, idx)
-        worst = min(worst, idx / peak - 1.0)
-    return worst
-
-
-def _plan_row(o, key):
-    return dict(plan=key, real_end=o['real_end'], real10=o.get('real10'), real20=o.get('real20'))
-
-
-def compute():
-    p = P
-    base_path = MD.baseline_path(p)
-    rows0, _ = MD.run(p, base_path)
-    self_check(base_path, p, rows0)
-    X = {'plans': [dict(key=k, label=PLAN[k]['label'], mode=PLAN[k]['mode'], K=PLAN[k]['K'], phase_years=PLAN[k]['phase'])
-                   for k, _, _, _, _ in PLANS]}
-    X['baseline'] = {k: run_plan(base_path, p, k, rows=rows0) for k in PLAN}
-    T = p['T']
-    # ---- crisis paths: 2008-type and 1929-type entries, plus the real replays
-    crises = []
-    for key, label, path in crisis_paths(p):
-        rows, _ = MD.run(p, path)
-        self_check(path, p, rows)
-        res = {k: run_plan(path, p, k, rows=rows) for k in ('sell', 'sell_p24', 'sell_p36', 'live', 'rent', 'rent5_sell')}
-        dd = None
-        if key == 'crash_at_T':
-            dd = window_stock_drawdown(path, p, 2007, 2012)
-        if key == 'depression_at_T':
-            dd = window_stock_drawdown(path, p, 1929, 1941)
-        crises.append(dict(key=key, label=label, drawdown=dd, res=res))
-    X['crises'] = crises
-    # ---- all 50 real starting years (1976-2025)
-    reps = []
-    for st in range(1976, 2026):
-        path = MD.replay_path(st)
-        rows, _ = MD.run(p, path)
-        self_check(path, p, rows)
-        reps.append(dict(start=st, res={k: run_plan(path, p, k, rows=rows) for k in PLAN}))
-    X['replays'] = reps
-
-    def stats(key, field):
-        vals = sorted(r['res'][key][field] for r in reps)
-        return dict(min=vals[0], median=vals[len(vals) // 2], max=vals[-1])
-
-    summ = {}
-    for k in PLAN:
-        summ[k] = dict(real10=stats(k, 'real10'), real_end=stats(k, 'real_end'))
-    X['replay_stats'] = summ
-    # phased versus immediate sale, across the 50 real starting years
-    ph = {}
-    for k in ('sell_p24', 'sell_p36'):
-        d10 = [r['res'][k]['real10'] - r['res']['sell']['real10'] for r in reps]
-        dE = [r['res'][k]['real_end'] - r['res']['sell']['real_end'] for r in reps]
-        ph[k] = dict(wins10=sum(1 for x in d10 if x > 0), winsE=sum(1 for x in dE if x > 0), n=len(reps),
-                     worst10=min(d10), median10=sorted(d10)[len(d10) // 2], worstE=min(dE), medianE=sorted(dE)[len(dE) // 2])
-    X['phase_vs_sell'] = ph
-    # ---- what-if grid (every combination the page offers; each one a full model run)
-    grid = {}
-    for Tt in (2040, 2045, 2050):
-        for rs in (0.05, 0.07, 0.10):
-            for inf in (0.02, 0.025, 0.035):
-                for cost in (0.05, 0.07):
-                    shift = inf - 0.025
-                    q = MD.with_(T=Tt, r_stock=rs, infl=inf, g_cup=0.04 + shift, g_sf=0.04 + shift,
-                                 g_ca=0.04 + shift, r_bond=0.045 + shift, r_bill=0.035 + shift,
-                                 sell_cost=cost)
-                    path = MD.baseline_path(q)
-                    rows, _ = MD.run(q, path)
-                    key = '%d|%s|%s|%s' % (Tt, rs, inf, cost)
-                    grid[key] = {}
-                    for k in ('live', 'rent', 'sell', 'sell_p24', 'sell_p36', 'rent5_sell'):
-                        o = run_plan(path, q, k, rows=rows)
-                        grid[key][k] = dict(real_end=o['real_end'], real10=o.get('real10'))
-    X['grid'] = grid
-    return X
-
-
-def r10_all(o):
-    """Round every dollar in a nested structure to $10 (ratios and counts unchanged)."""
-    if isinstance(o, dict):
-        return {k: r10_all(v) for k, v in o.items()}
-    if isinstance(o, list):
-        return [r10_all(v) for v in o]
-    if isinstance(o, float) and abs(o) >= 1000:
-        return r10(o)
-    return o
-
-
-if __name__ == '__main__':
-    import json
-    X = compute()
-    print('self-checks passed; replays', len(X['replays']), 'grid', len(X['grid']))
-    print(json.dumps(X['phase_vs_sell'], indent=1)[:900])
-    for c in X['crises']:
-        print(c['key'], round(c['drawdown'] or 0, 3) if c['drawdown'] is not None else '-',
-              {k: round(v['real10']) for k, v in c['res'].items()})
+def build_all(B):
+    """Called from final/build.py after the core pages are written."""
+    res = json.load(open(os.path.join(HERE, 'out', 'phased.json')))
+    build_phased(B, res)
+    cases = whatif_cases()
+    build_whatif(B, cases)
+    build_glossary(B)
+    build_timeline(B)
+    build_brief(B, cases)

@@ -19,10 +19,6 @@ Rounding to the nearest $10 is the disclosure-minimisation control the brief ask
 | `projections.html` | Year by year 2026 to 2076: value, assessed value, property tax, insurance, water, electricity, repairs, rental insurance |
 | `black-swan.html` | Non-constant growth and inflation: 50 replays of the real 1976-2025 record and named crisis paths, with a provenance table separating official statistics, academic returns and hypothetical constructions |
 | `process.html` | Step-by-step process with legal deadlines (`BOE-266` before `BOE-19-P` per BOE Pub. 800-1) |
-| `paths.html` | Mixed paths (live or rent for 5 or 10 years, then sell) and phased reinvestment (3M-2Y Treasury sleeve for 24 or 36 months, then stocks), with the 2008-type and 1929-type entry test and all 50 real starting years |
-| `whatif.html` | What-if controls: year of inheritance, stock return, inflation and selling costs, each with its range and source; results are precomputed model runs, not browser formulas |
-| `briefing.html` | One-page printable Attorney & CPA Briefing Sheet (print at letter size) |
-| `glossary.html` | Glossary of legal, tax, property and money terms, each linked to its official page |
 | `law.html` | Federal, California (`Behavioral Health Services Tax`), and local law in force, plus pending measures & Nov 11 ballot updates |
 | `estate-cash.html` | Cash inheritance: thresholds at each level, room before tax, projections |
 | `costs.html` | Insurance for both ZIP codes and running costs (CPUC NEM / `$24.15` fixed charge, water, rent) |
@@ -34,6 +30,25 @@ Rounding to the nearest $10 is the disclosure-minimisation control the brief ask
 | `requirements.html` | Every part of the brief, the page that answers it, the official pages re-read, and `SG-1`–`SG-11` queue |
 | `review.html` | Repository review findings (`R01`–`R54`) |
 | `versions.html` | Earlier editions and why they were replaced |
+
+## Added in session arena/7895b5d7-tino1
+
+| Page | Content |
+|---|---|
+| `brief.html` | One-page printable Attorney and CPA briefing sheet (print from the browser) |
+| `timeline.html` | Deadlines as a timeline, counted from the date of death, each row linked to its source |
+| `glossary.html` | Glossary; each term linked to its official page, model terms labelled as such |
+| `what-if.html` | Controls for home growth, stock return, rent and inflation over 54 precomputed model cases, with reinvestment risk beside the headline |
+| `phased.html` | Phased investing: proceeds parked 24 or 36 months in short Treasuries, then equal annual tranches into stocks; tested on 1929, 1937, 2000 and 2007 entries and on every entry year from 1928 to 2016 |
+| `paths.html` | Mixed paths (live or rent for K years, then sell) and a model-based crash-entry test of phased reinvestment; every row linked to an official source |
+
+Regenerate after any change to the model or the test:
+
+```
+python3 final/model.py && python3 final/phased.py && ROOT_MODE=1 OUT_DIR=. python3 final/build.py && python3 final/publish.py && python3 final/check.py .
+```
+
+The phased test and the what-if cases are computed from the model and the repository's annual return table. Stock and bill returns come from an academic table (flagged); the 2-year Treasury series is not in the repository, so the 3-month bill stands in for it (flagged).
 
 ## Reproduce
 
@@ -73,8 +88,6 @@ Earlier editions (`archive/`, `dashboard/`, `docs/`, `site/`) are kept for the r
 ## Owner action still needed for full privacy
 
 This repository is public, and its Git history contains the first versions of the pages, written before the figures were rounded. Rounding the current pages does not remove that history. Only the owner can make the repository private or have the history rewritten.
-
-**Measured in session `arena/88de34f6-tino1` (2026-11-14):** the full history (345 commits, fetched read-only) still contains the unrounded owner figures. The strings `550,537`, `539,743`, `114,248`, `7,207` and `2,439` each appear in 7 to 11 commits, including the first commits of 2026-11-10 (`e1522a4`, `702ca76`). The history was **not** rewritten: a rewrite is destructive, changes every commit hash and needs the owner's written decision. Options: make the repository private (this removes public access to the history but keeps it), or rewrite the history with `git filter-repo` and force-push `main` after the owner agrees (this removes the figures, but every fork, clone and cached copy keeps them).
 
 ## Coordination
 
