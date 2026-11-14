@@ -2558,3 +2558,13 @@ Change requests (logged, not edited, because the files belong to the merged sess
 - **CR-1A-4 (owner).** Git history still contains unrounded owner figures in 13 commits (see the earlier record on this board). This needs an owner-level decision; it is not solved by any page.
 
 Verification performed in this session before it was superseded: `final/model.py` regenerates `final/out/model.json` byte-identically; `final/check.py .` OK; `final/check_published.py` and `privacy-site/check_published.py` pass against a simulated Jekyll output of the allowlist. The CI `verify` job for the superseded commit (fe61914) passed.
+
+### Correction and fix — `verify` failure on `main` (arena/1a8bae22-tino1, 2026-11-14 UTC)
+
+- **What failed.** The `verify` step "Verify that Jekyll publishes exactly the reviewed allowlist" failed on `main` itself (run 43646498510, commit 0ad11bd) and on this branch (run 43646637546). It is not caused by this branch's content.
+- **Real causes (found by rebuilding a Jekyll-equivalent `_site` from `git ls-files` under `_config.yml` excludes, then running `final/check_published.py`):**
+  1. `attorney-cpa-briefing.html` is on the allowlist, but no generator writes it ("the builder no longer writes", added in ca27ef4 as hand-written HTML).
+  2. `decision.html`, `flagged.html`, and `process.html` were hand-edited in ca27ef4 (mixed-path table, flag rows A14/A15/U11, deadline timeline). Those insertions were not in `final/build.py`, so the committed copies differed from what the builder produces.
+- **Fix (no content removed).** Each hand-added insertion is saved as a reviewed fragment in `final/fragments/inserts.json` (anchor text plus inserted text, each anchor matching exactly once). `final/build.py` applies these after generation (`apply_fragments()`). The briefing page is saved unchanged as `final/fragments/attorney-cpa-briefing.html` and copied by the build. Regenerating the root pages reproduces the committed files byte for byte. My earlier simulation (which copied the allowlist and so could not detect this) is superseded by this one.
+- **Checks run locally, all passing:** `privacy-site/build.py` (no diff), `privacy-site/check.py`, unittest `privacy-site`, `final/publish.py --check` (39 files), `final/check.py .` (31 pages), `final/check_published.py` and `privacy-site/check_published.py` against the faithful `_site` (39 files, 26 builder outputs compared).
+- **Owner decision still open:** the hand-written fragments should be moved into generator code when a session has time; until then the fragment file is the source for those blocks.

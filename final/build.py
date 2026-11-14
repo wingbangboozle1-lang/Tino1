@@ -2276,6 +2276,30 @@ def build_home_choice():
     open(os.path.join(OUT, 'index.html'), 'w').write(scrub(doc))
 
 
+def apply_fragments():
+    """Reviewed fragments that the generator inserts verbatim, so every committed page is reproducible.
+
+    final/fragments/inserts.json holds, per page, the text to insert and the 80 characters of generated
+    text that come just before it (each anchor must match exactly once, or the build stops). The attorney
+    briefing sheet is a checked-in page copied unchanged. Both are reviewed; neither is edited by the build.
+    """
+    import json
+    frag = os.path.join(HERE, 'fragments')
+    with open(os.path.join(frag, 'inserts.json'), encoding='utf-8') as fh:
+        plan = json.load(fh)
+    for page, items in plan.items():
+        path = os.path.join(OUT, page)
+        doc = open(path, encoding='utf-8').read()
+        for it in items:
+            n = doc.count(it['anchor_before'])
+            if n != 1:
+                raise SystemExit('fragment anchor for %s matched %d times' % (page, n))
+            doc = doc.replace(it['anchor_before'], it['anchor_before'] + it['text'], 1)
+        open(path, 'w', encoding='utf-8').write(doc)
+    import shutil
+    shutil.copyfile(os.path.join(frag, 'attorney-cpa-briefing.html'), os.path.join(OUT, 'attorney-cpa-briefing.html'))
+
+
 def main():
     os.makedirs(OUT, exist_ok=True)
     open(os.path.join(OUT, 'style.css'), 'w').write(CSS)
@@ -2286,6 +2310,7 @@ def main():
 
         f()
     EXTRAS.build_all(sys.modules[__name__])
+    apply_fragments()
     if ROOT_MODE:
         build_home_choice()
         build_versions()
