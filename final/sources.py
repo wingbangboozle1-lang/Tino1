@@ -261,3 +261,12 @@ add('DIGITAL-GOV', 'Digital.gov content guide', 'U.S. General Services Administr
     'https://digital.gov/resources/an-introduction-to-content', 'page',
     'Read directly 2026-11-12: Federal content guide advising HTML over PDFs, plain language, structured searchability, currency reviews, clear labeling of non-government links, and appropriate translation access.')
 
+
+# ---- Added 2026-11-14 by session 59feaf6e (phased-entry test, what-if page) ------------------------
+add('TREASURY-NOV13', 'Treasury yields, 13 Nov 2026', 'U.S. Treasury - Daily Treasury Par Yield Curve Rates, Friday 13 November 2026 (home.treasury.gov, read 2026-11-14)',
+    'https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve&field_tdr_date_value_month=202611', 'page',
+    'Row for 11/13/2026: 1 month 4.10%, 2 months 4.26%, 3 months 4.32%, 6 months 4.42%, 1 year 4.65%, 2 years 4.88%, 5 years 4.98%, 10 years 5.15%, 30 years 5.47%.')
+
+add('SEC-DCA', 'SEC Investor.gov: dollar-cost averaging', 'U.S. SEC, Investor.gov - Dollar Cost Averaging (glossary entry, read 2026-11-14)',
+    'https://www.investor.gov/introduction-investing/investing-basics/glossary/dollar-cost-averaging', 'page',
+    'Dollar-cost averaging means investing money in equal portions at regular intervals regardless of market ups and downs; it can help manage risk by spreading purchases over time.')

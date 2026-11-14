@@ -1,9 +1,11 @@
 app.js
 black-swan.html
+brief.html
 costs.html
 decision.html
 estate-cash.html
 flagged.html
+glossary.html
 index.html
 law.html
 privacy-site/public/costs.html
@@ -30,3 +32,4 @@ suggestions.html
 summary.html
 verification.html
 versions.html
+what-if.html

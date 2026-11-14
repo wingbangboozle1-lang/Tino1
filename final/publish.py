@@ -37,6 +37,9 @@ LANDING = [
 # is option D of suggestion G01; the owner can still choose a narrower boundary.
 NUMERIC = [
     'summary.html',
+    'brief.html',
+    'what-if.html',
+    'glossary.html',
     'decision.html',
     'questions.html',
     'suggestions.html',
