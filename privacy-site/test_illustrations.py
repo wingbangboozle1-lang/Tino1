@@ -5,7 +5,7 @@ import subprocess
 import sys
 from pathlib import Path
 import shutil
-from illustrations import (r10, family_assessment, outlook, investment_path, STRESS, threshold, ledger,
+from illustrations import (r10, family_assessment, outlook, investment_path, phased_entry, STRESS, threshold, ledger,
                            CPI_ANNUAL, cpi_decades, cpi_extremes, cpi_display_rows)
 from check import pii_kinds
 
@@ -59,6 +59,22 @@ class ArithmeticTests(unittest.TestCase):
         self.assertAlmostEqual(crash[-1]['nominal'],late[-1]['nominal'])
         self.assertAlmostEqual(crash[-1]['real'],crash[-1]['nominal']/1.025**50)
         for r,c in STRESS.values(): self.assertEqual(len(r),50); self.assertEqual(len(c),50)
+
+    def test_phased_entry_helps_front_loaded_crash_but_lags_bull_market(self):
+        crash=[-.37,.26,.15,.02,.16,.07,.07,.07,.07,.07]
+        bull=[.12,.10,.08,.07,.07,.07,.07,.07,.07,.07]
+        immediate_crash=100000
+        for ret in crash: immediate_crash*=1+ret
+        immediate_bull=100000
+        for ret in bull: immediate_bull*=1+ret
+        staged_crash=phased_entry(crash,wait_months=30,park_rate=.03)['staged']
+        staged_bull=phased_entry(bull,wait_months=30,park_rate=.03)['staged']
+        self.assertGreater(staged_crash,immediate_crash)
+        self.assertLess(staged_bull,immediate_bull)
+        low=phased_entry(crash,wait_months=30,park_rate=.02)['staged']
+        high=phased_entry(crash,wait_months=30,park_rate=.04)['staged']
+        self.assertLess(low,staged_crash)
+        self.assertGreater(high,staged_crash)
 
     def test_first_year_independent_bridge(self):
         r=ledger(years=1)
@@ -117,13 +133,16 @@ class PublicationTests(unittest.TestCase):
         repo=here.parent
         with tempfile.TemporaryDirectory() as folder:
             root=Path(folder)
-            # Fixture mirrors the allowlist in final/published.txt: the rounded-figures
-            # analysis at the root plus the no-household-figures guide. Superseded root
-            # stubs such as properties.html stay out of the published set.
+            # Fixture mirrors the privacy-first allowlist: one generic root landing
+            # plus the figure-free guide. Numeric analysis pages stay repository-only.
             names=(repo/'final'/'published.txt').read_text().split()
             self.assertIn('index.html',names)
             self.assertIn('privacy-site/public/index.html',names)
+            self.assertIn('privacy-site/public/brief.html',names)
             self.assertIn('privacy-site/public/issues.html',names)
+            self.assertNotIn('summary.html',names)
+            self.assertNotIn('black-swan.html',names)
+            self.assertNotIn('projections.html',names)
             self.assertNotIn('properties.html',names)
             self.assertNotIn('dashboard/index.html',names)
             for name in names:
@@ -145,8 +164,12 @@ class PublicationTests(unittest.TestCase):
     def test_reproducible_generation(self):
         here=Path(__file__).resolve().parent
         before={p.name:p.read_bytes() for p in (here/'public').iterdir()}
+        landing=(here.parent/'index.html').read_bytes()
+        template=(here/'landing.html').read_bytes()
+        self.assertEqual(landing,template)
         subprocess.run([sys.executable,str(here/'build.py')],check=True,capture_output=True)
         self.assertEqual(before,{p.name:p.read_bytes() for p in (here/'public').iterdir()})
+        self.assertEqual(template,(here.parent/'index.html').read_bytes())
 
 
 if __name__=='__main__': unittest.main()

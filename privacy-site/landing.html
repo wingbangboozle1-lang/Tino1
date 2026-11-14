@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'">
+  <title>Inheritance Decision Guide</title>
+  <style>
+    :root{color-scheme:light;--ink:#20332d;--muted:#63736c;--line:#dce5de;--green:#245648;--wash:#f4f7f2;--gold:#9b7735}
+    *{box-sizing:border-box}body{margin:0;background:#f8faf7;color:var(--ink);font:16px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif}
+    header{background:#fff;border-bottom:1px solid var(--line)}.top,main,footer{width:min(1100px,calc(100% - 40px));margin:auto}.top{padding:18px 0;display:flex;justify-content:space-between;gap:20px;align-items:center}.brand{font-size:12px;font-weight:800;letter-spacing:.12em;color:var(--green)}.tag{color:var(--muted);font-size:12px}
+    main{padding:58px 0 70px}.eyebrow{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--green);font-weight:800}.hero{padding:36px;background:var(--green);color:#fff;border-radius:18px}.hero h1{font-size:clamp(34px,6vw,56px);line-height:1.08;max-width:760px;margin:10px 0 16px}.hero p{max-width:760px;color:#e3eee8}.button{display:inline-block;background:#fff;color:var(--green);font-weight:750;text-decoration:none;padding:11px 17px;border-radius:8px;margin-top:8px}
+    h2{font-size:23px;margin:42px 0 14px}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.card{display:block;background:#fff;border:1px solid var(--line);padding:20px;border-radius:12px;text-decoration:none;color:inherit;min-height:142px}.card:hover{border-color:var(--green);box-shadow:0 4px 16px #20332d12}.card b{display:block;color:var(--green);font-size:16px}.card span{display:block;color:var(--muted);font-size:13px;margin-top:8px}.notice{margin-top:30px;padding:20px 22px;background:#fff8e9;border-left:4px solid var(--gold);border-radius:5px}.notice b{color:#604718}.notice p{margin:5px 0 0;color:#6d6049;font-size:14px}footer{border-top:1px solid var(--line);padding:24px 0 35px;color:var(--muted);font-size:12px}
+    a:focus-visible{outline:3px solid var(--gold);outline-offset:4px}@media(max-width:760px){.grid{grid-template-columns:1fr 1fr}main{padding-top:32px}.hero{padding:27px}}@media(max-width:480px){.grid{grid-template-columns:1fr}.tag{display:none}}@media print{body{background:#fff}.top,footer,.button{display:none}main{padding:0}.hero{color:#111;background:#fff;border:1px solid #777;padding:20px}.hero p{color:#333}.grid{grid-template-columns:1fr 1fr}.card{min-height:0;padding:12px;break-inside:avoid}h2{margin:20px 0 8px}.notice{break-inside:avoid}}
+  </style>
+</head>
+<body>
+  <header><div class="top"><div class="brand">INHERITANCE DECISION GUIDE</div><div class="tag">Privacy-first reference and decision workflow</div></div></header>
+  <main>
+    <section class="hero">
+      <div class="eyebrow">Decision dashboard</div>
+      <h1>Make the next decision with better evidence.</h1>
+      <p>A structured guide to a future inherited home when another home is already owned. Compare living in, renting, and selling; separate verified rules from unknown household facts; and prepare for a conversation with an estate attorney and tax adviser.</p>
+      <a class="button" href="privacy-site/public/index.html">Open the guide</a>
+    </section>
+    <h2>Explore by topic</h2>
+    <div class="grid">
+      <a class="card" href="privacy-site/public/decision.html"><b>Decision framework</b><span>Compare live, rent, and sell paths without assuming a winner.</span></a>
+      <a class="card" href="privacy-site/public/projection.html"><b>Projection method</b><span>Understand the annual cost and tax categories; examples are fictional.</span></a>
+      <a class="card" href="privacy-site/public/stress.html"><b>Black swan conditions</b><span>Review non-constant inflation, housing, and investment stress cases.</span></a>
+      <a class="card" href="privacy-site/public/process.html"><b>Inheritance process</b><span>Follow the trust and property-tax steps, with legal clocks to verify.</span></a>
+      <a class="card" href="privacy-site/public/law.html"><b>Tax and law</b><span>Current public rules, exceptions, and future-law uncertainty.</span></a>
+      <a class="card" href="privacy-site/public/costs.html"><b>Costs and insurance</b><span>Find the cost evidence needed for a private, property-specific estimate.</span></a>
+      <a class="card" href="privacy-site/public/questions.html"><b>Questions to resolve</b><span>Separate known rules from missing facts and how to discover them.</span></a>
+      <a class="card" href="privacy-site/public/brief.html"><b>Attorney &amp; CPA briefing sheet</b><span>Print a one-page, blank template to complete privately; use browser Print / Save as PDF.</span></a>
+      <a class="card" href="privacy-site/public/suggestions.html"><b>Suggestions for review</b><span>Consider improvements before changing a model or taking action.</span></a>
+      <a class="card" href="privacy-site/public/glossary.html"><b>Glossary</b><span>Plain-language definitions for tax, estate, and investment terms.</span></a>
+      <a class="card" href="privacy-site/public/flagged.html"><b>Flagged for review</b><span>See source limits, unverified items, and items requiring professional review.</span></a>
+    </div>
+    <aside class="notice"><b>Privacy is the first constraint.</b><p>This public site contains no household-specific property values, tax histories, rents, utility amounts, or derived household projections. Use private records only with your own trusted professionals. The source repository and its historical commits are a separate exposure risk; a page allowlist does not erase Git history, forks, or copies.</p></aside>
+  </main>
+  <footer>General information only, not legal, tax, investment, or insurance advice. Use the guide’s dated official sources and confirm current rules before acting.</footer>
+</body>
+</html>

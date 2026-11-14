@@ -2,7 +2,7 @@
 from pathlib import Path
 from html import escape
 import json
-from illustrations import (outlook, ledger, money, investment_path, STRESS, threshold, family_assessment,
+from illustrations import (outlook, ledger, money, investment_path, phased_entry, STRESS, threshold, family_assessment,
                            cpi_decades, cpi_extremes, cpi_display_rows)
 
 HERE = Path(__file__).parent
@@ -23,10 +23,15 @@ def table(caption, head, rows, kind='verified'):
             '<td>'+link(row[-1])+'</td></tr>' for row in rows)+'</tbody></table></div>')
 
 
-nav=[('index.html','Overview'),('decision.html','Decision'),('projection.html','Projections'),('stress.html','Black swan'),('process.html','Process'),('law.html','Tax & law'),('costs.html','Costs'),('questions.html','Open questions'),('suggestions.html','Suggestions'),('suggestions-detail.html','Review details'),('issues.html','Issues to resolve'),('flagged.html','Flagged for review')]
+nav=[('index.html','Overview'),('decision.html','Decision'),('projection.html','Projections'),('stress.html','Black swan'),('process.html','Process'),('law.html','Tax & law'),('costs.html','Costs'),('questions.html','Open questions'),('brief.html','Attorney & CPA brief'),('suggestions.html','Suggestions'),('suggestions-detail.html','Review details'),('issues.html','Issues to resolve'),('glossary.html','Glossary'),('flagged.html','Flagged for review')]
 
 def notice(title, body):
     return '<div class="notice"><b>'+title+'</b><p>'+body+'</p></div>'
+
+
+def write_root_landing():
+    """Restore the generic Pages front door after any internal numeric build."""
+    (HERE.parent/'index.html').write_bytes((HERE/'landing.html').read_bytes())
 
 
 def page(fn,title,kicker,description,body):
@@ -98,6 +103,37 @@ for name,(returns,cpi) in STRESS.items():
     for yr in (1,10,20,50):
         r=path[yr-1]
         stress_rows.append((name,str(yr),money(r['nominal']),money(r['real']),'sec'))
+
+# Illustrative sequence-risk test for a lump sum. These are chosen paths, not
+# historical return series or forecasts. The 3% parking yield is an assumption.
+phase_paths={
+    'Prolonged crash (1929-style shape; invented)':([-0.35,-0.20,0.00,0.00,0.10,0.10,0.08,0.07,0.07,0.07],'recession'),
+    'Fast crash and recovery (2008-style shape; invented)':([-0.37,0.26,0.15,0.02,0.16,0.07,0.07,0.07,0.07,0.07],'recession'),
+    'Crash after three strong years (invented)':([0.10,0.08,0.08,-0.35,0.26,0.15,0.02,0.16,0.07,0.07],'sec'),
+    'Rising market with no early crash (invented)':([0.12,0.10,0.08,0.07,0.07,0.07,0.07,0.07,0.07,0.07],'sec'),
+}
+phase_assumptions=[]
+phase_results=[]
+phase_immediate={}
+for name,(returns,source) in phase_paths.items():
+    sequence=', '.join(('+' if r>=0 else '−')+f'{abs(r)*100:.0f}%' for r in returns)
+    phase_assumptions.append((name,sequence,'Synthetic annual equity-return sequence; not an actual historic replay or forecast.',source))
+    immediate=100000.0
+    for ret in returns: immediate*=1+ret
+    phase_immediate[name]=immediate
+    for wait in (24,30,36):
+        staged=phased_entry(returns,principal=100000,park_rate=.03,wait_months=wait,phase_months=12)['staged']
+        delta=staged-immediate
+        delta_text=('+' if delta>=0 else '−')+money(abs(delta))
+        phase_results.append((name,money(immediate),f'{wait} months in Treasury proxy, then 12-month stock phase',money(staged),delta_text,source))
+fast_path=phase_paths['Fast crash and recovery (2008-style shape; invented)'][0]
+fast_immediate=phase_immediate['Fast crash and recovery (2008-style shape; invented)']
+phase_yield_rows=[]
+for rate in (.02,.03,.04):
+    staged=phased_entry(fast_path,principal=100000,park_rate=rate,wait_months=30,phase_months=12)['staged']
+    delta=staged-fast_immediate
+    phase_yield_rows.append((f'{rate*100:.0f}% assumed rolling Treasury return',money(staged),('+' if delta>=0 else '−')+money(abs(delta)),'30 months parked, then 12 equal monthly equity purchases.','sec'))
+phase_section='''<h2>Phased investing after a crash-entry inheritance</h2><p>Test a lump sum parked in a short Treasury ladder/rolling maturities spanning 3 months to 2 years for 24, 30 or 36 months, then invested in stocks over 12 months. The table compares that path with investing the same illustrative proceeds in equities immediately. It is an educational sequence-risk experiment, not the household forecast or a historical replay.</p>'''+table('SYNTHETIC annual equity paths · assumptions only',['Stress path','Assumed stock returns by year 1–10','Status / limitation','Official context'],phase_assumptions,'illustration')+table('SYNTHETIC ending value · $100,000 illustrative starting amount · 10-year horizon',['Stress path','Immediate equity entry','Treasury wait then 12-month phase','Phased terminal value','Phased minus immediate','Official context'],phase_results,'illustration')+table('WHAT-IF · fast crash/recovery path · 30-month wait · 12-month phase',['Assumed rolling Treasury return','Phased terminal value','Difference vs immediate equity','Entry schedule','Official context'],phase_yield_rows,'illustration')+notice('Reinvestment risk beside the headline','The parking return is a flat assumed 3% per year, not a Treasury quote or yield forecast; the what-if table varies it from 2% to 4%. Actual 3-month-to-2-year yields and maturity-date reinvestment rates can differ. Staging benefits these chosen early-crash paths but lags immediate equity entry in the rising-market path; it does not remove market loss, assure a higher return, or make a 24–36 month wait optimal. The official links give historical / diversification context only and do not validate the synthetic returns.')
 page('stress.html','When the baseline breaks','BLACK SWAN & REGIME RISK / 04','Uneven inflation, market losses and housing disruptions can overwhelm a smooth average.',table('Historical context · dates and measures must not be mixed',['Episode','Official observation','Relevance / limits','Source'],[
 ('Great Inflation · 1965–1982','Multiple recessions and energy shocks; inflation exceeded 14% in 1980.','A long low-inflation baseline is not a law of nature. Not a forecast for local expenses.','inflation'),
 ('Great Recession · 2007–2009','National home prices fell about 30% from mid-2006 to mid-2009; S&P 500 price index fell 57% October 2007 to March 2009.','Different peak/trough windows; not calendar-year returns, not total returns and not specific-property performance.','recession'),
@@ -107,7 +143,7 @@ page('stress.html','When the baseline breaks','BLACK SWAN & REGIME RISK / 04','U
 ('Insurance / repair shock','Assume premium doubles; test $100,000 uninsured repair and one year without rent.','Invented amounts; verify exclusions, deductible and temporary-housing/lost-rent coverage.','insurance'),
 ('Solar / utility regime','Assume no solar cash compensation and a positive import/fixed-charge bill; test panel/inverter replacement separately.','Do not carry today’s estimated credit forward indefinitely.','cpuc'),
 ('Law / eligibility shock','Remove family-home relief; rerun at full reassessment. Freeze or reduce future estate exclusion in a separate policy stress.','No claim these changes have been enacted or assigned a probability.','boe')
-],'illustration'))
+],'illustration')+phase_section)
 
 process=[
 ('1','Before transfer','Counsel checks trust funding, title, beneficiaries, relationship, powers, debts, prior gifts and estate inclusion. Separate the Inheritor’s own assets from the Transferor’s estate.','Planning action; trust alone is not tax exemption.','estate'),
@@ -277,4 +313,30 @@ issues=[
 page('issues.html','Issues to resolve','EVIDENCE GAPS / 10','Every open question this analysis found, ordered by what it blocks, with the evidence that would close it and who can supply it.',notice('How to use this page','Nothing here is a decision. Rows are open questions: each one names what is unknown, what would settle it, and the official context. A row disappears only when the evidence exists privately, not when it is published here.')+table('Open items · status is unverified by design, never zero and never assumed',['ID','Open item','Why it matters / what is unresolved','What would close it','Official context'],issues,'unverified')+notice('What would make this page shorter','Verified private records: the trust and deed, the assessor records and bills, a date-of-death appraisal, occupancy-specific insurance quotes, a year of utility bills, the solar or tariff agreement, and an estate inventory. Each closes one or more rows. None of them should be uploaded to this public site or repository.'))
 
 
-print(f'Built {len(nav)} privacy-first public pages; no private inputs read.')
+brief_rows=[
+('Trust, title & estate inclusion','Is the inherited home included in the transferor’s gross estate? What do the trust and deed say about control, beneficiaries and powers?','Bring the current trust, amendments, deed and asset schedule privately.','trustbasis'),
+('Basis and valuation','What basis applies at transfer, and which date-of-death valuation evidence is needed?','Bring acquisition/improvement records and obtain an independent valuation; do not assume a trust guarantees a basis adjustment.','basis'),
+('Property-tax transfer','Is the family relationship and occupancy test met? Which forms, filing order, deadlines, reassessment and direct charges apply?','Bring occupancy records and current assessor statements; have counsel confirm the applicable county process and dates.','boepub'),
+('Estate tax and cash','What is the current-year exclusion at the actual transfer date? What assets, gifts, deductions and portability elections enter the calculation?','Prepare a confidential gross-estate inventory and review prior Forms 709/706; filing threshold is not the same as tax due.','estate'),
+('Sale and rental taxes','For each path, what are the basis, selling costs, depreciation, rental income/expenses, gain and California tax consequences?','Bring private leases, tax returns, basis records, offers and a professional after-tax calculation.','rent'),
+('Operating costs and coverage','What policies and actual costs apply to owner-occupancy, rental and mixed use? Which utility, solar, repair and liability risks are unpriced?','Bring a year of bills, policy declarations, occupancy-specific quotes and inspection/reserve estimates.','cdires'),
+('Investment and sequence risk','Compare immediate investing with a short Treasury ladder/rolling maturities and a written phased stock-entry schedule; show inflation, reinvestment, tax and crash-entry risks.','Specify cash needs, duration, allocation, phase length, rebalancing and what happens if stocks fall while Treasury maturities roll. Do not project today’s yield.','sec'),
+('Decision and review date','What facts would reverse the choice to live in, rent or sell? What must be rechecked before acting?','Write down the decision gates, evidence owner, source document, date checked and next review date.','boe')]
+brief_body='''<div class="brief"><div class="notice"><b>Privacy-safe, one-page working template</b><p>This public sheet contains no household names, property locations, values, rents, tax bills or account details. Fill it in privately with qualified advisers; do not upload or return the completed sheet to this site.</p></div><div class="brief-meta"><span>Transferor / trustee: __________________________</span><span>Inheritor: __________________________</span><span>Meeting date: __________________</span><span>Expected decision date: __________________</span></div><h2>Start with the ownership distinction</h2><p><b>Property A:</b> future inherited property · <b>Property B:</b> already owned by the inheritor. Treat B’s current ownership, housing use and existing income as the common baseline unless a separately documented change is planned. Analyze only A’s incremental effect.</p>'''+table('Attorney &amp; CPA agenda · record answers and evidence privately',['Review item','Question for the adviser','Private records / deliverable to bring','Official context'],brief_rows)+'''<div class="brief-grid"><section><h2>Decision paths to compare</h2><p>□ Live in A　 □ Rent A　 □ Sell A and reinvest</p><p>Compare on the same date and after tax. Include property tax, insurance, utilities, repairs/capital work, management/vacancy, transaction costs, liquidity and final liquidation taxes.</p><p>For reinvestment, compare immediate exposure with a 3-month-to-2-year Treasury parking/ladder path and a defined phased stock allocation. Show reinvestment risk at each maturity; staging does not guarantee protection from loss or better returns.</p></section><section><h2>Before leaving the meeting</h2><p>Attorney confirms trust/title, estate inclusion, basis questions, eligibility and filing clocks.</p><p>CPA confirms estate inventory, prior gifts/portability, transfer and sale/rental tax work, and liquidity needs.</p><p>□ Written answers received　 □ Missing evidence assigned　 □ Next review date set</p><p>Key facts that would change the answer: ____________________________________________</p></section></div><p class="print-note"><b>Print / export:</b> use the browser’s Print command and choose “Save as PDF.” The print layout is designed for one Letter-size page. This is a meeting checklist, not legal, tax or investment advice.</p></div>'''
+page('brief.html','Attorney & CPA briefing sheet','PRIVATE MEETING TEMPLATE / PRINT','A concise agenda to complete privately with an estate attorney and tax adviser before choosing a path.',brief_body)
+
+glossary_rows=[
+('Adjusted basis','Tax basis used to calculate gain or loss; inherited-property basis requires review of the transfer and trust facts.','basis'),
+('Factored base-year value','California property-tax value adjusted annually within statutory rules; distinct from income-tax basis.','rtc'),
+('Family-home exclusion','A limited California property-tax reassessment exclusion that depends on relationship, use, claims and current law.','boepub'),
+('Gross estate','Assets included in the federal estate-tax calculation; not the same as what one beneficiary receives.','estate'),
+('Portability','Potential transfer of a deceased spouse’s unused federal exclusion, generally requiring a timely estate-tax return election.','faq'),
+('Supplemental assessment','An assessment that may follow a change in ownership or new construction; verify the local bill and applicable process.','boe'),
+('Rental income / expenses','Rent and qualifying expenses are reported under tax rules; gross rent is not after-tax profit.','rent'),
+('Sequence risk','Risk that the timing/order of returns changes outcomes when there are withdrawals, taxes or expenses; not captured by a no-cash-flow terminal return alone.','sec'),
+('Treasury reinvestment risk','The future return on maturing short Treasury holdings is unknown; a model must not carry today’s yield forward as a fact.','sec'),
+('Synthetic scenario','A deliberately invented stress path used to test sensitivity; not a historical replay, forecast, or probability.','recession')]
+page('glossary.html','Glossary','REFERENCE / TERMS','Plain-language definitions used throughout the guide. Definitions are general; the linked official context controls.',table('Terms and meanings · official context, not household verification',['Term','Meaning / limitation','Official context'],glossary_rows)+notice('A note on similar words','Property-tax assessed value, income-tax basis, fair market value and sale proceeds are different measures. Do not substitute one for another in an attorney or tax calculation.'))
+
+write_root_landing()
+print(f'Built {len(nav)} privacy-first public pages and restored the generic root landing; no private inputs read.')

@@ -71,6 +71,12 @@ def step2_build():
     env = dict(os.environ, OUT_DIR=ROOT, ROOT_MODE='1')
     subprocess.check_call([sys.executable, os.path.join(HERE, 'model.py')], stdout=subprocess.DEVNULL)
     subprocess.check_call([sys.executable, os.path.join(HERE, 'build.py')], env=env)
+    # The numeric analysis generator writes internal root pages, including its
+    # own dashboard. Restore the reviewed, figure-free Pages front door last.
+    public_builder = os.path.join(ROOT, 'privacy-site', 'build.py')
+    public_check = os.path.join(ROOT, 'privacy-site', 'check.py')
+    subprocess.check_call([sys.executable, public_builder])
+    subprocess.check_call([sys.executable, public_check])
 
 
 def step3_notices():
