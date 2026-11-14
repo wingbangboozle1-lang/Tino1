@@ -181,23 +181,20 @@ FLAGS = [
          used='Used for one stress path only. Cash is assumed to do no better than consumer prices in that path.',
          check='Treat it as an illustration of a long stagnation, not as a forecast for California.',
          src=('FRED-JP',)),
-    # ---- added 2026-11-14 by session 59feaf6e (phased entry, mixed paths, what-if) --------------------
-    dict(id='H01', item='Parking yield for the phased-entry test. The model parks the proceeds at each path\'s 3-month Treasury bill return (3.5% in the constant baseline). On 13 Nov 2026 the official curve read 4.32% for 3 months and 4.88% for 2 years. The 2-year series is not in the repository, so the 3-month to 2-year band is represented by the bill series.',
-         used='Baseline 3.5%. The what-if page also runs the official 4.32% three-month rate. Higher parking yields make phasing look better; the 2-year yield (4.88%) is not modelled separately.',
-         check='Re-run with the 2-year yield once the attorney and adviser agree which parking instrument is realistic for the proceeds.',
-         src=('TREASURY-NOV13', 'TREASURY')),
-    dict(id='H02', item='Phase-in design: 12 months of equal monthly purchases after the park period (24 or 36 months). No official source sets a phase-in schedule; it is a modelling choice.',
-         used='The black swan page and the what-if grid use only the 12-month phase-in. A longer or shorter phase-in would change the crash-timing results.',
-         check='Decide the phase-in with the adviser before relying on the phased-entry rows. Not a legal or tax requirement.',
-         src=('TREASURY-NOV13', 'DAMODARAN')),
-    dict(id='H03', item='Mixed paths (live, or rent, for 5 or 10 years, then sell) are model constructions. Live-then-sell assumes the 2-of-5-year Section 121 test is met; rent-then-sell assumes full reassessment in the rental years and depreciation recapture on sale.',
-         used='The sale is at the end of the chosen year, with the same selling costs and carrying cost as the main model. Suspended passive losses carry to the sale.',
+    dict(id='S-PHASE', item='Phased-investing test: the 2-year Treasury return is not in the repository, so the 3-month bill stands in for the parked cash; the test is annual, gross of tax and costs, and uses an academic stock and bill table.',
+         used='Parked cash earns the 3-month bill return; stocks earn the S&P 500 total return; equal annual tranches; 10-year horizon; 89 entry years from 1928 to 2016.',
+         check='Check the 2-year Treasury yield history on the official Treasury page before relying on dollar differences. The 1929 crash fell mostly inside the calendar year, which annual data understates.',
+         src=('DAMODARAN', 'TREASURY')),
+    dict(id='S-WHATIF', item='What-if cases: each control selects one of 54 precomputed model runs; rent benchmarks are HUD figures, not quotes for Property A.',
+         used='Only the four controls change; each control moves the named input(s) and nothing else. The bills-only check is the same model with proceeds held in Treasury bills.',
+         check='Re-run final/extras.py after any change to model inputs; the page is generated, not typed.',
+         src=('HUD-95014', 'TREASURY')),
+
+    # ---- added 2026-11-14 by session 59feaf6e (mixed paths: live or rent for 5 or 10 years, then sell) --------
+    dict(id='H03', item='Mixed paths (live, or rent, for 5 or 10 years, then sell) are model constructions, not forecasts. Live-then-sell assumes the two-of-five-year Section 121 test is met; rent-then-sell assumes full reassessment in the rental years and depreciation recapture on sale.',
+         used='The sale is at the end of the chosen year, with the same selling costs and carrying cost as the main model. Suspended passive losses carry to the sale. The phased-entry (monthly) engine is computed in the model but is not published here.',
          check='The attorney confirms that a sale after a lived-in period or a rental period does not change the Proposition 19 result; the CPA confirms the Section 121 and recapture treatment.',
          src=('IRS-TC701', 'BOE-P19', 'IRS-TC409')),
-    dict(id='H04', item='Crash timing decides the phased-entry result. The 2007-2012 and 1929-1941 sequences are real series placed in a chosen year; they are stress tests, not forecasts. Across the 50 real histories the all-at-once entry ends ahead more often than the phased entry.',
-         used='The black swan page shows the timing table (crash starting in the inheritance year and up to four years later) and the 50-history table, so no single timing is presented as the answer.',
-         check='Treat the phased entry as an insurance choice with a premium, and confirm the risk appetite before choosing.',
-         src=('DAMODARAN', 'BLS-CPI')),
 ]
 
 REVIEW = [

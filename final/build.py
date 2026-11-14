@@ -15,6 +15,7 @@ from flags import FLAGS, REVIEW  # noqa: E402
 import questions as QUESTIONS_DATA
 import suggestions as SUGGESTIONS_DATA
 from review_queue import render_queue, render_verification  # noqa: E402
+import extras as EXTRAS  # noqa: E402  (session arena/7895b5d7: what-if, phased, glossary, timeline, brief)
 from scrub import scrub  # noqa: E402  (publication scrub, session 6f85fbe1)
 
 M = json.load(open(os.path.join(HERE, 'out', 'model.json')))
@@ -89,23 +90,48 @@ def flag(fid):
 
 BLANK = '<span class="blank">not confirmed - left blank</span>'
 
-NAV = [
-    (HOME, 'Summary'),
-    ('decision.html', 'Decision'),
-    ('questions.html', 'Questions to answer'),
-    ('suggestions.html', 'Suggestions'),
-    ('projections.html', 'Year by year'),
-    ('black-swan.html', 'Black swan'),
-    ('process.html', 'Process'),
-    ('law.html', 'Law'),
-    ('estate-cash.html', 'Cash and estate tax'),
-    ('costs.html', 'Insurance and costs'),
-    ('flagged.html', 'Flagged for Review'),
-    ('sources.html', 'Sources and method'),
-    ('verification.html', 'Verification'),
-    ('requirements.html', 'Requirements'),
-    ('review.html', 'Repo review'),
-] + ([('versions.html', 'Earlier versions')] if os.environ.get('ROOT_MODE') else [])
+NAV_GROUPS = [
+    ('Start', [
+        (HOME, 'Summary'),
+        ('brief.html', 'Attorney and CPA brief'),
+        ('timeline.html', 'Deadlines timeline'),
+        ('glossary.html', 'Glossary'),
+    ]),
+    ('Decide', [
+        ('decision.html', 'Decision'),
+        ('what-if.html', 'What-if controls'),
+        ('black-swan.html', 'Black swan'),
+        ('phased.html', 'Phased investing'),
+    ]),
+    ('Facts', [
+        ('projections.html', 'Year by year'),
+        ('process.html', 'Process'),
+        ('law.html', 'Law'),
+        ('estate-cash.html', 'Cash and estate tax'),
+        ('costs.html', 'Insurance and costs'),
+    ]),
+    ('Review', [
+        ('questions.html', 'Questions to answer'),
+        ('suggestions.html', 'Suggestions'),
+        ('flagged.html', 'Flagged for Review'),
+    ]),
+    ('Evidence', [
+        ('sources.html', 'Sources and method'),
+        ('verification.html', 'Verification'),
+        ('requirements.html', 'Requirements'),
+        ('review.html', 'Repo review'),
+    ] + ([('versions.html', 'Earlier versions')] if os.environ.get('ROOT_MODE') else [])),
+]
+NAV = [item for _, items in NAV_GROUPS for item in items]
+
+
+def nav_html(slug):
+    out = []
+    for gname, items in NAV_GROUPS:
+        here = any(h == slug for h, _ in items)
+        links = ''.join('<a href="%s"%s>%s</a>' % (h, ' class="on" aria-current="page"' if h == slug else '', t) for h, t in items)
+        out.append('<details class="grp"%s><summary>%s</summary><div class="grpitems">%s</div></details>' % (' open' if here else '', gname, links))
+    return ''.join(out)
 
 
 def page(slug, title, lead, body):
@@ -204,6 +230,7 @@ def build_index():
     by = M['by_T']
     cards = ''.join([
         kpi('Best financial outcome (conditional)', 'Sell Property A, keep Property B', 'ahead in the baseline; across 50 real historical sequences it leads in %d after 10 years and in %d after 20 - a model result on the assumptions flagged %s and %s, not a verified forecast' % (RH['10']['wins']['sell'], RH['20']['wins']['sell'], flag('A01'), flag('A02'))),
+        kpi('Reinvestment risk, beside the headline', EXTRAS.bills_gap_text() + ' in 2076, nominal', 'the sell path if the proceeds stayed in Treasury bills instead of stocks; computed from the same model, see <a href="what-if.html">What-if controls</a>'),
         kpi('Property A at inheritance (%d)' % T, m(B['fmv_T']), 'from %s today at 4.0%% a year (assumption)' % m(P['cup_value'])),
         kpi('Property A tax: today / if lived in / if rented', '%s / %s / %s' % (m(P['cup_tax_2025']), m(B['tax_live_T']), m(B['tax_rent_T'])), 'per year; first year after inheritance'),
         kpi('Property B tax advantage kept by not selling', m(sf_gap) + ' a year', 'difference between tax on market value and on the current assessed value'),
@@ -354,6 +381,52 @@ def build_index():
 
 
 # ====================================================================== decision
+
+def build_mixed_section():
+    """Mixed paths: live or rent for 5 or 10 years, then sell, beside the pure choices (session 59feaf6e).
+    Every figure is read from final/out/model.json (rounded to $10 by m())."""
+    BS = M['baseline']['summary']
+    MXB = M['mixed']['baseline']
+    MXN = M['mixed']['named']
+    rows = []
+    NAMED_SUM = {x['key']: x['summary'] for x in M['paths'] if 'summary' in x}
+    cols = [('Baseline', None), ('1929-1941 Depression at inheritance', 'depression_at_T'),
+            ('2007-2012 bust at inheritance', 'crash_at_T'), ('Japan-style stagnation at inheritance', 'japan_at_T')]
+
+    def cell(lbl, pure_key):
+        out = [lbl]
+        for name, pk in cols:
+            sumd = BS if pk is None else NAMED_SUM[pk]
+            out.append(m(sumd[pure_key]))
+        return out
+
+    rows.append(cell('Live in it, never sold', 'real_live') + [src('BOE-P19', 'BOE-HOX')])
+    rows.append(cell('Rent it out, never sold', 'real_rent') + [src('BOE-P19', 'IRS-P527')])
+    rows.append(cell('Sell and reinvest, all at once (main model)', 'real_sell') + [src('IRS-FAQ-INHERIT', 'TREASURY-NOV13')])
+    for first, lab, ids in (('live', 'Live in it', ('IRS-TC701', 'BOE-P19')), ('rent', 'Rent it out', ('IRS-P527', 'IRS-TC409', 'BOE-P19'))):
+        for yrs in (5, 10):
+            k = '%s%d' % (first, yrs)
+            r = ['%s for %d years, then sell' % (lab, yrs), m(MXB[k])]
+            for name, pk in cols[1:]:
+                r.append(m(MXN[pk][k]))
+            r.append(src(*ids))
+            rows.append(r)
+    main_t = table(['Choice (wealth in 2076, 2026 dollars)'] + [c[0] for c in cols] + ['Official basis'], rows, cls='num', tid='mixed',
+                   caption='Mixed paths beside the three pure choices, on the baseline and three stress paths',
+                   note='Mixed paths are constructions (flag %s), not forecasts. Living for five or ten years and then selling keeps the Proposition 19 and Section 121 treatment only while the Inheritor lives there; renting for those years means full reassessment and depreciation recapture on sale (%s).' % (flag('H03'), flag('H03')))
+    det = []
+    for k, lab in (('live5', 'Live 5 years, then sell'), ('live10', 'Live 10 years, then sell'), ('rent5', 'Rent 5 years, then sell'), ('rent10', 'Rent 10 years, then sell')):
+        d = M['mixed_detail'][k]
+        det.append([lab, str(d['year']), m(d['proceeds']), m(d['tax']), m(d['hold']), m(d['net']),
+                    src('IRS-TC701') if k.startswith('live') else src('IRS-TC409', 'IRS-P527')])
+    sale = table(['Mixed path, baseline', 'Sale at the end of', 'Proceeds of sale', 'Tax on the gain', 'Carrying cost in the sale year', 'Net cash into the account', 'Official basis'],
+                 det, cls='num yr', caption='Sale year and proceeds for each mixed path (nominal dollars)',
+                 note='Live-then-sell keeps the Section 121 exclusion (up to $250,000 for a single owner who lived in the home for two of the five years before sale). Rent-then-sell recaptures depreciation at up to 25% federal.')
+    return ('<h2>Mixed paths: live or rent for a while, then sell</h2>'
+            '<p class="lead">The brief asks for mixed paths, not only the three pure choices. These rows keep the same cash flows, rules and assumptions as the pure choices, and only change when the house is sold.</p>'
+            + main_t + sale)
+
+
 def build_decision():
     s = B
     at = table(['Item at inheritance in %d' % T, 'Amount', 'How it is worked out', 'Official basis'], [
@@ -623,7 +696,8 @@ def build_blackswan():
     ], caption='Shocks that no price history captures')
     body = ("""<p class="callout">This section is kept apart from the baseline on purpose. The baseline uses constant rates so that the three choices can be compared cleanly. Here nothing is constant: every path uses real recorded years, in their real order, for inflation, local home prices, stocks, bonds and bills. Read the provenance table first: official statistics, the academic return dataset and the hypothetical constructions below are three different kinds of material.</p>"""
             + prov + rep + named + '<h2>Property A market value in 2026 dollars under six paths</h2>' + ch + stats + other + yr + yr2 + hist)
-    body = body + build_phased_section()
+    body += ('<h2>Phased entry into stocks</h2><p>A separate test asks whether parking the sale proceeds in short Treasuries for 24 to 36 months, then moving them into stocks in equal annual tranches, softens the crash at entry in 1929 and 2007. '
+             'The answer is on the <a href="phased.html">Phased investing</a> page: in no entry year tested is the worst fall deeper than the lump sum&rsquo;s, and the phased path ends higher than the lump sum in only a minority of entry years.</p>')
     page('black-swan.html', 'Black swan section: non-constant growth and inflation over 50 years',
          'What happens to the decision when inflation, home prices and markets behave the way they really have: in bursts, busts and long flat stretches.', body)
 
@@ -649,7 +723,6 @@ def build_process():
         ['16', 'Throughout', 'Leave Property B exactly as it is: same owner, same exemption or rental status.', 'Any transfer of Property B could trigger its own reassessment; nothing about the inheritance requires one.', src('BOE-P19', 'SF-TAX')],
     ], caption='Steps and deadlines for Property A')
     body = steps + '<p class="note">Deadlines are quoted from the linked statutes and agency pages as read on %s and re-checked on %s. Forms and county procedures change; confirm each one with the county office and the attorney handling the trust.</p>' % (REGISTER_DATE, BUILD_DATE)
-    body = timeline_html() + body
     page('process.html', 'Step-by-step process for the inherited home',
          'What has to be done, by whom and by when, from today through the first tax return after the inheritance.', body)
 
@@ -1588,7 +1661,7 @@ def build_flagged():
         ('P', 'Privacy decisions'),
         ('U', 'Values that could not be confirmed on an official page (left blank)'),
         ('A', 'Model assumptions (no official figure exists)'),
-        ('H', 'Phased-entry, mixed-path and what-if assumptions'),
+        ('H', 'Mixed-path assumptions (live or rent, then sell)'),
         ('S', 'Irregularities in sources'),
         ('R', 'Irregularities in the repository'),
     ]
@@ -1979,6 +2052,14 @@ header.top .wrap{display:flex;flex-wrap:wrap;align-items:center;gap:6px 18px;pad
 nav{display:flex;flex-wrap:wrap;gap:2px}
 nav a{color:#d5e1ee;text-decoration:none;padding:5px 9px;border-radius:5px;font-size:14px}
 nav a:hover{background:#21405f}nav a.on{background:#fff;color:#12283f;font-weight:600}
+nav details.grp{position:relative}nav details.grp>summary{list-style:none;cursor:pointer;color:#fff;padding:5px 9px;border-radius:5px;font-size:14px;font-weight:600}
+nav details.grp>summary::-webkit-details-marker{display:none}nav details.grp>summary::after{content:' \\25BE';font-size:11px}
+nav details.grp[open]>summary,nav details.grp>summary:hover{background:#21405f}
+nav .grpitems{position:absolute;left:0;top:100%;margin-top:4px;background:#12283f;border-radius:6px;padding:6px;min-width:220px;display:flex;flex-direction:column;box-shadow:0 6px 18px rgba(0,0,0,.25);z-index:9}
+nav .grpitems a{white-space:nowrap}
+.ctrl{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;margin:10px 0 16px}.ctrl label{font-size:14px;display:flex;flex-direction:column;gap:4px}.ctrl select{font:inherit;padding:6px;border:1px solid var(--line);border-radius:6px;background:#fff}
+.glossary dl{margin:0}.gl{border-bottom:1px solid var(--line);padding:9px 0}.gl dt{font-weight:700}.gl dd{margin:2px 0 0 0}.gsrc{font-size:13px;color:var(--mut)}
+ol.timeline{list-style:none;padding:0;margin:14px 0;border-left:3px solid var(--acc)}ol.timeline li{padding:6px 0 10px 16px;position:relative}ol.timeline li::before{content:'';position:absolute;left:-8px;top:12px;width:13px;height:13px;border-radius:50%;background:var(--acc)}.tlwhen{font-weight:700}.tlwhat{color:var(--ink)}
 h1{font-size:30px;line-height:1.2;margin:28px 0 8px}h2{font-size:21px;margin:34px 0 10px}
 .lead{font-size:18px;color:var(--mut);max-width:900px;margin:0 0 20px}
 .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin:18px 0}
@@ -2064,10 +2145,15 @@ JS = """
 NAV_CARDS = [
     ('Start here', [
         ('summary.html', 'Executive summary', 'the answer, the numbers behind it, and the six steps of the plan'),
+        ('brief.html', 'Attorney and CPA brief', 'a one-page printable sheet with the figures, questions and deadlines for the two advisers'),
+        ('timeline.html', 'Deadlines timeline', 'every step counted from the date of death, in order, with its official source'),
+        ('glossary.html', 'Glossary', 'plain-English meanings of the terms, each linked to its official page'),
         ('decision.html', 'Decision analysis', 'live, rent or sell: cash flows, after-tax wealth, sensitivities, break-even points'),
     ]),
     ('Money and projections', [
         ('projections.html', 'Year by year, 2026-2076', 'value, assessed value, property tax, insurance, water, electricity, repairs'),
+        ('what-if.html', 'What-if controls', 'change growth, stock return, rent or inflation; reinvestment risk shown beside the headline'),
+        ('phased.html', 'Phased investing', 'parking the proceeds for 24 to 36 months before stocks, tested on the 1929, 1937, 2000 and 2007 entries'),
         ('black-swan.html', 'Black swan', '50 replays of the real 1976-2025 record and named crisis paths'),
         ('costs.html', 'Insurance and running costs', 'what is quoted, what is assumed, and what is still unconfirmed'),
         ('estate-cash.html', 'Cash and estate tax', 'the threshold at each level, the room before tax, and projections'),
@@ -2135,7 +2221,9 @@ def build_home_choice():
     unpublished; that boundary is recorded as review item G02 so the owner can
     still choose the narrower setting.
     """
-    nav = nav_html('index.html', front=True)
+    nav_items = [('index.html', 'Home')] + NAV
+    nav = ''.join('<a href="%s"%s>%s</a>' % (
+        h, ' class="on" aria-current="page"' if h == 'index.html' else '', t) for h, t in nav_items)
 
     kpis = ''.join([
         kpi('Best financial outcome (conditional)', 'Sell Property A, keep Property B',
@@ -2162,29 +2250,9 @@ def build_home_choice():
         out.append('</div></section>')
         return ''.join(out)
 
-    be_ = M['breakeven']
-    c08_lump, d29_lump = PH_N['crash_at_T']['lump'], PH_N['depression_at_T']['lump']
-    head2 = ('<section class="headline2"><div class="hbox"><h3>Best financial outcome (conditional)</h3>'
-             '<p>Sell Property A and reinvest all at once: <strong>%s</strong> in 2026 dollars in 2076 (baseline). Renting gives %s and living there %s. Model result on flagged assumptions (%s, %s), not a forecast.</p></div>'
-             '<div class="hbox"><h3>Reinvestment risk, beside the headline</h3>'
-             '<p>If a 2008-type bust begins in the inheritance year, the all-at-once result falls to <strong>%s</strong> (%s). In a 1929-type Depression it falls to <strong>%s</strong> (%s). Parking for 24 months ends at %s and %s on those two paths.</p></div></section>') % (
-        m(B['real_sell']), m(B['real_rent']), m(B['real_live']), flag('A01'), flag('A02'),
-        m(c08_lump), pc(c08_lump / PH_B['lump'] - 1, 0), m(d29_lump), pc(d29_lump / PH_B['lump'] - 1, 0),
-        m(PH_N['crash_at_T']['park24']), m(PH_N['depression_at_T']['park24']))
-    what = table(['What would change the answer', 'The threshold or fact', 'Why it matters', 'Official basis'], [
-        ['Is Property A inside the Transferor\'s gross estate? (%s)' % flag('Q01'), 'Yes (basis resets) assumed', 'Without the reset, a sale is taxed on decades of gain and most of the case for selling disappears.', src('RR-2023-2', 'IRS-FAQ-INHERIT')],
-        ['Will the Inheritor live in Property A? (%s, %s)' % (flag('Q15'), flag('H03')), 'Lived-in path is the alternative', 'Decides the Proposition 19 relief and the Section 121 exclusion on a later sale.', src('BOE-P19', 'IRS-TC701')],
-        ['Stock return on the proceeds', 'Renting beats selling only below %s a year' % pc(be_['r_stock_rent_vs_sell']), 'The sale pays off only if the reinvested money earns more than the house.', src('TREASURY-NOV13', 'DAMODARAN')],
-        ['Where a crash lands after the sale', 'Parking 24 months helps only if the bust lands inside the park window', 'Phasing is insurance with a premium: all-at-once wins in %d of 50 real histories.' % M['phased']['replay_wins']['lump'], src('TREASURY-NOV13', 'SEC-DCA')],
-    ], cls='', caption='What would change the answer (the full list is on the Decision and Black swan pages)')
     body = ''.join([
-        head2,
-        '<h2>What would change the answer</h2>' + what,
         '<section class="kpis">%s</section>' % kpis,
         group('1. Decide', [
-            ('brief.html', 'Attorney &amp; CPA briefing sheet', 'One printable page for the estate attorney and the tax adviser: the figures to confirm, the questions for each, and the deadlines.'),
-            ('what-if.html', 'What-if controls', 'Change home prices, stock returns, rent and the parking yield; the best choice and the reinvestment risk update together.'),
-            ('glossary.html', 'Glossary', 'Every term used on the site in plain language, each with its official source.'),
             ('summary.html', 'Executive summary', 'The whole brief in one page: the best plan, '
              'the numbers behind it, and what would change the answer.'),
             ('decision.html', 'Live in it, rent it, or sell', 'Cash flows, after-tax wealth, '
@@ -2256,410 +2324,16 @@ def build_home_choice():
     open(os.path.join(OUT, 'index.html'), 'w').write(scrub(doc))
 
 
-# ====================================================================== session 59feaf6e additions
-# Grouped navigation, phased-entry and mixed-path sections, what-if controls, glossary, printable brief.
-# Every figure below is read from final/out/model.json (rounded to $10 by m()); nothing is typed in by hand.
-NAV_GROUPS = [
-    ('Start', [(HOME, 'Summary'), ('brief.html', 'Attorney &amp; CPA brief'), ('glossary.html', 'Glossary')]),
-    ('Decide', [('decision.html', 'Decision'), ('what-if.html', 'What-if controls'), ('questions.html', 'Questions to answer'),
-                ('suggestions.html', 'Suggestions')]),
-    ('Money and time', [('projections.html', 'Year by year'), ('black-swan.html', 'Black swan'),
-                        ('process.html', 'Process and timeline'), ('estate-cash.html', 'Cash and estate tax'),
-                        ('costs.html', 'Insurance and costs')]),
-    ('Rules and evidence', [('law.html', 'Law'), ('sources.html', 'Sources and method'), ('verification.html', 'Verification'),
-                            ('requirements.html', 'Requirements'), ('review.html', 'Repo review')]),
-    ('Open items', [('flagged.html', 'Flagged for Review')] + ([('versions.html', 'Earlier versions')] if ROOT_MODE else [])),
-]
-
-
-def nav_html(current, front=False):
-    """Grouped header menu. The front door labels its first link Home and points it at index.html."""
-    groups = []
-    for gname, items in NAV_GROUPS:
-        links = []
-        for h, t in items:
-            if front and h == HOME:
-                h, t = 'index.html', 'Home'
-            links.append('<a href="%s"%s>%s</a>' % (h, ' class="on" aria-current="page"' if h == current else '', t))
-        groups.append('<div class="navgroup"><span class="navlabel">%s</span>%s</div>' % (gname, ''.join(links)))
-    return ''.join(groups)
-
-
-def write_page(slug, doc):
-    open(os.path.join(OUT, slug), 'w').write(scrub(doc))
-
-
-PH_B = M['phased']['baseline']
-PH_N = M['phased']['named']
-PH_R = M['phased']
-MX_B = M['mixed']['baseline']
-MX_N = M['mixed']['named']
-CT = M['crash_timing']
-WI = M['whatif']
-NAMED = {x['key']: x for x in M['paths']}
-BASE_S = M['baseline']['summary']
-MIX_DETAIL = M['mixed_detail']
-
-
-def _diff(a, b):
-    return m(a - b)
-
-
-def _named_row(label, d, ids):
-    return [label, m(d['proceeds']), m(d['lump']), m(d['park24']), m(d['park36']),
-            _diff(d['park24'], d['lump']), _diff(d['park36'], d['lump']), src(*ids)]
-
-
-def build_phased_section():
-    named_rows = [
-        _named_row('Baseline (constant rates, inheritance in %d)' % T, PH_B, ('TREASURY', 'BLS-CPI')),
-        _named_row('2007-2012 bust starting in the inheritance year (2008 is the worst year)', PH_N['crash_at_T'], ('FHFA-SJ', 'BLS-CPI', 'DAMODARAN')),
-        _named_row('1929-1941 Depression sequence starting in the inheritance year (national data)', PH_N['depression_at_T'], ('DAMODARAN', 'BLS-CPI')),
-        _named_row('2000-2009 lost decade for stocks starting in the inheritance year', PH_N['lost_decade_at_T'], ('DAMODARAN', 'BLS-CPI')),
-        _named_row('Japan-style stagnation starting in the inheritance year', PH_N['japan_at_T'], ('FRED-JP',)),
-        _named_row('1990-1996 California housing slump starting in the inheritance year', PH_N['slump_at_T'], ('FHFA-SJ', 'DAMODARAN')),
-        _named_row('1977-1982 inflation years starting in the inheritance year', PH_N['stagflation_at_T'], ('BLS-CPI', 'FHFA-SJ')),
-    ]
-    named = table(['Path (inheritance year = %d)' % T, 'Net proceeds at inheritance', 'All at once', 'Park 24 months, then phase in over 12',
-                   'Park 36 months, then phase in over 12', 'Park 24 minus all at once', 'Park 36 minus all at once', 'Official basis'],
-                  named_rows, cls='num', tid='phased-named',
-                  caption='Entry test on the named paths: wealth in 2076, in 2026 dollars, after tax',
-                  note='A positive difference means phasing ends with more wealth than entering all at once. Each row is a constructed path (not a forecast), and the same monthly engine runs every column, so only the entry timing differs.')
-    tim_rows = []
-    for x in CT:
-        lab = {'c08': '2007-2012 bust (2008 is the worst year)', 'd29': '1929-1941 Depression sequence (national data)'}[x['tag']]
-        when = '%d (inheritance year)' % x['year'] if x['offset'] == 0 else '%d (+%d years)' % (x['year'], x['offset'])
-        ids = ('FHFA-SJ', 'BLS-CPI', 'DAMODARAN') if x['tag'] == 'c08' else ('DAMODARAN', 'BLS-CPI')
-        tim_rows.append([lab, when, m(x['sell']), m(x['lump']), m(x['park24']), m(x['park36']),
-                         _diff(x['park24'], x['lump']), _diff(x['park36'], x['lump']), src(*ids)])
-    timing = table(['Crash path', 'Bust begins in', 'Sell and reinvest, main model', 'All at once (same engine)', 'Park 24 months, then phase in',
-                    'Park 36 months, then phase in', 'Park 24 minus all at once', 'Park 36 minus all at once', 'Official basis'],
-                   tim_rows, cls='num', tid='phased-timing',
-                   caption='Where the crash lands decides whether parking helps: wealth in 2076, 2026 dollars',
-                   note='The main-model sell figure starts investing at mid-year, as does the monthly engine; the two agree within about 0.5% on the same path. Parking helps when the bust lands inside the park window, and costs money when it lands later, because the stock sleeve then buys in after the fall and the parked cash earns bill rates in the meantime.')
-    rw = M['phased']['replay_wins']
-    rep = table(['Across the 50 real histories (1976-2025 starts)', 'All at once', 'Park 24 months, then phase in', 'Park 36 months, then phase in', 'Official basis'], [
-        ['Histories in which this entry ends with the most wealth (of 50)', str(rw['lump']), str(rw['park24']), str(rw['park36']), src('FHFA-SJ', 'BLS-CPI') + ' · ' + src('DAMODARAN')],
-        ['Median difference from all at once, 2026 dollars', '-', _diff(PH_R['replay_gap24']['median'], 0), _diff(PH_R['replay_gap36']['median'], 0), src('FHFA-SJ', 'BLS-CPI') + ' · ' + src('DAMODARAN')],
-        ['Worst difference from all at once', '-', _diff(PH_R['replay_gap24']['worst'], 0), _diff(PH_R['replay_gap36']['worst'], 0), src('FHFA-SJ', 'BLS-CPI') + ' · ' + src('DAMODARAN')],
-        ['Best difference from all at once', '-', _diff(PH_R['replay_gap24']['best'], 0), _diff(PH_R['replay_gap36']['best'], 0), src('FHFA-SJ', 'BLS-CPI') + ' · ' + src('DAMODARAN')],
-    ], cls='num', caption='The same comparison across every start year of the real record',
-        note='The 50 histories are constructions that keep the real year-to-year order from each start year (flag S02 on the black swan page). Over the real 1976-2025 record, United States stocks compounded faster than bills, so parking usually cost wealth; that is why all-at-once entry wins in most histories.')
-    rules = table(['Assumption in the phased test', 'Value used', 'Flag', 'Official basis'], [
-        ['Where the proceeds are parked', 'Three-month to two-year Treasury securities, modelled at the path\'s three-month bill return. On 13 Nov 2026 the official curve read 4.32% for three months and 4.88% for two years.', flag('H01'), src('TREASURY-NOV13')],
-        ['Phase-in', 'Equal monthly purchases of stock over 12 months, starting after the park period (24 or 36 months)', flag('H02'), src('SEC-DCA')],
-        ['When the proceeds arrive', 'Mid-year of the inheritance year, net of selling costs and the carrying cost, as in the main model', flag('H03'), src('IRS-FAQ-INHERIT')],
-        ['Taxes', 'Interest taxed each month at ordinary rates; dividends at the qualified rate; capital gain at liquidation at the end of 2076', '-', src('IRS-TC409', 'IRS-TC559')],
-        ['Check against the main model', 'All-at-once entry on the baseline: %s, against %s for the main-model sell result (2026 dollars)' % (m(PH_B['lump']), m(BASE_S['real_sell'])), '-', src('BLS-CPI')],
-    ], caption='Assumptions behind the phased-entry test', cls='')
-    answer = ('<p class="callout"><strong>Answer on the current assumptions.</strong> Parking the sale proceeds does soften entry risk in the crash paths the brief names. '
-              'If a 1929-type Depression starts in the inheritance year, parking for 24 months ends with %s against %s for an all-at-once entry, and parking for 36 months with %s. '
-              'If a 2008-type bust starts that year, the 24-month park ends with %s against %s. It is not free: on the baseline, where stocks compound faster than bills, the 24-month park ends with %s against %s, '
-              'and across the 50 real histories all-at-once entry ends ahead in %d of 50. The benefit depends on timing. A bust that lands two or more years after the inheritance is mostly missed by a 24-month park, and the parked cash then costs money. '
-              '<strong>Reinvestment risk:</strong> the all-at-once choice loses %s against the baseline in the 2008-type path and %s in the 1929-type path; that is the number to set beside the headline.</p>') % (
-        m(PH_N['depression_at_T']['park24']), m(PH_N['depression_at_T']['lump']), m(PH_N['depression_at_T']['park36']),
-        m(PH_N['crash_at_T']['park24']), m(PH_N['crash_at_T']['lump']),
-        m(PH_B['park24']), m(PH_B['lump']), rw['lump'],
-        m(PH_B['lump'] - PH_N['crash_at_T']['lump']), m(PH_B['lump'] - PH_N['depression_at_T']['lump']))
-    return ('<h2>Phased entry: park the proceeds for 24 or 36 months, then buy stocks</h2>'
-            '<p class="lead">The question is whether parking the sale proceeds in short Treasuries before buying stocks softens the risk of entering just before a crash.</p>'
-            + answer + named + timing + rep + rules)
-
-
-def build_mixed_section():
-    def pure(key):
-        return NAMED[key]['summary'] if key in NAMED else None
-    dep, c08, jp = NAMED['depression_at_T']['summary'], NAMED['crash_at_T']['summary'], NAMED['japan_at_T']['summary']
-    rows = [
-        ['Live in it, never sold', m(BASE_S['real_live']), m(dep['real_live']), m(c08['real_live']), m(jp['real_live']), src('BOE-P19', 'BOE-HOX')],
-        ['Rent it out, never sold', m(BASE_S['real_rent']), m(dep['real_rent']), m(c08['real_rent']), m(jp['real_rent']), src('BOE-P19', 'IRS-P527')],
-        ['Sell and reinvest, all at once (main model)', m(BASE_S['real_sell']), m(dep['real_sell']), m(c08['real_sell']), m(jp['real_sell']), src('IRS-FAQ-INHERIT', 'TREASURY-NOV13')],
-    ]
-    for first, lab, ids in (('live', 'Live in it', ('IRS-TC701', 'BOE-P19')), ('rent', 'Rent it out', ('IRS-P527', 'IRS-TC409', 'BOE-P19'))):
-        for yrs in (5, 10):
-            k = '%s%d' % (first, yrs)
-            rows.append(['%s for %d years, then sell' % (lab, yrs), m(MX_B[k]), m(MX_N['depression_at_T'][k]), m(MX_N['crash_at_T'][k]),
-                         m(MX_N['japan_at_T'][k]), src(*ids)])
-    for pk, lab in (('park24', '24 months'), ('park36', '36 months')):
-        rows.append(['Sell, park %s, then phase in over 12 months' % lab, m(PH_B[pk]), m(PH_N['depression_at_T'][pk]), m(PH_N['crash_at_T'][pk]),
-                     m(PH_N['japan_at_T'][pk]), src('TREASURY-NOV13', 'SEC-DCA')])
-    main = table(['Choice (wealth in 2076, 2026 dollars)', 'Baseline', '1929-1941 Depression at inheritance', '2007-2012 bust at inheritance',
-                  'Japan-style stagnation at inheritance', 'Official basis'], rows, cls='num', tid='mixed',
-                 caption='Mixed paths beside the three pure choices, on the baseline and three stress paths',
-                 note='The phased rows use the monthly engine from the black swan page, which agrees with the main sell result to about 0.5%%. Mixed paths are constructions (flag %s). Living for five or ten years and then selling keeps the Proposition 19 relief only while the Inheritor lives there; renting for those years means full reassessment (%s).' % (flag('H03'), flag('H03')))
-    det = []
-    for k, lab in (('live5', 'Live 5 years, then sell'), ('live10', 'Live 10 years, then sell'), ('rent5', 'Rent 5 years, then sell'), ('rent10', 'Rent 10 years, then sell')):
-        d = MIX_DETAIL[k]
-        det.append([lab, str(d['year']), m(d['proceeds']), m(d['tax']), m(d['hold']), m(d['net']),
-                    src('IRS-TC701') if k.startswith('live') else src('IRS-TC409', 'IRS-P527')])
-    sale = table(['Mixed path, baseline', 'Sale at the end of', 'Proceeds of sale', 'Tax on the gain', 'Carrying cost in the sale year', 'Net cash into the account', 'Official basis'],
-                 det, cls='num yr', caption='Sale year and proceeds for each mixed path (nominal dollars)',
-                 note='Live-then-sell keeps the Section 121 exclusion (up to $250,000 for a single owner who lived in the home for two of the five years before sale). Rent-then-sell recaptures depreciation at up to 25% federal.')
-    return ('<h2>Mixed paths: live or rent for a while, then sell</h2>'
-            '<p class="lead">The brief asks for mixed paths, not only the three pure choices. These rows keep the same cash flows, rules and assumptions as the pure choices, and only change when the house is sold.</p>'
-            + main + sale)
-
-
-CRASH_NOTE = ('The what-if page applies the same rules to any combination of its four controls.')
-
-
-def build_whatif():
-    cells = WI['cells']
-    labs = WI['labels']
-    AX = WI['axes']
-    opts = {
-        'g': [(AX['home_growth'][0], '3% a year'), (AX['home_growth'][1], '4% a year (baseline)'), (AX['home_growth'][2], '5% a year')],
-        's': [(AX['stock_return'][0], '5% a year'), (AX['stock_return'][1], '7% a year (baseline)'), (AX['stock_return'][2], '10% a year')],
-        'rent': [(AX['rent'][0], '$%s a month (HUD 3-bedroom)' % format(AX['rent'][0], ',')),
-                 (AX['rent'][1], '$%s a month (HUD 4-bedroom, baseline)' % format(AX['rent'][1], ',')),
-                 (AX['rent'][2], '$%s a month (30%% above HUD 4-bedroom)' % format(AX['rent'][2], ','))],
-        'b': [(AX['park_return'][0], '3.50% (model assumption, baseline)'), (AX['park_return'][1], '4.32% (official 3-month, 13 Nov 2026)')],
-    }
-    default = dict(g=0.04, s=0.07, rent=6390, b=0.035)
-    sel_html = []
-    for key, title in (('g', labs['home_growth']), ('s', labs['stock_return']), ('rent', labs['rent']), ('b', labs['park_return'])):
-        sel_html.append('<label class="wi">%s<select id="wi-%s">%s</select></label>' % (
-            e(title), key, ''.join('<option value="%r"%s>%s</option>' % (v, ' selected' if abs(float(v) - float(default[key])) < 1e-9 else '', e(t))
-                                   for v, t in opts[key])))
-    cell = [c for c in cells if abs(c['g'] - default['g']) < 1e-9 and abs(c['s'] - default['s']) < 1e-9
-            and c['rent'] == default['rent'] and abs(c['b'] - default['b']) < 1e-9][0]
-    choices = [('live', 'Live in it, never sold', 'live', 'c08_live', 'd29_live'),
-               ('rent_now', 'Rent it out, never sold', 'rent_now', 'c08_rent', 'd29_rent'),
-               ('lump', 'Sell and reinvest, all at once', 'lump', 'c08_lump', 'd29_lump'),
-               ('live5', 'Live 5 years, then sell', 'live5', 'c08_live5', 'd29_live5'),
-               ('live10', 'Live 10 years, then sell', 'live10', 'c08_live10', 'd29_live10'),
-               ('rent5', 'Rent 5 years, then sell', 'rent5', 'c08_rent5', 'd29_rent5'),
-               ('rent10', 'Rent 10 years, then sell', 'rent10', 'c08_rent10', 'd29_rent10'),
-               ('park24', 'Sell, park 24 months, then phase in', 'park24', 'c08_park24', 'd29_park24'),
-               ('park36', 'Sell, park 36 months, then phase in', 'park36', 'c08_park36', 'd29_park36')]
-    trs = ''.join('<tr data-k="%s"><td>%s</td><td data-c="base">%s</td><td data-c="c08">%s</td><td data-c="d29">%s</td></tr>' % (
-        k, e(lab), m(cell[a]), m(cell[b_]), m(cell[c_])) for k, lab, a, b_, c_ in choices)
-    best = max(choices, key=lambda t: cell[t[2]])
-    rr_c08 = cell['lump'] - cell['c08_lump']
-    rr_d29 = cell['lump'] - cell['d29_lump']
-    static_head = ('<strong>%s</strong> gives the most wealth under these controls: %s in 2026 dollars.' % (e(best[1]), m(cell[best[2]])))
-    static_risk = ('All at once loses <strong>%s</strong> (%s) if a 2008-type bust begins in the inheritance year, and <strong>%s</strong> (%s) in a 1929-type Depression. '
-                   'Parking for 24 months changes those two results by %s and %s.') % (
-        m(cell['lump'] - cell['c08_lump']), pc(cell['c08_lump'] / cell['lump'] - 1, 0), m(cell['lump'] - cell['d29_lump']),
-        pc(cell['d29_lump'] / cell['lump'] - 1, 0), m(cell['c08_park24'] - cell['c08_lump']), m(cell['d29_park24'] - cell['d29_lump']))
-    # The page reads the grid in the browser; the static version above is the same cell, so the page works without JavaScript.
-    data = dict(cells=[{k: (r10(v) if isinstance(v, float) and abs(v) > 100 else v) for k, v in c.items()} for c in cells])
-    js = """
-(function(){
-  var D = JSON.parse(document.getElementById('wi-data').textContent);
-  var choices = %s;
-  function fm(v){ var r = Math.round(v/10)*10; return (r<0?'-$':'$') + Math.abs(r).toLocaleString('en-US'); }
-  function pc(v){ return (v*100).toFixed(0) + '%%'; }
-  function sel(k){ return document.getElementById('wi-' + k); }
-  function find(){
-    var g = parseFloat(sel('g').value), s = parseFloat(sel('s').value), rt = parseInt(sel('rent').value,10), b = parseFloat(sel('b').value);
-    for (var i = 0; i < D.cells.length; i++) { var c = D.cells[i];
-      if (Math.abs(c.g-g)<1e-9 && Math.abs(c.s-s)<1e-9 && c.rent===rt && Math.abs(c.b-b)<1e-9) return c; }
-    return null;
-  }
-  function render(){
-    var c = find(); if (!c) return;
-    var best = null;
-    choices.forEach(function(t){ if (!best || c[t[2]] > c[best[2]]) best = t; });
-    document.getElementById('wi-best').innerHTML = '<strong>' + best[1] + '</strong> gives the most wealth under these controls: ' + fm(c[best[2]]) + ' in 2026 dollars.';
-    document.getElementById('wi-risk').innerHTML = 'All at once loses <strong>' + fm(c.lump - c.c08_lump) + '</strong> (' + pc(c.c08_lump/c.lump - 1) + ') if a 2008-type bust begins in the inheritance year, and <strong>' + fm(c.lump - c.d29_lump) + '</strong> (' + pc(c.d29_lump/c.lump - 1) + ') in a 1929-type Depression. Parking for 24 months changes those two results by ' + fm(c.c08_park24 - c.c08_lump) + ' and ' + fm(c.d29_park24 - c.d29_lump) + '.';
-    choices.forEach(function(t){
-      var tr = document.querySelector('tr[data-k="' + t[0] + '"]');
-      tr.querySelector('[data-c="base"]').textContent = fm(c[t[2]]);
-      tr.querySelector('[data-c="c08"]').textContent = fm(c[t[3]]);
-      tr.querySelector('[data-c="d29"]').textContent = fm(c[t[4]]);
-    });
-  }
-  ['g','s','rent','b'].forEach(function(k){ sel(k).addEventListener('change', render); });
-})();
-""" % json.dumps([[t[0], t[1], t[2], t[3], t[4]] for t in choices])
-    body = ('<p class="callout"><strong>What this page does.</strong> The four controls pick one of %d combinations that the model has already run in full. '
-            'No value is calculated in the browser beyond a lookup, so every figure is traceable to the model run. The controls show the range the brief asked for: '
-            'home prices, stock returns, Property A rent and the parking yield each take three or two values, and the baseline is the middle value (the parking yield baseline is the model\'s 3.5%% assumption). '
-            'These are constructions for comparison, not forecasts. Flags %s and %s apply.</p>') % (len(cells), flag('H01'), flag('A01'))
-    body += ('<form class="wi-controls" onsubmit="return false" aria-label="What-if controls">%s</form>' % ''.join(sel_html))
-    body += ('<section class="headline2" aria-live="polite">'
-             '<div class="hbox"><h3>Best under these controls (baseline path)</h3><p id="wi-best">%s</p></div>'
-             '<div class="hbox"><h3>Reinvestment risk, beside the headline</h3><p id="wi-risk">%s</p></div></section>') % (static_head, static_risk)
-    body += table(['Choice (wealth in 2076, 2026 dollars)', 'Baseline path', '2007-2012 bust at inheritance', '1929-1941 Depression at inheritance', 'Official basis'],
-                  [[lab, m(cell[a]), m(cell[b_]), m(cell[c_]), src('FHFA-SJ', 'BLS-CPI') if k in ('live', 'rent_now', 'lump') else src('TREASURY-NOV13', 'DAMODARAN')]
-                   for k, lab, a, b_, c_ in choices],
-                  cls='num', tid='wi-table', caption='Result for the selected controls',
-                  note='The "All at once" row uses the same monthly engine as the two phased rows, so the difference from them is the entry timing. The main-model sell figure is within about 0.5% of it.')
-    body += ('<script type="application/json" id="wi-data">%s</script><script>%s</script>'
-             % (json.dumps(data, separators=(',', ':')).replace('</', '<\\/'), js))
-    body += ('<p class="note">Grid: home prices 3, 4 and 5%% a year; stocks 5, 7 and 10%% a year; Property A rent $5,870, $6,390 and $8,310 a month; parking yield 3.50%% and 4.32%%. '
-             'Every cell is a full model run (%d cells). Values outside these settings are not shown, because they would have to be calculated, not looked up.</p>') % len(cells)
-    page('what-if.html', 'What-if controls: change the assumptions and see the answer move',
-         'Pick a home-price path, a stock return, a rent and a parking yield. The best choice, the wealth figures and the reinvestment risk update together, with no value outside the model grid.', body)
-
-
-GLOSSARY = [
-    ('Basis (stepped-up basis)', 'The starting value used to measure taxable gain on a sale. For inherited property it is generally the fair market value on the date of death.', 'Sell and reinvest; the basis reset (question Q01)', src('IRS-FAQ-INHERIT')),
-    ('Gross estate', 'Everything the person owned at death that counts toward the federal estate tax. Whether the home is inside it decides the basis reset.', 'Question Q01; the process steps', src('IRS-ESTATE')),
-    ('Federal basic exclusion amount', 'The amount each person can pass without federal estate tax: $15,000,000 for 2026 and $15,480,000 for 2027.', 'Cash and estate tax page', src('IRS-NEW', 'RP-2026-35')),
-    ('Portability', 'A surviving spouse can use a deceased spouse\'s unused exclusion, but only if a timely estate tax return is filed.', 'Question Q02', src('IRS-FAQ-ESTATE')),
-    ('Form 706 and Form 4768', 'The federal estate tax return is due nine months after death. Form 4768 gives six more months.', 'Process step 8', src('IRS-I706', 'IRS-FAQ-ESTATE')),
-    ('Proposition 13 assessed value', 'The taxable value for property tax. It starts from the last change in ownership and rises by no more than 2% a year (or inflation, if lower).', 'Both properties', src('RTC-51')),
-    ('Change in ownership', 'A transfer that triggers reassessment. For a revocable trust the change-in-ownership date is the date of death.', 'Process steps 4 and 7', src('BOE-RULE-462.260')),
-    ('Proposition 19 parent-child exclusion', 'Lets a child keep most of the parent\'s assessed value, only if the child makes the home a principal residence and files the claim on time.', 'Lived-in path (Property A)', src('BOE-P19')),
-    ('Base year value (taxable value)', 'The assessed value carried into the new ownership before any Proposition 19 adjustment.', 'Lived-in path (Property A)', src('BOE-LTA-2026-026')),
-    ('Value limit ($1,044,586)', 'The amount above the base year value that Proposition 19 still excludes for transfers from 16 Feb 2025 to 15 Feb 2027. It is adjusted every two years.', 'Lived-in path (Property A)', src('BOE-LTA-2025-009')),
-    ('Homeowners\' exemption', 'The reduction of $7,000 in assessed value for an owner-occupied principal residence.', 'Process steps 2 and 10', src('BOE-HOX')),
-    ('Principal residence', 'The home where the owner lives most of the time. Several rules (exclusion, exemption, Section 121) depend on it.', 'Question Q15', src('RTC-63.2')),
-    ('Section 121 exclusion', 'Up to $250,000 of gain ($500,000 for joint filers) is excluded when the home was the owner\'s residence for two of the five years before sale.', 'Live-then-sell mixed path', src('IRS-TC701')),
-    ('Depreciation recapture', 'Depreciation claimed on rented property is taxed when the property is sold, at up to 25% federal.', 'Rent-then-sell mixed path; process step 14', src('IRS-TC409', 'IRS-P527')),
-    ('Net investment income tax', 'A 3.8% tax on certain investment income, including rent and gains, above income thresholds.', 'Every choice that earns income', src('IRS-TC559')),
-    ('Capital gains rates (0%, 15%, 20%)', 'Federal tax rates on long-term gains, set by taxable income.', 'Sale of the home and the stock portfolio', src('IRS-TC409')),
-    ('Form 1041', 'The income tax return for a trust or estate with gross income above $600 in a year.', 'Process step 6', src('IRS-1041')),
-    ('Form 8971', 'The basis report that must match when estate tax is due and the property is later sold.', 'Process step 13', src('IRS-FAQ-INHERIT')),
-    ('Revocable and irrevocable trust (Rev. Rul. 2023-2)', 'Whether trust assets are in the gross estate decides whether they get the basis reset. Assets of an irrevocable grantor trust outside the estate get no reset.', 'Question Q01', src('RR-2023-2')),
-    ('Trust notice (Probate Code 16061.7)', 'The successor trustee must notify beneficiaries and heirs within 60 days of death, which starts the contest period.', 'Process step 5', src('PROB-16061.7')),
-    ('Net metering (solar credits)', 'The rules under which a solar system exports power and the utility credits it. Current tariffs decide how long a credit lasts.', 'Property A electricity line', src('CPUC-NEM')),
-    ('San Francisco rent control', 'Annual increases on covered units are capped by the Rent Board at a share of inflation.', 'Property B rent growth', src('SF-RENT-RULES')),
-    ('Statewide rent cap (Tenant Protection Act)', 'A statewide cap on annual rent increases for covered units, with exemptions.', 'Rent-it-out choice (Property A)', src('DOJ-TPA')),
-    ('Consumer Price Index (CPI)', 'The official measure of consumer inflation used for every path.', 'Every path', src('BLS-CPI')),
-    ('FHFA house price index', 'The official home-price index used for the historical replays of the Bay Area.', 'Black swan page', src('FHFA-SJ')),
-    ('Treasury par yield and 3-month bill', 'The yield on government securities. The parked proceeds earn a rate close to these yields.', 'Phased entry; what-if parking yield', src('TREASURY-NOV13')),
-    ('Dollar-cost averaging', 'Investing equal amounts at regular intervals, so that purchases are spread over time.', 'Phase-in after the park period', src('SEC-DCA')),
-    ('Phased entry (model term)', 'Parking the proceeds for 24 or 36 months in short Treasuries, then buying stocks in equal monthly steps over 12 months.', 'Black swan page; what-if page', src('TREASURY-NOV13', 'SEC-DCA')),
-    ('Mixed path (model term)', 'Living in, or renting, Property A for a fixed number of years and then selling it.', 'Decision page; what-if page', src('IRS-TC701', 'BOE-P19')),
-    ('Black swan path (model term)', 'A path in which inflation, home prices and stocks move in bursts, busts and long flat stretches instead of a constant rate. A stress test, not a forecast.', 'Black swan page', src('BLS-CPI')),
-    ('Reinvestment risk (model term)', 'The risk that sale proceeds are invested at a bad time, or earn less than assumed. Shown beside the headline and on the what-if page.', 'Front page; what-if page', src('TREASURY-NOV13')),
-]
-
-
-def build_glossary():
-    rows = [[t, d, w, s_] for t, d, w, s_ in GLOSSARY]
-    body = table(['Term', 'What it means', 'Where it matters on this site', 'Official basis'], rows,
-                 caption='Glossary: %d terms, each with the official page it comes from' % len(rows),
-                 note='Plain-language definitions for reading the site. They summarise the linked official pages and are not legal or tax advice. Terms marked "model term" are this analysis\'s own labels, and each one links the official source for the data it uses.')
-    page('glossary.html', 'Glossary: terms used on this site',
-         'Every term that matters for the decision, in plain language, with the official page it comes from.', body)
-
-
-def timeline_html():
-    items = [
-        ('Now', 'Settle the trust question and the homeowners\' exemption on Property A (steps 1 to 3). Take the attorney and CPA briefing sheet.', src('RR-2023-2', 'BOE-HOX')),
-        ('Date of death', 'Record the date and order an appraisal; the appraisal sets the new income-tax basis (step 4).', src('BOE-RULE-462.260', 'IRS-FAQ-INHERIT')),
-        ('Within 60 days', 'The successor trustee notifies beneficiaries and heirs, which starts the contest period (step 5).', src('PROB-16061.7')),
-        ('Within 150 days', 'Change-in-ownership statement for Property A to the county assessor (step 7).', src('RTC-480')),
-        ('Within 9 months', 'Form 706 if the estate is over the filing threshold, or to elect portability. Form 4768 adds six months (step 8).', src('IRS-FAQ-ESTATE', 'IRS-I706')),
-        ('Within 1 year, if moving in', 'Principal residence and the homeowners\' exemption on form BOE-266 (step 10).', src('RTC-63.2', 'BOE-PUB-800-1')),
-        ('Within 3 years, if moving in', 'Parent-child exclusion claim on form BOE-19-P, before any transfer to a third party (step 11).', src('BOE-P19', 'SCC-P19')),
-        ('Year of sale, and each rental year', 'Form 8949 and Schedule D if sold; rent, depreciation and reporting each year if rented (steps 13 and 14).', src('IRS-TC409', 'IRS-P527')),
-    ]
-    lis = ''.join('<li><b>%s</b><span>%s</span><small>%s</small></li>' % (e(a), e(b), c) for a, b, c in items)
-    return ('<h2>Timeline of the deadlines</h2><ol class="timeline" aria-label="Deadlines in order">%s</ol>'
-            '<p class="note">The same deadlines as the table below, in order. Each one links the official statute, form or agency page it comes from.</p>' % lis)
-
-
-def build_brief():
-    """One printable page for the estate attorney and the tax adviser (rounded figures; not advice)."""
-    B_ = BASE_S
-    fig = table(['Item (rounded to $10)', 'Figure', 'Status', 'Official basis'], [
-        ['Property A market value, Nov 2026 (owner estimate)', m(P['cup_value']), 'owner-supplied, unconfirmed %s' % flag('P03'), src('SCC-RATES')],
-        ['Property A assessed value, 2026 (owner)', m(P['cup_assessed']), 'owner-supplied %s' % flag('P03'), src('SCC-RATES')],
-        ['Property A property tax, 2025 (owner)', m(P['cup_tax_2025']), 'owner-supplied %s' % flag('P03'), src('SCC-RATES')],
-        ['Property B market value, Nov 2026 (owner estimate)', m(P['sf_value']), 'owner-supplied, unconfirmed %s' % flag('P03'), src('SF-TAX')],
-        ['Property B assessed value, 2025 (owner)', m(P['sf_assessed']), 'owner-supplied %s' % flag('P03'), src('SF-TAX')],
-        ['Property A value at inheritance (%d, model)' % T, m(B_['fmv_T']), 'model, 4.0%% a year assumption %s' % flag('A01'), src('FHFA-SJ')],
-        ['Federal basic exclusion, 2026 / 2027', '%s / %s' % (m(15000000), m(15480000)), 'official', src('IRS-NEW', 'RP-2026-35')],
-        ['Proposition 19 value limit, transfers to 15 Feb 2027 (official figure, not rounded)', '$1,044,586', 'official', src('BOE-LTA-2025-009')],
-        ['Homeowners\' exemption', m(7000), 'official', src('BOE-HOX')],
-        ['Section 121 exclusion, single owner', m(250000), 'official', src('IRS-TC701')],
-        ['Three-month Treasury yield, 13 Nov 2026', '4.32%', 'official', src('TREASURY-NOV13')],
-    ], cls='num', caption='Figures to confirm')
-    atty = ''.join('<li>%s %s</li>' % (q, src(*ids)) for q, ids in [
-        ('Will the trust-held Property A be in the Transferor\'s gross estate, so that the basis resets at death? %s' % flag('Q01'), ('RR-2023-2', 'IRS-FAQ-INHERIT')),
-        ('Was a Form 706 filed for a predeceased spouse, and can a portability election still be made? %s' % flag('Q02'), ('IRS-FAQ-ESTATE',)),
-        ('Does the trust transfer meet the Proposition 19 parent-child definitions, and who files BOE-19-P, and when? %s' % flag('Q06'), ('BOE-LTA-2026-026', 'BOE-PUB-800-1')),
-        ('Is Property A the Transferor\'s principal residence, with the homeowners\' exemption on file? %s' % flag('Q15'), ('BOE-HOX', 'RTC-63.2')),
-        ('Notice to beneficiaries within 60 days, and the contest period that follows.', ('PROB-16061.7',)),
-    ])
-    cpa = ''.join('<li>%s %s</li>' % (q, src(*ids)) for q, ids in [
-        ('Basis: is the date-of-death appraisal the basis, and is Form 8971 needed? Property B has no reset. %s' % flag('Q03'), ('IRS-FAQ-INHERIT',)),
-        ('Rental years: depreciation over 27.5 years, and recapture on sale at up to 25% federal.', ('IRS-P527', 'IRS-TC409')),
-        ('Lived-in path: the Section 121 two-of-five-years test before any sale.', ('IRS-TC701',)),
-        ('Net investment income tax on rent and gains above the thresholds.', ('IRS-TC559',)),
-        ('Parked proceeds: interest is taxed each year at ordinary rates; stock gains at sale.', ('IRS-TC409',)),
-        ('California: no estate or inheritance tax return for deaths since 2005; confirm the trust\'s state income reporting.', ('SCO-ESTATE',)),
-    ])
-    dl = table(['When', 'What', 'Official basis'], [
-        ['Within 60 days of death', 'Notice to beneficiaries and heirs', src('PROB-16061.7')],
-        ['Within 150 days of death', 'Change-in-ownership statement for Property A', src('RTC-480')],
-        ['Within 9 months of death', 'Form 706 if required or to elect portability; Form 4768 adds six months', src('IRS-FAQ-ESTATE', 'IRS-I706')],
-        ['Within 1 year, if moving in', 'Principal residence and homeowners\' exemption (BOE-266)', src('RTC-63.2', 'BOE-PUB-800-1')],
-        ['Within 3 years, if moving in', 'Parent-child exclusion claim (BOE-19-P)', src('BOE-P19')],
-    ], cls='', caption='Deadlines')
-    head = ('<div class="brief-head"><div><h1>Attorney &amp; CPA Briefing Sheet</h1>'
-            '<p class="sub">Two-home inheritance analysis. Property A (Cupertino) to pass by trust around 2040 to 2050; Property B (San Francisco) already owned by the Inheritor. Prepared 14 Nov 2026 from the rounded-figures model. Placeholders only: "the Transferor", "the Inheritor".</p></div>'
-            '<p class="noprint"><a href="index.html">Back to the site</a> &middot; <a href="flagged.html">Flagged for Review</a></p></div>')
-    answer = ('<p><strong>Question.</strong> Live in Property A, rent it out, or sell and reinvest? Property B stays as it is in every case.<br>'
-              '<strong>Answer on current assumptions (conditional, not advice).</strong> In the baseline, sell and reinvest ends with %s, against %s for renting and %s for living there (2076, 2026 dollars). '
-              'Parking the proceeds for 24 months lowers the baseline to %s, but softens a 1929-type entry from %s to %s. '
-              '<strong>What would change it:</strong> whether the home is in the gross estate (basis reset); whether the Inheritor lives there (Proposition 19 and Section 121); the growth and return assumptions (%s, %s).</p>') % (
-        m(B_['real_sell']), m(B_['real_rent']), m(B_['real_live']), m(PH_B['park24']), m(PH_N['depression_at_T']['lump']), m(PH_N['depression_at_T']['park24']), flag('A01'), flag('H01'))
-    doc = ('<!doctype html>\n<html lang="en"><head><meta charset="utf-8">\n<meta name="viewport" content="width=device-width, initial-scale=1">\n'
-           '<meta name="robots" content="noindex, nofollow">\n<meta name="referrer" content="no-referrer">\n'
-           '<title>Attorney &amp; CPA Briefing Sheet - Two-home inheritance analysis</title>\n<link rel="stylesheet" href="style.css">\n</head>\n'
-           '<body class="brief-page"><main class="wrap brief">%s%s%s%s<h2>Questions for the estate attorney</h2><ol class="qs">%s</ol>'
-           '<h2>Questions for the CPA</h2><ol class="qs">%s</ol>%s'
-           '<p class="fine">Not legal or tax advice. Owner-supplied figures are rounded to the nearest $10 and are not confirmed on an official page; they stay flagged. Every link is an official page or the primary source for the figure. Full register: <a href="flagged.html">Flagged for Review</a>, <a href="sources.html">Sources and method</a>. Built %s from final/ (model, generator, checker).</p></main></body></html>\n') % (
-        head, '<div class="brief-answer">%s</div>' % answer, fig, dl, atty, cpa, '', BUILD_DATE)
-    write_page('brief.html', doc)
-
-
-CSS_H = """
-.navgroup{display:flex;flex-wrap:wrap;gap:2px;align-items:center;border-left:1px solid #2c4b6b;padding:0 6px 0 8px;margin:2px 0}
-.navlabel{color:#9fb3c8;font-size:11px;text-transform:uppercase;letter-spacing:.05em;padding:5px 6px 5px 0}
-.headline2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0}
-.hbox{border:1px solid #cdd7e3;border-radius:8px;padding:12px 14px;background:#fff}
-.hbox h3{margin:0 0 6px;font-size:15px}
-.wi-controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin:14px 0}
-.wi{display:flex;flex-direction:column;font-size:13px;gap:4px;font-weight:600}
-.wi select{font-size:14px;padding:6px;border:1px solid #9aabbe;border-radius:6px;background:#fff}
-ol.timeline{list-style:none;border-left:3px solid #1f4e8c;padding-left:16px;margin:12px 0}
-ol.timeline li{margin:0 0 12px;position:relative}
-ol.timeline li b{display:block;color:#12283f}
-ol.timeline li span{display:block}
-ol.timeline li small{display:block;color:#4a5b6e}
-.brief-head{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;border-bottom:2px solid #12283f;padding-bottom:6px}
-.brief-head h1{margin:0 0 4px;font-size:22px}
-.brief .sub{margin:0;font-size:12px;color:#334}
-.brief-answer{border:1px solid #9aabbe;border-radius:6px;padding:8px 10px;margin:8px 0;font-size:12px}
-.brief h2{font-size:14px;margin:10px 0 4px}
-.brief table{font-size:11px}
-.brief td,.brief th{padding:3px 5px}
-.brief ol.qs{font-size:11.5px;margin:0 0 4px 18px;padding:0}
-.brief ol.qs li{margin:0 0 2px}
-.brief .fine{font-size:10px;color:#334;margin-top:8px}
-.brief .src{font-size:10px}
-@media (max-width:700px){.headline2{grid-template-columns:1fr}}
-@media print{
-  header.top,footer,.noprint,.note{display:none!important}
-  body{background:#fff}
-  @page{size:letter;margin:.4in}
-  .brief{max-width:none;padding:0;margin:0}
-  .brief table{page-break-inside:avoid}
-  .brief h2{page-break-after:avoid}
-  .tablewrap{overflow:visible}
-  .brief-answer,.hbox{box-shadow:none}
-}
-"""
-CSS += CSS_H
-
-
 def main():
     os.makedirs(OUT, exist_ok=True)
     open(os.path.join(OUT, 'style.css'), 'w').write(CSS)
     open(os.path.join(OUT, 'app.js'), 'w').write(JS)
     for f in (build_index, build_decision, build_projections, build_blackswan, build_process, build_law,
               build_estate, build_costs, build_questions, build_suggestions, build_flagged, build_sources,
-              build_verification, build_requirements, build_review,
-              build_whatif, build_glossary, build_brief):
+              build_verification, build_requirements, build_review):
 
         f()
+    EXTRAS.build_all(sys.modules[__name__])
     if ROOT_MODE:
         build_home_choice()
         build_versions()

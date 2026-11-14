@@ -2392,6 +2392,38 @@ Scope note: this session edits only COORDINATION.md (claim log) plus whatever is
 - **T3-4 in progress.** Open PR from `arena/3eb2dccc-tino1` into `main`, wait for CI `verify`, merge with `gh pr merge <num> --merge`, record PR number, merge commit and Pages result here. No code changes in this session beyond COORDINATION.md, so the published site output is unchanged by the merge.
 
 
+## Session `arena/7895b5d7-tino1` — gap closure: phased investing, what-if, reinvestment risk, glossary, brief, timeline, grouped menu (claimed 2026-11-14)
+
+Branch fixed by workspace: `arena/7895b5d7-tino1`, base `b9d1a0f` (= `main`). Starting state checked: `final/publish.py --check`, `final/check.py .`, `privacy-site/check.py` and its unittests all pass; regenerating the root pages from unchanged code is byte-identical (no drift).
+
+Gap audit against the owner brief (grep of the published pages): phased investing (park in 3M–2Y Treasuries 24–36 months, then phase into stocks) was **not modelled**; no what-if controls; no glossary page; no printable one-page Attorney & CPA briefing sheet; no timeline view of deadlines; reinvestment risk not shown beside the headline; menu not grouped.
+
+| Task | Status | Owner | Files / scope | Verification plan |
+|---|---|---|---|---|
+| S-1 Phased-investing test on real history (1928–2025 annual data; entries at 1929, 2000, 2007 and all start years) | claimed | `arena/7895b5d7-tino1` | `final/phased.py` (new), `phased.html` (new), `black-swan.html` link | Source: NYU Stern annual returns already in `final/data`; 2Y yields not in the dataset, so 3M bill is the parked-cash proxy and the gap is flagged |
+| S-2 What-if controls + reinvestment risk beside the headline | claimed | `arena/7895b5d7-tino1` | `final/whatif.py` (new), `what-if.html` (new) | Grid precomputed from `final/model.py` only; no value invented; controls only choose among computed cases |
+| S-3 Glossary, one-page printable Attorney & CPA brief, deadline timeline | claimed | `arena/7895b5d7-tino1` | `final/extras.py` (new), `glossary.html`, `brief.html`, `timeline.html` (new) | Every term/row linked to an official page; `final/check.py` must pass |
+| S-4 Group the menu | claimed | `arena/7895b5d7-tino1` | `final/build.py` NAV only | Regeneration; all links resolve |
+| S-5 Integration: allowlist, regenerate, full checks, PR to `main`, merge, Pages status | claimed | `arena/7895b5d7-tino1` | `final/publish.py`, `final/published.txt`, `_config.yml`, root pages, `COORDINATION.md` | Same CI steps as `.github/workflows/pages.yml` (Jekyll itself cannot be installed in this sandbox; CI runs it) |
+
+Owner items NOT done here (only the owner can do them): making the repository private or rewriting Git history. Nothing in this session deletes or rewrites history; see G01 on the Suggestions page.
+
+### Session `arena/7895b5d7-tino1` — close-out (2026-11-14)
+
+| Task | Status | Output | Sources (official unless marked) | Verification performed | Irregularities / flags |
+|---|---|---|---|---|---|
+| S-1 Phased investing test | done | `final/phased.py`, `final/out/phased.json` (rounded household figure only), `phased.html`, link from `black-swan.html` | Stock and bill annual returns: NYU Stern academic table (`DAMODARAN`, not government, flagged `S-PHASE`); bill-yield reference: Treasury yield page (`TREASURY`) | Hand-checked the 1929 lump-sum path (0.845x over 10 years) from the annual returns; all 89 entry years computed; claims on the page are generated from the computed numbers (`phased_claims`) | 2-year Treasury series not in the repository, so the 3-month bill stands in (flagged); annual resolution understates intra-year crashes (1929); gross of tax and costs |
+| S-2 What-if controls + reinvestment risk beside the headline | done | `final/extras.py` (54 cases from `final/model.py`), `what-if.html`, `whatif.js`; KPI on the Summary page | HUD SAFMR 95014 (`HUD-95014`), FHFA (`FHFA-SJ`), BLS CPI (`BLS-CPI`), Treasury (`TREASURY`) | Node test of the control logic across the selects; all 54 keys present; default case equals the model's baseline sell path ($33,502,220 nominal, 2076) | Rent cases are HUD benchmarks, not a quote for Property A (`U08`); mixed paths beyond the pure choices and the phased test are not modelled |
+| S-3 Glossary, printable Attorney & CPA brief, timeline | done | `glossary.html`, `brief.html` (print-styled, ~640 words), `timeline.html` | Each glossary term and timeline row links to an official page already in `final/sources.py`; model terms are labelled "model term" with no link | `final/check.py`: 1,089 table rows each with an official link; brief table rows each with an official link | Print layout NOT visually verified (no browser in this sandbox): owner should print `brief.html` once to confirm one page |
+| S-4 Grouped menu | done | `final/build.py` (`NAV_GROUPS`, `nav_html`), `style.css` | — | Regenerated all 30 pages; internal links resolve (`check.py`) | — |
+| S-5 Integration | done (PR and merge below) | `final/publish.py`, `final/published.txt` (38 files), root pages, `README.md` | — | `publish.py --check`; `check.py .`; `privacy-site/check.py` and unittest 12/12; staged the 38 allowlisted files and ran `final/check_published.py` and `privacy-site/check_published.py` (both PASS); Jekyll itself cannot be installed here, so CI runs it | — |
+
+Privacy checks on this session's work: no name, address or account number; household figures appear only rounded to $10 (`check.py` $10 scan clean); the phased output stores the proceeds rounded (it was first written unrounded, caught and fixed before commit).
+
+**Owner decisions still needed (not done here):**
+1. `final/out/model.json` is tracked in the public repository and contains unrounded model outputs derived from owner figures (for example the sale proceeds and market values). The published pages are rounded; the JSON is not published. The site's privacy scan reads this file, so deleting it would change the checks. Options: make the repository private, round every stored output and regenerate, or move the file out of the repository and keep the scan working. Suggestion G01 on the Suggestions page covers the same boundary.
+2. Git history: earlier editions were committed before rounding (README, "Owner action still needed"). A search of the full history for the exact unrounded owner values found no match. This session did not rewrite history; a rewrite needs the owner's decision and a force-push to `main`.
+
 ## Session `arena/6f85fbe1-tino1` — publication privacy scrub (ZIP codes and city names in visible text), re-verification, PR and merge (claimed 2026-11-14 UTC)
 
 Branch fixed by workspace: `arena/6f85fbe1-tino1`, branched from `main` at `b9d1a0f` (PR #99). No other open session claim touches these files at claim time; PR #97 (law-change register) is a different scope and is not touched.
@@ -2413,6 +2445,17 @@ Branch fixed by workspace: `arena/6f85fbe1-tino1`, branched from `main` at `b9d1
   4. Git history still contains the pre-scrub text and the rounded values. Only the repository owner can decide on a history rewrite or making the repository private. This session did not rewrite history.
   5. Rounded property values, tax histories and rents are still published. The owner's brief asked for them, and the earlier G01/G02 decision kept them. Whether they are acceptable to publish is an owner decision; the figure-free guide in `privacy-site/public/` remains the no-figures alternative.
 
+### arena/6f85fbe1-tino1 — merge and Pages record (2026-11-14 UTC)
+
+- **PR #100** (`arena/6f85fbe1-tino1` → `main`, merge commit `f9bcbe3`, merged 2026-11-14T21:57:39Z, `gh pr merge --merge`). CI check "Validate the Pages publication boundary" (run 43645422131): success, including the real Jekyll build and the 32-file allowlist comparison. Pages run 43645529896 "pages build and deployment": success. Pages API: status `built`.
+- **Live check.** https://wingbangboozle1-lang.github.io/Tino1/summary.html now shows "Property A (Santa Clara County, [ZIP A])" and "Property B (San Francisco, [ZIP B])" in visible text; official HUD links unchanged.
+- **Not done here (owner decisions, recorded as P-2):** history rewrite of pre-scrub commits; making the repository private; the broader publication of rounded household figures. The Attorney & CPA briefing sheet, Git-history scrub and other features listed in the brief are already present elsewhere in the published site or remain owner decisions; this session did not change them.
+
+### Session `arena/7895b5d7-tino1` — merge of `main` (privacy scrub) before PR merge (2026-11-14)
+
+`main` moved to `25cf4e5` (PR #100 publication scrub by `arena/6f85fbe1`, PR #101 board record) while PR #103 was open; GitHub reported the PR as conflicting. Resolved by merging `origin/main` into this branch and keeping both sides of each conflict: `final/build.py` (both imports: `EXTRAS` and `scrub`) and `COORDINATION.md` (both log sections). No work from either side was discarded.
+
+Follow-up made because of the scrub: `brief.html` writes its own HTML and therefore bypassed `scrub()`; it now passes through `scrub()` as well. All generated pages were regenerated from the merged code. `final/check.py .` (including the new ZIP-in-visible-text rule) passes; the ZIP codes that remain are only inside official-source URLs, which the scrub leaves intact by design (flagged by `6f85fbe1` for owner review).
 
 ## Session `arena/59feaf6e-tino1` — phased entry, mixed paths, what-if, brief, glossary, menu (claimed 2026-11-14 UTC)
 
@@ -2431,15 +2474,27 @@ Branch fixed by the workspace: `arena/59feaf6e-tino1` (the `session-<id>/<task>`
 
 Scope note: this session does not edit `final/scrub.py` or the PR #100 scrub rules, and does not change the publication boundary beyond adding the three new pages (brief, what-if, glossary) to the reviewed allowlist.
 
-### arena/59feaf6e-tino1 — H-1 to H-6 record (2026-11-14 UTC)
+### arena/59feaf6e-tino1 — reconciled record (2026-11-14 UTC)
 
-- **What changed.** `final/model.py`: phased-entry engine (`phased_entry`, mid-year entry as in `simulate()`), crash-timing table (2008-type and 1929-type overlays at offsets 0 to 4 years), mixed paths (`mixed`: live or rent 5 or 10 years, then sell), and the 54-cell what-if grid with reinvestment-risk columns. `final/build.py`: new `build_phased_section` (Black swan), `build_mixed_section` (Decision), `build_whatif` (new `what-if.html`, lookup-only controls), `build_glossary` (new `glossary.html`), `build_brief` (new `brief.html`, printable), `timeline_html` (Process), grouped `NAV_GROUPS`/`nav_html`, and a front-door "What would change the answer" block with reinvestment risk beside the headline. `final/flags.py`: H01 to H04 (parking yield, phase-in, mixed-path tax, crash timing) and an H category on the Flagged page. `final/sources.py`: TREASURY-NOV13 and SEC-DCA. `final/publish.py` and `final/integrate.py`: three new pages added to the allowlist and the current-page list.
-- **Deviation.** The what-if builder lives in `final/build.py`, not in a separate `final/whatif.py` as the claim said. The grid is computed in the model, and the page only looks up values.
-- **Decision on shared index/NAV (H-5, H-6).** Kept in this session. The claim named `build_index` and `NAV`, and no integration session has claimed them. The integration session should review the front-door block and the grouped menu, not rewrite them.
-- **Verification.** `python3 final/model.py`, `python3 final/integrate.py`, `python3 final/publish.py` and `--check` (35 files), `python3 final/check.py .` OK (28 pages, 1,167 table rows each with an official link, 3,054 links, 2,801 dollar figures rounded to $10, 6-digit scan clean against 16,139 model numbers, self-tests on 51 paths). `privacy-site/check.py` PASS (12 pages). `privacy-site` unittest 12/12 OK.
-- **Open for the owner or the next session.** H01 (the parking yield is the model's 3.5% bill assumption; the official 2-year yield is not modelled, and no 1929 or 2008 2-year series is in the repository). H02 (the 12-month phase-in is a modelling choice). H03 (mixed-path tax treatment needs attorney and CPA confirmation). H04 (crash timing decides the phased result; the 50 histories favour all-at-once in 44). H-7 (Git history privacy) is still owner-only.
-### arena/6f85fbe1-tino1 — merge and Pages record (2026-11-14 UTC)
+**Overlap found at merge time.** Session `arena/7895b5d7-tino1` claimed and merged (PR #103) the same gap-closure scope in the same hour: phased investing (S-1, `phased.html`), what-if controls with reinvestment risk (S-2, `what-if.html`), glossary, printable brief and timeline (S-3, `glossary.html`, `brief.html`, `timeline.html`), grouped menu (S-4), and the first-screen "what would change the answer" and reinvestment-risk block (on `summary.html`). This branch had built a second copy of the same pages. Two versions of the same deliverable would give the public site conflicting numbers, so this branch **does not publish its duplicates**.
 
-- **PR #100** (`arena/6f85fbe1-tino1` → `main`, merge commit `f9bcbe3`, merged 2026-11-14T21:57:39Z, `gh pr merge --merge`). CI check "Validate the Pages publication boundary" (run 43645422131): success, including the real Jekyll build and the 32-file allowlist comparison. Pages run 43645529896 "pages build and deployment": success. Pages API: status `built`.
-- **Live check.** https://wingbangboozle1-lang.github.io/Tino1/summary.html now shows "Property A (Santa Clara County, [ZIP A])" and "Property B (San Francisco, [ZIP B])" in visible text; official HUD links unchanged.
-- **Not done here (owner decisions, recorded as P-2):** history rewrite of pre-scrub commits; making the repository private; the broader publication of rounded household figures. The Attorney & CPA briefing sheet, Git-history scrub and other features listed in the brief are already present elsewhere in the published site or remain owner decisions; this session did not change them.
+**Decision (recorded for the integration owner).** Main's versions of the overlapping pages are kept as they are. This branch was rebased onto `main` at `25cf4e5` and resolved as follows:
+
+| Claimed item | Outcome on this branch |
+|---|---|
+| H-1 Phased entry (park 24/36 months, then phase in) | Main's S-1 (`phased.html`, annual history) is the published test. The monthly engine and crash-timing table (2008-type and 1929-type overlays at offsets 0 to 4 years) remain computed in `final/model.py` / `final/out/model.json` and are **not published**. Publishing them would add a second phased test with different numbers. Listed as an owner choice below. |
+| H-2 Mixed paths (live or rent 5/10 years, then sell) | **Published** on `decision.html` ("Mixed paths: live or rent for a while, then sell"), with a sale-year table. Not in main. |
+| H-3 What-if controls | Main's S-2 is published. This branch's grid (with `c08_*` and `d29_*` columns) is not published. |
+| H-4 Attorney & CPA brief | Main's S-3 is published. This branch's version was dropped. |
+| H-5 Glossary, grouped menu, timeline | Main's S-3 and S-4 are published. This branch's versions were dropped. |
+| H-6 First-screen "what would change the answer" | Main's `summary.html` block is published. This branch's version was dropped. |
+| H-7 Git-history privacy | Owner action only; not attempted. |
+
+**Files from this branch that stayed in.** `final/model.py` (mixed engine, phased engine, crash timing, what-if grid with reinvestment-risk columns; all unrounded, rounded to $10 in every page); `final/build.py` (`build_mixed_section` and its call on the Decision page; flagged category H); `final/flags.py` (H03 only; H01, H02 and H04 described the unpublished monthly engine and were dropped); `final/sources.py` (TREASURY-NOV13, the official 13 Nov 2026 Treasury par yield curve, which main lacks; SEC-DCA, the SEC definition of dollar-cost averaging, unused on pages so far).
+
+**Owner choices (not implemented).**
+1. Publish the monthly phased-entry engine and crash timing as a second, clearly labelled stress test next to `phased.html`, or leave it out (current choice).
+2. Make the Treasury 2-year series an input once a source for 1929 and 2008 2-year yields is found (`S-PHASE` still says the 2-year is missing; the 13 Nov 2026 reading is now in `sources.py`).
+3. Remove or keep the unused `SEC-DCA` source.
+
+**Verification on the reconciled branch.** `final/model.py`, `final/build.py`, `final/integrate.py`, `final/publish.py` and `--check` (38 files), `final/check.py .` OK (30 pages, 1,103 table rows each with an official link, 3,057 links, 2,650 dollar figures rounded to $10, 6-digit scan clean against 16,139 model numbers, self-tests on 51 paths). `privacy-site/check.py` PASS, unittest OK.

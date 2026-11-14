@@ -8,6 +8,14 @@ header.top .wrap{display:flex;flex-wrap:wrap;align-items:center;gap:6px 18px;pad
 nav{display:flex;flex-wrap:wrap;gap:2px}
 nav a{color:#d5e1ee;text-decoration:none;padding:5px 9px;border-radius:5px;font-size:14px}
 nav a:hover{background:#21405f}nav a.on{background:#fff;color:#12283f;font-weight:600}
+nav details.grp{position:relative}nav details.grp>summary{list-style:none;cursor:pointer;color:#fff;padding:5px 9px;border-radius:5px;font-size:14px;font-weight:600}
+nav details.grp>summary::-webkit-details-marker{display:none}nav details.grp>summary::after{content:' \25BE';font-size:11px}
+nav details.grp[open]>summary,nav details.grp>summary:hover{background:#21405f}
+nav .grpitems{position:absolute;left:0;top:100%;margin-top:4px;background:#12283f;border-radius:6px;padding:6px;min-width:220px;display:flex;flex-direction:column;box-shadow:0 6px 18px rgba(0,0,0,.25);z-index:9}
+nav .grpitems a{white-space:nowrap}
+.ctrl{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;margin:10px 0 16px}.ctrl label{font-size:14px;display:flex;flex-direction:column;gap:4px}.ctrl select{font:inherit;padding:6px;border:1px solid var(--line);border-radius:6px;background:#fff}
+.glossary dl{margin:0}.gl{border-bottom:1px solid var(--line);padding:9px 0}.gl dt{font-weight:700}.gl dd{margin:2px 0 0 0}.gsrc{font-size:13px;color:var(--mut)}
+ol.timeline{list-style:none;padding:0;margin:14px 0;border-left:3px solid var(--acc)}ol.timeline li{padding:6px 0 10px 16px;position:relative}ol.timeline li::before{content:'';position:absolute;left:-8px;top:12px;width:13px;height:13px;border-radius:50%;background:var(--acc)}.tlwhen{font-weight:700}.tlwhat{color:var(--ink)}
 h1{font-size:30px;line-height:1.2;margin:28px 0 8px}h2{font-size:21px;margin:34px 0 10px}
 .lead{font-size:18px;color:var(--mut);max-width:900px;margin:0 0 20px}
 .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin:18px 0}
@@ -48,39 +56,3 @@ pre{background:#12283f;color:#e8eef5;padding:12px 14px;border-radius:8px;overflo
 footer{color:var(--mut);font-size:13px;margin-top:40px;padding-bottom:40px;border-top:1px solid var(--line)}
 [hidden]{display:none!important}
 @media (max-width:640px){h1{font-size:24px}.lead{font-size:16px}}
-
-.navgroup{display:flex;flex-wrap:wrap;gap:2px;align-items:center;border-left:1px solid #2c4b6b;padding:0 6px 0 8px;margin:2px 0}
-.navlabel{color:#9fb3c8;font-size:11px;text-transform:uppercase;letter-spacing:.05em;padding:5px 6px 5px 0}
-.headline2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0}
-.hbox{border:1px solid #cdd7e3;border-radius:8px;padding:12px 14px;background:#fff}
-.hbox h3{margin:0 0 6px;font-size:15px}
-.wi-controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin:14px 0}
-.wi{display:flex;flex-direction:column;font-size:13px;gap:4px;font-weight:600}
-.wi select{font-size:14px;padding:6px;border:1px solid #9aabbe;border-radius:6px;background:#fff}
-ol.timeline{list-style:none;border-left:3px solid #1f4e8c;padding-left:16px;margin:12px 0}
-ol.timeline li{margin:0 0 12px;position:relative}
-ol.timeline li b{display:block;color:#12283f}
-ol.timeline li span{display:block}
-ol.timeline li small{display:block;color:#4a5b6e}
-.brief-head{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;border-bottom:2px solid #12283f;padding-bottom:6px}
-.brief-head h1{margin:0 0 4px;font-size:22px}
-.brief .sub{margin:0;font-size:12px;color:#334}
-.brief-answer{border:1px solid #9aabbe;border-radius:6px;padding:8px 10px;margin:8px 0;font-size:12px}
-.brief h2{font-size:14px;margin:10px 0 4px}
-.brief table{font-size:11px}
-.brief td,.brief th{padding:3px 5px}
-.brief ol.qs{font-size:11.5px;margin:0 0 4px 18px;padding:0}
-.brief ol.qs li{margin:0 0 2px}
-.brief .fine{font-size:10px;color:#334;margin-top:8px}
-.brief .src{font-size:10px}
-@media (max-width:700px){.headline2{grid-template-columns:1fr}}
-@media print{
-  header.top,footer,.noprint,.note{display:none!important}
-  body{background:#fff}
-  @page{size:letter;margin:.4in}
-  .brief{max-width:none;padding:0;margin:0}
-  .brief table{page-break-inside:avoid}
-  .brief h2{page-break-after:avoid}
-  .tablewrap{overflow:visible}
-  .brief-answer,.hbox{box-shadow:none}
-}
