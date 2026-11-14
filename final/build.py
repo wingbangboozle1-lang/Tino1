@@ -89,26 +89,36 @@ def flag(fid):
 BLANK = '<span class="blank">not confirmed - left blank</span>'
 
 NAV = [
-    (HOME, 'Summary'),
-    ('decision.html', 'Decision'),
-    ('questions.html', 'Questions to answer'),
-    ('suggestions.html', 'Suggestions'),
-    ('projections.html', 'Year by year'),
-    ('black-swan.html', 'Black swan'),
-    ('process.html', 'Process'),
-    ('law.html', 'Law'),
-    ('estate-cash.html', 'Cash and estate tax'),
-    ('costs.html', 'Insurance and costs'),
-    ('flagged.html', 'Flagged for Review'),
-    ('sources.html', 'Sources and method'),
-    ('verification.html', 'Verification'),
-    ('requirements.html', 'Requirements'),
+    ('>', 'Start'), (HOME, 'Summary'),
+    ('>', 'Decide'), ('decision.html', 'Decision'), ('whatif.html', 'What-if controls'), ('paths.html', 'Mixed and phased paths'),
+    ('black-swan.html', 'Black swan'), ('projections.html', 'Year by year'),
+    ('>', 'Plan'), ('process.html', 'Process and timeline'), ('briefing.html', 'Attorney &amp; CPA sheet'),
+    ('>', 'Law and money'), ('law.html', 'Law'), ('estate-cash.html', 'Cash and estate tax'), ('costs.html', 'Insurance and costs'),
+    ('glossary.html', 'Glossary'),
+    ('>', 'Review'), ('questions.html', 'Questions to answer'), ('suggestions.html', 'Suggestions'), ('flagged.html', 'Flagged for Review'),
+    ('sources.html', 'Sources and method'), ('verification.html', 'Verification'), ('requirements.html', 'Requirements'),
     ('review.html', 'Repo review'),
 ] + ([('versions.html', 'Earlier versions')] if os.environ.get('ROOT_MODE') else [])
 
 
+def nav_html(current, items):
+    out = []
+    for h, t in items:
+        if h == '>':
+            out.append('<span class="grp">%s</span>' % t)
+        else:
+            out.append('<a href="%s"%s>%s</a>' % (h, ' class="on" aria-current="page"' if h == current else '', t))
+    return ''.join(out)
+
+
+def _pe():
+    """The session 88de34f6 pages module (imported lazily to avoid a circular import at load time)."""
+    import pages_extra
+    return pages_extra
+
+
 def page(slug, title, lead, body):
-    nav = ''.join('<a href="%s"%s>%s</a>' % (h, ' class="on" aria-current="page"' if h == slug else '', t) for h, t in NAV)
+    nav = nav_html(slug, NAV)
     doc = """<!doctype html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -645,7 +655,7 @@ def build_process():
         ['15', 'When the cash arrives', 'Nothing to report as income for the inheritance itself. Income earned on it afterwards is taxable. Inherited retirement accounts follow different rules.', 'The cash is taxed, if at all, to the estate before it is paid out, not to the Inheritor.', src('IRS-P559')],
         ['16', 'Throughout', 'Leave Property B exactly as it is: same owner, same exemption or rental status.', 'Any transfer of Property B could trigger its own reassessment; nothing about the inheritance requires one.', src('BOE-P19', 'SF-TAX')],
     ], caption='Steps and deadlines for Property A')
-    body = steps + '<p class="note">Deadlines are quoted from the linked statutes and agency pages as read on %s and re-checked on %s. Forms and county procedures change; confirm each one with the county office and the attorney handling the trust.</p>' % (REGISTER_DATE, BUILD_DATE)
+    body = _pe().timeline_html() + steps + '<p class="note">Deadlines are quoted from the linked statutes and agency pages as read on %s and re-checked on %s. Forms and county procedures change; confirm each one with the county office and the attorney handling the trust.</p>' % (REGISTER_DATE, BUILD_DATE)
     page('process.html', 'Step-by-step process for the inherited home',
          'What has to be done, by whom and by when, from today through the first tax return after the inheritance.', body)
 
@@ -2131,8 +2141,7 @@ def build_home_choice():
     still choose the narrower setting.
     """
     nav_items = [('index.html', 'Home')] + NAV
-    nav = ''.join('<a href="%s"%s>%s</a>' % (
-        h, ' class="on" aria-current="page"' if h == 'index.html' else '', t) for h, t in nav_items)
+    nav = nav_html('index.html', nav_items)
 
     kpis = ''.join([
         kpi('Best financial outcome (conditional)', 'Sell Property A, keep Property B',
@@ -2160,6 +2169,7 @@ def build_home_choice():
         return ''.join(out)
 
     body = ''.join([
+        _pe().first_screen_html(),
         '<section class="kpis">%s</section>' % kpis,
         group('1. Decide', [
             ('summary.html', 'Executive summary', 'The whole brief in one page: the best plan, '
@@ -2235,13 +2245,14 @@ def build_home_choice():
 
 def main():
     os.makedirs(OUT, exist_ok=True)
-    open(os.path.join(OUT, 'style.css'), 'w').write(CSS)
+    open(os.path.join(OUT, 'style.css'), 'w').write(CSS + _pe().EXTRA_CSS)
     open(os.path.join(OUT, 'app.js'), 'w').write(JS)
     for f in (build_index, build_decision, build_projections, build_blackswan, build_process, build_law,
               build_estate, build_costs, build_questions, build_suggestions, build_flagged, build_sources,
               build_verification, build_requirements, build_review):
 
         f()
+    _pe().build_all()
     if ROOT_MODE:
         build_home_choice()
         build_versions()

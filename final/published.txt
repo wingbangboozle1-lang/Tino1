@@ -1,11 +1,14 @@
 app.js
 black-swan.html
+briefing.html
 costs.html
 decision.html
 estate-cash.html
 flagged.html
+glossary.html
 index.html
 law.html
+paths.html
 privacy-site/public/costs.html
 privacy-site/public/decision.html
 privacy-site/public/flagged.html
@@ -30,3 +33,4 @@ suggestions.html
 summary.html
 verification.html
 versions.html
+whatif.html

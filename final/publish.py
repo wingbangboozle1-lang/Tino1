@@ -52,6 +52,10 @@ NUMERIC = [
     'requirements.html',
     'review.html',
     'versions.html',
+    'paths.html',
+    'whatif.html',
+    'glossary.html',
+    'briefing.html',
 ]
 
 # The figure-free guide: the same process and cost categories taught with
