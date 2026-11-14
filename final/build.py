@@ -88,27 +88,25 @@ def flag(fid):
 
 BLANK = '<span class="blank">not confirmed - left blank</span>'
 
-NAV = [
-    (HOME, 'Summary'),
-    ('decision.html', 'Decision'),
-    ('questions.html', 'Questions to answer'),
-    ('suggestions.html', 'Suggestions'),
-    ('projections.html', 'Year by year'),
-    ('black-swan.html', 'Black swan'),
-    ('process.html', 'Process'),
-    ('law.html', 'Law'),
-    ('estate-cash.html', 'Cash and estate tax'),
-    ('costs.html', 'Insurance and costs'),
-    ('flagged.html', 'Flagged for Review'),
-    ('sources.html', 'Sources and method'),
-    ('verification.html', 'Verification'),
-    ('requirements.html', 'Requirements'),
-    ('review.html', 'Repo review'),
-] + ([('versions.html', 'Earlier versions')] if os.environ.get('ROOT_MODE') else [])
+# Grouped menu (session 1a8bae22). Each group is a heading and its links; NAV is the flat list of the same pages.
+NAV_GROUPS = [
+    ('Start', [(HOME, 'Summary'), ('brief.html', 'Attorney &amp; CPA brief'), ('timeline.html', 'Deadline timeline')]),
+    ('Decide', [('decision.html', 'Decision'), ('whatif.html', 'What-if'), ('phased.html', 'Phased entry'),
+                ('questions.html', 'Questions to answer'), ('suggestions.html', 'Suggestions')]),
+    ('Analyse', [('projections.html', 'Year by year'), ('black-swan.html', 'Black swan'),
+                 ('estate-cash.html', 'Cash and estate tax'), ('costs.html', 'Insurance and costs')]),
+    ('Rules', [('process.html', 'Process'), ('law.html', 'Law'), ('glossary.html', 'Glossary')]),
+    ('Check', [('flagged.html', 'Flagged for Review'), ('sources.html', 'Sources and method'),
+               ('verification.html', 'Verification'), ('requirements.html', 'Requirements'), ('review.html', 'Repo review')]
+     + ([('versions.html', 'Earlier versions')] if os.environ.get('ROOT_MODE') else [])),
+]
+NAV = [item for _, items in NAV_GROUPS for item in items]
 
 
 def page(slug, title, lead, body):
-    nav = ''.join('<a href="%s"%s>%s</a>' % (h, ' class="on" aria-current="page"' if h == slug else '', t) for h, t in NAV)
+    nav = ''.join('<span class="navg"><span class="navl">%s</span>%s</span>' % (g, ''.join(
+        '<a href="%s"%s>%s</a>' % (h, ' class="on" aria-current="page"' if h == slug else '', t) for h, t in items))
+        for g, items in NAV_GROUPS)
     doc = """<!doctype html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -1585,6 +1583,7 @@ def build_flagged():
         ('U', 'Values that could not be confirmed on an official page (left blank)'),
         ('A', 'Model assumptions (no official figure exists)'),
         ('S', 'Irregularities in sources'),
+        ('H', 'Phased-entry test: limits of the parking test (parking return, annual data, phase-in length)'),
         ('R', 'Irregularities in the repository'),
     ]
     # Repository review findings R01-R43 are rendered on the repository review page; the flagged
@@ -1974,6 +1973,7 @@ header.top .wrap{display:flex;flex-wrap:wrap;align-items:center;gap:6px 18px;pad
 nav{display:flex;flex-wrap:wrap;gap:2px}
 nav a{color:#d5e1ee;text-decoration:none;padding:5px 9px;border-radius:5px;font-size:14px}
 nav a:hover{background:#21405f}nav a.on{background:#fff;color:#12283f;font-weight:600}
+.navg{display:inline-flex;flex-wrap:wrap;gap:2px;align-items:center;border-left:1px solid #33506e;padding-left:8px;margin-left:4px}.navl{color:#8fa8c4;font-size:11px;text-transform:uppercase;letter-spacing:.05em;padding:0 6px 0 2px}
 h1{font-size:30px;line-height:1.2;margin:28px 0 8px}h2{font-size:21px;margin:34px 0 10px}
 .lead{font-size:18px;color:var(--mut);max-width:900px;margin:0 0 20px}
 .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin:18px 0}
@@ -2130,9 +2130,9 @@ def build_home_choice():
     unpublished; that boundary is recorded as review item G02 so the owner can
     still choose the narrower setting.
     """
-    nav_items = [('index.html', 'Home')] + NAV
-    nav = ''.join('<a href="%s"%s>%s</a>' % (
-        h, ' class="on" aria-current="page"' if h == 'index.html' else '', t) for h, t in nav_items)
+    nav = ''.join('<span class="navg"><span class="navl">%s</span>%s</span>' % (g, ''.join(
+        '<a href="%s"%s>%s</a>' % (h, ' class="on" aria-current="page"' if h == 'index.html' else '', t) for h, t in items))
+        for g, items in [('Home', [('index.html', 'Home')])] + NAV_GROUPS)
 
     kpis = ''.join([
         kpi('Best financial outcome (conditional)', 'Sell Property A, keep Property B',

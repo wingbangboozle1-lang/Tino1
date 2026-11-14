@@ -2407,3 +2407,28 @@ Branch fixed by workspace: `arena/1a8bae22-tino1`, based on `b9d1a0f` (merge of 
 | H7 PR from branch to `main`, merge, Pages confirmation | claimed | `arena/1a8bae22-tino1` | GitHub PR | Recorded here after merge. |
 
 Not in this pass (remain open on the board, logged as backlog, not claimed): reinvestment-risk line beside the landing headline (H8); mixed-path modelling beyond the existing named paths (H9); a full public "suggestions" review workflow change (H10). Owner action still needed: history rewrite / repo visibility (G01), which only the owner can authorise.
+
+### Session `arena/1a8bae22-tino1` — progress and close-out record (2026-11-14 UTC)
+
+| Task | Status | Result | Verification and sources |
+|---|---|---|---|
+| H0 Claim | done | Claimed and pushed before edits (commit 9ed4e3c). | — |
+| H1 Phased-entry test | done (values partly unverified, flagged) | `phased.html`; engine `final/phased_1a8bae22.py`; output `final/out/phased_1a8bae22.json`. Starting cash = model after-tax sale proceeds, rounded to $10. Tests: entry 1929 and 2008; parking 24 or 36 months, then 12 monthly purchases of stocks; 10-year horizon; 89 entry years 1928–2016 for robustness. | Parking return = 3-month bill from the academic table. Official coverage checked on the FRED pages: TB3MS starts 1934, SP500 is a price index with 10 years of daily data, so no official series covers the 1928–1933 or 2008 total returns. Those values are flagged **S02** (academic, unverified) and **H02** (annual data). 2-year check: FRED GS2 monthly values 2007–2010 (`final/data/fred_gs2_monthly_2007_2010.csv`), flag **H01**. Phase-in length is an assumption, flag **H03**. |
+| H2 Attorney & CPA brief | done (print layout not verified) | `brief.html`: facts, modelled outcome, phased result, 6 attorney and 6 tax-adviser questions, deadlines; print CSS for one Letter page. | Every row links to an official page or to the official series behind it; flags shown. **Not verified in a print preview:** no browser is available in this sandbox. Check File > Print before using it. |
+| H3 Glossary | done | `glossary.html`: 28 official terms, each with its official page; project terms listed separately without a source (they are not official facts). | Definitions limited to what the linked official pages state (RTC 51, RTC 480, RTC 63.2, BOE Prop 19 and HOX, IRS Topics 409/559/701, IRS Pub. 527, IRS Form 706 instructions, CPUC NEM and fixed charge, CDI, DOJ TPA, SF Rent Board). |
+| H4 Deadline timeline | done | `timeline.html`: 11 items from "now" through each filing clock; each links to its official page. | Deadlines copied from the process page sources, already read on official pages: PROB 16061.7 (60 days), RTC 480 (150 days), IRS FAQ (9 months, Form 4768), RTC 63.2 and BOE LTA 2026/026 (1 year), BOE-19-P (3 years), BOE HOX (Feb. 15). |
+| H5 What-if controls | done | `whatif.html`: a selector over the model's 18 one-change cases; the matching row is highlighted and the readout updates. Browser code only selects; all numbers are model outputs. | Script checked with `node --check` and a DOM stub. Combined changes are not modelled (backlog). |
+| H6 Grouped menu | done | `final/build.py` NAV_GROUPS (Start / Decide / Analyse / Rules / Check) applied to all pages, including the home page. `final/publish.py` allowlist: five new pages added (37 files). | `final/check.py .` OK (30 pages, 1,140 table rows each with an official link, 2,704 dollar figures rounded to $10). `final/publish.py --check` OK. `privacy-site` build/check/unittest OK. |
+| H7 PR, merge, Pages | in progress | see below | — |
+
+**Changed shared files (this session):** `final/build.py` (nav block and the H flag group only), `final/sources.py` (+ FRED-GS2, FRED-TB3MS, FRED-SP500), `final/flags.py` (+ H01–H03; H02 sources updated), `final/publish.py` (allowlist), regenerated root pages (navigation and flags only; the model output `final/out/model.json` is unchanged on regeneration).
+
+**New irregularities and limits found in this pass (for the Flagged page):**
+- H01 — the parking return is the 3-month bill, not the 2-year note; the 2-year series only starts in 1976.
+- H02 — annual data cannot place the autumn 1929 and 2008 falls inside a year; the depth of early losses is approximate.
+- H03 — the 12-month phase-in is an assumption.
+- S02 (existing) now also covers the 1928–1933 bill and stock values and the 2008 total returns: no official series covers them.
+
+**Owner action still needed (not done by this session):**
+- **Git history contains unrounded owner figures.** A full-history search (after `git fetch --unshallow`) finds figures of the kind the brief asks to keep out of the repository in 13 commits, the earliest 2026-11-10 (for example 702ca76, e1522a4, 12f2f8a, 4d6ba09; the latest 951cbff, 120da54 and 41c05ac from 2026-11-11 to 2026-11-13). The current tree is clean (the only hits are modelled values). Removing them needs a history rewrite and a force-push to `main`. This branch may not push to `main`, and a rewrite would break every open session branch and PR, so this session did not do it. Options for the owner: a `git filter-repo` rewrite coordinated with all sessions, and/or making the repository private. The README already records this as owner action.
+- **Still open from the brief (backlog, not built this pass):** reinvestment risk beside the landing headline (H8; the phased page has it, the landing page does not); mixed paths beyond the existing named paths (H9); what-if combinations (H10); a suggestions review workflow that changes nothing until chosen (H11, the existing Suggestions page already covers the review part).

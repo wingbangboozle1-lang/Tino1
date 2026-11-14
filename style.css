@@ -8,6 +8,7 @@ header.top .wrap{display:flex;flex-wrap:wrap;align-items:center;gap:6px 18px;pad
 nav{display:flex;flex-wrap:wrap;gap:2px}
 nav a{color:#d5e1ee;text-decoration:none;padding:5px 9px;border-radius:5px;font-size:14px}
 nav a:hover{background:#21405f}nav a.on{background:#fff;color:#12283f;font-weight:600}
+.navg{display:inline-flex;flex-wrap:wrap;gap:2px;align-items:center;border-left:1px solid #33506e;padding-left:8px;margin-left:4px}.navl{color:#8fa8c4;font-size:11px;text-transform:uppercase;letter-spacing:.05em;padding:0 6px 0 2px}
 h1{font-size:30px;line-height:1.2;margin:28px 0 8px}h2{font-size:21px;margin:34px 0 10px}
 .lead{font-size:18px;color:var(--mut);max-width:900px;margin:0 0 20px}
 .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin:18px 0}
