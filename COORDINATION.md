@@ -2466,3 +2466,22 @@ To respect the "never discard other sessions' work" rule, the four merge-conflic
 The only incremental record this session adds is this coordination log entry. Local verification before alignment: `final/check.py` OK (27 pages, 1,134 sourced rows, 2,616 $10-rounded figures, no PII); `final/publish.py --check` OK (34-file allowlist).
 
 Owner-level actions still needed (only the owner can perform): make the repository private and/or rewrite the pre-rounding Git history (flag P02).
+
+## Session `arena/87f4c71e-tino1` — residual gap closure after overlap with `arena/7895b5d7-tino1` (claimed 2026-11-14)
+
+**Overlap found on 2026-11-14.** The U-1 to U-8 claim in this session (written on base `b9d1a0f`) covered the same work that session `arena/7895b5d7-tino1` had already claimed (S-1 to S-3) and merged through PR #103 (and PR #107 by `arena/2dbb6877-tino1`). Main already has: phased investing (`phased.html`, `final/phased.py`), what-if controls with reinvestment check (`what-if.html`, `final/extras.py`), mixed paths (`decision.html`), glossary, timeline, the one-page brief (`brief.html`) and the grouped menu. This session therefore **did not push its duplicate build**. The local uncommitted duplicates (`final/model.py`, `final/build.py`, `final/sources.py`, the four new pages) were set aside and are not on any branch. Tasks U-1 to U-7 are closed as "already delivered on `main` by `7895b5d7`/`2dbb6877`; not duplicated". U-8 (publication gates, PR, merge, Pages) is carried into the residual tasks below.
+
+**Residual gaps checked against the owner brief on `origin/main` (0ad11bd):**
+- The landing dashboard `index.html` has no reinvestment-risk card beside its headline. (`summary.html` already has one.)
+- The what-if page has four controls but no inheritance-year control. The owner's window is 2040 to 2050.
+- Two printable briefing sheets exist (`brief.html` and `attorney-cpa-briefing.html`). Logged for the owner; not changed here.
+
+| Task | Description | Status | Session | File scope | Notes |
+|---|---|---|---|---|---|
+| R-1 | Reinvestment-risk card beside the headline on the landing dashboard `index.html` (figures from the model's break-even and bill-yield case) | claimed | `arena/87f4c71e-tino1` | `final/build.py` (`build_home_choice` KPI block only) | Every figure rounded to $10; source link on the row. |
+| R-2 | What-if inheritance-year control (2040, 2045, 2050), added to the precomputed cases | claimed | `arena/87f4c71e-tino1` | `final/extras.py` (`whatif_cases`, `build_whatif`, `WHATIF_JS` only) | Re-run of `final/model.py` only if needed; no change to existing keys. |
+| R-3 | Integration: `final/model.py`, `final/build.py`, `final/check.py .`, `final/publish.py --check`, `privacy-site/build.py` + `check.py` + unittest; PR to `main`; merge without approval; Pages deploy confirmed; this log updated | claimed | `arena/87f4c71e-tino1` | `COORDINATION.md`, `final/published.txt` and `_config.yml` only if regenerated (no new pages planned) | Merge with `gh pr merge --merge`. |
+
+**Correction to the first claim.** An earlier claim of U-0 to U-8 (written on `b9d1a0f`) is not on `origin/arena/87f4c71e-tino1`; the remote branch stayed at `b9d1a0f`. This entry supersedes it. Nothing from that claim was pushed or merged.
+
+**Scope not touched:** `final/sources.py` (the five entries drafted earlier were not needed and were not committed), `privacy-site/**`, the pre-rounding Git history (owner-only; not attempted).
