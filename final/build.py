@@ -15,6 +15,7 @@ from flags import FLAGS, REVIEW  # noqa: E402
 import questions as QUESTIONS_DATA
 import suggestions as SUGGESTIONS_DATA
 from review_queue import render_queue, render_verification  # noqa: E402
+import extras as EXTRAS  # noqa: E402  (session arena/7895b5d7: what-if, phased, glossary, timeline, brief)
 from scrub import scrub  # noqa: E402  (publication scrub, session 6f85fbe1)
 
 M = json.load(open(os.path.join(HERE, 'out', 'model.json')))
@@ -89,25 +90,52 @@ def flag(fid):
 
 BLANK = '<span class="blank">not confirmed - left blank</span>'
 
-# Grouped menu (session 1a8bae22). Each group is a heading and its links; NAV is the flat list of the same pages.
 NAV_GROUPS = [
-    ('Start', [(HOME, 'Summary'), ('brief.html', 'Attorney &amp; CPA brief'), ('timeline.html', 'Deadline timeline')]),
-    ('Decide', [('decision.html', 'Decision'), ('whatif.html', 'What-if'), ('phased.html', 'Phased entry'),
-                ('questions.html', 'Questions to answer'), ('suggestions.html', 'Suggestions')]),
-    ('Analyse', [('projections.html', 'Year by year'), ('black-swan.html', 'Black swan'),
-                 ('estate-cash.html', 'Cash and estate tax'), ('costs.html', 'Insurance and costs')]),
-    ('Rules', [('process.html', 'Process'), ('law.html', 'Law'), ('glossary.html', 'Glossary')]),
-    ('Check', [('flagged.html', 'Flagged for Review'), ('sources.html', 'Sources and method'),
-               ('verification.html', 'Verification'), ('requirements.html', 'Requirements'), ('review.html', 'Repo review')]
-     + ([('versions.html', 'Earlier versions')] if os.environ.get('ROOT_MODE') else [])),
+    ('Start', [
+        (HOME, 'Summary'),
+        ('brief.html', 'Attorney and CPA brief'),
+        ('timeline.html', 'Deadlines timeline'),
+        ('glossary.html', 'Glossary'),
+    ]),
+    ('Decide', [
+        ('decision.html', 'Decision'),
+        ('what-if.html', 'What-if controls'),
+        ('black-swan.html', 'Black swan'),
+        ('phased.html', 'Phased investing'),
+    ]),
+    ('Facts', [
+        ('projections.html', 'Year by year'),
+        ('process.html', 'Process'),
+        ('law.html', 'Law'),
+        ('estate-cash.html', 'Cash and estate tax'),
+        ('costs.html', 'Insurance and costs'),
+    ]),
+    ('Review', [
+        ('questions.html', 'Questions to answer'),
+        ('suggestions.html', 'Suggestions'),
+        ('flagged.html', 'Flagged for Review'),
+    ]),
+    ('Evidence', [
+        ('sources.html', 'Sources and method'),
+        ('verification.html', 'Verification'),
+        ('requirements.html', 'Requirements'),
+        ('review.html', 'Repo review'),
+    ] + ([('versions.html', 'Earlier versions')] if os.environ.get('ROOT_MODE') else [])),
 ]
 NAV = [item for _, items in NAV_GROUPS for item in items]
 
 
+def nav_html(slug):
+    out = []
+    for gname, items in NAV_GROUPS:
+        here = any(h == slug for h, _ in items)
+        links = ''.join('<a href="%s"%s>%s</a>' % (h, ' class="on" aria-current="page"' if h == slug else '', t) for h, t in items)
+        out.append('<details class="grp"%s><summary>%s</summary><div class="grpitems">%s</div></details>' % (' open' if here else '', gname, links))
+    return ''.join(out)
+
+
 def page(slug, title, lead, body):
-    nav = ''.join('<span class="navg"><span class="navl">%s</span>%s</span>' % (g, ''.join(
-        '<a href="%s"%s>%s</a>' % (h, ' class="on" aria-current="page"' if h == slug else '', t) for h, t in items))
-        for g, items in NAV_GROUPS)
+    nav = nav_html(slug)
     doc = """<!doctype html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -202,6 +230,7 @@ def build_index():
     by = M['by_T']
     cards = ''.join([
         kpi('Best financial outcome (conditional)', 'Sell Property A, keep Property B', 'ahead in the baseline; across 50 real historical sequences it leads in %d after 10 years and in %d after 20 - a model result on the assumptions flagged %s and %s, not a verified forecast' % (RH['10']['wins']['sell'], RH['20']['wins']['sell'], flag('A01'), flag('A02'))),
+        kpi('Reinvestment risk, beside the headline', EXTRAS.bills_gap_text() + ' in 2076, nominal', 'the sell path if the proceeds stayed in Treasury bills instead of stocks; computed from the same model, see <a href="what-if.html">What-if controls</a>'),
         kpi('Property A at inheritance (%d)' % T, m(B['fmv_T']), 'from %s today at 4.0%% a year (assumption)' % m(P['cup_value'])),
         kpi('Property A tax: today / if lived in / if rented', '%s / %s / %s' % (m(P['cup_tax_2025']), m(B['tax_live_T']), m(B['tax_rent_T'])), 'per year; first year after inheritance'),
         kpi('Property B tax advantage kept by not selling', m(sf_gap) + ' a year', 'difference between tax on market value and on the current assessed value'),
@@ -620,6 +649,8 @@ def build_blackswan():
     ], caption='Shocks that no price history captures')
     body = ("""<p class="callout">This section is kept apart from the baseline on purpose. The baseline uses constant rates so that the three choices can be compared cleanly. Here nothing is constant: every path uses real recorded years, in their real order, for inflation, local home prices, stocks, bonds and bills. Read the provenance table first: official statistics, the academic return dataset and the hypothetical constructions below are three different kinds of material.</p>"""
             + prov + rep + named + '<h2>Property A market value in 2026 dollars under six paths</h2>' + ch + stats + other + yr + yr2 + hist)
+    body += ('<h2>Phased entry into stocks</h2><p>A separate test asks whether parking the sale proceeds in short Treasuries for 24 to 36 months, then moving them into stocks in equal annual tranches, softens the crash at entry in 1929 and 2007. '
+             'The answer is on the <a href="phased.html">Phased investing</a> page: in no entry year tested is the worst fall deeper than the lump sum&rsquo;s, and the phased path ends higher than the lump sum in only a minority of entry years.</p>')
     page('black-swan.html', 'Black swan section: non-constant growth and inflation over 50 years',
          'What happens to the decision when inflation, home prices and markets behave the way they really have: in bursts, busts and long flat stretches.', body)
 
@@ -1584,7 +1615,6 @@ def build_flagged():
         ('U', 'Values that could not be confirmed on an official page (left blank)'),
         ('A', 'Model assumptions (no official figure exists)'),
         ('S', 'Irregularities in sources'),
-        ('H', 'Phased-entry test: limits of the parking test (parking return, annual data, phase-in length)'),
         ('R', 'Irregularities in the repository'),
     ]
     # Repository review findings R01-R43 are rendered on the repository review page; the flagged
@@ -1974,7 +2004,14 @@ header.top .wrap{display:flex;flex-wrap:wrap;align-items:center;gap:6px 18px;pad
 nav{display:flex;flex-wrap:wrap;gap:2px}
 nav a{color:#d5e1ee;text-decoration:none;padding:5px 9px;border-radius:5px;font-size:14px}
 nav a:hover{background:#21405f}nav a.on{background:#fff;color:#12283f;font-weight:600}
-.navg{display:inline-flex;flex-wrap:wrap;gap:2px;align-items:center;border-left:1px solid #33506e;padding-left:8px;margin-left:4px}.navl{color:#8fa8c4;font-size:11px;text-transform:uppercase;letter-spacing:.05em;padding:0 6px 0 2px}
+nav details.grp{position:relative}nav details.grp>summary{list-style:none;cursor:pointer;color:#fff;padding:5px 9px;border-radius:5px;font-size:14px;font-weight:600}
+nav details.grp>summary::-webkit-details-marker{display:none}nav details.grp>summary::after{content:' \\25BE';font-size:11px}
+nav details.grp[open]>summary,nav details.grp>summary:hover{background:#21405f}
+nav .grpitems{position:absolute;left:0;top:100%;margin-top:4px;background:#12283f;border-radius:6px;padding:6px;min-width:220px;display:flex;flex-direction:column;box-shadow:0 6px 18px rgba(0,0,0,.25);z-index:9}
+nav .grpitems a{white-space:nowrap}
+.ctrl{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;margin:10px 0 16px}.ctrl label{font-size:14px;display:flex;flex-direction:column;gap:4px}.ctrl select{font:inherit;padding:6px;border:1px solid var(--line);border-radius:6px;background:#fff}
+.glossary dl{margin:0}.gl{border-bottom:1px solid var(--line);padding:9px 0}.gl dt{font-weight:700}.gl dd{margin:2px 0 0 0}.gsrc{font-size:13px;color:var(--mut)}
+ol.timeline{list-style:none;padding:0;margin:14px 0;border-left:3px solid var(--acc)}ol.timeline li{padding:6px 0 10px 16px;position:relative}ol.timeline li::before{content:'';position:absolute;left:-8px;top:12px;width:13px;height:13px;border-radius:50%;background:var(--acc)}.tlwhen{font-weight:700}.tlwhat{color:var(--ink)}
 h1{font-size:30px;line-height:1.2;margin:28px 0 8px}h2{font-size:21px;margin:34px 0 10px}
 .lead{font-size:18px;color:var(--mut);max-width:900px;margin:0 0 20px}
 .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin:18px 0}
@@ -2060,10 +2097,15 @@ JS = """
 NAV_CARDS = [
     ('Start here', [
         ('summary.html', 'Executive summary', 'the answer, the numbers behind it, and the six steps of the plan'),
+        ('brief.html', 'Attorney and CPA brief', 'a one-page printable sheet with the figures, questions and deadlines for the two advisers'),
+        ('timeline.html', 'Deadlines timeline', 'every step counted from the date of death, in order, with its official source'),
+        ('glossary.html', 'Glossary', 'plain-English meanings of the terms, each linked to its official page'),
         ('decision.html', 'Decision analysis', 'live, rent or sell: cash flows, after-tax wealth, sensitivities, break-even points'),
     ]),
     ('Money and projections', [
         ('projections.html', 'Year by year, 2026-2076', 'value, assessed value, property tax, insurance, water, electricity, repairs'),
+        ('what-if.html', 'What-if controls', 'change growth, stock return, rent or inflation; reinvestment risk shown beside the headline'),
+        ('phased.html', 'Phased investing', 'parking the proceeds for 24 to 36 months before stocks, tested on the 1929, 1937, 2000 and 2007 entries'),
         ('black-swan.html', 'Black swan', '50 replays of the real 1976-2025 record and named crisis paths'),
         ('costs.html', 'Insurance and running costs', 'what is quoted, what is assumed, and what is still unconfirmed'),
         ('estate-cash.html', 'Cash and estate tax', 'the threshold at each level, the room before tax, and projections'),
@@ -2131,9 +2173,9 @@ def build_home_choice():
     unpublished; that boundary is recorded as review item G02 so the owner can
     still choose the narrower setting.
     """
-    nav = ''.join('<span class="navg"><span class="navl">%s</span>%s</span>' % (g, ''.join(
-        '<a href="%s"%s>%s</a>' % (h, ' class="on" aria-current="page"' if h == 'index.html' else '', t) for h, t in items))
-        for g, items in [('Home', [('index.html', 'Home')])] + NAV_GROUPS)
+    nav_items = [('index.html', 'Home')] + NAV
+    nav = ''.join('<a href="%s"%s>%s</a>' % (
+        h, ' class="on" aria-current="page"' if h == 'index.html' else '', t) for h, t in nav_items)
 
     kpis = ''.join([
         kpi('Best financial outcome (conditional)', 'Sell Property A, keep Property B',
@@ -2243,15 +2285,12 @@ def main():
               build_verification, build_requirements, build_review):
 
         f()
+    EXTRAS.build_all(sys.modules[__name__])
     if ROOT_MODE:
         build_home_choice()
         build_versions()
         for s_, t_, n_ in STUBS:
             stub(s_, t_, n_)
-    # session 1a8bae22: the five added pages are written by the same generator, so that the freshness check
-    # in final/check_published.py (which runs only this file) regenerates every allowlisted page.
-    import build_1a8bae22
-    build_1a8bae22.main()
     print('built', len([x for x in os.listdir(OUT) if x.endswith('.html')]), 'pages in', OUT)
 
 

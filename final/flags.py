@@ -148,18 +148,6 @@ FLAGS = [
          used='The federal exclusion, the Proposition 19 allowance, rent rules, insurance regulation and utility tariffs will be adjusted, extended or repealed between now and 2050-2076. Today\'s verified amounts are anchors for the projection, not forecasts. Pending measures are listed on the Law page.',
          check='Re-read the linked official pages each year (the re-check calendar is suggested on the Site improvements page); nothing decades ahead can be verified today.',
          src=('RP-2026-35', 'BOE-LTA-2025-009')),
-    dict(id='H01', item='Phased-entry test: the parking return is the 3-month Treasury bill, not the 2-year note. The 2-year yield series starts in 1976, so it cannot test 1929.',
-         used='The phased-entry test (Black swan section) parks the proceeds at the 3-month bill return for every year. For 2008-2010 the 2-year yield averaged about 0.6 to 0.8 points above the 3-month bill return, so the 3-month proxy is slightly conservative for that window (cross-check table on the page).',
-         check='Ask the adviser which parking instrument a 24-36 month ladder would really use (Treasury bills, notes or a money-market fund) and what it would cost. Compare with the yield at the time of inheritance.',
-         src=('FRED-GS2', 'TREASURY')),
-    dict(id='H02', item='Phased-entry test: annual returns are spread evenly across each calendar year, so a crash inside a year (1929 and 2008) is smoothed, and entry is on 1 January of the entry year.',
-         used='Both named tests (entry 1929 and entry 2008) are stress tests on annual data. The real autumn 1929 and 2008 falls are not located within the year, so the depth of the early losses is approximate.',
-         check='Re-run the test on monthly index data (S&P 500 total return, Treasury bills and 2-year notes) from an official or licensed series before relying on the depth of any loss.',
-         src=('DAMODARAN', 'FRED-TB3MS', 'FRED-SP500')),
-    dict(id='H03', item='Phased-entry test: the phase-in period of 12 equal monthly purchases after parking is an assumption, not a rule from any source.',
-         used='The page tests 24 and 36 months of parking, each followed by 12 monthly purchases. Shorter or longer phase-ins change the result; no phase-in length is recommended by an official source.',
-         check='Ask the adviser to set the parking period and the phase-in length. The what-if results and the robustness table show the sensitivity.',
-         src=('FRED-GS2',)),
     # ---- irregularities in sources ------------------------------------------------------------
     dict(id='S01', item='Estate-tax closing-letter user fee, by the date of the request.',
          used='Not used in any calculation. A 2026-11-12 re-read of the closing-letter FAQ dates the fees instead of contradicting the What is New page: $67 before 2025-05-21, $56 from 2025-05-21 until 2026-10-26, and $76 after 2026-10-26. The What is New page describes the latest step, from $56 to $76.',
@@ -193,6 +181,14 @@ FLAGS = [
          used='Used for one stress path only. Cash is assumed to do no better than consumer prices in that path.',
          check='Treat it as an illustration of a long stagnation, not as a forecast for California.',
          src=('FRED-JP',)),
+    dict(id='S-PHASE', item='Phased-investing test: the 2-year Treasury return is not in the repository, so the 3-month bill stands in for the parked cash; the test is annual, gross of tax and costs, and uses an academic stock and bill table.',
+         used='Parked cash earns the 3-month bill return; stocks earn the S&P 500 total return; equal annual tranches; 10-year horizon; 89 entry years from 1928 to 2016.',
+         check='Check the 2-year Treasury yield history on the official Treasury page before relying on dollar differences. The 1929 crash fell mostly inside the calendar year, which annual data understates.',
+         src=('DAMODARAN', 'TREASURY')),
+    dict(id='S-WHATIF', item='What-if cases: each control selects one of 54 precomputed model runs; rent benchmarks are HUD figures, not quotes for Property A.',
+         used='Only the four controls change; each control moves the named input(s) and nothing else. The bills-only check is the same model with proceeds held in Treasury bills.',
+         check='Re-run final/extras.py after any change to model inputs; the page is generated, not typed.',
+         src=('HUD-95014', 'TREASURY')),
 ]
 
 REVIEW = [

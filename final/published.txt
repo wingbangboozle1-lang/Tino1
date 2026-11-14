@@ -1,4 +1,5 @@
 app.js
+attorney-cpa-briefing.html
 black-swan.html
 brief.html
 costs.html
@@ -34,4 +35,5 @@ summary.html
 timeline.html
 verification.html
 versions.html
-whatif.html
+what-if.html
+whatif.js

@@ -260,12 +260,4 @@ add('SF-LEG-261020', 'SF File No. 261020', 'San Francisco Board of Supervisors -
 add('DIGITAL-GOV', 'Digital.gov content guide', 'U.S. General Services Administration, Digital.gov - An introduction to content',
     'https://digital.gov/resources/an-introduction-to-content', 'page',
     'Read directly 2026-11-12: Federal content guide advising HTML over PDFs, plain language, structured searchability, currency reviews, clear labeling of non-government links, and appropriate translation access.')
-add('FRED-GS2', 'FRED GS2 (2-year Treasury)', 'Federal Reserve Bank of St. Louis (FRED) - market yield on U.S. Treasury securities at 2-year constant maturity (GS2)',
-    'https://fred.stlouisfed.org/series/GS2', 'page',
-    'Read 2026-11-14: monthly averages for 2007-2010 copied from the FRED download (2007 4.36% average, 2008 2.00%, 2009 0.96%, 2010 0.70%). Series starts 1976, so it cannot test 1929.')
-add('FRED-TB3MS', 'FRED TB3MS (3-month Treasury bill)', 'Federal Reserve Bank of St. Louis (FRED) - 3-Month Treasury Bill Secondary Market Rate, Discount Basis (H.15 release)',
-    'https://fred.stlouisfed.org/series/TB3MS', 'page',
-    'Read 2026-11-14: monthly, Board of Governors of the Federal Reserve (H.15); data start 1934-01 - no official value exists for 1928-1933, so those bill rows are academic (flag S02).')
-add('FRED-SP500', 'FRED SP500 (S&P 500 index)', 'Federal Reserve Bank of St. Louis (FRED) - S&P 500 (S&P Dow Jones Indices)',
-    'https://fred.stlouisfed.org/series/SP500', 'page',
-    'Read 2026-11-14: daily closing price index with 10 years of history (2016 onward) and no dividends; it cannot test 1929 or 2008 total returns, so those rows are academic (flag S02).')
+

@@ -8,7 +8,14 @@ header.top .wrap{display:flex;flex-wrap:wrap;align-items:center;gap:6px 18px;pad
 nav{display:flex;flex-wrap:wrap;gap:2px}
 nav a{color:#d5e1ee;text-decoration:none;padding:5px 9px;border-radius:5px;font-size:14px}
 nav a:hover{background:#21405f}nav a.on{background:#fff;color:#12283f;font-weight:600}
-.navg{display:inline-flex;flex-wrap:wrap;gap:2px;align-items:center;border-left:1px solid #33506e;padding-left:8px;margin-left:4px}.navl{color:#8fa8c4;font-size:11px;text-transform:uppercase;letter-spacing:.05em;padding:0 6px 0 2px}
+nav details.grp{position:relative}nav details.grp>summary{list-style:none;cursor:pointer;color:#fff;padding:5px 9px;border-radius:5px;font-size:14px;font-weight:600}
+nav details.grp>summary::-webkit-details-marker{display:none}nav details.grp>summary::after{content:' \25BE';font-size:11px}
+nav details.grp[open]>summary,nav details.grp>summary:hover{background:#21405f}
+nav .grpitems{position:absolute;left:0;top:100%;margin-top:4px;background:#12283f;border-radius:6px;padding:6px;min-width:220px;display:flex;flex-direction:column;box-shadow:0 6px 18px rgba(0,0,0,.25);z-index:9}
+nav .grpitems a{white-space:nowrap}
+.ctrl{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;margin:10px 0 16px}.ctrl label{font-size:14px;display:flex;flex-direction:column;gap:4px}.ctrl select{font:inherit;padding:6px;border:1px solid var(--line);border-radius:6px;background:#fff}
+.glossary dl{margin:0}.gl{border-bottom:1px solid var(--line);padding:9px 0}.gl dt{font-weight:700}.gl dd{margin:2px 0 0 0}.gsrc{font-size:13px;color:var(--mut)}
+ol.timeline{list-style:none;padding:0;margin:14px 0;border-left:3px solid var(--acc)}ol.timeline li{padding:6px 0 10px 16px;position:relative}ol.timeline li::before{content:'';position:absolute;left:-8px;top:12px;width:13px;height:13px;border-radius:50%;background:var(--acc)}.tlwhen{font-weight:700}.tlwhat{color:var(--ink)}
 h1{font-size:30px;line-height:1.2;margin:28px 0 8px}h2{font-size:21px;margin:34px 0 10px}
 .lead{font-size:18px;color:var(--mut);max-width:900px;margin:0 0 20px}
 .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin:18px 0}
