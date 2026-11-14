@@ -2406,3 +2406,29 @@ Branch fixed by workspace: `arena/88de34f6-tino1` (base `b9d1a0f`; `origin/main`
 | S88-6 Repository privacy audit (Git history) | done (report only) | arena/88de34f6-tino1 | history not rewritten (destructive; owner decision) | See the record below |
 
 Claimed at commit time; notes on handoff and results follow in later entries of this session.
+## Session `arena/6f85fbe1-tino1` — publication privacy scrub (ZIP codes and city names in visible text), re-verification, PR and merge (claimed 2026-11-14 UTC)
+
+Branch fixed by workspace: `arena/6f85fbe1-tino1`, branched from `main` at `b9d1a0f` (PR #99). No other open session claim touches these files at claim time; PR #97 (law-change register) is a different scope and is not touched.
+
+| Task | Status | Owner session | Files / scope | Verification / handoff |
+|---|---|---|---|---|
+| P-0 Claim and coordination | in progress | arena/6f85fbe1-tino1 | COORDINATION.md (append only) | This entry. |
+| P-1 Remove the two ZIP codes and the Cupertino city name from visible text of every published page (owner brief: personal information must not appear on the website). Official-source URLs keep their ZIP query strings so each row stays verifiable; this residual is flagged. | done (see record below) | arena/6f85fbe1-tino1 | `final/build.py` (output scrub at write time), `final/exec_summary.py`, regenerated root allowlist pages, `EXECUTIVE-SUMMARY.md`, `final/check.py` if a check needs to recognise the placeholder form | `final/check.py .`, `final/publish.py --check`, `privacy-site/check.py`, unit tests, and a text-only grep of the published files. |
+| P-2 Record the residuals (ZIP inside official URLs, district names, San Francisco city name, history-level Git exposure) for owner decision | done (see record below) | arena/6f85fbe1-tino1 | `flags.py` appended items only, this board | Owner decision needed: history rewrite / repo visibility. Not done by this session. |
+
+### arena/6f85fbe1-tino1 — P-1 / P-2 record (2026-11-14 UTC)
+
+- **What changed.** New `final/scrub.py` replaces the ZIP codes 95014 and 94122 with `[ZIP A]` / `[ZIP B]` and the city "Cupertino" with "Santa Clara County" in every visible text and fragment identifier of the generated pages. Official-source URLs are untouched. `final/build.py` and `final/exec_summary.py` apply it at write time; `final/check.py` gained a PRIVACY gate that fails the build if a ZIP code appears in visible text or a title/alt attribute (URL bodies exempt). Regenerated with `python3 final/model.py && python3 final/integrate.py`; 21 files changed (19 root pages, `EXECUTIVE-SUMMARY.md`, plus the two generators and the new module). Nothing else changed.
+- **Verification.** `final/check.py .` OK (25 pages, 1,062 rows each with an official link, 2,717 links, 2,556 dollar figures rounded to $10). `final/publish.py --check` OK (32 files). `privacy-site/check.py` PASS (no privacy-site output change). Unit tests 12/12 OK. Gate negative test: a sample with ZIP in text is caught; a ZIP inside an official URL is not. Text-only grep of the 19 root pages: no ZIP code outside URLs. Jekyll output is checked by CI (`final/check_published.py _site`), since rubygems.org is outside the sandbox allowlist.
+- **Residuals (P-2, owner decision, not changed here).**
+  1. ZIP codes remain inside about 88 official HUD URLs (`zcta=95014`, `zcta=94122`). Removing them would break the per-row official-source requirement.
+  2. "Cupertino" remains inside official agency and district names (City of Cupertino water, Cupertino Elementary, Cupertino Municipal System). These are public names, not addresses.
+  3. "San Francisco" remains as Property B's jurisdiction (its rent law and tax rules depend on the city). Property B is still identifiable by city plus rounded values.
+  4. Git history still contains the pre-scrub text and the rounded values. Only the repository owner can decide on a history rewrite or making the repository private. This session did not rewrite history.
+  5. Rounded property values, tax histories and rents are still published. The owner's brief asked for them, and the earlier G01/G02 decision kept them. Whether they are acceptable to publish is an owner decision; the figure-free guide in `privacy-site/public/` remains the no-figures alternative.
+
+### arena/6f85fbe1-tino1 — merge and Pages record (2026-11-14 UTC)
+
+- **PR #100** (`arena/6f85fbe1-tino1` → `main`, merge commit `f9bcbe3`, merged 2026-11-14T21:57:39Z, `gh pr merge --merge`). CI check "Validate the Pages publication boundary" (run 43645422131): success, including the real Jekyll build and the 32-file allowlist comparison. Pages run 43645529896 "pages build and deployment": success. Pages API: status `built`.
+- **Live check.** https://wingbangboozle1-lang.github.io/Tino1/summary.html now shows "Property A (Santa Clara County, [ZIP A])" and "Property B (San Francisco, [ZIP B])" in visible text; official HUD links unchanged.
+- **Not done here (owner decisions, recorded as P-2):** history rewrite of pre-scrub commits; making the repository private; the broader publication of rounded household figures. The Attorney & CPA briefing sheet, Git-history scrub and other features listed in the brief are already present elsewhere in the published site or remain owner decisions; this session did not change them.

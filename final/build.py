@@ -15,6 +15,7 @@ from flags import FLAGS, REVIEW  # noqa: E402
 import questions as QUESTIONS_DATA
 import suggestions as SUGGESTIONS_DATA
 from review_queue import render_queue, render_verification  # noqa: E402
+from scrub import scrub  # noqa: E402  (publication scrub, session 6f85fbe1)
 
 M = json.load(open(os.path.join(HERE, 'out', 'model.json')))
 P = M['params']
@@ -138,7 +139,7 @@ def page(slug, title, lead, body):
 <footer class="wrap"><p>Built %s from <a href="%s/tree/main/final">final/</a> (model, generator and checker). %s Property A = Cupertino home (ZIP 95014). Property B = San Francisco three-unit home (ZIP 94122). People are placeholders: "the Transferor" (current owner of Property A) and "the Inheritor" (already owns Property B). Owner-supplied and modelled dollar figures are rounded to the nearest $10. This is an analysis to prepare questions for a licensed estate attorney and tax adviser, not legal or tax advice. Open items are on the <a href="flagged.html">Flagged for Review</a> page.</p></footer>
 <script src="app.js"></script>
 </body></html>""" % (e(title), HOME, nav, e(title), lead, body, BUILD_DATE, REPO, '<a href="versions.html">Earlier versions</a> are superseded.' if ROOT_MODE else '')
-    open(os.path.join(OUT, slug), 'w').write(doc)
+    open(os.path.join(OUT, slug), 'w').write(scrub(doc))
 
 
 # ------------------------------------------------------------------ charts (inline SVG)
@@ -2240,7 +2241,7 @@ def build_home_choice():
 <footer class="wrap"><p>Built %s from <a href="%s/tree/main/final">final/</a> (model, generator and checker). <a href="versions.html">Earlier versions</a> are superseded. Property A = Cupertino home (ZIP 95014). Property B = San Francisco three-unit home (ZIP 94122). People are placeholders: "the Transferor" (current owner of Property A) and "the Inheritor" (already owns Property B). Owner-supplied and modelled dollar figures are rounded to the nearest $10. This is an analysis to prepare questions for a licensed estate attorney and tax adviser, not legal or tax advice. Open items are on the <a href="flagged.html">Flagged for Review</a> page.</p></footer>
 <script src="app.js"></script>
 </body></html>""" % (nav, body, BUILD_DATE, REPO)
-    open(os.path.join(OUT, 'index.html'), 'w').write(doc)
+    open(os.path.join(OUT, 'index.html'), 'w').write(scrub(doc))
 
 
 def main():
