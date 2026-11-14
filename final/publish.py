@@ -36,12 +36,14 @@ LANDING = [
 # is the disclosure-minimisation control the brief asks for. Publishing this set
 # is option D of suggestion G01; the owner can still choose a narrower boundary.
 NUMERIC = [
+    'attorney-cpa-briefing.html',
     'summary.html',
     'decision.html',
     'questions.html',
     'suggestions.html',
     'projections.html',
     'black-swan.html',
+    'glossary.html',
     'process.html',
     'law.html',
     'estate-cash.html',

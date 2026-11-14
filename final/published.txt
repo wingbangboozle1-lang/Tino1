@@ -1,9 +1,11 @@
 app.js
+attorney-cpa-briefing.html
 black-swan.html
 costs.html
 decision.html
 estate-cash.html
 flagged.html
+glossary.html
 index.html
 law.html
 privacy-site/public/costs.html

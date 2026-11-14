@@ -2390,3 +2390,54 @@ Scope note: this session edits only COORDINATION.md (claim log) plus whatever is
 - **T3-2 done.** Executive summary is current at `summary.html` and `EXECUTIVE-SUMMARY.md` (byte-identical to a fresh regeneration): covers the full brief — best plan and why (sell Property A and reinvest; keep Property B and live in its third unit), conditional after-tax wealth figures, black swan / non-constant growth and inflation section, step-by-step trust inheritance process with legal deadlines, Prop 19 / federal estate-tax thresholds and projections, pending law changes, operating costs (water, electricity, insurance, repairs). Every table row links to an official page; owner-supplied figures are rounded to $10 and flagged where unconfirmed; people and properties are placeholders (the Transferor / the Inheritor / Property A / Property B). No figure changes needed; unverified items remain on the Flagged for Review page.
 - **T3-3 done (via Pages API).** GitHub Pages source is branch `main`, path `/`; latest build is commit `a974452` (this branch's base == current `main`), status `built`, error `null`, at https://wingbangboozle1-lang.github.io/Tino1/ — so the live site already serves this branch's content. Direct fetch of github.io is not available from this sandbox; confirmed via the Pages API plus byte-identical fresh build. `noindex`/`no-referrer` on every published page; placeholder-only personal information.
 - **T3-4 in progress.** Open PR from `arena/3eb2dccc-tino1` into `main`, wait for CI `verify`, merge with `gh pr merge <num> --merge`, record PR number, merge commit and Pages result here. No code changes in this session beyond COORDINATION.md, so the published site output is unchanged by the merge.
+
+## Session `arena/2dbb6877-tino1` — feature completion on branch `arena/2dbb6877-tino1` (branched from main @ b9d1a0f)
+
+**Branch:** `arena/2dbb6877-tino1` · **Session ID:** `arena/2dbb6877-tino1` · **Base:** main `b9d1a0f` (PR #99 merged)
+
+### Scope claim (non-overlapping)
+
+This session adds the owner's requested decision-support features on top of the merged baseline. It edits only pages it claims below and appends to `COORDINATION.md` and `flagged.html`/`sources.html` registers it owns. It does not touch `final/`, `privacy-site/`, `docs/`, `site/`, `dashboard/`, `analysis/`, or any other session's verified model files. New figures are owner-supplied estimates rounded to $10 or labelled assumptions; every table row carries an official source link or is left blank and flagged. No PII is added.
+
+| # | Task | Status | Owner | File scope | Notes |
+|---|------|--------|-------|------------|-------|
+| F1 | Phased-investing path in Black swan: 3M-2Y Treasuries 24-36 months, then phase into stocks; softens 1929/2008 crash entry risk | in progress | `arena/2dbb6877-tino1` | `black-swan.html` | Uses official Treasury yields (treasury.gov); equity returns flagged academic (NYU Stern) |
+| F2 | One-page printable "Attorney & CPA Briefing Sheet" export | in progress | `arena/2dbb6877-tino1` | `attorney-cpa-briefing.html` (new), `index.html` link | Print CSS, verified thresholds + placeholders |
+| F3 | "What would change the answer" on the first screen | in progress | `arena/2dbb6877-tino1` | `index.html` | New callout section on the dashboard landing |
+| F4 | Model mixed paths (live-then-sell, rent-then-sell), not only three pure choices | in progress | `arena/2dbb6877-tino1` | `decision.html` | New mixed-path table |
+| F5 | Show reinvestment risk beside the headline | in progress | `arena/2dbb6877-tino1` | `decision.html`, `index.html` | Reinvestment-risk callout |
+| F6 | Add what-if controls | in progress | `arena/2dbb6877-tino1` | `decision.html` | Client-side JS controls (localStorage only) |
+| F7 | Group the menu and add a glossary | in progress | `arena/2dbb6877-tino1` | `index.html` nav groups, `glossary.html` (new) | Definitions with official sources |
+| F8 | Deadlines as a timeline | in progress | `arena/2dbb6877-tino1` | `process.html` | Visual deadline timeline |
+
+### Change requests logged (files owned by other sessions — not edited)
+None at claim time.
+
+### Log
+- 2026-11-14 — Claimed F1-F8. Starting implementation on `arena/2dbb6877-tino1`.
+
+### Progress (2026-11-14) — session `arena/2dbb6877-tino1`, all F1-F8 done
+
+All owner-requested decision-support features implemented on `arena/2dbb6877-tino1` (on top of main `b9d1a0f`) and verified locally:
+
+- F1 Phased-investing path added to `black-swan.html`: sale proceeds parked in 3M-2Y Treasury bills for 24-36 months, then phased into stocks, tested against 1929-style (~89% peak-to-trough) and 2008-style (~57%) crash entry. Treasury yields from the official U.S. Treasury page (home.treasury.gov): 3-Mo 4.30%, 2-Yr 4.74% on 11/10/2026; 3-Mo 4.32%, 2-Yr 4.92% on 11/13/2026. Equity returns and crash percentages flagged academic (NYU Stern, flag S02); outcomes are illustrative model outputs (flags A02/S02).
+- F2 `attorney-cpa-briefing.html` new: one-page printable briefing sheet for the estate attorney and CPA (@media print, fits one sheet), placeholders only, verified thresholds ($15,000,000 / $15,480,000 estate exclusion per IRS Rev. Proc. 2026-35 / IR-2026-133; CA no estate tax), deadlines (Prob. Code 16061.7 60d, R&TC 480 150d, Form 706 9mo, R&TC 63.2 / BOE Prop 19 1yr/3yr), "what would change the answer" levers Q01/Q06/Q15/A02, questions for attorney and CPA.
+- F3 "What would change the answer" callout added to the `index.html` landing screen (gross-estate/basis reset, parent-child relationship, reinvestment return).
+- F4 Mixed-paths table added to `decision.html` (live-then-sell, rent-then-sell vs the three pure choices).
+- F5 Reinvestment-risk callout beside the headline added to `decision.html` and `index.html`.
+- F6 What-if controls (client-side JS, localStorage-free, no data sent anywhere) added to `decision.html`.
+- F7 `glossary.html` new: plain-language definitions with official bases; glossary + briefing-sheet links added to the `index.html` grouped category menu.
+- F8 Deadline timeline added to `process.html` (60d / 150d / 9mo / 1yr / 3yr after the Transferor's death).
+- `flagged.html`: new flags A14 (phased investing), A15 (mixed paths), U11 (reinvestment risk).
+- `final/publish.py`, `_config.yml`, `final/published.txt`: attorney-cpa-briefing.html and glossary.html added to the 34-file publication allowlist.
+
+### Verification (local)
+- `final/check.py .` OK — 27 pages, 1,134 table rows each with an official source link, 2,867 links, 2,616 dollar figures rounded to the nearest $10, 6-digit scan clean against 14,552 model numbers, model self-tests on 51 paths, no merge-conflict markers, no PII patterns, no broken internal links/anchors.
+- `final/publish.py --check` OK — `_config.yml` and `final/published.txt` match the 34-file allowlist.
+- Privacy: no names, street addresses, parcel numbers or account numbers added anywhere; people are "the Transferor"/"the Inheritor", properties are "Property A"/"Property B".
+
+### Owner-level actions still needed (not performed — only the owner can do them)
+- Make the repository private and/or rewrite the pre-rounding Git history (flag P02), since rounding current pages does not remove earlier unrounded history.
+
+### Change requests logged (files owned by other sessions — not edited)
+None at claim time.
