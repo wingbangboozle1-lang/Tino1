@@ -107,10 +107,11 @@ G_OPTS = [0.03, 0.04, 0.05]                         # Property A home growth a y
 R_OPTS = [0.05, 0.07, 0.10]                         # stock return a year (baseline 7.0%)
 RENT_OPTS = [('3br', 5870), ('4br', 6390), ('up30', r10(6390 * 1.3))]   # Cupertino rent a month (baseline 4br)
 INF_OPTS = [0.025, 0.04]                            # inflation (baseline 2.5%)
+T_OPTS = [2040, 2045, 2050]                         # year of inheritance (baseline 2045); the owner's window is 2040 to 2050
 
 
-def cell_key(g, r, rent, inf):
-    return '%.2f|%.2f|%s|%.3f' % (g, r, rent, inf)
+def cell_key(g, r, rent, inf, t):
+    return '%.2f|%.2f|%s|%.3f|%d' % (g, r, rent, inf, t)
 
 
 def whatif_cases():
@@ -119,12 +120,13 @@ def whatif_cases():
         for r in R_OPTS:
             for rk, rent in RENT_OPTS:
                 for inf in INF_OPTS:
+                  for t in T_OPTS:
                     d = inf - MD.P['infl']          # 4% inflation raises nominal rates by the same 1.5 points
                     kw = dict(g_cup=g + d, g_ca=g + d, r_stock=r + d, r_bond=MD.P['r_bond'] + d,
-                              r_bill=MD.P['r_bill'] + d, infl=inf, cup_rent_month=rent)
+                              r_bill=MD.P['r_bill'] + d, infl=inf, cup_rent_month=rent, T=t)
                     _, s = MD.run(MD.with_(**kw))
                     _, sb = MD.run(MD.with_(**dict(kw, w_stock=0.0, w_bill=1.0)))
-                    cases[cell_key(g, r, rk, inf)] = dict(
+                    cases[cell_key(g, r, rk, inf, t)] = dict(
                         live=r10(s['w_live']), rent=r10(s['w_rent']), sell=r10(s['w_sell']),
                         live_real=r10(s['real_live']), rent_real=r10(s['real_rent']), sell_real=r10(s['real_sell']),
                         best=s['best'], sell_net=r10(s['sell_net']),
@@ -237,6 +239,7 @@ def build_whatif(B, cases):
 <label>Home growth a year, Property A <select id="c-growth"><option value="0.03">3.0%</option><option value="0.04" selected>4.0% (baseline)</option><option value="0.05">5.0%</option></select></label>
 <label>Stock return a year <select id="c-stock"><option value="0.05">5.0%</option><option value="0.07" selected>7.0% (baseline)</option><option value="0.10">10.0%</option></select></label>
 <label>Cupertino rent a month <select id="c-rent"><option value="3br">HUD 3-bedroom, $5,870</option><option value="4br" selected>HUD 4-bedroom, $6,390 (baseline)</option><option value="up30">HUD 4-bedroom plus 30%, $8,310</option></select></label>
+<label>Year of inheritance <select id="c-t"><option value="2040">2040</option><option value="2045" selected>2045 (baseline)</option><option value="2050">2050</option></select></label>
 <label>Inflation a year <select id="c-infl"><option value="0.025" selected>2.5% (baseline)</option><option value="0.04">4.0% (nominal rates raised 1.5 points)</option></select></label>
 </div>"""
     body = """
@@ -255,7 +258,7 @@ def build_whatif(B, cases):
 <tr><td>Rent Property A out</td><td id="w-rent"></td><td id="r-rent"></td><td>not applicable</td><td>%s</td></tr>
 <tr><td>Sell Property A and reinvest the proceeds</td><td id="w-sell"></td><td id="r-sell"></td><td id="rb-sell"></td><td>%s</td></tr>
 </tbody></table></div>
-<p class="note">Baseline sell-path net proceeds in the inheritance year (this case): <span id="sellnet"></span>. Only the four controls change; every other input is at its baseline (see the <a href="decision.html">Decision</a> page and <a href="sources.html">Sources and method</a>). Rounded to the nearest $10.</p>
+<p class="note">Baseline sell-path net proceeds in the inheritance year (this case): <span id="sellnet"></span>. Only the five controls change; every other input is at its baseline (see the <a href="decision.html">Decision</a> page and <a href="sources.html">Sources and method</a>). Rounded to the nearest $10.</p>
 <h2>What the controls can and cannot show</h2>
 <ul>
 <li>Each control moves one group of inputs together. The controls do not cover every risk; the <a href="black-swan.html">Black swan</a> page covers sequences of years.</li>
@@ -278,7 +281,7 @@ WHATIF_JS = """(function () {
   function set(id, t) { var el = document.getElementById(id); if (el) el.textContent = t; }
   var NAMES = { live: 'Live in Property A', rent: 'Rent Property A out', sell: 'Sell and reinvest' };
   function show() {
-    var key = [parseFloat(val('c-growth')).toFixed(2), parseFloat(val('c-stock')).toFixed(2), val('c-rent'), parseFloat(val('c-infl')).toFixed(3)].join('|');
+    var key = [parseFloat(val('c-growth')).toFixed(2), parseFloat(val('c-stock')).toFixed(2), val('c-rent'), parseFloat(val('c-infl')).toFixed(3), val('c-t')].join('|');
     var c = WHATIF.cases[key];
     if (!c) { set('best', 'not computed'); return; }
     set('best', NAMES[c.best]);
@@ -290,7 +293,7 @@ WHATIF_JS = """(function () {
     set('rb-sell', fmt(c.sell_bills) + ' (today\\'s dollars: ' + fmt(c.sell_bills_real) + ')');
     set('sellnet', fmt(c.sell_net));
   }
-  ['c-growth', 'c-stock', 'c-rent', 'c-infl'].forEach(function (id) {
+  ['c-growth', 'c-stock', 'c-rent', 'c-infl', 'c-t'].forEach(function (id) {
     document.getElementById(id).addEventListener('change', show);
   });
   show();

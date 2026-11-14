@@ -2523,6 +2523,43 @@ Owner-level actions still needed (only the owner can perform): make the reposito
 
 - **S88-8 merged `origin/main` again (`0ad11bd`, PR #107, session `arena/2dbb6877-tino1`).** That session added `attorney-cpa-briefing.html`, a mixed-paths section, a what-if script and hand-typed rows to `decision.html`, plus `process.html` and `flagged.html` additions. None of these is produced by any generator in `final/`, and CI publishes committed HTML without running `final/build.py`, so a rebuild would have erased them. Handling: kept all of PR #107's content unchanged (the four pages differ from `origin/main` only by this branch's navigation line and, in `flagged.html`, by flags A14-A19). `build.py` was NOT re-run after the merge for those pages. Irregularity to review: the hand-typed figures on those pages (e.g. $9,747,210, $5,582,450) have no generator behind them; the owner or the integration session should either regenerate them from `final/` or record the source. The `paths.html` mixed-path rows from this branch are the generator-backed version of the same topic. Gates after merge: `publish.py --check` (40 files), `check.py .` (32 pages, 1,162 sourced rows), privacy-site check and tests, 0 internal link problems, 0 street-address strings.
 
+## Session `arena/87f4c71e-tino1` — residual gap closure after overlap with `arena/7895b5d7-tino1` (claimed 2026-11-14)
+
+**Overlap found on 2026-11-14.** The U-1 to U-8 claim in this session (written on base `b9d1a0f`) covered the same work that session `arena/7895b5d7-tino1` had already claimed (S-1 to S-3) and merged through PR #103 (and PR #107 by `arena/2dbb6877-tino1`). Main already has: phased investing (`phased.html`, `final/phased.py`), what-if controls with reinvestment check (`what-if.html`, `final/extras.py`), mixed paths (`decision.html`), glossary, timeline, the one-page brief (`brief.html`) and the grouped menu. This session therefore **did not push its duplicate build**. The local uncommitted duplicates (`final/model.py`, `final/build.py`, `final/sources.py`, the four new pages) were set aside and are not on any branch. Tasks U-1 to U-7 are closed as "already delivered on `main` by `7895b5d7`/`2dbb6877`; not duplicated". U-8 (publication gates, PR, merge, Pages) is carried into the residual tasks below.
+
+**Residual gaps checked against the owner brief on `origin/main` (0ad11bd):**
+- The landing dashboard `index.html` has no reinvestment-risk card beside its headline. (`summary.html` already has one.)
+- The what-if page has four controls but no inheritance-year control. The owner's window is 2040 to 2050.
+- Two printable briefing sheets exist (`brief.html` and `attorney-cpa-briefing.html`). Logged for the owner; not changed here.
+
+| Task | Description | Status | Session | File scope | Notes |
+|---|---|---|---|---|---|
+| R-1 | Reinvestment-risk card beside the headline on the landing dashboard `index.html` (figures from the model's break-even and bill-yield case) | claimed | `arena/87f4c71e-tino1` | `final/build.py` (`build_home_choice` KPI block only) | Every figure rounded to $10; source link on the row. |
+| R-2 | What-if inheritance-year control (2040, 2045, 2050), added to the precomputed cases | claimed | `arena/87f4c71e-tino1` | `final/extras.py` (`whatif_cases`, `build_whatif`, `WHATIF_JS` only) | Re-run of `final/model.py` only if needed; no change to existing keys. |
+| R-3 | Integration: `final/model.py`, `final/build.py`, `final/check.py .`, `final/publish.py --check`, `privacy-site/build.py` + `check.py` + unittest; PR to `main`; merge without approval; Pages deploy confirmed; this log updated | claimed | `arena/87f4c71e-tino1` | `COORDINATION.md`, `final/published.txt` and `_config.yml` only if regenerated (no new pages planned) | Merge with `gh pr merge --merge`. |
+
+**Correction to the first claim.** An earlier claim of U-0 to U-8 (written on `b9d1a0f`) is not on `origin/arena/87f4c71e-tino1`; the remote branch stayed at `b9d1a0f`. This entry supersedes it. Nothing from that claim was pushed or merged.
+
+**Scope not touched:** `final/sources.py` (the five entries drafted earlier were not needed and were not committed), `privacy-site/**`, the pre-rounding Git history (owner-only; not attempted).
+
+### arena/87f4c71e-tino1 close-out: R-1 to R-3 (2026-11-14)
+
+**Done.**
+- **R-1 (done).** The landing dashboard `index.html` now shows "Reinvestment risk, beside the headline" as its second headline card. It reuses the same figure as the summary card (`EXTRAS.bills_gap_text()`, the sell path if the proceeds stayed in Treasury bills, in 2076, rounded to $10), linked to the What-if page.
+- **R-2 (done).** The what-if page has a fifth control, **year of inheritance** (2040, 2045 baseline, 2050). The grid went from 54 to 162 precomputed model runs (3 growth × 3 stock return × 3 rent × 2 inflation × 3 years). The 2045 cases are identical to the previous 54 (checked key by key, 0 mismatches). Every combination of the five dropdowns has a precomputed case (162 of 162). The Attorney & CPA brief's count sentence updates to "24 of the 162 what-if cases".
+- **R-3 (gates run).** `final/publish.py --check` OK (39 files). `final/check.py .` OK (31 pages, 1,126 table rows each linked to an official source, 6-digit scan clean). `privacy-site/build.py` leaves the guide unchanged. `privacy-site/check.py` OK. Unit tests: 12 OK. Jekyll is not installed in the sandbox, so the `_site` allowlist check runs in CI.
+
+**Scope actually touched:** `final/extras.py` (`T_OPTS`, `cell_key`, `whatif_cases`, `build_whatif` controls and JS), `final/build.py` (`build_home_choice` one KPI card), and the regenerated root files `index.html`, `what-if.html`, `whatif.js`, `brief.html` (count sentence only). `COORDINATION.md` (this log). No new pages; `final/published.txt` and `_config.yml` unchanged.
+
+**Not touched on purpose:** `decision.html`, `process.html`, `flagged.html` (see irregularity 1), `final/sources.py` (the five entries drafted earlier were not needed), `privacy-site/**`, `final/site/`, and the pre-rounding Git history (owner-only).
+
+**Irregularities for the owner (logged, not fixed here).**
+1. **Hand-inserted root content.** The committed root `decision.html` (section "Mixed paths - not only the three pure choices") and `process.html` (section "Deadline timeline after the Transferor's death") contain text that no file in `final/` generates. A root rebuild from `final/build.py` would delete those sections, so this session regenerated only the files it changed. `flagged.html` also differs from generator output. The owner or an integration session should move these sections into the generator before any future full regeneration.
+2. **Two attorney and CPA briefing sheets.** `brief.html` (generated by `final/extras.py`, one printable page) and `attorney-cpa-briefing.html` (committed, no generator in `final/`). Both are linked from the site, which lets the figures drift apart. The owner should choose one.
+3. **Duplicate claim.** This session's first claim (U-0 to U-8, written on `b9d1a0f`) was never pushed. Its duplicate build was set aside and not pushed. Its work is on `main` through `arena/7895b5d7-tino1` and `arena/2dbb6877-tino1`.
+4. **Branch history.** The branch was fast-forwarded to `origin/main` (0ad11bd) before this claim was pushed. The push was a fast-forward from `b9d1a0f`, so no history was rewritten and no force-push was used.
+
+**Sources used in this residual pass:** the figures are model outputs from `final/out/model.json`, and every source link is one already in `final/sources.py` (for example `IRS-P527`, `BOE-P19`, `FHFA-SJ`, `TREASURY`, `BLS-CPI`). No new source was added.
 ## Session `arena/59feaf6e-tino1` — phased entry, mixed paths, what-if, brief, glossary, menu (claimed 2026-11-14 UTC)
 
 Branch fixed by the workspace: `arena/59feaf6e-tino1` (the `session-<id>/<task>` naming in this board is superseded for this session; the workspace allows one branch). Branch base `b9d1a0f`; `origin/main` moved to `f9bcbe3` (PR #100, privacy scrub). This branch was fast-forwarded to `f9bcbe3` before any edit, so nothing from PR #100 is lost or overwritten.
@@ -2606,3 +2643,17 @@ PR #104 and #105 remain open and overlap numeric site/model files; PR #106 is th
 
 - **S88-10 merged `origin/main` at `88b6400` (PR #105, session `arena/59feaf6e-tino1`; PR #106 and PR #107 earlier).** Main already carries the mixed-path engine (`final/model.py`, decision page section) and the phased and what-if pages from PR #103, so this branch's duplicates were removed and logged here: `final/mixed.py`, `final/mixed_pages.py` and `paths.html` (never published, and their build hook and README row removed from this branch). Kept from this branch because main lacks them: flags A14-A19 in `final/flags.py` and the `INVESTOR-TOTAL` entry in `final/sources.py`. Root pages (20 HTML/CSS/JS files) were restored to `origin/main`'s versions so PR #107's hand-edited pages (`decision.html`, `process.html`, `flagged.html`) stay byte-identical; the consequence is that A14-A19 appear on `flagged.html` only at the next regeneration, and that page is outside the Pages allowlist. Verification on this head: `publish.py --check` OK (16 files); `final/check.py .` OK (31 pages, 1,126 sourced rows); the scratch build (`ROOT_MODE=1 OUT_DIR=/tmp/...`) runs; `privacy-site/check.py` PASS; 13 unit tests OK; the 16 allowlisted files pass both published-output checkers. Owner decisions still open: publishing numeric analysis (G01/G02 and PR #106's boundary), the Git history rewrite or making the repository private, and which brief is canonical (`brief.html` vs `attorney-cpa-briefing.html`).
 
+### arena/87f4c71e-tino1 — synchronization with main 1276d6f and R-1 revert (2026-11-14)
+
+- `main` moved to `1276d6f` (PR #106, privacy-first Pages boundary, session `arena/80e36f03-tino1`) while this PR was open. Pages publishes only the generic landing (`index.html`, restored from `privacy-site/landing.html`) and the figure-free guide (16 files). This session **keeps that boundary**; nothing here changes it.
+- **R-1 reverted.** The reinvestment-risk card on the landing dashboard was dropped. The published landing is the figure-free template, so the card could not be published without putting a household figure on the front door. The reinvestment card remains on the internal summary (`summary.html`), which is not published.
+- **Conflicts resolved.** `index.html`: main's generic landing was kept (`--theirs`). `COORDINATION.md`: both sides kept (no entry removed).
+- **Gates after the merge:** `privacy-site/build.py` leaves the guide and landing unchanged; `privacy-site/check.py` PASS (14 public pages, 420 linked rows); unittest 12 OK; `final/publish.py --check` OK (16 files); `final/check.py .` OK (31 internal pages, 1,126 sourced rows).
+- **Still open for the owner:** the repository is public and its Git history contains pre-rounding drafts (flag P02). Only the owner can make the repository private or rewrite the history. Not attempted here.
+- **Remaining irregularities** are listed in the close-out above (hand-inserted root content in `decision.html`, `process.html`; two briefing sheets).
+
+### arena/87f4c71e-tino1 — merge of main 88b6400 (PR #105) and regenerated model output (2026-11-14)
+
+- `main` moved to `88b6400` (PR #105, session `arena/59feaf6e-tino1`: mixed-path engine in `final/model.py`). Merged into this branch; the only conflict was the append-only `COORDINATION.md`, resolved by keeping both sides.
+- `final/out/model.json` on main had not been regenerated after PR #105. A fresh `python3 final/model.py` adds 454 keys (`mixed_detail`, `mixed`, `phased`, `selftest`, `crash_timing`, and `rent_susp` in the yearly rows). **No existing value changed.** The regenerated file is committed here so the artifact matches the code.
+- The what-if data, `what-if.html` and the brief were regenerated from the merged model and are identical to the committed versions, so the 162 cases stand.
