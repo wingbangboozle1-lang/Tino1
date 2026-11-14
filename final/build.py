@@ -221,6 +221,11 @@ NAME = {'live': 'Live in it', 'rent': 'Rent it out', 'sell': 'Sell and reinvest'
 SRC_MODEL_TAX = ('SCC-RATES', 'BOE-LTA-2026-026')
 
 
+def _block(name):
+    """Reviewed HTML blocks kept as files under final/blocks/ (checked by final/check.py like any page)."""
+    return open(os.path.join(HERE, 'blocks', name), encoding='utf-8').read().rstrip('\n') + '\n'
+
+
 def kpi(label, value, sub=''):
     return '<div class="kpi"><div class="k">%s</div><div class="v">%s</div><div class="s">%s</div></div>' % (label, value, sub)
 
@@ -466,6 +471,7 @@ def build_decision():
     ], caption='Stocks or savings: where the sale proceeds go decides the answer', cls='num',
         note='Returns are assumptions (%s). On 2026-11-10 the 3-month Treasury bill yielded 4.30%% and the 10-year note 4.98%%. Interest is taxed every year at ordinary rates; stock growth is taxed when sold.' % flag('A02'))
     body = at + first + w + where + '<h2>Wealth over time, in 2026 dollars</h2>' + chart + why + sens + be + byT + '<h2>Property A or Property B?</h2>' + which + '<p class="note"><strong>Provenance note:</strong> Links in the Official basis column point to the governing tax rule, rate table, or government index applied in the row; they do not verify owner-supplied figures (%s) or future investment/housing returns (%s). Before finalizing any plan, review the open questions on <a href="questions.html">Questions &amp; discovery</a> and the candidate upgrades on <a href="suggestions.html">Site improvements</a>.</p>' % (flag('P03'), flag('A01'))
+    body += _block('decision_mixed_whatif.html')   # mixed paths + what-if (session 2dbb6877, PR #107), now generated
     page('decision.html', 'Decision: live in it, rent it, or sell and reinvest',
          'One model, one set of assumptions, three choices for Property A. Property B stays as it is in every case because the Inheritor already owns it.', body)
 
@@ -676,6 +682,7 @@ def build_process():
         ['16', 'Throughout', 'Leave Property B exactly as it is: same owner, same exemption or rental status.', 'Any transfer of Property B could trigger its own reassessment; nothing about the inheritance requires one.', src('BOE-P19', 'SF-TAX')],
     ], caption='Steps and deadlines for Property A')
     body = steps + '<p class="note">Deadlines are quoted from the linked statutes and agency pages as read on %s and re-checked on %s. Forms and county procedures change; confirm each one with the county office and the attorney handling the trust.</p>' % (REGISTER_DATE, BUILD_DATE)
+    body += _block('process_timeline.html')        # deadline timeline (session 2dbb6877, PR #107), now generated
     page('process.html', 'Step-by-step process for the inherited home',
          'What has to be done, by whom and by when, from today through the first tax return after the inheritance.', body)
 
@@ -1634,6 +1641,7 @@ def build_flagged():
         body += table(['No.', 'Item', 'What the site does', 'How to resolve it', 'Where to check'], rows, caption=title)
     ex = [['E-' + k, e(v['title']), e(v['read']), '<a href="%s" rel="noopener">%s</a>' % (e(v['url']), e(v['label'])) + (' · official reference for current rates: ' + src('TREASURY') if v['how'] == 'academic' else '')] for k, v in sorted(S.items()) if v['how'] != 'page']
     body += table(['No.', 'Source not read in full', 'Text relied on', 'Open the page'], ex, caption='Sources not read as a direct official government page (as of 2026-11-12, zero official agency excerpt entries remain; only the academic return dataset appears here)')
+    body += _block('flagged_scenario.html')        # flags A14, A15, U11 (session 2dbb6877, PR #107), now generated
     page('flagged.html', 'Flagged for Review',
          'Every value that could not be confirmed, every assumption, and every irregularity found, with a link for manual checking.', body)
 
@@ -2286,6 +2294,8 @@ def main():
 
         f()
     EXTRAS.build_all(sys.modules[__name__])
+    # reviewed page kept as a block file (session 2dbb6877, PR #107): written byte-for-byte, so the publish check can compare it
+    open(os.path.join(OUT, 'attorney-cpa-briefing.html'), 'w', encoding='utf-8').write(open(os.path.join(HERE, 'blocks', 'attorney_cpa_briefing.html'), encoding='utf-8').read())
     if ROOT_MODE:
         build_home_choice()
         build_versions()
