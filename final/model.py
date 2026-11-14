@@ -323,7 +323,7 @@ def simulate(path, p=P):
             row.update(live_assessed=av_L, live_tax=tax_L, live_cost=cost_L, live_unit3=unit3,
                        rent_assessed=av_R, rent_tax=tax_R, rent_collected=coll, rent_noi=noi, rent_depr=depr,
                        rent_income_tax=inc_tax, rent_after_tax=noi - inc_tax,
-                       w_live=wL, w_rent=wR, w_sell=wS,
+                       rent_susp=susp, w_live=wL, w_rent=wR, w_sell=wS,
                        h_live=A['live'].bal + Vc, h_rent=A['rent'].bal + Vc, h_sell=A['sell'].bal)
         rows.append(row)
     last = rows[-1]
@@ -378,6 +378,151 @@ def pick(s):
             'sell_net', 'w_live', 'w_rent', 'w_sell', 'h_live', 'h_rent', 'h_sell', 'real_live', 'real_rent',
             'real_sell', 'best', 'cpi_end', 'cpi_T', 'w10', 'w20')
     return {k: s[k] for k in keys if k in s}
+
+
+# ----------------------------------------------------------------------------
+# Mixed paths (session 59feaf6e, H-2): live in Property A for `years` years and then
+# sell, or rent it for `years` years and then sell.  Uses the same per-year cash flows
+# as simulate(), so a path that is never sold reproduces the pure live / rent results
+# exactly (self-test below).  The sale is at the end of year T + years.
+# ----------------------------------------------------------------------------
+def mixed(path, p=P, first='live', years=None):
+    rows, s = simulate(path, p)
+    T = p['T']
+    S = None if years is None else T + years
+    t_lump = p['t_fed_ltcg_lump'] + p['niit'] + p['t_ca_lump']
+    t_recap = p['t_recap_fed'] + p['niit'] + p['t_ca_lump']
+    basis = s['fmv_T'] if p['step_up'] else min(float(p['cup_assessed']), s['fmv_T'])
+    acc = Acct()
+    depr = 0.0
+    susp = 0.0
+    sale = None
+    for y in range(T, Y1 + 1):
+        r = rows[y - Y0]
+        acc.grow(path[y], p)
+        if sale is None and (S is None or y < S):
+            if first == 'live':
+                acc.add(r['live_unit3'] - r['live_cost'])
+            else:
+                acc.add(r['rent_after_tax'])
+                depr += r['rent_depr']
+                susp = r['rent_susp']
+        elif sale is None and y == S:
+            V = r['cup_value']
+            proceeds = V * (1 - p['sell_cost'] - p['doc_transfer_tax'])
+            hold = 0.5 * (r['rent_tax'] + r['ins_home'] + r['cup_maint'])
+            if first == 'live':
+                gain = proceeds - basis - (p['sec121'] if (S - T) >= 2 else 0.0)   # IRS Topic 701: 2 of 5 years
+                tax = max(gain, 0.0) * t_lump
+            else:
+                g_tot = proceeds - (basis - depr) - susp
+                recap = min(depr, max(g_tot, 0.0))
+                tax = recap * t_recap + max(g_tot - recap, 0.0) * t_lump
+            acc.add(proceeds - tax - hold)
+            sale = dict(year=S, proceeds=proceeds, tax=tax, hold=hold, net=proceeds - tax - hold,
+                        gain=proceeds - basis)
+    last = rows[-1]
+    if sale is None:
+        Vc = last['cup_value']
+        net_sale = Vc * (1 - p['sell_cost'] - p['doc_transfer_tax'])
+        if first == 'live':
+            gL = net_sale - basis - p['sec121']
+            nominal = acc.liq(p) + net_sale - max(gL, 0.0) * t_lump
+        else:
+            g_tot = net_sale - (basis - depr) - susp
+            recap = min(depr, max(g_tot, 0.0))
+            nominal = acc.liq(p) + net_sale - recap * t_recap - max(g_tot - recap, 0.0) * t_lump
+    else:
+        nominal = acc.liq(p)
+    return dict(nominal=nominal, real=nominal / last['cpi'], sale=sale, first=first, years=years)
+
+
+# ----------------------------------------------------------------------------
+# Phased entry (session 59feaf6e, H-1).  After the sale, the net proceeds are parked in
+# 3-month to 2-year Treasuries for `park_m` months, then moved into stocks in equal
+# monthly tranches over `phase_m` months.  `phase_m == 0` with `park_m == 0` is the
+# lump-sum entry.  One monthly engine serves both arms, so the difference between them
+# is the entry timing and nothing else.  Annual path rates are converted to monthly
+# rates.  Interest is taxed as ordinary income each month, dividends at the qualified
+# rate, and the capital gain is taxed at liquidation (end of Y1), as in Acct.
+# The parking return is the path's 3-month Treasury bill series (r_bill); the 2-year
+# note is not in the repository (flag H01).
+# ----------------------------------------------------------------------------
+def phased_entry(path, p, proceeds, park_m, phase_m, entry_m=6):
+    """entry_m = month of the inheritance year in which the proceeds arrive (6 = mid-year, as in simulate())."""
+    T = p['T']
+    t_int = p['t_fed_ord'] + p['niit'] + p['t_ca']
+    t_div = p['t_fed_ltcg'] + p['niit'] + p['t_ca']
+    t_lump = p['t_fed_ltcg_lump'] + p['niit'] + p['t_ca_lump']
+    cash = cash_b = 0.0            # the proceeds arrive in month entry_m
+    stk = stk_b = 0.0
+    tranche = float(proceeds) / phase_m if phase_m else float(proceeds)
+    cpi = 1.0
+    cpi_y = {}
+    for y in range(Y0 + 1, Y1 + 1):
+        cpi *= 1 + path[y]['infl']
+        cpi_y[y] = cpi
+    real_at = {}
+    net = None
+    for m in range(12 * (Y1 - T + 1)):
+        y = T + m // 12
+        e = path[y]
+        if m == entry_m:
+            cash = cash_b = float(proceeds)
+        mr = m - entry_m                 # months since the proceeds arrived
+        # transfer at the start of the month
+        if phase_m == 0:
+            amt = cash if mr == park_m else 0.0
+        else:
+            amt = tranche if park_m <= mr < park_m + phase_m else 0.0
+        amt = min(amt, cash)
+        if amt > 0:
+            frac = amt / cash
+            cash_b *= (1 - frac)
+            cash -= amt
+            stk += amt
+            stk_b += amt
+        # growth during the month
+        rb = (1 + e['r_bill']) ** (1 / 12) - 1
+        rs = (1 + e['r_stock']) ** (1 / 12) - 1
+        if cash:
+            i = cash * rb
+            ti = max(i, 0.0) * t_int
+            cash += i - ti
+            cash_b += i - ti
+        if stk:
+            dv = stk * p['div_yield'] / 12
+            dvt = dv * t_div
+            stk = stk * (1 + rs) - dvt
+            stk_b += dv - dvt
+        # year end: liquidation value after the capital-gain tax, in nominal and real dollars
+        if (m + 1) % 12 == 0 and m >= entry_m:
+            net = cash - t_lump * (cash - cash_b) + stk - t_lump * (stk - stk_b)
+            real_at[y] = net / cpi_y[y]
+    return dict(real=real_at[Y1], nominal=net, real_at=real_at,
+                real_T1=real_at[T + 1], real_T5=real_at[T + 5], real_T10=real_at[T + 10])
+
+
+def phased_selftest():
+    """Zero returns and zero tax: every arm must return exactly the proceeds."""
+    z = with_(t_fed_ord=0.0, t_ca=0.0, niit=0.0, t_fed_ltcg=0.0, t_fed_ltcg_lump=0.0, t_ca_lump=0.0,
+              div_yield=0.0)
+    zero = {y: dict(infl=0.0, g_cup=0.0, g_sf=0.0, g_ca=0.0, r_stock=0.0, r_bond=0.0, r_bill=0.0,
+                    f_p13=1.0) for y in range(Y0 + 1, Y1 + 1)}
+    out = []
+    for park, ph in ((0, 0), (24, 12), (36, 12)):
+        r = phased_entry(zero, z, 1_000_000.0, park, ph)['real']
+        out.append(abs(r - 1_000_000.0) < 1e-6)
+    return all(out)
+
+
+def mixed_selftest():
+    """A path that is never sold must reproduce the pure live and rent results."""
+    rows, s = run(P)
+    a = mixed(baseline_path(P), P, 'live', None)['nominal']
+    b = mixed(baseline_path(P), P, 'rent', None)['nominal']
+    return abs(a - s['w_live']) < 0.01 and abs(b - s['w_rent']) < 0.01, a - s['w_live'], b - s['w_rent']
+
 
 
 def main():
@@ -512,6 +657,124 @@ def main():
         prop13_factor='Statutory index: California CPI capped at 2% (R&TC 51). Replayed years 1976-2025 use the official BOE factor table (LTA 2026/002 enclosure; cross-checked against LTA 2020/067 and 2021/065). Future California CPI is unknowable, so baseline years after 2026 and the Japan/Depression counterfactuals use each path\'s inflation as a LABELLED PROXY (flag A11). Official BOE factor for 2026: 1.02.',
         paths='The fifty replays and every named path are HYPOTHETICAL constructions from the series above: illustrative stress tests, not forecasts.',
     )
+    # ---------------- phased entry (H-1): park 24 or 36 months, then phase in over 12 months ----------------
+    PARK = dict(lump=dict(park_m=0, phase_m=0), park24=dict(park_m=24, phase_m=12), park36=dict(park_m=36, phase_m=12))
+
+    def phased_row(path, summ):
+        proceeds = summ['sell_net']
+        res = {k: phased_entry(path, P, proceeds, **v) for k, v in PARK.items()}
+        d = dict(proceeds=proceeds)
+        for k, r_ in res.items():
+            d[k] = r_['real']
+            d[k + '_T1'] = r_['real_T1']
+            d[k + '_T10'] = r_['real_T10']
+        d['lump_nominal'] = res['lump']['nominal']
+        return d
+
+    base_path = baseline_path(P)
+    BS = out['baseline']['summary']
+    ph_base = phased_row(base_path, BS)
+    ph_named = {x['key']: phased_row(x_path, x['summary']) for x, x_path in
+                zip(out['paths'], [p_ for _, _, _, p_ in named])}
+    ph_replays = []
+    for rp_ in replays:
+        ph_replays.append(dict(start=rp_['start'], **phased_row(replay_path(rp_['start']), rp_)))
+    wins = {k: 0 for k in ('lump', 'park24', 'park36')}
+    gaps24 = sorted(x['park24'] - x['lump'] for x in ph_replays)
+    gaps36 = sorted(x['park36'] - x['lump'] for x in ph_replays)
+    for x in ph_replays:
+        wins[max(('lump', 'park24', 'park36'), key=lambda k: x[k])] += 1
+    out['phased'] = dict(
+        baseline=ph_base, named=ph_named, replays=ph_replays,
+        replay_wins=wins,
+        replay_gap24=dict(worst=gaps24[0], median=gaps24[len(gaps24) // 2], best=gaps24[-1]),
+        replay_gap36=dict(worst=gaps36[0], median=gaps36[len(gaps36) // 2], best=gaps36[-1]),
+        rule=dict(park_months=[24, 36], phase_months=12, park_return='3-month Treasury bill series (r_bill) of each path',
+                  start='start of the inheritance year, with the net proceeds of the sale after tax and selling costs'),
+    )
+
+    # ---------------- mixed paths (H-2): live or rent for 5 or 10 years, then sell ----------------
+    MIX = [('live', 5), ('live', 10), ('rent', 5), ('rent', 10)]
+
+    def mixed_row(path):
+        d = {}
+        for first, yrs in MIX:
+            d['%s%d' % (first, yrs)] = mixed(path, P, first, yrs)['real']
+        d['never_live'] = mixed(path, P, 'live', None)['real']
+        d['never_rent'] = mixed(path, P, 'rent', None)['real']
+        return d
+
+    mix_base = mixed_row(base_path)
+    mix_named = {x['key']: mixed_row(x_path) for x, x_path in zip(out['paths'], [p_ for _, _, _, p_ in named])}
+    mix_replays = [dict(start=rp_['start'], **mixed_row(replay_path(rp_['start']))) for rp_ in replays]
+    out['mixed'] = dict(baseline=mix_base, named=mix_named, replays=mix_replays,
+                        pure=dict(live=BS['real_live'], rent=BS['real_rent'], sell=BS['real_sell']),
+                        rule=dict(first=['live', 'rent'], years=[5, 10],
+                                  note='Sale at the end of year T + years; live years carry the Proposition 19 '
+                                       'taxable value; rent years carry full reassessment and depreciation; '
+                                       'the gain on sale is taxed as in the pure sell path.'))
+    # sale-year detail for the baseline mixed paths
+    out['mixed_detail'] = {'%s%d' % (f, y): mixed(base_path, P, f, y)['sale'] for f, y in MIX}
+
+    # ---------------- what-if grid (H-3): every combination of four controls, all outputs from this model ----------------
+    AX = dict(
+        home_growth=[0.03, 0.04, 0.05],       # applied to Property A and B and the California index
+        stock_return=[0.05, 0.07, 0.10],      # annual total return, stocks
+        rent=[5870, 6390, 8310],              # monthly rent for Property A (HUD 3-bedroom, HUD 4-bedroom, 30% above 4-bedroom)
+        park_return=[0.035, 0.0432],          # 3-month Treasury: model assumption, and the official 13 Nov 2026 rate
+    )
+    cells = []
+    for g in AX['home_growth']:
+        for rs_ in AX['stock_return']:
+            for rent_ in AX['rent']:
+                for rb_ in AX['park_return']:
+                    p_ = with_(g_cup=g, g_ca=g, g_sf=g, r_stock=rs_, cup_rent_month=rent_, r_bill=rb_)
+                    rows_, s_ = run(p_)
+                    path_ = baseline_path(p_)
+                    c = dict(g=g, s=rs_, rent=rent_, b=rb_,
+                             live=s_['real_live'], rent_now=s_['real_rent'], sell=s_['real_sell'],
+                             fmv=s_['fmv_T'], proceeds=s_['sell_net'])
+                    for first, yrs in MIX:
+                        c['%s%d' % (first, yrs)] = mixed(path_, p_, first, yrs)['real']
+                    for k, v in PARK.items():
+                        if k != 'lump':
+                            c[k] = phased_entry(path_, p_, s_['sell_net'], **v)['real']
+                    # reinvestment risk: the same choices when a crash lands just after the sale.
+                    # 2008 = real 2007-2012 bust starting in the inheritance year; 1929 = real 1929-1941 national Depression
+                    for tag, src_, a_, b_ in (('c08', HIST, 2007, 2012), ('d29', NAT, 1929, 1941)):
+                        cp_ = overlay_path(p_, src_, a_, b_, T)
+                        sc_ = run(p_, cp_)[1]
+                        c[tag + '_sell'] = sc_['real_sell']
+                        for k, v in PARK.items():
+                            c[tag + '_' + k] = phased_entry(cp_, p_, sc_['sell_net'], **v)['real']
+                    c['lump'] = phased_entry(path_, p_, s_['sell_net'], 0, 0)['real']
+                    for tag, cp_ in (('c08', overlay_path(p_, HIST, 2007, 2012, T)), ('d29', overlay_path(p_, NAT, 1929, 1941, T))):
+                        sc_ = run(p_, cp_)[1]
+                        c[tag + '_live'] = sc_['real_live']
+                        c[tag + '_rent'] = sc_['real_rent']
+                        for first, yrs in MIX:
+                            c[tag + '_%s%d' % (first, yrs)] = mixed(cp_, p_, first, yrs)['real']
+                    cells.append(c)
+    out['whatif'] = dict(axes=AX, cells=cells,
+                         labels=dict(home_growth='Home prices, % a year (Property A, Property B and the California index)',
+                                     stock_return='Stock return, % a year (total return)',
+                                     rent='Property A rent, $ a month (HUD 3-bedroom; HUD 4-bedroom; 30% above HUD 4-bedroom)',
+                                     park_return='Three-month Treasury yield while parked, % a year'))
+    # ---------------- crash timing (H-1): where the crash lands decides whether parking helps ----------------
+    timing = []
+    for tag, srcd, a_, b_, name in (('c08', HIST, 2007, 2012, '2007-2012 bust (2008 is the worst year)'),
+                                    ('d29', NAT, 1929, 1941, '1929-1941 Depression sequence (national data)')):
+        for off in range(0, 5):
+            cp_ = overlay_path(P, srcd, a_, b_, T + off)
+            rows_c, sc_ = run(P, cp_)
+            ph_c = phased_row(cp_, sc_)
+            timing.append(dict(tag=tag, name=name, offset=off, year=T + off, sell=sc_['real_sell'],
+                               lump=ph_c['lump'], park24=ph_c['park24'], park36=ph_c['park36']))
+    out['crash_timing'] = timing
+
+    # self-tests recorded with the output
+    out['selftest'] = dict(phased_zero_returns=phased_selftest(), mixed_never_sold=mixed_selftest()[0])
+
     os.makedirs(os.path.join(HERE, 'out'), exist_ok=True)
     json.dump(out, open(os.path.join(HERE, 'out', 'model.json'), 'w'), indent=0)
     return out
@@ -536,3 +799,8 @@ if __name__ == '__main__':
     for x in o['paths']:
         s = x['summary']
         print('%-18s L %12d R %12d S %12d %s' % (x['key'], s['real_live'], s['real_rent'], s['real_sell'], s['best']))
+    ph = o['phased']
+    print('phased baseline', {k: round(v) for k, v in ph['baseline'].items() if not k.endswith(('_T1', '_T10'))})
+    print('phased replay wins', ph['replay_wins'], 'gap24', ph['replay_gap24'], 'gap36', ph['replay_gap36'])
+    print('mixed baseline', {k: round(v) for k, v in o['mixed']['baseline'].items()})
+    print('whatif cells', len(o['whatif']['cells']), 'selftest', o['selftest'])

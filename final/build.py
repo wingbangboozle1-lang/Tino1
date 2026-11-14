@@ -102,7 +102,6 @@ NAV_GROUPS = [
         ('what-if.html', 'What-if controls'),
         ('black-swan.html', 'Black swan'),
         ('phased.html', 'Phased investing'),
-        ('paths.html', 'Mixed and phased paths'),
     ]),
     ('Facts', [
         ('projections.html', 'Year by year'),
@@ -2287,8 +2286,6 @@ def main():
 
         f()
     EXTRAS.build_all(sys.modules[__name__])
-    import mixed_pages  # session arena/88de34f6-tino1: mixed paths page (paths.html)
-    mixed_pages.build_all(sys.modules[__name__])
     if ROOT_MODE:
         build_home_choice()
         build_versions()

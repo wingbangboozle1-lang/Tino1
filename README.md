@@ -40,7 +40,6 @@ Rounding to the nearest $10 is the disclosure-minimisation control the brief ask
 | `glossary.html` | Glossary; each term linked to its official page, model terms labelled as such |
 | `what-if.html` | Controls for home growth, stock return, rent and inflation over 54 precomputed model cases, with reinvestment risk beside the headline |
 | `phased.html` | Phased investing: proceeds parked 24 or 36 months in short Treasuries, then equal annual tranches into stocks; tested on 1929, 1937, 2000 and 2007 entries and on every entry year from 1928 to 2016 |
-| `paths.html` | Mixed paths (live or rent for K years, then sell) and a model-based crash-entry test of phased reinvestment; every row linked to an official source |
 
 Regenerate after any change to the model or the test:
 

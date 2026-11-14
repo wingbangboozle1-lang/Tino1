@@ -37,7 +37,6 @@ exclude:
   - 'mirror-archived-2026-11-10.html'
   - 'model'
   - 'owner-analysis-2026'
-  - 'paths.html'
   - 'pending-changes.html'
   - 'phased.html'
   - 'process.html'
