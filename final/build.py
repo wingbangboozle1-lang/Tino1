@@ -2183,6 +2183,8 @@ def build_home_choice():
             'flagged assumptions, not a verified forecast (%s, %s)' % (flag('A01'), flag('A02'))),
         kpi('Property A at inheritance (%d)' % T, m(B['fmv_T']),
             'from %s today at 4.0%% a year (assumption %s)' % (m(P['cup_value']), flag('A01'))),
+        kpi('Reinvestment risk, beside the headline', EXTRAS.bills_gap_text() + ' in 2076, nominal',
+            'the sell path if the proceeds stayed in Treasury bills instead of stocks; computed from the same model, see <a href="what-if.html">What-if controls</a>'),
         kpi('Property A tax: today / lived in / rented',
             '%s / %s / %s' % (m(P['cup_tax_2025']), m(B['tax_live_T']), m(B['tax_rent_T'])),
             'per year, first year after inheritance (%s)' % src('SCC-RATES', 'BOE-LTA-2026-026')),
