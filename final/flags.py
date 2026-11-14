@@ -189,12 +189,6 @@ FLAGS = [
          used='Only the four controls change; each control moves the named input(s) and nothing else. The bills-only check is the same model with proceeds held in Treasury bills.',
          check='Re-run final/extras.py after any change to model inputs; the page is generated, not typed.',
          src=('HUD-95014', 'TREASURY')),
-
-    # ---- added 2026-11-14 by session 59feaf6e (mixed paths: live or rent for 5 or 10 years, then sell) --------
-    dict(id='H03', item='Mixed paths (live, or rent, for 5 or 10 years, then sell) are model constructions, not forecasts. Live-then-sell assumes the two-of-five-year Section 121 test is met; rent-then-sell assumes full reassessment in the rental years and depreciation recapture on sale.',
-         used='The sale is at the end of the chosen year, with the same selling costs and carrying cost as the main model. Suspended passive losses carry to the sale. The phased-entry (monthly) engine is computed in the model but is not published here.',
-         check='The attorney confirms that a sale after a lived-in period or a rental period does not change the Proposition 19 result; the CPA confirms the Section 121 and recapture treatment.',
-         src=('IRS-TC701', 'BOE-P19', 'IRS-TC409')),
 ]
 
 REVIEW = [

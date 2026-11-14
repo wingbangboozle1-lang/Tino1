@@ -2457,6 +2457,16 @@ Branch fixed by workspace: `arena/6f85fbe1-tino1`, branched from `main` at `b9d1
 
 Follow-up made because of the scrub: `brief.html` writes its own HTML and therefore bypassed `scrub()`; it now passes through `scrub()` as well. All generated pages were regenerated from the merged code. `final/check.py .` (including the new ZIP-in-visible-text rule) passes; the ZIP codes that remain are only inside official-source URLs, which the scrub leaves intact by design (flagged by `6f85fbe1` for owner review).
 
+### Handoff — session `arena/2dbb6877-tino1` (2026-11-14)
+
+This session claimed F1-F8 (phased-investing path, Attorney & CPA briefing sheet, what-would-change-the-answer, mixed paths, reinvestment risk, what-if controls, glossary, deadline timeline) on `arena/2dbb6877-tino1` (base main b9d1a0f). While implementing, it was discovered that session `arena/7895b5d7-tino1` had already implemented the same feature set on `main` (PR #103, merged as 8510034; commit dce89a1 "Phased-investing test, what-if controls with reinvestment risk, glossary, timeline, printable Attorney & CPA brief, grouped menu"), including `brief.html`, `phased.html`, `timeline.html`, `what-if.html`, `whatif.js`, `final/scrub.py`, `final/phased.py`, `final/extras.py`, `final/out/phased.json`.
+
+To respect the "never discard other sessions' work" rule, the four merge-conflicted files (`black-swan.html`, `glossary.html`, `index.html`, `COORDINATION.md`) were resolved by adopting main's (`--theirs`, session 7895b5d7's already-merged canonical) versions. This session's duplicate feature edits were therefore superseded by theirs; the branch is now aligned with main. Nothing from session 7895b5d7 was discarded.
+
+The only incremental record this session adds is this coordination log entry. Local verification before alignment: `final/check.py` OK (27 pages, 1,134 sourced rows, 2,616 $10-rounded figures, no PII); `final/publish.py --check` OK (34-file allowlist).
+
+Owner-level actions still needed (only the owner can perform): make the repository private and/or rewrite the pre-rounding Git history (flag P02).
+
 ## Session `arena/59feaf6e-tino1` — phased entry, mixed paths, what-if, brief, glossary, menu (claimed 2026-11-14 UTC)
 
 Branch fixed by the workspace: `arena/59feaf6e-tino1` (the `session-<id>/<task>` naming in this board is superseded for this session; the workspace allows one branch). Branch base `b9d1a0f`; `origin/main` moved to `f9bcbe3` (PR #100, privacy scrub). This branch was fast-forwarded to `f9bcbe3` before any edit, so nothing from PR #100 is lost or overwritten.
@@ -2476,25 +2486,30 @@ Scope note: this session does not edit `final/scrub.py` or the PR #100 scrub rul
 
 ### arena/59feaf6e-tino1 — reconciled record (2026-11-14 UTC)
 
-**Overlap found at merge time.** Session `arena/7895b5d7-tino1` claimed and merged (PR #103) the same gap-closure scope in the same hour: phased investing (S-1, `phased.html`), what-if controls with reinvestment risk (S-2, `what-if.html`), glossary, printable brief and timeline (S-3, `glossary.html`, `brief.html`, `timeline.html`), grouped menu (S-4), and the first-screen "what would change the answer" and reinvestment-risk block (on `summary.html`). This branch had built a second copy of the same pages. Two versions of the same deliverable would give the public site conflicting numbers, so this branch **does not publish its duplicates**.
+**Outcome: this branch does not change the published site.** Three sessions built the same scope on `main` in the same hour: `arena/7895b5d7-tino1` (PR #103, merged), and `arena/2dbb6877-tino1` (PR #107, merged; its own handoff records the overlap). This branch built a fourth copy. Two versions of the same deliverable would give the public site conflicting numbers, so nothing from this branch's build is published.
 
-**Decision (recorded for the integration owner).** Main's versions of the overlapping pages are kept as they are. This branch was rebased onto `main` at `25cf4e5` and resolved as follows:
+**What is on this branch.**
+- `final/model.py`: the mixed-path engine (`mixed()`: live or rent for 5 or 10 years, then sell), the monthly phased-entry engine (`phased_entry()`), the crash-timing table, and the 54-cell what-if grid with reinvestment-risk columns. The mixed-path numbers that main's `decision.html` shows by hand (for example live 5 years then sell, $7,693,700 baseline) are reproduced by `mixed()`. Main's model did not contain them, so this branch is the only generator for those figures.
+- No root page, generator (`build.py`), flag, source or allowlist file is changed from main. Main's versions are kept.
 
-| Claimed item | Outcome on this branch |
+**Warning for the integration owner (not fixed here).** `final/build.py` on main does not produce three root pages that PR #107 edited by hand: `decision.html` (the mixed-path section), `flagged.html` (A14, A15, U11) and `process.html` (the deadline timeline). Running `final/integrate.py` on main would overwrite them and remove that content. Do not regenerate those three pages until the content is moved into `build.py`, or the integration session decides to keep the hand edits.
+
+**Overlap table (what each claimed item became).**
+
+| Claimed item | Where it is on main |
 |---|---|
-| H-1 Phased entry (park 24/36 months, then phase in) | Main's S-1 (`phased.html`, annual history) is the published test. The monthly engine and crash-timing table (2008-type and 1929-type overlays at offsets 0 to 4 years) remain computed in `final/model.py` / `final/out/model.json` and are **not published**. Publishing them would add a second phased test with different numbers. Listed as an owner choice below. |
-| H-2 Mixed paths (live or rent 5/10 years, then sell) | **Published** on `decision.html` ("Mixed paths: live or rent for a while, then sell"), with a sale-year table. Not in main. |
-| H-3 What-if controls | Main's S-2 is published. This branch's grid (with `c08_*` and `d29_*` columns) is not published. |
-| H-4 Attorney & CPA brief | Main's S-3 is published. This branch's version was dropped. |
-| H-5 Glossary, grouped menu, timeline | Main's S-3 and S-4 are published. This branch's versions were dropped. |
-| H-6 First-screen "what would change the answer" | Main's `summary.html` block is published. This branch's version was dropped. |
+| H-1 Phased entry | `phased.html` (PR #103, annual history). The monthly engine and crash timing are computed here and not published. |
+| H-2 Mixed paths | `decision.html` (PR #107, hand edit). Numbers reproduced by `mixed()` here. |
+| H-3 What-if | `what-if.html` (PR #103). This branch's 54-cell grid is not published. |
+| H-4 Attorney & CPA brief | `brief.html` (PR #103) and `attorney-cpa-briefing.html` (PR #107, two briefs on the site). |
+| H-5 Glossary, menu, timeline | `glossary.html`, `timeline.html` (PR #103); `process.html` timeline (PR #107). |
+| H-6 First-screen block | `summary.html` (PR #103). |
 | H-7 Git-history privacy | Owner action only; not attempted. |
 
-**Files from this branch that stayed in.** `final/model.py` (mixed engine, phased engine, crash timing, what-if grid with reinvestment-risk columns; all unrounded, rounded to $10 in every page); `final/build.py` (`build_mixed_section` and its call on the Decision page; flagged category H); `final/flags.py` (H03 only; H01, H02 and H04 described the unpublished monthly engine and were dropped); `final/sources.py` (TREASURY-NOV13, the official 13 Nov 2026 Treasury par yield curve, which main lacks; SEC-DCA, the SEC definition of dollar-cost averaging, unused on pages so far).
+**Owner or integration choices (not implemented).**
+1. Publish the monthly phased-entry and crash-timing results, or leave them out (currently left out, so the site has one phased test).
+2. Which brief is canonical: `brief.html` or `attorney-cpa-briefing.html`.
+3. Move PR #107's hand edits into `build.py`, or keep them out of the generator (see the warning above).
+4. Model outputs in `final/out/model.json` are tracked in the public repository and are unrounded (G01). This branch does not re-commit `final/out/model.json`: running `final/model.py` writes the extra keys locally, so the tracked file stays as main has it and no new unrounded outputs reach the public repository.
 
-**Owner choices (not implemented).**
-1. Publish the monthly phased-entry engine and crash timing as a second, clearly labelled stress test next to `phased.html`, or leave it out (current choice).
-2. Make the Treasury 2-year series an input once a source for 1929 and 2008 2-year yields is found (`S-PHASE` still says the 2-year is missing; the 13 Nov 2026 reading is now in `sources.py`).
-3. Remove or keep the unused `SEC-DCA` source.
-
-**Verification on the reconciled branch.** `final/model.py`, `final/build.py`, `final/integrate.py`, `final/publish.py` and `--check` (38 files), `final/check.py .` OK (30 pages, 1,103 table rows each with an official link, 3,057 links, 2,650 dollar figures rounded to $10, 6-digit scan clean against 16,139 model numbers, self-tests on 51 paths). `privacy-site/check.py` PASS, unittest OK.
+**Verification.** Checks were run on main's published files, which this branch does not change: `final/check.py .`, `final/publish.py --check` and `privacy-site/check.py` (results recorded at merge).

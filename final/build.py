@@ -381,52 +381,6 @@ def build_index():
 
 
 # ====================================================================== decision
-
-def build_mixed_section():
-    """Mixed paths: live or rent for 5 or 10 years, then sell, beside the pure choices (session 59feaf6e).
-    Every figure is read from final/out/model.json (rounded to $10 by m())."""
-    BS = M['baseline']['summary']
-    MXB = M['mixed']['baseline']
-    MXN = M['mixed']['named']
-    rows = []
-    NAMED_SUM = {x['key']: x['summary'] for x in M['paths'] if 'summary' in x}
-    cols = [('Baseline', None), ('1929-1941 Depression at inheritance', 'depression_at_T'),
-            ('2007-2012 bust at inheritance', 'crash_at_T'), ('Japan-style stagnation at inheritance', 'japan_at_T')]
-
-    def cell(lbl, pure_key):
-        out = [lbl]
-        for name, pk in cols:
-            sumd = BS if pk is None else NAMED_SUM[pk]
-            out.append(m(sumd[pure_key]))
-        return out
-
-    rows.append(cell('Live in it, never sold', 'real_live') + [src('BOE-P19', 'BOE-HOX')])
-    rows.append(cell('Rent it out, never sold', 'real_rent') + [src('BOE-P19', 'IRS-P527')])
-    rows.append(cell('Sell and reinvest, all at once (main model)', 'real_sell') + [src('IRS-FAQ-INHERIT', 'TREASURY-NOV13')])
-    for first, lab, ids in (('live', 'Live in it', ('IRS-TC701', 'BOE-P19')), ('rent', 'Rent it out', ('IRS-P527', 'IRS-TC409', 'BOE-P19'))):
-        for yrs in (5, 10):
-            k = '%s%d' % (first, yrs)
-            r = ['%s for %d years, then sell' % (lab, yrs), m(MXB[k])]
-            for name, pk in cols[1:]:
-                r.append(m(MXN[pk][k]))
-            r.append(src(*ids))
-            rows.append(r)
-    main_t = table(['Choice (wealth in 2076, 2026 dollars)'] + [c[0] for c in cols] + ['Official basis'], rows, cls='num', tid='mixed',
-                   caption='Mixed paths beside the three pure choices, on the baseline and three stress paths',
-                   note='Mixed paths are constructions (flag %s), not forecasts. Living for five or ten years and then selling keeps the Proposition 19 and Section 121 treatment only while the Inheritor lives there; renting for those years means full reassessment and depreciation recapture on sale (%s).' % (flag('H03'), flag('H03')))
-    det = []
-    for k, lab in (('live5', 'Live 5 years, then sell'), ('live10', 'Live 10 years, then sell'), ('rent5', 'Rent 5 years, then sell'), ('rent10', 'Rent 10 years, then sell')):
-        d = M['mixed_detail'][k]
-        det.append([lab, str(d['year']), m(d['proceeds']), m(d['tax']), m(d['hold']), m(d['net']),
-                    src('IRS-TC701') if k.startswith('live') else src('IRS-TC409', 'IRS-P527')])
-    sale = table(['Mixed path, baseline', 'Sale at the end of', 'Proceeds of sale', 'Tax on the gain', 'Carrying cost in the sale year', 'Net cash into the account', 'Official basis'],
-                 det, cls='num yr', caption='Sale year and proceeds for each mixed path (nominal dollars)',
-                 note='Live-then-sell keeps the Section 121 exclusion (up to $250,000 for a single owner who lived in the home for two of the five years before sale). Rent-then-sell recaptures depreciation at up to 25% federal.')
-    return ('<h2>Mixed paths: live or rent for a while, then sell</h2>'
-            '<p class="lead">The brief asks for mixed paths, not only the three pure choices. These rows keep the same cash flows, rules and assumptions as the pure choices, and only change when the house is sold.</p>'
-            + main_t + sale)
-
-
 def build_decision():
     s = B
     at = table(['Item at inheritance in %d' % T, 'Amount', 'How it is worked out', 'Official basis'], [
@@ -512,7 +466,6 @@ def build_decision():
     ], caption='Stocks or savings: where the sale proceeds go decides the answer', cls='num',
         note='Returns are assumptions (%s). On 2026-11-10 the 3-month Treasury bill yielded 4.30%% and the 10-year note 4.98%%. Interest is taxed every year at ordinary rates; stock growth is taxed when sold.' % flag('A02'))
     body = at + first + w + where + '<h2>Wealth over time, in 2026 dollars</h2>' + chart + why + sens + be + byT + '<h2>Property A or Property B?</h2>' + which + '<p class="note"><strong>Provenance note:</strong> Links in the Official basis column point to the governing tax rule, rate table, or government index applied in the row; they do not verify owner-supplied figures (%s) or future investment/housing returns (%s). Before finalizing any plan, review the open questions on <a href="questions.html">Questions &amp; discovery</a> and the candidate upgrades on <a href="suggestions.html">Site improvements</a>.</p>' % (flag('P03'), flag('A01'))
-    body = body + build_mixed_section()
     page('decision.html', 'Decision: live in it, rent it, or sell and reinvest',
          'One model, one set of assumptions, three choices for Property A. Property B stays as it is in every case because the Inheritor already owns it.', body)
 
@@ -1661,7 +1614,6 @@ def build_flagged():
         ('P', 'Privacy decisions'),
         ('U', 'Values that could not be confirmed on an official page (left blank)'),
         ('A', 'Model assumptions (no official figure exists)'),
-        ('H', 'Mixed-path assumptions (live or rent, then sell)'),
         ('S', 'Irregularities in sources'),
         ('R', 'Irregularities in the repository'),
     ]
