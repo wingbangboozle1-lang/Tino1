@@ -62,6 +62,40 @@ def investment_path(returns, inflation):
     return rows
 
 
+def phased_entry(stock_returns, principal=100000, park_rate=.03,
+                 wait_months=24, phase_months=12):
+    """Synthetic 10-year comparison of immediate stock entry vs Treasury parking.
+
+    ``stock_returns`` contains annual assumed equity returns. The phased path
+    parks principal at a constant assumed annual Treasury rate, then invests
+    equal installments over ``phase_months``. Interest-rate resets, taxes, fees,
+    inflation, dividend conventions and actual Treasury maturity yields are
+    omitted deliberately; the output is an educational timing-risk stress only.
+    """
+    if not stock_returns or any(r <= -1 for r in stock_returns):
+        raise ValueError('stock returns must be nonempty and greater than -100%')
+    horizon_months = 12 * len(stock_returns)
+    if wait_months < 0 or phase_months < 1 or wait_months + phase_months > horizon_months:
+        raise ValueError('parking and phasing must fit inside the modeled horizon')
+    equity_now = float(principal)
+    equity_staged = 0.0
+    treasury = float(principal)
+    monthly_treasury = (1 + park_rate) ** (1 / 12) - 1
+    for month in range(horizon_months):
+        annual_equity = stock_returns[month // 12]
+        monthly_equity = (1 + annual_equity) ** (1 / 12) - 1
+        equity_now *= 1 + monthly_equity
+        equity_staged *= 1 + monthly_equity
+        treasury *= 1 + monthly_treasury
+        if wait_months <= month < wait_months + phase_months:
+            remaining_phases = wait_months + phase_months - month
+            installment = treasury / remaining_phases
+            treasury -= installment
+            equity_staged += installment
+    return dict(immediate=equity_now, staged=equity_staged + treasury,
+                staged_equity=equity_staged, residual_treasury=treasury)
+
+
 # Explicit invented regimes, not historical replays; shocks in year 1 unless noted.
 STRESS = {
     'Smooth reference': ([.05]*50, [.025]*50),

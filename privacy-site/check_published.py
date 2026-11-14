@@ -1,22 +1,14 @@
-"""Fail closed unless Jekyll emits exactly the reviewed publication boundary.
+"""Fail closed unless Jekyll emits exactly the privacy-first publication boundary.
 
-This check validates the Pages output boundary, not the safety of the public Git
-repository, its history, or third-party copies.
-
-Two editions are published:
-
-* the rounded-figures analysis at the repository root, whose front door is
-  ``index.html``. Every person is a placeholder, every owner-supplied and
-  modelled dollar figure is rounded to the nearest $10, and no name, street
-  address, parcel number or account number appears. $10 rounding is
-  disclosure minimisation, not anonymisation - that is recorded as review item
-  G01 on the Suggestions page, together with the narrower options.
-* the figure-free guide under ``privacy-site/public/``, which teaches the same
-  process with invented examples and carries no household figure at all.
+Only a generic root landing page and the figure-free guide under
+``privacy-site/public/`` are published. No rounded household analysis, owner
+history, locality cue or derived household forecast is in the Pages allowlist.
+This validates the Pages output, not the safety of the public Git repository,
+its history, or third-party copies; those remain separate risks.
 
 ``final/published.txt`` is the single source of truth for the file list. This
-checker adds the guide-specific invariants that the root checker does not make:
-the guide stays complete, byte-identical, figure-free and self-contained.
+checker verifies the root landing is generic and the guide remains complete,
+byte-identical and self-contained.
 """
 from html.parser import HTMLParser
 from pathlib import Path
@@ -28,8 +20,8 @@ from urllib.parse import urlsplit
 HERE = Path(__file__).parent
 ROOT = HERE.parent
 GUIDE_FILES = frozenset({
-    'costs.html', 'decision.html', 'flagged.html', 'index.html', 'law.html',
-    'process.html', 'projection.html', 'questions.html', 'stress.html', 'issues.html',
+    'brief.html', 'costs.html', 'decision.html', 'flagged.html', 'index.html', 'law.html',
+    'process.html', 'projection.html', 'questions.html', 'stress.html', 'issues.html', 'glossary.html',
     'suggestions-detail.html', 'suggestions.html', 'style.css',
 })
 GUIDE_PREFIX = 'privacy-site/public/'
@@ -81,6 +73,9 @@ def check_published(root, public=None):
     expected = _allowlist()
     assert {GUIDE_PREFIX + name for name in GUIDE_FILES} <= expected, \
         'The figure-free guide must stay inside the published allowlist'
+    landing_template = HERE / 'landing.html'
+    assert landing_template.is_file() and (ROOT / 'index.html').read_bytes() == landing_template.read_bytes(), \
+        'Published root landing must match the reviewed generic template'
     entries = list(root.rglob('*'))
     assert not any(p.is_symlink() for p in entries), 'Symlinks are forbidden in the published output'
     actual = {p.relative_to(root).as_posix() for p in entries if p.is_file()}
@@ -99,6 +94,13 @@ def check_published(root, public=None):
         assert 'no-referrer' in low, f'Missing referrer policy: {name}'
         if name == GUIDE_PREFIX + 'index.html':
             _check_guide_landing(text)
+        if name == 'index.html':
+            forbidden = ('Cupertino', 'San Francisco', '95014', '94122',
+                         '3,100,000', '1,800,000', '7,150', '550,540', '114,250')
+            assert '$' not in text, 'Root landing must not publish household or modelled dollar figures'
+            assert not any(token.casefold() in low for token in forbidden), \
+                'Root landing contains a known household signature or locality cue'
+            assert '<script' not in low, 'Root landing must not execute scripts'
         parser = LocalLinks()
         parser.feed(text)
         for raw in parser.links:
@@ -110,9 +112,9 @@ def check_published(root, public=None):
             resolved = posixpath.normpath(posixpath.join(base, target))
             assert resolved in expected, f'{name} links to non-published path {raw!r}'
 
-    print(f'PASS: exact allowlist, {len(actual)} files ({len(GUIDE_FILES)} guide + '
-          f'{len(actual) - len(GUIDE_FILES)} analysis), byte-identical, local links resolve, '
-          'guide landing stays figure-free')
+    print(f'PASS: exact allowlist, {len(actual)} files (1 generic landing + '
+          f'{len(GUIDE_FILES)} guide files), byte-identical, local links resolve, '
+          'root landing has no household signatures, guide landing stays figure-free')
 
 
 if __name__ == '__main__':
