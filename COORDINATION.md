@@ -2466,3 +2466,12 @@ To respect the "never discard other sessions' work" rule, the four merge-conflic
 The only incremental record this session adds is this coordination log entry. Local verification before alignment: `final/check.py` OK (27 pages, 1,134 sourced rows, 2,616 $10-rounded figures, no PII); `final/publish.py --check` OK (34-file allowlist).
 
 Owner-level actions still needed (only the owner can perform): make the repository private and/or rewrite the pre-rounding Git history (flag P02).
+
+### Close-out — PR #107 merged, GitHub Pages live (2026-11-14)
+
+- **PR:** https://github.com/wingbangboozle1-lang/Tino1/pull/107 — `arena/2dbb6877-tino1` → `main`, state MERGED, merge commit **0ad11bd3** `Merge pull request #107 from wingbangboozle1-lang/arena/2dbb6877-tino1`
+- **What it added:** this session's coordination log recording that F1-F8 (phased-investing path, Attorney & CPA briefing sheet, what-would-change-the-answer, mixed paths, reinvestment risk, what-if controls, glossary, deadline timeline) had already been implemented by session `arena/7895b5d7-tino1` on main (PR #103, merged 8510034); nothing from that session was discarded.
+- **GitHub Pages:** source branch `main`, path `/`; latest build `1370189640` for commit `0ad11bd3`, status `built`, error `null`; live at https://wingbangboozle1-lang.github.io/Tino1/ (live feature set delivered by PR #103: brief.html, phased.html, timeline.html, what-if.html, whatif.js, final/scrub.py, final/phased.py, final/extras.py).
+- **Verification (local, before alignment):** final/check.py OK (27 pages, 1,134 table rows each with an official source link, 2,867 links, 2,616 dollar figures rounded to nearest $10, no PII, no broken links); final/publish.py --check OK (34-file publication allowlist).
+- **Privacy:** placeholders only; no names, addresses, parcel numbers or account numbers added.
+- **Owner-level actions still needed (only the owner can perform):** make the repository private and/or rewrite the pre-rounding Git history (flag P02).
