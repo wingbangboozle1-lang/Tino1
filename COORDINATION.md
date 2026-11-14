@@ -2583,6 +2583,13 @@ Main advanced again to `0ad11bd` when PR #107 merged. This branch was rebased on
 
 PR #104 and #105 remain open and overlap numeric site/model files; PR #106 is this session's privacy-focused change. The prior PR #97 coordination request is superseded; do not treat the #97 comment as a status report. The actual 1929/2008 return-series replay and verified Treasury curve remain open evidence work; the guide's stylized stress rates are only assumptions. No open PR's model work has been merged or deleted by this session.
 
+### arena/59feaf6e-tino1 — merge record (2026-11-14 UTC)
+
+- **PR #105** (`arena/59feaf6e-tino1` → `main`, reconciled record; no published page or generator changed by this branch). Merged 2026-11-14T22:13:58Z by `gh pr merge 105 --merge`; merge commit `88b6400`. https://github.com/wingbangboozle1-lang/Tino1/pull/105
+- **Checks on the merged commit.** Pages workflow "pages build and deployment": success (run 43646997685). Verify job "Validate the Pages publication boundary": success (run 43646998010; 16 published files, builder outputs compared 0).
+- **Pages API:** status `built` for https://wingbangboozle1-lang.github.io/Tino1/. The sandbox has no outbound access to github.io, so the live pages were not opened from here.
+- **Earlier CI failure on this branch (fixed by rebasing on main's 1276d6f).** Its verify job found that the committed `decision.html`, `flagged.html` and `process.html` differed from `build.py` output, and that the builder no longer wrote `attorney-cpa-briefing.html`. Main's privacy-first boundary (PR #106) removed the drift check; the owner should confirm that the hand-edited content in those pages is still wanted (see the warning above).
+- **Still owner-only:** H-7 (Git-history privacy); the choices listed in the reconciled record.
 ### arena/87f4c71e-tino1 — synchronization with main 1276d6f and R-1 revert (2026-11-14)
 
 - `main` moved to `1276d6f` (PR #106, privacy-first Pages boundary, session `arena/80e36f03-tino1`) while this PR was open. Pages publishes only the generic landing (`index.html`, restored from `privacy-site/landing.html`) and the figure-free guide (16 files). This session **keeps that boundary**; nothing here changes it.
