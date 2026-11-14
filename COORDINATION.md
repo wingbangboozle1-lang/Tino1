@@ -2390,3 +2390,20 @@ Scope note: this session edits only COORDINATION.md (claim log) plus whatever is
 - **T3-2 done.** Executive summary is current at `summary.html` and `EXECUTIVE-SUMMARY.md` (byte-identical to a fresh regeneration): covers the full brief — best plan and why (sell Property A and reinvest; keep Property B and live in its third unit), conditional after-tax wealth figures, black swan / non-constant growth and inflation section, step-by-step trust inheritance process with legal deadlines, Prop 19 / federal estate-tax thresholds and projections, pending law changes, operating costs (water, electricity, insurance, repairs). Every table row links to an official page; owner-supplied figures are rounded to $10 and flagged where unconfirmed; people and properties are placeholders (the Transferor / the Inheritor / Property A / Property B). No figure changes needed; unverified items remain on the Flagged for Review page.
 - **T3-3 done (via Pages API).** GitHub Pages source is branch `main`, path `/`; latest build is commit `a974452` (this branch's base == current `main`), status `built`, error `null`, at https://wingbangboozle1-lang.github.io/Tino1/ — so the live site already serves this branch's content. Direct fetch of github.io is not available from this sandbox; confirmed via the Pages API plus byte-identical fresh build. `noindex`/`no-referrer` on every published page; placeholder-only personal information.
 - **T3-4 in progress.** Open PR from `arena/3eb2dccc-tino1` into `main`, wait for CI `verify`, merge with `gh pr merge <num> --merge`, record PR number, merge commit and Pages result here. No code changes in this session beyond COORDINATION.md, so the published site output is unchanged by the merge.
+
+
+## Session `arena/7895b5d7-tino1` — gap closure: phased investing, what-if, reinvestment risk, glossary, brief, timeline, grouped menu (claimed 2026-11-14)
+
+Branch fixed by workspace: `arena/7895b5d7-tino1`, base `b9d1a0f` (= `main`). Starting state checked: `final/publish.py --check`, `final/check.py .`, `privacy-site/check.py` and its unittests all pass; regenerating the root pages from unchanged code is byte-identical (no drift).
+
+Gap audit against the owner brief (grep of the published pages): phased investing (park in 3M–2Y Treasuries 24–36 months, then phase into stocks) was **not modelled**; no what-if controls; no glossary page; no printable one-page Attorney & CPA briefing sheet; no timeline view of deadlines; reinvestment risk not shown beside the headline; menu not grouped.
+
+| Task | Status | Owner | Files / scope | Verification plan |
+|---|---|---|---|---|
+| S-1 Phased-investing test on real history (1928–2025 annual data; entries at 1929, 2000, 2007 and all start years) | claimed | `arena/7895b5d7-tino1` | `final/phased.py` (new), `phased.html` (new), `black-swan.html` link | Source: NYU Stern annual returns already in `final/data`; 2Y yields not in the dataset, so 3M bill is the parked-cash proxy and the gap is flagged |
+| S-2 What-if controls + reinvestment risk beside the headline | claimed | `arena/7895b5d7-tino1` | `final/whatif.py` (new), `what-if.html` (new) | Grid precomputed from `final/model.py` only; no value invented; controls only choose among computed cases |
+| S-3 Glossary, one-page printable Attorney & CPA brief, deadline timeline | claimed | `arena/7895b5d7-tino1` | `final/extras.py` (new), `glossary.html`, `brief.html`, `timeline.html` (new) | Every term/row linked to an official page; `final/check.py` must pass |
+| S-4 Group the menu | claimed | `arena/7895b5d7-tino1` | `final/build.py` NAV only | Regeneration; all links resolve |
+| S-5 Integration: allowlist, regenerate, full checks, PR to `main`, merge, Pages status | claimed | `arena/7895b5d7-tino1` | `final/publish.py`, `final/published.txt`, `_config.yml`, root pages, `COORDINATION.md` | Same CI steps as `.github/workflows/pages.yml` (Jekyll itself cannot be installed in this sandbox; CI runs it) |
+
+Owner items NOT done here (only the owner can do them): making the repository private or rewriting Git history. Nothing in this session deletes or rewrites history; see G01 on the Suggestions page.
