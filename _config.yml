@@ -11,6 +11,7 @@ exclude:
   - 'app.js'
   - 'archive'
   - 'assets'
+  - 'attorney-cpa-briefing.html'
   - 'audit-5a0857f0'
   - 'audit-708757cf'
   - 'audit-959e77d3'
