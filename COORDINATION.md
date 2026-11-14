@@ -2456,3 +2456,13 @@ Branch fixed by workspace: `arena/6f85fbe1-tino1`, branched from `main` at `b9d1
 `main` moved to `25cf4e5` (PR #100 publication scrub by `arena/6f85fbe1`, PR #101 board record) while PR #103 was open; GitHub reported the PR as conflicting. Resolved by merging `origin/main` into this branch and keeping both sides of each conflict: `final/build.py` (both imports: `EXTRAS` and `scrub`) and `COORDINATION.md` (both log sections). No work from either side was discarded.
 
 Follow-up made because of the scrub: `brief.html` writes its own HTML and therefore bypassed `scrub()`; it now passes through `scrub()` as well. All generated pages were regenerated from the merged code. `final/check.py .` (including the new ZIP-in-visible-text rule) passes; the ZIP codes that remain are only inside official-source URLs, which the scrub leaves intact by design (flagged by `6f85fbe1` for owner review).
+
+### Handoff — session `arena/2dbb6877-tino1` (2026-11-14)
+
+This session claimed F1-F8 (phased-investing path, Attorney & CPA briefing sheet, what-would-change-the-answer, mixed paths, reinvestment risk, what-if controls, glossary, deadline timeline) on `arena/2dbb6877-tino1` (base main b9d1a0f). While implementing, it was discovered that session `arena/7895b5d7-tino1` had already implemented the same feature set on `main` (PR #103, merged as 8510034; commit dce89a1 "Phased-investing test, what-if controls with reinvestment risk, glossary, timeline, printable Attorney & CPA brief, grouped menu"), including `brief.html`, `phased.html`, `timeline.html`, `what-if.html`, `whatif.js`, `final/scrub.py`, `final/phased.py`, `final/extras.py`, `final/out/phased.json`.
+
+To respect the "never discard other sessions' work" rule, the four merge-conflicted files (`black-swan.html`, `glossary.html`, `index.html`, `COORDINATION.md`) were resolved by adopting main's (`--theirs`, session 7895b5d7's already-merged canonical) versions. This session's duplicate feature edits were therefore superseded by theirs; the branch is now aligned with main. Nothing from session 7895b5d7 was discarded.
+
+The only incremental record this session adds is this coordination log entry. Local verification before alignment: `final/check.py` OK (27 pages, 1,134 sourced rows, 2,616 $10-rounded figures, no PII); `final/publish.py --check` OK (34-file allowlist).
+
+Owner-level actions still needed (only the owner can perform): make the repository private and/or rewrite the pre-rounding Git history (flag P02).
