@@ -227,6 +227,9 @@ add('DAMODARAN', 'NYU Stern returns table', 'NYU Stern (A. Damodaran) - Historic
 add('FDIC', 'FDIC deposit insurance', 'Federal Deposit Insurance Corporation - Deposit insurance at a glance',
     'https://www.fdic.gov/resources/deposit-insurance/brochures/deposits-at-a-glance', 'page',
     'Standard insurance amount $250,000 per depositor, per insured bank, for each account ownership category; a trust owner with five or more beneficiaries is covered up to $1,250,000 at one bank; stocks, bonds and mutual funds are not insured; Treasury bills, bonds and notes are not FDIC-insured but are backed by the full faith and credit of the U.S. government.')
+add('INVESTOR-TOTAL', 'Investor.gov glossary: total return', 'U.S. Securities and Exchange Commission (Investor.gov) - Glossary: total return',
+    'https://www.investor.gov/introduction-investing/investing-basics/glossary/total-return', 'page',
+    'Entry located 2026-11-14; the entry text did not extract in the reader, so the glossary summary on this site is flagged A19.')
 add('SEC-TEN', 'SEC investing basics', 'U.S. Securities and Exchange Commission - Ten things to consider before you make investing decisions',
     'https://www.sec.gov/investor/pubs/tenthingstoconsider.htm', 'page',
     'Read directly 2026-11-12: SEC Investor Alert covers financial roadmap, risk/reward, asset mix, diversification, 6-month emergency fund, paying off high-interest debt, dollar cost averaging, rebalancing, and fraud prevention.')
