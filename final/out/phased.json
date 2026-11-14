@@ -1,0 +1,207 @@
+{
+ "bill_stats": {
+  "all_1928_2025": 0.03415306122448979,
+  "y1929_1931": 0.0334,
+  "y2009_2015": 0.0008142857142857143
+ },
+ "episodes": {
+  "1929": {
+   "bill_avg_parked": 0.03855,
+   "label": "1929 entry (Depression crash begins)",
+   "paths": {
+    "lump": {
+     "end": 0.8449765338577289,
+     "mdd": -0.647695361327104
+    },
+    "park2_phase2": {
+     "end": 1.8725559832144127,
+     "mdd": -0.35340000000000005
+    },
+    "park2_phase3": {
+     "end": 2.139992608737225,
+     "mdd": -0.35340000000000005
+    },
+    "park3_phase2": {
+     "end": 2.546375964173412,
+     "mdd": -0.35340000000000005
+    },
+    "park3_phase3": {
+     "end": 2.2977850189294857,
+     "mdd": -0.35340000000000005
+    }
+   },
+   "stock_1yr": -0.083,
+   "stock_2yr": -0.31335040000000003
+  },
+  "1937": {
+   "bill_avg_parked": 0.0017500000000000003,
+   "label": "1937 entry (second slump)",
+   "paths": {
+    "lump": {
+     "end": 1.421298440039982,
+     "mdd": -0.35579136508391485
+    },
+    "park2_phase2": {
+     "end": 1.716145543811956,
+     "mdd": -0.22486534434750005
+    },
+    "park2_phase3": {
+     "end": 1.78843296951704,
+     "mdd": -0.1922151480783334
+    },
+    "park3_phase2": {
+     "end": 1.8295366405886917,
+     "mdd": -0.17406274500000019
+    },
+    "park3_phase3": {
+     "end": 1.9593145914117642,
+     "mdd": -0.11547499000000006
+    }
+   },
+   "stock_1yr": -0.35340000000000005,
+   "stock_2yr": -0.16407552000000014
+  },
+  "2000": {
+   "bill_avg_parked": 0.0474,
+   "label": "2000 entry (dot-com peak)",
+   "paths": {
+    "lump": {
+     "end": 0.9085791561161868,
+     "mdd": -0.37427700083500004
+    },
+    "park2_phase2": {
+     "end": 1.4308315523853516,
+     "mdd": -0.36549999999999994
+    },
+    "park2_phase3": {
+     "end": 1.3786118777686203,
+     "mdd": -0.36549999999999994
+    },
+    "park3_phase2": {
+     "end": 1.4465130967073128,
+     "mdd": -0.36549999999999994
+    },
+    "park3_phase3": {
+     "end": 1.3532442810553267,
+     "mdd": -0.36549999999999994
+    }
+   },
+   "stock_1yr": -0.09029999999999999,
+   "stock_2yr": -0.19809945000000007
+  },
+  "2007": {
+   "bill_avg_parked": 0.029400000000000003,
+   "label": "2007 entry (housing and stock peak)",
+   "paths": {
+    "lump": {
+     "end": 1.9465778252671921,
+     "mdd": -0.36549999999999994
+    },
+    "park2_phase2": {
+     "end": 2.7658512034095444,
+     "mdd": 0.0
+    },
+    "park2_phase3": {
+     "end": 2.5562569843078244,
+     "mdd": 0.0
+    },
+    "park3_phase2": {
+     "end": 2.2937100792420546,
+     "mdd": 0.0
+    },
+    "park3_phase3": {
+     "end": 2.2271932948709483,
+     "mdd": 0.0
+    }
+   },
+   "stock_1yr": 0.0548,
+   "stock_2yr": -0.33072939999999995
+  }
+ },
+ "first_start": 1928,
+ "horizon": 10,
+ "last_start": 2016,
+ "lump_median_end": 2.828838903739711,
+ "paths": [
+  {
+   "key": "lump",
+   "park_years": 0,
+   "phase_years": 1
+  },
+  {
+   "key": "park2_phase2",
+   "park_years": 2,
+   "phase_years": 2
+  },
+  {
+   "key": "park2_phase3",
+   "park_years": 2,
+   "phase_years": 3
+  },
+  {
+   "key": "park3_phase2",
+   "park_years": 3,
+   "phase_years": 2
+  },
+  {
+   "key": "park3_phase3",
+   "park_years": 3,
+   "phase_years": 3
+  }
+ ],
+ "proceeds": 6152510,
+ "summary": {
+  "park2_phase2": {
+   "mean_bill_yield": 0.03415306122448979,
+   "median_end_vs_lump": -0.15217729710065975,
+   "median_mdd_lump": -0.1431,
+   "median_mdd_phased": -0.10459999999999992,
+   "share_phased_ends_higher": 0.23595505617977527,
+   "starts": 89,
+   "worst_end_vs_lump": -0.5038273589365565,
+   "worst_mdd_lump": -0.647695361327104,
+   "worst_mdd_phased": -0.539692287616,
+   "years_drop_not_deeper": 89,
+   "years_drop_strictly_shallower": 36
+  },
+  "park2_phase3": {
+   "mean_bill_yield": 0.03415306122448979,
+   "median_end_vs_lump": -0.19867231507374983,
+   "median_mdd_lump": -0.1431,
+   "median_mdd_phased": -0.09970000000000001,
+   "share_phased_ends_higher": 0.25842696629213485,
+   "starts": 89,
+   "worst_end_vs_lump": -0.49880318438233684,
+   "worst_mdd_lump": -0.647695361327104,
+   "worst_mdd_phased": -0.37427700083500015,
+   "years_drop_not_deeper": 89,
+   "years_drop_strictly_shallower": 45
+  },
+  "park3_phase2": {
+   "mean_bill_yield": 0.03415306122448979,
+   "median_end_vs_lump": -0.23736236829830315,
+   "median_mdd_lump": -0.1431,
+   "median_mdd_phased": -0.09970000000000001,
+   "share_phased_ends_higher": 0.23595505617977527,
+   "starts": 89,
+   "worst_end_vs_lump": -0.5897902734030324,
+   "worst_mdd_lump": -0.647695361327104,
+   "worst_mdd_phased": -0.37427700083500015,
+   "years_drop_not_deeper": 89,
+   "years_drop_strictly_shallower": 45
+  },
+  "park3_phase3": {
+   "mean_bill_yield": 0.03415306122448979,
+   "median_end_vs_lump": -0.25449130156538313,
+   "median_mdd_lump": -0.1431,
+   "median_mdd_phased": -0.09970000000000001,
+   "share_phased_ends_higher": 0.25842696629213485,
+   "starts": 89,
+   "worst_end_vs_lump": -0.5607295634869622,
+   "worst_mdd_lump": -0.647695361327104,
+   "worst_mdd_phased": -0.37427700083500015,
+   "years_drop_not_deeper": 89,
+   "years_drop_strictly_shallower": 53
+  }
+ }
+}

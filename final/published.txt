@@ -1,6 +1,7 @@
 app.js
 attorney-cpa-briefing.html
 black-swan.html
+brief.html
 costs.html
 decision.html
 estate-cash.html
@@ -8,6 +9,7 @@ flagged.html
 glossary.html
 index.html
 law.html
+phased.html
 privacy-site/public/costs.html
 privacy-site/public/decision.html
 privacy-site/public/flagged.html
@@ -30,5 +32,8 @@ sources.html
 style.css
 suggestions.html
 summary.html
+timeline.html
 verification.html
 versions.html
+what-if.html
+whatif.js

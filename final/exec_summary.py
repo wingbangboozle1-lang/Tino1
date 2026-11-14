@@ -10,6 +10,9 @@ published allowlist in final/publish.py does not contain it.
 """
 import json
 import os
+import sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from scrub import scrub  # publication scrub (session 6f85fbe1)
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
@@ -135,7 +138,7 @@ def main(target=None):
         worst=m(-RH['10']['sell_minus_rent_worst']),
     )
     path = target or os.path.join(ROOT, 'EXECUTIVE-SUMMARY.md')
-    open(path, 'w', encoding='utf-8').write(text)
+    open(path, 'w', encoding='utf-8').write(scrub(text))
     print('wrote', os.path.relpath(path, ROOT))
 
 

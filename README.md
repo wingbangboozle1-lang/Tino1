@@ -31,6 +31,24 @@ Rounding to the nearest $10 is the disclosure-minimisation control the brief ask
 | `review.html` | Repository review findings (`R01`–`R54`) |
 | `versions.html` | Earlier editions and why they were replaced |
 
+## Added in session arena/7895b5d7-tino1
+
+| Page | Content |
+|---|---|
+| `brief.html` | One-page printable Attorney and CPA briefing sheet (print from the browser) |
+| `timeline.html` | Deadlines as a timeline, counted from the date of death, each row linked to its source |
+| `glossary.html` | Glossary; each term linked to its official page, model terms labelled as such |
+| `what-if.html` | Controls for home growth, stock return, rent and inflation over 54 precomputed model cases, with reinvestment risk beside the headline |
+| `phased.html` | Phased investing: proceeds parked 24 or 36 months in short Treasuries, then equal annual tranches into stocks; tested on 1929, 1937, 2000 and 2007 entries and on every entry year from 1928 to 2016 |
+
+Regenerate after any change to the model or the test:
+
+```
+python3 final/model.py && python3 final/phased.py && ROOT_MODE=1 OUT_DIR=. python3 final/build.py && python3 final/publish.py && python3 final/check.py .
+```
+
+The phased test and the what-if cases are computed from the model and the repository's annual return table. Stock and bill returns come from an academic table (flagged); the 2-year Treasury series is not in the repository, so the 3-month bill stands in for it (flagged).
+
 ## Reproduce
 
 ```
