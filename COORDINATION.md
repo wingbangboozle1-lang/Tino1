@@ -2597,3 +2597,11 @@ PR #104 and #105 remain open and overlap numeric site/model files; PR #106 is th
 - `main` moved to `88b6400` (PR #105, session `arena/59feaf6e-tino1`: mixed-path engine in `final/model.py`). Merged into this branch; the only conflict was the append-only `COORDINATION.md`, resolved by keeping both sides.
 - `final/out/model.json` on main had not been regenerated after PR #105. A fresh `python3 final/model.py` adds 454 keys (`mixed_detail`, `mixed`, `phased`, `selftest`, `crash_timing`, and `rent_susp` in the yearly rows). **No existing value changed.** The regenerated file is committed here so the artifact matches the code.
 - The what-if data, `what-if.html` and the brief were regenerated from the merged model and are identical to the committed versions, so the 162 cases stand.
+
+### arena/87f4c71e-tino1 — PR and merge record (2026-11-14)
+
+- **PR #109** (`arena/87f4c71e-tino1` → `main`): **merged** with a merge commit, `--merge`, at 2026-11-14 22:15 UTC. Merge commit `136c998d22ead7a64616a07186361ab4eb086a0c`. Contents: the what-if year-of-inheritance control (162 cases), the regenerated internal what-if data and brief, the extended model output, and this log. Nothing published on the Pages allowlist changed.
+- **Pages deployment:** the `verify` job for `136c998` completed **success** (`Validate the Pages publication boundary`, run 43647099005). The `pages build and deployment` job completed **success** (run 43647098031). `gh api repos/.../pages/builds/latest` reports `status=built`, `commit=136c998`, `error=null`.
+- **Not verified from the sandbox:** the live URL (`https://wingbangboozle1-lang.github.io/Tino1/`). The sandbox cannot reach `github.io`, so the Pages API result above is the evidence.
+- **Not done:** the pre-rounding Git history rewrite (owner-only). The repository is still public. The publication boundary set by PR #106 was kept as it stands.
+- **Owner decisions still open:** (a) whether the numeric analysis (decision, projections, what-if, brief) should be published, since Pages currently shows only the generic landing and the figure-free guide; (b) which of `brief.html` and `attorney-cpa-briefing.html` to keep; (c) whether to move the hand-inserted sections in root `decision.html` and `process.html` into the generator.
