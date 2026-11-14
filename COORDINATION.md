@@ -2412,3 +2412,9 @@ Branch fixed by workspace: `arena/6f85fbe1-tino1`, branched from `main` at `b9d1
   3. "San Francisco" remains as Property B's jurisdiction (its rent law and tax rules depend on the city). Property B is still identifiable by city plus rounded values.
   4. Git history still contains the pre-scrub text and the rounded values. Only the repository owner can decide on a history rewrite or making the repository private. This session did not rewrite history.
   5. Rounded property values, tax histories and rents are still published. The owner's brief asked for them, and the earlier G01/G02 decision kept them. Whether they are acceptable to publish is an owner decision; the figure-free guide in `privacy-site/public/` remains the no-figures alternative.
+
+### arena/6f85fbe1-tino1 — merge and Pages record (2026-11-14 UTC)
+
+- **PR #100** (`arena/6f85fbe1-tino1` → `main`, merge commit `f9bcbe3`, merged 2026-11-14T21:57:39Z, `gh pr merge --merge`). CI check "Validate the Pages publication boundary" (run 43645422131): success, including the real Jekyll build and the 32-file allowlist comparison. Pages run 43645529896 "pages build and deployment": success. Pages API: status `built`.
+- **Live check.** https://wingbangboozle1-lang.github.io/Tino1/summary.html now shows "Property A (Santa Clara County, [ZIP A])" and "Property B (San Francisco, [ZIP B])" in visible text; official HUD links unchanged.
+- **Not done here (owner decisions, recorded as P-2):** history rewrite of pre-scrub commits; making the repository private; the broader publication of rounded household figures. The Attorney & CPA briefing sheet, Git-history scrub and other features listed in the brief are already present elsewhere in the published site or remain owner decisions; this session did not change them.
