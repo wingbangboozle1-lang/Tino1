@@ -391,7 +391,8 @@ ol,ul{margin:2px 0 0 16px;padding:0}li{margin:1px 0}
 <p class="small">IRS estate tax (irs.gov/businesses/small-businesses-self-employed/estate-tax) &middot; IRS inherited property FAQ (irs.gov/faqs/interest-dividends-other-types-of-income/gifts-inheritances/gifts-inheritances) &middot; Rev. Rul. 2023-2 (irs.gov/irb/2023-16_IRB) &middot; California Board of Equalization Proposition 19 (boe.ca.gov/prop19/) &middot; BOE LTA 2025/009 (boe.ca.gov/proptaxes/pdf/lta25009.pdf) &middot; BOE Pub. 800-1 (boe.ca.gov/pdf/pub800-1.pdf) &middot; California Controller estate tax (sco.ca.gov/ardtax_estate_tax.html) &middot; Santa Clara County Assessor (asr.santaclaracounty.gov).</p>
 <p class="small">Open questions Q01 to Q06 and the Flagged for Review list are on the site. Nothing here is verified legal or tax advice. Prepared from the site's model; confirm every figure before it is used.</p>
 </div></body></html>""" % (T, trows, ranking, ''.join('<li>%s</li>' % html.escape(x) for x in atty), ''.join('<li>%s</li>' % html.escape(x) for x in cpa))
-    open(os.path.join(B.OUT, 'brief.html'), 'w').write(body)
+    from scrub import scrub   # publication scrub (session 6f85fbe1): ZIP codes and city name in visible text
+    open(os.path.join(B.OUT, 'brief.html'), 'w').write(scrub(body))
 
 
 def build_all(B):
