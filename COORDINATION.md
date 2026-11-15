@@ -2718,3 +2718,18 @@ Verification performed in this session before it was superseded: `final/model.py
 - **Post-merge checks on `main` at `1f9dd13`:** `Validate the Pages publication boundary` (verify job) completed **success**; `pages build and deployment` completed **success**. Pages API (`repos/.../pages/builds/latest`) reports `built` at `1f9dd13`, updated 2026-11-14T22:37:56Z. Live site: https://wingbangboozle1-lang.github.io/Tino1/
 - **Net content of this branch on `main`:** only this coordination record. The branch's own pages and engine (phased investing, brief, glossary, timeline, what-if, fragments) were superseded by `7895b5d7`, `2dbb6877`, and the later privacy sessions and are not republished (see the record above).
 - **Still open for the owner:** (1) the unrounded owner figures in earlier commits (history rewrite needs owner action; the repo is public); (2) the `verify` failure that affected `main` at 0ad11bd was fixed upstream before this merge (`main`'s verify passes at 5a1661a and 1f9dd13); (3) the GS2 and 1928–1933 proxy values in the phased test are not verified against an official source and must be cited only after a fetch (CR-1A-1 and CR-1A-2 above).
+
+## Session `arena/81ca5078-tino1` — claim (2026-11-15 UTC)
+
+**Branch:** `arena/81ca5078-tino1` (fixed by the platform). **Base:** `main` @ `d40f768`.
+
+| # | Task | Status | Owner | File scope | Notes |
+|---|------|--------|-------|------------|-------|
+| V-1 | Official-source research for still-unverified flagged items (insurance U01/U02, property tax rate area U03, NEM/solar U05, HUD FY2027 U09) | in progress | `arena/81ca5078-tino1` | `flagged.html`, `questions.html`, `research/*.md` | Every value either confirmed on an official page or left blank + flagged; no inference |
+| V-2 | Site build verification: `final/check.py .`, `privacy-site/check.py`, PII/$10-rounding gates | in progress | `arena/81ca5078-tino1` | `final/*.py`, `privacy-site/*.py`, root `*.html` | No broken internal links; no street address/e-mail/parcel/phone patterns; every dollar figure multiple of $10 |
+| V-3 | GitHub Pages deployment confirmation | unclaimed | `arena/81ca5078-tino1` | `gh api pages/builds`, PR merge to `main` | Confirm Pages API `status: built`, `error: null`; 16-file allowlist enforced |
+| V-4 | Privacy review: PII scan across working tree + git history check | in progress | `arena/81ca5078-tino1` | all tracked files | No names/addresses/parcel numbers/phone/e-mail in published pages; public repo + history risk logged |
+
+### Log (`arena/81ca5078-tino1`)
+
+- 2026-11-15 — Claim written. No file owned by another session edited yet. Starting with V-1 official-source research.
