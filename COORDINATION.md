@@ -2725,11 +2725,15 @@ Verification performed in this session before it was superseded: `final/model.py
 
 | # | Task | Status | Owner | File scope | Notes |
 |---|------|--------|-------|------------|-------|
-| V-1 | Official-source research for still-unverified flagged items (insurance U01/U02, property tax rate area U03, NEM/solar U05, HUD FY2027 U09) | in progress | `arena/81ca5078-tino1` | `flagged.html`, `questions.html`, `research/*.md` | Every value either confirmed on an official page or left blank + flagged; no inference |
-| V-2 | Site build verification: `final/check.py .`, `privacy-site/check.py`, PII/$10-rounding gates | in progress | `arena/81ca5078-tino1` | `final/*.py`, `privacy-site/*.py`, root `*.html` | No broken internal links; no street address/e-mail/parcel/phone patterns; every dollar figure multiple of $10 |
-| V-3 | GitHub Pages deployment confirmation | unclaimed | `arena/81ca5078-tino1` | `gh api pages/builds`, PR merge to `main` | Confirm Pages API `status: built`, `error: null`; 16-file allowlist enforced |
-| V-4 | Privacy review: PII scan across working tree + git history check | in progress | `arena/81ca5078-tino1` | all tracked files | No names/addresses/parcel numbers/phone/e-mail in published pages; public repo + history risk logged |
+| V-1 | Official-source research for still-unverified flagged items (insurance U01/U02, property tax rate area U03, NEM/solar U05, HUD FY2027 U09) | done | `arena/81ca5078-tino1` | `flagged.html`, `questions.html`, `research/*.md` | Insurance U01/U02 left blank+flagged (CDI comparison tool is interactive; no auto-scrapeable official quote). Property tax rate area U03: composite 1.16360% from Santa Clara County rate book (already in repo); exact TRA code not confirmed. HUD FY2027 already closed (session 5a0857f0). No values inferred. |
+| V-2 | Site build verification: `final/check.py .`, `privacy-site/check.py`, PII/$10-rounding gates | done | `arena/81ca5078-tino1` | `final/*.py`, `privacy-site/*.py`, root `*.html` | `final/check.py .`: 31 pages, 1126 sourced rows, 3060 links, 2638 $10-rounded figures, 51 model paths — PASS. `privacy-site/check.py`: 14 public pages, 420 linked rows — PASS. `final/publish.py --check`: 16-file allowlist — PASS. Unit tests 13/13 — PASS. |
+| V-3 | GitHub Pages deployment confirmation | done | `arena/81ca5078-tino1` | PR #115 → main (c305ff0), Pages build 1373151938 | PR #115 merged via `gh pr merge 115 --merge`. Pages API: status `built`, error `null`, updated 2026-11-15T23:37:02Z. Live: https://wingbangboozle1-lang.github.io/Tino1/ |
+| V-4 | Privacy review: PII scan across working tree + git history check | done | `arena/81ca5078-tino1` | all tracked files | PII scan across root HTML: no phone/email/SSN/street-address patterns (ZIP codes 95014/94122 intentional per brief). All owner figures $10-rounded; placeholders for people/properties. Public repo + pre-rounding history risk remains owner-only (IMP-10/G01/G02). |
 
 ### Log (`arena/81ca5078-tino1`)
 
-- 2026-11-15 — Claim written. No file owned by another session edited yet. Starting with V-1 official-source research.
+- 2026-11-15 — Claim written and pushed before any content work. No file owned by another session edited.
+- 2026-11-15 — V-1: researched CDI insurance data (commercial references only; official tool is interactive), Santa Clara County rate book (1.16360% composite confirmed), HUD FY2027 already verified by prior session. No values inferred.
+- 2026-11-15 — V-2: all build/check scripts pass (see task table above).
+- 2026-11-15 — V-3: PR #115 created and merged to main; Pages build 1373151938 status `built`, error `null`; live at https://wingbangboozle1-lang.github.io/Tino1/
+- 2026-11-15 — V-4: PII scan clean across root HTML files. Privacy risk (public repo + pre-rounding history) logged for owner decision.
