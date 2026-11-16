@@ -3120,3 +3120,29 @@ Status: P3-A, P3-B, P3-C and P3-D **done**. Only files in the claimed scope were
 | PC-1 | claimed | `arena/cd739140-tino1` | `privacy-site/build.py` (new decision-page section + one questions-page row), regenerated `privacy-site/public/decision.html` and `privacy-site/public/questions.html`, `COORDINATION.md` | No household figures, PII, city names or signature tokens; every new table row carries an official-context link from `research.json`; thresholds are left blank (`$____`) or stated as structural/percentage conditions so nothing is invented; gates `privacy-site/build.py`, `privacy-site/check.py`, `python3 -m unittest discover -s privacy-site`, `final/publish.py --check` and `final/check.py .` must pass before PR. |
 
 **Scope note:** writes only the two generated public pages listed above plus their generator. Does not touch the allowlist, `_config.yml`, checkers, root numeric pages, or any other session's files. Claim pushed before content work.
+
+---
+
+## Session `arena/0937cfae-tino1` — consolidation onto the canonical staged-entry engine, owner scrub workflow, board scrub (claimed 2026-11-16 UTC)
+
+**Branch:** `arena/0937cfae-tino1` (fixed by Arena). **Base:** `origin/main` at `2cbc4d0` (PR #134 merged). This session starts from the canonical `main` tree and consolidates onto it; it does **not** carry a second staged-entry engine or a second staged-entry page.
+
+**Predecessor state on this branch (retained, not deleted):** the earlier feature work on this branch was committed as `b53df9c` and remains reachable at the local ref `scratch/0937cfae-pre-rebase`. It is superseded, not lost.
+
+**Findings that shaped the scope**
+
+- `main` already owns the canonical staged-entry engine (`privacy-site/illustrations.py` + `privacy-site/data/phased-history.json`) and the published page `privacy-site/public/phased.html`, published with the **official** cash leg: the 3-month bill from 1934 and the 2-year par yield from 1977, with a stated 0% assumption where no official series reaches back. On its own universe (82 complete entry years, 1934–2015, 3-year park, 3 tranches, 10-year horizon) it gives 14 wins, 68 losses, 0 ties and a median staged-vs-lump gap of **−29.0%** (range −57.5% to +48.4%).
+- The archived branch engine was a **different** engine on a **different** universe (academic bill returns, 89 starts from 1928, median −25.4%). The two are not interchangeable and the archived numbers are not republished as a second answer. The private model is brought onto the canonical official-cash engine instead (P4).
+- **PR #130** (`arena/eb57290f-tino1`) is **merged** (`6d7524a`, CI pass, Pages deploy pass). Nothing from it is re-implemented here.
+- **PR #120** (`arena/4aa608af-tino1`, "Harden public-guide privacy checks without household signatures") is still **open** and stale (based on `158056c`). It overlaps this session's file scope, so its substance is **reconciled here** (P2) rather than duplicated.
+
+| # | Task | Status | Owner | File scope | Notes |
+|---|---|---|---|---|---|
+| P0 | Claim and coordinate | done | `arena/0937cfae-tino1` | `COORDINATION.md` (append only for the claim) | Claim pushed before any product-change commit. |
+| P1 | Owner-controlled, non-pushing privacy scrub workflow | in progress | `arena/0937cfae-tino1` | `tools/privacy_scrub.py`, `tools/README.md` | New directory, used by no other session. No private value is stored in the repository; the figures are read from a values file kept outside it. The tool never pushes and never rewrites the working tree. |
+| P2 | Reconcile open PR #120 into this branch | in progress | `arena/0937cfae-tino1` | `privacy-site/check.py`, `privacy-site/test_illustrations.py`, `privacy-site/README.md` | Folds PR #120's substance forward onto current `main` instead of writing a competing version. PR #120 stays open under its own session and is told this branch supersedes it. |
+| P3 | Classify and scrub the targeted owner/derived-value occurrences in the canonical board | in progress | `arena/0937cfae-tino1` | `COORDINATION.md` (in-place numeric scrubbing only), `REPO-REVIEW.md` | Every candidate occurrence is classified first: an owner-supplied figure, a model output that **equals** an owner figure, a legitimate year label, or a substring of a CI run identifier. Only the first two classes are removed; the others are kept and the reason is recorded. |
+| P4 | Consolidate the private staged-entry model onto the canonical official-cash engine and refresh the private decision table | in progress | `arena/0937cfae-tino1` | `final/phased.py`, `final/out/phased.json`, `final/extras.py`, `final/flags.py` | The private model stops carrying its own academic-bill cash leg and reads the canonical official series, so the private numbers and the published guide cannot drift apart. The private `final/` tree is **not published**; the Pages boundary is unchanged. |
+| P5 | Re-run every gate, simulate the 17-file Jekyll output, open the PR and verify Pages | claimed | `arena/0937cfae-tino1` | read-only | `privacy-site/build.py`, `privacy-site/check.py`, unit tests, `final/publish.py --check`, `final/check.py .`, both published-output checkers, owner-value scan of the tracked tree and of history. |
+
+**Scope note:** this session owns `tools/`, `final/phased.py`, `final/out/phased.json`, `final/extras.py`, `final/flags.py`, the privacy-checker files folded in from PR #120, and the scrubbed numeric tokens in `COORDINATION.md` / `REPO-REVIEW.md`. It does not touch the published allowlist (`final/published.txt`), `_config.yml`, the canonical public engine or the canonical staged-entry page, and it publishes no household figure.
