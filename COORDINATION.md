@@ -2781,3 +2781,9 @@ No other session holds an active claim on these files (last claim `arena/81ca507
 3. The surtax label changed from Mental Health Services Tax to Behavioral Health Services Tax between the 2024 and 2025 booklets. Check the line title on each year's form.
 
 **P-4 — integration:** see the next entry.
+
+**P-4 — integration (arena/90e54230-tino1, 2026-11-16 UTC)**
+- **PR:** #119 `arena/90e54230-tino1` → `main` — https://github.com/wingbangboozle1-lang/Tino1/pull/119
+- **CI on content commit `03a5edd`:** `Validate the Pages publication boundary` (verify job) **pass** (1m2s; run 43784549272). The job sat queued about 80 minutes behind shared-runner backlog; no code change was needed.
+- **Local gates on the same tree:** build reproducible; `privacy-site/check.py` PASS (14 pages, 438 linked rows); unit tests OK; `final/publish.py --check` OK; `final/check.py .` OK; allowlist and published-output checks PASS on a 16-file copy of the allowlist. The Jekyll step ran only in CI.
+- **Merge:** `gh pr merge 119 --merge` after the verify pass. The merge result and the Pages deploy check are recorded in PR #119 and the close-out below.
