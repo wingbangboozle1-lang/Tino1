@@ -3035,3 +3035,22 @@ No other session holds an active claim on these files (last claim `arena/81ca507
   5. The public `flagged.html` P0 row (written by another session) states the repository "contain[s] household-derived material" and that Git history remains public. This is accurate and is left as written; the owner decision (G01/G02) remains open.
 - 2026-11-16 — **Open after merge (not blocking):** U-PH1 (Property B building area), U-PH2 (rent pass-through, unmodelled), A-TSY and A14 (ladder return from daily data), and the owner decisions above.
 
+
+---
+
+## Session `arena/eb57290f-tino1` — claim (2026-11-16 UTC)
+
+Branch fixed by workspace: `arena/eb57290f-tino1`, branched from `main` at `d3e23dc` (PR #119 merged). Claim is appended only; no earlier record is edited or removed.
+
+Owner brief for this session re-states the full requirement list. Audit of the current tree found most items already delivered (first-screen "what would change the answer", phased 24–36 month Treasury parking test on 1929/2008-style paths and 50 replays, mixed live-or-rent-then-sell paths, what-if grid, one-page Attorney & CPA brief, grouped glossary, open-questions and issues pages, suggestions review queue, Prop H, Prop 19 allowance carry-forward, Form 540 Line 62). This session therefore closes only genuine gaps and open verification items; it does not duplicate or regenerate pages owned by earlier sessions where no change is needed.
+
+| Task | Status | Owner | Files / scope | Verification plan |
+|---|---|---|---|---|
+| E-0 Claim and coordination | in progress | `arena/eb57290f-tino1` | `COORDINATION.md` (append only) | This entry, committed and pushed before any product edit. |
+| E-1 Re-verify federal and state amounts that the guide publishes (basic exclusion and annual gift for 2025/2026, 2027 adjustments, SALT cap schedule, §121 exclusion, transfer-tax statute) against the official pages, and correct any row that the body text and the flags contradict | unclaimed → in progress | `privacy-site/research.json`, `privacy-site/build.py` (law/index rows), `privacy-site/public/*.html` (regenerated) | Only values read on the official page this session; unread values stay blank and flagged. |
+| E-2 Deadlines as one dated timeline from death to decision, each row linked to its official rule | unclaimed | `privacy-site/build.py` (+ `timeline.html` if needed), nav, publication allowlists | Dates only where the official text states a period. |
+| E-3 Distribution of outcomes beside the single-point illustration (percentile band from a stated, explicitly invented assumption) and mixed paths shown next to the pure choices | unclaimed | `privacy-site/illustrations.py`, `privacy-site/build.py`, `privacy-site/test_illustrations.py` | Computed in Python; labelled synthetic; no odds claimed. |
+| E-4 Decision log template ("write the decision and the date next to the item") and grouped navigation | unclaimed | `privacy-site/build.py`, `privacy-site/public/brief.html` or process page, `style.css` | Every row keeps its official link; menu groups only reorder existing pages. |
+| E-5 Gates, PR, merge, Pages confirmation | unclaimed | repo-wide | `privacy-site/build.py` reproducible; `check.py`; unittest; `final/publish.py --check`; `final/check.py .`; both published-output checkers on a staged allowlist copy; CI `verify`; `gh api .../pages` status `built` after merge. |
+
+Owner-only items remain untouched and stay flagged: repository visibility and Git-history rewrite (I01 / P0), private appraisals, insurance quotes, utility bills, trust and deed review, and the future estate inventory are not obtainable from this sandbox and are not invented here.
