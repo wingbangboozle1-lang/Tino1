@@ -2737,3 +2737,16 @@ Verification performed in this session before it was superseded: `final/model.py
 - 2026-11-15 — V-2: all build/check scripts pass (see task table above).
 - 2026-11-15 — V-3: PR #115 created and merged to main; Pages build 1373151938 status `built`, error `null`; live at https://wingbangboozle1-lang.github.io/Tino1/
 - 2026-11-15 — V-4: PII scan clean across root HTML files. Privacy risk (public repo + pre-rounding history) logged for owner decision.
+
+## Session `arena/90e54230-tino1` — claim (2026-11-16 UTC)
+
+**Branch:** `arena/90e54230-tino1` (fixed by the platform; the task-branch naming in the brief is superseded by this single-branch rule). **Base:** `main` @ `181be9e`. **Date:** 2026-11-16.
+
+| # | Task | Status | Owner | File scope | Notes |
+|---|------|--------|-------|------------|-------|
+| P-1 | Privacy boundary re-check: public repo, full history (409 commits after unshallow), exposure register | in progress | `arena/90e54230-tino1` | `COORDINATION.md` only | Repo is **public**. Unrounded household figures and ZIP codes appear in tracked non-published files and in history. Rewriting `main` or changing visibility is an owner decision; not executed (see log). |
+| P-2 | Proposition H (SF Muni parcel tax) official terms and certification status on the published guide | claimed | `arena/90e54230-tino1` | `privacy-site/build.py`, `privacy-site/check.py`, `privacy-site/research.json`, generated `privacy-site/public/*.html` | Official sources: SFMTA parcel page; Dept. of Elections Nov 3, 2026 results. |
+| P-3 | Form 540 line 62 "1% tax above $1,000,000" and California capital-gain treatment | claimed | `arena/90e54230-tino1` | same as P-2 | Read 2025 Form 540 booklet line 62 directly. |
+| P-4 | Rebuild, all gates (CI-equivalent), PR to `main`, merge, Pages deploy confirmation | claimed | `arena/90e54230-tino1` | `COORDINATION.md` | Only integration step touching `main`. |
+
+No other session holds an active claim on these files (last claim `arena/81ca5078-tino1`, closed 2026-11-15).
