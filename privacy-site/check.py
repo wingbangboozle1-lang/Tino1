@@ -107,6 +107,16 @@ def main():
         assert 'noindex,nofollow' in text and 'no-referrer' in text
         assert 'Content-Security-Policy' in text
         assert 'SOURCE CHECKS <i></i> 12–16 NOV 2026' in text
+        if name == 'flagged.html':
+            # Keep the urgent exposure warning actionable and avoid implying that
+            # a Pages update or ordinary delete commit erases GitHub history.
+            for required in ('Priority 0 · exposure-containment checklist',
+                             'Status: not completed.',
+                             'Safe order of operations · no repository change is made by this checklist',
+                             'This session has not changed repository visibility or rewritten history.',
+                             'A normal delete commit leaves earlier Git objects in history.',
+                             'Rewriting cannot erase clones, forks or third-party copies'):
+                assert required in text, f'Missing or weakened P0 privacy guidance: {required}'
         pii = pii_kinds(text)
         assert not pii, f'Personal-data pattern(s) in {name}: {", ".join(pii)}'
         # Defense in depth against known rounded household signatures and location
