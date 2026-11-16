@@ -3134,3 +3134,19 @@ Status: P3-A, P3-B, P3-C and P3-D **done**. Only files in the claimed scope were
 - **Gates on the merged tree (all PASS):** `privacy-site/build.py` reproducible (no diff on `privacy-site/public`); `privacy-site/check.py` 15 pages / 548 official-context-linked rows; `unittest` 23/23; `final/publish.py --check` 17-file allowlist; `final/check.py .` 31 pages / 1,135 sourced rows / 2,703 $10-rounded figures; `final/check_published.py` + `privacy-site/check_published.py` on a simulated 17-file `_site`.
 - **Merges during this session:** `main` advanced repeatedly (PRs #129/#130/#131/#132/#133 by sessions `b70b3a7c` and `eb57290f`) while PR #134 was open. Resolved by merging `origin/main` into the branch and regenerating the public pages from the merged generator, so **both** the staged-entry `phased.html` work, the grouped-navigation/percentile-band work **and** this rule are kept; only `COORDINATION.md` (append-only) conflicted, and every session's record was preserved — none discarded.
 - **Open / not taken here (unchanged, non-blocking):** repository visibility and Git-history scrub of pre-rounding figures (owner decisions G01/G02); filling the rule's blank thresholds is a private household action with counsel/CPA; open PRs #97, #108, #120, #135 belong to their sessions and were not merged or modified here.
+
+## Session `arena/ab947e72-tino1` — sell-path costs, distribution chart, imputed rent (claimed 2026-11-16 UTC)
+
+**Branch (fixed by the workspace):** `arena/ab947e72-tino1`, based on `main` @ `d3e23dc` (the current tip; shallow clone, `git rev-list HEAD...origin/main` = 0/0). Working tree clean at claim time. Baseline gates re-run and green: `final/check.py .` OK (31 pages, 1135 sourced rows, 2703 dollar figures rounded to $10), `final/publish.py --check` OK (16-file allowlist).
+
+**Scope of this session:** the private numeric build only (`final/model.py`, `final/build.py`, `final/extras.py`, `final/sources.py`, `final/flags.py` and the regenerated repo-root pages). No change to the 16-file Pages allowlist or the privacy-first public guide. Household figures stay repo-only and $10-rounded; placeholders only.
+
+| # | Task | Status | Owner | Files / scope | Verification plan |
+|---|------|--------|-------|----------------|-------------------|
+| A0 | Claim and coordination | done | `arena/ab947e72-tino1` | `COORDINATION.md` (append only) | This entry; committed + pushed before any other edit. |
+| A1 | Price the recording fee into the sell path; re-verify the county documentary transfer tax; document the city-only measures | in progress | `arena/ab947e72-tino1` | `final/model.py`, `final/sources.py`, `final/flags.py`, regenerated root pages | Official Santa Clara County Clerk-Recorder fee schedule + Measure E/G pages read 2026-11-16; AB 2224 (Ch. 292, Stats. 2026) status read. Recording fee applied to every sell computation; transfer tax re-confirmed at $0.55/$500. |
+| A2 | Distribution chart in projections (real after-tax wealth spread across the 50 replays, by path) | in progress | `arena/ab947e72-tino1` | `final/model.py` (distribution stats), `final/build.py` (`build_projections`, new SVG) | Distribution computed from the same 50 replays already in the model; SVG rendered with the existing chart style; every figure $10-rounded. |
+| A3 | Imputed-rent input for the living paths (foregone market rent as an explicit, toggleable opportunity cost) | in progress | `arena/ab947e72-tino1` | `final/model.py`, regenerated root pages | Default = the HUD FY2026 SAFMR 3-bedroom figure already in the model; toggle documented; live-path wealth recomputed; sources reused (HUD). |
+
+**Owner-level items this session does NOT take (recorded, unchanged):** rewriting the public Git history that holds pre-rounding figures, changing repository visibility, and publishing household figures to Pages. These remain owner decisions (see the exposure register above).
+
