@@ -34,7 +34,7 @@ def _diff(x, money):
 
 EPISODES = [
     (1929, 'Crash year. The official bill series starts in 1934, so the parked leg is an explicit 0% assumption here.'),
-    (1937, 'Second severe decline. Same pre-1934 gap; parked leg 0%.'),
+    (1937, 'Second severe decline. Official bill leg available; no 2-year leg before 1977, so no ladder proxy.'),
     (1973, 'Inflation-era decline. Official bill leg available; the 2-year leg is not, so no ladder proxy.'),
     (2000, 'Dot-com peak year. Both official legs available.'),
     (2007, 'Pre-crisis peak year. Both official legs available.'),
@@ -152,8 +152,8 @@ def body(table, notice, money):
     distribution = ('<h2>Every entry year with official data, not only the famous ones</h2><p>Choosing 1929 and '
                     '2008 after the fact is the easiest way to make a staged plan look good. The table below applies '
                     'the same rule to every start year for which the official cash leg and the stock series both '
-                    'exist, and counts the outcomes. Values are the staged result minus the lump-sum result, as a '
-                    'percentage of the starting amount.</p>') + table(
+                    'exist, and counts the outcomes. Each gap is the staged result divided by the lump-sum result, '
+                    'minus one, so −29.0% means the staged path ended 29% below the lump sum.</p>') + table(
         'Distribution of staged minus lump-sum across all complete entry years · real history, not a probability',
         ['Rule tested', 'Entry years', 'Staged ahead / behind / level', 'Median gap vs lump sum',
          'Worst entry year', 'Best entry year', 'Sources'], grid) + table(

@@ -3077,6 +3077,15 @@ Status: P3-A, P3-B, P3-C and P3-D **done**. Only files in the claimed scope were
 **Gates run on the merged tree (all PASS):** `privacy-site/build.py` (byte-identical on a second run), `privacy-site/check.py` (15 pages, 521 linked rows), `unittest` 19/19, `final/publish.py --check` (17 files), `final/check.py .` (31 pages, 1,135 sourced rows, 2,703 rounded figures), and both publication checkers against a simulated `_site` built from `git ls-files` with the `_config.yml` excludes (17 files, byte-identical). Jekyll itself is not installed in this sandbox; the real Jekyll build runs in CI.
 
 **Not done, still open:** the repository remains public with pre-rounding figures in its history (owner decisions G01/G02); publishing household figures is still not done; and the daily-data ladder return (flag A14) is still not computed — this session states that limit on the page rather than estimating it.
+
+### arena/b70b3a7c-tino1 — publish record and post-merge correction (2026-11-16 UTC)
+
+- **PR:** #129 https://github.com/wingbangboozle1-lang/Tino1/pull/129 — `verify` job **pass** on head `f98d7e1` (run 43923018292, 56s, including the real Jekyll build and both publication checkers). Merged with `gh pr merge 129 --merge`; merge commit `3c1ed09` on `main`.
+- **Pages:** `pages build and deployment` for `3c1ed09` completed **success**; `Validate the Pages publication boundary` on `main` completed **success**. Live page confirmed by reading the deployed HTML: https://wingbangboozle1-lang.github.io/Tino1/privacy-site/public/phased.html
+- **Post-merge correction (second PR):** reading the deployed page showed the 1937 row caption read "Same pre-1934 gap; parked leg 0%" while the row's own value column correctly showed 0.13% from the official bill series. That sentence was wrong (1937 is after 1934). It is corrected to "Official bill leg available; no 2-year leg before 1977, so no ladder proxy." No number changed; all gates re-run and pass.
+- **Second post-merge wording fix (PR #133):** the distribution caption said the gap was "a percentage of the starting amount"; it is the gap relative to the **lump-sum endpoint** (staged/lump-sum − 1). Corrected in the caption and in the closing paragraph. No number changed; all gates re-run and pass.
+---
+
 ---
 
 ## Session `arena/cd739140-tino1` — pre-commitment decision rule (claimed 2026-11-16 UTC)
