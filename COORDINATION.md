@@ -2767,3 +2767,17 @@ Verification performed in this session before it was superseded: `final/model.py
 - 2026-11-16 — X-1: gates re-run, all PASS (see Results).
 - 2026-11-16 — X-2: two official statute and table reads recorded with URLs; one guessed IRS URL was 404 and dropped.
 - 2026-11-16 — X-3: publication boundary confirmed unchanged; no personal data added to the repository.
+
+## Session `arena/9bf08f53-tino1` — claim (2026-11-16 UTC)
+
+**Branch:** `arena/9bf08f53-tino1` (fixed by the platform), based on `main` @ `181be9e` (PR #116). Current publication boundary is kept: the generic front door plus the figure-free guide in `privacy-site/public/` (16-file allowlist). No household figure, ZIP code, city name, name, address or parcel number is added to any published page.
+
+| # | Task | Status | Owner | File scope | Notes |
+|---|------|--------|-------|------------|-------|
+| 9B-1 | "What would change the answer" as a first-screen block on the public front door (each trigger linked to an official source) | in progress | `arena/9bf08f53-tino1` | `privacy-site/build.py`, `privacy-site/research.json`, `privacy-site/public/index.html`, `privacy-site/landing.html`, `index.html` | Adds rows only; no figures. |
+| 9B-2 | Deadlines as a timeline (from date of death, each step linked) | in progress | `arena/9bf08f53-tino1` | `privacy-site/build.py`, `privacy-site/research.json`, `privacy-site/public/process.html` | Only deadlines confirmed on the official page are stated. |
+| 9B-3 | Like-kind exchange, depreciation and recapture, imputed rent: plain-language questions and glossary terms with official links | in progress | `arena/9bf08f53-tino1` | `privacy-site/build.py`, `privacy-site/research.json`, `privacy-site/public/questions.html`, `privacy-site/public/glossary.html` | Generic; no household values. |
+| 9B-4 | Written investment policy template for sale proceeds (blank fields; no invented targets) | in progress | `arena/9bf08f53-tino1` | `privacy-site/build.py`, `privacy-site/public/brief.html` | Template only; fields left blank for the owner. |
+| 9B-5 | Read the official FTB Form 540 instructions for the 1% tax above $1,000,000 and the capital-gain treatment; record the wording and the link | in progress | `arena/9bf08f53-tino1` | `COORDINATION.md` (record), `privacy-site/public/law.html` if the wording changes a row | Official text read on the day, not from memory. |
+
+Owner-level items this session does **not** take (recorded in the board, unchanged): rewriting Git history that holds pre-rounding figures, changing repository visibility, and publishing household figures. These need the repository owner.
