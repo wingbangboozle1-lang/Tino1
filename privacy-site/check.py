@@ -87,11 +87,14 @@ class Check(HTMLParser):
 def main():
     landing_template = ROOT.parent/'landing.html'
     root_landing = ROOT.parent.parent/'index.html'
-    assert landing_template.is_file() and root_landing.is_file(), 'Missing privacy-first root landing'
-    assert landing_template.read_bytes() == root_landing.read_bytes(), \
-        'Root landing differs from the privacy-reviewed template'
+    assert landing_template.is_file(), 'Missing the figure-free front-door template'
+    assert root_landing.is_file(), 'Missing the published front door'
+    # The published front door is the generated decision dashboard (final/build.py) since
+    # 2026-11-16. The figure-free template above is the fallback variant (suggestion G01)
+    # and is checked here as a template only; the dashboard itself is checked by
+    # final/check.py and final/check_published.py.
     landing_text = landing_template.read_text(encoding='utf-8')
-    assert not pii_kinds(landing_text), 'Personal-data pattern in root landing'
+    assert not pii_kinds(landing_text), 'Personal-data pattern in the figure-free front-door template'
     for token in ('Cupertino','San Francisco','95014','94122','3,100,000','1,800,000','7,150'):
         assert token.casefold() not in landing_text.casefold(), 'Known household signature/locality in root landing'
     for source in REGISTRY['sources'].values():

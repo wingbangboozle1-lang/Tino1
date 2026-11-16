@@ -4,12 +4,16 @@
   python3 final/check_published.py _site
 
 Exit code 1 on any failure. This gate checks the actual Jekyll output against
-final/published.txt: only the generic root landing page and figure-free guide
-under privacy-site/public/ may be published. Household-derived values, home
-locality cues, owner histories and household projections are excluded. The
-repository and its Git history remain a separate exposure surface; this check
-is not a whole-repository privacy audit. The guide's detailed signature and
-locality checks run separately in privacy-site/check.py.
+final/published.txt: the rounded-figures analysis at the repository root and the
+figure-free guide under privacy-site/public/, and nothing else. The repository
+and its Git history remain a separate exposure surface; this check is not a
+whole-repository privacy audit. The guide's detailed signature and locality
+checks run separately in privacy-site/check.py.
+
+The privacy rule enforced here for every published page: no name, street
+address, parcel number, account number, phone number or e-mail address, and no
+ZIP code in the visible text (official source URLs are exempt, because a row
+that cannot be verified is worse than a row that exposes a ZIP code).
 """
 import html
 import os
@@ -41,9 +45,29 @@ PII = [
     (r'\b\d{3}-\d{2}-\d{3}\b', 'parcel-number pattern'),
     (r'\(\d{3}\)\s*\d{3}-\d{4}|\b\d{3}-\d{3}-\d{4}\b', 'phone number'),
 ]
+# The two ZIP codes, replaced in visible text by the publication scrub. They may still
+# appear inside an official source URL (a HUD rent calculator is addressed by ZIP);
+# that residual is flagged on the Flagged for Review page.
+ZIP_TEXT = re.compile(r'\b(95014|94122)\b')
+
+# 4b locality. The published pages name no city, county or neighbourhood: the two places
+# involved are called Jurisdiction A (where Property A sits) and Jurisdiction B (where
+# Property B sits), and official bodies are named by role. final/scrub.py performs the
+# replacement; this is the gate that fails if a name escapes it. Agency names that are
+# state-wide ("California Water Boards", state boards and departments) are not localities.
+LOCALITY = re.compile(
+    r"San Francisco|Santa Clara|Cupertino|San Jose|Bay Area|SCVWD|SFPUC|SFMTA|SJWC|"
+    r"Cal Water|California Water Service|Midpen|\bVMC\b|Fremont Union|Foothill-De ?Anza|"
+    r"santaclaracounty|cupertino\.org|cupertino\.gov|sftreasurer|sfmta\.com|sfpuc\.gov|\bSF\b",
+    re.I)
 
 PF = os.environ.get('TINO1_PRIVATE_FIGURES', '')
 FP = set(re.sub(r'\D', '', x) for x in open(PF).read().split()) - {''} if PF and os.path.isfile(PF) else set()
+
+
+def visible_text(text):
+    """The page without the bodies of its URLs: what a reader sees."""
+    return re.sub(r'https?://[^\s"<>\']+', ' ', text)
 
 
 def scan(name, text):
@@ -51,6 +75,12 @@ def scan(name, text):
         m = re.search(rx, text)
         if m:
             err('PII:', what, 'in', name, '->', m.group(0))
+    m = ZIP_TEXT.search(visible_text(text))
+    if m:
+        err('PRIVACY: ZIP code in the visible text of', name, '->', m.group(0))
+    m = LOCALITY.search(visible_text(text))
+    if m:
+        err('PRIVACY: place name in the text of', name, '->', m.group(0))
     for tok in set(re.findall(r'(?<![\d.])\d{1,3}(?:(?:,|\\,|[_ ])\d{3})+(?![\d])|(?<![\d.])\d{4,7}(?![\d])', text)):
         if re.sub(r'\D', '', tok) in FP:
             err('PRIVACY: unrounded owner figure in', name)
@@ -75,10 +105,10 @@ def check_site(site):
             err('published page without robots noindex:', name)
         scan(name, text)
         if name == 'index.html':
-            forbidden = ('Cupertino', 'San Francisco', '95014', '94122',
-                         '3,100,000', '1,800,000', '7,150', '550,540', '114,250')
-            if '$' in text or any(token.casefold() in text.casefold() for token in forbidden):
-                err('root landing includes household figures or locality cues')
+            if 'Two-home inheritance analysis' not in text:
+                err('the published front door is not the generated dashboard')
+            if 'the Transferor' not in text and 'the Inheritor' not in text:
+                err('the front door does not use the placeholder names')
         for u in re.findall(r'(?:href|src)="([^"]+)"', text):
             u = html.unescape(u)
             if re.match(r'^(?:[a-z][a-z0-9+.-]*:|//|#)', u, flags=re.I):
@@ -108,8 +138,8 @@ def check_fresh():
     for name in sorted(ALLOW_SET):
         if not name.endswith(('.html', '.css', '.js')):
             continue
-        if '/' in name or name == 'index.html':
-            continue  # guide pages are built by privacy-site/build.py; root landing is a reviewed static privacy page
+        if '/' in name:
+            continue  # guide pages are built by privacy-site/build.py, not by final/build.py
         fresh = os.path.join(tmp, name)
         live = os.path.join(ROOT, name)
         if not os.path.exists(fresh):

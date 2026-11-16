@@ -3,6 +3,7 @@ import unittest
 import tempfile
 import subprocess
 import sys
+import os
 from pathlib import Path
 import shutil
 from illustrations import (r10, family_assessment, outlook, investment_path, phased_entry, STRESS, threshold, ledger,
@@ -133,18 +134,24 @@ class PublicationTests(unittest.TestCase):
         repo=here.parent
         with tempfile.TemporaryDirectory() as folder:
             root=Path(folder)
-            # Fixture mirrors the privacy-first allowlist: one generic root landing
-            # plus the figure-free guide. Numeric analysis pages stay repository-only.
+            # Fixture mirrors the published boundary: the rounded-figures analysis
+            # at the repository root (figures rounded to $10, identities replaced by
+            # placeholders) plus the figure-free guide under privacy-site/public/.
             names=(repo/'final'/'published.txt').read_text().split()
             self.assertIn('index.html',names)
             self.assertIn('privacy-site/public/index.html',names)
             self.assertIn('privacy-site/public/brief.html',names)
             self.assertIn('privacy-site/public/issues.html',names)
-            self.assertNotIn('summary.html',names)
-            self.assertNotIn('black-swan.html',names)
-            self.assertNotIn('projections.html',names)
-            self.assertNotIn('properties.html',names)
+            self.assertIn('summary.html',names)
+            self.assertIn('black-swan.html',names)
+            self.assertIn('projections.html',names)
+            self.assertIn('decisions.html',names)
+            self.assertIn('precommit.html',names)
             self.assertNotIn('dashboard/index.html',names)
+            # Nothing that carries household research outside the boundary
+            self.assertNotIn('final/out/model.json',names)
+            self.assertNotIn('final/model.py',names)
+            self.assertNotIn('privacy-site/research.json',names)
             for name in names:
                 dst=root/name
                 dst.parent.mkdir(parents=True,exist_ok=True)
@@ -164,12 +171,19 @@ class PublicationTests(unittest.TestCase):
     def test_reproducible_generation(self):
         here=Path(__file__).resolve().parent
         before={p.name:p.read_bytes() for p in (here/'public').iterdir()}
-        landing=(here.parent/'index.html').read_bytes()
-        template=(here/'landing.html').read_bytes()
-        self.assertEqual(landing,template)
+        front=(here.parent/'index.html').read_bytes()
         subprocess.run([sys.executable,str(here/'build.py')],check=True,capture_output=True)
         self.assertEqual(before,{p.name:p.read_bytes() for p in (here/'public').iterdir()})
-        self.assertEqual(template,(here.parent/'index.html').read_bytes())
+        # The guide build never replaces the published front door: the rounded
+        # dashboard (final/build.py) is the live landing page. The figure-free
+        # template is only restored on request, with TINO1_ROOT_LANDING=1.
+        self.assertEqual(front,(here.parent/'index.html').read_bytes())
+        env=dict(os.environ,TINO1_ROOT_LANDING='1')
+        subprocess.run([sys.executable,str(here/'build.py')],check=True,capture_output=True,env=env)
+        self.assertEqual((here/'landing.html').read_bytes(),(here.parent/'index.html').read_bytes())
+        # put the published front door back
+        (here.parent/'index.html').write_bytes(front)
+        self.assertEqual(front,(here.parent/'index.html').read_bytes())
 
 
 if __name__=='__main__': unittest.main()

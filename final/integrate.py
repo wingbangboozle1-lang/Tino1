@@ -18,7 +18,7 @@ ARCH = 'archive/root-site-2026-11-11'
 MARK = '<!-- superseded-notice 07a57a05 -->'
 LEGACY_DIRS = ['dashboard', 'docs', 'site', 'archive']
 CURRENT = ['index.html', 'summary.html', 'decision.html', 'questions.html', 'suggestions.html', 'projections.html', 'black-swan.html', 'process.html', 'law.html',
-           'estate-cash.html', 'costs.html', 'flagged.html', 'sources.html', 'verification.html', 'requirements.html',
+           'estate-cash.html', 'pending.html', 'costs.html', 'flagged.html', 'sources.html', 'verification.html', 'requirements.html',
            'review.html', 'versions.html']
 # The root index.html is the site's front door (D1: a chooser between the no-figures guide and the rounded-figures
 # analysis, written by final/build.py in ROOT_MODE). It must never be archived by this script (R29's guard, kept).

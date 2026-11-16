@@ -74,8 +74,11 @@ def check_published(root, public=None):
     assert {GUIDE_PREFIX + name for name in GUIDE_FILES} <= expected, \
         'The figure-free guide must stay inside the published allowlist'
     landing_template = HERE / 'landing.html'
-    assert landing_template.is_file() and (ROOT / 'index.html').read_bytes() == landing_template.read_bytes(), \
-        'Published root landing must match the reviewed generic template'
+    assert landing_template.is_file(), 'Missing the figure-free front-door template'
+    # The published front door is the generated decision dashboard since 2026-11-16
+    # (the brief asks for the live site to carry the analysis, with every figure
+    # rounded to $10 and every person and property replaced by a placeholder).
+    # The template above is the figure-free variant (suggestion G01) and is not published.
     entries = list(root.rglob('*'))
     assert not any(p.is_symlink() for p in entries), 'Symlinks are forbidden in the published output'
     actual = {p.relative_to(root).as_posix() for p in entries if p.is_file()}
@@ -95,12 +98,16 @@ def check_published(root, public=None):
         if name == GUIDE_PREFIX + 'index.html':
             _check_guide_landing(text)
         if name == 'index.html':
-            forbidden = ('Cupertino', 'San Francisco', '95014', '94122',
-                         '3,100,000', '1,800,000', '7,150', '550,540', '114,250')
-            assert '$' not in text, 'Root landing must not publish household or modelled dollar figures'
-            assert not any(token.casefold() in low for token in forbidden), \
-                'Root landing contains a known household signature or locality cue'
-            assert '<script' not in low, 'Root landing must not execute scripts'
+            assert 'Two-home inheritance analysis' in text, \
+                'The published front door must be the generated dashboard'
+            assert '<script' not in low or 'src=' in low, \
+                'The front door must not carry an inline script'
+            # no locality cue and no ZIP code in the visible text
+            shown = re.sub(r'https?://[^\s"<>\']+', ' ', text)
+            for token in ('95014', '94122'):
+                assert token not in shown, f'The front door shows a ZIP code in its visible text: {token}'
+            for token in ('Cupertino',):
+                assert token not in shown, f'The front door shows a locality cue: {token}'
         parser = LocalLinks()
         parser.feed(text)
         for raw in parser.links:
@@ -112,9 +119,10 @@ def check_published(root, public=None):
             resolved = posixpath.normpath(posixpath.join(base, target))
             assert resolved in expected, f'{name} links to non-published path {raw!r}'
 
-    print(f'PASS: exact allowlist, {len(actual)} files (1 generic landing + '
-          f'{len(GUIDE_FILES)} guide files), byte-identical, local links resolve, '
-          'root landing has no household signatures, guide landing stays figure-free')
+    print(f'PASS: exact allowlist, {len(actual)} files ({len(expected) - len(GUIDE_FILES)} '
+          f'analysis pages + {len(GUIDE_FILES)} figure-free guide files), byte-identical, '
+          'local links resolve, front door is the generated dashboard with no ZIP code or '
+          'locality cue in its visible text, guide landing stays figure-free')
 
 
 if __name__ == '__main__':
