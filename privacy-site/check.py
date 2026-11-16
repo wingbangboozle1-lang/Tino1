@@ -12,7 +12,8 @@ REGISTRY = json.loads((ROOT.parent/'research.json').read_text())
 SOURCES = {s['url'] for s in REGISTRY['sources'].values()}
 # www.sfmta.com: the San Francisco Municipal Transportation Agency is a City and County department (official City site, not .gov); used for the Proposition H rate table.
 OFFICIAL_PUBLISHED_RATES = {'129', '249', '65', '799', '392'}  # SFMTA Proposition H rate table, read 2026-11-16
-REVIEWED_NON_GOV_HOSTS = {'docs.github.com', 'federalreservehistory.org', 'www.federalreservehistory.org', 'www.sfmta.com'}
+# www.law.cornell.edu: non-government mirror of the U.S. Code, used only for IRC §1250 text (flagged 9B-F1 on the public Flagged page); the GPO copy was not retrieved on 2026-11-16.
+REVIEWED_NON_GOV_HOSTS = {'docs.github.com', 'federalreservehistory.org', 'www.federalreservehistory.org', 'www.sfmta.com', 'www.law.cornell.edu'}
 PII_PATTERNS = {
     'street address': r'\b\d{1,5}\s+[A-Z][A-Za-z-]+(?:\s+[A-Z][A-Za-z-]+)?\s+(?:Street|St\.?|Avenue|Ave\.?|Drive|Dr\.?|Way|Court|Ct\.?|Lane|Ln\.?|Road|Rd\.?|Boulevard|Blvd\.?)\b',
     'email address': r'[\w.+-]+@[\w-]+\.[\w.-]+',
@@ -107,7 +108,17 @@ def main():
         text = (ROOT/name).read_text()
         assert 'noindex,nofollow' in text and 'no-referrer' in text
         assert 'Content-Security-Policy' in text
-        assert 'SOURCE CHECKS <i></i> 12–13 NOV 2026' in text
+        assert 'SOURCE CHECKS <i></i> 12–16 NOV 2026' in text
+        if name == 'flagged.html':
+            # Keep the urgent exposure warning actionable and avoid implying that
+            # a Pages update or ordinary delete commit erases GitHub history.
+            for required in ('Priority 0 · exposure-containment checklist',
+                             'Status: not completed.',
+                             'Safe order of operations · no repository change is made by this checklist',
+                             'This session has not changed repository visibility or rewritten history.',
+                             'A normal delete commit leaves earlier Git objects in history.',
+                             'Rewriting cannot erase clones, forks or third-party copies'):
+                assert required in text, f'Missing or weakened P0 privacy guidance: {required}'
         pii = pii_kinds(text)
         assert not pii, f'Personal-data pattern(s) in {name}: {", ".join(pii)}'
         # Defense in depth against known rounded household signatures and location

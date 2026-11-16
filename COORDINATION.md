@@ -2738,6 +2738,32 @@ Verification performed in this session before it was superseded: `final/model.py
 - 2026-11-15 — V-3: PR #115 created and merged to main; Pages build 1373151938 status `built`, error `null`; live at https://wingbangboozle1-lang.github.io/Tino1/
 - 2026-11-15 — V-4: PII scan clean across root HTML files. Privacy risk (public repo + pre-rounding history) logged for owner decision.
 
+## Session `arena/f391f643-tino1` — CA Form 540 / RTC §17043 verification, sensitivity update, publication-boundary confirmation (2026-11-16 UTC)
+
+**Branch:** `arena/f391f643-tino1` (fixed by the platform). **Base:** `main` @ `181be9e`. **Session ID:** `arena/f391f643-tino1`.
+
+### Claim
+
+| # | Task | Status | Owner | File scope | Notes |
+|---|------|--------|-------|------------|-------|
+| F3-0 | Claim and coordination | done | arena/f391f643-tino1 | COORDINATION.md (append only) | This entry; claim committed and pushed before content work. |
+| F3-1 | Official-source verification of the CA 1% tax above $1M and capital-gains treatment (Form 540 / RTC §17043) | done | arena/f391f643-tino1 | final/sources.py (new RTC-17043 entry), final/model.py | RTC §17043 read directly on leginfo.legislature.ca.gov: 1% additional tax on taxable income over $1,000,000 for taxable years beginning on/after 1 Jan 2005 (Prop 63). FTB-MHS / FTB-RATES already cited. Capital-gains-as-ordinary-income is the model's standing treatment (no separate CA rate); no unconfirmed value added. |
+| F3-2 | Update the sensitivity value to reflect the verified rule | done | arena/f391f643-tino1 | final/model.py | Top-tax-bracket sensitivity now explicitly sets t_ca_lump=0.133 and labels the 13.3% top marginal CA rate (12.3% top bracket + 1% Form 540 surtax over $1M, R&TC 17043). Sell-under-top-bracket moved from $9,747,210 to $9,362,776. |
+| F3-3 | Rebuild the model and re-run all verification gates | done | arena/f391f643-tino1 | final/out/model.json | `final/check.py .` OK: 31 pages, 1126 table rows each with an official link, 3060 links, 2638 $10-rounded figures, 6-digit scan against 16139 model numbers clean, model self-tests passed on 51 paths. `privacy-site/check.py` PASS (14 public pages, 420 official-linked rows). `final/publish.py --check` OK (16-file allowlist). |
+| F3-4 | PR → main, merge, confirm Pages deploy, record result | in progress | arena/f391f643-tino1 | branch commits + COORDINATION.md | See PR/merge record below. |
+
+### Publication-boundary decision (G01/G02)
+
+The verified numeric decision analysis (live / rent / sell, mixed and phased paths, black-swan stress, Property B already-owned and not reassessed, no basis reset on B) is built, rounded to the nearest $10, placeholder-only for people/properties, and every table row carries an official source link. It passes all verification gates but is **not** served from GitHub Pages: the publication boundary is the generic landing plus the figure-free `privacy-site/public/` guide (16 files), enforced by `final/check_published.py`, `privacy-site/check_published.py` and `check_fresh()` (committed root pages must match `final/build.py` byte-for-byte; most committed root pages are hand-customized and do not, so publishing them would break the gate). Per the brief, rounding to $10 is disclosure minimisation, not anonymisation; whether to publish the rounded numeric edition remains the owner's open decision G01/G02. The live figure-free site is at https://wingbangboozle1-lang.github.io/Tino1/.
+
+### PR / merge record
+
+- PR #122: https://github.com/wingbangboozle1-lang/Tino1/pull/122 — merged to main via `gh pr merge 122 --merge`, merge commit `06e490a6270cbbc56c780332030b6e1c6e3d5123`, merged 2026-11-16T01:25:09Z.
+- GitHub Pages: a build is triggered automatically on `main` for commit `06e490a`. The Pages API could not be polled during this session (HTTP 403 rate limit), so the deploy status was not confirmed here; the prior Pages build was live (`built`, `error: null`) at https://wingbangboozle1-lang.github.io/Tino1/ and all local publication gates passed (`final/publish.py --check`, `privacy-site/check.py`, `final/check.py .`). Owner to confirm the `06e490a` Pages deploy.
+
+
+---
+
 ## Session `arena/678f5a7b-tino1` — claim, gate re-run, official re-read, close-out (2026-11-16 UTC)
 
 **Branch:** `arena/678f5a7b-tino1` (fixed by the platform; the board's `session-<id>/<task>` naming is not used). **Base:** `main` @ `181be9e`.
@@ -2829,3 +2855,115 @@ Verification performed in this session before it was superseded: `final/model.py
 - 2026-11-16 — H-1, H-2, H-3 complete on the branch. Pull request and merge: see the next log line.
 - 2026-11-16 — Merge conflict on rebase onto `main` @ `eca8647` (PR #117 by `arena/678f5a7b-tino1`, which also appended to this file). The conflict was only at the end of the file, where both sessions had appended sections. Resolved by keeping both sections in order (`arena/678f5a7b-tino1` first, this session second); nothing from either session was discarded. After the rebase, all gates were re-run and pass on the rebased tree; `main`'s change touched only this file.
 
+
+## Session `arena/9bf08f53-tino1` — claim (2026-11-16 UTC)
+
+**Branch:** `arena/9bf08f53-tino1` (fixed by the platform), based on `main` @ `181be9e` (PR #116). Current publication boundary is kept: the generic front door plus the figure-free guide in `privacy-site/public/` (16-file allowlist). No household figure, ZIP code, city name, name, address or parcel number is added to any published page.
+
+| # | Task | Status | Owner | File scope | Notes |
+|---|------|--------|-------|------------|-------|
+| 9B-1 | "What would change the answer" as a first-screen block on the public front door (each trigger linked to an official source) | in progress | `arena/9bf08f53-tino1` | `privacy-site/build.py`, `privacy-site/research.json`, `privacy-site/public/index.html`, `privacy-site/landing.html`, `index.html` | Adds rows only; no figures. |
+| 9B-2 | Deadlines as a timeline (from date of death, each step linked) | in progress | `arena/9bf08f53-tino1` | `privacy-site/build.py`, `privacy-site/research.json`, `privacy-site/public/process.html` | Only deadlines confirmed on the official page are stated. |
+| 9B-3 | Like-kind exchange, depreciation and recapture, imputed rent: plain-language questions and glossary terms with official links | in progress | `arena/9bf08f53-tino1` | `privacy-site/build.py`, `privacy-site/research.json`, `privacy-site/public/questions.html`, `privacy-site/public/glossary.html` | Generic; no household values. |
+| 9B-4 | Written investment policy template for sale proceeds (blank fields; no invented targets) | in progress | `arena/9bf08f53-tino1` | `privacy-site/build.py`, `privacy-site/public/brief.html` | Template only; fields left blank for the owner. |
+| 9B-5 | Read the official FTB Form 540 instructions for the 1% tax above $1,000,000 and the capital-gain treatment; record the wording and the link | in progress | `arena/9bf08f53-tino1` | `COORDINATION.md` (record), `privacy-site/public/law.html` if the wording changes a row | Official text read on the day, not from memory. |
+
+Owner-level items this session does **not** take (recorded in the board, unchanged): rewriting Git history that holds pre-rounding figures, changing repository visibility, and publishing household figures. These need the repository owner.
+
+### arena/9bf08f53-tino1 — close-out record (2026-11-16 UTC)
+
+Status of the claimed tasks (only files in the claimed scope were changed: `privacy-site/build.py`, `privacy-site/check.py`, `privacy-site/research.json`, and the regenerated `privacy-site/public/*.html`; the root landing and the 16-file allowlist are unchanged).
+
+| # | Task | Status | What was done | Sources read (official unless marked) | Irregularities / open |
+|---|------|--------|---------------|----------------------------------------|-----------------------|
+| 9B-1 | "What would change the answer" on the first screen | done | New table on the public front door, directly after the hero: seven triggers (property-tax treatment, filing clocks, estate-tax status, sale-year income, CA capital gains, like-kind, depreciation). Each row links to its rule. | BOE Prop 19 page (https://www.boe.ca.gov/prop19/); IRS estate tax page (https://www.irs.gov/businesses/small-businesses-self-employed/estate-tax); FTB 2025 Form 540 booklet (https://www.ftb.ca.gov/forms/2025/2025-540-booklet.html); FTB capital gains (https://www.ftb.ca.gov/file/personal/income-types/capital-gains-and-losses.html); IRC §1031 GPO (https://www.govinfo.gov/content/pkg/USCODE-2024-title26/html/USCODE-2024-title26-subtitleA-chap1-subchapO-partIII-sec1031.htm); IRC §1250 LII mirror (flagged) | 9B-F1 |
+| 9B-2 | Deadlines as a timeline | done | Ordered timeline on the process page: day 0, 9-month Form 706 date, 1-year homeowners' exemption, 3-year exclusion claim, annual Form 540 dates, like-kind clocks, annual re-check. | IRS Form 706 instructions Rev. July 2026 (https://www.irs.gov/pub/irs-pdf/i706.pdf), read on the "When To File" and "Which Estates Must File" text; BOE Prop 19 page; FTB 2025 Form 540 booklet "Important Dates" | 9B-F2 (extension wording corrected: Form 4768 covers filing and can request payment extension) |
+| 9B-3 | Like-kind, depreciation and recapture, imputed rent | done | Structural-questions table on the questions page (like-kind, depreciation/recapture, imputed rent, sale-year $1,000,000, written rule before figures); five glossary terms. | IRC §1031 GPO; IRS Publication 544 (2025) PDF, receipt requirement (chunk read 2026-11-16); IRS Topic 414 (https://www.irs.gov/taxtopics/tc414); IRC §1250 LII mirror | 9B-F1: §1250 text not read from an official host (GPO address not found; Publication 544 PDF tool stops before chapter 3). The unrecaptured-§1250 federal rate (IRC §1(h)) was not read and is not stated. |
+| 9B-4 | Written investment policy template for sale proceeds | done | Blank-entry template on the attorney and CPA brief page: decision owner, cash need, parking instrument, equity share and phase-in, rebalancing and loss response, tax items, review triggers. No target or projected figure entered. | Uses the existing registry entries (FDIC, SEC asset allocation, IRS estate tax page, FTB 2025 Form 540 booklet, IRS estate tax) | None beyond the rule that yields change daily and must be read on the day |
+| 9B-5 | Read the official FTB Form 540 instructions for the 1% tax above $1,000,000 and the capital-gain treatment; update the sensitivity value | done (text read; sensitivity not changed) | Read Line 62 "Behavioral Health Services Tax" in the 2025 Form 540 booklet (chunks 11, 14–17): if taxable income is more than $1,000,000, compute 1% of the excess. Law page row updated to this label; registry entry re-dated. Capital gains: FTB page confirms all capital gains are ordinary income in California. | FTB 2025 Form 540 booklet; FTB capital gains page (last updated 01/28/2026) | 9B-F3 (the phrase "renamed from Mental Health Services Tax" in the private numeric build is not in the text read; not published). 9B-F4: the private numeric model has no 1% term, so there was no sensitivity value to update. Adding one needs an owner decision. |
+
+Other checks run on 2026-11-16:
+- `privacy-site/build.py` regenerated the public pages (no diff from the committed state after the final run); `privacy-site/check.py` PASS (14 public pages, 458 official-context-linked rows, $10 rounding, PII-pattern and household-signature checks); `unittest` 13/13 OK; `final/publish.py --check` OK (16-file allowlist); `final/check.py .` OK (31 pages, 1,126 sourced rows, 2,638 dollar figures rounded to $10).
+- `privacy-site/check.py` header date changed from 12–13 to 12–16 Nov 2026 on all public pages (source checks dated per item).
+- Public pages checked for ZIP codes, city names and street patterns: none in visible text.
+- Non-government host added to `REVIEWED_NON_GOV_HOSTS` in `privacy-site/check.py`: `www.law.cornell.edu`, used only for the IRC §1250 mirror text, flagged 9B-F1.
+- Dead links recorded in `rejected_links` (irs.gov like-kind pages returned 404; uscode.house.gov and a govinfo §6075 path returned not-found on 2026-11-16).
+
+Not done in this session (left on the board for an owner decision or a later session; none claimed here):
+- Git history scrub, repository visibility, and any publication of household figures. These are owner-level (see the publication-boundary records above). Nothing was rewritten.
+- Mixed-path, what-if and reinvestment-risk pages, and the decision-date log: these exist in the private numeric build (`final/`, root pages), which is not on the Pages allowlist. Publishing them is the owner's boundary decision.
+- Property tax rate area (U03), comparables for the Cupertino house, and independent property or rental estimates: still unverified and not inferred here.
+- The pre-commitment rule (what would make each path the choice) is written only as a blank question on the questions page; no rule with thresholds was written.
+## Session `arena/06446b26-tino1` — privacy exposure containment (claimed 2026-11-16 UTC)
+
+**Branch:** `arena/06446b26-tino1` (fixed by Arena); base `181be9ea7004b7c68602597d1add962d099a692e`. This session stays on the assigned branch; no parallel branch/worktree is created.
+
+| Task | Status | Owner | Files / scope | Verification |
+|---|---|---|---|---|
+| PRIV-1 | done | `arena/06446b26-tino1` | `COORDINATION.md`, `privacy-site/build.py`, generated `privacy-site/public/flagged.html`, `privacy-site/check.py` | P0 flagged page now clearly says remediation is incomplete, gives ordered owner actions, and states Pages/deleting in a later commit does not erase old history or copies. GitHub Sensitive Data Removal docs opened and read 2026-11-16. Build, privacy gate, 13 unit tests, publish allowlist, repo checks and simulated exact-output checkers passed. Jekyll itself unavailable locally; PR CI remains the real Jekyll validation. No visibility/history change attempted. |
+
+**Reason and limits:** the published guide already excludes household-specific numeric analysis, but the repository and old Git history remain public. A Pages change cannot revoke GitHub history, forks, caches or third-party copies. History rewrite / visibility changes are owner-level operations and can disrupt the repository and Pages. This task makes the current exposure and a safe, ordered remediation checklist explicit; it does not claim prior copies are erased.
+
+### PRIV-1 close-out — 2026-11-16 UTC
+
+- Expanded the public `Flagged for review` page P0 entry to label the exposure **unresolved · highest priority** and added five ordered steps: stop new exposure, inventory copies, choose containment, coordinate removal, and verify/monitor. The checklist is explicit that no repository visibility change or history rewrite was made, and that external copies may remain.
+- Source re-read: GitHub Docs, [Removing sensitive data from a repository](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/removing-sensitive-data-from-a-repository), opened 2026-11-16. It states history rewriting needs coordination, can have significant side effects, and does not remove other users' clones/forks or all GitHub references; it also directs users to GitHub Support for cached views/PR references in qualifying sensitive-data cases.
+- Checks passed: `python3 privacy-site/build.py`; `python3 privacy-site/check.py` (14 pages, 425 linked rows); `python3 -m unittest discover -s privacy-site -p 'test_*.py' -v` (13/13); `python3 final/publish.py --check`; `python3 final/check.py .` (31 pages, 1,126 sourced rows); `final/check_published.py` and `privacy-site/check_published.py` against a locally simulated 16-file output allowlist. `jekyll` is not installed in this sandbox, so actual Jekyll validation is delegated to PR CI.
+- Irregularity remains open by design: household-derived data remain reachable through the public repository and historical refs. A PR cannot erase old public commits. Repository visibility and any comprehensive history cleanup require owner-level coordination; old forks/caches/clones may persist.
+- Integration note: while PR #118 was open, `main` advanced through PRs #117 and #124, touching the same shared board and privacy-site generator. Rebased onto the updated `origin/main`; resolved append-only board and overlapping generator/checker/page conflicts by retaining all `main` changes (including session 9bf08f53's new public guidance) and re-applying this session's P0 row/checklist. Regenerated all public pages and re-ran the full local gates (14 pages, 463 linked rows; 13/13 tests; both exact-output checkers passed). No changes from the other session were dropped.
+
+### PR #118 integration status — 2026-11-16 UTC
+
+- PR #118 (https://github.com/wingbangboozle1-lang/Tino1/pull/118) was merged with `gh pr merge 118 --merge` at 2026-11-16 01:21:45 UTC; merge commit `abe93cf71a0bd0aef1350fecbea608c3ed1d2852` is on `main`.
+- At the time of the post-merge check, the `verify` workflow run 43785808043 remained **queued**. The GitHub Pages latest-build API request returned HTTP 403 rate-limit exhaustion, so Pages deployment success is **not confirmed here**; no success is claimed. Local exact-output, PII, link, generation and model gates passed before merge. Follow up on the Actions run and Pages build status when GitHub checks are available.
+
+### arena/9bf08f53-tino1 — merge record (2026-11-16 UTC)
+
+| Item | Result |
+|------|--------|
+| PR | #124 — "9B-1..9B-5: what-would-change block, deadline timeline, like-kind/recapture questions, investment-policy template, Form 540 Line 62 verified" — https://github.com/wingbangboozle1-lang/Tino1/pull/124 |
+| Merge | `gh pr merge 124 --merge` at 2026-11-16 01:15:03 UTC, merge commit `97d8c1a` on `main`. State: MERGED. Merged without waiting for review, per the brief. |
+| Claim commit | `fa4e8c2` (board only) rebased onto `main` @ `eca8647` as `2a44111`. Remote branch force-updated with lease pinned to `fa4e8c2` (no other commits on the remote branch). |
+| Gates, run on the rebased tree and again on `main` @ `06e490a` | `privacy-site/build.py` reproduces `privacy-site/public` with no diff; `privacy-site/check.py` PASS (463 official-context-linked rows); unittest 13/13 OK; `final/publish.py --check` OK (16-file allowlist); `final/check.py .` OK (31 pages, 1,126 rows, 3,060 links, 2,638 $10-rounded figures). |
+| CI "Validate the Pages publication boundary" | Run `43785143107` (merge `97d8c1a`) still **queued** at 01:34 UTC; the runner queue has not advanced since creation at 01:15. Later `main` pushes (`fc42e61`, `06e490a`) also queued. Not a failure: no job has run. Re-check the run before relying on it. |
+| GitHub Pages deploy | Run `43785142744` for `97d8c1a` was **cancelled** at 01:21 UTC, superseded by a newer push (normal). Run `43786377060` for `fc42e61` is **queued** since 01:27 UTC. **Not yet confirmed.** At 01:34 UTC the live site https://wingbangboozle1-lang.github.io/Tino1/privacy-site/public/process.html still showed the pre-merge page (no "Deadline timeline" table). The merged content is on `main` (verified with `git show origin/main:privacy-site/public/process.html`). |
+| Irregularities | `final/check_published.py .` run against the repo root reports `whatif.js` as "published but not declared". The file is in the `exclude:` list of `_config.yml` and is pre-existing (`181be9e`); CI checks `_site`, where excluded files are absent. Not a publication change. |
+| Flagged (non-blocking, on the Flagged for Review page) | 9B-F1 (§1250 from non-government LII mirror); 9B-F2 (Form 706 extension wording corrected); 9B-F3 (private numeric build's "renamed from" phrase for the 1% add-on not supported by the booklet text read; not published); 9B-F4 (private numeric model has no 1% add-on term; owner decision). |
+| Owner decisions still open (not taken here) | Repository visibility; history rewrite of pre-rounding figures (CR-1A-4); whether to add a 1% add-on term to the private numeric model. |
+
+Next action for this branch: re-check the Pages run for `fc42e61` or later, and record the live result here once the deploy is confirmed.
+
+## Session `arena/7f5b13be-tino1` — decision-first landing and privacy boundary close-out (claimed 2026-11-16 UTC)
+
+**Branch:** `arena/7f5b13be-tino1` (fixed by Arena; one-branch workspace). **Base:** `main` @ `181be9ea7004b7c68602597d1add962d099a692e`.
+
+| Task | Status | Owner | Files / scope | Verification |
+|---|---|---|---|---|
+| P-0 Claim and coordinate | done | `arena/7f5b13be-tino1` | `COORDINATION.md` (this record) | Initial claim pushed as `b34fd8c`; preserved/rebased as `02ea935` after PR #117, then as `509cf41` after later merged sessions; product edits remain separate. Earlier board entries show the substantive model/site requests are already implemented. |
+| P-1 Put decision-changing facts on the first screen | done | `arena/7f5b13be-tino1` | `privacy-site/landing.html`, generated root `index.html` | Added a private-data-free decision status and three groups of answer-changing unknowns before the topic menu; manually checked root links against the published-file list. |
+| P-2 Recheck current public privacy boundary and record remaining exposure | needs review | `arena/7f5b13be-tino1` | `README.md`, `COORDINATION.md` | Verified GitHub repository visibility is public, Pages status was built at the initial check and allowlist is 16 files; documented current/history exposure and official GitHub cleanup guidance. History/remote refs were not rewritten or deleted; full remediation remains a repository-owner action. The separate privacy-gate scope requested on PR #117 was completed by session `arena/06446b26-tino1` in PR #118; this session does not edit those files. |
+| P-3 Full local validation and integration | in progress | `arena/7f5b13be-tino1` | CI-facing checks only; no other task scope | Local public-site build, 13 tests, allowlist, model checks and diff checks pass. Local Jekyll is not installed; the PR workflow must confirm the real Jekyll output before merge. |
+
+**Coordination constraint:** the user requested separate parallel branches, but the workspace and developer instructions fix all work to this branch. This session is the final integration pass on the current main snapshot; it will not create, switch to, or push another branch. At claim time no active task was visible at the board tail; session `arena/678f5a7b-tino1` subsequently merged PR #117 and added a fresh coordination record, which has been preserved below.
+
+### Verification log — arena/7f5b13be-tino1 (2026-11-16 UTC; pre-merge)
+
+- **Implemented:** decision status and answer-changing evidence appear on the root landing page before the topic menu. Root landing links were manually resolved against the reviewed Pages allowlist. Rewrote the root README to match the current 16-file privacy-first publication boundary and clearly distinguish a public Pages allowlist from a private repository. No household input or model assumption was changed.
+- **Repository status checked:** `gh repo view` reports `isPrivate: false`. The Pages API reported `built` at the initial check, before several parallel main merges; a later live fetch still showed the pre-change root landing, so deployment of the merged updates is not currently confirmed. `_config.yml` and `final/published.txt` agree on the 16 published files. Local Git was expanded to inspect main history; prior board records and repository documentation identify earlier pre-rounding material. This session did not claim a complete private-value inventory of every historical ref.
+- **Official history-remediation source:** GitHub Docs, “Removing sensitive data from a repository” — https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/removing-sensitive-data-from-a-repository . The guidance describes `git-filter-repo`, coordinating all clones/refs, side effects to pull requests and commit hashes, and GitHub Support follow-up for cached views/PR references.
+- **Local verification after concurrent merges:** `python3 privacy-site/build.py` PASS (14 public HTML pages); `python3 privacy-site/check.py` PASS (463 official-context-linked rows); root landing links manually resolve within the 16-file allowlist; unit tests PASS (13/13); `python3 final/publish.py --check` PASS; `python3 final/check.py .` PASS (31 pages, 1,126 linked rows, 3,062 links, 2,638 displayed dollar figures, 51 model paths); `git diff --check` PASS. Both `check_published.py` scripts PASS against a simulated byte-exact 16-file static `_site`; no Liquid/Jekyll markers are present in the allowlisted files.
+- **Limits / items for review:** Jekyll is not installed in this workspace; the local static allowlist copy passed both publication checkers, but the real Jekyll-output check and the current Pages deployment are still pending/uncertain in GitHub Actions. The public repository remains public and old history/remote refs were not rewritten; this is not full exposure containment. No tax-law source was re-audited in this UI/privacy pass; published authority dates remain those shown on each page. The 1929- and 2008-style phased-entry rows are synthetic stress shapes, not verified historical Treasury-plus-equity-total-return replays. Because no model inputs changed, no new household recommendation or recommendation movement is claimed.
+
+### Merge-conflict log — 2026-11-16 UTC
+
+After the initial claim had been pushed, the required `git pull --rebase origin main` fetched `eca8647` (PR #117, session `arena/678f5a7b-tino1`). Both sessions had appended to `COORDINATION.md`, so the rebase stopped with a conflict in that file only. Resolution preserved the complete `arena/678f5a7b-tino1` record, including its official-source re-read, and retained this session's claim. The claim was rebased as `02ea935`; the product change remained separate. No other session files or content were discarded; `main` was not rewritten. The current branch was then updated with `--force-with-lease`; a later `main` advance and second rebase are logged below.
+
+### Change request CR-PG1 — reserved privacy-gate scope (logged 2026-11-16 UTC)
+
+| Task | Status | Owner | Files / scope | Notes |
+|---|---|---|---|---|
+| CR-PG1 | done | `arena/06446b26-tino1` | `privacy-site/check.py`, `privacy-site/test_illustrations.py`, `privacy-site/README.md` | Request originated in the repository-owner comment on PR #117; session `arena/06446b26-tino1` completed the separate privacy-gate follow-up in merged PR #118. This session reverted its temporary edits after discovering the overlap; none of these files is part of PR #123. Source comment: https://github.com/wingbangboozle1-lang/Tino1/pull/117 . |
+
+### Second rebase log — 2026-11-16 UTC
+
+While PR #123 was open, the next required `git pull --rebase origin main` fetched `e0344df` after multiple parallel PR merges. The append-only `COORDINATION.md` again conflicted; resolution preserved the complete concurrent `arena/9bf08f53-tino1` record and all prior merged session records, then re-applied this session's separate claim/product changes. No other product file conflicted. The merged task board now records that PR #118 completed the separate privacy-gate scope, so PR #123 does not modify `privacy-site/check.py`, `privacy-site/test_illustrations.py` or `privacy-site/README.md`. The root decision-first landing remains this session's distinct change. Current claim commit is `509cf41`; no commits or files from other sessions were discarded.

@@ -561,7 +561,7 @@ def main():
         ('Cupertino rent at the HUD 3-bedroom figure', dict(cup_rent_month=5870)),
         ('Selling costs 7%', dict(sell_cost=0.07)),
         ('Lower tax bracket (12% federal, 6% state, 0% gains)', dict(t_fed_ord=0.12, t_ca=0.06, t_fed_ltcg=0.0, t_fed_ltcg_lump=0.15, t_ca_lump=0.093, niit=0.0)),
-        ('Top tax bracket (37% federal, 12.3% state)', dict(t_fed_ord=0.37, t_ca=0.123, t_fed_ltcg=0.20)),
+        ('Top tax bracket (37% federal; CA 13.3% top marginal rate on gains above $1M - 12.3% top bracket plus the 1% Form 540 surtax on taxable income over $1,000,000, R&TC 17043)', dict(t_fed_ord=0.37, t_ca=0.123, t_ca_lump=0.133, t_fed_ltcg=0.20)),
         ('Third unit at Property B let at the average of the two known unit rents (scenario only; the baseline counts none)', dict(rent_sf_unit3=True)),
         ('Insurance three times the owner estimate', dict(ins_home=4500, ins_rental=4500)),
         ('Prop H at a hypothetical 10,000 sq ft Property B building (not the owner\'s building; Property B only)', dict(prop_h_sf=10000)),
