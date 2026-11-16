@@ -1,5 +1,6 @@
 """Build ONLY the isolated public guide. Never read household/model files."""
 from pathlib import Path
+import os
 from html import escape
 import json
 from illustrations import (outlook, ledger, money, investment_path, phased_entry, STRESS, threshold, family_assessment,
@@ -39,8 +40,19 @@ def notice(title, body):
 
 
 def write_root_landing():
-    """Restore the generic Pages front door after any internal numeric build."""
-    (HERE.parent/'index.html').write_bytes((HERE/'landing.html').read_bytes())
+    """Restore the generic Pages front door after any internal numeric build.
+
+    Since 2026-11-16 the published front door is the generated decision dashboard
+    (final/build.py), not this template: the brief asks for a live site that carries
+    the analysis, with the figures rounded to the nearest $10 and every person and
+    property replaced by a placeholder. The template is kept because it is the
+    figure-free front door of the guide and the fallback if the owner chooses the
+    narrower publication boundary (suggestion G01). It is written only when
+    TINO1_ROOT_LANDING=1 asks for it, so that an internal numeric build cannot
+    silently replace the published front door with it.
+    """
+    if os.environ.get('TINO1_ROOT_LANDING') == '1':
+        (HERE.parent/'index.html').write_bytes((HERE/'landing.html').read_bytes())
 
 
 def page(fn,title,kicker,description,body):
@@ -242,7 +254,7 @@ laws=[
 ('Savings insurance','$250,000 per depositor / insured bank / ownership category','Aggregate deposits in same category; investments such as stocks and mutual funds are not FDIC insured.','fdic'),
 ('Law watch · SB 974','Chaptered September 27, 2026, Chapter 665','Enacted special-needs-trust transfer-medium amendment, not a pending blanket restoration of the old parent-child exclusion. Household relevance unknown; confirm effective application with counsel.','bill'),
 ('Nov 2026 California ballot (unofficial)','Nov 14 (5:16 p.m.): Prop 3 Yes 60.7%, Prop 40 No 52.2%, Prop 42 Yes 51.3%','No Prop 19 repeal appeared on the Nov 2026 ballot; unofficial until Dec 11 certification. Recheck federal legislation and BOE updates at decision time.','sos26'),
-('Proposition H · city parcel tax for Muni (approved Nov 3, 2026)','Multifamily parcel: $249 a year up to 5,000 sq ft of building area, plus $0.195 per sq ft above 5,000 (maximum $50,000). Single-family: $129 up to 3,000 sq ft, plus $0.42 and $1.99 per sq ft above that. Runs July 1, 2027 to June 30, 2042.','Official SFMTA page (read 2026-11-16) says voters approved it on 2026-11-03; first bill is fiscal year 2027-28. Rates rise with inflation from fiscal year 2028-29. Renters: landlord pass-through up to 50%, capped at $65 per unit a year, not for base rent set on or after June 1, 2027. Building area and parcel type are private; check them with SFMTA and the Assessor.','sfmta26')]
+('Proposition H · city parcel tax for Muni (approved Nov 3, 2026)','Multifamily parcel: $249 a year up to 5,000 sq ft of building area, plus $0.195 per sq ft above 5,000 (maximum $50,000). Single-family: $129 up to 3,000 sq ft, plus $0.42 and $1.99 per sq ft above that. Runs July 1, 2027 to June 30, 2042.','Official city transit-agency page (read 2026-11-16) says voters approved it on 2026-11-03; first bill is fiscal year 2027-28. Rates rise with inflation from fiscal year 2028-29. Renters: landlord pass-through up to 50%, capped at $65 per unit a year, not for base rent set on or after June 1, 2027. Building area and parcel type are private; check them with the transit agency and the Assessor.','sfmta26')]
 future=[]
 for year in (2040,2045,2050):
     future.append((str(year),'',money(threshold(year,0)),money(threshold(year,.02)),money(threshold(year,.04)),'irs27'))
@@ -333,8 +345,8 @@ page('suggestions.html','Suggestions for review','PROPOSED IMPROVEMENTS / 09','A
 
 flags=[
 ('TSY · parked-cash rate check','Recheck','Official 3-month Treasury par yield 4.32% and 2-year 4.88% on 2026-11-13. Any cash-return assumption in a private model should be dated and compared with the current yield before it is used.','treas26'),
-('PH · Proposition H city parcel tax for Muni','Needs review','Approved by voters on 2026-11-03 per the SFMTA page read 2026-11-16. The charge depends on the building area and parcel classification, which are not in this guide; the minimum multifamily rate is $249 a year. Certified count, any legal challenge and the renter pass-through still need checking; the vote share in news reports is not used.','sfmta26'),
-('PH2 · Proposition H official vote count and certification','Needs review','Department of Elections preliminary results (last updated November 10, 2026): YES 244,760 (74.4%), NO 84,209 (25.6%). Certification may take up to 30 days after Election Day; the next results update is scheduled for November 17, 2026. Treat the tax as approved but not yet certified. The FY 2027–28 rates on this page come from the SFMTA page; later inflation adjustments are not projected.','sfdoe_results'),
+('PH · Proposition H city parcel tax for Muni','Needs review','Approved by voters on 2026-11-03 per the city transit-agency page read 2026-11-16. The charge depends on the building area and parcel classification, which are not in this guide; the minimum multifamily rate is $249 a year. Certified count, any legal challenge and the renter pass-through still need checking; the vote share in news reports is not used.','sfmta26'),
+('PH2 · Proposition H official vote count and certification','Needs review','Department of Elections preliminary results (last updated November 10, 2026): YES 244,760 (74.4%), NO 84,209 (25.6%). Certification may take up to 30 days after Election Day; the next results update is scheduled for November 17, 2026. Treat the tax as approved but not yet certified. The FY 2027–28 rates on this page come from the city transit-agency page; later inflation adjustments are not projected.','sfdoe_results'),
 ('9B-F1 · §1250 statute text from a non-government mirror','Needs review','The depreciation-recapture rule (IRC §1250(a)) is quoted from the Cornell LII copy of the statute, read 2026-11-16. The official GPO copy was not found at the addresses tried, and the IRS Publication 544 PDF tool read only its first 21 chunks, which end before the section 1250 chapter. Confirm against the official text before any figure depends on it.','irc1250'),
 ('9B-F2 · Form 706 extension wording corrected','Confirmed (corrected)','The IRS Form 706 instructions (Rev. July 2026) state the 9-month due date and an automatic 6-month extension on Form 4768 that can also cover payment. An earlier row on this page said the extension covers filing only; that row is corrected.','irc6075'),
 ('9B-F3 · 1% add-on label and history','Needs review','The 2025 Form 540 instructions, Line 62, name the tax Behavioral Health Services Tax and give the 1% rate above $1,000,000. They do not state an earlier name. A private numeric build contains the phrase "renamed from" an earlier label; that phrase was not found in the text read here and is not published.','ftb540'),
@@ -466,4 +478,7 @@ glossary_rows += [
 page('glossary.html','Glossary','REFERENCE / TERMS','Plain-language definitions used throughout the guide. Definitions are general; the linked official context controls.',table('Terms and meanings · official context, not household verification',['Term','Meaning / limitation','Official context'],glossary_rows)+notice('A note on similar words','Property-tax assessed value, income-tax basis, fair market value and sale proceeds are different measures. Do not substitute one for another in an attorney or tax calculation.'))
 
 write_root_landing()
-print(f'Built {len(nav)} privacy-first public pages and restored the generic root landing; no private inputs read.')
+restored = ' and wrote the figure-free template as the root front door' if os.environ.get('TINO1_ROOT_LANDING') == '1' else '';
+print(f'Built {len(nav)} privacy-first public pages{restored}; no private inputs read. '
+      f'The published front door is the generated dashboard (final/build.py); set '
+      f'TINO1_ROOT_LANDING=1 to replace it with the figure-free template instead.')

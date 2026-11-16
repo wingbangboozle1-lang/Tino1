@@ -31,7 +31,10 @@ OFFICIAL_ODD = {'38,915.87', '8,455.35', '14,217,212,455', '324,973', '1,176', '
                 # SFMTA Prop H rate table (official City page, read 2026-11-16; finding U-PH1)
                 '129', '249', '392', '799', '969', '0.195', '0.42', '1.99', '0.76', '0.84', '0.99', '34,999', '202,999', '3,174', '65',
                 # HUD's own FY2026 reference row printed on the FY2027 zip-calc page for 94122 (read 2026-11-13, finding R55)
-                '2,485', '2,977', '3,604', '4,604', '4,772'}
+                '2,485', '2,977', '3,604', '4,604', '4,772',
+                # R&TC 63.2(g): the one-time Proposition 19 claim-processing fee is capped at the lesser of the
+                # county's actual cost or $175 (read on the statute page 2026-11-13); it is a statutory ceiling, not a model figure.
+                '175'}
 errors = []
 # A git merge-conflict marker left in a file publishes as literal text. R38: a marker and a duplicated fragment were
 # live on the published Verification page while every other check passed. Scan pages and repository files alike.
@@ -99,6 +102,17 @@ SAFE_6DIGIT = {
     '109125', '208325', '371479', '445771', '661375', '742953',
 }
 
+
+# 4b locality. The published pages name no city, county or neighbourhood: the two places
+# involved are called Jurisdiction A (where Property A sits) and Jurisdiction B (where
+# Property B sits), and official bodies are named by role. final/scrub.py performs the
+# replacement; this is the gate that fails if a name escapes it. Agency names that are
+# state-wide ("California Water Boards", state boards and departments) are not localities.
+LOCALITY = re.compile(
+    r"San Francisco|Santa Clara|Cupertino|San Jose|Bay Area|SCVWD|SFPUC|SFMTA|SJWC|"
+    r"Cal Water|California Water Service|Midpen|\bVMC\b|Fremont Union|Foothill-De ?Anza|"
+    r"santaclaracounty|cupertino\.org|cupertino\.gov|sftreasurer|sfmta\.com|sfpuc\.gov|\bSF\b",
+    re.I)
 
 def load_model_numbers():
     """Every integer the model produced, so a legitimate model output is never flagged."""
@@ -200,6 +214,9 @@ def check_site():
         for rx, what in PII:
             for mm_ in re.finditer(rx, text):
                 err(p, 'possible', what + ':', mm_.group(0))
+        for mm_ in LOCALITY.finditer(re.sub(r'https?://[^\s"<>\']+', ' ', t)):
+            err(p, 'PRIVACY: place name in visible text ->', mm_.group(0), '|',
+                re.sub(r'\s+', ' ', re.sub(r'https?://[^\s"<>\']+', ' ', t)[max(0, mm_.start() - 50):mm_.end() + 30]))
         if 'noindex' not in t:
             err(p, 'missing robots noindex')
         if CONFLICT.search(t):

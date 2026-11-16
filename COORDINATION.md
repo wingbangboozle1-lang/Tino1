@@ -3038,6 +3038,133 @@ No other session holds an active claim on these files (last claim `arena/81ca507
 
 ---
 
+## Session `arena/3adb817a-tino1` — final integration: publish the rounded-figures edition, take over the stale PRs, close the brief's open gaps, scrub the history (claimed 2026-11-16 17:50 UTC)
+
+**Branch:** `arena/3adb817a-tino1` (fixed by the platform; the `session-<id>/<task>` naming is superseded by the one-branch workspace rule). **Base:** `main` @ `d3e23dc` (merge of PR #119). **Session ID:** `arena/3adb817a-tino1`.
+
+**State found at claim time (17:45–17:50 UTC).** The canonical numeric edition is built and checked (`final/check.py .` OK: 31 pages, 1,135 sourced rows, 3,134 links, 2,703 figures rounded to $10; `final/publish.py --check` OK: 16-file allowlist; `privacy-site/check.py` PASS). But the **published** site is only the generic landing plus the figure-free guide: the rounded-figures analysis that the brief asks for ("a github page live site … that should contain all entries and findings … and include any analysis and findings", "I want clear numbers and projections") is built and checked in the repository and **not served**. The repository's own review register records this as **R64** ("the allowlist is now 32 files – the rounded-figures edition plus the figure-free guide", status *Closed 2026-11-13*); a later session (PR #106, 2026-11-14) narrowed the boundary back to 16 files as an urgent privacy step and left the choice open as G01/G02. The brief also says the numbers are to be **reported** at $10 rounding and that personal information (names, addresses, parcel numbers) must not appear — placeholders and rounding are the owner's stated mechanism.
+
+**Parallel sessions.** Three pull requests have been open for more than 60 minutes without commits, so their scopes are taken over here under the board's handoff rule, and **nothing of theirs is discarded**: #97 (2026-11-13, session `558a0100`, law-change register + non-constant fifty-year paths + the sensitivity-lookup fix), #108 (2026-11-14, session `7895b5d7`, the reviewed blocks that make the hand-edited pages reproducible), #120 (2026-11-16, session `4aa608af`, privacy-check hardening without household signatures).
+
+| # | Task | Status | Owner | Files / scope | Verification plan |
+|---|---|---|---|---|---|
+| T-1 | Take over PR #97: merge its branch, keep both sides of every conflict, renumber its colliding flag IDs (its A14/A15/U11 clash with main's A14/A15 and with the new U11) | claimed | `arena/3adb817a-tino1` | `final/build.py`, `final/flags.py`, `final/model.py`, `final/sources.py`, `final/check.py`, `final/exec_summary.py`, `final/integrate.py`, regenerated root pages | Model self-tests on 51 paths; every published figure reproduced by a fresh build; `final/check.py .` |
+| T-2 | Take over PR #108: restore the mixed-paths section, the deadline timeline and the reviewed blocks in a **generator-backed** way (the model's `mixed` output, not hand-typed numbers), and settle one printable briefing sheet | claimed | `arena/3adb817a-tino1` | `final/build.py`, `final/extras.py`, `final/blocks/**`, `decision.html`, `process.html` | Fresh build reproduces the committed pages byte-for-byte; `final/check.py .` |
+| T-3 | Take over PR #120: privacy-check hardening (generic pattern checks, no household literals echoed) reconciled with the new boundary | claimed | `arena/3adb817a-tino1` | `privacy-site/check.py`, `privacy-site/test_illustrations.py`, `privacy-site/README.md` | `privacy-site/check.py` PASS, unit tests, negative tests |
+| T-4 | **Publication boundary: publish the rounded-figures edition together with the figure-free guide** (R64 / option D of G01), with the privacy controls the brief states: placeholders only, every figure to $10, no ZIP or city name in visible text, `noindex`/`no-referrer` on every page, and the guide one click away | claimed | `arena/3adb817a-tino1` | `final/publish.py`, `final/published.txt`, `_config.yml`, `final/check_published.py`, `privacy-site/build.py`, `final/integrate.py`, `.github/workflows/pages.yml` | Exact-output checkers in CI; link check over the published set; PII scan |
+| T-5 | Close the brief's open gaps with generator-backed pages: a **decision log with dates**, the **pre-commitment rules** (what would make the household choose each path, written before the figures arrive), a **distribution chart** on the projections page, the **three-number separation** (estate tax / income-tax basis / property-tax assessment) and an **annual re-check calendar** | claimed | `arena/3adb817a-tino1` | `final/build.py` (new pages), `final/sources.py` (new sources only if read today) | Every table row links to an official page; `final/check.py .` |
+| T-6 | **Scrub the pre-rounding Git history** (owner instruction) so the first pages, written before the $10 rounding, are not readable in the public repository; keep every other session's work | claimed | `arena/3adb817a-tino1` | Git history (all refs), `README.md`, `COORDINATION.md` | Fingerprint scan of the rewritten history: zero hits; Pages still builds |
+| T-7 | Verification pass, PR → `main`, merge without waiting, confirm the Pages deploy, record the result | claimed | `arena/3adb817a-tino1` | `COORDINATION.md`, `README.md` | `final/check.py .`, `final/publish.py --check`, `privacy-site/check.py`, unit tests, CI, Pages API |
+
+**Owner-only actions this session does not take:** changing repository visibility (on a free GitHub plan a Pages site needs a public repository, so privatising it would take the live site down); anything that requires a licensed appraiser, a broker quote or the trust document. Those stay blank and flagged.
+
+### Results — arena/3adb817a-tino1 (2026-11-16 UTC, second block)
+
+**T-4 — the publication boundary, and how the published pages are made untraceable (done)**
+
+The site now publishes the rounded-figures analysis *and* the figure-free guide: **52 files**
+(37 analysis pages and assets at the repository root + 15 guide files under `privacy-site/public/`).
+Nothing else survives `_config.yml`, and both published-output checkers fail on anything extra.
+
+| Control | How it is enforced |
+|---|---|
+| Every dollar figure rounded to the nearest $10 | `final/check.py` (2,987 figures clean) and `privacy-site/check.py` |
+| No name, street, parcel, phone or e-mail anywhere | PII patterns in `final/check.py`, `final/check_published.py`, `privacy-site/check_published.py` |
+| No ZIP code in visible text | `final/scrub.py` rewrites `95014` → `[ZIP A]` and `94122` → `[ZIP B]` outside URL bodies; the checker fails on a ZIP in visible text. Official URLs keep the ZIP in a query string (a HUD rent calculator is addressed by ZIP), which is the residual already flagged for the owner. |
+| **No city or county name in the text a reader sees** | new in this block — see below |
+| `noindex` + `no-referrer` on every published page | both `check_published.py` gates; the redirect stubs now carry `no-referrer` too |
+| Every table row links to an official page | `final/check.py` (1,263 rows, 3,587 links) |
+
+**The locality convention (new).** The published edition names no city, county, ZIP or neighbourhood. The two
+places involved are called **Jurisdiction A** — the county, and the city inside it, where Property A sits — and
+**Jurisdiction B** — the city and county where Property B sits. Official bodies are named by role
+("Assessor of Jurisdiction A", "Rent board of Jurisdiction B", "Water and sewer utility of Jurisdiction B"),
+the local house-price index is named after the property it belongs to ("Property A metro"), and "Bay Area"
+becomes "regional"/"the region". The convention is defined in the page footer, on the glossary page and in
+`final/scrub.py`, and the guide's own source labels were aligned (`SFMTA` → "city transit agency",
+`SF Dept. of Elections` → "city elections office").
+
+`final/scrub.py` performs the replacement on generated pages (URL bodies protected, so every row still links
+to the verifiable official page). Two gates now fail the build if a place name escapes it: `final/check.py`
+(pattern `LOCALITY`, over the page text with URLs removed) and `final/check_published.py` (same pattern, over
+the Pages output). A scan helper is kept at `final/scan_locality.py`.
+
+**T-5 — decision log, pre-commitment rules, distributions, three-number separation, re-check calendar (done).**
+34 pages, all generator-backed: `decisions.html` (dated log with "(to be completed by the household)" placeholders
+and official-source links instead of empty cells), `precommit.html`, the mixed-path and distribution tables, the
+annual re-check calendar, and the reviewed attorney/CPA sheet copied from `final/blocks/`. The unsupported
+academic stock-return row is no longer a sourced table row: it appears only in a note explicitly flagged `A18`.
+
+**T-1/T-2/T-3 — the three taken-over stale PRs (in progress).** PR #97 (`arena/558a0100-tino1`) is merged into
+this branch and its content is live on the rebuilt pages (`pending.html`, the non-constant fifty-year paths, the
+label-keyed sensitivity lookups). PR #108's reviewed blocks and PR #120's privacy-check hardening are reconciled
+with the new boundary below; PR #120's own branch is still open and is not closed by this session.
+
+**T-3 — privacy unit tests (done).** The two assertions that described the old boundary (analysis pages excluded
+from the allowlist; root `index.html` equal to the figure-free template) now describe the published one: the
+allowlist is asserted to contain the analysis pages and to exclude `final/out/model.json`, `final/model.py` and
+`privacy-site/research.json`; the guide build is asserted *not* to replace the published front door, and to write
+the template only when `TINO1_ROOT_LANDING=1` asks for it. 13 tests, all passing. The guide builder's closing
+message no longer claims to have restored a landing page it did not restore.
+
+**Gates on this head (all PASS):** `python3 final/model.py` (deterministic), `ROOT_MODE=1 OUT_DIR=. python3
+final/build.py` (34 pages), `python3 final/check.py .` (1,263 sourced rows, 3,587 links, 2,987 $10 figures,
+6-digit scan against 16,480 model numbers clean, model self-tests on 51 paths), `python3 final/publish.py
+--check` (52 files), `python3 privacy-site/build.py` + `privacy-site/check.py` (14 pages, 481 linked rows),
+`python3 -m unittest discover -s privacy-site` (13 OK), and both published-output checkers on an exact copy of
+the allowlist. `final/phased.py` output is unchanged. Ruby is not installed in this sandbox, so the real
+`jekyll build` runs in CI as before.
+
+**Still open (owner or later blocks):** T-6, the pre-rounding history scrub — destructive and owner-facing, not
+started here; T-7, the PR, merge and Pages confirmation; and the integration of PR #108/#120 branch differences.
+
+
+---
+
+## Session `arena/558a0100-tino1` — owner-instruction pass: decision-critical verification, law-change register, privacy-first publication decision (claimed 2026-11-13 UTC)
+
+**Branch:** `arena/558a0100-tino1`, based on `18962953544f4061c9b96db19ea955056f747272` (PR #84 merge = current `main`). At claim time: `gh pr list --state open` returned no open PRs and the board carried no unexpired claims from other sessions (last board entry = session `arena/831d7baf-tino1`, closed with PR #83/#84 merged). This session therefore works only on files not owned by any live claim.
+
+**Owner instruction that sets this session's scope (2026-11-13 brief, verbatim intent):** (a) the live GitHub Pages site must carry the entries, findings, tables and projections the owner asked for, with dollar figures rounded to the nearest $10 "so that it cannot be traced back to the source or traced online through search"; (b) personal information must never appear on the site (placeholders only). This is read as the owner resolving the long-open item **G01** ("settle where the numeric analysis may live") in favour of publishing the rounded numeric edition *behind* the existing privacy-first guide, not instead of it. No other session's privacy work is reverted; the landing page keeps the no-figures guide first.
+
+| Task | Status | Owner session | Files / scope | Acceptance / verification |
+|---|---|---|---|---|
+| NVR-0 Claim, board entry, branch alignment | done | `arena/558a0100-tino1` | `COORDINATION.md` (append only) | This entry, committed and pushed before any product change. |
+| NVR-1 Line-by-line review of the decision-critical model and the site's load-bearing legal claims | in progress | `arena/558a0100-tino1` | read-only over `final/**`; findings recorded in `session-558a0100/REVIEW.md` (new) | Each claim re-read at the official source URL cited; statute/BOE/IRS/county pages fetched directly, not from memory. |
+| NVR-2 Proposition 19 eligibility and formula verification (the "heir already owns Property B" distinction) | in progress | `arena/558a0100-tino1` | `final/model.py` (formula only if a defect is proven), `final/build.py`, `final/sources.py`, regenerated pages | Formula re-read from R&TC 63.2(d)(1)-(2) on leginfo; eligibility, clawback and claim-deadline rules from 63.2(a)(1)(A)-(C) and 63.2(f); cap indexation from Const. Art. XIII A 2.1; findings recorded whether they confirm or correct. |
+| NVR-3 New decision surface: pending-law register (federal, state, county, city) with modelled impact | in progress | `arena/558a0100-tino1` | `final/pending.py` (new), `final/build.py`, `final/sources.py`, new page `pending.html` | Every row links an official page; anything not confirmable is left blank and flagged, never inferred. |
+| NVR-4 Operating-cost re-verification (insurance, water, electricity/solar, rents) and flag hygiene | in progress | `arena/558a0100-tino1` | `final/sources.py`, `final/flags.py`, `final/build.py` (costs page), regenerated pages | Official sources only (CA DOI, CPUC, county water districts, HUD, SF Rent Board, SFPUC); unverifiable figures stay flagged and blank. |
+| NVR-5 Executive summary, suggestions and questions pages refreshed for this pass (suggestions remain proposals, nothing implemented without an owner choice) | pending | `arena/558a0100-tino1` | `final/exec_summary.py`, `final/suggestions.py`, `final/questions.py`, `EXECUTIVE-SUMMARY.md`, regenerated pages | Suggestions page keeps Adopt/Hold/Reject controls and records that nothing changes until the owner chooses. |
+| NVR-6 Publication boundary per the owner instruction: publish the rounded numeric edition, keep the privacy-first guide first, all PII gates intact | pending | `arena/558a0100-tino1` | `final/publish.py`, `final/published.txt`, `_config.yml` (both regenerated by `final/publish.py`), `privacy-site/check_published.py`, `final/build.py` landing, `.github/workflows/pages.yml` if needed | `final/publish.py --check`, both `check_published.py` gates, `final/check.py .`, `privacy-site/check.py`, unit tests, then real Jekyll in CI; no PII pattern, no unrounded figure, noindex on every page. |
+| NVR-7 Final integration: gates, PR, merge, Pages confirmation, board close-out | pending | `arena/558a0100-tino1` | current branch only; `COORDINATION.md` append | `git pull --rebase` before push; CI green; Pages API `status: built`; PR link and merge SHA recorded here. |
+
+**Scope guarantees.** `privacy-site/public/**` content is not edited by this session (only the published-set declaration files and, if the boundary change needs it, `privacy-site/check_published.py`'s expected-file set). No names, addresses, parcel numbers or exact unrounded owner figures anywhere. No repository history rewrite, no force push, no visibility change (owner-only items P01/P02, G02 remain flagged). If another session claims `final/build.py` or `final/publish.py` while this entry is live, this session stops and logs a request here instead of editing.
+
+### NVR results (session `arena/558a0100-tino1`, 2026-11-13, second block)
+
+All NVR-0..NVR-6 work is done and on this branch; NVR-7 (PR, merge, Pages confirmation) is the next step.
+
+| # | Result |
+|---|---|
+| NVR-1 | `final/sources.py`: `BOE-SB974` added; `RTC-63.2`, `RTC-480`, `PROB-16061.7` re-read in full on 2026-11-13 and their read-notes rewritten to what the pages actually say; three leginfo URLs lost a stray trailing period (finding `R57`); `SOS-RESULTS` refreshed to the 2026-11-13 unofficial returns with the 2026-12-11 certification date; `HUD-SAFMR-INDEX` records the failed FY2027 ZIP lookups (why `U09` stays blank); `CDI-SB824` records the biennial `§929` collection cycle (why no 2025 ZIP figure exists). |
+| NVR-2 | Proposition 19 verdict: **no model defect**. `prop19_taxable()` reproduces R&TC 63.2(d) as read on the statute page, and the BOE's own SB 974 analysis states the same test; the checker's self-test reproduces the county assessor's worked example. Owning Property B is **not** a disqualifier - 63.2 has no first-time-buyer or "must not already own" condition; the real exposures are the one-year occupancy test, the HOX/DVE filing, and the value limit. Recorded as finding `R56` so the reading is on the review page, not only in chat. |
+| NVR-3/4 | New numeric page `pending.html` ("Law changes: enacted, pending, and due to move"), built by `final/build.py` and wired into `NAV`, `main()` and `final/integrate.py`'s page list. Five sections: enacted and in-force rows (SB 293 fire relief, 63.2 as read, SB 974 with the `U11` date caveat, P.L. 119-21, Schedule A reversion); all fourteen November 2026 measures with the 2026-11-13 unofficial percentages and "certified by 2026-12-11"; a nine-row watch list where every unverifiable figure is left blank and flagged (`U03`, `U04`, `S04`, `Q04`, `U09`); a law-change-effects table whose numbers come from the model's own sensitivity rows; and a re-check calendar keyed to the publication dates of each official adjustment. The publication boundary was **not** changed: `pending.html` is built and checked, and excluded from Pages like every other numeric page (`final/publish.py` untouched; `final/published.txt` regenerated to hold `pending.html` out via `_config.yml`). |
+| NVR-5 | `final/model.py`: four new sensitivity rows (insurance priced per dollar of coverage, Prop 19 claim refused, Prop 19 undone, California 1% surtax, solar credit lost), a 400-path 8-year block resampling of the 1976-2025 official record with per-horizon p10-p90 distributions (`out['mc']`), and an estate-tax counterfactual indexed from the published 2017 $5,490,000 exclusion (`out['estate_alt']`). Black swan page gained "Fifty years that never behave the same way twice": how wide every ten-year window of the real record spread, what the drawn paths say, and how often each choice leads. `pending.html` gained the counterfactual estate table. |
+| NVR-6 | New flags `A14` (coverage-scaled insurance), `A15` (the 1% California surtax is not in the baseline lump-sum rate), `U11` (SB 974's effective date, statute text vs BOE letter), `P04` (what the publication boundary currently does and how an owner changes it). New findings `R55`-`R60`. `R60` is the one that mattered: the Decision page zipped the sensitivity list against a fixed 18-entry source list and three pages read rows by index, so appending scenarios silently re-pointed the "no basis reset" figure at the solar row and dropped the five newest rows from the published table. Every lookup is now label-keyed, the build fails on an ambiguous, unused or missing fragment, and all 23 scenarios publish with the correct official link. `R55` also fixes the two stale range labels on the Flagged page, which now derives its range from the registry. |
+| gates | `python3 final/check.py .` - OK, 26 pages, 1068 table rows each with an official link, 2720 links, 2564 dollar figures $10-clean, 6-digit scan against 14715 model numbers clean, model self-tests passed on 51 paths. `final/publish.py --check` OK (13 files). `privacy-site/build.py` + `check.py` PASS (11 pages, 318 rows) with `git diff --exit-code -- privacy-site/public` clean; unit tests 9/9 OK. Jekyll is not installed in this sandbox, so the published output was emulated by copying exactly the 13 allowlisted files into `_site`: `final/check_published.py _site` and `privacy-site/check_published.py _site` both PASS, and `_config.yml` proves only `index.html` and `privacy-site/` survive the exclusion list. Real Jekyll still runs in CI. |
+| figures that moved | Only where this pass deliberately added content. Every pre-existing figure on `index.html`, `summary.html`, `projections.html`, `estate-cash.html`, `costs.html`, `process.html`, `questions.html`, `suggestions.html`, `law.html` is byte-identical to the previous build (checked by diffing the `$`-figure multiset per page); `decision.html`, `black-swan.html` and `flagged.html` gained rows. No baseline scenario, rate or projection was altered. |
+| still open | `U01` (ZIP-level premiums), `U03` (Santa Clara FY2026-27 rate book), `U04` (Feb 2027 Prop 19 limit), `U09` (HUD FY2027 ZIP rents), `U11` (SB 974 effective date), `A12`/`A13`/`A14`/`A15`, `P01`/`P02`/`G02` (owner-only history and visibility work). `session-558a0100/REVIEW.md` is not written by this session; the review content is on the site's review page instead. |
+
+**Rebase and gate record for this block (2026-11-13, same session).** The branch was rebased onto `main` at `e762a27` (PR #95), which had moved 27 commits ahead, so two shared outputs had to be union-resolved rather than overwritten:
+
+- `COORDINATION.md`: this session's claim block and the `arena/5a0857f0` / `arena/959e77d3` entries are both kept, in full.
+- `final/flags.py`: `main` already held a finding numbered `R55` (HUD's FY2026 reference row on the FY2027 page). This session's findings were renumbered `R56`-`R61` so neither record is lost, and every reference on the pages and in the generators follows the new numbers. One more finding, `R62`, was added when the rebase exposed that the verification page and the source register still described the FY2027 HUD rents as unread after `U09` had been closed by another session on the same day; the contradiction is resolved in favour of the read that succeeded, with the failed calculator route recorded as the reason it is not used.
+- `final/check.py`: both new "listed official figure" sets survive (`$175` statutory claim-processing ceiling from this session, HUD's reference-row figures from `R55`).
+
+Gates after the rebase, on the rebased tree: `final/model.py` then `final/integrate.py` regenerate cleanly; `python3 final/check.py .` - OK, 26 pages, 1083 table rows each with an official link, 2746 links, 2635 dollar figures $10-clean, 6-digit scan against 14715 model numbers clean, model self-tests passed on 51 paths. `final/publish.py --check` - OK (14 files, the boundary as `main` sets it). `privacy-site/build.py` byte-identical, `privacy-site/check.py` PASS (12 pages, 383 rows), `unittest` 12/12 OK. Jekyll is still unavailable in this sandbox, so the published output was emulated from `_config.yml`'s exclusion list and both published checkers PASS on it; the real `jekyll build` runs in CI.
+
+---
+
 ## Session `arena/b70b3a7c-tino1` — claim (2026-11-16 UTC)
 
 **Branch:** `arena/b70b3a7c-tino1` (fixed by the platform), based on `main` @ `d3e23dc` (PR #119). The current publication boundary is kept exactly: the generic front door at `index.html` plus the figure-free guide in `privacy-site/public/`, enforced by the allowlists in `final/published.txt` and `privacy-site/check_published.py`. The allowlist grows by exactly one new page in this session (`privacy-site/public/phased.html`); no household figure, ZIP code, city name, address or parcel number is added to any published page.

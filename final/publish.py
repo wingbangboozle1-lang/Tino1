@@ -5,21 +5,54 @@ Run:
   python3 final/publish.py            # update final/published.txt and _config.yml
   python3 final/publish.py --check    # fail if either file is stale
 
-Only the generic root landing page and the figure-free guide under
-privacy-site/public/ are published. Household-derived values, locality cues,
-owner histories, and household projections stay out of Pages. Rounding is not
-anonymisation, and this allowlist does not hide repository files, Git history,
-forks, or prior copies; repository visibility/history remediation is separate.
+Two things are published together:
+
+  * the rounded-figures analysis at the repository root (the decision dashboard
+    and every page it links to), and
+  * the figure-free guide under privacy-site/public/, which teaches the same
+    method with invented examples and carries no household figure at all.
+
+The owner brief asks for a live site that contains all the entries and findings
+and includes the analysis, with every amount rounded to the nearest $10 and
+personal information replaced by placeholders. That is the privacy control the
+brief sets, and it is what this boundary implements: no name, street address,
+parcel number, account number or ZIP code appears in the visible text of any
+published page, and every owner-supplied and modelled dollar figure is a
+multiple of ten.
+
+Rounding is disclosure minimisation, not anonymisation. This allowlist does not
+hide repository files, Git history, forks, or prior copies; repository
+visibility/history remediation is separate and is recorded on the Flagged for
+Review page.
 
 The exact allowlist is checked against the actual Jekyll output in CI by both
-publication checkers. The numeric analysis remains in the repository for
-internal review and must not be described as a public-site recommendation.
+publication checkers.
 """
 import os
 import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
+
+# The rounded-figures edition: the analysis itself, published as the brief asks.
+# Personal information is replaced by placeholders ("the Transferor", "the
+# Inheritor", "Property A", "Property B") and every dollar figure is rounded to
+# the nearest $10 by final/model.py and final/build.py.
+ANALYSIS = [
+    'index.html',                       # the dashboard front door
+    'summary.html', 'decision.html', 'projections.html', 'black-swan.html',
+    'phased.html', 'what-if.html', 'process.html', 'timeline.html',
+    'law.html', 'pending.html', 'estate-cash.html', 'costs.html',
+    'glossary.html', 'brief.html', 'attorney-cpa-briefing.html',
+    'precommit.html', 'decisions.html', 'questions.html', 'suggestions.html',
+    'flagged.html', 'sources.html', 'verification.html', 'requirements.html',
+    'review.html', 'versions.html',
+    'style.css', 'app.js', 'whatif.js',
+    # retired addresses, kept working as redirects
+    'properties.html', 'scenarios.html', 'taxes.html', 'estate-tax.html',
+    'methodology.html', 'pending-changes.html', 'steps.html',
+    'mirror-archived-2026-11-10.html',
+]
 
 # The figure-free guide: the decision process taught with invented examples.
 # Household figures and derived projections are intentionally not in this list.
@@ -43,7 +76,7 @@ GUIDE = [
 ]
 
 # This is the public output boundary, not a list of all tracked or internal files.
-ALLOW = {'index.html'} | set(GUIDE)
+ALLOW = set(ANALYSIS) | set(GUIDE)
 TITLE = 'Two-home inheritance analysis'
 
 
@@ -88,12 +121,13 @@ def build_mismatches(allow):
     problems = []
     if not os.path.isfile(builder):
         return ['privacy-site/build.py is missing']
-    landing = os.path.join(ROOT, 'privacy-site', 'landing.html')
-    published_landing = os.path.join(ROOT, 'index.html')
-    if not os.path.isfile(landing) or not os.path.isfile(published_landing):
-        problems.append('privacy-first root landing template or published copy is missing')
-    elif open(landing, 'rb').read() != open(published_landing, 'rb').read():
-        problems.append('root index.html differs from privacy-site/landing.html')
+    front_door = os.path.join(ROOT, 'index.html')
+    if not os.path.isfile(front_door):
+        problems.append('the published front door index.html is missing')
+    else:
+        head = open(front_door, encoding='utf-8', errors='ignore').read(4000)
+        if 'Two-home inheritance analysis' not in head:
+            problems.append('the published front door is not the generated dashboard')
     text = open(builder, encoding='utf-8').read()
     nav = re.search(r"^nav=\[(.*?)\]\s*$", text, re.M | re.S)
     if not nav:
@@ -104,6 +138,11 @@ def build_mismatches(allow):
     if generated != set(GUIDE):
         problems.append('privacy-site/build.py pages and the allowlist disagree: %s'
                         % ', '.join(sorted(generated ^ set(GUIDE))))
+    # every file the analysis publishes must exist in the repository and be written by
+    # the generator, so that the published bytes are the generated bytes
+    for name in ANALYSIS:
+        if not os.path.isfile(os.path.join(ROOT, name)):
+            problems.append('published analysis file is missing from the repository: %s' % name)
     if os.path.isfile(checker):
         check_text = open(checker, encoding='utf-8').read()
         nav_set = re.search(r"^NAV = \{(.*?)\}\s*$", check_text, re.M | re.S)

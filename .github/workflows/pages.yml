@@ -15,10 +15,14 @@ jobs:
           ruby-version: '3.2'
       - name: Install the GitHub Pages Jekyll
         run: gem install github-pages --no-document
-      - name: Rebuild and check the public guide and decision model
+      - name: Rebuild and check the published site and the decision model
         run: |
           python3 privacy-site/build.py
           git diff --exit-code -- privacy-site/public
+          python3 final/model.py
+          python3 final/phased.py
+          ROOT_MODE=1 OUT_DIR=. python3 final/build.py
+          git diff --exit-code -- $(grep -v '^privacy-site/' final/published.txt) final/out/model.json final/out/phased.json
           python3 privacy-site/check.py
           python3 -m unittest discover -s privacy-site -p 'test_*.py' -v
           python3 final/publish.py --check

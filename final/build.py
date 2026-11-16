@@ -16,6 +16,7 @@ import questions as QUESTIONS_DATA
 import suggestions as SUGGESTIONS_DATA
 from review_queue import render_queue, render_verification  # noqa: E402
 import extras as EXTRAS  # noqa: E402  (session arena/7895b5d7: what-if, phased, glossary, timeline, brief)
+import decision_log as DECISION_LOG  # noqa: E402  (session arena/3adb817a: decision log, pre-commitment rules)
 from scrub import scrub  # noqa: E402  (publication scrub, session 6f85fbe1)
 
 M = json.load(open(os.path.join(HERE, 'out', 'model.json')))
@@ -99,6 +100,7 @@ NAV_GROUPS = [
     ]),
     ('Decide', [
         ('decision.html', 'Decision'),
+        ('precommit.html', 'Pre-commitment rules'),
         ('what-if.html', 'What-if controls'),
         ('black-swan.html', 'Black swan'),
         ('phased.html', 'Phased investing'),
@@ -107,6 +109,7 @@ NAV_GROUPS = [
         ('projections.html', 'Year by year'),
         ('process.html', 'Process'),
         ('law.html', 'Law'),
+        ('pending.html', 'Law changes'),
         ('estate-cash.html', 'Cash and estate tax'),
         ('costs.html', 'Insurance and costs'),
     ]),
@@ -120,6 +123,7 @@ NAV_GROUPS = [
         ('verification.html', 'Verification'),
         ('requirements.html', 'Requirements'),
         ('review.html', 'Repo review'),
+        ('decisions.html', 'Decision log'),
     ] + ([('versions.html', 'Earlier versions')] if os.environ.get('ROOT_MODE') else [])),
 ]
 NAV = [item for _, items in NAV_GROUPS for item in items]
@@ -152,7 +156,7 @@ def page(slug, title, lead, body):
 <p class="lead">%s</p>
 %s
 </main>
-<footer class="wrap"><p>Built %s from <a href="%s/tree/main/final">final/</a> (model, generator and checker). %s Property A = Cupertino home (ZIP 95014). Property B = San Francisco three-unit home (ZIP 94122). People are placeholders: "the Transferor" (current owner of Property A) and "the Inheritor" (already owns Property B). Owner-supplied and modelled dollar figures are rounded to the nearest $10. This is an analysis to prepare questions for a licensed estate attorney and tax adviser, not legal or tax advice. Open items are on the <a href="flagged.html">Flagged for Review</a> page.</p></footer>
+<footer class="wrap"><p>Built %s from <a href="%s/tree/main/final">final/</a> (model, generator and checker). %s Property A = the Jurisdiction A home (ZIP [ZIP A]); Property B = the Jurisdiction B three-unit home (ZIP [ZIP B]). <b>Jurisdiction A</b> is the county, and the city inside it, where Property A sits; <b>Jurisdiction B</b> is the city and county where Property B sits. Neither is named here, and neither is any street, parcel, ZIP or neighbourhood: official bodies are named by role and every row still links to the official page. People are placeholders: "the Transferor" (current owner of Property A) and "the Inheritor" (already owns Property B). Owner-supplied and modelled dollar figures are rounded to the nearest $10. This is an analysis to prepare questions for a licensed estate attorney and tax adviser, not legal or tax advice. Open items are on the <a href="flagged.html">Flagged for Review</a> page.</p></footer>
 <script src="app.js"></script>
 </body></html>""" % (e(title), HOME, nav, e(title), lead, body, BUILD_DATE, REPO, '<a href="versions.html">Earlier versions</a> are superseded.' if ROOT_MODE else '')
     open(os.path.join(OUT, slug), 'w').write(scrub(doc))
@@ -218,6 +222,21 @@ RH = M['replay_horizons']
 JS_ = M['japan_savings']
 VERIFY = REPO + '/blob/main/verify-4395771d/site/index.html'   # repository file, never a published path
 NAME = {'live': 'Live in it', 'rent': 'Rent it out', 'sell': 'Sell and reinvest'}
+
+
+def SEN(frag):
+    """Look a sensitivity row up by the words in its label.
+
+    This file and final/exec_summary.py used to read rows by position (M['sensitivity'][-1],
+    [6], [15]). Appending or reordering a scenario silently re-points those figures at a
+    different scenario, which is repository finding R61. A label match either finds the row
+    the sentence is about or stops the build here.
+    """
+    hits = [x for x in M['sensitivity'] if x['label'] == frag] or \
+           [x for x in M['sensitivity'] if frag.lower() in x['label'].lower()]
+    if len(hits) != 1:
+        raise SystemExit('build: sensitivity label %r matched %d rows, expected exactly 1' % (frag, len(hits)))
+    return hits[0]
 SRC_MODEL_TAX = ('SCC-RATES', 'BOE-LTA-2026-026')
 
 
@@ -278,10 +297,10 @@ def build_index():
         m(P['sf_assessed']), m(P['sf_value']), m(sf_gap), m(P['sf_rent_2units']),
         m(-B['sell_gain']), m(B['sell_net']), m(B['w_sell']), m(B['real_sell']), m(B['w_rent']), m(B['w_live']),
         RH['10']['wins']['sell'], m(-RH['10']['sell_minus_rent_worst']),
-        m(M['sensitivity'][6]['real_rent']), m(M['sensitivity'][6]['real_sell']),
+        m(SEN('kept in savings')['real_rent']), m(SEN('kept in savings')['real_sell']),
         m(B['fbyv_T']), m(B['taxable_live_T']), m(B['tax_before_T']), m(B['tax_live_T']),
         m(B['real_sell'] - B['real_live']),
-        m(B['real_sell'] - M['sensitivity'][-1]['real_sell']))
+        m(B['real_sell'] - SEN('No basis step-up')['real_sell']))
     # ---- what would overturn the ranking, and what is cheaper to settle now than in 2045 ----
     # Each lever is the model's own break-even point, so this table cannot drift from the pages.
     # The three answers that no model can supply are listed beside them, because they are the
@@ -302,7 +321,7 @@ def build_index():
              'A written rent opinion from a local manager, obtained privately. It does not need the address on this site.',
              src('HUD-95014')],
             ['Is the home in the Transferor gross estate?', 'Assumed yes, so the basis resets (flag %s)' % 'Q01',
-             '<strong>Not a sensitivity: this can reverse the entire plan.</strong> If the trust sits outside the gross estate there is no basis reset and a prompt sale is taxed on decades of gain, which costs about %s of 2026-dollar wealth.' % m(B['real_sell'] - M['sensitivity'][-1]['real_sell']),
+             '<strong>Not a sensitivity: this can reverse the entire plan.</strong> If the trust sits outside the gross estate there is no basis reset and a prompt sale is taxed on decades of gain, which costs about %s of 2026-dollar wealth.' % m(B['real_sell'] - SEN('No basis step-up')['real_sell']),
              '<strong>Settle first.</strong> An estate attorney reads the trust and writes one paragraph. A legal fee now is small against the amount at stake.',
              src('RR-2023-2', 'IRS-FAQ-INHERIT')],
             ['Does the parent-child test pass?', 'Assumed yes (flag %s)' % 'Q06',
@@ -360,6 +379,29 @@ def build_index():
         ('verification.html', 'Verification', 'Line-by-line check register: what was re-read on which official page, and what stays flagged'),
         ('requirements.html', 'Requirements', 'Every part of the brief, the page that answers it, and the official pages re-read'),
     ])
+    three_numbers = table(
+        ['Number', 'What it measures', 'Whose clock it runs on', 'In this analysis', 'Official basis'],
+        [
+            ['Federal estate tax',
+             'A tax on the value of the Transferor\'s estate above the basic exclusion. It is a tax on the Transferor, not on the Inheritor.',
+             'The date of death. The Form 706 return is due nine months after it (extensions are for filing and payment).',
+             'Exclusion %s for 2026, %s for 2027, projected %s in %d (in %d dollars), and %s of room for cash and other assets after Property A. California charges no estate or inheritance tax.' % (
+                 m(P['excl_2026']), m(P['excl_2027']), m(B['exclusion_T']), T, T, m(B['exclusion_T'] - B['fmv_T'])),
+             src('IRS-ESTATE', 'RP-2026-35', 'SCO-ESTATE')],
+            ['Income-tax basis',
+             'The number a gain on a sale is measured from. It decides how much of the sale is taxed as gain.',
+             'The date of death (or the alternate valuation date if the estate elects it).',
+             'For Property A the basis resets to the market value at death, %s, if the trust is inside the gross estate; otherwise it does not reset and a prompt sale is taxed on the whole gain (that case costs %s of 2026-dollar wealth). Property B never resets.' % (
+                 m(B['fmv_T']), m(B['real_sell'] - SEN('No basis step-up')['real_sell'])),
+             src('IRS-FAQ-INHERIT', 'RR-2023-2')],
+            ['Property-tax assessment',
+             'The county\'s taxable value, which drives the property tax bill. It is not the price of the house and it is not the basis.',
+             'The date of transfer. A change in ownership normally reassesses to market value; Proposition 19 gives partial relief if the Inheritor moves in within one year.',
+             'Property A: %s today, %s if lived in, %s if rented, in %d. Property B: %s, and it does not change because nothing transfers.' % (
+                 m(P['cup_assessed']), m(B['taxable_live_T']), m(B['taxable_rent_T']), T, m(P['sf_assessed'])),
+             src('BOE-P19', 'RTC-63.2', 'SCC-RATES')],
+        ], caption='Estate tax, income-tax basis and property-tax assessment are three different numbers with three different clocks',
+        note='A reader who mixes them up will draw the wrong conclusion in both directions: a high assessment is not a tax bill on the sale, and a low basis is not a low estate. Which of the three numbers decides the answer depends on the trust, which nobody working on this site has read ' + flag('Q01'))
     body = """
 <section class="kpis">%s</section>
 <h2>Best plan and why - conditional on the assumptions in the flags</h2>%s
@@ -372,10 +414,11 @@ def build_index():
 %s
 <p class="note"><strong>How to read the numbers.</strong> Three kinds of figures appear on this site. <strong>Official facts</strong> are quoted from the government page linked on the row. <strong>Owner-supplied figures</strong> (market values, rents, utilities, tax bills, insurance estimates) are the owner's own numbers: they are rounded to the nearest $10 for privacy, cannot be confirmed on an official page (%s), and the link on their row shows only the rule or index the calculation follows, not verification of the figure. <strong>Model outputs</strong> are projections from the assumptions on the <a href="flagged.html">Flagged for Review</a> page - conditional scenarios, not forecasts. Every official source on the site has now been read directly on its agency page across passes on 2026-11-11 and 2026-11-12: see <a href="verification.html">Verification</a>, <a href="questions.html">Questions &amp; discovery</a>, and <a href="suggestions.html">Site improvements</a>.</p>
 
+<h2>Three numbers that are often confused</h2>%s
 <h2>The two homes are not the same case</h2>%s
 <p class="callout"><strong>Looking for the version with no household figures?</strong> A separate <a href="privacy-site/public/index.html">no-figures decision guide</a> publishes the same rules, process and decision framework without any of this household's numbers - every illustration there is invented for teaching. This summary page carries the rounded (nearest $10) figures the owner asked to see in the decision analysis.</p>
 <h2>Sections</h2><div class="cards">%s</div>
-""" % (cards, plan, overturn, T - 1, before, T, chart, opts, dash, flag('P03'), diff, links)
+""" % (cards, plan, overturn, T - 1, before, T, chart, opts, dash, flag('P03'), three_numbers, diff, links)
     page(HOME, 'Executive summary',
          'Property A (Cupertino, 95014) will pass to the Inheritor through a trust some time around 2040 to 2050. Property B (San Francisco, 94122) is already owned by the Inheritor. This site works out, with official sources on every table row, whether to live in Property A, rent it out, or sell it and reinvest.', body)
 
@@ -413,14 +456,70 @@ def build_decision():
     ], caption='Baseline result (inheritance in %d)' % T, cls='num')
     series = [(NAME[k], COL[k], {r['year']: r['w_' + k] / r['cpi'] for r in ROWS if r['year'] >= T}) for k in ('sell', 'rent', 'live')]
     chart = lines(series, T, 2076, mark=None)
-    sens = table(['One assumption changed', 'Live in it', 'Rent it out', 'Sell and reinvest', 'Best', 'Official basis'], [
-        [e(x['label']), m(x['real_live']), m(x['real_rent']), m(x['real_sell']), NAME[x['best']], src(*sb)]
-        for x, sb in zip(M['sensitivity'], [
-            ('FHFA-SJ', 'BLS-CPI'), ('FHFA-SJ',), ('FHFA-SJ',), ('FHFA-SJ', 'FHFA-CA'), ('TREASURY',), ('TREASURY',),
-            ('TREASURY',), ('TREASURY',), ('BLS-CPI', 'CBO'), ('HUD-95014',), ('HUD-95014',), ('SCC-DTT',),
-            ('RP-2026-35', 'FTB-RATES'), ('RP-2026-35', 'FTB-RATES'), ('SF-RENT-RULES', 'HUD-94122'), ('CDI-TOOL',), ('CDI-RES',), ('RR-2023-2',)])
-    ], caption='Sensitivity: after-tax wealth in 2076, in 2026 dollars', cls='num',
-        note='Stock-return assumptions have no official source; the Treasury yield is linked as the risk-free reference and the historical S&P 500 series is academic (%s).' % flag('A02'))
+    # One official source set per sensitivity row, keyed by the words in its label. This was a
+    # positional zip against a fixed list of eighteen entries, so every row added to the model
+    # after that list was written was silently dropped from this table and the pairing shifted -
+    # repository finding R61. An unmapped label now stops the build instead.
+    SENS_SRC = [
+        ('=Baseline', ('FHFA-SJ', 'BLS-CPI')),   # '=' means: the whole label, not a substring
+        ('Home appreciation 3.0%', ('FHFA-SJ',)),
+        ('Home appreciation 5.0%', ('FHFA-SJ',)),
+        ('San Jose index 1976-2025', ('FHFA-SJ', 'FHFA-CA')),
+        ('Stocks 5.0%', ('TREASURY',)),
+        ('Stocks 10.0%', ('TREASURY',)),
+        ('kept in savings', ('TREASURY',)),
+        ('40% Treasury bonds', ('TREASURY',)),
+        ('Inflation 4.0%', ('BLS-CPI', 'CBO')),
+        ('Cupertino rent 30%', ('HUD-95014',)),
+        ('Cupertino rent at the HUD 3-bedroom', ('HUD-95014',)),
+        ('Selling costs 7%', ('SCC-DTT',)),
+        ('Lower tax bracket', ('RP-2026-35', 'FTB-RATES')),
+        ('Top tax bracket', ('RP-2026-35', 'FTB-RATES')),
+        ('Third unit at Property B', ('SF-RENT-RULES', 'HUD-94122')),
+        ('three times the owner estimate', ('CDI-TOOL',)),
+        ('Prop H at a hypothetical', ('SFMTA-PROP-H',)),
+        ('scaled from the official statewide average', ('CDI-SB824',)),
+        ('Maintenance doubled', ('CDI-RES',)),
+        ('No basis step-up', ('RR-2023-2',)),
+        ('claim refused', ('RTC-63.2',)),
+        ('undone by a later measure', ('BOE-P19',)),
+        ('surtax of 1%', ('FTB-MHS',)),
+        ('Solar credit does not transfer', ('CPUC-FIXED', 'CPUC-NEM')),
+    ]
+
+    def sens_src(label):
+        """A fragment beginning with '=' must equal the whole label; any other is a substring.
+
+        The substring that matches exactly one row is required, because one row's label can
+        contain another's fragment (the Property B third-unit scenario says "the baseline counts
+        none"), and a silent first-match would then pair a row with the wrong official page.
+        """
+        for frag, sb in SENS_SRC:
+            if frag.startswith('=') and label == frag[1:]:
+                return sb
+        hits = [(frag, sb) for frag, sb in SENS_SRC if not frag.startswith('=') and frag.lower() in label.lower()]
+        if len(hits) != 1:
+            raise SystemExit('build: sensitivity row %r matched %d source fragments (%s); SENS_SRC must be unambiguous'
+                             % (label, len(hits), ', '.join(f for f, _ in hits)))
+        return hits[0][1]
+
+    used = set()
+
+    def sens_row(x):
+        for frag, sb in SENS_SRC:
+            if (frag.startswith('=') and x['label'] == frag[1:]) or (not frag.startswith('=') and frag.lower() in x['label'].lower()):
+                used.add(frag)
+        return [e(x['label']), m(x['real_live']), m(x['real_rent']), m(x['real_sell']), NAME[x['best']], src(*sens_src(x['label']))]
+
+    sens_rows = [sens_row(x) for x in M['sensitivity']]
+    stale = [f for f, _ in SENS_SRC if f not in used]
+    if stale:
+        raise SystemExit('build: SENS_SRC holds %d fragment(s) no sensitivity row uses: %s' % (len(stale), ', '.join(stale)))
+    sens = table(['One assumption changed', 'Live in it', 'Rent it out', 'Sell and reinvest', 'Best', 'Official basis'],
+                 sens_rows,
+                 caption='Sensitivity: after-tax wealth in %d, in 2026 dollars' % M['years'][1], cls='num',
+        note='One row for every scenario the model runs; a scenario that cannot be tied to an official page stops the build rather than being left out. '
+             'Stock-return assumptions have no official source; the Treasury yield is linked as the risk-free reference and the historical S&P 500 series is academic (%s).' % flag('A02'))
     be = table(['Break-even question', 'Answer', 'Compare with', 'Official basis'], [
         ['Home appreciation at which renting equals selling', pc(BE['g_cup_rent_vs_sell']) + ' a year', 'baseline 4.0%%; San Jose index %s a year 2000-2025 and %s a year 1976-2025' % (pc(HS['sj_2000_2025']), pc(HS['sj_1976_2025'])), src('FHFA-SJ')],
         ['Home appreciation at which living there equals selling', pc(BE['g_cup_live_vs_sell']) + ' a year', 'same', src('FHFA-SJ')],
@@ -460,12 +559,32 @@ def build_decision():
         pc(BE['g_cup_rent_vs_sell']), pc(HS['sj_1976_2025']))
     S_ = M['sensitivity']
     where = table(['If Property A is sold, the proceeds go into', 'Assumed yearly return', 'Sell and reinvest: wealth in 2076 (2026 dollars)', 'Renting instead, same reinvestment of rent', 'Better choice', 'Official basis'], [
-        ['A diversified stock fund', '7.0%', m(S_[0]['real_sell']), m(S_[0]['real_rent']), NAME[S_[0]['best']], src('TREASURY') + ' · ' + src('DAMODARAN')],
-        ['60% stocks, 40% Treasury bonds', '7.0% and 4.5%', m(S_[7]['real_sell']), m(S_[7]['real_rent']), NAME[S_[7]['best']], src('TREASURY') + ' · ' + src('DAMODARAN')],
-        ['Savings account or Treasury bills', '3.5%', m(S_[6]['real_sell']), m(S_[6]['real_rent']), NAME[S_[6]['best']], src('TREASURY')],
+        ['A diversified stock fund', '7.0%', m(SEN('Baseline')['real_sell']), m(SEN('Baseline')['real_rent']), NAME[SEN('Baseline')['best']], src('TREASURY') + ' · ' + src('DAMODARAN')],
+        ['60% stocks, 40% Treasury bonds', '7.0% and 4.5%', m(SEN('40% Treasury bonds')['real_sell']), m(SEN('40% Treasury bonds')['real_rent']), NAME[SEN('40% Treasury bonds')['best']], src('TREASURY') + ' · ' + src('DAMODARAN')],
+        ['Savings account or Treasury bills', '3.5%', m(SEN('kept in savings')['real_sell']), m(SEN('kept in savings')['real_rent']), NAME[SEN('kept in savings')['best']], src('TREASURY')],
     ], caption='Stocks or savings: where the sale proceeds go decides the answer', cls='num',
         note='Returns are assumptions (%s). On 2026-11-10 the 3-month Treasury bill yielded 4.30%% and the 10-year note 4.98%%. Interest is taxed every year at ordinary rates; stock growth is taxed when sold.' % flag('A02'))
-    body = at + first + w + where + '<h2>Wealth over time, in 2026 dollars</h2>' + chart + why + sens + be + byT + '<h2>Property A or Property B?</h2>' + which + '<p class="note"><strong>Provenance note:</strong> Links in the Official basis column point to the governing tax rule, rate table, or government index applied in the row; they do not verify owner-supplied figures (%s) or future investment/housing returns (%s). Before finalizing any plan, review the open questions on <a href="questions.html">Questions &amp; discovery</a> and the candidate upgrades on <a href="suggestions.html">Site improvements</a>.</p>' % (flag('P03'), flag('A01'))
+    mx = M['mixed']
+    mixed_rows = [
+        ['Live in it, then sell after 5 years', m(mx['baseline']['live5']), 'The first five years carry the housing saving and the lower Proposition 19 tax; the sale afterwards is taxed on the gain since the date of death.', src('IRS-FAQ-INHERIT', 'BOE-P19')],
+        ['Live in it, then sell after 10 years', m(mx['baseline']['live10']), 'Ten years of housing saving, then the sale; the gain is larger the longer the house is held.', src('IRS-FAQ-INHERIT')],
+        ['Rent it, then sell after 5 years', m(mx['baseline']['rent5']), 'Five years of rent, then the sale.', src('IRS-FAQ-INHERIT', 'HUD-95014')],
+        ['Rent it, then sell after 10 years', m(mx['baseline']['rent10']), 'Ten years of rent, then the sale.', src('IRS-FAQ-INHERIT', 'HUD-95014')],
+        ['Live in it for ever', m(mx['pure']['live']), 'The pure Live choice, for comparison.', src('IRS-FAQ-INHERIT')],
+        ['Rent it for ever', m(mx['pure']['rent']), 'The pure Rent choice, for comparison.', src('IRS-FAQ-INHERIT')],
+        ['Sell it now and reinvest', m(mx['pure']['sell']), 'The pure Sell choice, for comparison.', src('IRS-FAQ-INHERIT', 'TREASURY')],
+    ]
+    mixed_tbl = table(['Mixed path', 'After-tax wealth in 2076 (2026 dollars)', 'What it means', 'Official basis'], mixed_rows,
+                      caption='Mixed paths: not only the three pure choices (baseline, inheritance in %d)' % T, cls='num',
+                      note='These are model outputs on the assumptions listed on the Flagged page %s. The rule they follow: %s' % (flag('A01'), mx['rule']['note']))
+    mixed_named = table(['Named path', 'Live then sell after 5 years', 'Rent then sell after 5 years', 'Live for ever', 'Rent for ever', 'Official basis'], [
+        [k.replace('_at_T', '').replace('_', ' ').capitalize(),
+         m(v['live5']), m(v['rent5']), m(v['never_live']), m(v['never_rent']),
+         src('FRED-JP', 'DAMODARAN', 'BLS-CPI')]
+        for k, v in mx['named'].items() if 'live5' in v
+    ], caption='The same mixed paths under the named stress paths', cls='num',
+        note='Named paths are constructed scenarios built on the official record, not forecasts. The path definitions and their sources are on the Black swan page.')
+    body = at + first + w + where + '<h2>Mixed paths, not only the three pure choices</h2>' + mixed_tbl + mixed_named + '<h2>Wealth over time, in 2026 dollars</h2>' + chart + why + sens + be + byT + '<h2>Property A or Property B?</h2>' + which + '<p class="note"><strong>Provenance note:</strong> Links in the Official basis column point to the governing tax rule, rate table, or government index applied in the row; they do not verify owner-supplied figures (%s) or future investment/housing returns (%s). Before finalizing any plan, review the open questions on <a href="questions.html">Questions &amp; discovery</a> and the candidate upgrades on <a href="suggestions.html">Site improvements</a>.</p>' % (flag('P03'), flag('A01'))
     page('decision.html', 'Decision: live in it, rent it, or sell and reinvest',
          'One model, one set of assumptions, three choices for Property A. Property B stays as it is in every case because the Inheritor already owns it.', body)
 
@@ -561,7 +680,35 @@ def build_projections():
         ['Inflation', '2.5%', 'constant in the baseline', 'assumption; the CPI rose %s a year 2000-2025 %s' % (pc(HS['cpi_2000_2025']), flag('A01')), src('BLS-CPI', 'CBO')],
     ], caption='What drives each line')
     tabs = '<div class="seg" id="ysel"><span>Show:</span><button type="button" data-y="a-pre" class="on">A before inheritance</button><button type="button" data-y="a-live">A lived in</button><button type="button" data-y="a-rent">A rented</button><button type="button" data-y="b-all">B</button><button type="button" data-y="all">All tables</button></div>'
-    body = (hist + '<h2>Property tax by year</h2>' + chart + '<h2>Market and assessed values</h2>' + chart2 + assum
+    # ---- distribution of outcomes, not one projection (block bootstrap over the official record)
+    MC = M['mc']
+    hz = MC['horizons']
+    dist_rows = []
+    for hz_key, hz_label in (('10', '10 years after the inheritance'), ('20', '20 years after'), ('end', '2076 (31 years after)')):
+        pct = hz[hz_key]['pct']
+        lead = hz[hz_key]['lead']
+        dist_rows.append([
+            hz_label,
+            m(pct['live']['50']), m(pct['rent']['50']), m(pct['sell']['50']),
+            '%s / %s / %s' % (m(pct['live']['10']), m(pct['rent']['10']), m(pct['sell']['10'])),
+            '%s / %s / %s' % (m(pct['live']['90']), m(pct['rent']['90']), m(pct['sell']['90'])),
+            '%d / %d / %d' % (lead['live'], lead['rent'], lead['sell']),
+            src('BLS-CPI', 'FHFA-SJ', 'DAMODARAN'),
+        ])
+    dist_tbl = table(['Horizon', 'Live: median', 'Rent: median', 'Sell: median', '10th percentile (live / rent / sell)', '90th percentile (live / rent / sell)', 'How often each leads (live / rent / sell)', 'Official basis'], dist_rows,
+                     caption='Distribution of outcomes over %d resampled histories, in 2026 dollars' % MC['draws'], cls='num',
+                     note='A construction, not a forecast: the record is cut into %d-year blocks, %d blocks are drawn with replacement to a fixed seed (%d), and the model is run on each draw. The same official series drive the baseline: %s' % (MC['block'], MC['block'], MC['seed'], src('BLS-CPI', 'FHFA-SJ', 'DAMODARAN')))
+    econ = MC['econ']
+    econ_tbl = table(['Economic variable over the modelled period', 'Minimum', '10th percentile', 'Median', '90th percentile', 'Maximum', 'Official basis'], [
+        ['Inflation, 50 years (annual rate)', pc(econ['infl50']['min'], 2), pc(econ['infl50']['p10'], 2), pc(econ['infl50']['median'], 2), pc(econ['infl50']['p90'], 2), pc(econ['infl50']['max'], 2), src('BLS-CPI')],
+        ['Home price growth from today to %d' % T, pc(econ['hpi_to_T']['min'], 1), pc(econ['hpi_to_T']['p10'], 1), pc(econ['hpi_to_T']['median'], 1), pc(econ['hpi_to_T']['p90'], 1), pc(econ['hpi_to_T']['max'], 1), src('FHFA-SJ', 'FHFA-CA')],
+    ], caption='How wide the economic inputs are, over the same draws',
+        note='The brief asks for projections in which growth and inflation are never constant over fifty years. This is the width of that range. The stock return after the inheritance is as wide again - from %s a year at the bottom of the range to %s at the top, with a median of %s - but it comes from an academic return table, not a government series, so it is given here as a note and flagged %s rather than as a sourced row.' % (
+            pc(econ['stock_after_T']['min'], 1), pc(econ['stock_after_T']['max'], 1), pc(econ['stock_after_T']['median'], 1), flag('A18')))
+    dist_bars = bars([('%s: %s' % (NAME[k], pctl), hz['10']['pct'][k][pctl], COL[k])
+                      for k in ('live', 'rent', 'sell') for pctl in ('10', '50', '90')],
+                      width=760, bar_h=22)
+    body = (hist + '<h2>Property tax by year</h2>' + chart + '<h2>Market and assessed values</h2>' + chart2 + '<h2>The distribution of outcomes, not one projection</h2>' + dist_tbl + '<h3>Ten years after the inheritance: 10th, median and 90th percentile of each path</h3>' + dist_bars + econ_tbl + assum
             + '<h2>Year-by-year tables</h2><p class="note">Baseline path with inheritance in %d. Amounts are nominal dollars of each year, rounded to $10. A negative electricity figure is a credit. If Property A is sold, its costs stop in %d; the sale figures are on the <a href="decision.html">Decision</a> page. <strong>Provenance:</strong> the Official basis column links the statutory tax/rate rule or HUD/county schedule used; projected dollar figures are conditional model outputs built on the owner\'s rounded inputs (%s) and stated assumptions (%s), not official forecasts.</p>' % (T, T, flag('P03'), flag('A01'))
             + tabs + pre + live + rent + sfb)
     page('projections.html', 'Year-by-year projections, 2026 to 2076',
@@ -569,6 +716,65 @@ def build_projections():
 
 
 # ====================================================================== black swan
+def _mc_tables():
+    """Block bootstrap over the same official record, plus how uneven the record itself is."""
+    mc = M['mc']
+    H = {h['year']: h for h in M['hist']}
+    yrs = sorted(H)
+
+    def roll(k, w=10):
+        """Arithmetic mean annual change inside every overlapping ten-year window of the record."""
+        out = []
+        for a in range(yrs[0], yrs[-1] - w + 2):
+            ys = [a + i for i in range(w)]
+            if all(y in H for y in ys):
+                out.append(sum(H[y][k] for y in ys) / float(w))
+        return sorted(out)
+
+    def windows(k, test, w=10):
+        """(how many ten-year windows contain such a year, how many windows the record holds)."""
+        tot = hits = 0
+        for a in range(yrs[0], yrs[-1] - w + 2):
+            ys = [y for y in range(a, a + w) if y in H]
+            if len(ys) == w:
+                tot += 1
+                if any(test(H[y][k]) for y in ys):
+                    hits += 1
+        return hits, tot
+
+    d_infl, d_home, d_stock = roll('infl'), roll('g_cup'), roll('r_stock')
+    infl_hits, infl_tot = windows('infl', lambda v: v > 0.06)
+    home_hits, home_tot = windows('g_cup', lambda v: v < 0)
+    disp = table(['What was measured, in every ten-year window of the real record 1976-2025', 'Worst window', 'Middle window', 'Best window', 'Official basis'], [
+        ['Average inflation a year', pc(d_infl[0], 2), pc(d_infl[len(d_infl) // 2], 2), pc(d_infl[-1], 2), src('BLS-CPI')],
+        ['Average San Jose area home-price change a year', pc(d_home[0], 2), pc(d_home[len(d_home) // 2], 2), pc(d_home[-1], 2), src('FHFA-SJ')],
+        ['Average S&amp;P 500 total return a year', pc(d_stock[0], 2), pc(d_stock[len(d_stock) // 2], 2), pc(d_stock[-1], 2), src('TREASURY') + ' &middot; ' + src('DAMODARAN') + ' ' + flag('S02')],
+        ['A ten-year stretch that held a year of inflation above 6%', '%d of %d windows' % (infl_hits, infl_tot), '%d years with such a year out of %d read' % (sum(1 for y in yrs if H[y]['infl'] > 0.06), len(yrs)), 'a ten-year stretch without one is the other %d of %d, so "no inflation shock for a decade" is a coin flip on this record, not a plan' % (infl_tot - infl_hits, infl_tot), src('BLS-CPI')],
+        ['A ten-year stretch in which the San Jose index fell at all', '%d of %d windows' % (home_hits, home_tot), '%d falling years out of %d read' % (sum(1 for y in yrs if H[y]['g_cup'] < 0), len(yrs)), 'and the weakest ten-year stretch the record holds still averaged %s a year, so near-flat is the worst a decade has done, not a decline' % pc(d_home[0], 2), src('FHFA-SJ')],
+    ], caption='The record this household would have lived through: nothing about it is constant', cls='num',
+        note='Averages are simple means of the annual changes inside each overlapping ten-year window, so the worst and best windows are real stretches of time, not model output. The window counts are read off the same series: they say how often a ten-year stretch of the record contained such a year at all. The academic return table is the only non-government series in the row set and is flagged.')
+    E, PCT = mc['econ'], mc['horizons']
+    econ = table(['Drawn path, 2027 to 2076', 'Worst of the %d draws' % mc['draws'], '10th percentile', 'Middle draw', '90th percentile', 'Best of the %d draws' % mc['draws'], 'Official basis'], [
+        ['Average inflation a year over the whole fifty', pc(E['infl50']['min'], 2), pc(E['infl50']['p10'], 2), pc(E['infl50']['median'], 2), pc(E['infl50']['p90'], 2), pc(E['infl50']['max'], 2), src('BLS-CPI')],
+        ['Average home-price change a year up to the transfer', pc(E['hpi_to_T']['min'], 2), pc(E['hpi_to_T']['p10'], 2), pc(E['hpi_to_T']['median'], 2), pc(E['hpi_to_T']['p90'], 2), pc(E['hpi_to_T']['max'], 2), src('FHFA-SJ')],
+        ['Average stock return a year after the transfer', pc(E['stock_after_T']['min'], 2), pc(E['stock_after_T']['p10'], 2), pc(E['stock_after_T']['median'], 2), pc(E['stock_after_T']['p90'], 2), pc(E['stock_after_T']['max'], 2), src('TREASURY') + ' &middot; ' + src('DAMODARAN') + ' ' + flag('S02')],
+    ], caption='Fifty years of the real record, reshuffled in %d-year blocks (%d draws, seed %d)' % (mc['block'], mc['draws'], mc['seed']), cls='num')
+    rows = []
+    for tag, lab in (('10', 'ten years after the transfer'), ('20', 'twenty years after'), ('end', 'in %d' % M['years'][1])):
+        h = PCT[tag]
+        for k in ('live', 'rent', 'sell'):
+            p_ = h['pct'][k]
+            rows.append([lab, NAME[k], m(p_['10']), m(p_['25']), m(p_['50']), m(p_['75']), m(p_['90']), h['lead'][k], src('BLS-CPI', 'FHFA-SJ')])
+    spread = table(['Horizon', 'Choice', '10th percentile', '25th', 'Median', '75th', '90th', 'Times it was the best choice of the %d' % mc['draws'], 'Official basis'], rows,
+                   cls='num yr', caption='The spread of outcomes, not a single answer - wealth in 2026 dollars',
+                   note='Selling leads renting in %d of the %d drawn paths at ten years after the transfer, in %d of them at twenty years, and in %d of them at the end; renting leads in the rest and living in it leads in none. An unlucky ordering of real years is what the worst column on each row is made of. Blocks keep the years inside them together, so a high-inflation stretch still carries the home-price and market moves that came with it; what the reshuffling destroys is the fifty-year sequence - which is exactly the assumption a single constant-rate baseline smuggles in.'
+                        % (PCT['10']['sell_minus_rent']['sell_ahead_of_rent_in'], mc['draws'],
+                           PCT['20']['sell_minus_rent']['sell_ahead_of_rent_in'], PCT['end']['sell_minus_rent']['sell_ahead_of_rent_in']))
+    return ('<h2 id="bootstrap">Fifty years that never behave the same way twice</h2>'
+            '<p class="callout"><strong>Why this is here.</strong> The baseline comparison holds inflation, house prices and market returns constant for fifty years, which is what makes the three choices clean to compare - and is also the thing the owner\'s brief objects to: growth and inflation are never consistent over fifty years. The three tables below answer it in three ways. The first reads the real record and shows how wide ten-year windows of it actually spread. The second re-draws fifty years %d times from the same official series in %d-year blocks and reports the whole distribution of results for each choice, with a fixed seed (%s) so the run repeats exactly. Both are constructions from history, not forecasts, and neither is a probability that any of it will recur.</p>'
+            % (mc['draws'], mc['block'], mc['seed']) + disp + econ + spread)
+
+
 def build_blackswan():
     hist = table(['Year', 'Inflation (CPI, Dec to Dec)', 'San Jose area home prices', 'San Francisco area home prices', 'S&P 500 total return', '3-month Treasury bill', 'Official basis'], [
         [h['year'], pc(h['infl']), pc(h['g_cup']), pc(h['g_sf']), pc(h['r_stock']), pc(h['r_bill']), src('BLS-CPI', 'FHFA-SJ', 'FHFA-SF') + ' · ' + src('DAMODARAN')]
@@ -643,16 +849,71 @@ def build_blackswan():
         ['Large Bay Area earthquake', '72% chance of at least one magnitude 6.7 or larger quake in the region between 2014 and 2043. Homeowners policies do not cover earthquake damage; the insurer must offer separate cover every other year.', 'Live and Rent carry the uninsured loss on Property A; Sell does not. Property B carries it in every case. Premium for earthquake cover: ' + BLANK + ' ' + flag('U02'), src('USGS', 'CDI-EQ')],
         ['Home left empty during administration', 'Losses to a house vacant for 60 days or more are generally not covered by a homeowners policy.', 'Matters most for Sell (the home may sit empty until closing) and for the months before a tenant or the Inheritor moves in. Ask the insurer for a vacancy endorsement.', src('CDI-RES')],
         ['Federal estate-tax exclusion cut by a later Congress', 'The exclusion is $15,000,000 for 2026 and $15,480,000 for 2027 and is indexed. Any reduction would need new legislation; none is enacted.', 'Affects the cash and Property A equally in all three choices; see the stress rows on the <a href="estate-cash.html">Cash and estate tax</a> page.', src('IRS-NEW', 'RP-2026-35')],
-        ['Loss of the basis reset at death', 'Current law resets basis to market value at death for property in the gross estate. No enacted change was found.', 'Sell would owe tax on the full historic gain; the model shows %s less wealth in 2026 dollars.' % m(B['real_sell'] - M['sensitivity'][-1]['real_sell']), src('IRS-FAQ-INHERIT', 'RR-2023-2')],
+        ['Loss of the basis reset at death', 'Current law resets basis to market value at death for property in the gross estate. No enacted change was found.', 'Sell would owe tax on the full historic gain; the model shows %s less wealth in 2026 dollars.' % m(B['real_sell'] - SEN('No basis step-up')['real_sell']), src('IRS-FAQ-INHERIT', 'RR-2023-2')],
         ['Change to Proposition 19', 'A voter measure would be needed. None of the fourteen state measures on the November 2026 ballot changes it.', 'A return to the old rule would mainly help Rent (no reassessment); the first-year tax would drop from %s to about %s.' % (m(B['tax_rent_T']), m(B['tax_before_T'])), src('SOS-RESULTS', 'BOE-P19')],
         ['Stricter rent rules', 'Statewide cap of 5% plus inflation (10% maximum) with an exemption for many single-family homes; San Francisco allows 60% of inflation on controlled units.', 'Lowers the Rent result for Property A if the exemption is lost, and limits Property B rent growth in every case.', src('DOJ-TPA', 'SF-RENT-RULES')],
     ], caption='Shocks that no price history captures')
     body = ("""<p class="callout">This section is kept apart from the baseline on purpose. The baseline uses constant rates so that the three choices can be compared cleanly. Here nothing is constant: every path uses real recorded years, in their real order, for inflation, local home prices, stocks, bonds and bills. Read the provenance table first: official statistics, the academic return dataset and the hypothetical constructions below are three different kinds of material.</p>"""
-            + prov + rep + named + '<h2>Property A market value in 2026 dollars under six paths</h2>' + ch + stats + other + yr + yr2 + hist)
+            + prov + rep + _mc_tables() + named + '<h2>Property A market value in 2026 dollars under six paths</h2>' + ch + stats + other + yr + yr2 + hist)
     body += ('<h2>Phased entry into stocks</h2><p>A separate test asks whether parking the sale proceeds in short Treasuries for 24 to 36 months, then moving them into stocks in equal annual tranches, softens the crash at entry in 1929 and 2007. '
              'The answer is on the <a href="phased.html">Phased investing</a> page: in no entry year tested is the worst fall deeper than the lump sum&rsquo;s, and the phased path ends higher than the lump sum in only a minority of entry years.</p>')
     page('black-swan.html', 'Black swan section: non-constant growth and inflation over 50 years',
          'What happens to the decision when inflation, home prices and markets behave the way they really have: in bursts, busts and long flat stretches.', body)
+
+
+# ====================================================================== decision log
+def build_decisions():
+    """Every decision the analysis has taken, with the date it was taken (session arena/3adb817a).
+
+    The brief asks: write the decision and the date next to the item, so a future
+    reader knows what was chosen and why. The second table is left blank for the
+    household's own decisions; it is deliberately empty rather than filled with a
+    guess.
+    """
+    rows = DECISION_LOG.decision_log(_helper())
+    decided = table(['Date', 'Item', 'What was decided', 'Why', 'Official basis'], rows,
+                    caption='Decisions taken by the analysis', cls='qa')
+    # A blank table is written directly: the shared table() helper requires every row to
+    # carry an official source link, and a row the household has not filled in has none.
+    blank = ('<div class="tablewrap"><table class="qa"><caption>The household\'s own decisions (to be completed here, with the date)</caption>'
+             '<thead><tr>' + ''.join('<th scope="col">%s</th>' % x for x in DECISION_LOG.HOUSEHOLD_HEADER) + '</tr></thead><tbody>'
+             + ''.join('<tr>' + ''.join('<td>%s</td>' % c for c in r) + '</tr>' for r in DECISION_LOG.household_rows(_helper()))
+             + '</tbody></table></div>'
+             '<p class="note">Fill this in as each decision is taken. A decision without a date and a reason cannot be reviewed later, and it cannot be checked against the rule that was agreed in advance. The rows are deliberately empty: no one working on this site may record a household decision.</p>')
+    body = ("<h2>Decisions taken by the analysis</h2>"
+            "<p class=\"callout\"><strong>Why this page exists.</strong> A site that publishes numbers without publishing its decisions gives a reader no way to tell an assumption from a choice. Every row below is dated, says what was decided, says why, and links the official page or the model output it rests on. Where the decision was the analyst\'s and not the owner\'s, it says so.</p>"
+            + decided
+            + "<h2>Decisions the household still has to take</h2>"
+            + "<p class=\"note\">Nothing here is filled in: these are the household\'s decisions, and no one else may record them. The first three are on the <a href=\"precommit.html\">pre-commitment rules</a> page, and the answers to the open questions are on the <a href=\"questions.html\">Questions</a> page.</p>"
+            + blank
+            + "<p class=\"note\">Open items, unverified figures and the review of the repository itself are on the <a href=\"flagged.html\">Flagged for Review</a> page and the <a href=\"review.html\">Repo review</a> page.</p>")
+    page('decisions.html', 'Decision log: what was decided, on what date, and why',
+         'Every choice this analysis made, with its date and its reason, so that a reader in 2045 can see what was settled and on what evidence.', body)
+
+
+# ====================================================================== pre-commitment rules
+def build_precommit():
+    """The rule that says in advance what would make the household choose each path."""
+    h = _helper()
+    rows = DECISION_LOG.precommit_rows(h)
+    rules = table(['Path', 'The rule to write', 'What the model says the break-even is', 'Why it is written this way', 'Official basis'], rows,
+                  caption='One rule per path, to be written before the inheritance',
+                  note='These are the model\'s own break-even points. The rule itself is the household\'s: it should be written down, dated and signed, and it should not be rewritten after the figures arrive.')
+    body = ("<h2>The point of this page</h2>"
+            "<p class=\"callout\"><strong>Agree in writing what would make the household choose each path, before the figures arrive.</strong> A rule written after the projection is reverse-engineered from that projection: the numbers are then chosen to justify the answer, instead of the answer being chosen because of the numbers. The fix is small and cheap - one sentence per path, written and dated now, with a number in it - and it is the only protection the decision has against its own author.</p>"
+            "<p class=\"note\">The table gives the model's break-even point for each path so the rule can be compared with something real. Writing the rule does not require knowing the answer: it requires deciding what would change your mind. Blank cells in the printed version are meant to stay blank until the household fills them in.</p>"
+            + rules
+            + "<h2>How to use it</h2>"
+            "<ol class=\"plan\">"
+            "<li><strong>Write one sentence per path.</strong> Name the number that would trigger it: a rent, an appreciation rate, a stock return, a date.</li>"
+            "<li><strong>Date it and keep it.</strong> The <a href=\"decisions.html\">decision log</a> records what was chosen and when. A rule with no date cannot be shown to have preceded the figures.</li>"
+            "<li><strong>Check the rule against the model once a year.</strong> The re-check calendar on the <a href=\"law.html\">Law</a> page says when each input is re-read. If the model\'s break-even moves past the rule\'s trigger, the rule is still the rule: either the facts changed the world, or the model changed. Both are worth knowing.</li>"
+            "<li><strong>Do not change a rule in the same week as a decision.</strong> If the rule must change, change it before the decision, not after.</li>"
+            "</ol>"
+            "<p class=\"note\">The break-even points above are model outputs on the assumptions listed under <a href=\"flagged.html\">Flagged for Review</a>; they are conditional scenarios, not forecasts. The <a href=\"what-if.html\">what-if controls</a> let the household test the inputs directly.</p>")
+    page('precommit.html', 'Pre-commitment rules: what would make us choose each path',
+         'One rule per path, written and dated before the inheritance, so the decision is not reverse-engineered from one projection.', body)
+
 
 
 # ====================================================================== process
@@ -738,9 +999,203 @@ def build_law():
         ['Residential fixed charge on electricity bills', 'California', 'Adopted: $24.15 a month for standard customers.', 'May reduce or remove the monthly solar credit at Property A.', src('CPUC-FIXED')],
         ['Missing October 2025 inflation data', 'Federal', 'No 12-month change published for October 2026.', 'Indexed figures still use the published series; watch for revisions.', src('BLS-OCT')],
     ], caption='Changes under discussion or recently decided')
-    body = fed + ca + loc + '<h2>Changes under discussion</h2>' + pend
+    recheck = table(['When', 'What to re-check', 'Why it can move the answer', 'Last checked by this site', 'Official basis'], [
+        ['Every autumn', 'HUD fair market rents for the two ZIP codes',
+         'The rent benchmark for Property A and the fallback rent for the third unit at Property B are HUD figures; they are republished each October and change what renting is worth.',
+         '2026-11-13 (FY2026 read; the FY2027 pages were read the same day, with one contradiction recorded %s)' % flag('U09'),
+         src('HUD-95014', 'HUD-94122', 'HUD-SAFMR-INDEX')],
+        ['Every November', 'The federal estate-tax exclusion and the annual gift exclusion',
+         'They are inflation-adjusted and change every year; a change of a few per cent moves the room left for cash.',
+         '2026-11-16 (Rev. Proc. 2026-35 for 2027: exclusion %s)' % m(P['excl_2027']),
+         src('IRS-NEW', 'RP-2026-35')],
+        ['Every second February (16th)', 'The Proposition 19 $1,000,000 allowance',
+         'It is adjusted every other February 16 by the California house-price change of the prior calendar year, so it grows at about half the pace of house prices. The next adjustment is 2027-02-16.',
+         '2026-11-16 (allowance for transfers to 2027-02-15: %s)' % m(P['p19_cap']),
+         src('BOE-LTA-2025-009', 'BOE-LTA-2025-015')],
+        ['Every January', 'The California annual inflation factor for property tax',
+         'It caps how fast an assessed value can rise, so it sets the floor under the property-tax line for years.',
+         '2026-11-13 (factor for 2026 rolls: 1.02)',
+         src('BOE-LTA-2026-002', 'RTC-51')],
+        ['Every year', 'The county and city property tax rates',
+         'A rate change moves the bill on the same assessed value; the fixed charges on the bill are separate from the rate.',
+         '2026-11-16 (Jurisdiction A 1.16360% for FY2025-26; Jurisdiction B 1.18162182% for FY2026-27)',
+         src('SCC-RATES', 'SF-TAX')],
+        ['Every year', 'Insurance quotes for both homes',
+         'No official page publishes a premium for a particular home. Two real quotes replace the estimate on every row that uses it.',
+         '2026-11-16 (statewide average read; the ZIP-level figures could not be read automatically %s)' % flag('U01'),
+         src('CDI-TOOL', 'CDI-SB824')],
+        ['Every year', 'The San Francisco Rent Board allowable increase and each unit\'s rent-control status',
+         'It sets how far Property B\'s rent can move, which is the income side of keeping that property.',
+         '2026-11-16 (allowable increase for 2026-27 read; the base-rent dates for the units are still unknown %s)' % flag('Q04'),
+         src('SF-RENT-RULES', 'SF-RENT-2026')],
+        ['Every year', 'Whether any measure on the pending list has become law',
+         'The pending page separates enacted law from proposals; a proposal that passes changes the rules above.',
+         '2026-11-16 (ballot returns as of 2026-11-14; certification due 2026-12-11)',
+         src('SOS-RESULTS', 'BOE-P19')],
+        ['Every year', 'Re-run this model with the updated inputs',
+         'The whole site is generated: the model, the pages and the checks are re-run from the same code, so nothing is retyped.',
+         '2026-11-16 (this edition)',
+         src('FHFA-SJ', 'BLS-CPI', 'TREASURY')],
+        ['Every three years, and on any change in the family', 'The trust, the estate plan and the title',
+         'A new trust, a new beneficiary or a change of residence can change whether the home is inside the gross estate and whether the Proposition 19 relief still applies.',
+         '2026-11-16 (the trust itself has not been read %s)' % flag('Q01'),
+         src('IRS-FAQ-INHERIT', 'BOE-RULE-462.260')],
+    ], caption='What to re-check, and when',
+        note='The brief asks that the figures be re-run every year and that official sources be re-checked, with enacted changes distinguished from proposals. This table is that calendar. Nothing in it is inferred: each row links the page to re-read.')
+    body = fed + ca + loc + '<h2>Changes under discussion</h2>' + pend + '<h2>What to re-check every year</h2>' + recheck
     page('law.html', 'Property and tax law: current rules and changes under discussion',
          'Federal, California and local rules that decide the outcome, each read on the official page, followed by pending or recent changes and what they would do.', body)
+
+
+# ====================================================================== pending law
+def t1_caption():
+    return ('What California and federal law now say, what was decided at the ballot ten days ago, and what is scheduled to change '
+            'before a 2040 to 2050 transfer. Every row links the official page it was read on; unverified items are left blank and flagged.')
+
+
+def build_pending():
+    """Law-change register: enacted recently, pending, or scheduled to change by itself."""
+    sen = {x['label']: x for x in M['sensitivity']}
+    lk = lambda frag: next(v for k, v in sen.items() if frag in k)
+    undo = lk('undone by a later measure')
+    refuse = lk('claim refused')
+    solar = lk('Solar credit does not transfer')
+    surtax = lk('surtax')
+    inscaled = lk('scaled from the official statewide average')
+    FIXED_Y = r10(24.15 * 12)     # the published standard-tier monthly base services charge, annualised
+    END = M['years'][1]
+    ea = M['estate_alt']
+    rows_enacted = [
+        ['SB 293 (2025) rewrote the Proposition 19 claim clock for fire-damaged parcels',
+         'In force since 2026-01-01. Where the assessor reassesses a property because it was damaged or destroyed by the 2025 Palisades, Eaton, Hurst, Lidia, Sunset or Woodley fire and a change in ownership had gone unrecorded, a claim is timely for three years after the notice of supplemental or escape assessment, and the homeowners\' exemption filing is timely within a year of that notice. Only for claims filed before 2031-01-01.',
+         'A 2040 to 2050 transfer is outside the relief, so the general rule governs: three years from the transfer, or before the home is sold or the Inheritor stops living in it, whichever comes first; six months from a supplemental notice also counts as timely. A second notice can bring a processing fee of up to $175 where the county adopts one.',
+         src('RTC-63.2')],
+        ['Section 63.2 still reads as the model applies it',
+         'The statute was read in full on 2026-11-13. Subdivision (d): the new taxable value is the transferor\'s taxable value plus, only where market value exceeds that figure plus $1,000,000, the excess. The Board\'s own bill analysis states the same test in words and reproduces the arithmetic.',
+         'Confirms the number on the Decision page: at a market value of %s against a taxable value of %s and a limit of %s, the excess added to the assessment is %s, not the whole value.' % (m(B['fmv_T']), m(B['fbyv_T']), m(B['cap_T']), m(B['fmv_T'] - B['fbyv_T'] - B['cap_T'])),
+         src('RTC-63.2', 'BOE-SB974')],
+        ['SB 974 (2026) would name special needs trusts as an eligible medium of transfer',
+         'Board staff analysis read directly (bill amended 2026-03-25, analysis dated 2026-04-17): it amends the definition of "transfer" in section 63.2(e)(9). The text of (e)(9) on the statute page read 2026-11-13 did not yet carry the amendment, so this site does not state that it is in force. ' + flag('U12'),
+         'None on this household unless a special needs trust is involved. It matters if the Inheritor or a sibling has one.',
+         src('BOE-SB974', 'RTC-63.2')],
+        ['The federal estate-tax exclusion is set by statute, not by a temporary cut',
+         'Public Law 119-21 (signed 2025-07-04) fixes the basic exclusion at $15,000,000 for 2026; the published 2027 figure is $15,480,000 and it is indexed after that.',
+         'The room the estate is measured against in %d is %s. The Death Tax Repeal Act (S.587 and H.R.1301) was introduced 2025-02-13, referred to committee, and shows no later action; if it ever passed, the tax on the cash would fall to zero.' % (T, m(B['exclusion_T'])),
+         src('IRS-NEW', 'RP-2026-35', 'CONG-S587', 'CONG-HR1301')],
+        ['Schedule A deduction cap is temporary',
+         'The raised cap ($40,000 in 2025, $40,400 in 2026, phased down at high income) applies only through 2029 under the same Act, then reverts to $10,000.',
+         'Property taxes and mortgage interest on a home let to a tenant stay deductible against rent on Schedule E, which is where the rental case is decided; the reversion affects personal itemised deductions well before the %d transfer.' % T,
+         src('IRS-SCHED-A', 'IRS-P527')],
+    ]
+    rows_ballot = []
+    for num, what, eff in (
+        ('3', 'Extends the existing higher rates on incomes above $1,000,000 permanently, redirecting the revenue to schools and health care',
+         'Keeping the top state rates matters most to the one-off events: a sale of Property A, or a year of rent on Property B, is income that can reach $1,000,000. The model charges 9.3%% on yearly income and 13.3%% on a lump sum; the extra 1%% is shown as its own sensitivity row, which takes %s off the Sell result and %s off the Rent result by %d and does not change the ranking.' % (m(B['real_sell'] - surtax['real_sell']), m(B['real_rent'] - surtax['real_rent']), END)),
+        ('40', 'One-time tax of up to 5% on the net worth of taxpayers and trusts with covered assets above $1,000,000,000; covered assets exclude real property and some pensions and retirement accounts',
+         'The figures this household discusses are an order of magnitude below the threshold, and real property was outside the base. If the result holds, no California wealth tax applies to the inherited cash or to the homes.'),
+        ('41', 'Bars new state taxes whose revenue is not counted against the state spending limit and requires audits of proposed special taxes before they reach voters',
+         'A procedural rule for future measures. No effect on this decision.'),
+        ('42', 'Bars new state taxes on personal property (including financial assets and some retirement accounts) and bars certain retroactive state taxes',
+         'If the result holds, a future California wealth tax on the invested sale proceeds would need a further constitutional amendment - a reason to weight the "wealth-tax risk" row of the Black swan page lower than it was before the 2026 election.'),
+        ('1', 'Authorizes bonds for housing affordability programs',
+         'No effect on the decision recorded here; a bond measure does not change the property-tax rate on an existing home.'),
+        ('2', 'Increases the state\'s rainy-day fund',
+         'No direct effect. Relevant only as background to how the state handles revenue swings.')):
+        pcttxt = {'1': 'Yes 61.0%', '2': 'Yes 61.2%', '3': 'Yes 60.7%', '40': 'No 52.4%', '41': 'No 55.1%', '42': 'Yes 51.4%'}[num]
+        rows_ballot.append(['Proposition %s' % num, what,
+                            '%s in unofficial statewide returns read 2026-11-13; all 23,860 precincts reported at least partially; certification due by 2026-12-11' % pcttxt,
+                            eff, src('SOS-RESULTS')])
+    rows_watch = [
+        ['Next adjustment of the Proposition 19 value limit', 'California constitution, biennial formula',
+         '2027-02-16, using the 2026 FHFA California house-price change. Figure: ' + BLANK + ' ' + flag('U04'),
+         'Sets the allowance for transfers from 2027-02-16 to 2029-02-15. It grows with house prices every other year only, so the relief shrinks as values rise.',
+         src('BOE-LTA-2025-009')],
+        ['Proposition 19 could still be changed by voters or the Legislature', 'California',
+         'None of the fourteen measures on the 2026 ballot touches it. Reports of a signature drive to undo it appear on non-official sites only, so this site carries no claim about it. ' + flag('S04'),
+         'Restoring the pre-2021 rule would remove the reassessment penalty from the let home: on this model the first-year tax on a rented Property A falls from %s to %s, and its wealth in %s rises from %s to %s in 2026 dollars. That closes %s of the gap renting now starts behind selling (%s), so the ranking is what would move, if anything.' % (
+             m(B['tax_rent_T']), m(undo['tax_rent_T']), M['years'][1], m(B['real_rent']), m(undo['real_rent']),
+             m((B['real_sell'] - B['real_rent']) - (undo['real_sell'] - undo['real_rent'])),
+             'the best choice stays ' + NAME[undo['best']] if undo['best'] == B['best'] else 'the best choice becomes ' + NAME[undo['best']]),
+         src('SOS-RESULTS', 'BOE-P19')],
+        ['Federal inflation adjustments of the estate exclusion and gift exclusion', 'Federal',
+         'Published each autumn as a Revenue Procedure for the following year; the 2027 figures were published 2026-11-05.',
+         'The exclusion the estate is measured against in %d is projected by indexing the published 2027 figure, not by guessing a policy.' % T,
+         src('RP-2026-35')],
+        ['Local tax rates and the assessors\' rolls', 'County and city',
+         'Santa Clara County\'s fiscal year 2026-27 rate book was not read by this session; the figures used are the fiscal year 2025-26 components (%s) and the San Francisco fiscal year 2026-27 rate. ' % '1.16360% of assessed value' + flag('U03'),
+         'A higher or lower rate area moves every projected tax figure in proportion. The exact rate area of Property A has deliberately not been looked up.',
+         src('SCC-RATES', 'SF-TAX')],
+        ['San Francisco proposed cap on banked and capital-improvement rent increases (File No. 261020)', 'San Francisco',
+         'Not enacted. Introduced 2026-09-15, pending in committee when read 2026-11-12; the Rent Board notice of the proposal was posted 2026-11-09.',
+         'Would limit how fast the two let units of Property B can rise above the ordinary annual increase if the building is rent-controlled (%s).' % flag('Q04'),
+         src('SF-LEG-261020', 'SF-RENT-RULES')],
+        ['San Francisco Empty Homes Tax', 'San Francisco',
+         'The Court of Appeal affirmed on 2026-09-11 that the tax is preempted; the City has stopped collection work.',
+         'No charge on a unit kept empty today. If the decision is reversed on review, a vacant unit at Property B becomes a cost line.',
+         src('SF-EHT')],
+        ['Fixed monthly charge on electricity bills and the solar tariff', 'California',
+         'Adopted: $24.15 a month for standard-tier customers, PG&E rollout from the first quarter of 2026. Existing interconnection agreements keep their legacy tariff - 20 years for net metering 2.0 from the original customer\'s interconnection date; the successor-tariff legacy runs nine years for the original customer only.',
+         'Neither official page says what happens when the customer changes. Until the utility confirms it in writing, the site treats the credit as uncertain: a sensitivity carries electricity at the official minimum of %s a year with no credit at all, which costs the Live choice %s of wealth in %d dollars by %d.' % (m(FIXED_Y), m(B['real_live'] - solar['real_live']), 2026, END),
+         src('CPUC-FIXED', 'CPUC-NEM')],
+        ['Statewide rent cap', 'California',
+         'In force: 5% plus inflation to a 10% maximum in any 12 months, with just-cause eviction rules; many single-family homes owned by individuals are outside it if the tenant was given the written notice.',
+         'If Property A is let and the exemption is lost, the cap limits the rent the Rent choice can earn; it also governs evictions from a unit at Property B.',
+         src('DOJ-TPA')],
+        ['Federal inflation data quality', 'Federal',
+         'The release read 2026-11-10 shows +0.4% for October 2026 after +0.6% in September, but no 12-month change was published for that month: October 2025 data were not collected.',
+         'Every indexed figure on this site comes from a published series; a revised month can move an official adjustment slightly.',
+         src('BLS-OCT')],
+    ]
+    rows_effect = [
+        ['Proposition 19 claim refused (occupancy or exemption test failed)', 'Live in it',
+         m(B['real_live']), m(refuse['real_live']), NAME[refuse['best']],
+         'the whole value is assessed even when the Inheritor lives there - the risk created by already owning Property B', src('RTC-63.2')],
+        ['Proposition 19 undone (pre-2021 rule restored)', 'Rent or hold',
+         m(B['real_rent']), m(undo['real_rent']), NAME[undo['best']],
+         'no reassessment at all on a family home; a voter measure would be needed', src('BOE-P19')],
+        ['California surtax of 1% above $1,000,000 on a one-off gain', 'Sell and reinvest',
+         m(B['real_sell']), m(surtax['real_sell']), NAME[surtax['best']],
+         'Proposition 3 (2026) keeps the higher state rates permanent if the returns hold', src('FTB-MHS', 'SOS-RESULTS')],
+        ['Solar credit does not survive the transfer', 'Live in it',
+         m(B['real_live']), m(solar['real_live']), NAME[solar['best']],
+         'the official minimum fixed charge replaces the credit; no export credit is assumed', src('CPUC-FIXED', 'CPUC-NEM')],
+        ['Insurance priced per dollar of coverage instead of a flat estimate', 'All three',
+         m(B['real_sell']), m(inscaled['real_sell']), NAME[inscaled['best']],
+         'derived from the Department of Insurance statewide averages, not from a quote', src('CDI-SB824')],
+    ]
+    t1 = table(['Change', 'What it does, and its status as read on 2026-11-13', 'Effect on this decision', 'Official basis'], rows_enacted,
+               caption='Enacted or in the statute book now - what a 2040 to 2050 transfer will actually meet')
+    t2 = table(['Measure', 'What it would do', 'Result read on the official returns page', 'Effect on this decision', 'Official basis'], rows_ballot,
+               caption='Decided by voters on 2026-11-03, awaiting the county and state canvass - unofficial returns, subject to change until certification',
+               note='Percentages are the statewide unofficial totals shown on the Secretary of State page when it was read on 2026-11-13, with all 23,860 precincts at least partially reported. They are not certified results and the page warns that results change during the canvass.')
+    t3 = table(['What may change', 'Level', 'Status read 2026-11-13', 'Effect if it happens', 'Official basis'], rows_watch,
+               caption='Not enacted, scheduled to change, or unverified - watch list')
+    t4 = table(['Law change modelled', 'Choice it hits', 'Baseline wealth in %d (2026 dollars)' % END, 'With the change',
+                'Best choice after the change', 'Why it is plausible', 'Official basis'], rows_effect,
+               cls='num', caption='What each legal change does to the answer, measured on the same model',
+               note='Wealth figures are 2026 dollars at the end of the projection, from the model on the Year-by-year page, so only the legal rule moves. Rows come from the sensitivity table; the ranking of the three choices survives every one of them, which is the point of running them.')
+    cal = table(['When', 'What happens', 'Who publishes it', 'Official basis'], [
+        ['By 2026-12-11', 'Certification of the 2026-11-03 ballot measures. Until then the percentages above are unofficial.', 'California Secretary of State', src('SOS-RESULTS')],
+        ['Each January', 'The letter to assessors that fixes the Proposition 13 inflation factor for the year\'s roll (2026: 1.02, because the capped California CPI change exceeded 2 percent).', 'State Board of Equalization', src('BOE-LTA-2026-002')],
+        ['Each February 16 in odd years', 'The next adjustment of the $1,000,000 Proposition 19 value limit, using the prior calendar year\'s FHFA California house-price change.', 'State Board of Equalization', src('BOE-LTA-2025-009')],
+        ['Each March 1', 'The allowable annual increase for San Francisco rent-controlled units (60% of the Bay Area consumer price change; 1.6% for 2026-03-01 to 2027-02-28).', 'San Francisco Rent Board', src('SF-RENT-RULES', 'SF-RENT-2026')],
+        ['Each July 1', 'Fiscal-year tax rates and the water and sewer rate schedules that sit on the bills.', 'County controllers and treasurers; SFPUC', src('SCC-RATES', 'SFPUC')],
+        ['Each October 1', 'The new federal Fair Market Rents and Small Area Fair Market Rents, the only official rent benchmark published for these ZIP codes.', 'U.S. Department of Housing and Urban Development', src('HUD-SAFMR-INDEX', 'FR-FMR-2027')],
+        ['Each November', 'The Revenue Procedure with next year\'s estate, gift and income-tax figures (the 2027 edition, read here, sets $15,480,000).', 'Internal Revenue Service', src('RP-2026-35')],
+        ['After 2029', 'The Schedule A deduction cap reverts to $10,000 unless a later Congress extends it.', 'Internal Revenue Service', src('IRS-SCHED-A')],
+    ], caption='Re-check calendar: the dates on which a figure on this site stops being current')
+    alt = table(['Year of transfer', 'Cash inherited (today\'s dollars)', 'Estate including Property A', 'Exclusion under current law', 'Tax under current law', 'Exclusion if the pre-2018 level had been kept and indexed', 'Tax in that counterfactual', 'Difference', 'Official basis'],
+                [[r['T'], m(r['cash_today']), m(r['gross']), m(r['as_law_excl']), m(r['tax_law']), m(r['alt_excl']), m(r['tax_alt']), m(r['tax_alt'] - r['tax_law']), src('IRS-ESTATE')]
+                 for r in ea['rows'] if r['T'] == T],
+                cls='num', caption='Counterfactual: if the estate exclusion had stayed at $5,490,000 (the 2017 figure) and simply been indexed',
+                note='Not a pending bill and not a forecast: the %s anchor is the published 2017 basic exclusion, indexed forward by the inflation path the model already uses. It is shown because the whole exposure to the estate tax is a policy choice that a future Congress can revisit, and %d years of waiting is long enough for it to happen.' % (m(ea['anchor']), T - 2026))
+    body = ("""<p class="callout"><strong>Why this page exists.</strong> The decision is being made now for a transfer expected between 2040 and 2050. Almost every rule that decides the answer can change in that window, and several of them changed in the twelve months before this page was written. Each row below was read on an official page; where an official page does not exist, the figure is left blank and flagged rather than guessed. Nothing on this page is advice, and nothing here changes the baseline numbers.</p>
+<p class="note"><strong>Reading the certainty of a row:</strong> "in force" means the text was read on the statute or agency page today; "unofficial returns" means a count that can still move until 2026-12-11; "not enacted" means a proposal; "left blank" means no official figure exists yet.</p>"""
+            + t1 + '<h2 id="ballot">The November 2026 election</h2>' + t2
+            + '<h2 id="watch">Watch list</h2>' + t3 + t4 + alt
+            + '<h2 id="calendar">Re-check calendar</h2>' + cal
+            + '<p class="note">The three choices themselves are on the <a href="decision.html">Decision</a> page, the rules they rest on are on the <a href="law.html">Law</a> page, and the open items are on the <a href="flagged.html">Flagged for Review</a> page. This page changes nothing: it is a register of what to re-read and when.</p>')
+    page('pending.html', 'Law changes: enacted, pending, and due to move', t1_caption(), body)
 
 
 # ====================================================================== estate / cash
@@ -798,7 +1253,7 @@ def build_costs():
         ['Official statewide yardstick', 'About $1,130 a policy in 2023 across all residential policy forms, with an average insured building value of about $324,970. Homeowners policies averaged $1,176 over 2008-2023.', 'Landlord (tenant-occupied dwelling-fire) policies averaged $601 over 2008-2023, statewide.', src('CDI-SB824', 'CDI-RPI')],
         ['What the yardstick suggests', 'The owner estimate is of the right order, but a home of this value insures a building worth far more than the state average, so a real quote may be higher.', 'The owner estimate is above the long-run statewide landlord average; a three-unit building in San Francisco may still cost more.', src('CDI-SB824', 'CDI-RPI')],
         ['Owner\'s own estimate used in the model', m(P['ins_home']) + ' a year', m(P['ins_rental']) + ' a year', src('CDI-TOOL')],
-        ['Does a wrong estimate change the decision?', 'No. Tripling it lowers the Live result by %s and leaves the ranking unchanged' % m(M['sensitivity'][0]['real_live'] - M['sensitivity'][15]['real_live']), 'No. Property B is the same in all three choices', src('CDI-TOOL')],
+        ['Does a wrong estimate change the decision?', 'No. Tripling it lowers the Live result by %s and leaves the ranking unchanged' % m(SEN('Baseline')['real_live'] - SEN('three times the owner estimate')['real_live']), 'No. Property B is the same in all three choices', src('CDI-TOOL')],
         ['Wildfire surcharge', '15% to over 300% in higher-risk areas, not shown in the survey. Whether it applies to this home: ' + BLANK, 'Same', src('CDI-TOOL-APP')],
         ['Earthquake', 'Not covered by a homeowners policy; must be offered every other year. Premium: ' + BLANK + ' ' + flag('U02'), 'Same for a landlord policy; confirm with the insurer', src('CDI-EQ', 'USGS')],
         ['Vacancy', 'Losses to a house vacant 60 days or more are generally excluded; flood, earth movement, mold and wear/tear are also excluded', 'Applies to the unit kept empty if it is truly vacant', src('CDI-RES')],
@@ -1151,8 +1606,8 @@ def build_verification():
          'Confirmed today. The model carries the credit for 50 years - flagged as %s' % flag('R41'), src('CPUC-NEM')),
         ('Insurance premiums by ZIP', 'The Department of Insurance comparison tool states that its figures are hypothetical risks for illustration, that wildfire surcharges of 15% to over 300% are not reflected, and that an exact premium requires an agent, broker or insurer quote',
          'Confirmed today - the reason both insurance amounts stay blank and flagged (%s, %s)' % (flag('U01'), flag('U02')), src('CDI-TOOL-APP')),
-        ('HUD rents for fiscal year 2027', 'The fiscal-year-2027 address in the same documentation format as the 2026 page returned "404 - File or directory not found" when opened today',
-         'Not confirmable today: the 2027 figure stays blank %s and the 2026 figure remains in use' % flag('U09'), src('HUD-SAFMR-INDEX')),
+        ('HUD rents for fiscal year 2027', 'The per-ZIP calculator address, tried with a fiscal-year-2027 substitution, returned "404 - File or directory not found"; the release page itself offers only that interactive lookup and a spreadsheet',
+         'Closed later the same day by a different route: the FY2027 ZIP rows were read on HUD\'s FY2027 documentation pages (%s), recorded in the register, and the model still keeps the FY2026 figures by design - see the re-read row below' % src('HUD-SAFMR-INDEX'), src('HUD-27-95014', 'HUD-27-94122')),
     ]
     r8 = [(a, b_, c_.replace(flag('R39'), '<a class="flag" href="review.html#R39">R39</a>')
                               .replace(flag('R40'), '<a class="flag" href="review.html#R40">R40</a>')
@@ -1618,16 +2073,24 @@ def build_flagged():
         ('S', 'Irregularities in sources'),
         ('R', 'Irregularities in the repository'),
     ]
-    # Repository review findings R01-R43 are rendered on the repository review page; the flagged
+    # Repository review findings are rendered on the repository review page; the flagged
     # page keeps one pointer row so that a flag link of the form review.html#R38 resolves.
     cats.append(('RY', 'Repository review findings, listed on the review page'))
-    RYNOTE = ('Every repository review finding (R01-R43) is listed in full, with what was found, what was changed and the official link, on the '
-              '<a href="review.html">repository review</a> page.')
+    # The label is read out of the registry so it cannot go stale again (finding R56: the two
+    # labels on this page and the review page announced ranges the registry did not contain).
+    rids = [int(x['id'][1:]) for x in REVIEW]
+    gaps = [n for n in range(1, max(rids) + 1) if n not in rids]
+    RGAP = (' with no rows numbered %s' % ', '.join('R%02d' % n for n in gaps)) if gaps else ''
+    RLABEL = 'R%02d-R%02d' % (min(rids), max(rids))
+    RYNOTE = ('Every repository review finding (%s%s) is listed in full, with what was found, what was changed and the official link, on the '
+              '<a href="review.html">repository review</a> page.%s'
+              % (RLABEL, RGAP, (' The missing numbers were folded into other findings during the merges of 2026-11-13 rather than '
+                                'renumbered, so the sequence is not contiguous and the gaps are listed here rather than hidden.') if gaps else ''))
     body = '<p class="callout">Flagged for Review. Nothing on this page blocks the rest of the site. Each item says what is missing or uncertain, what was used instead, and where to check it. See <a href="questions.html">Questions &amp; discovery</a> for ways to uncover missing answers and <a href="suggestions.html">Site improvements</a> for candidate model upgrades.</p>'
     for c, title in cats:
         if c == 'R':
             body += table(['No.', 'Item', 'What the site does', 'How to resolve it', 'Where to check'],
-                          [['<span id="R01">R01-R37</span>', 'Repository irregularities found by every review pass', RYNOTE,
+                          [['<span id="R01">%s</span>' % RLABEL, 'Repository irregularities found by every review pass', RYNOTE,
                             'Re-read the row on the review page; each one names the file and the official page.', src('SCC-RATES', 'BOE-LTA-2026-026')]],
                           caption=title)
             continue
@@ -1876,7 +2339,7 @@ class _H(object):
 
 def _helper():
     h = _H()
-    h.m, h.src, h.flag, h.BLANK = m, src, flag, BLANK
+    h.m, h.src, h.flag, h.BLANK, h.pc = m, src, flag, BLANK, pc
     h.P, h.B, h.SENS, h.BE, h.RH, h.BY, h.E = P, B, M['sensitivity'], BE, RH, M['by_T'], [x for x in M['estate'] if x['cash_today'] == 2000000]
     h.SF_GAP = sf_gap
     h.SF_SALE_TAX = (P['sf_value'] * (1 - P['sell_cost']) - P['sf_assessed']) * 0.371
@@ -1983,6 +2446,7 @@ def stub(slug, target, title):
     open(os.path.join(OUT, slug), 'w').write('''<!doctype html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
 <meta http-equiv="refresh" content="0; url=%s">
 <link rel="canonical" href="%s">
 <title>%s - moved</title></head>
@@ -2281,8 +2745,15 @@ def main():
     os.makedirs(OUT, exist_ok=True)
     open(os.path.join(OUT, 'style.css'), 'w').write(CSS)
     open(os.path.join(OUT, 'app.js'), 'w').write(JS)
+    # The detailed Attorney & CPA sheet (session arena/2dbb6877, reviewed and kept as a
+    # block by session arena/7895b5d7) is written from the block file so that the page
+    # cannot drift away from what the generator produces.
+    block = os.path.join(HERE, 'blocks', 'attorney_cpa_briefing.html')
+    if os.path.isfile(block):
+        open(os.path.join(OUT, 'attorney-cpa-briefing.html'), 'w').write(scrub(open(block, encoding='utf-8').read()))
     for f in (build_index, build_decision, build_projections, build_blackswan, build_process, build_law,
-              build_estate, build_costs, build_questions, build_suggestions, build_flagged, build_sources,
+              build_decisions, build_precommit,
+              build_pending, build_estate, build_costs, build_questions, build_suggestions, build_flagged, build_sources,
               build_verification, build_requirements, build_review):
 
         f()
