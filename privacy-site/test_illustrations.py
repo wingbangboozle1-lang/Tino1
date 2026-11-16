@@ -6,7 +6,8 @@ import sys
 from pathlib import Path
 import shutil
 from illustrations import (r10, family_assessment, outlook, investment_path, phased_entry, STRESS, threshold, ledger,
-                           CPI_ANNUAL, cpi_decades, cpi_extremes, cpi_display_rows, outcome_band, band_selftest)
+                           CPI_ANNUAL, cpi_decades, cpi_extremes, cpi_display_rows, episode_replay, cash_leg,
+                           all_start_years, staged_summary, lump_sum_return, STOCK, BILL, GS2, HISTORY, outcome_band, band_selftest)
 from check import pii_kinds
 
 
@@ -174,6 +175,71 @@ class PublicationTests(unittest.TestCase):
 
 if __name__=='__main__': unittest.main()
 
+
+class HistoricalStagedEntryTests(unittest.TestCase):
+    """The staged-entry page is the one page built on real history: check its engine."""
+
+    def test_history_file_is_complete_and_monotonic(self):
+        self.assertEqual(sorted(STOCK), list(range(1928, 2026)))
+        self.assertEqual(sorted(BILL), list(range(1934, 2026)))
+        self.assertEqual(sorted(GS2), list(range(1977, 2026)))
+        # Spot values re-read on the official and academic pages on 2026-11-16.
+        self.assertEqual(round(STOCK[1929], 2), -0.08)
+        self.assertEqual(round(STOCK[2008], 4), -0.3655)
+        self.assertEqual(HISTORY['stock']['status'].startswith('non-government'), True)
+        self.assertEqual(HISTORY['bill3m']['status'].startswith('official'), True)
+
+    def test_cash_leg_never_invents_a_missing_series(self):
+        self.assertIsNone(cash_leg(1929, 3))            # before the bill series
+        self.assertEqual(cash_leg(1973, 3)['mode'], 'bill')    # no 2-year leg yet
+        self.assertEqual(cash_leg(2007, 3)['mode'], 'ladder')  # both legs official
+        leg = cash_leg(2007, 3)
+        self.assertAlmostEqual(leg['rate'], ((BILL[2007]+GS2[2007])/2+(BILL[2008]+GS2[2008])/2
+                                             + (BILL[2009]+GS2[2009])/2)/3)
+
+    def test_empty_park_reproduces_the_lump_sum(self):
+        for year in (1990, 2008, 2015):
+            r = episode_replay(year, park_years=0, phase_years=1)
+            self.assertAlmostEqual(r['staged'], r['lump_sum'], places=12)
+            self.assertAlmostEqual(r['staged'], lump_sum_return(year), places=12)
+
+    def test_proceeds_are_conserved_and_direction_is_as_stated(self):
+        # 1929: the parked leg is an explicit 0% assumption, and staging still wins.
+        self.assertGreater(episode_replay(1929, cash_fallback=0.0)['staged'],
+                           episode_replay(1929, cash_fallback=0.0)['lump_sum'])
+        # 2008: official legs, small advantage, not a large one.
+        r08 = episode_replay(2008)
+        self.assertGreater(r08['staged'], r08['lump_sum'])
+        self.assertLess(r08['staged']/r08['lump_sum'] - 1, 0.10)
+        # 1950: a strong rising market, so the wait is a large cost.
+        self.assertLess(episode_replay(1950)['staged'], episode_replay(1950)['lump_sum'])
+        # An unverifiable window returns blanks rather than a number.
+        blank = episode_replay(1929)
+        self.assertIsNone(blank['staged'])
+        self.assertIsNotNone(blank['lump_sum'])
+
+    def test_distribution_counts_match_the_rows(self):
+        rows = [r for r in all_start_years(3, 3, 10) if r['staged'] is not None]
+        s = staged_summary(rows)
+        self.assertEqual(s['n'], len(rows))
+        self.assertEqual(s['wins'] + s['losses'] + s['ties'], s['n'])
+        self.assertGreater(s['losses'], s['wins'])   # stated on the page
+        self.assertGreaterEqual(s['high'], s['median'])
+        self.assertGreaterEqual(s['median'], s['low'])
+        for r in rows:
+            self.assertTrue(-10 < r['difference'] < 10)
+
+
+class StagedEntryPageTests(unittest.TestCase):
+    def test_page_is_inside_the_allowlist_and_links_its_sources(self):
+        page = Path(__file__).parent/'public'/'phased.html'
+        self.assertTrue(page.is_file())
+        text = page.read_text()
+        self.assertIn('noindex,nofollow', text)
+        for phrase in ('What would change the answer', 'Reinvestment risk',
+                       'Limits, stated plainly', 'not a forecast'):
+            self.assertIn(phrase, text)
+
 class OutcomeBandTests(unittest.TestCase):
     """The dispersion table must be ordered, seeded and honestly labelled."""
 
@@ -206,3 +272,4 @@ class OutcomeBandTests(unittest.TestCase):
         self.assertIn('assigns no probability to any real outcome', page)
         for banned in ('odds of', 'chance of', 'probability of success'):
             self.assertNotIn(banned, page.casefold())
+

@@ -236,6 +236,134 @@ def cpi_display_rows(values=None):
 
 
 # ---------------------------------------------------------------------------
+# Historical episode test of staged entry. Data: data/phased-history.json.
+# The stock leg is academic (non-government); the cash leg is official FRED.
+# ---------------------------------------------------------------------------
+import json as _json
+from pathlib import Path as _Path
+
+HISTORY = _json.loads((_Path(__file__).parent/'data'/'phased-history.json').read_text())
+STOCK = {int(k): v/100 for k, v in HISTORY['stock']['years'].items()}
+BILL = {int(k): v/100 for k, v in HISTORY['bill3m']['years'].items()}
+GS2 = {int(k): v/100 for k, v in HISTORY['gs2']['years'].items()}
+EPS = 1e-4
+
+
+def cash_leg(year, park_years):
+    """Official cash ingredient for the parked window [year, year+park_years).
+
+    Returns dict(rate, mode, years) or None. Modes:
+      'bill'   - mean of the official annual average 3-month bill rate for each
+                 parked year (available from 1934).
+      'ladder' - mean of the bill and 2-year par-yield annual averages, a proxy for
+                 a bill-to-2-year ladder (needs both series, so 1977 onward).
+    A yield is not a total return. The 2-year leg is a holding-price proxy only, and
+    a missing official value is never filled in: ``None`` is returned instead.
+    """
+    years = list(range(year, year+park_years))
+    if not years or any(y not in BILL for y in years):
+        return None
+    if all(y in GS2 for y in years):
+        return dict(rate=sum((BILL[y]+GS2[y])/2 for y in years)/park_years,
+                    mode='ladder', years=tuple(years))
+    return dict(rate=sum(BILL[y] for y in years)/park_years, mode='bill', years=tuple(years))
+
+
+def ladder_rate(year, park_years):
+    """Backwards-compatible accessor: the official rate, or None."""
+    leg = cash_leg(year, park_years)
+    return None if leg is None else leg['rate']
+
+
+def lump_sum_return(start_year, horizon=10):
+    """Growth of 1.0 from the start of the crisis year to the start of year
+    ``start_year+horizon`` on the academic annual total-return series."""
+    if any(y not in STOCK for y in range(start_year, start_year+horizon)):
+        raise ValueError('no stock observation for the whole horizon')
+    value = 1.0
+    for j in range(horizon):
+        value *= 1+STOCK[start_year+j]
+    return value
+
+
+def episode_replay(start_year, park_years=3, phase_years=3, horizon=10, cash_fallback=None):
+    """Equal-installment staged entry on the real calendar-year path starting at ``start_year``.
+
+    Year 0 is the crisis year in which the proceeds arrive. The lump-sum comparison
+    invests at the start of year 0; the staged comparison keeps everything in the
+    cash leg for ``park_years`` years and then moves equal shares into stocks at the
+    start of years ``park_years`` .. ``park_years+phase_years-1``. The last tranche
+    takes whatever is still in cash. Arithmetic annual returns, no tax, fees or
+    inflation; parked cash earns the same ``cash_leg`` rate each parked year.
+
+    ``cash_fallback`` is an explicit assumed rate (0.0 on the page) used only when no
+    official series reaches back far enough; the result then carries mode
+    'assumed' so the assumption is visible. Without a fallback, ``staged`` is None
+    rather than an unverified number.
+    """
+    lump = lump_sum_return(start_year, horizon)
+    if park_years == 0:      # nothing is parked, so the cash rate cannot matter
+        rate, mode = 0.0, 'none'
+        leg = dict(mode='none', rate=0.0, years=())
+    else:
+        leg = cash_leg(start_year, park_years)
+    if park_years:
+        mode = leg['mode'] if leg else None
+        rate = leg['rate'] if leg else None
+    if leg is None and cash_fallback is not None:
+        rate, mode = cash_fallback, 'assumed'
+    if leg is None and rate is None:
+        return dict(start_year=start_year, park_years=park_years, phase_years=phase_years,
+                    cash_rate=None, cash_mode=None, lump_sum=lump, staged=None, difference=None)
+    cash, equity = 1.0, 0.0
+    for j in range(horizon):
+        if park_years <= j < park_years+phase_years:
+            move = cash/(park_years+phase_years-j)
+            cash -= move
+            equity += move
+        if j < park_years:
+            cash *= 1+rate
+        equity *= 1+STOCK[start_year+j]
+    staged = cash+equity
+    return dict(start_year=start_year, park_years=park_years, phase_years=phase_years,
+                cash_rate=rate, cash_mode=mode, lump_sum=lump, staged=staged,
+                difference=staged-lump)
+
+
+def all_start_years(park_years=3, phase_years=3, horizon=10, first=1934, last=2015):
+    """Every entry year on which the official cash leg and the stock leg both exist."""
+    out = []
+    for year in range(first, last+1):
+        try:
+            out.append(episode_replay(year, park_years, phase_years, horizon))
+        except ValueError:
+            continue
+    return out
+
+
+def staged_summary(rows):
+    """Counts and medians of staged-minus-lump-sum across complete entry years.
+
+    ``difference`` is in units of the starting amount (1.0 == the whole principal).
+    ``ratio`` is the same gap relative to the lump-sum endpoint, which is the number a
+    reader can act on: -0.21 means the staged path ended 21% below the lump sum.
+    """
+    rows = [r for r in rows if r['staged'] is not None]
+    diffs = sorted(r['difference'] for r in rows)
+    ratios = sorted(r['staged']/r['lump_sum']-1 for r in rows)
+    n = len(diffs)
+    wins = sum(1 for d in diffs if d > EPS)
+    losses = sum(1 for d in diffs if d < -EPS)
+    def median(xs):
+        m = len(xs)//2
+        return xs[m] if len(xs) % 2 else (xs[m-1]+xs[m])/2
+    return dict(n=n, wins=wins, losses=losses, ties=n-wins-losses,
+                median=median(ratios) if ratios else None,
+                low=ratios[0] if ratios else None, high=ratios[-1] if ratios else None,
+                median_principal=median(diffs) if diffs else None,
+                low_principal=diffs[0] if diffs else None, high_principal=diffs[-1] if diffs else None)
+
+# ---------------------------------------------------------------------------
 # Dispersion test: a single point estimate hides how wide the range is.
 # Every input below is invented and stated on the page. This is NOT a forecast,
 # NOT an odds statement and NOT calibrated to any historic series.
