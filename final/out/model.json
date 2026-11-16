@@ -6410,10 +6410,11 @@
 }
 },
 {
-"label": "Top tax bracket (37% federal, 12.3% state)",
+"label": "Top tax bracket (37% federal; CA 13.3% top marginal rate on gains above $1M - 12.3% top bracket plus the 1% Form 540 surtax on taxable income over $1,000,000, R&TC 17043)",
 "change": {
 "t_fed_ord": 0.37,
 "t_ca": 0.123,
+"t_ca_lump": 0.133,
 "t_fed_ltcg": 0.2
 },
 "T": 2045,

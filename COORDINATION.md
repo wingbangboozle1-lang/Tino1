@@ -2737,3 +2737,27 @@ Verification performed in this session before it was superseded: `final/model.py
 - 2026-11-15 — V-2: all build/check scripts pass (see task table above).
 - 2026-11-15 — V-3: PR #115 created and merged to main; Pages build 1373151938 status `built`, error `null`; live at https://wingbangboozle1-lang.github.io/Tino1/
 - 2026-11-15 — V-4: PII scan clean across root HTML files. Privacy risk (public repo + pre-rounding history) logged for owner decision.
+
+## Session `arena/f391f643-tino1` — CA Form 540 / RTC §17043 verification, sensitivity update, publication-boundary confirmation (2026-11-16 UTC)
+
+**Branch:** `arena/f391f643-tino1` (fixed by the platform). **Base:** `main` @ `181be9e`. **Session ID:** `arena/f391f643-tino1`.
+
+### Claim
+
+| # | Task | Status | Owner | File scope | Notes |
+|---|------|--------|-------|------------|-------|
+| F3-0 | Claim and coordination | done | arena/f391f643-tino1 | COORDINATION.md (append only) | This entry; claim committed and pushed before content work. |
+| F3-1 | Official-source verification of the CA 1% tax above $1M and capital-gains treatment (Form 540 / RTC §17043) | done | arena/f391f643-tino1 | final/sources.py (new RTC-17043 entry), final/model.py | RTC §17043 read directly on leginfo.legislature.ca.gov: 1% additional tax on taxable income over $1,000,000 for taxable years beginning on/after 1 Jan 2005 (Prop 63). FTB-MHS / FTB-RATES already cited. Capital-gains-as-ordinary-income is the model's standing treatment (no separate CA rate); no unconfirmed value added. |
+| F3-2 | Update the sensitivity value to reflect the verified rule | done | arena/f391f643-tino1 | final/model.py | Top-tax-bracket sensitivity now explicitly sets t_ca_lump=0.133 and labels the 13.3% top marginal CA rate (12.3% top bracket + 1% Form 540 surtax over $1M, R&TC 17043). Sell-under-top-bracket moved from $9,747,210 to $9,362,776. |
+| F3-3 | Rebuild the model and re-run all verification gates | done | arena/f391f643-tino1 | final/out/model.json | `final/check.py .` OK: 31 pages, 1126 table rows each with an official link, 3060 links, 2638 $10-rounded figures, 6-digit scan against 16139 model numbers clean, model self-tests passed on 51 paths. `privacy-site/check.py` PASS (14 public pages, 420 official-linked rows). `final/publish.py --check` OK (16-file allowlist). |
+| F3-4 | PR → main, merge, confirm Pages deploy, record result | in progress | arena/f391f643-tino1 | branch commits + COORDINATION.md | See PR/merge record below. |
+
+### Publication-boundary decision (G01/G02)
+
+The verified numeric decision analysis (live / rent / sell, mixed and phased paths, black-swan stress, Property B already-owned and not reassessed, no basis reset on B) is built, rounded to the nearest $10, placeholder-only for people/properties, and every table row carries an official source link. It passes all verification gates but is **not** served from GitHub Pages: the publication boundary is the generic landing plus the figure-free `privacy-site/public/` guide (16 files), enforced by `final/check_published.py`, `privacy-site/check_published.py` and `check_fresh()` (committed root pages must match `final/build.py` byte-for-byte; most committed root pages are hand-customized and do not, so publishing them would break the gate). Per the brief, rounding to $10 is disclosure minimisation, not anonymisation; whether to publish the rounded numeric edition remains the owner's open decision G01/G02. The live figure-free site is at https://wingbangboozle1-lang.github.io/Tino1/.
+
+### PR / merge record
+
+- PR: to be created from `arena/f391f643-tino1` into `main`.
+- Merge result and Pages deploy: to be recorded after merge.
+
