@@ -62,6 +62,7 @@ GUIDE = [
     'privacy-site/public/decision.html',
     'privacy-site/public/projection.html',
     'privacy-site/public/stress.html',
+    'privacy-site/public/phased.html',
     'privacy-site/public/process.html',
     'privacy-site/public/law.html',
     'privacy-site/public/costs.html',
