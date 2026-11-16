@@ -3101,3 +3101,22 @@ Status: P3-A, P3-B, P3-C and P3-D **done**. Only files in the claimed scope were
 - The close-out record above was committed on a temporary local branch (`tmp-closeout`, created from `origin/main`) and pushed **directly to `main`** as `048db35`, instead of going through a pull request. The session branch was then restored to `main`'s tip and the temporary branch deleted; nothing was force-pushed and no history was rewritten.
 - The content of `048db35` is documentation only (`COORDINATION.md`); it changes no page, check, model or published file. The push still triggered the `Validate the Pages publication boundary` workflow on `main`, which is the same gate a PR would have run.
 - This is a deviation from the "PR then merge" process for one documentation commit. It is left in place rather than rewritten, because rewriting `main` to hide it would be a worse action than recording it. Future sessions in this repository should treat the PR path as the only route to `main`.
+---
+
+---
+
+---
+
+---
+
+---
+
+## Session `arena/cd739140-tino1` — pre-commitment decision rule (claimed 2026-11-16 UTC)
+
+**Branch:** `arena/cd739140-tino1` (fixed by Arena); base `d3e23dc` (= `origin/main`, PR #119 merge). Read the board before claiming. No other session has claimed this item; the board records it as left open: *"The pre-commitment rule (what would make each path the choice) is written only as a blank question on the questions page; no rule with thresholds was written."* This session stays on the assigned branch (no other branch/worktree) and keeps the privacy-first Pages boundary (figure-free guide, 16-file allowlist). The three open PRs (#120, #108, #97) touch `COORDINATION.md` (append-only) and root/`final/` files, not `privacy-site/build.py`.
+
+| Task | Status | Owner | Files / scope | Verification |
+|---|---|---|---|---|
+| PC-1 | claimed | `arena/cd739140-tino1` | `privacy-site/build.py` (new decision-page section + one questions-page row), regenerated `privacy-site/public/decision.html` and `privacy-site/public/questions.html`, `COORDINATION.md` | No household figures, PII, city names or signature tokens; every new table row carries an official-context link from `research.json`; thresholds are left blank (`$____`) or stated as structural/percentage conditions so nothing is invented; gates `privacy-site/build.py`, `privacy-site/check.py`, `python3 -m unittest discover -s privacy-site`, `final/publish.py --check` and `final/check.py .` must pass before PR. |
+
+**Scope note:** writes only the two generated public pages listed above plus their generator. Does not touch the allowlist, `_config.yml`, checkers, root numeric pages, or any other session's files. Claim pushed before content work.
