@@ -71,6 +71,39 @@ def lump_end(R, s):
     return metrics(R, s, 0, 1)['end']
 
 
+# Official Treasury annual averages, read on 2026-11-16 (session arena/83baf48f-tino1) from the FRED
+# graph endpoint with fq=Annual&fam=avg: GS2 = 2-year constant-maturity Treasury yield (H.15);
+# TB3MS = 3-month Treasury bill secondary market rate. Percent per year.
+GS2_AVG = {2006: 4.82, 2007: 4.36, 2008: 2.00, 2009: 0.96, 2010: 0.70, 2011: 0.45}
+TB3MS_AVG = {2006: 4.73, 2007: 4.35, 2008: 1.37, 2009: 0.15, 2010: 0.14, 2011: 0.05}
+
+
+def official_check(R):
+    """Cross-check the bill proxy against the official 3-month series, then test the 2-year sleeve.
+
+    The sleeve return for 2007-2010 is replaced by the 2-year yield annual average (a yield, not a
+    total return: a 2-year bought in those years would also have gained or lost on price, which this
+    test does not model). Other years are unchanged. Only a sensitivity; the page's main test is not changed.
+    """
+    out = dict(gs2_avg_pct=GS2_AVG, tb3ms_avg_pct=TB3MS_AVG, nyu_bill_minus_tb3ms_pts={}, sleeve_2y={})
+    for y in range(2007, 2011):
+        out['nyu_bill_minus_tb3ms_pts'][str(y)] = round(R[y]['bill'] * 100 - TB3MS_AVG[y], 2)
+        out.setdefault('gs2_minus_tb3ms_pts', {})[str(y)] = round(GS2_AVG[y] - TB3MS_AVG[y], 2)
+    R2 = {y: dict(v) for y, v in R.items()}
+    for y in range(2007, 2011):
+        R2[y]['bill'] = GS2_AVG[y] / 100.0
+    for s in (2007, 2008):
+        rows = {}
+        for n, k in ((2, 2), (2, 3), (3, 2), (3, 3)):
+            a = metrics(R, s, n, k)['end']
+            b = metrics(R2, s, n, k)['end']
+            rows['park%d_phase%d' % (n, k)] = dict(bill_proxy_end=round(a, 4), two_year_sleeve_end=round(b, 4),
+                                                  change_pct_of_proceeds=round((b - a) * 100, 2))
+        rows['lump_end'] = round(metrics(R, s, 0, 1)['end'], 4)
+        out['sleeve_2y'][str(s)] = rows
+    return out
+
+
 def compute(proceeds=None):
     R = load()
     last_start = max(R) - HORIZON + 1
@@ -112,6 +145,7 @@ def compute(proceeds=None):
         y1929_1931=statistics.mean(R[y]['bill'] for y in range(1929, 1932)),
         y2009_2015=statistics.mean(R[y]['bill'] for y in range(2009, 2016)))
     out['proceeds'] = proceeds
+    out['official_check'] = official_check(R)
     return out
 
 

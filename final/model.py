@@ -78,6 +78,13 @@ P = dict(
                                 #   only as one labelled scenario in `sensitivity` below.
     step_up=True,
     T=2045,
+    # --- Proposition H (San Francisco parcel tax, approved by voters 2026-11-03; official terms read on
+    #     SFMTA's page 2026-11-16). Multifamily rate: $249 up to 5,000 sq ft of building area, plus $0.195 per
+    #     sq ft over 5,000, capped at $50,000. Starts with the FY 2027-28 bill; rises with inflation from FY 2028-29.
+    #     prop_h_sf is the building area, which is NOT in the repository (owner input). The default is the
+    #     5,000 sq ft point, which gives the MINIMUM tax for a multifamily parcel ($249), not an estimate of the
+    #     owner's bill. Parcel classification to be confirmed by the SFMTA (flag U-PH1).
+    prop_h_base=249, prop_h_per_sf=0.195, prop_h_cap=50_000, prop_h_sf=5_000, prop_h_start=2027,
 )
 
 # derived, shown rounded.  Scenario input only (S5-P1): letting the third unit at the average of the two known
@@ -220,6 +227,7 @@ def simulate(path, p=P):
     A = {k: Acct() for k in ('live', 'rent', 'sell')}
     rows = []
     summary = {}
+    ph_amt = 0.0
     for y in range(Y0, Y1 + 1):
         e = path.get(y)
         if y > Y0:
@@ -255,9 +263,15 @@ def simulate(path, p=P):
         # ---------------- Property B (SF): status quo every year ----------------
         av_s = min(fby_s, Vs)
         tax_s = av_s * p['rate_sf'] + dc_s
+        if y == p['prop_h_start']:
+            ph_amt = min(p['prop_h_base'] + p['prop_h_per_sf'] * max(p['prop_h_sf'] - 5000, 0), p['prop_h_cap'])
+        elif y > p['prop_h_start']:
+            ph_amt *= 1 + e['infl']                          # indexed to inflation from FY 2028-29
+        prop_h = ph_amt if y >= p['prop_h_start'] else 0.0
         row = dict(year=y, cpi=cpi, cup_value=Vc, sf_value=Vs, sf_assessed=av_s, sf_tax=tax_s,
                    sf_ins=ins_r, sf_water=wat_s, sf_elec=el_s, sf_maint=maint_s, sf_rent=rent_s2,
-                   sf_net=rent_s2 * (1 - p['vacancy']) - tax_s - ins_r - wat_s - el_s - maint_s,
+                   sf_prop_h=prop_h,
+                   sf_net=rent_s2 * (1 - p['vacancy']) - tax_s - prop_h - ins_r - wat_s - el_s - maint_s,
                    p19_cap=cap, exclusion=excl, cup_fbyv=min(fby_c, Vc), phase='before' if y < T else 'after',
                    ins_home=ins_h, ins_rental=ins_r, cup_water=wat_c, cup_elec=el_c, cup_maint=maint_c,
                    cup_rent=rent_c)
@@ -550,6 +564,7 @@ def main():
         ('Top tax bracket (37% federal, 12.3% state)', dict(t_fed_ord=0.37, t_ca=0.123, t_fed_ltcg=0.20)),
         ('Third unit at Property B let at the average of the two known unit rents (scenario only; the baseline counts none)', dict(rent_sf_unit3=True)),
         ('Insurance three times the owner estimate', dict(ins_home=4500, ins_rental=4500)),
+        ('Prop H at a hypothetical 10,000 sq ft Property B building (not the owner\'s building; Property B only)', dict(prop_h_sf=10000)),
         ('Maintenance doubled', dict(maint_cup=12000)),
         ('No basis step-up (trust assets outside the estate)', dict(step_up=False)),
     ]

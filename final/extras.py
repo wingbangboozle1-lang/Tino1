@@ -198,14 +198,34 @@ def build_phased(B, res):
                  caption='All %d entry years tested, %d to %d' % (nstarts, res['first_start'], res['last_start']),
                  note='Reading: in most entry years the lump sum ends higher, because stocks rose in most years. Phasing reduces the worst falls. That is the trade-off the owner is choosing between.')
     bs = res['bill_stats']
+    oc = res['official_check']
+    _nyu = [abs(v) for v in oc['nyu_bill_minus_tb3ms_pts'].values() if v is not None][:4]
+    _nyu_08_10 = max(abs(oc['nyu_bill_minus_tb3ms_pts'][str(y)]) for y in (2008, 2009, 2010))
+    _gap = [oc['gs2_minus_tb3ms_pts'][str(y)] for y in (2008, 2009, 2010)]
+    _moves = [v['change_pct_of_proceeds'] for s_ in oc['sleeve_2y'].values() for k_, v in s_.items() if k_.startswith('park')]
+    def _order(d):
+        return sorted(k_ for k_ in d if k_.startswith('park') or k_ == 'lump_end') 
+    _same = all(
+        sorted((k_ for k_ in oc['sleeve_2y'][s_] if k_.startswith('park')), key=lambda k_: -oc['sleeve_2y'][s_][k_]['bill_proxy_end'])
+        == sorted((k_ for k_ in oc['sleeve_2y'][s_] if k_.startswith('park')), key=lambda k_: -oc['sleeve_2y'][s_][k_]['two_year_sleeve_end'])
+        for s_ in oc['sleeve_2y'])
+    _same_txt = 'does not change' if _same else 'CHANGES'
+    _nyu_txt = '%.2f' % _nyu_08_10
+    _parked_li = ("<li><strong>Parked cash is a proxy, now checked against official data.</strong> The test parks cash in the "
+                  "3-month bill. On 2026-11-16 that bill return was checked against the official 3-month annual averages: within %s points "
+                  "for 2008 to 2010. The 2-year Treasury, which the brief names, paid %s to %s points more in 2008 to 2010 (official annual "
+                  "averages). Using it for 2007 to 2010 raises the parked-path results by %s to %s percent of the proceeds and %s the order "
+                  "of the four parked paths in either entry year. Yields are not total returns, and a ladder return from daily data is not "
+                  "computed (flag A14). %s</li>") % (_nyu_txt, '%.2f' % min(_gap), '%.2f' % max(_gap), '%.1f' % min(_moves),
+                  '%.1f' % max(_moves), _same_txt, B.src('FRED-GS2', 'FRED-TB3MS'))
     body = """
 <h2>What the test asks</h2>
 <ul>
 <li><strong>Question.</strong> If the sale proceeds wait in short Treasuries for 24 or 36 months after the inheritance, and only then move into stocks, how much of a crash that starts at entry is avoided, and what does the wait cost in years with no crash?</li>
 <li><strong>Method.</strong> Real annual history from 1928 to 2025. Cash earns the 3-month Treasury bill return; stocks earn the S&amp;P 500 total return. Each path is followed for 10 years after entry. Tranches are equal and move at the start of each year. %s</li>
-<li><strong>Parked cash is a proxy.</strong> The 2-year Treasury series is not in the repository, so the 3-month bill stands in for the 3-month to 2-year range the brief names. The owner should check the 2-year history on the Treasury page before relying on dollar differences. %s</li>
+%s
 </ul>
-""" % (flagged('S-PHASE'), B.src('TREASURY')) + t1 + t2 + t3 + """
+""" % (flagged('S-PHASE'), _parked_li) + t1 + t2 + t3 + """
 <h2>Reinvestment risk on the parked cash</h2>
 <p>Parked cash earns whatever bills yield in those years, and that is not fixed. The average 3-month bill return was about <strong>%s</strong> a year over 1928 to 2025, about <strong>%s</strong> over 1929 to 1931, and about <strong>%s</strong> over 2009 to 2015. The parked cash earns no stock growth, so a long wait gives up part of any recovery. %s</p>
 """ % (pc_(bs['all_1928_2025'], 1), pc_(bs['y1929_1931'], 1), pc_(bs['y2009_2015'], 2), PHASED_SRC(B)) + """
