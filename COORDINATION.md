@@ -2870,3 +2870,16 @@ Not done in this session (left on the board for an owner decision or a later ses
 | Owner decisions still open (not taken here) | Repository visibility; history rewrite of pre-rounding figures (CR-1A-4); whether to add a 1% add-on term to the private numeric model. |
 
 Next action for this branch: re-check the Pages run for `fc42e61` or later, and record the live result here once the deploy is confirmed.
+
+## Session `arena/7f5b13be-tino1` — decision-first landing and privacy boundary close-out (claimed 2026-11-16 UTC)
+
+**Branch:** `arena/7f5b13be-tino1` (fixed by Arena; one-branch workspace). **Base:** `main` @ `181be9ea7004b7c68602597d1add962d099a692e`.
+
+| Task | Status | Owner | Files / scope | Verification |
+|---|---|---|---|---|
+| P-0 Claim and coordinate | in progress | `arena/7f5b13be-tino1` | `COORDINATION.md` (this record) | Claim committed and pushed before product edits. Earlier board entries show the substantive model/site requests are already implemented; no currently active task was found. |
+| P-1 Put decision-changing facts on the first screen | in progress | `arena/7f5b13be-tino1` | `privacy-site/landing.html`, generated root `index.html`, `privacy-site/check.py` | Add a concise, private-data-free statement of the current decision status and highest-impact unknowns; enforce it in the public-site gate. |
+| P-2 Recheck current public privacy boundary and record remaining exposure | in progress | `arena/7f5b13be-tino1` | `README.md`, `privacy-site/README.md`, `COORDINATION.md` | Inspect the exact Pages allowlist, run its checks, verify repository visibility/history facts with GitHub/local Git, and document what this branch can and cannot safely remediate. Do not publish household values or rewrite/delete shared history/refs from this branch. |
+| P-3 Full local validation and integration | in progress | `arena/7f5b13be-tino1` | CI-facing checks only; no other task scope | Rebuild the public site, run tests and privacy/publication checks, validate Jekyll allowlist in CI, and record sources and irregularities. |
+
+**Coordination constraint:** the user requested separate parallel branches, but the workspace and developer instructions fix all work to this branch. This session is the final integration pass on the current main snapshot; it will not create, switch to, or push another branch. No other task currently marked in progress was found at the board tail.
