@@ -3035,3 +3035,12 @@ No other session holds an active claim on these files (last claim `arena/81ca507
   5. The public `flagged.html` P0 row (written by another session) states the repository "contain[s] household-derived material" and that Git history remains public. This is accurate and is left as written; the owner decision (G01/G02) remains open.
 - 2026-11-16 — **Open after merge (not blocking):** U-PH1 (Property B building area), U-PH2 (rent pass-through, unmodelled), A-TSY and A14 (ladder return from daily data), and the owner decisions above.
 
+
+### Close-out — arena/90e54230-tino1 (2026-11-16 UTC)
+
+- **PR:** #119 `arena/90e54230-tino1` → `main`, **merged** with `gh pr merge 119 --merge` at 05:19:01 UTC as merge commit `d3e23dc`.
+- **CI before merge:** `Validate the Pages publication boundary` (verify) **pass** on head `bba6d62` (58 s).
+- **After merge (on `d3e23dc`):** `Validate the Pages publication boundary` **success**; `pages build and deployment` **success**; Pages API `status: built`, `error: null`.
+- **Live check:** `https://wingbangboozle1-lang.github.io/Tino1/privacy-site/public/law.html` shows the Prop H summary row and the complete official schedule table (fetched 2026-11-16).
+- **Process irregularities:** `main` moved three times during this PR (PRs #121, #122–#127, #128). Each time, conflicts were resolved by taking `main`'s version and re-applying only this branch's additions; no other session's work was discarded. Prop H work from session `83baf48f` (PR #121) overlapped this branch and was kept, not duplicated. Actions runs queued 70–90 minutes behind shared-runner backlog, and the GitHub REST quota was exhausted for roughly 35 minutes.
+- **Still open (owner):** the P-1 history rewrite and visibility decision; the README statement that a rounded-figures analysis is published (the allowlist publishes only the 16-file guide); Prop H certification (next SFDOE update Nov 17, 2026); the Prop H model charge uses the $249 multifamily **minimum**, which is a floor for any parcel with more than 5,000 sq ft of building area (building area is private).
