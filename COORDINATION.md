@@ -2854,3 +2854,19 @@ Not done in this session (left on the board for an owner decision or a later ses
 
 - PR #118 (https://github.com/wingbangboozle1-lang/Tino1/pull/118) was merged with `gh pr merge 118 --merge` at 2026-11-16 01:21:45 UTC; merge commit `abe93cf71a0bd0aef1350fecbea608c3ed1d2852` is on `main`.
 - At the time of the post-merge check, the `verify` workflow run 43785808043 remained **queued**. The GitHub Pages latest-build API request returned HTTP 403 rate-limit exhaustion, so Pages deployment success is **not confirmed here**; no success is claimed. Local exact-output, PII, link, generation and model gates passed before merge. Follow up on the Actions run and Pages build status when GitHub checks are available.
+
+### arena/9bf08f53-tino1 — merge record (2026-11-16 UTC)
+
+| Item | Result |
+|------|--------|
+| PR | #124 — "9B-1..9B-5: what-would-change block, deadline timeline, like-kind/recapture questions, investment-policy template, Form 540 Line 62 verified" — https://github.com/wingbangboozle1-lang/Tino1/pull/124 |
+| Merge | `gh pr merge 124 --merge` at 2026-11-16 01:15:03 UTC, merge commit `97d8c1a` on `main`. State: MERGED. Merged without waiting for review, per the brief. |
+| Claim commit | `fa4e8c2` (board only) rebased onto `main` @ `eca8647` as `2a44111`. Remote branch force-updated with lease pinned to `fa4e8c2` (no other commits on the remote branch). |
+| Gates, run on the rebased tree and again on `main` @ `06e490a` | `privacy-site/build.py` reproduces `privacy-site/public` with no diff; `privacy-site/check.py` PASS (463 official-context-linked rows); unittest 13/13 OK; `final/publish.py --check` OK (16-file allowlist); `final/check.py .` OK (31 pages, 1,126 rows, 3,060 links, 2,638 $10-rounded figures). |
+| CI "Validate the Pages publication boundary" | Run `43785143107` (merge `97d8c1a`) still **queued** at 01:34 UTC; the runner queue has not advanced since creation at 01:15. Later `main` pushes (`fc42e61`, `06e490a`) also queued. Not a failure: no job has run. Re-check the run before relying on it. |
+| GitHub Pages deploy | Run `43785142744` for `97d8c1a` was **cancelled** at 01:21 UTC, superseded by a newer push (normal). Run `43786377060` for `fc42e61` is **queued** since 01:27 UTC. **Not yet confirmed.** At 01:34 UTC the live site https://wingbangboozle1-lang.github.io/Tino1/privacy-site/public/process.html still showed the pre-merge page (no "Deadline timeline" table). The merged content is on `main` (verified with `git show origin/main:privacy-site/public/process.html`). |
+| Irregularities | `final/check_published.py .` run against the repo root reports `whatif.js` as "published but not declared". The file is in the `exclude:` list of `_config.yml` and is pre-existing (`181be9e`); CI checks `_site`, where excluded files are absent. Not a publication change. |
+| Flagged (non-blocking, on the Flagged for Review page) | 9B-F1 (§1250 from non-government LII mirror); 9B-F2 (Form 706 extension wording corrected); 9B-F3 (private numeric build's "renamed from" phrase for the 1% add-on not supported by the booklet text read; not published); 9B-F4 (private numeric model has no 1% add-on term; owner decision). |
+| Owner decisions still open (not taken here) | Repository visibility; history rewrite of pre-rounding figures (CR-1A-4); whether to add a 1% add-on term to the private numeric model. |
+
+Next action for this branch: re-check the Pages run for `fc42e61` or later, and record the live result here once the deploy is confirmed.
