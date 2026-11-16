@@ -10,7 +10,12 @@ NAV = {'index.html','decision.html','projection.html','stress.html','process.htm
 FILES = NAV | {'style.css'}
 REGISTRY = json.loads((ROOT.parent/'research.json').read_text())
 SOURCES = {s['url'] for s in REGISTRY['sources'].values()}
-REVIEWED_NON_GOV_HOSTS = {'docs.github.com', 'federalreservehistory.org', 'www.federalreservehistory.org'}
+# Exact published rates of Proposition H (SFMTA page) and the Controller's published estimate. Public amounts, not household figures.
+OFFICIAL_WHOLE_RATES = {'65','129','249','392','549','799','969','3,174','34,999','202,999','177'}  # '177' = Controller's published $177 million estimate
+OFFICIAL_DECIMAL_RATES = {'0.195','0.42','0.76','0.84','0.99','1.99'}
+REVIEWED_NON_GOV_HOSTS = {'docs.github.com', 'federalreservehistory.org', 'www.federalreservehistory.org',
+    # Official San Francisco agency sites (not .gov): the transit agency's Proposition H page and the Department of Elections results.
+    'www.sfmta.com', 'www.sfelections.org'}
 PII_PATTERNS = {
     'street address': r'\b\d{1,5}\s+[A-Z][A-Za-z-]+(?:\s+[A-Z][A-Za-z-]+)?\s+(?:Street|St\.?|Avenue|Ave\.?|Drive|Dr\.?|Way|Court|Ct\.?|Lane|Ln\.?|Road|Rd\.?|Boulevard|Blvd\.?)\b',
     'email address': r'[\w.+-]+@[\w-]+\.[\w.-]+',
@@ -105,7 +110,7 @@ def main():
         text = (ROOT/name).read_text()
         assert 'noindex,nofollow' in text and 'no-referrer' in text
         assert 'Content-Security-Policy' in text
-        assert 'SOURCE CHECKS <i></i> 12–13 NOV 2026' in text
+        assert 'SOURCE CHECKS <i></i> 12–16 NOV 2026' in text
         pii = pii_kinds(text)
         assert not pii, f'Personal-data pattern(s) in {name}: {", ".join(pii)}'
         # Defense in depth against known rounded household signatures and location
@@ -115,8 +120,12 @@ def main():
             assert token not in text, f'Household signature in {name}'
         for token in ('Cupertino','San Francisco','sftreasurer.org','sf.gov'):
             assert token.casefold() not in text.casefold(), f'Household-locality cue in {name}'
-        for amount in re.findall(r'\$([\d,]+)(?![\d,])', text):
-            assert int(amount.replace(',','')) % 10 == 0, (name,amount)
+        for amount in re.findall(r'\$([\d,]+(?:\.\d+)?)(?![\d,])', text):
+            # Official statutory/measure rates are published exactly; only these are exempt from $10 rounding.
+            if '.' in amount:
+                assert amount in OFFICIAL_DECIMAL_RATES, (name, amount)
+            else:
+                assert int(amount.replace(',','')) % 10 == 0 or amount in OFFICIAL_WHOLE_RATES, (name, amount)
         p = Check(); p.feed(text)
         assert p.headings == 1 and p.current == 1 and p.captions == p.tables
         pages[name] = p

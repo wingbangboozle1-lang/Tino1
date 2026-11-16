@@ -2750,3 +2750,34 @@ Verification performed in this session before it was superseded: `final/model.py
 | P-4 | Rebuild, all gates (CI-equivalent), PR to `main`, merge, Pages deploy confirmation | claimed | `arena/90e54230-tino1` | `COORDINATION.md` | Only integration step touching `main`. |
 
 No other session holds an active claim on these files (last claim `arena/81ca5078-tino1`, closed 2026-11-15).
+
+### Results — arena/90e54230-tino1 (2026-11-16 UTC)
+
+**P-2 — Proposition H (done; sources checked 2026-11-16)**
+- *Sources (official):* SF Department of Elections, Nov 3, 2026 results (preliminary, last update Nov 10, 2026): https://www.sfelections.org/results/20261103/index.html · SFMTA "Proposition H: Stronger Muni For All Parcel Tax" (rates, dates, exemptions, rent pass-through, billing): https://www.sfmta.com/getting-around/muni/parcel
+- *Verified:* approved (74.4% yes, 244,760 votes; 25.6% no, 84,209 votes, preliminary); annual parcel tax July 1, 2027–June 30, 2042; first bill FY 2027–28; full official rate schedule by parcel type and building area; SFMTA examples ($129; $549; $3,174); senior relief by application due June 1; SRO exclusion; rent-controlled pass-through 50% up to $65 per unit per year; inflation adjustment from FY 2028–29; Controller estimate $177M a year.
+- *Not verified / flagged:* certification (due within 30 days of Election Day; next SFDOE update Nov 17, 2026); any parcel-specific amount (needs official building area, private); inflation-indexed amounts after FY 2027–28. Non-official estimates in press and advocacy pieces ($160M, $184M) are **not** used.
+- *Published:* `privacy-site/public/law.html` (summary row + official schedule table), `flagged.html` (P13, P14), registry `research.json` (`prop_h`, `prop_h_results`).
+- *Implementation note:* the publication checker had no exemption for statutory rates. A narrow, named allowlist of exact official rates (`OFFICIAL_WHOLE_RATES`, `OFFICIAL_DECIMAL_RATES` in `privacy-site/check.py`) now exempts only these published amounts from the $10 display rule; all household-type amounts stay $10-rounded. Two `.org`/`.com` official city-agency hosts (`www.sfmta.com`, `www.sfelections.org`) are added to the reviewed-host list alongside `.gov` hosts.
+
+**P-3 — Form 540 1% surtax and capital gains (done; sources checked 2026-11-16)**
+- *Sources (official):* 2025 Form 540 booklet, line 62: https://www.ftb.ca.gov/forms/2025/2025-540-booklet.pdf · 2024 Form 540 booklet (prior line-62 title; read as a search excerpt only, not opened in full): https://www.ftb.ca.gov/forms/2024/2024-540-booklet.pdf · FTB capital-gains page (already in registry as `ftb`) · RTC §17043 (already in registry as `t117043`).
+- *Verified:* line 62 is now titled **Behavioral Health Services Tax**. If taxable income (line 19) is more than $1,000,000: subtract $1,000,000, multiply by 1%, whole dollars only. The 2024 booklet used "Mental Health Services Tax." Open flags **P12** and **I03** resolved; the label is now asserted with its source.
+- *Capital gains:* the FTB page states California has no lower capital-gains rate; gains are taxed as ordinary income. The surtax therefore reaches a large one-year gain above $1,000,000 of taxable income.
+
+**Gates run on this branch (all PASS):** `privacy-site/build.py` (rebuilt 14 public pages), `privacy-site/check.py`, `python3 -m unittest discover -s privacy-site` (13 OK), `final/publish.py --check` (16-file allowlist), `final/check.py .`. The Jekyll step of the CI workflow needs Ruby, which is not installed in this sandbox; it runs on the pull request instead.
+
+**P-1 — Privacy exposure register (2026-11-16; owner action required; not executed on `main`)**
+- *Repository visibility:* **public** (checked with `gh api repos/...`), GitHub Pages enabled.
+- *History:* the clone was shallow (1 commit); unshallowed to 409 commits. Unrounded household figures (assessment and tax values) and both ZIP codes appear in multiple past commits (up to 12 commits per figure; ZIP codes in about 60–70 commits each). Counts only are recorded here.
+- *Working tree (tracked, HEAD):* ZIP codes appear in about 111 non-published files; unrounded household values appear in about 78 lines across roughly 40 non-published files (largest: `final/out/model.json`, `dashboard/*`, `docs/*`, `archive/*`, `verify-4395771d/*`, `analysis/data/*`). None appear in the 16 published files, and the published synthetic table (year 2066) is an illustration with no household inputs.
+- *Published site (Pages allowlist):* clean for ZIP codes, unrounded household values, street addresses, emails, phones and parcel-number patterns (`final/check_published.py` logic applied to the 16 files).
+- *Decision not taken here:* rewriting history of public `main` (force-push) and changing repository visibility are destructive, affect the live site and any forks, and are outside this branch's rules. They are owner decisions. Recommended order for the owner: (1) decide whether the repository should be private, which would also require a Pages-capable plan; (2) rewrite history with `git filter-repo --replace-text` using a replacement file kept outside the repository; (3) remove household-derived files from the working tree; (4) ask GitHub support to purge cached views. Rounding alone does not protect values that also appear unrounded in public history.
+- *Irregularity:* `README.md` says the rounded-figures analysis is published at the repository root, but `final/published.txt` allows only the 16-file privacy guide plus the root landing. The README should be corrected by the integration session.
+
+**Irregularities for owner review (not blocking):**
+1. Prop H estimates differ by source (press and advocacy figures $160M and $184M; Controller $177M). Only the Controller figure is used.
+2. Prop H is a San Francisco-only measure. The public guide names no city, so the measure is described by its ballot name and agency, which can hint at location. Owner to decide whether to keep Prop H on the public guide.
+3. The surtax label changed from Mental Health Services Tax to Behavioral Health Services Tax between the 2024 and 2025 booklets. Check the line title on each year's form.
+
+**P-4 — integration:** see the next entry.

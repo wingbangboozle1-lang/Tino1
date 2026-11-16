@@ -223,6 +223,30 @@
       "url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=17043.&lawCode=RTC",
       "finding": "For taxable years beginning on or after January 1, 2005, an additional tax of 1 percent is imposed on the portion of a taxpayer's taxable income above $1,000,000. The threshold is not adjusted for filing status by this section.",
       "checked": "2026-11-13"
+    },
+    "prop_h": {
+      "title": "SFMTA · Proposition H parcel tax (official agency page)",
+      "url": "https://www.sfmta.com/getting-around/muni/parcel",
+      "finding": "Approved November 3, 2026. Annual parcel tax July 1, 2027 through June 30, 2042; first bill FY 2027–28; rates by parcel type and building area; senior and SRO relief by application by June 1; rent-controlled pass-through limited to 50% of the tax, up to $65 per unit per year; amounts rise with inflation from FY 2028–29; Controller estimate about $177 million a year.",
+      "checked": "2026-11-16"
+    },
+    "prop_h_results": {
+      "title": "SF Dept. of Elections · Nov 3, 2026 results (preliminary)",
+      "url": "https://www.sfelections.org/results/20261103/index.html",
+      "finding": "Measure H, parcel tax to fund Muni operations: YES 244,760 (74.4%), NO 84,209 (25.6%) on the preliminary count, last updated November 10, 2026; next update November 17, 2026; certification may take up to 30 days after Election Day.",
+      "checked": "2026-11-16"
+    },
+    "ftb540_2025": {
+      "title": "CA FTB · 2025 Form 540 booklet, line 62",
+      "url": "https://www.ftb.ca.gov/forms/2025/2025-540-booklet.pdf",
+      "finding": "Line 62, Behavioral Health Services Tax: if taxable income (line 19) is more than $1,000,000, subtract $1,000,000 and multiply the result by 1%, using whole dollars only.",
+      "checked": "2026-11-16"
+    },
+    "ftb540_2024": {
+      "title": "CA FTB · 2024 Form 540 booklet, line 62 (prior title)",
+      "url": "https://www.ftb.ca.gov/forms/2024/2024-540-booklet.pdf",
+      "finding": "Line 62, Mental Health Services Tax, with the same $1,000,000 threshold and 1% rate. Read from a search excerpt of the official PDF, not opened in full.",
+      "checked": "2026-11-16"
     }
   },
   "rejected_links": [
