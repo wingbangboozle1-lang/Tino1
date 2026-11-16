@@ -6,14 +6,14 @@ import json
 import re
 
 ROOT = Path(__file__).parent/'public'
-NAV = {'index.html','decision.html','projection.html','stress.html','process.html','law.html','costs.html','questions.html','brief.html','glossary.html','suggestions.html','suggestions-detail.html','issues.html','flagged.html'}
+NAV = {'index.html','decision.html','projection.html','stress.html','phased.html','process.html','law.html','costs.html','questions.html','brief.html','glossary.html','suggestions.html','suggestions-detail.html','issues.html','flagged.html'}
 FILES = NAV | {'style.css'}
 REGISTRY = json.loads((ROOT.parent/'research.json').read_text())
 SOURCES = {s['url'] for s in REGISTRY['sources'].values()}
 # www.sfmta.com: the San Francisco Municipal Transportation Agency is a City and County department (official City site, not .gov); used for the Proposition H rate table.
 OFFICIAL_PUBLISHED_RATES = {'129', '249', '65', '799', '392', '549', '969', '3,174', '34,999', '202,999', '177'}  # SFMTA Proposition H rate table and examples, plus the Controller's $177 million estimate, read 2026-11-16
 # www.law.cornell.edu: non-government mirror of the U.S. Code, used only for IRC §1250 text (flagged 9B-F1 on the public Flagged page); the GPO copy was not retrieved on 2026-11-16.
-REVIEWED_NON_GOV_HOSTS = {'docs.github.com', 'federalreservehistory.org', 'www.federalreservehistory.org', 'www.sfmta.com', 'www.sfelections.org', 'www.law.cornell.edu'}  # www.sfelections.org: Department of Elections results page (Proposition H count)
+REVIEWED_NON_GOV_HOSTS = {'docs.github.com', 'federalreservehistory.org', 'www.federalreservehistory.org', 'www.sfmta.com', 'www.sfelections.org', 'www.law.cornell.edu', 'pages.stern.nyu.edu', 'fred.stlouisfed.org'}  # fred.stlouisfed.org: Federal Reserve Bank of St. Louis FRED, serving the Board's H.15 series TB3MS and GS2 that are used on the staged-entry page  # pages.stern.nyu.edu: the academic S&P 500 annual total-return series used only on the staged-entry page, labelled non-government there and on the Flagged page  # www.sfelections.org: Department of Elections results page (Proposition H count)
 PII_PATTERNS = {
     'street address': r'\b\d{1,5}\s+[A-Z][A-Za-z-]+(?:\s+[A-Z][A-Za-z-]+)?\s+(?:Street|St\.?|Avenue|Ave\.?|Drive|Dr\.?|Way|Court|Ct\.?|Lane|Ln\.?|Road|Rd\.?|Boulevard|Blvd\.?)\b',
     'email address': r'[\w.+-]+@[\w-]+\.[\w.-]+',
