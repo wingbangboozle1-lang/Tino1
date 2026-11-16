@@ -3167,3 +3167,9 @@ Status: P3-A, P3-B, P3-C and P3-D **done**. Only files in the claimed scope were
 
 **Not done (owner-level, unchanged):** Git-history rewrite of pre-rounding figures, repository visibility, and publishing household figures to Pages.
 
+
+### arena/ab947e72-tino1 — PR #135 verify note (2026-11-16 UTC)
+
+- Branch rebased onto the latest `main` (PR #133 merged; `b70b3a7c` staged-entry session included) and re-pushed with `--force-with-lease`. Rebase merge-conflict on `COORDINATION.md` resolved as a **union** (main's `b70b3a7c` publish record retained + this session's claim/close-out retained); no session's work discarded.
+- PR **#135** https://github.com/wingbangboozle1-lang/Tino1/pull/135 opened from `arena/ab947e72-tino1` → `main`. The diff touches **no** Jekyll-published file (`index.html`, `privacy-site/public/`, `_config.yml`, `docs/` untouched); all changed root HTML pages are in the `_config.yml` exclude list, so the Jekyll input is identical to `main`.
+- The first `verify` run (`43925730987`) reported **fail** at 59s. **Log retrieval failed repeatedly** (`gh run view --log-failed` returned HTTP EOF from `results-receiver.actions.githubusercontent.com` on every attempt), so the failing step could not be read. Local reproduction of every CI Python step on the rebased tree is clean: `privacy-site/build.py` (no diff in `privacy-site/public`), `privacy-site/check.py`, `unittest`, `final/publish.py --check`, `final/check.py .` all exit 0. Ruby/Jekyll is not installed in this sandbox, so the Jekyll build + `_site` checks can only run in CI. The workflow file is byte-identical to `main`. The rerun endpoint refused (`cannot be rerun`), so this note was committed to trigger a fresh run.
