@@ -3035,3 +3035,30 @@ No other session holds an active claim on these files (last claim `arena/81ca507
   5. The public `flagged.html` P0 row (written by another session) states the repository "contain[s] household-derived material" and that Git history remains public. This is accurate and is left as written; the owner decision (G01/G02) remains open.
 - 2026-11-16 — **Open after merge (not blocking):** U-PH1 (Property B building area), U-PH2 (rent pass-through, unmodelled), A-TSY and A14 (ladder return from daily data), and the owner decisions above.
 
+
+---
+
+## Session `arena/b0680de0-tino1` — final integration: privacy-literal closure, pre-commitment rule card, five-year capital plan, distribution chart, sale-cost completeness (claimed 2026-11-16 UTC)
+
+**Branch:** `arena/b0680de0-tino1` (fixed by the platform; the board's `session-<id>/<task>` naming is superseded by the one-branch workspace rule). **Base:** `main` @ `d3e23dc` (PR #119 merged). **Session ID:** `arena/b0680de0-tino1`.
+
+**State found at claim time (2026-11-16 UTC).** The tree is green: `privacy-site/build.py` + `check.py` PASS (14 public pages, 481 linked rows), unittest 13/13, `final/publish.py --check` OK (16-file allowlist), `final/check.py .` OK (31 pages, 1,135 sourced rows, 3,134 links, 2,703 $10-rounded figures, 51 model paths). The publication boundary is the generic landing plus the figure-free guide; the numeric edition stays repository-only by the owner's standing decision. No other session holds an open claim on the files below. Open PRs on other branches: #120 (checker hardening, CI green), #108 (board record only), #97 (law-change register).
+
+**Finding that drives this session.** `privacy-site/check.py` — a **public-repository** file — still carries the household's own rounded values as literal check tokens (`3,100,000`, `1,800,000`, `550,540`, `539,740`, `114,250`, `7,150`, `85,800`) together with both ZIP codes and both city names. The published Pages output is clean, but the checker file itself republishes the household signature in the open repository. PR #120 (branch `arena/4aa608af-tino1`, CI `verify` **pass**) replaces those literals with generic pattern checks. This session lands that change first, then closes the remaining brief gaps.
+
+| # | Task | Status | Owner | File scope | Verification |
+|---|---|---|---|---|---|
+| B-0 | Land PR #120 (remove household literals from the public checker; add an import-boundary gate) | claimed | `arena/b0680de0-tino1` | `privacy-site/check.py`, `privacy-site/test_illustrations.py`, `privacy-site/README.md` (as authored by the other session; not rewritten here) | Local gates on the merged tree; CI `verify` already green on PR #120 |
+| B-1 | **Pre-commitment rule card** — the thresholds at which each path becomes the choice, computed from the model, so the household can agree the rule before the figures arrive | claimed | `arena/b0680de0-tino1` | `final/model.py` (break-even engine reuse), `final/extras.py`, `privacy-site/build.py`, `privacy-site/research.json`, regenerated pages | Thresholds recomputed by the model; self-test reproduces the pure live/rent/sell ranking |
+| B-2 | **Five-year maintenance and capital plan** for both buildings | claimed | `arena/b0680de0-tino1` | `final/model.py`, `final/build.py` (new section), `privacy-site/build.py` (structure, no household values) | Cost lines from the model; official references for each cost driver; unpriced lines blank and flagged |
+| B-3 | **Distribution chart** in the projections (cumulative wealth path of the three choices) | claimed | `arena/b0680de0-tino1` | `final/build.py` (SVG chart helper already exists) | Chart values read back from the model rows |
+| B-4 | **Recording fees and transfer tax priced into the sell path** (the model carries the documentary transfer tax only) | claimed | `arena/b0680de0-tino1` | `final/model.py`, `final/sources.py` | Recording-fee figure read on the county's own fee schedule; blank and flagged if not published |
+| B-5 | Official re-read of every source this session adds; flags updated where a figure moved | claimed | `arena/b0680de0-tino1` | `final/sources.py`, `final/flags.py`, `privacy-site/research.json` | Each new row read on the official page on 2026-11-16 |
+| B-6 | Integration: full gates, PR to `main`, merge without waiting for review, Pages deploy confirmed, result recorded here | claimed | `arena/b0680de0-tino1` | `COORDINATION.md`, generated root pages, allowlist only if a page is added | `privacy-site/check.py`, `final/check.py .`, `final/publish.py --check`, unittest, CI `verify` |
+
+**Not claimed (owner or professional action, logged, not edited here):** rewriting the pre-rounding Git history; changing repository visibility; publishing household figures; obtaining comparables, an appraisal at the date of death, insurance quotes, the parcel tax-rate-area code, or the leases for Property B. Those stay blank and flagged.
+
+**Coordination note.** B-0 lands another session's pull request; that session's files are used as authored. This session does not rewrite `privacy-site/check.py`'s new pattern checks, `privacy-site/test_illustrations.py` or `privacy-site/README.md` after the merge; any later need to touch them is logged as a change request instead.
+
+**Log (`arena/b0680de0-tino1`)**
+- 2026-11-16 — Claim written and pushed before any product edit. No file owned by another session edited.
