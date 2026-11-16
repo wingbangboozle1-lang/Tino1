@@ -2761,3 +2761,35 @@ The verified numeric decision analysis (live / rent / sell, mixed and phased pat
 - PR: to be created from `arena/f391f643-tino1` into `main`.
 - Merge result and Pages deploy: to be recorded after merge.
 
+
+---
+
+## Session `arena/678f5a7b-tino1` — claim, gate re-run, official re-read, close-out (2026-11-16 UTC)
+
+**Branch:** `arena/678f5a7b-tino1` (fixed by the platform; the board's `session-<id>/<task>` naming is not used). **Base:** `main` @ `181be9e`.
+
+| # | Task | Status | Owner | File scope | Notes |
+|---|------|--------|-------|------------|-------|
+| X-0 | Claim, board append, push before any other edit | in progress | `arena/678f5a7b-tino1` | `COORDINATION.md` (append only) | This entry. No other file is edited. |
+| X-1 | Re-run the publication and verification gates on the branch (privacy-site build/check/unittest, `final/publish.py --check`, `final/check.py .`) | done | `arena/678f5a7b-tino1` | read-only | Results below. |
+| X-2 | Fresh official re-read of two decision-critical legal items | done | `arena/678f5a7b-tino1` | read-only | Results below. |
+| X-3 | Publication-boundary check for the household figures supplied in this session's request | done | `arena/678f5a7b-tino1` | read-only | No household figure, street address or personal name was written to any repository file. Published boundary unchanged. |
+
+### Results (2026-11-16 UTC)
+
+- **Gates re-run on `arena/678f5a7b-tino1`:** `privacy-site/build.py` regenerates `privacy-site/public` with no diff; `privacy-site/check.py` PASS (14 public pages, 420 linked rows); unittest 13/13 OK; `final/publish.py --check` OK (16-file allowlist matches `_config.yml`); `final/check.py .` OK (31 pages, 1,126 sourced rows, 3,060 links, 2,638 $10-rounded figures, 51 model paths). The Jekyll build and the two `check_published.py` checkers run in CI, not locally (no Ruby in this sandbox).
+- **Official re-read 1, RTC §17043 (California 1% additional tax):** https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=RTC&sectionNum=17043 — text read 2026-11-16: "an additional tax ... at the rate of 1 percent on that portion of a taxpayer's taxable income in excess of one million dollars ($1,000,000)", operative 1 Jan 2005, added by Prop 63 (2004). The statute text does not index the threshold. Matches `law.html`. Status: **enacted**.
+- **Official re-read 2, federal estate-tax filing threshold:** https://www.irs.gov/businesses/small-businesses-self-employed/estate-tax — read 2026-11-16: the table lists **$15,000,000 for year of death 2026**. Matches the repo's $15M figure. The IRS page is a summary; the controlling figure is the basic exclusion in IRC §2010(c) as set by the IRS inflation adjustment (Rev. Proc. 2026-35 is the 2027 adjustment and was read at https://www.irs.gov/pub/irs-drop/rp-26-35.pdf, which does not change the 2026 figure). Status: **verified as the 2026 table value**.
+- **Attempted but not verified:** a guessed IRS "tax inflation adjustments for tax year 2026" newsroom URL returned 404 and was not used. No value was taken from it.
+- **Irregularities (for owner review, not blocking):**
+  1. The public repository's Git history still contains pre-rounding owner figures (already logged as G01/G02). Making the repository private or rewriting history requires owner action; this session cannot do it.
+  2. The request in this session asks for household figures, comparables and an "anonymised" dashboard on the public site. The published boundary deliberately excludes them (see `final/published.txt`); rounding to $10 is disclosure minimisation, not anonymisation (already stated in `index.html`). Owner decision still needed.
+  3. The request asks for per-session branches named `session-<id>/<task>` and for merges without review. The platform fixes this session's branch name, so the work stays on `arena/678f5a7b-tino1`.
+  4. Items the request calls "obtain comparables", "written valuation at date of death", "independent property and rental estimates", "insurance quotes" and "tax rate area" require third-party or owner-held documents. None is available from the official sources in this sandbox. They stay blank and flagged, per the verification rule.
+
+### Log (`arena/678f5a7b-tino1`)
+
+- 2026-11-16 — X-0 claim written and pushed before any other edit.
+- 2026-11-16 — X-1: gates re-run, all PASS (see Results).
+- 2026-11-16 — X-2: two official statute and table reads recorded with URLs; one guessed IRS URL was 404 and dropped.
+- 2026-11-16 — X-3: publication boundary confirmed unchanged; no personal data added to the repository.
