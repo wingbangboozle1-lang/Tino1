@@ -2905,3 +2905,16 @@ After the initial claim had been pushed, the required `git pull --rebase origin 
 ### Second rebase log — 2026-11-16 UTC
 
 While PR #123 was open, the next required `git pull --rebase origin main` fetched `e0344df` after multiple parallel PR merges. The append-only `COORDINATION.md` again conflicted; resolution preserved the complete concurrent `arena/9bf08f53-tino1` record and all prior merged session records, then re-applied this session's separate claim/product changes. No other product file conflicted. The merged task board now records that PR #118 completed the separate privacy-gate scope, so PR #123 does not modify `privacy-site/check.py`, `privacy-site/test_illustrations.py` or `privacy-site/README.md`. The root decision-first landing remains this session's distinct change. Current claim commit is `509cf41`; no commits or files from other sessions were discarded.
+
+### PR #123 merge and post-merge status — 2026-11-16 UTC
+
+| Item | Result |
+|---|---|
+| PR | #123 — https://github.com/wingbangboozle1-lang/Tino1/pull/123 |
+| Merge | `gh pr merge 123 --merge` succeeded at 2026-11-16 02:07:29 UTC; merge commit `aa1c7f530e7ea9e3ef344bd2578623e897154a4a` is on `main`. |
+| Pre-merge verification | Local public build, privacy/source/rounding checks, 13 unit tests, 16-file allowlist, 31-page model checks, 14 root-link checks and both exact-output publication checkers against a static 16-file `_site` simulation passed. Local Jekyll was unavailable. |
+| GitHub Actions | The `verify` run for merge commit `aa1c7f5` (run `43790237755`) remained **queued** when checked; the Pages build-and-deployment run for the same commit (`43790238066`) also remained **queued**. No CI success is claimed. |
+| Pages API/live site | The Pages API still reported an **errored** build for prior commit `e0344df` (build `1373381448`), while its associated Pages workflow run was cancelled when `aa1c7f5` arrived. The current `aa1c7f5` deployment was queued, not failed or confirmed. A live fetch still showed the pre-change generic landing page; the new decision-first block is not yet confirmed live. |
+| Next action | Wait for the current `verify` and Pages runs to finish; if either fails, inspect logs, fix and retry. If successful, fetch the live root page and record the deployed commit. The local static simulation supports the exact expected output but does not replace real Jekyll/Pages confirmation. |
+
+No household inputs, private values or tax-law rows were changed by this PR. Repository visibility/history remains an owner-level privacy issue; the merged root README states this accurately.
