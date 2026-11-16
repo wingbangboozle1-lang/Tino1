@@ -7,7 +7,7 @@ from pathlib import Path
 import shutil
 from illustrations import (r10, family_assessment, outlook, investment_path, phased_entry, STRESS, threshold, ledger,
                            CPI_ANNUAL, cpi_decades, cpi_extremes, cpi_display_rows)
-from check import pii_kinds
+from check import pii_kinds, unexpected_public_imports
 
 
 class PrivacyPatternTests(unittest.TestCase):
@@ -18,6 +18,8 @@ class PrivacyPatternTests(unittest.TestCase):
             'email address': 'person@example.invalid',
             'phone number': '(555) 234-6789',
             'parcel-number pattern': '123-45-678',
+            'postal code': 'ZIP 12345',
+            'city/state/postal address': 'Exampleville, ZZ 12345',
         }
         for kind, example in examples.items():
             with self.subTest(kind=kind):
@@ -128,6 +130,9 @@ class ArithmeticTests(unittest.TestCase):
 
 
 class PublicationTests(unittest.TestCase):
+    def test_public_generator_uses_only_stdlib_and_public_synthetic_inputs(self):
+        self.assertEqual(unexpected_public_imports(), [])
+
     def test_source_allowlist_rejects_extra_file_and_modified_content(self):
         here=Path(__file__).resolve().parent
         repo=here.parent

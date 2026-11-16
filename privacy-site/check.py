@@ -2,8 +2,10 @@
 from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import urlparse, unquote
+import ast
 import json
 import re
+import sys
 
 ROOT = Path(__file__).parent/'public'
 NAV = {'index.html','decision.html','projection.html','stress.html','process.html','law.html','costs.html','questions.html','brief.html','glossary.html','suggestions.html','suggestions-detail.html','issues.html','flagged.html'}
@@ -17,12 +19,43 @@ PII_PATTERNS = {
     'email address': r'[\w.+-]+@[\w-]+\.[\w.-]+',
     'phone number': r'(?<!\d)(?:\+?1[ .-]?)?(?:\(\d{3}\)|\d{3})[ .-]\d{3}[ .-]\d{4}(?!\d)',
     'parcel-number pattern': r'\b\d{3}-\d{2}-\d{3}\b',
+    'postal code': r'\b(?:ZIP(?:\s+code)?|postal code)\s*[:#]?\s*\d{5}(?:-\d{4})?\b',
+    'city/state/postal address': r"\b[A-Z][A-Za-z.' -]{1,40},\s*[A-Z]{2}\s+\d{5}(?:-\d{4})?\b",
 }
+
+PUBLIC_LOCAL_MODULES = {'illustrations'}
+PUBLIC_INPUT_MODULES = (Path(__file__).parent/'build.py', Path(__file__).parent/'illustrations.py')
 
 
 def pii_kinds(text):
     """Return only PII-pattern categories, never the matched value."""
     return [label for label, pattern in PII_PATTERNS.items() if re.search(pattern, text)]
+
+
+def unexpected_public_imports():
+    """Return non-stdlib imports from the isolated public guide's own modules.
+
+    The public builder may use the local synthetic illustration module, but it
+    must not depend on household analysis, repository data, or other project code.
+    """
+    unexpected = set()
+    for path in PUBLIC_INPUT_MODULES:
+        tree = ast.parse(path.read_text(encoding='utf-8'), filename=str(path))
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Import):
+                names = [alias.name for alias in node.names]
+            elif isinstance(node, ast.ImportFrom):
+                if node.level:
+                    unexpected.add(f'{path.name}:relative-import')
+                    continue
+                names = [node.module or '']
+            else:
+                continue
+            for name in names:
+                root = name.split('.')[0]
+                if root not in sys.stdlib_module_names and root not in PUBLIC_LOCAL_MODULES:
+                    unexpected.add(f'{path.name}:{root}')
+    return sorted(unexpected)
 
 
 class Check(HTMLParser):
@@ -90,8 +123,9 @@ def main():
         'Root landing differs from the privacy-reviewed template'
     landing_text = landing_template.read_text(encoding='utf-8')
     assert not pii_kinds(landing_text), 'Personal-data pattern in root landing'
-    for token in ('Cupertino','San Francisco','95014','94122','3,100,000','1,800,000','7,150'):
-        assert token.casefold() not in landing_text.casefold(), 'Known household signature/locality in root landing'
+    unexpected_imports = unexpected_public_imports()
+    assert not unexpected_imports, \
+        'Public guide imports outside the standard library and its synthetic illustration module: ' + ', '.join(unexpected_imports)
     for source in REGISTRY['sources'].values():
         parsed=urlparse(source['url'])
         host=(parsed.hostname or '').casefold()
@@ -119,13 +153,10 @@ def main():
                 assert required in text, f'Missing or weakened P0 privacy guidance: {required}'
         pii = pii_kinds(text)
         assert not pii, f'Personal-data pattern(s) in {name}: {", ".join(pii)}'
-        # Defense in depth against known rounded household signatures and location
-        # cues. These checks cover only the public build, not Git history or every
-        # possible inference from public context.
-        for token in ('3,100,000','1,800,000','550,540','539,740','114,250','7,150','85,800','94122','95014'):
-            assert token not in text, f'Household signature in {name}'
-        for token in ('Cupertino','San Francisco','sftreasurer.org','sf.gov'):
-            assert token.casefold() not in text.casefold(), f'Household-locality cue in {name}'
+        # Generic identifiers and postal-address patterns are checked without
+        # embedding household-specific figures or location signatures in this
+        # public-repository test source. This gate cannot prove anonymity or
+        # inspect older Git history.
         for amount in re.findall(r'\$([\d,]+)(?![\d,])', text):
             assert int(amount.replace(',','')) % 10 == 0, (name,amount)
         p = Check(); p.feed(text)
@@ -149,7 +180,7 @@ def main():
     css = (ROOT/'style.css').read_text()
     assert '@import' not in css and 'url(' not in css, 'Remote CSS resource'
     print(f'PASS: {len(NAV)} public pages, {sum(p.rows for p in pages.values())} official-context-linked data rows, '
-          'captions, anchors, local resources, PII-pattern checks, $10 display rounding and known household-signature checks. '
+          'captions, anchors, local resources, generic identifier/postal-pattern checks, $10 display rounding and public-import boundary. '
           'Not a privacy audit of Git history or a verification of synthetic assumptions.')
 
 

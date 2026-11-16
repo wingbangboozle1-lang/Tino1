@@ -2828,3 +2828,19 @@ Not done in this session (left on the board for an owner decision or a later ses
 
 - PR #118 (https://github.com/wingbangboozle1-lang/Tino1/pull/118) was merged with `gh pr merge 118 --merge` at 2026-11-16 01:21:45 UTC; merge commit `abe93cf71a0bd0aef1350fecbea608c3ed1d2852` is on `main`.
 - At the time of the post-merge check, the `verify` workflow run 43785808043 remained **queued**. The GitHub Pages latest-build API request returned HTTP 403 rate-limit exhaustion, so Pages deployment success is **not confirmed here**; no success is claimed. Local exact-output, PII, link, generation and model gates passed before merge. Follow up on the Actions run and Pages build status when GitHub checks are available.
+
+## Session `arena/4aa608af-tino1` — public-guide privacy gate hardening (claimed 2026-11-16 UTC)
+
+**Branch:** `arena/4aa608af-tino1` (fixed by the platform). **Base:** `main` after PR #125, `158056c`.
+
+| # | Task | Status | Owner | File scope | Notes |
+|---|---|---|---|---|---|
+| P0 | Claim and coordination | done | `arena/4aa608af-tino1` | `COORDINATION.md` (append only) | Claim was committed/pushed before product-change commit. PR #117 owned the file while open; a non-sensitive scope note was posted, then the claim was appended after it merged. |
+| P1 | Remove household-specific signature literals from the public-guide checker; use generic identifier/postal-address patterns and a public-input import boundary | in progress | `arena/4aa608af-tino1` | `privacy-site/check.py`, `privacy-site/test_illustrations.py`, `privacy-site/README.md` | Rebase preserved 06446b26's Cornell-host note, 9bf08f53's source-check date and P0 guidance assertions, plus new official rows. |
+| P2 | Re-run guide/model/publication gates and record results | claimed | `arena/4aa608af-tino1` | read-only | `privacy-site/check.py`, unit tests, `final/publish.py --check`, `final/check.py .`, PR CI and Pages status. |
+
+### Log (`arena/4aa608af-tino1`)
+
+- 2026-11-16 — Read the task board and open PR scopes. PR #117 owned `COORDINATION.md`; posted a non-sensitive scope note to that PR and did not edit its files while open. PR #117 later merged as `eca8647`.
+- 2026-11-16 — Main advanced after PR #120 opened; the first rebase conflicted in the append-only board. Resolved by retaining all upstream entries and appending this claim. Main advanced again to `158056c` (PR #125, board-only update); resolved the repeated board conflict the same way. No work from sessions 9bf08f53 or 06446b26 was dropped.
+- 2026-11-16 — Checker integration retains the updated non-government-source allowlist, 12–16 November source-check stamp, and required P0 exposure-containment checks. Adds only generic postal-address patterns and the static standard-library/public-synthetic import boundary. Public content, model/source rows and allowlist remain unchanged by this session.
