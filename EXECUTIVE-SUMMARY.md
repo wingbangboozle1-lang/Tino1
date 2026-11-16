@@ -10,9 +10,9 @@ The decision: Property A (Santa Clara County, [ZIP A], $3,100,000) will pass to 
 
 | Choice for Property A | After-tax wealth in 2076, 2026 dollars | Why |
 |---|---|---|
-| Sell and reinvest | $9,747,210 | Basis resets to date-of-death value, so the sale carries almost no taxable gain |
-| Rent it out | $5,582,450 | Full reassessment to market value, plus rental income and depreciation recapture |
-| Live in it | $2,259,640 | Proposition 19 relief is partial: the assessed value still jumps to $5,031,080 |
+| Sell and reinvest | $9,746,980 | Basis resets to date-of-death value, so the sale carries almost no taxable gain |
+| Rent it out | $5,582,390 | Full reassessment to market value, plus rental income and depreciation recapture |
+| Live in it | $2,259,580 | Proposition 19 relief is partial: the assessed value still jumps to $5,031,080 |
 
 | Headline number | Value | Source or flag |
 |---|---|---|
@@ -24,13 +24,13 @@ The decision: Property A (Santa Clara County, [ZIP A], $3,100,000) will pass to 
 
 ## Why not the alternatives
 
-- **Living in Property A** is a lifestyle choice with a price: about $7,487,570 of 2076 wealth in 2026 dollars against selling.
-- **Selling and parking the proceeds in savings or Treasury bills** loses to keeping the house as a rental ($3,554,580 against $5,118,360).
+- **Living in Property A** is a lifestyle choice with a price: about $7,487,390 of 2076 wealth in 2026 dollars against selling.
+- **Selling and parking the proceeds in savings or Treasury bills** loses to keeping the house as a rental ($3,554,500 against $5,118,300).
 - **Renting Property A out** is the most tax-expensive route, because the transfer is reassessed at market value in full.
 
 ## Risk is not a smooth line
 
-Inflation, house prices and stock returns do not compound evenly over 50 years. The Black swan page replays the real 1976-2025 record from each of its 50 possible starting years, and adds named crisis paths (1929-1941, 1970s stagflation, 1990 Japan, 2000 and 2008 crashes). Selling is ahead of renting in 43 of the 50 ten-year horizons and in 50 of the 50 twenty-year horizons; the worst ten-year case is behind by $2,068,710. Renting ends ahead in exactly two named paths: the Japan stagnation and the Depression. Staging the investment and holding a few years of spending in Treasury bills narrows that gap.
+Inflation, house prices and stock returns do not compound evenly over 50 years. The Black swan page replays the real 1976-2025 record from each of its 50 possible starting years, and adds named crisis paths (1929-1941, 1970s stagflation, 1990 Japan, 2000 and 2008 crashes). Selling is ahead of renting in 43 of the 50 ten-year horizons and in 50 of the 50 twenty-year horizons; the worst ten-year case is behind by $2,068,720. Renting ends ahead in exactly two named paths: the Japan stagnation and the Depression. Staging the investment and holding a few years of spending in Treasury bills narrows that gap.
 
 ## Before anything else
 
@@ -43,9 +43,9 @@ Inflation, house prices and stock returns do not compound evenly over 50 years. 
 
 The [Questions page](./questions.html) lists what must be answered first in two complementary sections: **Part 1** (known vs. unknown information, `Q01–Q18`, `U01–U10`, the `S5-Q1–S5-Q7` evidence checklist carried from the independent audit, and concrete ways to discover each missing answer offline — trust inclusion, prior-spouse Form 706 portability, exact Santa Clara & SF tax bills, Santa Clara County's three water providers, PG&E solar interconnection date, actual broker insurance quotes, SF Rent Board registration) and **Part 2** (a reading-dated decision register grouped into open, unknowable, and answered rows). Three open questions matter far more than the rest:
 
-1. **What the trust says about the home** — is Property A inside the Transferor's gross estate? Without the basis reset, selling falls from $9,747,210 to $6,428,140. (Q01)
-2. **Whether the Inheritor wants to live there** — a personal choice with a known price ($7,487,570) and a one-year move-in limit that has no exception.
-3. **How sale proceeds would be invested** — the one input that reverses the ranking in the cases tested: left in savings, selling ($3,554,580) falls behind renting ($5,118,360).
+1. **What the trust says about the home** — is Property A inside the Transferor's gross estate? Without the basis reset, selling falls from $9,746,980 to $6,428,000. (Q01)
+2. **Whether the Inheritor wants to live there** — a personal choice with a known price ($7,487,390) and a one-year move-in limit that has no exception.
+3. **How sale proceeds would be invested** — the one input that reverses the ranking in the cases tested: left in savings, selling ($3,554,500) falls behind renting ($5,118,300).
 
 ## Suggestions for the site — for review, nothing implemented
 

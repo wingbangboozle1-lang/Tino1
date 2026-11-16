@@ -168,7 +168,19 @@ add('SCC-RATES', 'Santa Clara tax rate book', 'Santa Clara County Controller-Tre
     'Rates per $100 (pages A-4 to A-6): 1% levy 1.00000; county retirement 0.03880; library retirement 0.00240; VMC 2008 0.00520; housing bond 0.00560; Cupertino Elementary 0.00010 + 0.01650 + 0.01690; Fremont Union High 0.01040 + 0.00880 + 0.01070 + 0.01180; Foothill-De Anza 0.01010 + 0.01350 + 0.00750; SCVWD State Water Project 0.00390; Midpeninsula Open Space 0.00140. Sum 1.16360. The exact tax rate area of the home was not looked up (privacy).')
 add('SCC-DTT', 'Santa Clara Clerk-Recorder', 'Santa Clara County Clerk-Recorder - Recording real estate (documentary transfer tax)',
     'https://clerkrecorder.santaclaracounty.gov/recording-documents/recording-real-estate', 'page',
-    'Documentary transfer tax $0.55 per $500 of value; a higher rate applies only in San Jose, Palo Alto and Mountain View.')
+    'Documentary transfer tax $0.55 per $500 of value (R&TC 11911), due on every change of ownership unless exempt. The additional city conveyance taxes ($1.65 per $500) apply only in San Jose, Palo Alto and Mountain View - not to a Cupertino parcel (Measure E is San Jose-only; Measure G is Mountain View-only).')
+add('SCC-REC-FEE', 'Santa Clara recording fee schedule', 'Santa Clara County Clerk-Recorder - Fee schedule (recording fees)',
+    'https://clerkrecorder.santaclaracounty.gov/resources/fee-schedule', 'page',
+    'Read 2026-11-16. Standard-size (8.5x11) document: $102.00 first page, $3.00 each additional page; the first-page fee includes a $10.00 Real Estate Fraud Prevention Fee, a $75.00 SB2 Building Homes & Jobs Act Fee and a $2.00 AB1466 Restrictive Covenants Fee, and $10.00 is subtracted for a document subject to the documentary transfer tax. A one-page transfer-tax-subject deed therefore records for $92.00. Fixed dollar fee (not a percentage); modelled grown with the CPI index.')
+add('SCC-ME-E', 'Measure E (San Jose)', 'Santa Clara County Clerk-Recorder - Measure E (San Jose Real Property Transfer Tax)',
+    'https://clerkrecorder.santaclaracounty.gov/recording-documents/recording-real-estate/measure-e', 'page',
+    'Read 2026-11-16. City of San Jose only. From 2025-07-01, a transfer tax on San Jose property when consideration exceeds $2,300,000: 0.75% ($2.3M-$5M), 1% ($5M-$10M), 1.5% (over $10M). Does NOT apply to a Cupertino parcel; recorded so the sell-path tax note is complete.')
+add('SCC-ME-G', 'Measure G (Mountain View)', 'Santa Clara County Clerk-Recorder - Measure G (Mountain View Real Property Transfer Tax)',
+    'https://clerkrecorder.santaclaracounty.gov/measure-g', 'page',
+    'Read 2026-11-16. City of Mountain View only; passed 2024-11-05, effective 2024-12-20. $15.00 per $1,000 on transfers of $6,000,000 or more (in addition to the existing $1.65 per $500 city conveyance tax below $6M). Does NOT apply to a Cupertino parcel; recorded for completeness.')
+add('CA-AB2224', 'AB 2224 (recorder fees)', 'California Legislative Information - AB 2224 (2025-2026), County recorders: fees',
+    'https://leginfo.legislature.ca.gov/faces/billNavClient.xhtml?bill_id=202520260AB2224', 'page',
+    'Read 2026-11-16. Chaptered 2026-09-18 as Chapter 292, Statutes of 2026 (status NotInForce at read time). Raises the MAXIMUM recorder fee to $15 first page / $4 each additional page (Gov. Code 27361); county boards of supervisors set the actual fee, so Santa Clara County\'s published schedule (SCC-REC-FEE) is the figure used. Not an effective-date assertion beyond the chaptered text.')
 add('SF-TAX', 'SF Treasurer', 'San Francisco Treasurer and Tax Collector - Secured property taxes',
     'https://sftreasurer.org/property/secured-property-taxes', 'page',
     'Fiscal year 2026-27 secured property tax rate 1.18162182%; supplemental bill follows a change in ownership.')

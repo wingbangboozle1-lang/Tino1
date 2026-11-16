@@ -31,7 +31,9 @@ OFFICIAL_ODD = {'38,915.87', '8,455.35', '14,217,212,455', '324,973', '1,176', '
                 # SFMTA Prop H rate table (official City page, read 2026-11-16; finding U-PH1)
                 '129', '249', '392', '799', '969', '0.195', '0.42', '1.99', '0.76', '0.84', '0.99', '34,999', '202,999', '3,174', '65',
                 # HUD's own FY2026 reference row printed on the FY2027 zip-calc page for 94122 (read 2026-11-13, finding R55)
-                '2,485', '2,977', '3,604', '4,604', '4,772'}
+                '2,485', '2,977', '3,604', '4,604', '4,772',
+                # Santa Clara County Clerk-Recorder fee schedule and transfer-tax figures (official; read 2026-11-16)
+                '1.65', '10.00', '102', '102.00', '15', '15.00', '2.00', '3.00', '4', '75.00', '92', '92.00', '1,000.00'}
 errors = []
 # A git merge-conflict marker left in a file publishes as literal text. R38: a marker and a duplicated fragment were
 # live on the published Verification page while every other check passed. Scan pages and repository files alike.

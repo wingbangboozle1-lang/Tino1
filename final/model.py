@@ -54,7 +54,11 @@ P = dict(
     cup_rent_month=6_390,       # HUD FY2026 SAFMR 95014, 4-bedroom -- BENCHMARK only, not a verified rent for
                                 #   Property A (bedroom count and rentable condition unknown: U08/A07)
     cup_rent_month_3br=5_870,   # HUD FY2026 SAFMR 95014, 3-bedroom (official figure, used as the downside gate)
-    doc_transfer_tax=0.0011,    # Santa Clara County: $0.55 per $500
+    doc_transfer_tax=0.0011,    # Santa Clara County: $0.55 per $500 (county documentary transfer tax)
+    recording_fee=92.0,         # Santa Clara County Clerk-Recorder fee schedule (read 2026-11-16): a deed
+                                #   subject to the documentary transfer tax is $102.00 for the first page
+                                #   minus the $10.00 transfer-tax offset = $92.00 (one 8.5x11 page). Fixed
+                                #   dollar cost, grown with the CPI index like the other fixed charges.
     salt_cap_2026=40_400,       # P.L. 119-21 Schedule A SALT cap, 2026 (official figure; IRS) - text only
     salt_cap_floor=10_000,      # pre-2025 SALT cap the law reverts to (official figure; IRS) - text only
     niit=0.038,                 # IRS Topic 559
@@ -69,6 +73,11 @@ P = dict(
     elec_premium=0.010,
     maint_cup=6_000, maint_sf=12_000,
     sell_cost=0.05, vacancy=0.05, mgmt=0.06,
+    imputed_rent=True,          # live-path opportunity cost: the market rent foregone by living in
+                                #   Property A instead of renting it out (toggle; see imputed_rent_month)
+    imputed_rent_month=6_390,   # default = HUD FY2026 SAFMR 4-bedroom benchmark for [ZIP A] (same series
+                                #   as cup_rent_month); a household-specific verified rent replaces it,
+                                #   otherwise the letting paths are a floor (owner brief)
     bldg_share=0.30,            # depreciable building share of Cupertino stepped-up basis
     t_fed_ord=0.24, t_ca=0.093, t_fed_ltcg=0.15,
     t_fed_ltcg_lump=0.20, t_ca_lump=0.133, t_recap_fed=0.25,
@@ -260,6 +269,7 @@ def simulate(path, p=P):
             rent_s3 *= 1 + 0.5 * g_ctrl + 0.5 * g_mkt
         maint_c, maint_s = p['maint_cup'] * cpi, p['maint_sf'] * cpi
         dc_c, dc_s = p['dc_cup'] * cpi, p['dc_sf'] * cpi
+        rec = p['recording_fee'] * cpi          # sale-year recording fee (Santa Clara County; grown with CPI)
         # ---------------- Property B (SF): status quo every year ----------------
         av_s = min(fby_s, Vs)
         tax_s = av_s * p['rate_sf'] + dc_s
@@ -297,6 +307,13 @@ def simulate(path, p=P):
             tax_L = max(av_L - p['hox'], 0) * p['rate_cup'] + dc_c
             cost_L = tax_L + ins_h + maint_c + wat_c + el_c
             unit3 = rent_s3 * (1 - p['vacancy']) * (1 - t_ord) if p['rent_sf_unit3'] else 0.0
+            # imputed rent: the market rent foregone by living in Property A instead of letting it.
+            # It is an OPPORTUNITY-COST MEMO, not a second cash subtraction: the rent path already
+            # earns this rent (rent_c), so the live-vs-rent gap already carries the cost. Subtracting
+            # it again would double-count. Shown here so the trade-off is explicit and inputable.
+            imputed = (rent_c * (p['imputed_rent_month'] / p['cup_rent_month'])) if p['imputed_rent'] else 0.0
+            if y == T:
+                summary['imputed_rent_T'] = imputed
             A['live'].add(unit3 - cost_L)
             # ---- RENT ----
             av_R = min(base_R, Vc)
@@ -316,17 +333,18 @@ def simulate(path, p=P):
             # ---- SELL ---- (sold in year T; six months of carrying costs; proceeds invested mid-year)
             if y == T:
                 hold = 0.5 * (tax_R + ins_h + maint_c)
-                proceeds = Vc * (1 - p['sell_cost'] - p['doc_transfer_tax'])
+                proceeds = Vc * (1 - p['sell_cost'] - p['doc_transfer_tax']) - rec
                 gain = proceeds - basis
                 sale_tax = max(gain, 0.0) * t_lump
                 A['sell'].add(proceeds - sale_tax - hold)
                 A['sell'].grow(e, p, frac=0.5)
                 summary.update(sell_proceeds=proceeds, sell_gain=gain, sell_tax=sale_tax, sell_hold=hold,
-                               sell_net=proceeds - sale_tax - hold)
+                               sell_net=proceeds - sale_tax - hold, sell_recording=rec,
+                               sell_doc_tax=Vc * p['doc_transfer_tax'])
             else:
                 A['sell'].grow(e, p)
             # ---- wealth if everything were liquidated at this year-end ----
-            net_sale = Vc * (1 - p['sell_cost'] - p['doc_transfer_tax'])
+            net_sale = Vc * (1 - p['sell_cost'] - p['doc_transfer_tax']) - rec
             excl121 = p['sec121'] if (y - T) >= 2 else 0.0   # IRS Topic 701: owned and lived in for 2 years before the sale
             gL = net_sale - basis - excl121
             wL = A['live'].liq(p) + net_sale - max(gL, 0.0) * t_lump
@@ -335,6 +353,7 @@ def simulate(path, p=P):
             wR = A['rent'].liq(p) + net_sale - recap * t_recap - max(g_tot - recap, 0.0) * t_lump
             wS = A['sell'].liq(p)
             row.update(live_assessed=av_L, live_tax=tax_L, live_cost=cost_L, live_unit3=unit3,
+                       live_imputed=imputed,
                        rent_assessed=av_R, rent_tax=tax_R, rent_collected=coll, rent_noi=noi, rent_depr=depr,
                        rent_income_tax=inc_tax, rent_after_tax=noi - inc_tax,
                        rent_susp=susp, w_live=wL, w_rent=wR, w_sell=wS,
@@ -423,7 +442,7 @@ def mixed(path, p=P, first='live', years=None):
                 susp = r['rent_susp']
         elif sale is None and y == S:
             V = r['cup_value']
-            proceeds = V * (1 - p['sell_cost'] - p['doc_transfer_tax'])
+            proceeds = V * (1 - p['sell_cost'] - p['doc_transfer_tax']) - p['recording_fee'] * r['cpi']
             hold = 0.5 * (r['rent_tax'] + r['ins_home'] + r['cup_maint'])
             if first == 'live':
                 gain = proceeds - basis - (p['sec121'] if (S - T) >= 2 else 0.0)   # IRS Topic 701: 2 of 5 years
@@ -438,7 +457,7 @@ def mixed(path, p=P, first='live', years=None):
     last = rows[-1]
     if sale is None:
         Vc = last['cup_value']
-        net_sale = Vc * (1 - p['sell_cost'] - p['doc_transfer_tax'])
+        net_sale = Vc * (1 - p['sell_cost'] - p['doc_transfer_tax']) - p['recording_fee'] * last['cpi']
         if first == 'live':
             gL = net_sale - basis - p['sec121']
             nominal = acc.liq(p) + net_sale - max(gL, 0.0) * t_lump
@@ -622,6 +641,15 @@ def main():
         gaps = sorted(get(x)['sell'] / get(x)['cpi'] - get(x)['rent'] / get(x)['cpi'] for x in replays)
         hz[name] = dict(wins=cnt, worst=worst, sell_minus_rent_worst=gaps[0], sell_minus_rent_median=gaps[len(gaps) // 2])
     out['replay_horizons'] = hz
+    # distribution of real (2026-dollar) after-tax wealth across the 50 replays, by path and horizon (A2)
+    def _dist(get):
+        vals = {k: sorted(get(x)[k] / get(x)['cpi'] for x in replays) for k in ('live', 'rent', 'sell')}
+        return {k: dict(min=vals[k][0], median=vals[k][len(vals[k]) // 2], max=vals[k][-1]) for k in vals}
+    out['wealth_distribution'] = {
+        '10': _dist(lambda x: x['w10']),
+        '20': _dist(lambda x: x['w20']),
+        'end': _dist(lambda x: dict(live=x['w_live'], rent=x['w_rent'], sell=x['w_sell'], cpi=x['cpi_end'])),
+    }
     # historical summary statistics used on the site
     def cagr(vals):
         prod = 1.0

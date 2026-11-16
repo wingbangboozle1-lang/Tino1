@@ -204,6 +204,48 @@ def lines(series, x0, x1, width=720, height=300, yfmt=lambda v: '$%.0fM' % (v / 
     return ''.join(o)
 
 
+def dist_chart(dist, horizon='2076'):
+    """dist: {path: {min, median, max}} of real after-tax wealth across the 50 replays.
+    Renders one floating range bar per path (min to max) with a median tick."""
+    order = ['live', 'rent', 'sell']
+    lo = min(d['min'] for d in dist.values())
+    hi = max(d['max'] for d in dist.values())
+    if hi <= lo:
+        hi = lo + 1e6
+    width, height, L, R, Tm, Bm = 720, 250, 150, 16, 26, 40
+    bar_h, gap = 34, 18
+
+    def Y(v):
+        return Tm + (height - Tm - Bm) * (1 - (v - lo) / float(hi - lo))
+
+    def tx(v):
+        return L + (width - L - R) * (v - lo) / float(hi - lo)
+
+    o = ['<svg class=\"chart\" viewBox=\"0 0 %d %d\" role=\"img\" aria-label=\"Distribution chart\">' % (width, height)]
+    for k in range(5):
+        v = lo + (hi - lo) * k / 4.0
+        o.append('<line x1=\"%d\" x2=\"%d\" y1=\"%.1f\" y2=\"%.1f\" class=\"grid\"/>' % (L, width - R, Y(v), Y(v)))
+        o.append('<text x=\"%d\" y=\"%.1f\" class=\"ax\" text-anchor=\"end\">$%.1fM</text>' % (L - 6, Y(v) + 4, v / 1e6))
+    for i, p in enumerate(order):
+        d = dist[p]
+        yc = Tm + (i + 0.5) * (bar_h + gap)
+        ytop = yc - bar_h / 2.0
+        xmin, xmax, xmed = tx(d['min']), tx(d['max']), tx(d['median'])
+        o.append('<text x=\"%d\" y=\"%.1f\" class=\"lab\">%s</text>' % (L - 10, yc + 4, e(NAME[p])))
+        o.append('<rect x=\"%.1f\" y=\"%.1f\" width=\"%.1f\" height=\"%d\" fill=\"%s\" opacity=\"0.32\" rx=\"3\"/>'
+                 % (xmin, ytop, max(2.0, xmax - xmin), bar_h, COL[p]))
+        o.append('<line x1=\"%.1f\" x2=\"%.1f\" y1=\"%.1f\" y2=\"%.1f\" stroke=\"%s\" stroke-width=\"2.6\"/>'
+                 % (xmed, xmed, ytop, ytop + bar_h, COL[p]))
+        o.append('<text x=\"%.1f\" y=\"%.1f\" class=\"val\" text-anchor=\"middle\">median $%.1fM</text>'
+                 % (xmed, ytop - 6, d['median'] / 1e6))
+        o.append('<text x=\"%.1f\" y=\"%.1f\" class=\"ax\" text-anchor=\"start\">min $%.1fM</text>'
+                 % (xmin + 2, yc + bar_h / 2 + 14, d['min'] / 1e6))
+        o.append('<text x=\"%.1f\" y=\"%.1f\" class=\"ax\" text-anchor=\"end\">max $%.1fM</text>'
+                 % (xmax - 2, yc + bar_h / 2 + 14, d['max'] / 1e6))
+    o.append('</svg>')
+    return ''.join(o)
+
+
 # ------------------------------------------------------------------ shared numbers
 rT = ROWS[T - Y0]
 r26 = ROWS[0]
@@ -411,6 +453,31 @@ def build_decision():
         ['2076 in 2026 dollars', m(s['real_live']), m(s['real_rent']), m(s['real_sell']), src('BLS-CPI')],
         ['2076 before the final sale and its taxes', m(s['h_live']), m(s['h_rent']), m(s['h_sell']), src('IRS-TC409')],
     ], caption='Baseline result (inheritance in %d)' % T, cls='num')
+    MX = M['mixed']; MD = M['mixed_detail']
+    mixed = table(['Choice for Property A', 'Sale year', 'Net cash at the sale', 'Tax on the sale',
+                   'Wealth in 2076 (2026 dollars)', 'Official basis'], [
+        ['Sell immediately (the pure sell choice)', str(T), m(s['sell_net']), m(s['sell_tax']), m(s['real_sell']),
+         src('IRS-TC409', 'IRS-TC701')],
+        ['Live in it 5 years, then sell', str(MD['live5']['year']), m(MD['live5']['net']), m(MD['live5']['tax']),
+         m(MX['baseline']['live5']), src('IRS-TC409', 'IRS-TC701', 'BOE-P19')],
+        ['Live in it 10 years, then sell', str(MD['live10']['year']), m(MD['live10']['net']), m(MD['live10']['tax']),
+         m(MX['baseline']['live10']), src('IRS-TC409', 'IRS-TC701', 'BOE-P19')],
+        ['Rent it out 5 years, then sell', str(MD['rent5']['year']), m(MD['rent5']['net']), m(MD['rent5']['tax']),
+         m(MX['baseline']['rent5']), src('IRS-TC409', 'IRS-TC701', 'IRS-P527')],
+        ['Rent it out 10 years, then sell', str(MD['rent10']['year']), m(MD['rent10']['net']), m(MD['rent10']['tax']),
+         m(MX['baseline']['rent10']), src('IRS-TC409', 'IRS-TC701', 'IRS-P527')],
+        ['Live in it, never sell (the pure live choice)', 'never', '$0', '$0', m(s['real_live']),
+         src('IRS-TC409', 'IRS-TC701', 'BOE-P19')],
+        ['Rent it out, never sell (the pure rent choice)', 'never', '$0', '$0', m(s['real_rent']),
+         src('IRS-TC409', 'IRS-P527')],
+    ], caption='Mixed paths compared with the three pure choices (inheritance in %d)' % T, cls='num',
+        note='A mixed path lives in or rents Property A for a few years and sells later. The sale is valued at the '
+             'year-end value of the sale year and treated as mid-year, so occupancy costs or rent count only through '
+             'the year before. The $250,000 single-filer home-sale exclusion (IRS Topic 701) is applied only after two '
+             'years of residence, and the Proposition 19 family-home relief is assumed to hold while the child lives '
+             'there. Selling immediately stays ahead in the baseline: delaying the sale costs the years of stock growth '
+             'the proceeds would otherwise have earned. Model outputs on the assumptions flagged on the Flagged for '
+             'Review page, not forecasts.')
     series = [(NAME[k], COL[k], {r['year']: r['w_' + k] / r['cpi'] for r in ROWS if r['year'] >= T}) for k in ('sell', 'rent', 'live')]
     chart = lines(series, T, 2076, mark=None)
     sens = table(['One assumption changed', 'Live in it', 'Rent it out', 'Sell and reinvest', 'Best', 'Official basis'], [
@@ -465,7 +532,7 @@ def build_decision():
         ['Savings account or Treasury bills', '3.5%', m(S_[6]['real_sell']), m(S_[6]['real_rent']), NAME[S_[6]['best']], src('TREASURY')],
     ], caption='Stocks or savings: where the sale proceeds go decides the answer', cls='num',
         note='Returns are assumptions (%s). On 2026-11-10 the 3-month Treasury bill yielded 4.30%% and the 10-year note 4.98%%. Interest is taxed every year at ordinary rates; stock growth is taxed when sold.' % flag('A02'))
-    body = at + first + w + where + '<h2>Wealth over time, in 2026 dollars</h2>' + chart + why + sens + be + byT + '<h2>Property A or Property B?</h2>' + which + '<p class="note"><strong>Provenance note:</strong> Links in the Official basis column point to the governing tax rule, rate table, or government index applied in the row; they do not verify owner-supplied figures (%s) or future investment/housing returns (%s). Before finalizing any plan, review the open questions on <a href="questions.html">Questions &amp; discovery</a> and the candidate upgrades on <a href="suggestions.html">Site improvements</a>.</p>' % (flag('P03'), flag('A01'))
+    body = at + first + w + '<h2>Mixed paths: live or rent for a while, then sell</h2>' + mixed + where + '<h2>Wealth over time, in 2026 dollars</h2>' + chart + why + sens + be + byT + '<h2>Property A or Property B?</h2>' + which + '<p class="note"><strong>Provenance note:</strong> Links in the Official basis column point to the governing tax rule, rate table, or government index applied in the row; they do not verify owner-supplied figures (%s) or future investment/housing returns (%s). Before finalizing any plan, review the open questions on <a href="questions.html">Questions &amp; discovery</a> and the candidate upgrades on <a href="suggestions.html">Site improvements</a>.</p>' % (flag('P03'), flag('A01'))
     page('decision.html', 'Decision: live in it, rent it, or sell and reinvest',
          'One model, one set of assumptions, three choices for Property A. Property B stays as it is in every case because the Inheritor already owns it.', body)
 
@@ -547,6 +614,22 @@ def build_projections():
         ('Property A assessed value if lived in', COL['live'], {r['year']: (r['cup_assessed_pre'] if r['year'] < T else r['live_assessed']) for r in ROWS}),
         ('Property B assessed value', COL['before'], {r['year']: r['sf_assessed'] for r in ROWS}),
     ], 2026, 2076, mark=T)
+    WD = M['wealth_distribution']
+    dist_svg = dist_chart(WD['end'])
+    dist_tbl = table(['Path', '10-year: low / median / high', '20-year: low / median / high', '2076: low / median / high', 'Official basis'], [
+        [NAME[p],
+         '%s / %s / %s' % (m(WD['10'][p]['min']), m(WD['10'][p]['median']), m(WD['10'][p]['max'])),
+         '%s / %s / %s' % (m(WD['20'][p]['min']), m(WD['20'][p]['median']), m(WD['20'][p]['max'])),
+         '%s / %s / %s' % (m(WD['end'][p]['min']), m(WD['end'][p]['median']), m(WD['end'][p]['max'])),
+         src('FHFA-SJ', 'BLS-CPI')]
+        for p in ('live', 'rent', 'sell')
+    ], caption='Distribution of real (2026-dollar) after-tax wealth across the 50 real-history replays', cls='num', tid='dist')
+    dist_note = ('<p class=\"note\">Each bar is the range of real after-tax wealth for that choice across the 50 replays that '
+                 'replay the real 1976-2025 growth, inflation and stock-return record from each of its 50 possible starting years '
+                 '(the same construction the <a href=\"black-swan.html\">Black swan</a> page uses); the tick is the median. Values are '
+                 'conditional model outputs on stated assumptions (%s), not forecasts: the series are the official FHFA house-price '
+                 'index and BLS CPI with an academic stock-return series (see the <a href=\"verification.html\">Verification</a> page).</p>'
+                 % flag('A01'))
     assum = table(['Line', 'Starting figure (2026)', 'Growth each year', 'Kind', 'Official basis'], [
         ['Property A market value', m(P['cup_value']), '4.0%', 'owner figure; growth is an assumption ' + flag('A01'), src('FHFA-SJ')],
         ['Property B market value', m(P['sf_value']), '4.0%', 'owner figure; growth is an assumption ' + flag('A01'), src('FHFA-SF')],
@@ -559,9 +642,12 @@ def build_projections():
         ['Property B rent, two units', m(P['sf_rent_2units']), 'half the rent-controlled rate (60% of inflation), half market rate', 'owner figure; growth rule is an assumption ' + flag('A10'), src('SF-RENT-RULES', 'SF-RENT-2026')],
         ['Property A market rent', m(P['cup_rent_month'] * 12), 'inflation + 0.5 point', 'HUD four-bedroom figure used as a stand-in ' + flag('A07'), src('HUD-95014')],
         ['Inflation', '2.5%', 'constant in the baseline', 'assumption; the CPI rose %s a year 2000-2025 %s' % (pc(HS['cpi_2000_2025']), flag('A01')), src('BLS-CPI', 'CBO')],
+        ['Sale-cost components', '5.0% commission/closing + 0.11% county documentary transfer tax + $92 recording fee', 'the recording fee grows with inflation', 'commission/closing is an assumption %s; the transfer tax and recording fee are official' % flag('A06'), src('SCC-DTT', 'SCC-REC-FEE')],
+        ['Imputed rent (live path)', 'market rent foregone by living in Property A', 'same growth as market rent', 'opportunity-cost memo on the live path; the rent path already earns this rent, so it is shown, not subtracted again (avoids double-counting) %s' % flag('A07'), src('HUD-95014')],
     ], caption='What drives each line')
     tabs = '<div class="seg" id="ysel"><span>Show:</span><button type="button" data-y="a-pre" class="on">A before inheritance</button><button type="button" data-y="a-live">A lived in</button><button type="button" data-y="a-rent">A rented</button><button type="button" data-y="b-all">B</button><button type="button" data-y="all">All tables</button></div>'
-    body = (hist + '<h2>Property tax by year</h2>' + chart + '<h2>Market and assessed values</h2>' + chart2 + assum
+    body = (hist + '<h2>Property tax by year</h2>' + chart + '<h2>Market and assessed values</h2>' + chart2
+            + '<h2>Distribution of outcomes across the 50 replays</h2>' + dist_svg + dist_note + dist_tbl + assum
             + '<h2>Year-by-year tables</h2><p class="note">Baseline path with inheritance in %d. Amounts are nominal dollars of each year, rounded to $10. A negative electricity figure is a credit. If Property A is sold, its costs stop in %d; the sale figures are on the <a href="decision.html">Decision</a> page. <strong>Provenance:</strong> the Official basis column links the statutory tax/rate rule or HUD/county schedule used; projected dollar figures are conditional model outputs built on the owner\'s rounded inputs (%s) and stated assumptions (%s), not official forecasts.</p>' % (T, T, flag('P03'), flag('A01'))
             + tabs + pre + live + rent + sfb)
     page('projections.html', 'Year-by-year projections, 2026 to 2076',
