@@ -3,7 +3,7 @@ from pathlib import Path
 from html import escape
 import json
 from illustrations import (outlook, ledger, money, investment_path, phased_entry, STRESS, threshold, family_assessment,
-                           cpi_decades, cpi_extremes, cpi_display_rows)
+                           cpi_decades, cpi_extremes, cpi_display_rows, outcome_band)
 
 HERE = Path(__file__).parent
 out = HERE/'public'
@@ -142,6 +142,30 @@ for rate in (.02,.03,.04):
     delta=staged-fast_immediate
     phase_yield_rows.append((f'{rate*100:.0f}% assumed rolling Treasury return',money(staged),('+' if delta>=0 else '−')+money(abs(delta)),'30 months parked, then 12 equal monthly equity purchases.','sec'))
 phase_section='''<h2>Phased investing after a crash-entry inheritance</h2><p>Test a lump sum parked in a short Treasury ladder/rolling maturities spanning 3 months to 2 years for 24, 30 or 36 months, then invested in stocks over 12 months. The table compares that path with investing the same illustrative proceeds in equities immediately. It is an educational sequence-risk experiment, not the household forecast or a historical replay.</p>'''+table('SYNTHETIC annual equity paths · assumptions only',['Stress path','Assumed stock returns by year 1–10','Status / limitation','Official context'],phase_assumptions,'illustration')+table('SYNTHETIC ending value · $100,000 illustrative starting amount · 10-year horizon',['Stress path','Immediate equity entry','Treasury wait then 12-month phase','Phased terminal value','Phased minus immediate','Official context'],phase_results,'illustration')+table('WHAT-IF · fast crash/recovery path · 30-month wait · 12-month phase',['Assumed rolling Treasury return','Phased terminal value','Difference vs immediate equity','Entry schedule','Official context'],phase_yield_rows,'illustration')+notice('Reinvestment risk beside the headline','The parking return is a flat assumed 3% per year, not a Treasury quote or yield forecast; the what-if table varies it from 2% to 4%. Actual 3-month-to-2-year yields and maturity-date reinvestment rates can differ. Staging benefits these chosen early-crash paths but lags immediate equity entry in the rising-market path; it does not remove market loss, assure a higher return, or make a 24–36 month wait optimal. The official links give historical / diversification context only and do not validate the synthetic returns.')
+band_rows=[]
+for r in outcome_band((10,20,30)):
+    band_rows.append((str(r['years']),money(r['p10']),money(r['p25']),money(r['median']),
+                      money(r['p75']),money(r['p90']),money(r['mean_path']),money(r['median_real']),'sec'))
+_band30=outcome_band((30,))[0]
+band_compare=[
+    ('One compounding path at 5% a year',money(1000000*1.05**30),
+     'The figure a single-point projection shows. It is one path, not an expectation and not a floor.','sec'),
+    ('Median of the invented paths',money(_band30['median']),
+     'Half the invented paths end lower than this, before tax and fees.','sec'),
+    ('10th percentile of the same paths',money(_band30['p10']),
+     'A weak outcome; it is not called a worst case, because the model is invented and has no tail limit.','sec'),
+    ('Median after 2.5% invented inflation',money(_band30['median_real']),
+     'Purchasing power at 2026 prices, not the account balance.','sec'),
+]
+band_section=('<h2>A single number hides the range: outcome percentiles</h2>'
+ '<p>Each table above shows one path. A reader who sees only a compounding result will underestimate how far an outcome can land from it. The table below keeps the same invented discipline and adds dispersion: $1,000,000 of unrelated capital, 20,001 simulated paths, and in every path an independent annual return drawn from a normal distribution with an <b>invented 5% mean and 17% standard deviation</b>. Inflation is a fixed invented 2.5%. No tax, fees or withdrawals. The seed is fixed, so two builds produce the same numbers. This is arithmetic on stated assumptions: it is not a calibrated forecast, it assigns no probability to any real outcome, and it is not advice.</p>'
+ +table('SYNTHETIC · invented 5% mean / 17% standard deviation · 20,001 paths · percentiles of nominal terminal value',
+        ['Years','10th percentile','25th','Median','75th','90th','Single compound-at-5% figure','Median in 2026 dollars','Official risk context'],band_rows,'illustration')
+ +notice('How to read the band',
+   'The single compound-at-5% figure that most projections show sits above the median of this invented spread, and well above the 10th percentile. The 10th percentile at 30 years is below the $1,000,000 starting amount in nominal terms, before tax and before adjusting for inflation. None of these numbers is evidence about real odds: the mean and the spread are invented rather than measured. The practical rule is that a decision which only works at the 75th or 90th percentile does not work at the median, so the band belongs beside every single-point figure.')
+ +table('SYNTHETIC · the point estimate beside its own dispersion · 30-year horizon · same invented assumptions',
+        ['Presentation','30-year nominal value','What it implies','Official risk context'],band_compare,'illustration'))
+
 page('stress.html','When the baseline breaks','BLACK SWAN & REGIME RISK / 04','Uneven inflation, market losses and housing disruptions can overwhelm a smooth average.',table('Historical context · dates and measures must not be mixed',['Episode','Official observation','Relevance / limits','Source'],[
 ('Great Inflation · 1965–1982','Multiple recessions and energy shocks; inflation exceeded 14% in 1980.','A long low-inflation baseline is not a law of nature. Not a forecast for local expenses.','inflation'),
 ('Great Recession · 2007–2009','National home prices fell about 30% from mid-2006 to mid-2009; S&P 500 price index fell 57% October 2007 to March 2009.','Different peak/trough windows; not calendar-year returns, not total returns and not specific-property performance.','recession'),
@@ -151,7 +175,7 @@ page('stress.html','When the baseline breaks','BLACK SWAN & REGIME RISK / 04','U
 ('Insurance / repair shock','Assume premium doubles; test $100,000 uninsured repair and one year without rent.','Invented amounts; verify exclusions, deductible and temporary-housing/lost-rent coverage.','insurance'),
 ('Solar / utility regime','Assume no solar cash compensation and a positive import/fixed-charge bill; test panel/inverter replacement separately.','Do not carry today’s estimated credit forward indefinitely.','cpuc'),
 ('Law / eligibility shock','Remove family-home relief; rerun at full reassessment. Freeze or reduce future estate exclusion in a separate policy stress.','No claim these changes have been enacted or assigned a probability.','boe')
-],'illustration')+phase_section)
+],'illustration')+phase_section+band_section)
 
 process=[
 ('1','Before transfer','Counsel checks trust funding, title, beneficiaries, relationship, powers, debts, prior gifts and estate inclusion. Separate the Inheritor’s own assets from the Transferor’s estate.','Planning action; trust alone is not tax exemption.','estate'),
@@ -166,7 +190,10 @@ process=[
 ('10','After implementation / annually','Update coverage, rent compliance, accounting, assessment and portfolio allocation; re-run after legal or economic changes.','Current facts must replace old scenarios.','sec')]
 TIMELINE=[
 ('Day 0 · date of death','Reference date for inherited basis and for the property-tax clocks. Counsel fixes the effective transfer date; the date of distribution or recording can differ.','Date-of-death value is generally the starting basis; trust alone does not guarantee an adjustment.','basis'),
-('Within 9 months after death','Federal estate-tax return (Form 706) if a filing requirement exists. Form 4768 gives an automatic 6-month extension to file, and can also request an extension of time to pay.','IRS Form 706 instructions (Rev. July 2026): the return must be filed within 9 months after the date of death. Filing is required only above the year-of-death threshold ($15,000,000 for 2026 deaths).',['irc6075','estate']),
+('Within 9 months after death · tax also due','Federal estate-tax return (Form 706) if a filing requirement exists. The tax itself is due in the same 9 months. Form 4768 gives an automatic 6-month extension to file and can separately request an extension of time to pay; an extension to file does not by itself extend payment.','In one IRS document (Form 706 instructions, Rev. July 2026): “You must file Form 706 ... within 9 months after the date of the decedent’s death” and “The estate and GST taxes are due within 9 months of the date of the decedent’s death.” Filing is required only above the year-of-death threshold ($15,000,000 for 2026 deaths).','irc6075'),
+('Up to 5 years after death · only if no filing requirement existed','A late portability election may still be possible: an executor with no filing requirement who did not file on time may file Form 706 on or before the fifth anniversary of the death under the procedure the instructions name.','Form 706 instructions: executors eligible under Rev. Proc. 2022-32 may file on or before the fifth anniversary of the decedent’s death, and must state on the return that it is filed under that procedure. A timely return is still required for the ordinary portability election.','irc6075'),
+('60 days after the triggering event','Trustee serves the statutory notification on beneficiaries and heirs, and on the Attorney General for a charitable trust. The period runs from the event, or from when the trustee learns of a person entitled to notice, and from the date a new trustee begins to serve if there was a vacancy.','Probate Code §16061.7(f): service “not later than 60 days following the occurrence of the event requiring service”. Counsel confirms who must be served and the method.','trust'),
+('Every 12 months · before the decision, then annually','Re-read the federal exclusion and annual gift exclusion, the SALT cap for the year, the Proposition 19 allowance in force, the county assessment and the actual bills; record the date and what changed beside each item.','The exclusion is published year by year (2026: $15,000,000; 2027: $15,480,000; annual gift exclusion $19,000 then $20,000); the Proposition 19 allowance is re-indexed and published in BOE notices; nothing here replaces the figures in force on the decision date.',['irs27','allow','boe']),
 ('Within 1 year of transfer','Homeowners’ exemption claim (BOE-266) if family-home relief is sought. Must be filed before the exclusion claim.','BOE Prop 19 page: file for the homeowners’ exemption within 1 year of transfer.','boe'),
 ('Within 3 years, or before a third-party transfer','Claim for exclusion (BOE-19-P) from reassessment, with the eligibility facts documented.','BOE Prop 19 page: claim for exclusion within 3 years or before transfer to a third party.','boe'),
 ('Each year · sale year and later','California Form 540 return and payment. For 2025 returns the booklet lists April 15, 2026 to file and pay, and October 15, 2026 for the extended filing date. Check the year’s booklet each time.','The 1% Behavioral Health Services Tax on taxable income above $1,000,000 is reported on Line 62.','ftb540'),

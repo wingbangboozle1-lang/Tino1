@@ -6,7 +6,7 @@ import sys
 from pathlib import Path
 import shutil
 from illustrations import (r10, family_assessment, outlook, investment_path, phased_entry, STRESS, threshold, ledger,
-                           CPI_ANNUAL, cpi_decades, cpi_extremes, cpi_display_rows)
+                           CPI_ANNUAL, cpi_decades, cpi_extremes, cpi_display_rows, outcome_band, band_selftest)
 from check import pii_kinds
 
 
@@ -173,3 +173,36 @@ class PublicationTests(unittest.TestCase):
 
 
 if __name__=='__main__': unittest.main()
+
+class OutcomeBandTests(unittest.TestCase):
+    """The dispersion table must be ordered, seeded and honestly labelled."""
+
+    def test_band_is_ordered_and_reproducible(self):
+        self.assertTrue(band_selftest())
+        rows = outcome_band((10, 20, 30), paths=3001)
+        self.assertEqual([r['years'] for r in rows], [10, 20, 30])
+        for r in rows:
+            self.assertLessEqual(r['p10'], r['p25'])
+            self.assertLessEqual(r['p25'], r['median'])
+            self.assertLessEqual(r['median'], r['p75'])
+            self.assertLessEqual(r['p75'], r['p90'])
+            self.assertEqual(r['paths'], 3001)
+
+    def test_band_rejects_wide_open_or_absurd_inputs(self):
+        with self.assertRaises(ValueError):
+            outcome_band((10,), paths=999)
+        with self.assertRaises(ValueError):
+            outcome_band((0,))
+        with self.assertRaises(ValueError):
+            outcome_band((10,), paths=2001, sd=9.0)  # draws below -100% are refused, not clipped
+
+    def test_band_real_value_deflates_by_the_stated_inflation(self):
+        r = outcome_band((30,), paths=2001)[0]
+        self.assertAlmostEqual(r['median_real'], r['median'] / 1.025 ** 30, places=6)
+
+    def test_published_band_is_not_a_probability_claim(self):
+        page = (Path(__file__).parent / 'public' / 'stress.html').read_text()
+        self.assertIn('invented 5% mean and 17% standard deviation', page)
+        self.assertIn('assigns no probability to any real outcome', page)
+        for banned in ('odds of', 'chance of', 'probability of success'):
+            self.assertNotIn(banned, page.casefold())

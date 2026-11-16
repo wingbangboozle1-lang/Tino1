@@ -3,6 +3,7 @@ All rates are chosen assumptions, not official predictions, quotes or tax advice
 Round only at display time; keep full precision for calculations.
 """
 from decimal import Decimal, ROUND_HALF_UP
+import random
 
 
 def r10(value):
@@ -232,3 +233,73 @@ def cpi_display_rows(values=None):
         rows.append((label, str(r['count']), signed(r['low'], 1), signed(r['high'], 1),
                      signed(r['mean'], 2), five, under))
     return rows
+
+
+# ---------------------------------------------------------------------------
+# Dispersion test: a single point estimate hides how wide the range is.
+# Every input below is invented and stated on the page. This is NOT a forecast,
+# NOT an odds statement and NOT calibrated to any historic series.
+# ---------------------------------------------------------------------------
+BAND = dict(principal=1000000.0, mean=0.05, sd=0.17, inflation=0.025, seed=20261116,
+            label='invented 5% mean / 17% standard deviation annual return, fixed seed')
+
+
+def outcome_band(years_list=(10, 20, 30), paths=20001, principal=None, mean=None, sd=None,
+                 inflation=None, seed=None):
+    """Deterministic percentile band from an invented normal return model.
+
+    Each path draws independent annual returns r = mean + sd * z, compounds the
+    principal, and the terminal values are ranked. Percentiles are read off the
+    ranked list; the same seed always reproduces the same numbers. A single
+    compound-at-mean path is returned beside the band so the reader can see how
+    far the familiar "5% a year" figure sits from the middle of the spread.
+    """
+    p = dict(principal=1000000.0, mean=0.05, sd=0.17, inflation=0.025, seed=20261116)
+    for k, v in (('principal', principal), ('mean', mean), ('sd', sd),
+                 ('inflation', inflation), ('seed', seed)):
+        if v is not None:
+            p[k] = v
+    years_list = tuple(sorted(set(int(y) for y in years_list)))
+    if not years_list or years_list[0] < 1:
+        raise ValueError('years must be positive')
+    if paths < 1000:
+        raise ValueError('use at least 1000 paths so the percentiles are stable')
+    rng = random.Random(p['seed'])
+    logs = [rng.gauss(p['mean'], p['sd']) for _ in range(paths * max(years_list))]
+    if any(1 + r <= 0 for r in logs):
+        raise ValueError('a drawn return of -100% or worse is not usable here')
+    out = []
+    for n in years_list:
+        values = []
+        for i in range(paths):
+            v = p['principal']
+            base = i * max(years_list)
+            for k in range(n):
+                v *= 1 + logs[base + k]
+            values.append(v)
+        values.sort()
+
+        def pct(q):
+            # nearest-rank on the sorted list, no interpolation
+            idx = min(len(values) - 1, max(0, int(round(q * (len(values) - 1)))))
+            return values[idx]
+        price = (1 + p['inflation']) ** n
+        out.append(dict(years=n,
+                        p10=pct(.10), p25=pct(.25), median=pct(.50), p75=pct(.75), p90=pct(.90),
+                        mean_path=p['principal'] * (1 + p['mean']) ** n,
+                        median_real=pct(.50) / price, p10_real=pct(.10) / price,
+                        paths=paths, assumptions=p))
+    return out
+
+
+def band_selftest():
+    """Structural checks used by the unit tests; no forecast is implied."""
+    rows = outcome_band((10, 30), paths=2001)
+    assert [r['years'] for r in rows] == [10, 30]
+    for r in rows:
+        assert r['p10'] <= r['p25'] <= r['median'] <= r['p75'] <= r['p90'], r['years']
+        assert abs(r['median'] - r['p10']) > 0, 'dispersion must be non-zero'
+        assert r['median_real'] <= r['median'], 'real value cannot exceed nominal with positive inflation'
+    again = outcome_band((10, 30), paths=2001)
+    assert [r['median'] for r in rows] == [r['median'] for r in again], 'seeded result must reproduce'
+    return True
