@@ -259,6 +259,30 @@
       "url": "https://www.sfelections.org/results/20261103/index.html",
       "finding": "Measure H, parcel tax to fund Muni operations: YES 244,760 (74.4%), NO 84,209 (25.6%) on the preliminary count, last updated November 10, 2026; next update November 17, 2026; certification may take up to 30 days after Election Day.",
       "checked": "2026-11-16"
+    },
+    "fred_tb3ms": {
+      "title": "Federal Reserve H.15 via FRED · 3-month Treasury bill, annual average",
+      "url": "https://fred.stlouisfed.org/series/TB3MS",
+      "finding": "Read 2026-11-16. Series starts 1934-01, so no official bill value exists for 1928-1933. Annual averages used here run 1934-2025; 2026 has no complete year. Annual average for 2025 was 4.07 percent.",
+      "checked": "2026-11-16"
+    },
+    "fred_gs2": {
+      "title": "Federal Reserve H.15 via FRED · 2-year Treasury constant maturity, annual average",
+      "url": "https://fred.stlouisfed.org/series/GS2",
+      "finding": "Read 2026-11-16. Series starts 1976-06; annual averages used here run 1977-2025. A par yield is not a total return; it is used only as a holding-price proxy for the parked 2-year leg.",
+      "checked": "2026-11-16"
+    },
+    "irs403": {
+      "title": "IRS Topic 403 · Interest received",
+      "url": "https://www.irs.gov/taxtopics/tc403",
+      "finding": "Read 2026-11-16. Interest income from Treasury bills, notes and bonds is subject to federal income tax but is exempt from all state and local income taxes.",
+      "checked": "2026-11-16"
+    },
+    "hist_returns": {
+      "title": "S&P 500 annual total return, 1928-2025 · academic series (not a government source)",
+      "url": "https://pages.stern.nyu.edu/~adamodar/New_Home_Page/datafile/histretSP.html",
+      "finding": "Page read 2026-11-16 and labelled January 2026. The 1928-2025 column used here was checked against the repository copy at 31 sample years with no mismatch. This is a non-government academic series and is flagged as such on the page that uses it.",
+      "checked": "2026-11-16"
     }
   },
   "rejected_links": [
