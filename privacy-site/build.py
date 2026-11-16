@@ -24,6 +24,13 @@ def table(caption, head, rows, kind='verified'):
 
 
 nav=[('index.html','Overview'),('decision.html','Decision'),('projection.html','Projections'),('stress.html','Black swan'),('process.html','Process'),('law.html','Tax & law'),('costs.html','Costs'),('questions.html','Open questions'),('brief.html','Attorney & CPA brief'),('suggestions.html','Suggestions'),('suggestions-detail.html','Review details'),('issues.html','Issues to resolve'),('glossary.html','Glossary'),('flagged.html','Flagged for review')]
+# Same pages, four labelled groups so a first-time reader can see what belongs together.
+NAV_GROUPS=[
+ ('Start here · the decision', ['index.html','decision.html','brief.html']),
+ ('The numbers · what they can and cannot say', ['projection.html','stress.html','costs.html']),
+ ('The rules · what must be checked with an adviser', ['law.html','process.html','glossary.html']),
+ ('Open work · questions, review and sources', ['questions.html','issues.html','suggestions.html','suggestions-detail.html','flagged.html'])];
+assert sorted(sum((v for _,v in NAV_GROUPS),[]))==sorted(k for k,_ in nav), 'nav groups must cover every page exactly once'
 
 def notice(title, body):
     return '<div class="notice"><b>'+title+'</b><p>'+body+'</p></div>'
@@ -35,7 +42,10 @@ def write_root_landing():
 
 
 def page(fn,title,kicker,description,body):
-    links=''.join(f'<a {"aria-current=page" if f==fn else ""} href="{f}">{n}</a>' for f,n in nav)
+    names=dict(nav)
+    links=''.join('<span class="navgroup"><span class="navlabel">'+escape(g)+'</span>'
+                  +''.join(f'<a {"aria-current=page" if f==fn else ""} href="{f}">{names[f]}</a>' for f in fs)
+                  +'</span>' for g,fs in NAV_GROUPS)
     (out/fn).write_text(f'''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><meta name="referrer" content="no-referrer"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none'"><title>{escape(title)} | Inheritance decision guide</title><link rel="stylesheet" href="style.css"></head><body><a class="skip" href="#main">Skip to content</a><header><div class="topbar"><a class="logo" href="index.html"><span class="mark">N</span><span>INHERITANCE <small>DECISION GUIDE</small></span></a><span class="topnote">SOURCE CHECKS <i></i> 12–16 NOV 2026</span></div><nav aria-label="Main navigation">{links}</nav></header><main id="main"><div class="heading"><p class="eyebrow">{kicker}</p><h1>{escape(title)}</h1><p class="lead">{description}</p></div>{body}</main><footer><div><b>Inheritance decision guide</b><p>No personal property figures or derived household forecasts are published.</p></div><p>Source checks are dated per item (12–16 November 2026). Illustrations are not forecasts. Rules may change. Not legal, tax, investment or insurance advice.</p><a href="flagged.html">Sources & limitations →</a></footer></body></html>''',encoding='utf-8')
 
 
@@ -406,7 +416,17 @@ POLICY=notice('Blank by design: investment policy for sale proceeds','Fill this 
 ('Tax items','','Gains are ordinary income for California purposes; the 1% add-on applies only above $1,000,000 taxable income; federal estate-tax status to be confirmed.','ftb540'),
 ('Review triggers','','Annual review and any event that reopens the policy: a law change, an estate-tax filing, a sale decision, or a change in household circumstances.','irs27')])
 brief_body='''<div class="brief"><div class="notice"><b>Privacy-safe, one-page working template</b><p>This public sheet contains no household names, property locations, values, rents, tax bills or account details. Fill it in privately with qualified advisers; do not upload or return the completed sheet to this site.</p></div><div class="brief-meta"><span>Transferor / trustee: __________________________</span><span>Inheritor: __________________________</span><span>Meeting date: __________________</span><span>Expected decision date: __________________</span></div><h2>Start with the ownership distinction</h2><p><b>Property A:</b> future inherited property · <b>Property B:</b> already owned by the inheritor. Treat B’s current ownership, housing use and existing income as the common baseline unless a separately documented change is planned. Analyze only A’s incremental effect.</p>'''+table('Attorney &amp; CPA agenda · record answers and evidence privately',['Review item','Question for the adviser','Private records / deliverable to bring','Official context'],brief_rows)+'''<div class="brief-grid"><section><h2>Decision paths to compare</h2><p>□ Live in A　 □ Rent A　 □ Sell A and reinvest</p><p>Compare on the same date and after tax. Include property tax, insurance, utilities, repairs/capital work, management/vacancy, transaction costs, liquidity and final liquidation taxes.</p><p>For reinvestment, compare immediate exposure with a 3-month-to-2-year Treasury parking/ladder path and a defined phased stock allocation. Show reinvestment risk at each maturity; staging does not guarantee protection from loss or better returns.</p></section><section><h2>Before leaving the meeting</h2><p>Attorney confirms trust/title, estate inclusion, basis questions, eligibility and filing clocks.</p><p>CPA confirms estate inventory, prior gifts/portability, transfer and sale/rental tax work, and liquidity needs.</p><p>□ Written answers received　 □ Missing evidence assigned　 □ Next review date set</p><p>Key facts that would change the answer: ____________________________________________</p></section></div><p class="print-note"><b>Print / export:</b> use the browser’s Print command and choose “Save as PDF.” The print layout is designed for one Letter-size page. This is a meeting checklist, not legal, tax or investment advice.</p></div>'''
-page('brief.html','Attorney & CPA briefing sheet','PRIVATE MEETING TEMPLATE / PRINT','A concise agenda to complete privately with an estate attorney and tax adviser before choosing a path.',brief_body+POLICY)
+
+DECISION_RECORD=table('Decision record · write the choice and the date beside each item at the moment it is made',['Item to be decided','What was decided (private, blank here)','Date of the decision','Who decided / who confirmed it','Evidence or document relied on','Official context'],[
+ ('Ownership and transfer date','','','','Trust, deed, trustee correspondence; counsel\'s written view on the change-in-ownership date.','trustbasis'),
+ ('Whether the family-home conditions are met','','','','BOE-19-P claim and the homeowners\' exemption claim; assessor confirmation. If any condition fails, record that the property is reassessed.','boepub'),
+ ('Sell, live in, rent — or a mixed path and for how long','','','','The written rule agreed before the figures arrived, plus the comparison at the same dates and horizon.','sell'),
+ ('Investment policy for the sale proceeds','','','','The signed policy above; the parking instrument, the phase-in schedule and the review triggers.','sec'),
+ ('Estate liquidity and portability','','','','The estate inventory, the Form 706 filing decision and any portability election; filing and payment dates.','irc6075'),
+ ('Insurance, utilities and reserve','','','','Occupancy-specific quotes, a year of bills, the inspection with a repair and capital reserve schedule.','cdires'),
+ ('Next review date and what would reopen the decision','','','','A named trigger and a date. Re-read the linked rule on that date rather than relying on this page.','irs27'),
+ ('Any decision deliberately deferred','','','','What is missing, who owns getting it, and the date by which it must exist before action.','boe')])
+page('brief.html','Attorney & CPA briefing sheet','PRIVATE MEETING TEMPLATE / PRINT','A concise agenda to complete privately with an estate attorney and tax adviser before choosing a path.',brief_body+POLICY+notice('Why a dated record matters','A projection read today and a decision taken in 2045 are different things. Recording the choice, the date, the person who confirmed it and the document relied on is what lets a future reader — including a successor trustee or a later adviser — see why a path was taken instead of re-deriving it from one forecast. Leave every entry blank until it is actually decided; an invented entry is worse than an empty one.')+DECISION_RECORD)
 
 glossary_rows=[
 ('Adjusted basis','Tax basis used to calculate gain or loss; inherited-property basis requires review of the transfer and trust facts.','basis'),
