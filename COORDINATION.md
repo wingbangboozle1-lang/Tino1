@@ -3035,3 +3035,24 @@ No other session holds an active claim on these files (last claim `arena/81ca507
   5. The public `flagged.html` P0 row (written by another session) states the repository "contain[s] household-derived material" and that Git history remains public. This is accurate and is left as written; the owner decision (G01/G02) remains open.
 - 2026-11-16 — **Open after merge (not blocking):** U-PH1 (Property B building area), U-PH2 (rent pass-through, unmodelled), A-TSY and A14 (ladder return from daily data), and the owner decisions above.
 
+
+---
+
+## Session `arena/b70b3a7c-tino1` — claim (2026-11-16 UTC)
+
+**Branch:** `arena/b70b3a7c-tino1` (fixed by the platform), based on `main` @ `d3e23dc` (PR #119). The current publication boundary is kept exactly: the generic front door at `index.html` plus the figure-free guide in `privacy-site/public/`, enforced by the allowlists in `final/published.txt` and `privacy-site/check_published.py`. The allowlist grows by exactly one new page in this session (`privacy-site/public/phased.html`); no household figure, ZIP code, city name, address or parcel number is added to any published page.
+
+**Why this scope is free:** the phased-entry work on `main` is the synthetic table in `privacy-site/public/stress.html` (session `arena/80e36f03-tino1`, recorded at P3 above) and the repository-only `final/phased.py` (annual academic replay, not published). Coordination records CR-1A-1 and CR-1A-2 leave one named gap open: the 2-year Treasury leg of the parked path (`GS2`) and the 1928–1933 bill proxy (`TB3MS` starts 1934-01). No other branch claims `privacy-site/data/`, `phased.html`, or a Treasury-ladder read. This session claims only that gap and does not touch the numeric build in `final/` beyond the publication allowlist lines it must extend.
+
+| # | Task | Status | Owner | File scope | Notes |
+|---|------|--------|-------|------------|-------|
+| P3-A | Civilian phased-entry test on the two real episode entries (1929 and 2008 calendar-year paths) with a real 3-month-to-2-year Treasury ladder return for the parked leg, using official FRED `TB3MS` / `GS2` values read this session | in progress | `arena/b70b3a7c-tino1` | `privacy-site/data/phased-history.json` (new), `privacy-site/illustrations.py`, `privacy-site/research.json`, `privacy-site/public/phased.html` | Values only from pages read this session; any leg with no official series is left blank and flagged. |
+| P3-B | Reinvestment risk and "what would change the answer" beside the phased headline | in progress | `arena/b70b3a7c-tino1` | `privacy-site/build.py`, `privacy-site/public/phased.html`, `privacy-site/public/stress.html` | No probability claims; ordering statements only. |
+| P3-C | Extend the publication allowlist by exactly one page and update every checker, the landing navigation, the README page table and the tests | in progress | `arena/b70b3a7c-tino1` | `privacy-site/check.py`, `privacy-site/check_published.py`, `privacy-site/test_illustrations.py`, `final/published.txt`, `final/check_published.py`, `privacy-site/landing.html`, `index.html`, `README.md` | Shared output changed only here and only by the additive page. |
+| P3-D | Official-source recheck for the session date: Treasury daily par yields; confirm nothing else used moved | in progress | `arena/b70b3a7c-tino1` | `privacy-site/research.json`, `COORDINATION.md` | Record what was read, with the date. |
+
+Owner-level items are not taken here and are unchanged: rewriting Git history that holds pre-rounding figures, changing repository visibility, and publishing household figures.
+
+### Session ID
+
+`arena/b70b3a7c-tino1` — claim commit pushed before any other file in the scope was edited.
