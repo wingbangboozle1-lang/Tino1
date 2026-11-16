@@ -10,8 +10,10 @@ NAV = {'index.html','decision.html','projection.html','stress.html','process.htm
 FILES = NAV | {'style.css'}
 REGISTRY = json.loads((ROOT.parent/'research.json').read_text())
 SOURCES = {s['url'] for s in REGISTRY['sources'].values()}
+# www.sfmta.com: the San Francisco Municipal Transportation Agency is a City and County department (official City site, not .gov); used for the Proposition H rate table.
+OFFICIAL_PUBLISHED_RATES = {'129', '249', '65', '799', '392'}  # SFMTA Proposition H rate table, read 2026-11-16
 # www.law.cornell.edu: non-government mirror of the U.S. Code, used only for IRC §1250 text (flagged 9B-F1 on the public Flagged page); the GPO copy was not retrieved on 2026-11-16.
-REVIEWED_NON_GOV_HOSTS = {'docs.github.com', 'federalreservehistory.org', 'www.federalreservehistory.org', 'www.law.cornell.edu'}
+REVIEWED_NON_GOV_HOSTS = {'docs.github.com', 'federalreservehistory.org', 'www.federalreservehistory.org', 'www.sfmta.com', 'www.law.cornell.edu'}
 PII_PATTERNS = {
     'street address': r'\b\d{1,5}\s+[A-Z][A-Za-z-]+(?:\s+[A-Z][A-Za-z-]+)?\s+(?:Street|St\.?|Avenue|Ave\.?|Drive|Dr\.?|Way|Court|Ct\.?|Lane|Ln\.?|Road|Rd\.?|Boulevard|Blvd\.?)\b',
     'email address': r'[\w.+-]+@[\w-]+\.[\w.-]+',
@@ -126,7 +128,14 @@ def main():
             assert token not in text, f'Household signature in {name}'
         for token in ('Cupertino','San Francisco','sftreasurer.org','sf.gov'):
             assert token.casefold() not in text.casefold(), f'Household-locality cue in {name}'
-        for amount in re.findall(r'\$([\d,]+)(?![\d,])', text):
+        for amount in re.findall(r'\$([\d,]+(?:\.\d+)?)(?![\d,])', text):
+            if '.' in amount:
+                # per-unit rates below $10 (for example $0.195 per square foot) are not household totals
+                assert float(amount.replace(',', '')) < 10, (name, amount)
+                continue
+            # official published rates quoted from their own source page (SFMTA Proposition H table; not household figures)
+            if amount in OFFICIAL_PUBLISHED_RATES:
+                continue
             assert int(amount.replace(',','')) % 10 == 0, (name,amount)
         p = Check(); p.feed(text)
         assert p.headings == 1 and p.current == 1 and p.captions == p.tables

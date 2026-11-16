@@ -173,8 +173,8 @@
     "sos26": {
       "title": "CA Secretary of State · 2026 Ballot Measures",
       "url": "https://electionresults.sos.ca.gov/returns/ballot-measures",
-      "finding": "Unofficial returns read 2026-11-13: as of November 12, 2026, 8:46 p.m., 23,860 of 23,860 precincts, Prop 3 Yes 60.7%, Prop 40 Yes 47.6% / No 52.4%, Prop 42 Yes 51.4%; certification is due by December 11, 2026. No Prop 19 repeal appeared on the November 2026 ballot.",
-      "checked": "2026-11-13"
+      "finding": "Unofficial returns read 2026-11-16: as of November 14, 2026, 5:16 p.m., 23,860 of 23,860 precincts, Prop 3 Yes 60.7%, Prop 40 No 52.2%, Prop 41 No 55.2%, Prop 42 Yes 51.3%, Prop 43 No 57.6%; certification is due by December 11, 2026. No Prop 19 repeal appeared on the November 2026 ballot.",
+      "checked": "2026-11-16"
     },
     "revproc": {
       "title": "IRS · Rev. Proc. 2026-35 (2027 adjustments)",
@@ -223,6 +223,18 @@
       "url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=17043.&lawCode=RTC",
       "finding": "For taxable years beginning on or after January 1, 2005, an additional tax of 1 percent is imposed on the portion of a taxpayer's taxable income above $1,000,000. The threshold is not adjusted for filing status by this section.",
       "checked": "2026-11-13"
+    },
+    "sfmta26": {
+      "title": "SFMTA · Proposition H city parcel tax (official City agency page)",
+      "url": "https://www.sfmta.com/getting-around/muni/parcel",
+      "finding": "States that city voters approved Proposition H on November 3, 2026. Tax July 1, 2027 to June 30, 2042; first bill fiscal year 2027-28, mailed fall 2027; inflation adjustment from fiscal year 2028-29. Multifamily: $249 up to 5,000 sq ft, plus $0.195 per sq ft over 5,000, maximum $50,000. Single-family: $129 up to 3,000 sq ft, plus $0.42 per sq ft from 3,001 to 5,000, plus $1.99 over 5,000. Renters: pass-through up to 50%, capped at $65 per unit a year; not for base rent set on or after June 1, 2027.",
+      "checked": "2026-11-16"
+    },
+    "treas26": {
+      "title": "U.S. Treasury · Daily par yield curve, November 2026",
+      "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve&field_tdr_date_value_month=202611",
+      "finding": "Read 2026-11-16. Par yields for 2026-11-13: 3-month 4.32%; 2-year 4.88%; 10-year 5.15%. Yields move daily; re-read the page at each decision date.",
+      "checked": "2026-11-16"
     },
     "irc6075": {
       "title": "IRS · Instructions for Form 706 (Rev. July 2026), When To File",

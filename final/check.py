@@ -18,7 +18,9 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 SITE = os.path.abspath(sys.argv[1]) if len(sys.argv) > 1 else os.path.join(HERE, 'site')
 # official = any .gov host (federal, state, county, city) plus these public-agency hosts
 OFFICIAL = ('gov', 'sftreasurer.org', 'fred.stlouisfed.org', 'sccassessor.org', 'valleywater.org', 'sfgov.legistar.com',
-            'capropeforms.org')
+            'capropeforms.org',
+            # SFMTA is a department of the City and County of San Francisco; its Prop H page is the official rate table (U-PH1)
+            'sfmta.com')
 OTHER_OK = ('github.com', 'pages.stern.nyu.edu')
 # official published figures that are not multiples of $10 (each is quoted from the linked page)
 # official published figures that are not multiples of $10 (each is quoted from the linked page);
@@ -26,6 +28,8 @@ OTHER_OK = ('github.com', 'pages.stern.nyu.edu')
 OFFICIAL_ODD = {'38,915.87', '8,455.35', '14,217,212,455', '324,973', '1,176', '601', '1,044,586', '72,724', '371,479', '445,771', '742,953', '109,125', '208,325', '661,375',
                 '56', '67', '76', '1.10', '0.55', '24.15',
                 '3,439',
+                # SFMTA Prop H rate table (official City page, read 2026-11-16; finding U-PH1)
+                '129', '249', '392', '799', '969', '0.195', '0.42', '1.99', '0.76', '0.84', '0.99', '34,999', '202,999', '3,174', '65',
                 # HUD's own FY2026 reference row printed on the FY2027 zip-calc page for 94122 (read 2026-11-13, finding R55)
                 '2,485', '2,977', '3,604', '4,604', '4,772'}
 errors = []

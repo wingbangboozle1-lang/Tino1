@@ -119,7 +119,19 @@ add('RTC-17043', 'R&TC 17043', 'California Revenue and Taxation Code section 170
     'Read directly 2026-11-16: for each taxable year beginning on or after January 1, 2005, an additional tax of 1 percent is imposed on the portion of taxable income in excess of $1,000,000 (added by Proposition 63). Combined with the 12.3% top bracket this gives a 13.3% top marginal California rate on large gains.')
 add('SOS-RESULTS', 'CA Secretary of State', 'California Secretary of State - 2026 General Election, state ballot measures (unofficial)',
     'https://electionresults.sos.ca.gov/returns/ballot-measures', 'page',
-    'Unofficial results as of 2026-11-11 6:51 p.m. (re-read 2026-11-12; earlier 2026-11-10 5:31 p.m. reading was Prop 3 Yes 60.6%, Prop 40 No 52.6%, Prop 42 Yes 51.5%); certification due by 2026-12-11. Prop 3 Yes 60.7%; Prop 40 No 52.5%; Prop 41 No 55.1%; Prop 42 Yes 51.4%; Prop 43 No 57.4%. Fourteen measures listed (1-5, 37-45); no Prop 19 repeal measure on ballot or active.')
+    'Unofficial results as of 2026-11-14 5:16 p.m. (re-read 2026-11-16; earlier readings: 2026-11-10 5:31 p.m. and 2026-11-11 6:51 p.m.). Prop 3 Yes 60.7%; Prop 40 No 52.2%; Prop 41 No 55.2%; Prop 42 Yes 51.3%; Prop 43 No 57.6%. Certification due by 2026-12-11. Fourteen measures listed (1-5, 37-45); no Prop 19 repeal measure on ballot or active.')
+add('SFMTA-PROP-H', 'SFMTA Prop H', 'SFMTA - Proposition H: Stronger Muni For All Parcel Tax (official City agency page)',
+    'https://www.sfmta.com/getting-around/muni/parcel', 'page',
+    'Read 2026-11-16. "San Francisco voters approved Proposition H on November 3, 2026." Tax period July 1, 2027 to June 30, 2042; first bill FY 2027-28 (mailed fall 2027); amounts rise with inflation from FY 2028-29. Multifamily: $249 up to 5,000 sq ft of building area, plus $0.195 per sq ft over 5,000, maximum $50,000. Single-family: $129 up to 3,000 sq ft, plus $0.42 per sq ft from 3,001 to 5,000, plus $1.99 per sq ft over 5,000. Renters: landlord pass-through up to 50% of the tax, capped at $65 per unit a year, not for base rent set on or after June 1, 2027. Senior and SRO relief needs an application; deadline June 1. Example in the page: 20,000 sq ft apartment building $3,174.')
+add('TREAS-2026-11-13', 'Treasury par yields 13 Nov 2026', 'U.S. Treasury - Daily Treasury Par Yield Curve Rates, November 2026 (data for 2026-11-13)',
+    'https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve&field_tdr_date_value_month=202611', 'page',
+    'Read 2026-11-16. Row 11/13/2026 (par yields, %): 3 Mo 4.32; 2 Yr 4.88; 10 Yr 5.15. Row 11/10/2026: 3 Mo 4.30; 2 Yr 4.73; 10 Yr 4.98.')
+add('FRED-GS2', 'FRED GS2 (2-year Treasury)', 'FRED series GS2 - market yield on U.S. Treasury securities at 2-year constant maturity (annual averages)',
+    'https://fred.stlouisfed.org/series/GS2', 'page',
+    'Read 2026-11-16 through the FRED annual-average download (fq=Annual, fam=avg). Annual averages, percent: 2006 4.82; 2007 4.36; 2008 2.00; 2009 0.96; 2010 0.70; 2011 0.45. Yields, not total returns.')
+add('FRED-TB3MS', 'FRED TB3MS (3-month bill)', 'FRED series TB3MS - 3-month Treasury bill secondary market rate (annual averages)',
+    'https://fred.stlouisfed.org/series/TB3MS', 'page',
+    'Read 2026-11-16 through the FRED annual-average download (fq=Annual, fam=avg). Annual averages, percent: 2006 4.73; 2007 4.35; 2008 1.37; 2009 0.15; 2010 0.14; 2011 0.05.')
 add('DOJ-TPA', 'CA Attorney General', 'California Department of Justice - Tenant Protection Act consumer alert',
     'https://oag.ca.gov/system/files/media/Tenant-Protection-Act-Landlords-and-Property-Managers-English.pdf', 'page',
     'Read directly 2026-11-12: Rent cap 5% plus CPI or 10% total in 12 months; SB 567 (eff 2024-04-01) adds 1-mo relocation, 90-day/12-mo owner move-in rule, treble damages; exempts <15-yr units and non-corporate SFH with written notice.')
