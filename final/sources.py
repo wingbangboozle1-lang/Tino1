@@ -114,6 +114,9 @@ add('FTB-RATES', 'FTB 2025 rates', 'Franchise Tax Board - 2025 California Tax Ra
 add('FTB-MHS', 'FTB Form 540 booklet', 'Franchise Tax Board - 2025 Form 540 Booklet, Line 62 Behavioral Health Services Tax',
     'https://www.ftb.ca.gov/forms/2025/2025-540-booklet.html', 'page',
     'Read directly 2026-11-12: Renamed from Mental Health Services Tax to Behavioral Health Services Tax for tax years >= Jan 1, 2025; Line 62 imposes 1% tax on taxable income over $1,000,000 (whole dollars).')
+add('RTC-17043', 'R&TC 17043', 'California Revenue and Taxation Code section 17043 - 1% tax on taxable income over $1,000,000',
+    'https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=RTC&sectionNum=17043.', 'page',
+    'Read directly 2026-11-16: for each taxable year beginning on or after January 1, 2005, an additional tax of 1 percent is imposed on the portion of taxable income in excess of $1,000,000 (added by Proposition 63). Combined with the 12.3% top bracket this gives a 13.3% top marginal California rate on large gains.')
 add('SOS-RESULTS', 'CA Secretary of State', 'California Secretary of State - 2026 General Election, state ballot measures (unofficial)',
     'https://electionresults.sos.ca.gov/returns/ballot-measures', 'page',
     'Unofficial results as of 2026-11-11 6:51 p.m. (re-read 2026-11-12; earlier 2026-11-10 5:31 p.m. reading was Prop 3 Yes 60.6%, Prop 40 No 52.6%, Prop 42 Yes 51.5%); certification due by 2026-12-11. Prop 3 Yes 60.7%; Prop 40 No 52.5%; Prop 41 No 55.1%; Prop 42 Yes 51.4%; Prop 43 No 57.4%. Fourteen measures listed (1-5, 37-45); no Prop 19 repeal measure on ballot or active.')

@@ -10,10 +10,11 @@ NAV = {'index.html','decision.html','projection.html','stress.html','process.htm
 FILES = NAV | {'style.css'}
 REGISTRY = json.loads((ROOT.parent/'research.json').read_text())
 SOURCES = {s['url'] for s in REGISTRY['sources'].values()}
+# www.law.cornell.edu: non-government mirror of the U.S. Code, used only for IRC §1250 text (flagged 9B-F1 on the public Flagged page); the GPO copy was not retrieved on 2026-11-16.
 # Exact published rates of Proposition H (SFMTA page) and the Controller's published estimate. Public amounts, not household figures.
 OFFICIAL_WHOLE_RATES = {'65','129','249','392','549','799','969','3,174','34,999','202,999','177'}  # '177' = Controller's published $177 million estimate
 OFFICIAL_DECIMAL_RATES = {'0.195','0.42','0.76','0.84','0.99','1.99'}
-REVIEWED_NON_GOV_HOSTS = {'docs.github.com', 'federalreservehistory.org', 'www.federalreservehistory.org',
+REVIEWED_NON_GOV_HOSTS = {'docs.github.com', 'federalreservehistory.org', 'www.federalreservehistory.org', 'www.law.cornell.edu',
     # Official San Francisco agency sites (not .gov): the transit agency's Proposition H page and the Department of Elections results.
     'www.sfmta.com', 'www.sfelections.org'}
 PII_PATTERNS = {
@@ -111,6 +112,16 @@ def main():
         assert 'noindex,nofollow' in text and 'no-referrer' in text
         assert 'Content-Security-Policy' in text
         assert 'SOURCE CHECKS <i></i> 12–16 NOV 2026' in text
+        if name == 'flagged.html':
+            # Keep the urgent exposure warning actionable and avoid implying that
+            # a Pages update or ordinary delete commit erases GitHub history.
+            for required in ('Priority 0 · exposure-containment checklist',
+                             'Status: not completed.',
+                             'Safe order of operations · no repository change is made by this checklist',
+                             'This session has not changed repository visibility or rewritten history.',
+                             'A normal delete commit leaves earlier Git objects in history.',
+                             'Rewriting cannot erase clones, forks or third-party copies'):
+                assert required in text, f'Missing or weakened P0 privacy guidance: {required}'
         pii = pii_kinds(text)
         assert not pii, f'Personal-data pattern(s) in {name}: {", ".join(pii)}'
         # Defense in depth against known rounded household signatures and location

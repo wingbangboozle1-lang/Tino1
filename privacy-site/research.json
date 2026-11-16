@@ -5,8 +5,8 @@
     "estate": {
       "title": "IRS · Estate tax",
       "url": "https://www.irs.gov/businesses/small-businesses-self-employed/estate-tax",
-      "finding": "2026 filing threshold $15,000,000; gross estate can include cash, securities, real estate, insurance and trusts; adjusted taxable gifts affect filing; deductions and credits affect liability.",
-      "checked": "2026-11-13"
+      "finding": "2026 filing threshold $15,000,000; gross estate can include cash, securities, real estate, insurance and trusts; adjusted taxable gifts affect filing; deductions and credits affect liability. Re-read 2026-11-16: filing threshold table shows 2026 year of death $15,000,000.",
+      "checked": "2026-11-16"
     },
     "irs27": {
       "title": "IRS · 2027 inflation adjustments",
@@ -23,8 +23,8 @@
     "boe": {
       "title": "California BOE · Proposition 19",
       "url": "https://www.boe.ca.gov/prop19/",
-      "finding": "Transferor/transferee principal residence, eligible relationship, adjusted value limit; homeowners exemption within one year; exclusion claim within three years or before third-party transfer. Official page lists 2026/026 guidance.",
-      "checked": "2026-11-13"
+      "finding": "Transferor/transferee principal residence, eligible relationship, adjusted value limit; homeowners exemption within one year; exclusion claim within three years or before third-party transfer. Official page lists 2026/026 guidance. Re-read 2026-11-16: comparison table confirms file homeowners exemption within 1 year of transfer and claim for exclusion within 3 years or before transfer to a third party.",
+      "checked": "2026-11-16"
     },
     "allow": {
       "title": "BOE · 2025 allowance notice",
@@ -71,14 +71,14 @@
     "rent": {
       "title": "IRS · Topic 414",
       "url": "https://www.irs.gov/taxtopics/tc414",
-      "finding": "Rent taxable, deductible expenses subject to rules, depreciation, personal-use allocation, passive limitations and possible NIIT; capital improvements differ from repairs.",
-      "checked": "2026-11-13"
+      "finding": "Rent taxable, deductible expenses subject to rules, depreciation, personal-use allocation, passive limitations and possible NIIT; capital improvements differ from repairs. Re-read 2026-11-16: Topic 414 taxes cash or fair market value of property or services actually received for the use of real estate; depreciation is an allowance under the same topic.",
+      "checked": "2026-11-16"
     },
     "ftb": {
       "title": "California FTB · Capital gains",
       "url": "https://www.ftb.ca.gov/file/personal/income-types/capital-gains-and-losses.html",
-      "finding": "California has no preferential lower capital-gains rate; gains taxed as ordinary income.",
-      "checked": "2026-11-13"
+      "finding": "California has no preferential lower capital-gains rate; gains taxed as ordinary income. Re-read 2026-11-16 (page last updated 01/28/2026): California does not have a lower rate for capital gains; all capital gains are taxed as ordinary income.",
+      "checked": "2026-11-16"
     },
     "insurance": {
       "title": "California DOI · Residential insurance",
@@ -167,8 +167,8 @@
     "ftb540": {
       "title": "CA FTB · 2025 Form 540 Booklet",
       "url": "https://www.ftb.ca.gov/forms/2025/2025-540-booklet.html",
-      "finding": "2025 Form 540 booklet. Used only for the California treatment of capital gains as ordinary income context; the 1% surtax itself is cited to Revenue and Taxation Code section 17043.",
-      "checked": "2026-11-13"
+      "finding": "2025 Form 540 instructions, Line 62 'Behavioral Health Services Tax': if taxable income is more than $1,000,000, compute 1% of the amount above $1,000,000 (read 2026-11-16). The booklet does not state a prior name; no rename history is asserted here.",
+      "checked": "2026-11-16"
     },
     "sos26": {
       "title": "CA Secretary of State · 2026 Ballot Measures",
@@ -224,6 +224,24 @@
       "finding": "For taxable years beginning on or after January 1, 2005, an additional tax of 1 percent is imposed on the portion of a taxpayer's taxable income above $1,000,000. The threshold is not adjusted for filing status by this section.",
       "checked": "2026-11-13"
     },
+    "irc6075": {
+      "title": "IRS · Instructions for Form 706 (Rev. July 2026), When To File",
+      "url": "https://www.irs.gov/pub/irs-pdf/i706.pdf",
+      "finding": "'You must file Form 706 to report estate and/or GST tax within 9 months after the date of the decedent’s death.' Automatic 6-month extension on Form 4768, which can also request an extension of time to pay. Filing threshold for 2026 deaths: $15,000,000 (Which Estates Must File). Read 2026-11-16. Statute: IRC §6075(a).",
+      "checked": "2026-11-16"
+    },
+    "irc1031": {
+      "title": "U.S. Code · 26 U.S.C. §1031 (GPO, 2024 edition)",
+      "url": "https://www.govinfo.gov/content/pkg/USCODE-2024-title26/html/USCODE-2024-title26-subtitleA-chap1-subchapO-partIII-sec1031.htm",
+      "finding": "Section 1031(a)(1): real property held for productive use in a trade or business or for investment, exchanged solely for like-kind property held for the same purposes. (a)(3): identification within 45 days and completion within 180 days (or the return due date, if earlier). Read 2026-11-16. Receipt requirement also restated in IRS Publication 544 (2025), Like-Kind Exchanges, read 2026-11-16 (180th day or return due date, if earlier).",
+      "checked": "2026-11-16"
+    },
+    "irc1250": {
+      "title": "Cornell LII · 26 U.S.C. §1250 (non-government mirror of the statute)",
+      "url": "https://www.law.cornell.edu/uscode/text/26/1250",
+      "finding": "Section 1250(a)(1)(A): additional depreciation (excess over straight-line) on disposition is treated as ordinary income, to the extent of the gain. Read 2026-11-16 from a non-government mirror; the official GPO copy was not retrieved (flagged 9B-F1). Unrecaptured-section-1250 federal rates in IRC §1(h) not read.",
+      "checked": "2026-11-16"
+    },
     "prop_h": {
       "title": "SFMTA · Proposition H parcel tax (official agency page)",
       "url": "https://www.sfmta.com/getting-around/muni/parcel",
@@ -234,18 +252,6 @@
       "title": "SF Dept. of Elections · Nov 3, 2026 results (preliminary)",
       "url": "https://www.sfelections.org/results/20261103/index.html",
       "finding": "Measure H, parcel tax to fund Muni operations: YES 244,760 (74.4%), NO 84,209 (25.6%) on the preliminary count, last updated November 10, 2026; next update November 17, 2026; certification may take up to 30 days after Election Day.",
-      "checked": "2026-11-16"
-    },
-    "ftb540_2025": {
-      "title": "CA FTB · 2025 Form 540 booklet, line 62",
-      "url": "https://www.ftb.ca.gov/forms/2025/2025-540-booklet.pdf",
-      "finding": "Line 62, Behavioral Health Services Tax: if taxable income (line 19) is more than $1,000,000, subtract $1,000,000 and multiply the result by 1%, using whole dollars only.",
-      "checked": "2026-11-16"
-    },
-    "ftb540_2024": {
-      "title": "CA FTB · 2024 Form 540 booklet, line 62 (prior title)",
-      "url": "https://www.ftb.ca.gov/forms/2024/2024-540-booklet.pdf",
-      "finding": "Line 62, Mental Health Services Tax, with the same $1,000,000 threshold and 1% rate. Read from a search excerpt of the official PDF, not opened in full.",
       "checked": "2026-11-16"
     }
   },
@@ -269,6 +275,22 @@
     {
       "url": "https://sftreasurer.org/payment-options/property-tax-rates",
       "reason": "404 page on 2026-11-13; not used in the published guide, which withholds city-specific rates"
+    },
+    {
+      "url": "https://www.irs.gov/businesses/small-businesses-self-employed/like-kind-exchanges",
+      "reason": "404 page on 2026-11-16; statute used instead"
+    },
+    {
+      "url": "https://www.irs.gov/businesses/like-kind-exchanges-real-estate-tax-tips",
+      "reason": "404 page on 2026-11-16; statute used instead"
+    },
+    {
+      "url": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title26-section6075&num=0&edition=prelim",
+      "reason": "Page not found (temporary OLRC format) on 2026-11-16"
+    },
+    {
+      "url": "https://www.govinfo.gov/content/pkg/USCODE-2024-title26/html/USCODE-2024-title26-subtitleF-chap61-subchapA-sec6075.htm",
+      "reason": "404 page on 2026-11-16; LII mirror used and flagged"
     }
   ]
 }
