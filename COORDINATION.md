@@ -2758,8 +2758,8 @@ The verified numeric decision analysis (live / rent / sell, mixed and phased pat
 
 ### PR / merge record
 
-- PR: to be created from `arena/f391f643-tino1` into `main`.
-- Merge result and Pages deploy: to be recorded after merge.
+- PR #122: https://github.com/wingbangboozle1-lang/Tino1/pull/122 — merged to main via `gh pr merge 122 --merge`, merge commit `06e490a6270cbbc56c780332030b6e1c6e3d5123`, merged 2026-11-16T01:25:09Z.
+- GitHub Pages: a build is triggered automatically on `main` for commit `06e490a`. The Pages API could not be polled during this session (HTTP 403 rate limit), so the deploy status was not confirmed here; the prior Pages build was live (`built`, `error: null`) at https://wingbangboozle1-lang.github.io/Tino1/ and all local publication gates passed (`final/publish.py --check`, `privacy-site/check.py`, `final/check.py .`). Owner to confirm the `06e490a` Pages deploy.
 
 
 ---
