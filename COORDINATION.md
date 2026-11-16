@@ -3035,3 +3035,28 @@ No other session holds an active claim on these files (last claim `arena/81ca507
   5. The public `flagged.html` P0 row (written by another session) states the repository "contain[s] household-derived material" and that Git history remains public. This is accurate and is left as written; the owner decision (G01/G02) remains open.
 - 2026-11-16 — **Open after merge (not blocking):** U-PH1 (Property B building area), U-PH2 (rent pass-through, unmodelled), A-TSY and A14 (ladder return from daily data), and the owner decisions above.
 
+
+## Session `arena/a36b4262-tino1` (branch `arena/a36b4262-tino1`) — 1% add-on sensitivity + Property A rate area (claimed 2026-11-16 UTC)
+
+**Task:** Close flags **9B-F3** (1% add-on label/history), **9B-F4** (1% add-on missing from the private numeric model / sensitivity value) and **U03 / R20** (Property A exact tax rate area + El Camino Hospital 2003 applicability), per the owner's explicit instructions: "Read the official Form 540 instructions for the 1% tax above one million dollars and the capital-gain treatment, then update the sensitivity value" and "**Look up Property A's tax rate area and read the published rate**".
+
+**Status:** claimed → in progress
+
+**Owner session ID:** `arena/a36b4262-tino1` (branch `arena/a36b4262-tino1`; base `d3e23dc`, the tip of `main` at claim time)
+
+**Files / scope (non-overlapping; this lane only):**
+- `final/model.py` — add an explicit, correct California 1% additional tax (R&TC §17043) term to the one-off-sale / lump tax computation; update the "Top tax bracket" sensitivity value.
+- `final/sources.py` — re-date/correct the `FTB-MHS` excerpt (cite the official FTB Tax News March 2026 rename); add the FTB Tax News source; correct the `SCC-RATES` excerpt with the confirmed TRA-level finding.
+- `final/flags.py` — close 9B-F3 and 9B-F4; update U03 / R20 with the TRA finding.
+- `final/build.py` — align the "renamed from" wording with the official source; update the rate-area text.
+- `final/out/model.json` + generated root pages — regenerate (not published).
+- `privacy-site/build.py` + `privacy-site/research.json` — close 9B-F3/9B-F4 on the published Flagged page; update the rate-area flag.
+- `COORDINATION.md` — this section + final verification log (append only).
+
+**Sources verified in this session (read directly on the official host):**
+- R&TC §17043 (leginfo.legislature.ca.gov): 1% additional tax on taxable income over $1,000,000; added by Prop 63; statute text does not itself carry the "Mental/Behavioral Health Services" label.
+- FTB capital-gains page (ftb.ca.gov, last updated 01/28/2026): "California does not have a lower rate for capital gains. All capital gains are taxed as ordinary income."
+- FTB Tax News, March 2026 (ftb.ca.gov/about-ftb/newsroom/tax-news/2026/03.html): "For taxable years beginning on or after January 1, 2025, the Mental Health Services Act has been renamed to the Behavioral Health Services Act. Therefore, references to the Mental Health Services Tax have been renamed to Behavioral Health Services Tax." — official source for the rename (closes 9B-F3).
+- Santa Clara County FY2025-26 Tax Rate Book (files.santaclaracounty.gov): confirms the 1.16360% composite (A-4 to A-6) and lists El Camino Hospital 2003 at 0.00200; TRA-level table in Section III (B-1 to B-185).
+
+**No other session has an active claim on this lane; the prior 9B-5 row is recorded "done (text read; sensitivity not changed)" and left the sensitivity value and the rate-area lookup open. Nothing of any other session is deleted.**
