@@ -10,7 +10,8 @@ NAV = {'index.html','decision.html','projection.html','stress.html','process.htm
 FILES = NAV | {'style.css'}
 REGISTRY = json.loads((ROOT.parent/'research.json').read_text())
 SOURCES = {s['url'] for s in REGISTRY['sources'].values()}
-REVIEWED_NON_GOV_HOSTS = {'docs.github.com', 'federalreservehistory.org', 'www.federalreservehistory.org'}
+# www.law.cornell.edu: non-government mirror of the U.S. Code, used only for IRC §1250 text (flagged 9B-F1 on the public Flagged page); the GPO copy was not retrieved on 2026-11-16.
+REVIEWED_NON_GOV_HOSTS = {'docs.github.com', 'federalreservehistory.org', 'www.federalreservehistory.org', 'www.law.cornell.edu'}
 PII_PATTERNS = {
     'street address': r'\b\d{1,5}\s+[A-Z][A-Za-z-]+(?:\s+[A-Z][A-Za-z-]+)?\s+(?:Street|St\.?|Avenue|Ave\.?|Drive|Dr\.?|Way|Court|Ct\.?|Lane|Ln\.?|Road|Rd\.?|Boulevard|Blvd\.?)\b',
     'email address': r'[\w.+-]+@[\w-]+\.[\w.-]+',
@@ -105,7 +106,7 @@ def main():
         text = (ROOT/name).read_text()
         assert 'noindex,nofollow' in text and 'no-referrer' in text
         assert 'Content-Security-Policy' in text
-        assert 'SOURCE CHECKS <i></i> 12–13 NOV 2026' in text
+        assert 'SOURCE CHECKS <i></i> 12–16 NOV 2026' in text
         pii = pii_kinds(text)
         assert not pii, f'Personal-data pattern(s) in {name}: {", ".join(pii)}'
         # Defense in depth against known rounded household signatures and location
