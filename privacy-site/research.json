@@ -253,6 +253,12 @@
       "url": "https://www.law.cornell.edu/uscode/text/26/1250",
       "finding": "Section 1250(a)(1)(A): additional depreciation (excess over straight-line) on disposition is treated as ordinary income, to the extent of the gain. Read 2026-11-16 from a non-government mirror; the official GPO copy was not retrieved (flagged 9B-F1). Unrecaptured-section-1250 federal rates in IRC §1(h) not read.",
       "checked": "2026-11-16"
+    },
+    "sfdoe_results": {
+      "title": "SF Dept. of Elections · Nov 3, 2026 results (preliminary)",
+      "url": "https://www.sfelections.org/results/20261103/index.html",
+      "finding": "Measure H, parcel tax to fund Muni operations: YES 244,760 (74.4%), NO 84,209 (25.6%) on the preliminary count, last updated November 10, 2026; next update November 17, 2026; certification may take up to 30 days after Election Day.",
+      "checked": "2026-11-16"
     }
   },
   "rejected_links": [

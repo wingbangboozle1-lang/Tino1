@@ -2967,6 +2967,65 @@ After the initial claim had been pushed, the required `git pull --rebase origin 
 ### Second rebase log — 2026-11-16 UTC
 
 While PR #123 was open, the next required `git pull --rebase origin main` fetched `e0344df` after multiple parallel PR merges. The append-only `COORDINATION.md` again conflicted; resolution preserved the complete concurrent `arena/9bf08f53-tino1` record and all prior merged session records, then re-applied this session's separate claim/product changes. No other product file conflicted. The merged task board now records that PR #118 completed the separate privacy-gate scope, so PR #123 does not modify `privacy-site/check.py`, `privacy-site/test_illustrations.py` or `privacy-site/README.md`. The root decision-first landing remains this session's distinct change. Current claim commit is `509cf41`; no commits or files from other sessions were discarded.
+
+## Session `arena/90e54230-tino1` — claim (2026-11-16 UTC)
+
+**Branch:** `arena/90e54230-tino1` (fixed by the platform; the task-branch naming in the brief is superseded by this single-branch rule). **Base:** `main` @ `181be9e`. **Date:** 2026-11-16.
+
+| # | Task | Status | Owner | File scope | Notes |
+|---|------|--------|-------|------------|-------|
+| P-1 | Privacy boundary re-check: public repo, full history (409 commits after unshallow), exposure register | in progress | `arena/90e54230-tino1` | `COORDINATION.md` only | Repo is **public**. Unrounded household figures and ZIP codes appear in tracked non-published files and in history. Rewriting `main` or changing visibility is an owner decision; not executed (see log). |
+| P-2 | Proposition H (SF Muni parcel tax) official terms and certification status on the published guide | claimed | `arena/90e54230-tino1` | `privacy-site/build.py`, `privacy-site/check.py`, `privacy-site/research.json`, generated `privacy-site/public/*.html` | Official sources: SFMTA parcel page; Dept. of Elections Nov 3, 2026 results. |
+| P-3 | Form 540 line 62 "1% tax above $1,000,000" and California capital-gain treatment | claimed | `arena/90e54230-tino1` | same as P-2 | Read 2025 Form 540 booklet line 62 directly. |
+| P-4 | Rebuild, all gates (CI-equivalent), PR to `main`, merge, Pages deploy confirmation | claimed | `arena/90e54230-tino1` | `COORDINATION.md` | Only integration step touching `main`. |
+
+No other session holds an active claim on these files (last claim `arena/81ca5078-tino1`, closed 2026-11-15).
+
+### Results — arena/90e54230-tino1 (2026-11-16 UTC)
+
+**P-2 — Proposition H (done; sources checked 2026-11-16)**
+- *Sources (official):* SF Department of Elections, Nov 3, 2026 results (preliminary, last update Nov 10, 2026): https://www.sfelections.org/results/20261103/index.html · SFMTA "Proposition H: Stronger Muni For All Parcel Tax" (rates, dates, exemptions, rent pass-through, billing): https://www.sfmta.com/getting-around/muni/parcel
+- *Verified:* approved (74.4% yes, 244,760 votes; 25.6% no, 84,209 votes, preliminary); annual parcel tax July 1, 2027–June 30, 2042; first bill FY 2027–28; full official rate schedule by parcel type and building area; SFMTA examples ($129; $549; $3,174); senior relief by application due June 1; SRO exclusion; rent-controlled pass-through 50% up to $65 per unit per year; inflation adjustment from FY 2028–29; Controller estimate $177M a year.
+- *Not verified / flagged:* certification (due within 30 days of Election Day; next SFDOE update Nov 17, 2026); any parcel-specific amount (needs official building area, private); inflation-indexed amounts after FY 2027–28. Non-official estimates in press and advocacy pieces ($160M, $184M) are **not** used.
+- *Published (final state on `main` after the second merge):* `privacy-site/public/law.html` (complete official schedule table), `flagged.html` (flag PH2 with the official vote count), registry `research.json` (`sfdoe_results`). The summary row and PH flag were already on `main` from session `83baf48f` and were kept, not duplicated.
+- *Implementation note:* the publication checker had no exemption for statutory rates. A narrow, named allowlist of exact official rates (`OFFICIAL_WHOLE_RATES`, `OFFICIAL_DECIMAL_RATES` in `privacy-site/check.py`) now exempts only these published amounts from the $10 display rule; all household-type amounts stay $10-rounded. Two `.org`/`.com` official city-agency hosts (`www.sfmta.com`, `www.sfelections.org`) are added to the reviewed-host list alongside `.gov` hosts.
+
+**P-3 — Form 540 1% surtax and capital gains (done; sources checked 2026-11-16)**
+- *Sources (official):* 2025 Form 540 booklet, line 62: https://www.ftb.ca.gov/forms/2025/2025-540-booklet.pdf · 2024 Form 540 booklet (prior line-62 title; read as a search excerpt only, not opened in full): https://www.ftb.ca.gov/forms/2024/2024-540-booklet.pdf · FTB capital-gains page (already in registry as `ftb`) · RTC §17043 (already in registry as `t117043`).
+- *Overlap:* another session merged the same Line 62 verification to `main` on 2026-11-16 (row "Behavioral Health Services Tax (1% add-on)"). This branch keeps that row and only aligns the stale flags P12 and I03 with it.
+- *Verified:* line 62 is now titled **Behavioral Health Services Tax**. If taxable income (line 19) is more than $1,000,000: subtract $1,000,000, multiply by 1%, whole dollars only. The 2024 booklet used "Mental Health Services Tax." Flags **P12** and **I03** aligned: the label is asserted with its source.
+- *Capital gains:* the FTB page states California has no lower capital-gains rate; gains are taxed as ordinary income. The surtax therefore reaches a large one-year gain above $1,000,000 of taxable income.
+
+**Gates run on this branch (all PASS):** `privacy-site/build.py` (rebuilt 14 public pages), `privacy-site/check.py`, `python3 -m unittest discover -s privacy-site` (13 OK), `final/publish.py --check` (16-file allowlist), `final/check.py .`. The Jekyll step of the CI workflow needs Ruby, which is not installed in this sandbox; it runs on the pull request instead.
+
+**P-1 — Privacy exposure register (2026-11-16; owner action required; not executed on `main`)**
+- *Repository visibility:* **public** (checked with `gh api repos/...`), GitHub Pages enabled.
+- *History:* the clone was shallow (1 commit); unshallowed to 409 commits. Unrounded household figures (assessment and tax values) and both ZIP codes appear in multiple past commits (up to 12 commits per figure; ZIP codes in about 60–70 commits each). Counts only are recorded here.
+- *Working tree (tracked, HEAD):* ZIP codes appear in about 111 non-published files; unrounded household values appear in about 78 lines across roughly 40 non-published files (largest: `final/out/model.json`, `dashboard/*`, `docs/*`, `archive/*`, `verify-4395771d/*`, `analysis/data/*`). None appear in the 16 published files, and the published synthetic table (year 2066) is an illustration with no household inputs.
+- *Published site (Pages allowlist):* clean for ZIP codes, unrounded household values, street addresses, emails, phones and parcel-number patterns (`final/check_published.py` logic applied to the 16 files).
+- *Decision not taken here:* rewriting history of public `main` (force-push) and changing repository visibility are destructive, affect the live site and any forks, and are outside this branch's rules. They are owner decisions. Recommended order for the owner: (1) decide whether the repository should be private, which would also require a Pages-capable plan; (2) rewrite history with `git filter-repo --replace-text` using a replacement file kept outside the repository; (3) remove household-derived files from the working tree; (4) ask GitHub support to purge cached views. Rounding alone does not protect values that also appear unrounded in public history.
+- *Irregularity:* `README.md` says the rounded-figures analysis is published at the repository root, but `final/published.txt` allows only the 16-file privacy guide plus the root landing. The README should be corrected by the integration session.
+
+**Irregularities for owner review (not blocking):**
+1. Prop H estimates differ by source (press and advocacy figures $160M and $184M; Controller $177M). Only the Controller figure is used.
+2. Prop H is a San Francisco-only measure. The public guide names no city, so the measure is described by its ballot name and agency, which can hint at location. Owner to decide whether to keep Prop H on the public guide.
+3. The surtax label changed from Mental Health Services Tax to Behavioral Health Services Tax between the 2024 and 2025 booklets. Check the line title on each year's form.
+
+**P-4 — integration:** see the next entry.
+
+**P-4 — integration (arena/90e54230-tino1, 2026-11-16 UTC)**
+- **PR:** #119 `arena/90e54230-tino1` → `main` — https://github.com/wingbangboozle1-lang/Tino1/pull/119
+- **CI on content commit `03a5edd`:** `Validate the Pages publication boundary` (verify job) **pass** (1m2s; run 43784549272). The job sat queued about 80 minutes behind shared-runner backlog; no code change was needed.
+- **Local gates on the same tree:** build reproducible; `privacy-site/check.py` PASS (14 pages, 438 linked rows); unit tests OK; `final/publish.py --check` OK; `final/check.py .` OK; allowlist and published-output checks PASS on a 16-file copy of the allowlist. The Jekyll step ran only in CI.
+- **Merge:** `gh pr merge 119 --merge` after the verify pass. The merge result and the Pages deploy check are recorded in PR #119 and the close-out below.
+
+**Merge log — arena/90e54230-tino1 with `main` (2026-11-16 UTC)**
+- `main` moved from `181be9e` to `aa1c7f5` (PRs #122–#127 by other sessions) while PR #119 was open. Merged `origin/main` into the branch (merge commit, no history rewritten).
+- Conflicts in `COORDINATION.md`, `privacy-site/{build.py,check.py,research.json,landing.html,public/*.html}` and `index.html` resolved by taking `main`'s version of each file and re-applying this branch's Prop H work on top. No other session's entries were removed.
+- **Second merge (PR #121 landed meanwhile, `abb74e9`):** `main` already contained a Prop H summary row (`sfmta26`), flag `PH`, a Prop H entry in `final/model.py` and a `sfmta.com` reviewed host, all from session `83baf48f`. This branch now keeps `main`'s privacy-site and adds only: the complete official schedule table, flag `PH2` (official Department of Elections preliminary count, certification pending), and the `sfelections.org` reviewed host with its source entry `sfdoe_results`. Earlier flags P14/P15 and their duplicate registry entries were dropped.
+- `main` already carried a verified "Behavioral Health Services Tax (1% add-on)" row (read 2026-11-16). This branch's P-3 work therefore reduced to aligning flags P12 and I03 with that row. Nothing was duplicated.
+- Flag IDs: `main` already uses P13 ("constant inflation baseline") and PH for Prop H, so this branch adds **PH2** (official vote count and certification) and drops its earlier P14/P15 flags.
+- Gates re-run on the merged tree: `privacy-site/build.py` is deterministic (two builds hash identically); `privacy-site/check.py` PASS (14 pages, 477 linked rows); unit tests OK; `final/publish.py --check` OK; `final/check.py .` OK (3062 links); allowlist checks PASS on a 16-file copy.
 - 2026-11-16 — **PR and merge (`arena/83baf48f-tino1`).** PR #121 https://github.com/wingbangboozle1-lang/Tino1/pull/121 merged into `main` with a merge commit, `abb74e9`, at 2026-11-16T03:52:42Z. Head checked: `ad03c4b`. The `verify` job on that head passed (run 43791724103, all steps). The GitHub Pages deploy for `abb74e9` completed successfully (run 43800729900). Live site confirmed at https://wingbangboozle1-lang.github.io/Tino1/privacy-site/public/flagged.html, which shows the session's Prop H and Treasury flags.
 - 2026-11-16 — **Irregularities during the publish cycle (for the record):**
   1. `main` moved three times during this session (PRs #117, #122–#127). Each rebase or merge conflicted on `COORDINATION.md`; conflicts were resolved by keeping every session's record. The `privacy-site` build, check and research files also conflicted with PR #123 and were merged by keeping both sets of entries; the other session's `P0` public-exposure entry was kept as written.
