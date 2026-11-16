@@ -34,7 +34,7 @@ def _diff(x, money):
 
 EPISODES = [
     (1929, 'Crash year. The official bill series starts in 1934, so the parked leg is an explicit 0% assumption here.'),
-    (1937, 'Second severe decline. Same pre-1934 gap; parked leg 0%.'),
+    (1937, 'Second severe decline. Official bill leg available; no 2-year leg before 1977, so no ladder proxy.'),
     (1973, 'Inflation-era decline. Official bill leg available; the 2-year leg is not, so no ladder proxy.'),
     (2000, 'Dot-com peak year. Both official legs available.'),
     (2007, 'Pre-crisis peak year. Both official legs available.'),

@@ -3078,11 +3078,8 @@ Status: P3-A, P3-B, P3-C and P3-D **done**. Only files in the claimed scope were
 
 **Not done, still open:** the repository remains public with pre-rounding figures in its history (owner decisions G01/G02); publishing household figures is still not done; and the daily-data ladder return (flag A14) is still not computed — this session states that limit on the page rather than estimating it.
 
-**E-merge (2026-11-16, `arena/eb57290f-tino1`) — merge of `origin/main` (PR #129, `arena/b70b3a7c-tino1`) into this branch**
-- `main` advanced to `3c1ed09` while PR #130 was open. Merged `origin/main` into the branch; no history was rewritten. Conflicts were resolved by **keeping both sides**, never by taking one side wholesale:
-  - `privacy-site/build.py`, `privacy-site/illustrations.py`, `privacy-site/test_illustrations.py`: the other session's `phased.html` page, its `phased_page` import, its D1–D4 flags and its staged-history data were kept, and this session's work was re-applied on top (grouped `NAV_GROUPS` including `phased.html`, the payment/portability/notice/annual rows in the timeline, the §1031 correction, the SALT row, the `outcome_band` section, the four flag corrections I02/I03/P10/P12, flags E1–E3, the decision record). Verified by running the generator: 15 pages, all present including `phased.html`.
-  - `privacy-site/research.json`: took `main`'s 47-entry registry and re-added only this session's `saltcorr` entry (48 entries; nothing lost).
-  - `README.md`: took `main`'s text (which describes the staged-entry page) and re-applied this session's three additions.
-  - `COORDINATION.md`: this append; every earlier record retained.
-- Gates re-run on the merged tree: `privacy-site/build.py` (15 pages) · `check.py` PASS (542 linked rows) · **23 unit tests OK** · `final/publish.py --check` OK (17 files, which now includes `phased.html`) · `final/check.py .` OK (31 pages, 3,135 links, model self-tests) · both published-output checkers PASS on a staged copy of the exact 17-file allowlist.
-- Note for the record: a `git checkout --theirs` during conflict resolution briefly discarded this session's `build.py` edits; they were restored from the branch commit and re-applied, and the restored file is what the gates above ran on. No other session's work was affected.
+### arena/b70b3a7c-tino1 — publish record and post-merge correction (2026-11-16 UTC)
+
+- **PR:** #129 https://github.com/wingbangboozle1-lang/Tino1/pull/129 — `verify` job **pass** on head `f98d7e1` (run 43923018292, 56s, including the real Jekyll build and both publication checkers). Merged with `gh pr merge 129 --merge`; merge commit `3c1ed09` on `main`.
+- **Pages:** `pages build and deployment` for `3c1ed09` completed **success**; `Validate the Pages publication boundary` on `main` completed **success**. Live page confirmed by reading the deployed HTML: https://wingbangboozle1-lang.github.io/Tino1/privacy-site/public/phased.html
+- **Post-merge correction (second PR):** reading the deployed page showed the 1937 row caption read "Same pre-1934 gap; parked leg 0%" while the row's own value column correctly showed 0.13% from the official bill series. That sentence was wrong (1937 is after 1934). It is corrected to "Official bill leg available; no 2-year leg before 1977, so no ladder proxy." No number changed; all gates re-run and pass.
