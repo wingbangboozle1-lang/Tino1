@@ -2806,3 +2806,12 @@ Not done in this session (left on the board for an owner decision or a later ses
 - Mixed-path, what-if and reinvestment-risk pages, and the decision-date log: these exist in the private numeric build (`final/`, root pages), which is not on the Pages allowlist. Publishing them is the owner's boundary decision.
 - Property tax rate area (U03), comparables for the Cupertino house, and independent property or rental estimates: still unverified and not inferred here.
 - The pre-commitment rule (what would make each path the choice) is written only as a blank question on the questions page; no rule with thresholds was written.
+## Session `arena/06446b26-tino1` — privacy exposure containment (claimed 2026-11-16 UTC)
+
+**Branch:** `arena/06446b26-tino1` (fixed by Arena); base `181be9ea7004b7c68602597d1add962d099a692e`. This session stays on the assigned branch; no parallel branch/worktree is created.
+
+| Task | Status | Owner | Files / scope | Verification |
+|---|---|---|---|---|
+| PRIV-1 | in progress | `arena/06446b26-tino1` | `COORDINATION.md`, `privacy-site/build.py`, generated `privacy-site/public/flagged.html`, `privacy-site/check.py` if a focused assertion is needed | Tighten the public P0 containment instructions without adding household data; build exact allowlist; rerun privacy checker, tests and repository checks. Do not rewrite public Git history or change repository visibility from this branch. |
+
+**Reason and limits:** the published guide already excludes household-specific numeric analysis, but the repository and old Git history remain public. A Pages change cannot revoke GitHub history, forks, caches or third-party copies. History rewrite / visibility changes are owner-level operations and can disrupt the repository and Pages. This task will make the current exposure and a safe, ordered remediation checklist explicit; it will not claim prior copies are erased.
