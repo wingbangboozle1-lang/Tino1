@@ -2767,3 +2767,24 @@ Verification performed in this session before it was superseded: `final/model.py
 - 2026-11-16 — X-1: gates re-run, all PASS (see Results).
 - 2026-11-16 — X-2: two official statute and table reads recorded with URLs; one guessed IRS URL was 404 and dropped.
 - 2026-11-16 — X-3: publication boundary confirmed unchanged; no personal data added to the repository.
+## Session `arena/83baf48f-tino1` — claim (2026-11-16 UTC)
+
+**Branch:** `arena/83baf48f-tino1` (fixed by the platform; status `active`). **Base:** `main` @ `181be9e`.
+
+**Context found before claiming.** The brief in this session repeats the full task list already on this board. Most items have been completed by earlier sessions and are live (see the Pages record above). Three items remain open on the board and can be closed from official sources this session. Everything else is either owner action (listed below) or was already done and is not re-done here.
+
+| # | Task | Status | Owner | File scope | Notes |
+|---|------|--------|-------|------------|-------|
+| H-1 | Close CR-1A-2 / flag A14 / S-PHASE: fetch the official 2-year Treasury (FRED `GS2`) and 3-month bill (`TB3MS`) values for 2007–2010 and state the parked-cash proxy gap with links | in progress | `arena/83baf48f-tino1` | `final/flags.py`, `final/extras.py`, `final/build.py` (phased/flagged text only), `final/out/*` regenerated | Values cited only if read on the FRED page this session. |
+| H-2 | "Prop H" (named in the brief): find the official San Francisco measure, read its terms, record them with the link, or flag it as not found | in progress | `arena/83baf48f-tino1` | `final/flags.py`, `final/build.py` (law table row only) | Not in repo before this claim (grep: no match). |
+| H-3 | Recheck official sources for changes since 2026-11-11 (CA SOS ballot-measure returns; Treasury daily par yields for the parked-cash comparison) and log what moved | in progress | `arena/83baf48f-tino1` | `COORDINATION.md` log; `final/flags.py` if a figure moved | Distinguish enacted from proposed. |
+
+**Not claimed (owner or future-session action, logged, not edited):**
+
+- **Git history with unrounded owner figures.** The repository is public (`gh repo view` → `isPrivate: false`). Removing the figures from history requires a history rewrite of `main` (force-push) and owner approval. Not done by any session here. Options G01/G02 on the Suggestions page stay open.
+- **Parcel-level items** (tax rate area code, exact assessed-value history, appraisal at date of death, comparables, insurance quotes, leases for Property B). These need the owner's parcel documents or a licensed appraiser, and the official lookups are interactive. They stay blank and flagged.
+- **Attorney and CPA review** of the mixed paths and the Prop 19 occupancy claim.
+
+### Log (`arena/83baf48f-tino1`)
+
+- 2026-11-16 — Claim written and pushed before any content work. No file owned by another session is edited; the 13 open PRs/branches are not touched.
