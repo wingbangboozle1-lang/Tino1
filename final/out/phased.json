@@ -122,6 +122,84 @@
  "horizon": 10,
  "last_start": 2016,
  "lump_median_end": 2.828838903739711,
+ "official_check": {
+  "gs2_avg_pct": {
+   "2006": 4.82,
+   "2007": 4.36,
+   "2008": 2.0,
+   "2009": 0.96,
+   "2010": 0.7,
+   "2011": 0.45
+  },
+  "gs2_minus_tb3ms_pts": {
+   "2007": 0.01,
+   "2008": 0.63,
+   "2009": 0.81,
+   "2010": 0.56
+  },
+  "nyu_bill_minus_tb3ms_pts": {
+   "2007": 0.13,
+   "2008": 0.03,
+   "2009": 0.0,
+   "2010": 0.0
+  },
+  "sleeve_2y": {
+   "2007": {
+    "lump_end": 1.9466,
+    "park2_phase2": {
+     "bill_proxy_end": 2.7659,
+     "change_pct_of_proceeds": 2.31,
+     "two_year_sleeve_end": 2.789
+    },
+    "park2_phase3": {
+     "bill_proxy_end": 2.5563,
+     "change_pct_of_proceeds": 2.86,
+     "two_year_sleeve_end": 2.5849
+    },
+    "park3_phase2": {
+     "bill_proxy_end": 2.2937,
+     "change_pct_of_proceeds": 3.56,
+     "two_year_sleeve_end": 2.3293
+    },
+    "park3_phase3": {
+     "bill_proxy_end": 2.2272,
+     "change_pct_of_proceeds": 3.67,
+     "two_year_sleeve_end": 2.2639
+    }
+   },
+   "2008": {
+    "lump_end": 2.2442,
+    "park2_phase2": {
+     "bill_proxy_end": 2.6698,
+     "change_pct_of_proceeds": 4.46,
+     "two_year_sleeve_end": 2.7143
+    },
+    "park2_phase3": {
+     "bill_proxy_end": 2.5924,
+     "change_pct_of_proceeds": 4.57,
+     "two_year_sleeve_end": 2.6381
+    },
+    "park3_phase2": {
+     "bill_proxy_end": 2.4625,
+     "change_pct_of_proceeds": 4.86,
+     "two_year_sleeve_end": 2.511
+    },
+    "park3_phase3": {
+     "bill_proxy_end": 2.3434,
+     "change_pct_of_proceeds": 4.62,
+     "two_year_sleeve_end": 2.3896
+    }
+   }
+  },
+  "tb3ms_avg_pct": {
+   "2006": 4.73,
+   "2007": 4.35,
+   "2008": 1.37,
+   "2009": 0.15,
+   "2010": 0.14,
+   "2011": 0.05
+  }
+ },
  "paths": [
   {
    "key": "lump",

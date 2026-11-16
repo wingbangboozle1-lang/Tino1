@@ -2793,6 +2793,68 @@ The verified numeric decision analysis (live / rent / sell, mixed and phased pat
 - 2026-11-16 — X-1: gates re-run, all PASS (see Results).
 - 2026-11-16 — X-2: two official statute and table reads recorded with URLs; one guessed IRS URL was 404 and dropped.
 - 2026-11-16 — X-3: publication boundary confirmed unchanged; no personal data added to the repository.
+## Session `arena/83baf48f-tino1` — claim (2026-11-16 UTC)
+
+**Branch:** `arena/83baf48f-tino1` (fixed by the platform; status `active`). **Base:** `main` @ `181be9e`.
+
+**Context found before claiming.** The brief in this session repeats the full task list already on this board. Most items have been completed by earlier sessions and are live (see the Pages record above). Three items remain open on the board and can be closed from official sources this session. Everything else is either owner action (listed below) or was already done and is not re-done here.
+
+| # | Task | Status | Owner | File scope | Notes |
+|---|------|--------|-------|------------|-------|
+| H-1 | Close CR-1A-2 / flag A14 / S-PHASE: fetch the official 2-year Treasury (FRED `GS2`) and 3-month bill (`TB3MS`) values for 2007–2010 and state the parked-cash proxy gap with links | done (ladder return still open, flag A14) | `arena/83baf48f-tino1` | `final/flags.py`, `final/extras.py`, `final/build.py` (phased/flagged text only), `final/out/*` regenerated | Values cited only if read on the FRED page this session. |
+| H-2 | "Prop H" (named in the brief): find the official San Francisco measure, read its terms, record them with the link, or flag it as not found | done (approved; terms from SFMTA; flags U-PH1, U-PH2) | `arena/83baf48f-tino1` | `final/flags.py`, `final/build.py` (law table row only) | Not in repo before this claim (grep: no match). |
+| H-3 | Recheck official sources for changes since 2026-11-11 (CA SOS ballot-measure returns; Treasury daily par yields for the parked-cash comparison) and log what moved | done (flag A-TSY) | `arena/83baf48f-tino1` | `COORDINATION.md` log; `final/flags.py` if a figure moved | Distinguish enacted from proposed. |
+
+**Not claimed (owner or future-session action, logged, not edited):**
+
+- **Git history with unrounded owner figures.** The repository is public (`gh repo view` → `isPrivate: false`). Removing the figures from history requires a history rewrite of `main` (force-push) and owner approval. Not done by any session here. Options G01/G02 on the Suggestions page stay open.
+- **Parcel-level items** (tax rate area code, exact assessed-value history, appraisal at date of death, comparables, insurance quotes, leases for Property B). These need the owner's parcel documents or a licensed appraiser, and the official lookups are interactive. They stay blank and flagged.
+- **Attorney and CPA review** of the mixed paths and the Prop 19 occupancy claim.
+
+### Log (`arena/83baf48f-tino1`)
+
+- 2026-11-16 — Claim written and pushed before any content work. No file owned by another session is edited; the 13 open PRs/branches are not touched.
+- 2026-11-16 — Official re-read, all on pages opened this session:
+  - **Prop H (H-2).** SFMTA page, https://www.sfmta.com/getting-around/muni/parcel: "San Francisco voters approved Proposition H on November 3, 2026." Tax July 1, 2027 to June 30, 2042; first bill FY 2027-28; multifamily $249 up to 5,000 sq ft plus $0.195 per sq ft over 5,000 (max $50,000); single-family $129 up to 3,000 sq ft, $0.42 and $1.99 per sq ft above; renter pass-through up to 50%, max $65 per unit a year, not for base rent set on or after 2027-06-01. Not used: the vote share in news reports (NBC Bay Area, 2026-11-10: 74.4% yes) because it is not an official count.
+  - **Ballot recheck (H-3).** SOS https://electionresults.sos.ca.gov/returns/ballot-measures, "as of November 14, 2026, 5:16 p.m.", certification by 2026-12-11: Prop 3 Yes 60.7%; Prop 40 No 52.2% (was 52.5%); Prop 41 No 55.2% (was 55.1%); Prop 42 Yes 51.3% (was 51.4%); Prop 43 No 57.6% (was 57.4%). No outcome changed. Updated in `final/build.py`, `final/sources.py`, `privacy-site/build.py`, `privacy-site/research.json`.
+  - **Treasury recheck (H-3).** https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve&field_tdr_date_value_month=202611, 2026-11-13 row: 3 Mo 4.32; 2 Yr 4.88; 10 Yr 5.15.
+  - **GS2 / TB3MS (H-1).** FRED annual averages (fq=Annual, fam=avg), https://fred.stlouisfed.org/series/GS2 and https://fred.stlouisfed.org/series/TB3MS. GS2 2007–2010: 4.36, 2.00, 0.96, 0.70. TB3MS 2007–2010: 4.35, 1.37, 0.15, 0.14.
+
+### Results (`arena/83baf48f-tino1`)
+
+- **Prop H in the model (new).** `final/model.py` now carries the Property B parcel tax: $249 a year from 2027 (the official multifamily minimum), indexed to inflation from 2028, with the $195-per-sq-ft rule above 5,000 sq ft as a parameter. The building area is not in the repository, so the baseline uses the minimum and says so (flag U-PH1). Total over 2027–2076 is about $24,270 nominal. A hypothetical 10,000 sq ft case is a labelled sensitivity.
+- **Recommendation check (required after input changes).** Before and after the change, the baseline best path is the same ("sell"), with identical values (live $7,766,637; rent $19,187,477; sell $33,502,215 in nominal end-of-horizon terms). Mixed-path and break-even outputs are identical. Property B cash flow is not an input to the Cupertino comparison, so the recommendation does not move. The Prop H sensitivity also leaves the ranking unchanged.
+- **Phased test (H-1).** `final/phased.py` now has an `official_check` block. The bill return used in the test is within 0.13 points of the official 3-month annual average in every year 2007–2010, and within 0.03 points in 2008–2010 (NYU table vs FRED TB3MS). Replacing the bill return with the 2-year yield for 2007–2010 (a yield, not a total return) raises the parked-path results by 2.3 to 4.9 percent of the proceeds and does not change the order of the four parked paths in either entry year. A ladder return from daily data is not computed (flag A14 stays open for it).
+- **Gates, all run on the regenerated tree:** `final/model.py`, `final/phased.py`, `ROOT_MODE=1 OUT_DIR=. final/build.py` (root `index.html` restored, because it must match `privacy-site/landing.html`), `final/publish.py --check` (16 files), `final/check.py .` (31 pages, 1134 sourced rows, 3131 links), `privacy-site/build.py` and `privacy-site/check.py`, unit tests (`privacy-site`, 13 tests), and the simulated Jekyll `_site` (16 files) through both `check_published.py` scripts. The simulated `_site` is built from `git ls-files` with the `_config.yml` excludes, because Jekyll is not installed here; CI runs the real Jekyll build.
+- **Check rules changed (narrowly, documented in the code).** `final/check.py` and `privacy-site/check.py` now allow the official SFMTA rate figures ($249, $129, $65, $799, $392 as published) and per-unit decimals under $10, and accept `sfmta.com` as an official City-agency host (SFMTA is a City and County department). No household figure is exempted.
+- **Public guide.** The published guide (`privacy-site/public/`) gained a Prop H row with the official rates (no household figures; "San Francisco" is not used, per the locality rule), a flag row, and a recheck row for the Treasury rates. Its ballot row shows the 2026-11-14 figures.
+
+### Sources (opened and read this session)
+
+- https://www.sfmta.com/getting-around/muni/parcel (Prop H official City page, read 2026-11-16)
+- https://electionresults.sos.ca.gov/returns/ballot-measures (CA SOS, unofficial, as of 2026-11-14 5:16 p.m.)
+- https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve&field_tdr_date_value_month=202611 (U.S. Treasury, 2026-11-13)
+- https://fred.stlouisfed.org/series/GS2 and https://fred.stlouisfed.org/series/TB3MS (FRED annual averages)
+
+### Irregularities (flagged, not blocking; published where they touch the public guide)
+
+1. **README says the rounded-figures analysis is what GitHub Pages publishes at the root.** The allowlist (`final/published.txt`, 16 files) and the CI check show the live site is the generic landing plus the no-figures guide in `privacy-site/public/`. The README's "What is current" section is out of date. Not edited here (README is a shared file); owner or the integration session should correct it.
+2. **Repository is public and its history has unrounded owner figures** (`gh repo view` → `isPrivate: false`). Still owner-only (G01/G02). No history rewrite was made in this session: it needs a force-push to `main` and the owner's approval, and it would not remove copies that already exist.
+3. **Model's bill return (3.5% a year) is below the official 3-month par yield on 2026-11-13 (4.32%).** It is a long-run assumption, not a current rate; flagged as A-TSY.
+4. **Prop H vote share** is available only from news sites; the official certified count is not yet read (U-PH2).
+
+### Still open (owner or professional action, not claimed)
+
+- Building area and parcel type for Property B (U-PH1). The Prop H bill cannot be fixed until these are known; the SFMTA parcel lookup opens on 2026-12-01.
+- Rent-control status and base-rent dates for each rented unit (U-PH2): needed before any pass-through is counted.
+- Whether the Prop H parcel tax is deductible or counts as a rental cost: a CPA question.
+- Parcel-level items from the earlier board (tax rate area, appraisal, comparables, insurance quotes, leases): unchanged, still blank and flagged.
+
+### Log (close-out, `arena/83baf48f-tino1`)
+
+- 2026-11-16 — H-1, H-2, H-3 complete on the branch. Pull request and merge: see the next log line.
+- 2026-11-16 — Merge conflict on rebase onto `main` @ `eca8647` (PR #117 by `arena/678f5a7b-tino1`, which also appended to this file). The conflict was only at the end of the file, where both sessions had appended sections. Resolved by keeping both sections in order (`arena/678f5a7b-tino1` first, this session second); nothing from either session was discarded. After the rebase, all gates were re-run and pass on the rebased tree; `main`'s change touched only this file.
+
 
 ## Session `arena/9bf08f53-tino1` — claim (2026-11-16 UTC)
 
@@ -2925,7 +2987,7 @@ No other session holds an active claim on these files (last claim `arena/81ca507
 - *Sources (official):* SF Department of Elections, Nov 3, 2026 results (preliminary, last update Nov 10, 2026): https://www.sfelections.org/results/20261103/index.html · SFMTA "Proposition H: Stronger Muni For All Parcel Tax" (rates, dates, exemptions, rent pass-through, billing): https://www.sfmta.com/getting-around/muni/parcel
 - *Verified:* approved (74.4% yes, 244,760 votes; 25.6% no, 84,209 votes, preliminary); annual parcel tax July 1, 2027–June 30, 2042; first bill FY 2027–28; full official rate schedule by parcel type and building area; SFMTA examples ($129; $549; $3,174); senior relief by application due June 1; SRO exclusion; rent-controlled pass-through 50% up to $65 per unit per year; inflation adjustment from FY 2028–29; Controller estimate $177M a year.
 - *Not verified / flagged:* certification (due within 30 days of Election Day; next SFDOE update Nov 17, 2026); any parcel-specific amount (needs official building area, private); inflation-indexed amounts after FY 2027–28. Non-official estimates in press and advocacy pieces ($160M, $184M) are **not** used.
-- *Published:* `privacy-site/public/law.html` (summary row + official schedule table), `flagged.html` (P13, P14), registry `research.json` (`prop_h`, `prop_h_results`).
+- *Published (final state on `main` after the second merge):* `privacy-site/public/law.html` (complete official schedule table), `flagged.html` (flag PH2 with the official vote count), registry `research.json` (`sfdoe_results`). The summary row and PH flag were already on `main` from session `83baf48f` and were kept, not duplicated.
 - *Implementation note:* the publication checker had no exemption for statutory rates. A narrow, named allowlist of exact official rates (`OFFICIAL_WHOLE_RATES`, `OFFICIAL_DECIMAL_RATES` in `privacy-site/check.py`) now exempts only these published amounts from the $10 display rule; all household-type amounts stay $10-rounded. Two `.org`/`.com` official city-agency hosts (`www.sfmta.com`, `www.sfelections.org`) are added to the reviewed-host list alongside `.gov` hosts.
 
 **P-3 — Form 540 1% surtax and capital gains (done; sources checked 2026-11-16)**
@@ -2960,6 +3022,7 @@ No other session holds an active claim on these files (last claim `arena/81ca507
 **Merge log — arena/90e54230-tino1 with `main` (2026-11-16 UTC)**
 - `main` moved from `181be9e` to `aa1c7f5` (PRs #122–#127 by other sessions) while PR #119 was open. Merged `origin/main` into the branch (merge commit, no history rewritten).
 - Conflicts in `COORDINATION.md`, `privacy-site/{build.py,check.py,research.json,landing.html,public/*.html}` and `index.html` resolved by taking `main`'s version of each file and re-applying this branch's Prop H work on top. No other session's entries were removed.
+- **Second merge (PR #121 landed meanwhile, `abb74e9`):** `main` already contained a Prop H summary row (`sfmta26`), flag `PH`, a Prop H entry in `final/model.py` and a `sfmta.com` reviewed host, all from session `83baf48f`. This branch now keeps `main`'s privacy-site and adds only: the complete official schedule table, flag `PH2` (official Department of Elections preliminary count, certification pending), and the `sfelections.org` reviewed host with its source entry `sfdoe_results`. Earlier flags P14/P15 and their duplicate registry entries were dropped.
 - `main` already carried a verified "Behavioral Health Services Tax (1% add-on)" row (read 2026-11-16). This branch's P-3 work therefore reduced to aligning flags P12 and I03 with that row. Nothing was duplicated.
-- Flag IDs for Prop H are **P14** and **P15** because `main` already uses P13 ("constant inflation baseline").
+- Flag IDs: `main` already uses P13 ("constant inflation baseline") and PH for Prop H, so this branch adds **PH2** (official vote count and certification) and drops its earlier P14/P15 flags.
 - Gates re-run on the merged tree: `privacy-site/build.py` is deterministic (two builds hash identically); `privacy-site/check.py` PASS (14 pages, 477 linked rows); unit tests OK; `final/publish.py --check` OK; `final/check.py .` OK (3062 links); allowlist checks PASS on a 16-file copy.

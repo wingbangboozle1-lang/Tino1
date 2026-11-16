@@ -10,13 +10,10 @@ NAV = {'index.html','decision.html','projection.html','stress.html','process.htm
 FILES = NAV | {'style.css'}
 REGISTRY = json.loads((ROOT.parent/'research.json').read_text())
 SOURCES = {s['url'] for s in REGISTRY['sources'].values()}
+# www.sfmta.com: the San Francisco Municipal Transportation Agency is a City and County department (official City site, not .gov); used for the Proposition H rate table.
+OFFICIAL_PUBLISHED_RATES = {'129', '249', '65', '799', '392', '549', '969', '3,174', '34,999', '202,999', '177'}  # SFMTA Proposition H rate table and examples, plus the Controller's $177 million estimate, read 2026-11-16
 # www.law.cornell.edu: non-government mirror of the U.S. Code, used only for IRC §1250 text (flagged 9B-F1 on the public Flagged page); the GPO copy was not retrieved on 2026-11-16.
-# Exact published rates of Proposition H (SFMTA page) and the Controller's published estimate. Public amounts, not household figures.
-OFFICIAL_WHOLE_RATES = {'65','129','249','392','549','799','969','3,174','34,999','202,999','177'}  # '177' = Controller's published $177 million estimate
-OFFICIAL_DECIMAL_RATES = {'0.195','0.42','0.76','0.84','0.99','1.99'}
-REVIEWED_NON_GOV_HOSTS = {'docs.github.com', 'federalreservehistory.org', 'www.federalreservehistory.org', 'www.law.cornell.edu',
-    # Official San Francisco agency sites (not .gov): the transit agency's Proposition H page and the Department of Elections results.
-    'www.sfmta.com', 'www.sfelections.org'}
+REVIEWED_NON_GOV_HOSTS = {'docs.github.com', 'federalreservehistory.org', 'www.federalreservehistory.org', 'www.sfmta.com', 'www.sfelections.org', 'www.law.cornell.edu'}  # www.sfelections.org: Department of Elections results page (Proposition H count)
 PII_PATTERNS = {
     'street address': r'\b\d{1,5}\s+[A-Z][A-Za-z-]+(?:\s+[A-Z][A-Za-z-]+)?\s+(?:Street|St\.?|Avenue|Ave\.?|Drive|Dr\.?|Way|Court|Ct\.?|Lane|Ln\.?|Road|Rd\.?|Boulevard|Blvd\.?)\b',
     'email address': r'[\w.+-]+@[\w-]+\.[\w.-]+',
@@ -132,11 +129,14 @@ def main():
         for token in ('Cupertino','San Francisco','sftreasurer.org','sf.gov'):
             assert token.casefold() not in text.casefold(), f'Household-locality cue in {name}'
         for amount in re.findall(r'\$([\d,]+(?:\.\d+)?)(?![\d,])', text):
-            # Official statutory/measure rates are published exactly; only these are exempt from $10 rounding.
             if '.' in amount:
-                assert amount in OFFICIAL_DECIMAL_RATES, (name, amount)
-            else:
-                assert int(amount.replace(',','')) % 10 == 0 or amount in OFFICIAL_WHOLE_RATES, (name, amount)
+                # per-unit rates below $10 (for example $0.195 per square foot) are not household totals
+                assert float(amount.replace(',', '')) < 10, (name, amount)
+                continue
+            # official published rates quoted from their own source page (SFMTA Proposition H table; not household figures)
+            if amount in OFFICIAL_PUBLISHED_RATES:
+                continue
+            assert int(amount.replace(',','')) % 10 == 0, (name,amount)
         p = Check(); p.feed(text)
         assert p.headings == 1 and p.current == 1 and p.captions == p.tables
         pages[name] = p
