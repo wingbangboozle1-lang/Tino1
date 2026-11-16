@@ -2767,3 +2767,42 @@ Verification performed in this session before it was superseded: `final/model.py
 - 2026-11-16 — X-1: gates re-run, all PASS (see Results).
 - 2026-11-16 — X-2: two official statute and table reads recorded with URLs; one guessed IRS URL was 404 and dropped.
 - 2026-11-16 — X-3: publication boundary confirmed unchanged; no personal data added to the repository.
+
+## Session `arena/9bf08f53-tino1` — claim (2026-11-16 UTC)
+
+**Branch:** `arena/9bf08f53-tino1` (fixed by the platform), based on `main` @ `181be9e` (PR #116). Current publication boundary is kept: the generic front door plus the figure-free guide in `privacy-site/public/` (16-file allowlist). No household figure, ZIP code, city name, name, address or parcel number is added to any published page.
+
+| # | Task | Status | Owner | File scope | Notes |
+|---|------|--------|-------|------------|-------|
+| 9B-1 | "What would change the answer" as a first-screen block on the public front door (each trigger linked to an official source) | in progress | `arena/9bf08f53-tino1` | `privacy-site/build.py`, `privacy-site/research.json`, `privacy-site/public/index.html`, `privacy-site/landing.html`, `index.html` | Adds rows only; no figures. |
+| 9B-2 | Deadlines as a timeline (from date of death, each step linked) | in progress | `arena/9bf08f53-tino1` | `privacy-site/build.py`, `privacy-site/research.json`, `privacy-site/public/process.html` | Only deadlines confirmed on the official page are stated. |
+| 9B-3 | Like-kind exchange, depreciation and recapture, imputed rent: plain-language questions and glossary terms with official links | in progress | `arena/9bf08f53-tino1` | `privacy-site/build.py`, `privacy-site/research.json`, `privacy-site/public/questions.html`, `privacy-site/public/glossary.html` | Generic; no household values. |
+| 9B-4 | Written investment policy template for sale proceeds (blank fields; no invented targets) | in progress | `arena/9bf08f53-tino1` | `privacy-site/build.py`, `privacy-site/public/brief.html` | Template only; fields left blank for the owner. |
+| 9B-5 | Read the official FTB Form 540 instructions for the 1% tax above $1,000,000 and the capital-gain treatment; record the wording and the link | in progress | `arena/9bf08f53-tino1` | `COORDINATION.md` (record), `privacy-site/public/law.html` if the wording changes a row | Official text read on the day, not from memory. |
+
+Owner-level items this session does **not** take (recorded in the board, unchanged): rewriting Git history that holds pre-rounding figures, changing repository visibility, and publishing household figures. These need the repository owner.
+
+### arena/9bf08f53-tino1 — close-out record (2026-11-16 UTC)
+
+Status of the claimed tasks (only files in the claimed scope were changed: `privacy-site/build.py`, `privacy-site/check.py`, `privacy-site/research.json`, and the regenerated `privacy-site/public/*.html`; the root landing and the 16-file allowlist are unchanged).
+
+| # | Task | Status | What was done | Sources read (official unless marked) | Irregularities / open |
+|---|------|--------|---------------|----------------------------------------|-----------------------|
+| 9B-1 | "What would change the answer" on the first screen | done | New table on the public front door, directly after the hero: seven triggers (property-tax treatment, filing clocks, estate-tax status, sale-year income, CA capital gains, like-kind, depreciation). Each row links to its rule. | BOE Prop 19 page (https://www.boe.ca.gov/prop19/); IRS estate tax page (https://www.irs.gov/businesses/small-businesses-self-employed/estate-tax); FTB 2025 Form 540 booklet (https://www.ftb.ca.gov/forms/2025/2025-540-booklet.html); FTB capital gains (https://www.ftb.ca.gov/file/personal/income-types/capital-gains-and-losses.html); IRC §1031 GPO (https://www.govinfo.gov/content/pkg/USCODE-2024-title26/html/USCODE-2024-title26-subtitleA-chap1-subchapO-partIII-sec1031.htm); IRC §1250 LII mirror (flagged) | 9B-F1 |
+| 9B-2 | Deadlines as a timeline | done | Ordered timeline on the process page: day 0, 9-month Form 706 date, 1-year homeowners' exemption, 3-year exclusion claim, annual Form 540 dates, like-kind clocks, annual re-check. | IRS Form 706 instructions Rev. July 2026 (https://www.irs.gov/pub/irs-pdf/i706.pdf), read on the "When To File" and "Which Estates Must File" text; BOE Prop 19 page; FTB 2025 Form 540 booklet "Important Dates" | 9B-F2 (extension wording corrected: Form 4768 covers filing and can request payment extension) |
+| 9B-3 | Like-kind, depreciation and recapture, imputed rent | done | Structural-questions table on the questions page (like-kind, depreciation/recapture, imputed rent, sale-year $1,000,000, written rule before figures); five glossary terms. | IRC §1031 GPO; IRS Publication 544 (2025) PDF, receipt requirement (chunk read 2026-11-16); IRS Topic 414 (https://www.irs.gov/taxtopics/tc414); IRC §1250 LII mirror | 9B-F1: §1250 text not read from an official host (GPO address not found; Publication 544 PDF tool stops before chapter 3). The unrecaptured-§1250 federal rate (IRC §1(h)) was not read and is not stated. |
+| 9B-4 | Written investment policy template for sale proceeds | done | Blank-entry template on the attorney and CPA brief page: decision owner, cash need, parking instrument, equity share and phase-in, rebalancing and loss response, tax items, review triggers. No target or projected figure entered. | Uses the existing registry entries (FDIC, SEC asset allocation, IRS estate tax page, FTB 2025 Form 540 booklet, IRS estate tax) | None beyond the rule that yields change daily and must be read on the day |
+| 9B-5 | Read the official FTB Form 540 instructions for the 1% tax above $1,000,000 and the capital-gain treatment; update the sensitivity value | done (text read; sensitivity not changed) | Read Line 62 "Behavioral Health Services Tax" in the 2025 Form 540 booklet (chunks 11, 14–17): if taxable income is more than $1,000,000, compute 1% of the excess. Law page row updated to this label; registry entry re-dated. Capital gains: FTB page confirms all capital gains are ordinary income in California. | FTB 2025 Form 540 booklet; FTB capital gains page (last updated 01/28/2026) | 9B-F3 (the phrase "renamed from Mental Health Services Tax" in the private numeric build is not in the text read; not published). 9B-F4: the private numeric model has no 1% term, so there was no sensitivity value to update. Adding one needs an owner decision. |
+
+Other checks run on 2026-11-16:
+- `privacy-site/build.py` regenerated the public pages (no diff from the committed state after the final run); `privacy-site/check.py` PASS (14 public pages, 458 official-context-linked rows, $10 rounding, PII-pattern and household-signature checks); `unittest` 13/13 OK; `final/publish.py --check` OK (16-file allowlist); `final/check.py .` OK (31 pages, 1,126 sourced rows, 2,638 dollar figures rounded to $10).
+- `privacy-site/check.py` header date changed from 12–13 to 12–16 Nov 2026 on all public pages (source checks dated per item).
+- Public pages checked for ZIP codes, city names and street patterns: none in visible text.
+- Non-government host added to `REVIEWED_NON_GOV_HOSTS` in `privacy-site/check.py`: `www.law.cornell.edu`, used only for the IRC §1250 mirror text, flagged 9B-F1.
+- Dead links recorded in `rejected_links` (irs.gov like-kind pages returned 404; uscode.house.gov and a govinfo §6075 path returned not-found on 2026-11-16).
+
+Not done in this session (left on the board for an owner decision or a later session; none claimed here):
+- Git history scrub, repository visibility, and any publication of household figures. These are owner-level (see the publication-boundary records above). Nothing was rewritten.
+- Mixed-path, what-if and reinvestment-risk pages, and the decision-date log: these exist in the private numeric build (`final/`, root pages), which is not on the Pages allowlist. Publishing them is the owner's boundary decision.
+- Property tax rate area (U03), comparables for the Cupertino house, and independent property or rental estimates: still unverified and not inferred here.
+- The pre-commitment rule (what would make each path the choice) is written only as a blank question on the questions page; no rule with thresholds was written.
