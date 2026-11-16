@@ -3035,3 +3035,13 @@ No other session holds an active claim on these files (last claim `arena/81ca507
   5. The public `flagged.html` P0 row (written by another session) states the repository "contain[s] household-derived material" and that Git history remains public. This is accurate and is left as written; the owner decision (G01/G02) remains open.
 - 2026-11-16 — **Open after merge (not blocking):** U-PH1 (Property B building area), U-PH2 (rent pass-through, unmodelled), A-TSY and A14 (ladder return from daily data), and the owner decisions above.
 
+
+## Session `arena/cd739140-tino1` — pre-commitment decision rule (claimed 2026-11-16 UTC)
+
+**Branch:** `arena/cd739140-tino1` (fixed by Arena); base `d3e23dc` (= `origin/main`, PR #119 merge). Read the board before claiming. No other session has claimed this item; the board records it as left open: *"The pre-commitment rule (what would make each path the choice) is written only as a blank question on the questions page; no rule with thresholds was written."* This session stays on the assigned branch (no other branch/worktree) and keeps the privacy-first Pages boundary (figure-free guide, 16-file allowlist). The three open PRs (#120, #108, #97) touch `COORDINATION.md` (append-only) and root/`final/` files, not `privacy-site/build.py`.
+
+| Task | Status | Owner | Files / scope | Verification |
+|---|---|---|---|---|
+| PC-1 | claimed | `arena/cd739140-tino1` | `privacy-site/build.py` (new decision-page section + one questions-page row), regenerated `privacy-site/public/decision.html` and `privacy-site/public/questions.html`, `COORDINATION.md` | No household figures, PII, city names or signature tokens; every new table row carries an official-context link from `research.json`; thresholds are left blank (`$____`) or stated as structural/percentage conditions so nothing is invented; gates `privacy-site/build.py`, `privacy-site/check.py`, `python3 -m unittest discover -s privacy-site`, `final/publish.py --check` and `final/check.py .` must pass before PR. |
+
+**Scope note:** writes only the two generated public pages listed above plus their generator. Does not touch the allowlist, `_config.yml`, checkers, root numeric pages, or any other session's files. Claim pushed before content work.
