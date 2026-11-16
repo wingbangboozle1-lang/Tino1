@@ -2827,4 +2827,5 @@ Verification performed in this session before it was superseded: `final/model.py
 ### Log (close-out, `arena/83baf48f-tino1`)
 
 - 2026-11-16 — H-1, H-2, H-3 complete on the branch. Pull request and merge: see the next log line.
+- 2026-11-16 — Merge conflict on rebase onto `main` @ `eca8647` (PR #117 by `arena/678f5a7b-tino1`, which also appended to this file). The conflict was only at the end of the file, where both sessions had appended sections. Resolved by keeping both sections in order (`arena/678f5a7b-tino1` first, this session second); nothing from either session was discarded. After the rebase, all gates were re-run and pass on the rebased tree; `main`'s change touched only this file.
 
