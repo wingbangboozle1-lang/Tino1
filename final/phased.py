@@ -64,7 +64,9 @@ def max_drawdown(vals):
 
 def metrics(R, s, park, phase):
     v = run_path(R, s, park, phase)
-    return dict(end=v[-1], mdd=max_drawdown(v))
+    # mdd3 = the worst fall inside the first three years only: the window the brief calls crash-entry risk.
+    return dict(end=v[-1], mdd=max_drawdown(v), mdd3=max_drawdown(v[:4]),
+                floor3=min(1.0, min(v[:4])))
 
 
 def lump_end(R, s):
@@ -116,13 +118,28 @@ def compute(proceeds=None):
     for k, n, p in paths:
         per[k] = {s: metrics(R, s, n, p) for s in starts}
     for name, s in (('1929 entry (Depression crash begins)', 1929), ('1937 entry (second slump)', 1937),
-                    ('2000 entry (dot-com peak)', 2000), ('2007 entry (housing and stock peak)', 2007)):
+                    ('2000 entry (dot-com peak)', 2000), ('2007 entry (housing and stock peak)', 2007),
+                    ('2008 entry (the crash year itself)', 2008)):
         if s in per['lump']:
+            l_end, l_mdd, l_mdd3 = per['lump'][s]['end'], per['lump'][s]['mdd'], per['lump'][s]['mdd3']
             out['episodes'][str(s)] = dict(
                 label=name,
-                paths={k: dict(end=per[k][s]['end'], mdd=per[k][s]['mdd']) for k, _, _ in paths},
+                paths={k: dict(end=per[k][s]['end'], mdd=per[k][s]['mdd'],
+                               mdd3=per[k][s]['mdd3'], floor3=per[k][s]['floor3'],
+                               # how the path ends against the lump sum, and how much shallower its worst fall is
+                               end_vs_lump=per[k][s]['end'] / l_end - 1,
+                               mdd_relief_pts=(per[k][s]['mdd'] - l_mdd) * 100,
+                               mdd3_relief_pts=(per[k][s]['mdd3'] - l_mdd3) * 100) for k, _, _ in paths},
                 bill_avg_parked=statistics.mean(R[y]['bill'] for y in range(s, s + 2)),
-                stock_1yr=R[s]['stock'], stock_2yr=(1 + R[s]['stock']) * (1 + R[s + 1]['stock']) - 1)
+                bill_avg_parked_24=statistics.mean(R[y]['bill'] for y in range(s, s + 2)),
+                bill_avg_parked_36=statistics.mean(R[y]['bill'] for y in range(s, s + 3)),
+                # the same money left in bills for the whole ten years: the floor a parked path cannot fall below
+                all_cash_end=metrics(R, s, HORIZON, 1)['end'],
+                lump_end=l_end, lump_mdd=l_mdd, lump_mdd3=l_mdd3,
+                stock_1yr=R[s]['stock'], stock_2yr=(1 + R[s]['stock']) * (1 + R[s + 1]['stock']) - 1,
+                stock_3yr=(1 + R[s]['stock']) * (1 + R[s + 1]['stock']) * (1 + R[s + 2]['stock']) - 1,
+                stock_years={str(y): R[y]['stock'] for y in range(s, s + 5)},
+                bill_years={str(y): R[y]['bill'] for y in range(s, s + 5)})
     for k, n, p in paths[1:]:
         diffs = [per[k][s]['end'] / per['lump'][s]['end'] - 1 for s in starts]
         mdds_l = [per['lump'][s]['mdd'] for s in starts]

@@ -17,7 +17,7 @@ Rounding to the nearest $10 is the disclosure-minimisation control the brief ask
 | `decision.html` | Live, rent or sell: cash flows, after-tax wealth, sensitivities, break-even points |
 | `questions.html` | Questions, known vs. unknown info, and discovery guide — Part 1: Q01–Q18, U01–U10, the S5-Q1–S5-Q7 evidence checklist & discovery sequence; Part 2: reading-dated decision register (open, unknowable, answered) |
 | `projections.html` | Year by year 2026 to 2076: value, assessed value, property tax, insurance, water, electricity, repairs, rental insurance |
-| `black-swan.html` | Non-constant growth and inflation: 50 replays of the real 1976-2025 record and named crisis paths, with a provenance table separating official statistics, academic returns and hypothetical constructions |
+| `black-swan.html` | Non-constant growth and inflation: 50 replays of the real 1976-2025 record, named crisis paths, and a phased-entry test that parks the sale proceeds in 3-month to 2-year Treasuries for 24 to 36 months before phasing into stocks (1929 and 2008 crash entries), with a provenance table separating official statistics, academic returns and hypothetical constructions |
 | `process.html` | Step-by-step process with legal deadlines (`BOE-266` before `BOE-19-P` per BOE Pub. 800-1) |
 | `law.html` | Federal, California (`Behavioral Health Services Tax`), and local law in force, plus pending measures & Nov 11 ballot updates |
 | `estate-cash.html` | Cash inheritance: thresholds at each level, room before tax, projections |

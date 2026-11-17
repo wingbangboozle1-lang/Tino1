@@ -30,7 +30,9 @@ The decision: Property A (Santa Clara County, [ZIP A], $3,100,000) will pass to 
 
 ## Risk is not a smooth line
 
-Inflation, house prices and stock returns do not compound evenly over 50 years. The Black swan page replays the real 1976-2025 record from each of its 50 possible starting years, and adds named crisis paths (1929-1941, 1970s stagflation, 1990 Japan, 2000 and 2008 crashes). Selling is ahead of renting in 43 of the 50 ten-year horizons and in 50 of the 50 twenty-year horizons; the worst ten-year case is behind by $2,068,720. Renting ends ahead in exactly two named paths: the Japan stagnation and the Depression. Staging the investment and holding a few years of spending in Treasury bills narrows that gap.
+Inflation, house prices and stock returns do not compound evenly over 50 years. The Black swan page replays the real 1976-2025 record from each of its 50 possible starting years, and adds named crisis paths (1929-1941, 1970s stagflation, 1990 Japan, 2000 and 2008 crashes). Selling is ahead of renting in 43 of the 50 ten-year horizons and in 50 of the 50 twenty-year horizons; the worst ten-year case is behind by $2,068,720. Renting ends ahead in exactly two named paths: the Japan stagnation and the Depression.
+
+**Phased entry (new, 2026-11-17).** The page now tests the obvious answer to that one failure mode: instead of investing the whole proceeds on the day of the sale, park them in 3-month to 2-year Treasuries for 24 or 36 months and move into stocks in 12 monthly tranches. Parking is the best of the three on **5 of the 11 named stress paths** — including the Depression, where waiting lifts the result from $4,756,630 to $11,072,980 — and on 6 of the 50 replays; the lump sum wins the other 44. In the worst replay, a 36-month park finishes $38,375,760 behind the lump sum. On real annual history, entering at the 2008 crash with a 36-month park meant no fall at all against the lump sum's -37% and finished 10% ahead after ten years, gross of tax. The trade is protection against one bad entry year, bought with the growth of the good years it sits out — a written investing policy decision, not a forecast.
 
 ## Before anything else
 

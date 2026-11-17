@@ -154,7 +154,7 @@ PATH_NAMES = {'lump': 'Lump sum into stocks on day one (no parking)',
               'park3_phase2': 'Park 36 months, then 2 equal annual tranches',
               'park3_phase3': 'Park 36 months, then 3 equal annual tranches'}
 PATH_ORDER = ['lump', 'park2_phase2', 'park2_phase3', 'park3_phase2', 'park3_phase3']
-EPISODES = ['1929', '1937', '2000', '2007']
+EPISODES = ['1929', '1937', '2000', '2007', '2008']
 
 
 def phased_claims():
@@ -179,11 +179,11 @@ def build_phased(B, res):
     for k in PATH_ORDER:
         cells = ['%.2f times; worst drop %s' % (ep[c]['paths'][k]['end'], pc_(ep[c]['paths'][k]['mdd'], 0)) for c in EPISODES]
         rows.append([PATH_NAMES[k]] + cells + [PHASED_SRC(B)])
-    t1 = B.table(['Path (proceeds start at the entry year)', '1929 entry', '1937 entry', '2000 entry', '2007 entry', 'Source'], rows,
+    t1 = B.table(['Path (proceeds start at the entry year)'] + ['%s entry' % c for c in EPISODES] + ['Source'], rows,
                  caption='Value 10 years after entry, per 1 dollar of proceeds, and the worst fall from a peak inside those 10 years',
                  note='A worst drop of -65% means the account fell 65%% from its highest point before recovering. Figures are gross: before tax, costs and inflation. Annual resolution: each calendar year is one step.')
     drows = [[PATH_NAMES[k]] + [_money(proceeds * ep[c]['paths'][k]['end']) for c in EPISODES] + [PHASED_SRC(B)] for k in PATH_ORDER]
-    t2 = B.table(['Path', '1929 entry', '1937 entry', '2000 entry', '2007 entry', 'Source'], drows,
+    t2 = B.table(['Path'] + ['%s entry' % c for c in EPISODES] + ['Source'], drows,
                  caption='The same test in dollars: 10 years after entry, starting from baseline net sale proceeds of %s' % _money(proceeds),
                  note='The starting amount is the model\'s baseline net sale proceeds in the inheritance year, after selling costs, carrying costs and the sale tax, rounded to $10. Real proceeds depend on the actual sale price and tax, which are not yet known.')
     srows = []
@@ -231,8 +231,9 @@ def build_phased(B, res):
 """ % (pc_(bs['all_1928_2025'], 1), pc_(bs['y1929_1931'], 1), pc_(bs['y2009_2015'], 2), PHASED_SRC(B)) + """
 <h2>How to read it</h2>
 <ul>
-<li>Phasing does not avoid losses that come after the stocks are bought. In the 1929 test the phased paths still fell about 35% from their peak, because they bought stocks in 1931, before the rebound.</li>
-<li>In the 2007 test the parked cash stayed out of stocks through 2008 and the worst drop was 0%: the wait avoided the crash. Parking was ahead of the lump sum after 10 years.</li>
+<li>Phasing does not avoid losses that come after the stocks are bought. In the 1929 test the phased paths still fell about 35%% from their peak, because they bought stocks in 1931, before the rebound.</li>
+<li>In the 2007 test the parked cash stayed out of stocks through 2008 and the worst drop was 0%%: the wait avoided the crash. Parking was ahead of the lump sum after 10 years.</li>
+<li>The 2008 row is the same crash seen from inside it: the entry year is the crash year, so the lump sum fell %s in its first twelve months while the parked paths had no fall at all. After ten years the 24-month park was still %s ahead of the lump sum on gross returns, even though the bill paid almost nothing in 2008 to 2010.</li>
 <li>@@CLAIM@@</li>
 <li>The test uses one entry date per row. A real decision also depends on tax, cash needed for carrying costs, and how much fall in value the owner can accept.</li>
 </ul>
@@ -241,9 +242,9 @@ def build_phased(B, res):
 <li>Annual data. A calendar year is one step, so the October 1929 crash appears only in the full-year 1929 return. Intra-year drops are understated.</li>
 <li>Gross of tax, selling costs, carrying costs and inflation. The <a href="decision.html">Decision</a> page carries those; this page isolates timing.</li>
 <li>Stock and bill returns come from an academic table, not a government source. This is flagged for review: <a href="flagged.html#S-PHASE">Flagged for Review</a>.</li>
-<li>Results are historical. Future sequences can differ; the <a href="black-swan.html">Black swan</a> page shows named stress paths.</li>
+<li>Results are historical. Future sequences can differ; the <a href="black-swan.html">Black swan</a> page shows named stress paths, and carries the same test run through the model itself, after tax and after inflation.</li>
 </ul>
-"""
+""" % (pc_(ep['2008']['stock_1yr'], 0), pc_(ep['2008']['paths']['park2_phase2']['end_vs_lump'], 0))
     c = phased_claims()
     claim = ('Across the %d entry years, the phased worst drop was never deeper than the lump sum&rsquo;s, and it was strictly shallower in %d of them '
              '(24-month park, 2 tranches). The phased path ends higher than the lump sum in only %s of entry years, so the benefit is protection against one bad entry, not a higher average return.'
@@ -345,6 +346,14 @@ def build_timeline(B):
            'When each step falls, counted from the date of death. Confirm every date with the attorney and the county office.', body)
 
 
+def _ph_counts():
+    """(parking wins on how many named paths, how many named paths, how many replays) - from the model."""
+    MJ = json.load(open(os.path.join(HERE, 'out', 'model.json')))
+    PH = MJ['phased']
+    win = sum(1 for d in PH['named'].values() if max(d['park24'], d['park36']) > d['lump'])
+    return (win, len(PH['named']), PH['replay_wins']['park24'] + PH['replay_wins']['park36'])
+
+
 def build_brief(B, cases):
     """One printable page for the estate attorney and the tax adviser (no site chrome)."""
     s = B.B
@@ -375,7 +384,10 @@ def build_brief(B, cases):
            'Confirm the basis step-up under the trust type, and the date-of-death appraisal used for basis. (Q01)',
            'Property B: the owner\'s basis and depreciation already claimed on the rented units. (Q03)',
            'Form 1041 for the trust or estate while the home is held; treatment of rent received before distribution.',
-           'Whether the solar credit and the rent on Property B are reported as the model assumes. Unverified items are on Flagged for Review.']
+           'Whether the solar credit and the rent on Property B are reported as the model assumes. Unverified items are on Flagged for Review.',
+           'Investing policy for the proceeds, written down before the money arrives: invest it all at once, or park it in 3-month to 2-year '
+           'Treasuries for 24 to 36 months and phase into stocks? On the site stress paths parking is the best of the three in %d of %d named '
+           'paths and in %d of the 50 replays (Black swan -> Phased entry into stocks).' % _ph_counts()]
     body = """<!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow"><meta name="referrer" content="no-referrer">
