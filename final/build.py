@@ -1452,6 +1452,29 @@ def build_verification():
     t10 = table(['What was checked', 'What the official page said when it was opened', 'Result', 'Official page'], r10,
                caption='Sixth independent re-read, 2026-11-13 (session arena/c61749ed), on the official pages themselves')
 
+    # 2026-11-17 pass (session arena/408e283a): the two official Treasury series behind the
+    # phased-entry test were re-downloaded and compared with the values stored in final/phased.py.
+    r11 = [
+        ('FRED GS2, the 2-year Treasury official series',
+         'Annual averages re-downloaded 2026-11-17: 2006 4.82; 2007 4.36; 2008 2.00; 2009 0.96; 2010 0.70; 2011 0.45',
+         'Confirmed today - identical, value for value, to the six figures hard-coded in <code>final/phased.py</code> and used in the 2-year sleeve check',
+         src('FRED-GS2')),
+        ('FRED TB3MS, the 3-month bill official series',
+         'Annual averages re-downloaded 2026-11-17: 2006 4.73; 2007 4.35; 2008 1.37; 2009 0.15; 2010 0.14; 2011 0.05',
+         'Confirmed today - identical, value for value, to the six figures hard-coded in <code>final/phased.py</code>',
+         src('FRED-TB3MS')),
+        ('The stock and bill rows the crash-entry test uses, read out of the repository copy',
+         'S&P 500 total return: 1929 -8.30%; 1930 -25.12%; 1931 -43.84%; 1932 -8.64%; 1933 +49.98%; 2008 -36.55%; 2009 +25.94%; 2010 +14.82%. 3-month bill: 1929 3.16%; 1930 4.55%; 1931 2.31%; 2008 1.40%; 2009 0.15%; 2010 0.14%',
+         'Read from <code>final/data/hist_returns_damodaran.csv</code> in this repository. Academic dataset, not a government source - it stays labelled as such everywhere it is used, with the official Treasury yield curve cited beside it as the reference for bill rates ' + flag('S02'),
+         src('TREASURY') + ' \u00b7 ' + src('DAMODARAN')),
+        ('The three legs of the phased-entry section',
+         'The model arm (after tax, in 2026 dollars, monthly steps), the historical crash-entry test (gross, annual steps) and the official 2-year sleeve check are computed, not typed: the tables are generated from <code>final/out/model.json</code> and <code>final/out/phased.json</code> on every build',
+         'Confirmed today by rebuilding from scratch and diffing the output; the zero-return self-test still returns exactly the proceeds for all three park settings',
+         src('BLS-CPI', 'FHFA-SJ')),
+    ]
+    t11 = table(['What was checked', 'What the official page said when it was opened', 'Result', 'Official page'], r11,
+               caption='Seventh pass, 2026-11-17 (session arena/408e283a): the phased-entry crash test and the Treasury series behind it')
+
     body = """
 <p class="callout">This page is the manual-review register for the whole site: one row per check, with the government page to open and re-read. Pass 1 was checked on 2026-11-11 (session faccd46d); Pass 2 re-opened the twelve core pages on 2026-11-12 (session e8636cac); subsequent same-day passes by sessions <code>3e79fc01</code>, <code>0adc9b0a</code>, and <code>a6ec5b1d</code> checked remaining official agency pages directly (leaving zero official agency excerpt entries in the register). Anything that cannot be confirmed from an agency page stays blank or labelled and carries a flag.</p>
 %s
@@ -1483,10 +1506,13 @@ def build_verification():
 <p class="note">This pass opened the eight official pages in its table on their own agency URLs and read them in full; the quoted wording is what each page says today. It did not re-open the inherited-property basis FAQ, Rev. Rul. 2023-2, Topics 409/559/701, the California Controller page, the Franchise Tax Board schedules, the CPUC net-metering material, the San Francisco rent-increase rules or the Department of Insurance tool - those stand on the earlier passes and keep their links. One arithmetic check was added rather than a read: the Santa Clara rate components were summed by hand and do add to 1.16360.</p>
 <h2>Sixth independent re-read, 2026-11-13 (session arena/c61749ed)</h2>
 %s
+<h2>Seventh pass, 2026-11-17 (session arena/408e283a): the phased-entry crash test</h2>
+%s
+<p class="note">Scope of this pass: the new <em>Phased entry into stocks</em> section of <a href="black-swan.html">Black swan</a>. The two official Treasury series behind it were re-downloaded from FRED and compared value for value with the figures stored in <code>final/phased.py</code>; both matched exactly. The stock and bill rows were read out of the repository copy of the academic dataset and are labelled academic wherever they appear. What this pass did <em>not</em> re-open: every other official page on this page's earlier tables - those stand on their own dated passes and keep their links.</p>
 <p class="note">The closing integration pass re-opened the decision-critical pages one final time: the federal exclusion for both years, the California death-tax rule, the Proposition 19 charts, allowance and formula letters, the Proposition 13 cap and the 2026-27 roll factor, both county rate pages (the Santa Clara components were summed by hand and give exactly 1.16360 per $100), the San Francisco rent notice, the homeowners\' exemption, and the HUD rent table for ZIP 95014. Every figure matched the site. Nothing new was marked verified without a page read today.</p>
 <p class="note"><strong>Coverage summary.</strong> Across the passes above, every official agency source in <a href="sources.html">Sources and method</a> has now been opened and read directly on its agency URL (only the non-government stock/bill dataset, Damodaran, remains labelled academic). The interactive CDI insurance survey still requires interactive form access that automation has not resolved, so the ZIP-level insurance premiums remain blank. The HUD fiscal year 2027 lookup was resolved on 2026-11-13 (session arena/5a0857f0): both ZIP rows are now read directly, recorded in the register, and flag U09 is closed.</p>
 <p class="note"><strong>What this pass does not establish.</strong> Model outputs and projections are conditional scenarios built on the assumptions in the flags; no official page can verify a forecast. The automated checker (<a href="%s/blob/main/final/check.py">final/check.py</a>) proves only that every table row carries an official link, that dollar figures are rounded to $10, and that no personal identifier pattern appears (no fingerprint of unrounded owner figures is stored; that extra scan runs only with a private local file) - it does not prove that each link supports each cell. This register exists so every claim can be checked by hand against its link. People remain placeholders (the Transferor, the Inheritor); no names, addresses or parcel numbers appear anywhere.</p>
-""" % (t1, t2, t3, t4, tw3, render_verification(src, table, flag), t6, t5, t7, t8, t9, s7_verification_table(), t10, REPO)
+""" % (t1, t2, t3, t4, tw3, render_verification(src, table, flag), t6, t5, t7, t8, t9, s7_verification_table(), t10, t11, REPO)
     page('verification.html', 'Verification',
          'Verification passes (the 2026-11-11 register and the independent re-read passes through 2026-11-13): every official source read directly on its agency page, each check linked for manual review, and everything unconfirmable left blank and flagged.', body)
 

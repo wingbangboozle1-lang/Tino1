@@ -128,10 +128,10 @@ add('TREAS-2026-11-13', 'Treasury par yields 13 Nov 2026', 'U.S. Treasury - Dail
     'Read 2026-11-16. Row 11/13/2026 (par yields, %): 3 Mo 4.32; 2 Yr 4.88; 10 Yr 5.15. Row 11/10/2026: 3 Mo 4.30; 2 Yr 4.73; 10 Yr 4.98.')
 add('FRED-GS2', 'FRED GS2 (2-year Treasury)', 'FRED series GS2 - market yield on U.S. Treasury securities at 2-year constant maturity (annual averages)',
     'https://fred.stlouisfed.org/series/GS2', 'page',
-    'Read 2026-11-16 through the FRED annual-average download (fq=Annual, fam=avg). Annual averages, percent: 2006 4.82; 2007 4.36; 2008 2.00; 2009 0.96; 2010 0.70; 2011 0.45. Yields, not total returns.')
+    'Read 2026-11-16 through the FRED annual-average download (fq=Annual, fam=avg). Annual averages, percent: 2006 4.82; 2007 4.36; 2008 2.00; 2009 0.96; 2010 0.70; 2011 0.45. Yields, not total returns. Re-read 2026-11-17 (session arena/408e283a) through the same download: every one of those six annual averages is unchanged.')
 add('FRED-TB3MS', 'FRED TB3MS (3-month bill)', 'FRED series TB3MS - 3-month Treasury bill secondary market rate (annual averages)',
     'https://fred.stlouisfed.org/series/TB3MS', 'page',
-    'Read 2026-11-16 through the FRED annual-average download (fq=Annual, fam=avg). Annual averages, percent: 2006 4.73; 2007 4.35; 2008 1.37; 2009 0.15; 2010 0.14; 2011 0.05.')
+    'Read 2026-11-16 through the FRED annual-average download (fq=Annual, fam=avg). Annual averages, percent: 2006 4.73; 2007 4.35; 2008 1.37; 2009 0.15; 2010 0.14; 2011 0.05. Re-read 2026-11-17 (session arena/408e283a) through the same download: every one of those six annual averages is unchanged.')
 add('DOJ-TPA', 'CA Attorney General', 'California Department of Justice - Tenant Protection Act consumer alert',
     'https://oag.ca.gov/system/files/media/Tenant-Protection-Act-Landlords-and-Property-Managers-English.pdf', 'page',
     'Read directly 2026-11-12: Rent cap 5% plus CPI or 10% total in 12 months; SB 567 (eff 2024-04-01) adds 1-mo relocation, 90-day/12-mo owner move-in rule, treble damages; exempts <15-yr units and non-corporate SFH with written notice.')

@@ -346,6 +346,14 @@ def build_timeline(B):
            'When each step falls, counted from the date of death. Confirm every date with the attorney and the county office.', body)
 
 
+def _ph_counts():
+    """(parking wins on how many named paths, how many named paths, how many replays) - from the model."""
+    MJ = json.load(open(os.path.join(HERE, 'out', 'model.json')))
+    PH = MJ['phased']
+    win = sum(1 for d in PH['named'].values() if max(d['park24'], d['park36']) > d['lump'])
+    return (win, len(PH['named']), PH['replay_wins']['park24'] + PH['replay_wins']['park36'])
+
+
 def build_brief(B, cases):
     """One printable page for the estate attorney and the tax adviser (no site chrome)."""
     s = B.B
@@ -376,7 +384,10 @@ def build_brief(B, cases):
            'Confirm the basis step-up under the trust type, and the date-of-death appraisal used for basis. (Q01)',
            'Property B: the owner\'s basis and depreciation already claimed on the rented units. (Q03)',
            'Form 1041 for the trust or estate while the home is held; treatment of rent received before distribution.',
-           'Whether the solar credit and the rent on Property B are reported as the model assumes. Unverified items are on Flagged for Review.']
+           'Whether the solar credit and the rent on Property B are reported as the model assumes. Unverified items are on Flagged for Review.',
+           'Investing policy for the proceeds, written down before the money arrives: invest it all at once, or park it in 3-month to 2-year '
+           'Treasuries for 24 to 36 months and phase into stocks? On the site stress paths parking is the best of the three in %d of %d named '
+           'paths and in %d of the 50 replays (Black swan -> Phased entry into stocks).' % _ph_counts()]
     body = """<!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow"><meta name="referrer" content="no-referrer">
