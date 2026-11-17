@@ -3157,6 +3157,26 @@ Status: P3-A, P3-B, P3-C and P3-D **done**. Only files in the claimed scope were
 |---|------|--------|---------------|--------------------------------------|-----------------------|
 | A0 | Claim and coordination | done | Claim pushed at `a20e254` before any product edit. | — | — |
 | A1 | Recording fee into the sell path; transfer tax re-verified; city measures documented | done | Added `recording_fee=92.0` (Santa Clara County Clerk-Recorder fee schedule: a one-page deed subject to the documentary transfer tax is $102.00 first page less the $10.00 transfer-tax offset = $92.00), applied to every sell computation (simulate sell path, wealth liquidation `net_sale`, and `mixed()`). County documentary transfer tax re-confirmed at $0.55/$500 (R&TC 11911). Measure E (San Jose) and Measure G (Mountain View) documented as **city-only** and therefore **not applicable to the Cupertino parcel**; AB 2224 (Ch. 292, Stats. 2026, chaptered 2026-09-18) recorded as raising the statutory maximum recorder fee to $15/$4 (county boards set the actual fee). New sources: `SCC-REC-FEE`, `SCC-ME-E`, `SCC-ME-G`, `CA-AB2224`; `SCC-DTT` read updated. New assumption flag **A20**. | clerkrecorder.santaclaracounty.gov fee schedule (`/resources/fee-schedule`); `recording-real-estate`; `measure-e`; `measure-g`; leginfo.legislature.ca.gov AB 2224 | Recording fee is a fixed dollar amount grown with CPI (A20). It is small vs. the sale but is priced in so the sell-path cost is complete. |
+
+
+### arena/14a50e8b-tino1 — claim (2026-11-17 UTC)
+
+Branch pinned by platform: `arena/14a50e8b-tino1` (cannot use `session-<id>/<task>` naming). Based on `main` @ `d901b50`; working tree clean at claim time.
+
+**Handoff:** session `4f787a0f` claimed V1 (re-verification register) and V2 (final integration) on 2026-11-10, but its branch is no longer present and its claim is far older than 60 minutes with no commits. Per the handoff rule, this session takes over V1 and V2; the handoff is logged here.
+
+**User-directed scope for this session:** privacy-first public guide (root `index.html` + `privacy-site/public/`), questions/answers checklist, suggestions review section, black-swan real-economic-conditions research, phased-investing path, step-by-step inheritance process, deadline timeline, one-page Attorney & CPA briefing sheet, glossary, flagged page, cost/insurance research register, estate-tax thresholds, $10 rounding, no PII on the website, and PR → main with Pages deploy confirmation.
+
+| # | Task | Status | Owner | Files / scope | Verification plan |
+|---|------|--------|-------|---------------|-------------------|
+| C0 | Claim and coordination | in progress | `arena/14a50e8b-tino1` | `COORDINATION.md` (append only) | This entry; commit + push before any other edit. |
+| V1 | Independent line-by-line re-verification: key public figures/rules re-read against official pages; unverifiable rows blank + flagged | in progress | `arena/14a50e8b-tino1` | `privacy-site/public/` (questions, stress, law, costs, projection, decision, brief, flagged, suggestions) | Each official link re-fetched and wording recorded; no household figure added; any non-confirmable value left blank and flagged. |
+| P1 | Real-economic-conditions baseline research (inflation, house prices, Fed policy, named crisis episodes) for the Black swan page | in progress | `arena/14a50e8b-tino1` | `privacy-site/public/stress.html` | BLS CPI, Fed History, FRED/FHFA series read on official pages. |
+| I1 | Insurance and utility research register refreshed for 95014 primary-residence and 94122 mixed-use context (quotes not binding; amounts flagged unverified) | in progress | `arena/14a50e8b-tino1` | `privacy-site/public/costs.html` | CA DOI and CPUC official pages; no quote obtained → blank + unverified. |
+| S1 | Site confirmation: GitHub Pages built/live, no broken internal links, privacy gate clean | in progress | `arena/14a50e8b-tino1` | Root site + `privacy-site/public/` | `privacy-site/build.py`, `privacy-site/check.py`, `gh api pages`, internal-link grep. |
+| R1 | PR from `arena/14a50e8b-tino1` → `main`, merge, deploy confirmation, result recorded here | unclaimed | `arena/14a50e8b-tino1` | `main`, GitHub Pages | `gh pr create`/`gh pr merge --merge`; `gh api pages` status `built`. |
+
+**Owner-level items this session does NOT take (recorded, unchanged):** rewriting public Git history that holds pre-rounding figures, changing repository visibility, publishing household figures to Pages.
 | A2 | Distribution chart in projections | done | `wealth_distribution` (min/median/max of real 2026-dollar after-tax wealth across the 50 replays, by path, at 10-year/20-year/2076 horizons) computed in `final/model.py`; new `dist_chart()` SVG (floating range bars + median tick) and a distribution table added to `projections.html`. | FHFA San Jose HPI (FRED ATNHPIUS41940Q); BLS CPI (FRED CPIAUCSL) | Same 50 hypothetical replays as the Black swan page; model outputs, not forecasts. |
 | A3 | Imputed-rent input for living paths | done | Added `imputed_rent` toggle + `imputed_rent_month` (default = HUD FY2026 SAFMR benchmark). Computed as a labelled **opportunity-cost memo** on the live path and **not subtracted again** (the rent path already earns that rent, so subtracting it would double-count). New assumption flag **A21**. | HUD FY2026 SAFMR 95014 (HUD-95014) | Default is the HUD benchmark (A07); replace with a written rent opinion. |
 | A4 | Display mixed paths alongside the pure choices | done | The model already computed `mixed()` (live/rent 5 or 10 years, then sell) but the Decision page did not show it. Added a Mixed-paths comparison table (sale year, net cash at sale, tax, final wealth) beside the three pure choices. | IRS Topic 409 / 701; IRS Pub. 527; BOE Prop 19 | Selling immediately stays ahead in the baseline; delaying the sale costs years of stock growth. |
@@ -3225,11 +3245,14 @@ Status: P3-A, P3-B, P3-C and P3-D **done**. Only files in the claimed scope were
 **Website content check:** current public output does not contain the supplied locality markers or personal property figures. It already includes the executive summary, decision-changing gates, mixed-path framework, synthetic black-swan and Treasury-staged-entry pages, reinvestment-risk caveats, question and suggestions pages, deadline timeline, glossary, attorney/CPA brief, and flagged-for-review items. The exact parcel-level tax-rate area, private valuations/comparables, leases, insurance quotes, utility records and trust-specific facts remain unverified and are not inferred; the public guide keeps these blank. The existing published source-check dates are 12–16 November 2026. This session did not re-read external legal authorities on 17 November, so it does not claim a fresh law update or exhaustive legislative scan.
 
 **PR:** #139 https://github.com/wingbangboozle1-lang/Tino1/pull/139 — audit/verification record only; contains no change to the publication allowlist or guide content.
+**LC-1 integration result (2026-11-17 UTC):** PR [#140](https://github.com/wingbangboozle1-lang/Tino1/pull/140) merged to `main` at merge commit `50652bb6b53334bc4fbe1a7dbc061cdda61422b2`. PR `verify` run `44125006438` passed, including the real Jekyll build and publication checks. GitHub Pages build/deploy run `44125343256` succeeded; repository Pages API reported `status=built`, `public=true`. Read the live [Tax & law page](https://wingbangboozle1-lang.github.io/Tino1/privacy-site/public/law.html) and [Flagged for review page](https://wingbangboozle1-lang.github.io/Tino1/privacy-site/public/flagged.html) after deployment: the city-specific measure, local election tally, agency names and direct links are absent; the general local-tax evidence gap and P0 repository-exposure warning remain. No other work is represented as completed by this change.
+
+**Concurrent coordination merge note (2026-11-17 UTC):** while opening documentation-only PR #142 for this deployment record, `main` advanced through PR #139 and `COORDINATION.md` conflicted during the required rebase. Resolved as a union: preserved session `arena/d53feb31-tino1`’s visibility-attempt record and all its audit notes, plus this session’s LC-1 deployment result. No product files or other session work were changed or dropped. The other session reports its visibility-setting attempt was blocked (HTTP 403); this is independently recorded there, not an action performed by LC-1.
 
 
 ### Session `arena/bbcca78e-tino1` — privacy-first build verification and integration (2026-11-17)
 
-**Branch:** `arena/bbcca78e-tino1` (branched from `d901b50`; merged `origin/main` `d74aa8a` to resolve a PR conflict) · **Session ID:** `arena/bbcca78e-tino1`
+**Branch:** `arena/bbcca78e-tino1` (branched from `d901b50`; merged current `origin/main` to resolve PR conflicts) · **Session ID:** `arena/bbcca78e-tino1`
 
 ### Task board (this session)
 
@@ -3238,7 +3261,7 @@ Status: P3-A, P3-B, P3-C and P3-D **done**. Only files in the claimed scope were
 | B-1 | Re-verify official sources (Prop 19 / BOE, Form 540 line 62 1% Behavioral Health Services Tax / R&TC §17043, federal exclusions 2026–2027 / IRS, tax rate area / RTC §51) | done | `arena/bbcca78e-tino1` | `privacy-site/build.py`, `privacy-site/public/law.html` | BOE Prop 19 page; FTB 2025 Form 540 booklet; R&TC §17043; RTC §51 |
 | B-2 | Tax-rate-area / local-rate disclosure on the Tax & law page (privacy-safe, no locality names) | done | `arena/bbcca78e-tino1` | `privacy-site/build.py` (regenerates `public/law.html`) | Parcel TRA/combined rate read from county Assessor; Proposition H parcel schedule deferred to the merged privacy reduction (session `10b908c2`, PR #140) because privacy is the top priority |
 | B-3 | Build + link/privacy/$10-rounding check + unit tests all PASS | done | `arena/bbcca78e-tino1` | `privacy-site/` | `build.py` + `check.py` PASS; 23 unittest OK; no PII or locality cues |
-| B-4 | Commit, push, PR to `main`, merge, confirm GitHub Pages | in progress | `arena/bbcca78e-tino1` | `arena/bbcca78e-tino1` → `main` | Conflict with `origin/main` `d74aa8a` resolved locally; Prop H section deferred to merged privacy reduction |
+| B-4 | Commit, push, PR to `main`, merge, confirm GitHub Pages | in progress | `arena/bbcca78e-tino1` | `arena/bbcca78e-tino1` → `main` | Merged current `origin/main` (cb48cf0) locally; resolving PR conflicts before final merge |
 
 ### Privacy / history decision (this session)
 
@@ -3248,4 +3271,4 @@ Status: P3-A, P3-B, P3-C and P3-D **done**. Only files in the claimed scope were
 
 ### Log (`arena/bbcca78e-tino1`)
 
-- 2026-11-17 — Re-verified Prop 19 (BOE), Form 540 line 62 1% Behavioral Health Services Tax (FTB / R&TC §17043), federal exclusions 2026–2027 (IRS), tax-rate-area mechanism (RTC §51). Applied the privacy-safe TRA/local-rate row to `privacy-site/build.py`. Resolved the PR #141 merge conflict by taking `origin/main` for the Proposition H section (privacy reduction merged in PR #140). Rebuild + `check.py` + 23 unit tests PASS.
+- 2026-11-17 — Re-verified Prop 19 (BOE), Form 540 line 62 1% Behavioral Health Services Tax (FTB / R&TC §17043), federal exclusions 2026–2027 (IRS), tax-rate-area mechanism (RTC §51). Applied the privacy-safe TRA/local-rate row to `privacy-site/build.py`. Resolved PR conflicts by taking `origin/main` for the Proposition H section (privacy reduction merged in PR #140). Rebuild + `check.py` + 23 unit tests PASS.
