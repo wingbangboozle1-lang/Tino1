@@ -3272,3 +3272,11 @@ Branch pinned by platform: `arena/14a50e8b-tino1` (cannot use `session-<id>/<tas
 ### Log (`arena/bbcca78e-tino1`)
 
 - 2026-11-17 — Re-verified Prop 19 (BOE), Form 540 line 62 1% Behavioral Health Services Tax (FTB / R&TC §17043), federal exclusions 2026–2027 (IRS), tax-rate-area mechanism (RTC §51). Applied the privacy-safe TRA/local-rate row to `privacy-site/build.py`. Resolved PR conflicts by taking `origin/main` for the Proposition H section (privacy reduction merged in PR #140). Rebuild + `check.py` + 23 unit tests PASS.
+
+
+
+### D53 final integration result — PR #139 merged (2026-11-17 UTC)
+
+- PR #139 https://github.com/wingbangboozle1-lang/Tino1/pull/139 merged to `main`; merge commit `d74aa8a9854d45a0aaa5f541925181bcaad1c7ce`.
+- Final PR-head verification passed: [CI run 44125467399](https://github.com/wingbangboozle1-lang/Tino1/actions/runs/44125467399) built with Jekyll and passed both exact-publication-boundary checks. The Pages deployment after merge passed: [run 44125583721](https://github.com/wingbangboozle1-lang/Tino1/actions/runs/44125583721); Pages API reports `built` at https://wingbangboozle1-lang.github.io/Tino1/.
+- D53-0 and D53-1: **done**. D53-2: **needs review** — repository visibility remains public because GitHub returned HTTP 403 to the authorized visibility-change attempt; historical repository exposure was not erased. No PR can make that change without the required GitHub permission.
