@@ -3261,7 +3261,7 @@ Branch pinned by platform: `arena/14a50e8b-tino1` (cannot use `session-<id>/<tas
 | B-1 | Re-verify official sources (Prop 19 / BOE, Form 540 line 62 1% Behavioral Health Services Tax / R&TC §17043, federal exclusions 2026–2027 / IRS, tax rate area / RTC §51) | done | `arena/bbcca78e-tino1` | `privacy-site/build.py`, `privacy-site/public/law.html` | BOE Prop 19 page; FTB 2025 Form 540 booklet; R&TC §17043; RTC §51 |
 | B-2 | Tax-rate-area / local-rate disclosure on the Tax & law page (privacy-safe, no locality names) | done | `arena/bbcca78e-tino1` | `privacy-site/build.py` (regenerates `public/law.html`) | Parcel TRA/combined rate read from county Assessor; Proposition H parcel schedule deferred to the merged privacy reduction (session `10b908c2`, PR #140) because privacy is the top priority |
 | B-3 | Build + link/privacy/$10-rounding check + unit tests all PASS | done | `arena/bbcca78e-tino1` | `privacy-site/` | `build.py` + `check.py` PASS; 23 unittest OK; no PII or locality cues |
-| B-4 | Commit, push, PR to `main`, merge, confirm GitHub Pages | in progress | `arena/bbcca78e-tino1` | `arena/bbcca78e-tino1` → `main` | Merged current `origin/main` (cb48cf0) locally; resolving PR conflicts before final merge |
+| B-4 | Commit, push, PR to `main`, merge, confirm GitHub Pages | done | `arena/bbcca78e-tino1` | `arena/bbcca78e-tino1` → `main` | PR #141 https://github.com/wingbangboozle1-lang/Tino1/pull/141 merged via `gh pr merge 141 --merge` as merge commit 8050394; CI `validate` passed (build.py + check.py + unittest + Jekyll allowlist); GitHub Pages `built` at https://wingbangboozle1-lang.github.io/Tino1/ |
 
 ### Privacy / history decision (this session)
 
@@ -3272,3 +3272,4 @@ Branch pinned by platform: `arena/14a50e8b-tino1` (cannot use `session-<id>/<tas
 ### Log (`arena/bbcca78e-tino1`)
 
 - 2026-11-17 — Re-verified Prop 19 (BOE), Form 540 line 62 1% Behavioral Health Services Tax (FTB / R&TC §17043), federal exclusions 2026–2027 (IRS), tax-rate-area mechanism (RTC §51). Applied the privacy-safe TRA/local-rate row to `privacy-site/build.py`. Resolved PR conflicts by taking `origin/main` for the Proposition H section (privacy reduction merged in PR #140). Rebuild + `check.py` + 23 unit tests PASS.
+- 2026-11-17 — PR #141 https://github.com/wingbangboozle1-lang/Tino1/pull/141 merged to `main` via `gh pr merge 141 --merge` (merge commit 8050394). CI `validate` passed (build.py, check.py, unittest, Jekyll build + allowlist); GitHub Pages `built` at https://wingbangboozle1-lang.github.io/Tino1/ . Session work complete.
