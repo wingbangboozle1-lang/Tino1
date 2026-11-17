@@ -224,12 +224,6 @@
    "finding": "For taxable years beginning on or after January 1, 2005, an additional tax of 1 percent is imposed on the portion of a taxpayer's taxable income above $1,000,000. The threshold is not adjusted for filing status by this section.",
    "checked": "2026-11-13"
   },
-  "sfmta26": {
-   "title": "SFMTA · Proposition H city parcel tax (official City agency page)",
-   "url": "https://www.sfmta.com/getting-around/muni/parcel",
-   "finding": "States that city voters approved Proposition H on November 3, 2026. Tax July 1, 2027 to June 30, 2042; first bill fiscal year 2027-28, mailed fall 2027; inflation adjustment from fiscal year 2028-29. Multifamily: $249 up to 5,000 sq ft, plus $0.195 per sq ft over 5,000, maximum $50,000. Single-family: $129 up to 3,000 sq ft, plus $0.42 per sq ft from 3,001 to 5,000, plus $1.99 over 5,000. Renters: pass-through up to 50%, capped at $65 per unit a year; not for base rent set on or after June 1, 2027.",
-   "checked": "2026-11-16"
-  },
   "treas26": {
    "title": "U.S. Treasury · Daily par yield curve, November 2026",
    "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve&field_tdr_date_value_month=202611",
@@ -252,12 +246,6 @@
    "title": "Cornell LII · 26 U.S.C. §1250 (non-government mirror of the statute)",
    "url": "https://www.law.cornell.edu/uscode/text/26/1250",
    "finding": "Section 1250(a)(1)(A): additional depreciation (excess over straight-line) on disposition is treated as ordinary income, to the extent of the gain. Read 2026-11-16 from a non-government mirror; the official GPO copy was not retrieved (flagged 9B-F1). Unrecaptured-section-1250 federal rates in IRC §1(h) not read.",
-   "checked": "2026-11-16"
-  },
-  "sfdoe_results": {
-   "title": "SF Dept. of Elections · Nov 3, 2026 results (preliminary)",
-   "url": "https://www.sfelections.org/results/20261103/index.html",
-   "finding": "Measure H, parcel tax to fund Muni operations: YES 244,760 (74.4%), NO 84,209 (25.6%) on the preliminary count, last updated November 10, 2026; next update November 17, 2026; certification may take up to 30 days after Election Day.",
    "checked": "2026-11-16"
   },
   "fred_tb3ms": {
