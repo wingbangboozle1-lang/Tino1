@@ -3181,3 +3181,26 @@ Status: P3-A, P3-B, P3-C and P3-D **done**. Only files in the claimed scope were
 - Third verify run also failed environmentally; see prior notes.
 - Fourth verify run also failed environmentally; monitoring for recovery.
 - Fifth verify run also failed environmentally. Waiting for recovery before final attempt.
+
+
+### Session `arena/bbcca78e-tino1` — privacy-first build verification and integration (2026-11-17)
+
+**Branch:** `arena/bbcca78e-tino1` (synced with `origin/main` at `d901b50`) · **Session ID:** `arena/bbcca78e-tino1`
+
+### Task board (this session)
+
+| # | Task | Status | Owner | Files / scope | Notes |
+|---|------|--------|-------|---------------|-------|
+| B-1 | Re-verify official sources (Prop 19 / BOE, Form 540 line 62 1% Behavioral Health Services Tax / R&TC §17043, federal exclusions 2026–2027 / IRS, tax rate area / RTC §51, Proposition H Muni parcel tax / SFMTA vs the 2024 firefighter measure) | done | `arena/bbcca78e-tino1` | `privacy-site/build.py`, `privacy-site/public/law.html` | BOE Prop 19 page; FTB 2025 Form 540 booklet; R&TC §17043; RTC §51; SFMTA parcel page |
+| B-2 | Tax-rate-area / local-rate disclosure + Proposition H enacted-vs-proposal disambiguation on the Tax & law page | done | `arena/bbcca78e-tino1` | `privacy-site/build.py` (regenerates `public/law.html`) | Locality names withheld; parcel TRA/combined rate read from county Assessor; two same-city Prop H measures distinguished |
+| B-3 | Build + link/privacy/$10-rounding check + unit tests all PASS | done | `arena/bbcca78e-tino1` | `privacy-site/` | `build.py` + `check.py` PASS; 23 unittest OK; no PII or locality cues; sourced rows verified |
+| B-4 | Commit, push, PR to `main`, merge, confirm GitHub Pages | in progress | `arena/bbcca78e-tino1` | `arena/bbcca78e-tino1` → `main` | Phased-investing (Treasury wait + staged stock entry), reinvestment risk beside headline, mixed paths, deadline timeline, one-page Attorney & CPA brief, what-if controls, glossary and suggestions already present |
+
+### Privacy / history decision (this session)
+
+- The pre-rounding Git-history rewrite and any repository-visibility change are owner-level operations (already logged as "Not done (owner-level, unchanged)"); this session does not rewrite history or change visibility.
+- No household names, addresses, parcel numbers, values, rents or bills were added; the public guide remains blank-by-design with placeholders.
+
+### Log (`arena/bbcca78e-tino1`)
+
+- 2026-11-17 — Re-verified Prop 19 (BOE), Form 540 line 62 1% Behavioral Health Services Tax (FTB / R&TC §17043), federal exclusions 2026–2027 (IRS), Proposition H Muni parcel tax (SFMTA) vs the 2024 firefighter measure. Applied TRA/local-rate and Prop H disambiguation edits to `privacy-site/build.py`. Rebuild + `check.py` + 23 unit tests PASS.
