@@ -1,6 +1,6 @@
 {
- "checked": "2026-11-13",
- "method": "Official pages opened and substantive passages read with page_fetch on 2026-11-12 and again on 2026-11-13 for every claim published in this edition (session bd0afb0a, audit file session-bd0afb0a/VERIFICATION.md). Three published statements were corrected after that re-read: the 2026 SALT amount's supporting link, a ballot percentage, and the label applied to the 1% surtax. This remains a bounded audit of the public guide, not of Git history, forks or prior editions. Official-context links do not verify household data, private bills or synthetic assumptions.",
+ "checked": "2026-11-17",
+ "method": "Official pages opened and substantive passages read with page_fetch on 2026-11-12 and again on 2026-11-13 for every claim published in this edition (session bd0afb0a, audit file session-bd0afb0a/VERIFICATION.md). Three published statements were corrected after that re-read: the 2026 SALT amount's supporting link, a ballot percentage, and the label applied to the 1% surtax. This remains a bounded audit of the public guide, not of Git history, forks or prior editions. Official-context links do not verify household data, private bills or synthetic assumptions. On 2026-11-17, independently re-read official BLS September and October 2026 CPI releases, the October 28, 2026 Federal Reserve FOMC statement, and FHFA 2026Q2 HPI report. The October CPI release explicitly does not provide most 12-month changes because October 2025 comparison data are unavailable. City/metro-specific house-price readings are deliberately excluded from public output. The California BOE Publication 29 (March 2025) was opened and read on 2026-11-17 for the statewide 1% base plus voter-approved bonded-indebtedness rule; no parcel-level/local rate was researched or published.",
  "sources": {
   "estate": {
    "title": "IRS · Estate tax",
@@ -277,6 +277,36 @@
    "url": "https://www.irs.gov/forms-pubs/correction-to-state-and-local-income-tax-deduction-amount-in-the-2026-form-1040-es",
    "finding": "For 2026 the limit is $40,400 ($20,200 if married filing separately); the overall limit is reduced if modified AGI is more than $505,000 ($252,500 if married filing separately) but not below $10,000 ($5,000 if married filing separately). Read 2026-11-16. This page states only 2026; the 2027-2029 amounts are arithmetic on the statute (101% of the prior year) in the congress.gov entry.",
    "checked": "2026-11-16"
+  },
+  "bls_sep26": {
+   "title": "BLS · Consumer Price Index, September 2026 release",
+   "url": "https://www.bls.gov/news.release/archives/cpi_10142026.htm",
+   "finding": "BLS reports CPI-U all items +3.7% and all items less food and energy +2.6% over the 12 months ending September 2026.",
+   "checked": "2026-11-17"
+  },
+  "bls_oct26": {
+   "title": "BLS · Consumer Price Index, October 2026 release",
+   "url": "https://www.bls.gov/news.release/cpi.nr0.htm",
+   "finding": "October 2026 CPI-U rose 0.4% seasonally adjusted from September; all items less food and energy rose 0.3%. BLS says it cannot publish most October 2026 12-month comparisons because October 2025 survey data were unavailable.",
+   "checked": "2026-11-17"
+  },
+  "fed_oct26": {
+   "title": "Federal Reserve · FOMC statement, October 28, 2026",
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20261028a.htm",
+   "finding": "The FOMC statement says it maintained the target range for the federal funds rate at 3-3/4 to 4 percent on October 28, 2026.",
+   "checked": "2026-11-17"
+  },
+  "fhfa_2026q2": {
+   "title": "FHFA · House Price Index report, 2026Q2 and June 2026",
+   "url": "https://www.fhfa.gov/document/d/hpi/fhfa-house-price-index-report-2026q2",
+   "finding": "FHFA 2026Q2 report: national purchase-only HPI press release reports +2.1% year over year and +0.3% quarter over quarter; the state table reports California −0.20% year over year. The report also states national annual appreciation was positive each quarter since 2012Q1; its annual table shows +17.35% in 2021Q2 and −10.00% in 2009Q1. Aggregate nominal index, not a property appraisal or forecast.",
+   "checked": "2026-11-17"
+  },
+  "boe_pub29": {
+   "title": "California BOE · Property Tax: An Overview, Publication 29",
+   "url": "https://www.boe.ca.gov/proptaxes/pdf/pub29.pdf",
+   "finding": "Publication 29 states that Proposition 13 limits the property-tax rate to 1% plus the rate needed to fund local voter-approved bonded indebtedness; its Tax-Rate Mapping Program discussion explains that differing distributions among taxing jurisdictions create distinct tax-rate areas and that local rates can vary by area. General statewide context only; no parcel-specific combined rate is supplied here.",
+   "checked": "2026-11-17"
   }
  },
  "rejected_links": [
