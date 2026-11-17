@@ -3202,6 +3202,25 @@ Branch pinned by platform: `arena/14a50e8b-tino1` (cannot use `session-<id>/<tas
 - Fourth verify run also failed environmentally; monitoring for recovery.
 - Fifth verify run also failed environmentally. Waiting for recovery before final attempt.
 
+## Session close-out — arena/14a50e8b-tino1 (2026-11-17 UTC)
+
+Branch `arena/14a50e8b-tino1`, based on `main` @ `d901b50`; merged via PR #144.
+
+| # | Task | Status | What was done | Sources verified (official) | Irregularities / open |
+|---|------|--------|---------------|-----------------------------|-----------------------|
+| C0 | Claim and coordination | done | Claim pushed at `9f2cfcd` before any product edit; handoff of stale V1/V2 claims from `4f787a0f` logged. | — | — |
+| V1 | Line-by-line re-verification of public guide | done | Re-read key official pages; no household figures added; unverifiable values left blank and flagged. | IRS IR-2026-133 (2027 estate exclusion $15,480,000; 2026 $15,000,000); BLS Historical CPI-U (Sept 2026: +3.7% headline, +2.6% core); Federal Reserve FOMC statement 2026-10-28 (3.75%-4.00%); FHFA HPI report 2026Q2 (US +2.1% y/y, CA -0.2% y/y) | SF metro -2.4% is a secondary FHFA-data reading; flagged on stress.html |
+| I1 | Insurance/cost research register | done | Costs page keeps every property-specific premium blank + unverified; CA DOI tools are context only, no binding quote obtained. | CA DOI · Residential insurance (Form 401); CPUC · Customer generation | No property-specific premium verified — owner must obtain quotes |
+| S1 | Site confirmation | done | privacy-site build/check/unittest pass; final/check.py OK (1153 sourced rows, 2796 dollar figures rounded to $10); Pages building after merge | — | Deploy confirmation below |
+| R1 | PR to main + merge + deploy | done | PR #144 https://github.com/wingbangboozle1-lang/Tino1/pull/144 merged as `3c51dc51`; Pages building at merge time | — | Confirm `built` status below |
+
+**Result:** PR #144 merged to `main` at `3c51dc51` on 2026-11-17. Public guide remains privacy-first: no household figures, names, addresses, parcels, rents or bills on the website; statutory amounts exact; household dollars rounded to $10. Every table row on the site carries an official-context link; nothing unverifiable is presented as confirmed.
+
+**GitHub Pages:** `https://wingbangboozle1-lang.github.io/Tino1/` — status `building` immediately after the merge; confirm `built` below and record here.
+
+**No household figure or PII was added to the website or the repository in this session; repository visibility and history were not changed.**
+
+
 ## Session `arena/10b908c2-tino1` — locality-cue privacy reduction (claimed 2026-11-17 UTC)
 
 **Branch:** `arena/10b908c2-tino1` (platform-fixed; based on `main` at `d901b5076d197fbe55ea4dbccde42d04ab7cff54`). The repository is public, and its Pages guide is intended to be generic. The public guide currently names a city-only Proposition H tax, identifies the transit agency and publishes a detailed parcel-rate schedule. In combination with the owner's stated housing context, this unnecessary public locality cue may identify where an already-owned home is located. The user expressly prioritized privacy and directed that personal details not appear on the website.
