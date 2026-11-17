@@ -3181,3 +3181,16 @@ Status: P3-A, P3-B, P3-C and P3-D **done**. Only files in the claimed scope were
 - Third verify run also failed environmentally; see prior notes.
 - Fourth verify run also failed environmentally; monitoring for recovery.
 - Fifth verify run also failed environmentally. Waiting for recovery before final attempt.
+
+## Session `arena/7f19fa9b-tino1` — claim (2026-11-17 UTC)
+
+**Branch (fixed by the workspace):** `arena/7f19fa9b-tino1`, based on `main` @ `d901b50` (PR #135 merged, Pages build green). Shallow clone (`git rev-list --all --count` = 1), so full history cannot be audited or rewritten from this sandbox.
+
+**Scope claimed:** append-only ledger entries in this file. No change to the 17-file Pages allowlist, to `privacy-site/public/`, to `final/` model code, or to any household figure. Re-verification of the rules named in the 2026-11-17 request (federal estate exclusion, Prop 19 cap, CA Form 540 surcharge).
+
+| # | Task | Status | Owner | Scope |
+|---|------|--------|-------|-------|
+| R1 | Official re-read: federal estate basic exclusion 2026 and filing threshold | in progress | `arena/7f19fa9b-tino1` | COORDINATION.md |
+| R2 | Official re-read: Prop 19 parent-child value cap (BOE LTA 2025/009) and occupancy rule | in progress | `arena/7f19fa9b-tino1` | COORDINATION.md |
+| R3 | Official re-read: CA Form 540 surcharge above $1,000,000 (Behavioral Health Services Tax) | in progress | `arena/7f19fa9b-tino1` | COORDINATION.md |
+| R4 | Privacy exposure check: published site vs. tracked repository tree | in progress | `arena/7f19fa9b-tino1` | COORDINATION.md |
