@@ -3182,25 +3182,70 @@ Status: P3-A, P3-B, P3-C and P3-D **done**. Only files in the claimed scope were
 - Fourth verify run also failed environmentally; monitoring for recovery.
 - Fifth verify run also failed environmentally. Waiting for recovery before final attempt.
 
+## Session `arena/10b908c2-tino1` — locality-cue privacy reduction (claimed 2026-11-17 UTC)
+
+**Branch:** `arena/10b908c2-tino1` (platform-fixed; based on `main` at `d901b5076d197fbe55ea4dbccde42d04ab7cff54`). The repository is public, and its Pages guide is intended to be generic. The public guide currently names a city-only Proposition H tax, identifies the transit agency and publishes a detailed parcel-rate schedule. In combination with the owner's stated housing context, this unnecessary public locality cue may identify where an already-owned home is located. The user expressly prioritized privacy and directed that personal details not appear on the website.
+
+| Task | Status | Owner | File scope | Verification |
+|---|---|---|---|---|
+| LC-1 | in progress | `arena/10b908c2-tino1` | `COORDINATION.md` (this claim), `privacy-site/build.py`, `privacy-site/research.json`, `privacy-site/check.py`, regenerated `privacy-site/public/*.html` | Remove city-specific measure, department, election-count and parcel-schedule references from the public guide; retain only a generic prompt to verify locally applicable levies privately. Keep non-public research unchanged unless a source is solely used to generate the removed public material. Rebuild, check all public pages and source links, scan for locality names/tokens, run tests, publication allowlist and repo-wide model/data checks. This task does not rewrite Git history or change repository visibility. |
+
+**Risk note:** public Pages isolation is not repository access control. `gh` confirms repository visibility is `public` and Pages visibility is `public`; the public repo contains household-derived files and historical material. A history rewrite or access/Pages visibility change can affect old refs, collaborators and live-site availability. This code change reduces an avoidable locality clue on the site but does not remediate the broader repository/history exposure (P0/E3 remain unresolved).
+
+### LC-1 close-out — locality-cue privacy reduction (2026-11-17 UTC)
+
+- **Result:** removed the city-only Proposition H schedule, agency examples, preliminary city election tally, and their source links from the public Tax & law and Flagged for review pages. Removed the two generator-only source records and deleted their reviewed non-government host/rate exceptions. The generic local-tax row remains: readers are told to identify applicable tax areas and charges privately from current records. No personal property figures, ZIP codes, or city names were added.
+- **Reason:** the city measure and agency uniquely disclosed a locality clue that could be combined with the user's description to infer where an already-owned property is. The official rate was correctly sourced but did not need to be public for a generic guide; data minimization takes precedence.
+- **Verification:** `privacy-site/build.py` regenerated the exact 15-page guide; `privacy-site/check.py` PASS (532 official-context-linked rows, $10 display rounding and privacy token checks); `unittest` PASS (23 tests); `final/publish.py --check` PASS (17-file allowlist); `final/check.py .` PASS (31 pages, 1,153 sourced rows, 3,178 links, 2,796 displayed dollar figures, 51 model paths); both published-output checkers PASS on a byte-identical simulated 17-file Pages allowlist; `git diff --check` PASS. A direct scan of generated pages and root landing found none of the removed city measure/agency terms, locality names, ZIPs, or known household numeric signatures. Jekyll is not installed in this sandbox; the PR's CI must run the real Jekyll build.
+- **Sources consulted for the risk boundary:** GitHub Docs, [About privately published GitHub Pages sites](https://docs.github.com/en/enterprise-cloud@latest/pages/getting-started-with-github-pages/about-privately-published-github-pages-sites), [Creating a GitHub Pages site](https://docs.github.com/en/enterprise-cloud@latest/pages/getting-started-with-github-pages/creating-a-github-pages-site), and [Removing sensitive data from a repository](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/removing-sensitive-data-from-a-repository). The repo settings API was read-only checked: repository `visibility=public`, Pages `public=true`, status `built`. No repository or Pages visibility setting and no Git ref was changed.
+- **Not resolved (highest-priority exposure):** the repository remains public and its current non-Pages files and Git history contain household-derived data. This page-level locality cleanup does not purge historical commits, branches, PR diffs, deployments, caches, forks, or clones. A public site and a public source repository are separate settings; public Pages from a private repository may depend on the organization's GitHub plan. No history rewrite or visibility change was made; P0/E3 remain unresolved and the public Flagged page continues to say so. The owner must coordinate a complete GitHub sensitive-data-removal procedure and decide how to preserve the live site before treating prior exposure as contained.
+
+
+---
+
+## Session `arena/d53feb31-tino1` — privacy-first integration audit (claimed 2026-11-17 UTC)
+
+**Branch:** `arena/d53feb31-tino1` (fixed by the workspace), based on `main` at `d901b5076d197fbe55ea4dbccde42d04ab7cff54`. The board and the current branch agree on the latest integrated state. This is a final audit/containment pass, not a new household-input or tax-law update.
+
+| # | Task | Status | Owner | File scope | Verification / notes |
+|---|---|---|---|---|---|
+| D53-0 | Claim and coordinate | in progress | `arena/d53feb31-tino1` | `COORDINATION.md` (append only) | Claim is committed and pushed before any subsequent edits. |
+| D53-1 | Rebuild the public guide; verify exact publication boundary, source-linked rows, tests, model self-checks, and latest Pages/CI state | in progress | `arena/d53feb31-tino1` | No product files; read-only checks | Preserve the existing 17-file allowlist. Do not add any household-derived data to the public site. |
+| D53-2 | Attempt immediate repository-visibility containment; document any permission/blocking condition without rewriting shared history | in progress | `arena/d53feb31-tino1` | GitHub repository setting; `COORDINATION.md` | User prioritizes prior exposure containment. Any inability to change visibility is reported explicitly; no history rewrite is attempted on this branch. |
+
+
+### Session `arena/d53feb31-tino1` — audit close-out (2026-11-17 UTC)
+
+| # | Task | Status | Verification / result | Remaining limitation |
+|---|---|---|---|---|
+| D53-0 | Claim and coordinate | done | Claim commit `64e1382` pushed to the fixed branch before this audit record. | — |
+| D53-1 | Rebuild and verify public boundary / latest deployment | done | `python3 privacy-site/build.py` rebuilt **15** public guide pages; `privacy-site/check.py` passed (**15 pages, 548 official-context-linked rows**, including source/link/PII-pattern and display-rounding gates); `final/publish.py --check` passed for the **17-file** allowlist; `final/check.py .` passed (**31 pages, 1,153 sourced rows, 3,178 links, 2,796 $10-rounded dollar figures, 51 model paths**); `unittest discover -s privacy-site -p 'test*.py'` passed **23/23**. A static copy of exactly the 17 allowlisted files passed both publication-output checkers. Local Jekyll is unavailable, so CI was used for the actual Jekyll build. The PR's Jekyll/allowlist CI passed (run [44124806243](https://github.com/wingbangboozle1-lang/Tino1/actions/runs/44124806243)); the preceding live `main` Pages deploy and validation also passed (runs [43938773269](https://github.com/wingbangboozle1-lang/Tino1/actions/runs/43938773269) and [43938775335](https://github.com/wingbangboozle1-lang/Tino1/actions/runs/43938775335)); Pages API reported `built` at `https://wingbangboozle1-lang.github.io/Tino1/`. No model input changed, so no changed recommendation is claimed. | Synthetic/public guide is not a household-specific recommendation. Numeric outputs remain repository content, not confidential. A page `noindex` directive is not access control. |
+| D53-2 | Attempt immediate repository-visibility containment | needs review | `gh repo view` confirmed `isPrivate: false`. `gh repo edit --visibility private` returned **HTTP 403: Resource not accessible by integration**; visibility was not changed. No force-push/history rewrite or remote-ref deletion was attempted. Official cleanup guidance: https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/removing-sensitive-data-from-a-repository . | The public repository still contains household-derived details in current tracked files and earlier history. The Pages allowlist withholds them from the website, but **prior public-data exposure is not contained/erased**. GitHub integration permissions blocked the visibility action. Git-history cleanup needs authorized repository-owner access and coordination of refs, clones/forks and cached views. |
+
+**Website content check:** current public output does not contain the supplied locality markers or personal property figures. It already includes the executive summary, decision-changing gates, mixed-path framework, synthetic black-swan and Treasury-staged-entry pages, reinvestment-risk caveats, question and suggestions pages, deadline timeline, glossary, attorney/CPA brief, and flagged-for-review items. The exact parcel-level tax-rate area, private valuations/comparables, leases, insurance quotes, utility records and trust-specific facts remain unverified and are not inferred; the public guide keeps these blank. The existing published source-check dates are 12–16 November 2026. This session did not re-read external legal authorities on 17 November, so it does not claim a fresh law update or exhaustive legislative scan.
+
+**PR:** #139 https://github.com/wingbangboozle1-lang/Tino1/pull/139 — audit/verification record only; contains no change to the publication allowlist or guide content.
+
 
 ### Session `arena/bbcca78e-tino1` — privacy-first build verification and integration (2026-11-17)
 
-**Branch:** `arena/bbcca78e-tino1` (synced with `origin/main` at `d901b50`) · **Session ID:** `arena/bbcca78e-tino1`
+**Branch:** `arena/bbcca78e-tino1` (branched from `d901b50`; merged `origin/main` `d74aa8a` to resolve a PR conflict) · **Session ID:** `arena/bbcca78e-tino1`
 
 ### Task board (this session)
 
 | # | Task | Status | Owner | Files / scope | Notes |
 |---|------|--------|-------|---------------|-------|
-| B-1 | Re-verify official sources (Prop 19 / BOE, Form 540 line 62 1% Behavioral Health Services Tax / R&TC §17043, federal exclusions 2026–2027 / IRS, tax rate area / RTC §51, Proposition H Muni parcel tax / SFMTA vs the 2024 firefighter measure) | done | `arena/bbcca78e-tino1` | `privacy-site/build.py`, `privacy-site/public/law.html` | BOE Prop 19 page; FTB 2025 Form 540 booklet; R&TC §17043; RTC §51; SFMTA parcel page |
-| B-2 | Tax-rate-area / local-rate disclosure + Proposition H enacted-vs-proposal disambiguation on the Tax & law page | done | `arena/bbcca78e-tino1` | `privacy-site/build.py` (regenerates `public/law.html`) | Locality names withheld; parcel TRA/combined rate read from county Assessor; two same-city Prop H measures distinguished |
-| B-3 | Build + link/privacy/$10-rounding check + unit tests all PASS | done | `arena/bbcca78e-tino1` | `privacy-site/` | `build.py` + `check.py` PASS; 23 unittest OK; no PII or locality cues; sourced rows verified |
-| B-4 | Commit, push, PR to `main`, merge, confirm GitHub Pages | in progress | `arena/bbcca78e-tino1` | `arena/bbcca78e-tino1` → `main` | Phased-investing (Treasury wait + staged stock entry), reinvestment risk beside headline, mixed paths, deadline timeline, one-page Attorney & CPA brief, what-if controls, glossary and suggestions already present |
+| B-1 | Re-verify official sources (Prop 19 / BOE, Form 540 line 62 1% Behavioral Health Services Tax / R&TC §17043, federal exclusions 2026–2027 / IRS, tax rate area / RTC §51) | done | `arena/bbcca78e-tino1` | `privacy-site/build.py`, `privacy-site/public/law.html` | BOE Prop 19 page; FTB 2025 Form 540 booklet; R&TC §17043; RTC §51 |
+| B-2 | Tax-rate-area / local-rate disclosure on the Tax & law page (privacy-safe, no locality names) | done | `arena/bbcca78e-tino1` | `privacy-site/build.py` (regenerates `public/law.html`) | Parcel TRA/combined rate read from county Assessor; Proposition H parcel schedule deferred to the merged privacy reduction (session `10b908c2`, PR #140) because privacy is the top priority |
+| B-3 | Build + link/privacy/$10-rounding check + unit tests all PASS | done | `arena/bbcca78e-tino1` | `privacy-site/` | `build.py` + `check.py` PASS; 23 unittest OK; no PII or locality cues |
+| B-4 | Commit, push, PR to `main`, merge, confirm GitHub Pages | in progress | `arena/bbcca78e-tino1` | `arena/bbcca78e-tino1` → `main` | Conflict with `origin/main` `d74aa8a` resolved locally; Prop H section deferred to merged privacy reduction |
 
 ### Privacy / history decision (this session)
 
-- The pre-rounding Git-history rewrite and any repository-visibility change are owner-level operations (already logged as "Not done (owner-level, unchanged)"); this session does not rewrite history or change visibility.
+- The pre-rounding Git-history rewrite and any repository-visibility change are owner-level operations (logged as "Not done (owner-level, unchanged)"); this session does not rewrite history or change visibility.
+- The Proposition H parcel-tax schedule and agency references were NOT added to the public guide: they constitute a locality cue that could identify the already-owned home, and privacy is the top priority. The generic local-tax row remains, directing the household to read its parcel TRA from the county Assessor.
 - No household names, addresses, parcel numbers, values, rents or bills were added; the public guide remains blank-by-design with placeholders.
 
 ### Log (`arena/bbcca78e-tino1`)
 
-- 2026-11-17 — Re-verified Prop 19 (BOE), Form 540 line 62 1% Behavioral Health Services Tax (FTB / R&TC §17043), federal exclusions 2026–2027 (IRS), Proposition H Muni parcel tax (SFMTA) vs the 2024 firefighter measure. Applied TRA/local-rate and Prop H disambiguation edits to `privacy-site/build.py`. Rebuild + `check.py` + 23 unit tests PASS.
+- 2026-11-17 — Re-verified Prop 19 (BOE), Form 540 line 62 1% Behavioral Health Services Tax (FTB / R&TC §17043), federal exclusions 2026–2027 (IRS), tax-rate-area mechanism (RTC §51). Applied the privacy-safe TRA/local-rate row to `privacy-site/build.py`. Resolved the PR #141 merge conflict by taking `origin/main` for the Proposition H section (privacy reduction merged in PR #140). Rebuild + `check.py` + 23 unit tests PASS.
