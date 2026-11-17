@@ -3334,3 +3334,11 @@ Branch pinned by platform: `arena/14a50e8b-tino1` (cannot use `session-<id>/<tas
 - Latest main at this check is `d89d258eeab2844dfe4e41d55dc7dbcc4cb3189c`. Main verification run [44128098945](https://github.com/wingbangboozle1-lang/Tino1/actions/runs/44128098945) passed with Jekyll and both publication-boundary checkers; Pages deployment [44128097367](https://github.com/wingbangboozle1-lang/Tino1/actions/runs/44128097367) succeeded and the Pages API reports `built`.
 - Local public/model gates passed after rebasing on the preceding content-equivalent main snapshot `66016a0`; the latest d89 change is coordination-only. The current PR head is being rebased to d89 and will be checked again before merge.
 - PR #138 remains open with the privacy hold unanswered and its recorded check failed; this session will not merge or close that other session's PR. No claim of historical exposure containment is made.
+
+### PR #145 merge and deployment close-out (2026-11-17 UTC)
+
+- **PR:** [#145 — Privacy review: hold numeric publication and record build verification](https://github.com/wingbangboozle1-lang/Tino1/pull/145), merged with `gh pr merge 145 --merge` at 2026-11-17T16:41:57Z.
+- **Merge result:** `7e6e4d1cc423c66d7c1b74d6c0c3628f14745485` on `main`.
+- **Checks:** PR-head `verify` run [44128445384](https://github.com/wingbangboozle1-lang/Tino1/actions/runs/44128445384) passed; main verification run [44128723234](https://github.com/wingbangboozle1-lang/Tino1/actions/runs/44128723234) passed including Jekyll and both exact-publication checks.
+- **Pages:** deployment run [44128720056](https://github.com/wingbangboozle1-lang/Tino1/actions/runs/44128720056) succeeded; Pages API reports `built` at https://wingbangboozle1-lang.github.io/Tino1/ . The PR changed no public page or model input.
+- **Open privacy request:** PR #138 remains open, with no response to the hold observed; its recorded check remains failed. PR #145 does not publish household-derived outputs and does not claim prior history exposure has been contained.
