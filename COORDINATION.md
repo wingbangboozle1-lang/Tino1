@@ -3248,3 +3248,27 @@ Branch pinned by platform: `arena/14a50e8b-tino1` (cannot use `session-<id>/<tas
 **LC-1 integration result (2026-11-17 UTC):** PR [#140](https://github.com/wingbangboozle1-lang/Tino1/pull/140) merged to `main` at merge commit `50652bb6b53334bc4fbe1a7dbc061cdda61422b2`. PR `verify` run `44125006438` passed, including the real Jekyll build and publication checks. GitHub Pages build/deploy run `44125343256` succeeded; repository Pages API reported `status=built`, `public=true`. Read the live [Tax & law page](https://wingbangboozle1-lang.github.io/Tino1/privacy-site/public/law.html) and [Flagged for review page](https://wingbangboozle1-lang.github.io/Tino1/privacy-site/public/flagged.html) after deployment: the city-specific measure, local election tally, agency names and direct links are absent; the general local-tax evidence gap and P0 repository-exposure warning remain. No other work is represented as completed by this change.
 
 **Concurrent coordination merge note (2026-11-17 UTC):** while opening documentation-only PR #142 for this deployment record, `main` advanced through PR #139 and `COORDINATION.md` conflicted during the required rebase. Resolved as a union: preserved session `arena/d53feb31-tino1`’s visibility-attempt record and all its audit notes, plus this session’s LC-1 deployment result. No product files or other session work were changed or dropped. The other session reports its visibility-setting attempt was blocked (HTTP 403); this is independently recorded there, not an action performed by LC-1.
+
+
+### Session `arena/bbcca78e-tino1` — privacy-first build verification and integration (2026-11-17)
+
+**Branch:** `arena/bbcca78e-tino1` (branched from `d901b50`; merged current `origin/main` to resolve PR conflicts) · **Session ID:** `arena/bbcca78e-tino1`
+
+### Task board (this session)
+
+| # | Task | Status | Owner | Files / scope | Notes |
+|---|------|--------|-------|---------------|-------|
+| B-1 | Re-verify official sources (Prop 19 / BOE, Form 540 line 62 1% Behavioral Health Services Tax / R&TC §17043, federal exclusions 2026–2027 / IRS, tax rate area / RTC §51) | done | `arena/bbcca78e-tino1` | `privacy-site/build.py`, `privacy-site/public/law.html` | BOE Prop 19 page; FTB 2025 Form 540 booklet; R&TC §17043; RTC §51 |
+| B-2 | Tax-rate-area / local-rate disclosure on the Tax & law page (privacy-safe, no locality names) | done | `arena/bbcca78e-tino1` | `privacy-site/build.py` (regenerates `public/law.html`) | Parcel TRA/combined rate read from county Assessor; Proposition H parcel schedule deferred to the merged privacy reduction (session `10b908c2`, PR #140) because privacy is the top priority |
+| B-3 | Build + link/privacy/$10-rounding check + unit tests all PASS | done | `arena/bbcca78e-tino1` | `privacy-site/` | `build.py` + `check.py` PASS; 23 unittest OK; no PII or locality cues |
+| B-4 | Commit, push, PR to `main`, merge, confirm GitHub Pages | in progress | `arena/bbcca78e-tino1` | `arena/bbcca78e-tino1` → `main` | Merged current `origin/main` (cb48cf0) locally; resolving PR conflicts before final merge |
+
+### Privacy / history decision (this session)
+
+- The pre-rounding Git-history rewrite and any repository-visibility change are owner-level operations (logged as "Not done (owner-level, unchanged)"); this session does not rewrite history or change visibility.
+- The Proposition H parcel-tax schedule and agency references were NOT added to the public guide: they constitute a locality cue that could identify the already-owned home, and privacy is the top priority. The generic local-tax row remains, directing the household to read its parcel TRA from the county Assessor.
+- No household names, addresses, parcel numbers, values, rents or bills were added; the public guide remains blank-by-design with placeholders.
+
+### Log (`arena/bbcca78e-tino1`)
+
+- 2026-11-17 — Re-verified Prop 19 (BOE), Form 540 line 62 1% Behavioral Health Services Tax (FTB / R&TC §17043), federal exclusions 2026–2027 (IRS), tax-rate-area mechanism (RTC §51). Applied the privacy-safe TRA/local-rate row to `privacy-site/build.py`. Resolved PR conflicts by taking `origin/main` for the Proposition H section (privacy reduction merged in PR #140). Rebuild + `check.py` + 23 unit tests PASS.
