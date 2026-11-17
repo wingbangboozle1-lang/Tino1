@@ -3181,3 +3181,13 @@ Status: P3-A, P3-B, P3-C and P3-D **done**. Only files in the claimed scope were
 - Third verify run also failed environmentally; see prior notes.
 - Fourth verify run also failed environmentally; monitoring for recovery.
 - Fifth verify run also failed environmentally. Waiting for recovery before final attempt.
+
+## Session `arena/10b908c2-tino1` — locality-cue privacy reduction (claimed 2026-11-17 UTC)
+
+**Branch:** `arena/10b908c2-tino1` (platform-fixed; based on `main` at `d901b5076d197fbe55ea4dbccde42d04ab7cff54`). The repository is public, and its Pages guide is intended to be generic. The public guide currently names a city-only Proposition H tax, identifies the transit agency and publishes a detailed parcel-rate schedule. In combination with the owner's stated housing context, this unnecessary public locality cue may identify where an already-owned home is located. The user expressly prioritized privacy and directed that personal details not appear on the website.
+
+| Task | Status | Owner | File scope | Verification |
+|---|---|---|---|---|
+| LC-1 | in progress | `arena/10b908c2-tino1` | `COORDINATION.md` (this claim), `privacy-site/build.py`, `privacy-site/research.json`, `privacy-site/check.py`, regenerated `privacy-site/public/*.html` | Remove city-specific measure, department, election-count and parcel-schedule references from the public guide; retain only a generic prompt to verify locally applicable levies privately. Keep non-public research unchanged unless a source is solely used to generate the removed public material. Rebuild, check all public pages and source links, scan for locality names/tokens, run tests, publication allowlist and repo-wide model/data checks. This task does not rewrite Git history or change repository visibility. |
+
+**Risk note:** public Pages isolation is not repository access control. `gh` confirms repository visibility is `public` and Pages visibility is `public`; the public repo contains household-derived files and historical material. A history rewrite or access/Pages visibility change can affect old refs, collaborators and live-site availability. This code change reduces an avoidable locality clue on the site but does not remediate the broader repository/history exposure (P0/E3 remain unresolved).
