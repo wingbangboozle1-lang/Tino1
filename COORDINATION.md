@@ -3376,3 +3376,13 @@ Branch pinned by platform: `arena/14a50e8b-tino1` (cannot use `session-<id>/<tas
 **Scope actually touched:** `final/phased.py`, `final/build.py`, `final/extras.py`, `final/sources.py`, `final/exec_summary.py`, `final/README_ROOT.md`, `final/out/phased.json`, the regenerated root pages (`black-swan.html`, `phased.html`, `summary.html`, `requirements.html`, `suggestions.html`, `sources.html`, `verification.html`, `brief.html`, `whatif.js`, `README.md`, `EXECUTIVE-SUMMARY.md`) and `COORDINATION.md`. The published set (`index.html`, `style.css`, `app.js`, `_config.yml`, `privacy-site/public/**`) is **untouched** and Jekyll's input is identical to `main`. This session did not edit `privacy-site/**`, which session `arena/10b908c2-tino1` has claimed.
 
 **Not done (owner-level, unchanged):** the Git-history rewrite of pre-rounding figures and repository visibility (`P02`, `IMP-10`).
+
+
+### arena/408e283a-tino1 — PR #149 merge and Pages deployment result (2026-11-17 UTC)
+
+- **PR:** [#149 — Black swan: phased-investing path with the 1929 and 2008 crash-entry test](https://github.com/wingbangboozle1-lang/Tino1/pull/149), merged with `gh pr merge 149 --merge` at **2026-11-17T16:52:03Z**.
+- **Merge commit on `main`:** `02f2af94ad009151e7bc44091b92f8ae0c0666c0`.
+- **Checks:** PR-head `verify` run [44129975381](https://github.com/wingbangboozle1-lang/Tino1/actions/runs/44129975381) **pass** (1m12s, including `jekyll build`, `final/check_published.py _site` and `privacy-site/check_published.py _site`); `main` push run [44130624200](https://github.com/wingbangboozle1-lang/Tino1/actions/runs/44130624200) **success**.
+- **Pages:** deployment succeeded; the Pages API reports **`built`** at https://wingbangboozle1-lang.github.io/Tino1/ , which was re-opened after the merge and serves the figure-free guide (the merged diff changes no published file — every changed path is in the `_config.yml` `exclude` list).
+- **Conflicts:** one, in `COORDINATION.md`, resolved as a union with nothing discarded (see the merge-conflict log above).
+- **Irregularities carried forward, none blocking:** `A14` (parked leg is the 3-month bill, with the 2-year sleeve checked against official yields), `S-PHASE` (annual, gross, single-entry-date historical test), `S02` (academic stock/bill dataset), and the standing owner action `P02` / `IMP-10` (Git-history rewrite and repository visibility). The task board entry for H-1 and H-2 is **done** as of this commit.
