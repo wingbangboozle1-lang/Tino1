@@ -3342,3 +3342,18 @@ Branch pinned by platform: `arena/14a50e8b-tino1` (cannot use `session-<id>/<tas
 - **Checks:** PR-head `verify` run [44128445384](https://github.com/wingbangboozle1-lang/Tino1/actions/runs/44128445384) passed; main verification run [44128723234](https://github.com/wingbangboozle1-lang/Tino1/actions/runs/44128723234) passed including Jekyll and both exact-publication checks.
 - **Pages:** deployment run [44128720056](https://github.com/wingbangboozle1-lang/Tino1/actions/runs/44128720056) succeeded; Pages API reports `built` at https://wingbangboozle1-lang.github.io/Tino1/ . The PR changed no public page or model input.
 - **Open privacy request:** PR #138 remains open, with no response to the hold observed; its recorded check remains failed. PR #145 does not publish household-derived outputs and does not claim prior history exposure has been contained.
+---
+
+## Session `arena/408e283a-tino1` — phased-investing path inside Black swan (claimed 2026-11-17 UTC)
+
+**Branch (fixed by the workspace):** `arena/408e283a-tino1`, based on `main` @ `d901b50` (PR #135 merge). Working tree clean at claim time.
+**Baseline gates re-run and green before any edit:** `privacy-site/build.py` (zero drift) + `privacy-site/check.py` (15 pages, 548 rows) + `unittest` 23/23 + `final/publish.py --check` (17-file allowlist) + `final/check.py .` (31 pages, 1153 sourced rows, 2796 dollar figures rounded to $10, self-tests on 51 paths). CI on `main` (run `43938775335`) is **success**, so the earlier environmental verify failures have cleared.
+
+**Scope claimed (private numeric build + the black-swan page):** `final/phased.py`, `final/build.py` (black-swan section only + one status string), `final/extras.py` (phased page columns), `final/out/phased.json`, the regenerated repo-root pages, `COORDINATION.md` (append only), and `README.md` / `EXECUTIVE-SUMMARY.md` if the generated text changes.
+
+**Not claimed by this session (left to other sessions / the owner):** the Jekyll allowlist and `privacy-site/public/**`, the public root `index.html`, the Git-history rewrite and repository visibility (owner action, `IMP-10`), and the hand-written `attorney-cpa-briefing.html`.
+
+| # | Task | Status | Owner | Files / scope | Verification plan |
+|---|------|--------|-------|---------------|-------------------|
+| H-1 | Phased-investing path **in Black swan**: park the net sale proceeds in 3-month to 2-year Treasuries for 24–36 months after the inheritance, then phase into stocks; test on the 1929 and 2008 crash entries | in progress | `arena/408e283a-tino1` | `final/phased.py`, `final/build.py`, `final/extras.py`, regenerated root pages | Historical leg recomputed from the same 1928–2025 annual dataset; the 2008 entry year added beside 1929; the model's own 50-replay phased arm (`M['phased']`) surfaced for the first time; every table row sourced; every dollar figure rounded to $10; `phased_selftest` still green. |
+| H-2 | Record the owner's instruction for `IMP-06` as approved/built and re-run every gate | pending | `arena/408e283a-tino1` | `final/build.py` (status string), `COORDINATION.md` | Status text changed from "Proposed" to approved-and-built with the date and the page it landed on. |
