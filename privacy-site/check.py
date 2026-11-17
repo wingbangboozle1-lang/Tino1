@@ -10,10 +10,8 @@ NAV = {'index.html','decision.html','projection.html','stress.html','phased.html
 FILES = NAV | {'style.css'}
 REGISTRY = json.loads((ROOT.parent/'research.json').read_text())
 SOURCES = {s['url'] for s in REGISTRY['sources'].values()}
-# www.sfmta.com: the San Francisco Municipal Transportation Agency is a City and County department (official City site, not .gov); used for the Proposition H rate table.
-OFFICIAL_PUBLISHED_RATES = {'129', '249', '65', '799', '392', '549', '969', '3,174', '34,999', '202,999', '177'}  # SFMTA Proposition H rate table and examples, plus the Controller's $177 million estimate, read 2026-11-16
 # www.law.cornell.edu: non-government mirror of the U.S. Code, used only for IRC §1250 text (flagged 9B-F1 on the public Flagged page); the GPO copy was not retrieved on 2026-11-16.
-REVIEWED_NON_GOV_HOSTS = {'docs.github.com', 'federalreservehistory.org', 'www.federalreservehistory.org', 'www.sfmta.com', 'www.sfelections.org', 'www.law.cornell.edu', 'pages.stern.nyu.edu', 'fred.stlouisfed.org'}  # fred.stlouisfed.org: Federal Reserve Bank of St. Louis FRED, serving the Board's H.15 series TB3MS and GS2 that are used on the staged-entry page  # pages.stern.nyu.edu: the academic S&P 500 annual total-return series used only on the staged-entry page, labelled non-government there and on the Flagged page  # www.sfelections.org: Department of Elections results page (Proposition H count)
+REVIEWED_NON_GOV_HOSTS = {'docs.github.com', 'federalreservehistory.org', 'www.federalreservehistory.org', 'www.law.cornell.edu', 'pages.stern.nyu.edu', 'fred.stlouisfed.org'}  # Official context from GitHub Docs; Federal Reserve History; academic S&P 500 data; FRED H.15 series.
 PII_PATTERNS = {
     'street address': r'\b\d{1,5}\s+[A-Z][A-Za-z-]+(?:\s+[A-Z][A-Za-z-]+)?\s+(?:Street|St\.?|Avenue|Ave\.?|Drive|Dr\.?|Way|Court|Ct\.?|Lane|Ln\.?|Road|Rd\.?|Boulevard|Blvd\.?)\b',
     'email address': r'[\w.+-]+@[\w-]+\.[\w.-]+',
@@ -126,15 +124,13 @@ def main():
         # possible inference from public context.
         for token in ('3,100,000','1,800,000','550,540','539,740','114,250','7,150','85,800','94122','95014'):
             assert token not in text, f'Household signature in {name}'
-        for token in ('Cupertino','San Francisco','sftreasurer.org','sf.gov'):
+        for token in ('Cupertino','San Francisco','sftreasurer.org','sf.gov','SFMTA','sfelections.org','Proposition H','Measure H','Muni parcel','city parcel tax'):
             assert token.casefold() not in text.casefold(), f'Household-locality cue in {name}'
+        assert 'www.sfmta.com' not in text and 'www.sfelections.org' not in text, f'City-specific source link in {name}'
         for amount in re.findall(r'\$([\d,]+(?:\.\d+)?)(?![\d,])', text):
             if '.' in amount:
                 # per-unit rates below $10 (for example $0.195 per square foot) are not household totals
                 assert float(amount.replace(',', '')) < 10, (name, amount)
-                continue
-            # official published rates quoted from their own source page (SFMTA Proposition H table; not household figures)
-            if amount in OFFICIAL_PUBLISHED_RATES:
                 continue
             assert int(amount.replace(',','')) % 10 == 0, (name,amount)
         p = Check(); p.feed(text)
