@@ -268,6 +268,20 @@ def kpi(label, value, sub=''):
 
 
 # ====================================================================== index
+def _phased_counts():
+    """How often the phased arm wins, counted from the model rather than asserted (session 408e283a)."""
+    PHM = M['phased']
+    win = sum(1 for d in PHM['named'].values() if max(d['park24'], d['park36']) > d['lump'])
+    losers = [x['key'] for x in M['paths'] if x['summary']['real_sell'] < x['summary']['real_rent']]
+    lw = sum(1 for k in losers if k in PHM['named']
+             and max(PHM['named'][k]['park24'], PHM['named'][k]['park36']) > PHM['named'][k]['lump'])
+    return (win, len(PHM['named']), lw, len(losers),
+            PHM['replay_wins']['park24'] + PHM['replay_wins']['park36'])
+
+
+_ph_win, _ph_n, _ph_loser_win, _ph_loser_n, _ph_wins50 = _phased_counts()
+
+
 def build_index():
     by = M['by_T']
     cards = ''.join([
@@ -312,7 +326,7 @@ def build_index():
 <ol class="plan">
 <li><strong>Keep Property B and keep living in its third unit.</strong> Its assessed value is %s against a market value of %s, which saves about %s of property tax every year, and that saving is lost for good if it is sold. It also has no basis reset, so selling it would tax the whole gain. It already produces %s a year.</li>
 <li><strong>Sell Property A within a few months of inheriting it and invest the proceeds in a diversified stock fund.</strong> With the basis reset to the date-of-death value the sale has no taxable gain (the model shows a small loss of %s from selling costs). About %s is released. In the baseline it grows to %s by 2076 after all taxes (%s in 2026 dollars), against %s if rented and %s if lived in.</li>
-<li><strong>Expect the first ten years to be the risky ones.</strong> Replaying the real 1976-2025 record from each of its 50 starting years, selling is ahead of renting in %d of 50 cases ten years after the inheritance and in all 50 after twenty. In the worst ten-year case selling is behind by %s (2026 dollars). A long stagnation of the kind Japan had after 1990 is the worst tested path for selling into stocks: renting ends ahead in it, and renting also edges ahead in the 1929-1941 Depression path - the only two named paths where selling into stocks loses to renting (see the Black swan section). Investing the proceeds in stages and keeping a few years of spending in Treasury bills narrows that risk.</li>
+<li><strong>Expect the first ten years to be the risky ones.</strong> Replaying the real 1976-2025 record from each of its 50 starting years, selling is ahead of renting in %d of 50 cases ten years after the inheritance and in all 50 after twenty. In the worst ten-year case selling is behind by %s (2026 dollars). A long stagnation of the kind Japan had after 1990 is the worst tested path for selling into stocks: renting ends ahead in it, and renting also edges ahead in the 1929-1941 Depression path - the only two named paths where selling into stocks loses to renting (see the Black swan section). Parking the sale proceeds in 3-month to 2-year Treasuries for 24 to 36 months and phasing into stocks afterwards is now tested directly in the <a href="black-swan.html">Black swan</a> section: it is the best of the three on %d of the %d named stress paths, including %d of the %d named paths where selling into stocks loses to renting, and on %d of the 50 replays. The trade is protection against one bad entry year, bought with the growth of the years it sits out, and it belongs in a written investing policy rather than in a guess about the market.</li>
 <li><strong>Do not sell and park the money in savings.</strong> If the proceeds would sit in savings or Treasury bills at about 3.5%%, keeping the house as a rental comes out ahead (%s against %s in 2026 dollars).</li>
 <li><strong>Living in Property A is a lifestyle choice with a price.</strong> The assessed value jumps from %s to %s even with the Proposition 19 relief, so the tax bill rises from about %s to about %s a year. Compared with selling, living there costs about %s of 2076 wealth in 2026 dollars.</li>
 <li><strong>Before anything else, have the trust read by an estate attorney.</strong> The whole result depends on the home being included in the Transferor's gross estate so that the basis resets. If it is not, selling triggers tax on decades of gain (the model shows %s less wealth in 2026 dollars). See the <a href="flagged.html">Flagged for Review</a> page.</li>
@@ -320,6 +334,7 @@ def build_index():
         m(P['sf_assessed']), m(P['sf_value']), m(sf_gap), m(P['sf_rent_2units']),
         m(-B['sell_gain']), m(B['sell_net']), m(B['w_sell']), m(B['real_sell']), m(B['w_rent']), m(B['w_live']),
         RH['10']['wins']['sell'], m(-RH['10']['sell_minus_rent_worst']),
+        _ph_win, _ph_n, _ph_loser_win, _ph_loser_n, _ph_wins50,
         m(M['sensitivity'][6]['real_rent']), m(M['sensitivity'][6]['real_sell']),
         m(B['fbyv_T']), m(B['taxable_live_T']), m(B['tax_before_T']), m(B['tax_live_T']),
         m(B['real_sell'] - B['real_live']),
@@ -655,6 +670,150 @@ def build_projections():
 
 
 # ====================================================================== black swan
+def _blackswan_phased():
+    """Phased-investing arm, shown inside Black swan (session arena/408e283a-tino1).
+
+    The brief asks for a phased-investing path: park the net sale proceeds in 3-month to 2-year
+    Treasuries for 24 to 36 months after the inheritance, then move into stocks in tranches, and test
+    whether that softens a 1929 or 2008-style crash at entry. Two independent tests are shown:
+
+      * the model's own arm (PHM): after tax and after inflation, in 2026 dollars, monthly steps, run
+        over the fifty replays and over every named stress path on this page;
+      * a historical crash-entry test (PHJ): gross of tax, costs and inflation, annual steps, per $1 of
+        proceeds, for every entry year 1928-2016, with the 1929 and 2008 entries set out here.
+
+    The two are not the same measurement and the page says so. Every row is sourced; every dollar
+    figure passes through m(), so it is rounded to the nearest $10.
+    """
+    PHJ = json.load(open(os.path.join(HERE, 'out', 'phased.json')))
+    PHM = M['phased']
+    PHSRC = src('FHFA-SJ', 'BLS-CPI') + ' · ' + src('DAMODARAN') + ' · ' + src('TREASURY')
+    ARM = [('lump', 'Lump sum into stocks at once', 'Lump sum'),
+           ('park24', 'Park 24 months, then 12 monthly tranches', 'Park 24 months'),
+           ('park36', 'Park 36 months, then 12 monthly tranches', 'Park 36 months')]
+    # ---- 1. the model's arm on the named stress paths and on the baseline -------------------------
+    rowsA = []
+    for x in M['paths']:
+        d = PHM['named'].get(x['key'])
+        if not d:
+            continue
+        best = max(ARM, key=lambda a: d[a[0]])[2]
+        rowsA.append([e(x['label'])] + [m(d[a[0]]) for a in ARM] + [best, m(d['proceeds']), PHSRC])
+    d0 = PHM['baseline']
+    rowsA.append(['Baseline (constant rates)'] + [m(d0[a[0]]) for a in ARM]
+                 + [max(ARM, key=lambda a: d0[a[0]])[2], m(d0['proceeds']), PHSRC])
+    # Where parking helps and where it hurts is read off the numbers, never asserted from a rule of thumb.
+    gains = []
+    for x in M['paths']:
+        d = PHM['named'].get(x['key'])
+        if not d:
+            continue
+        ec = x['econ']
+        gains.append((max(d['park24'], d['park36']) / d['lump'] - 1, x['label'], d, ec[T - Y0 - 1]['r_stock']))
+    gains.sort()
+    g_worst, lab_worst, d_worst, s1_worst = gains[0]
+    g_best, lab_best, d_best, s1_best = gains[-1]
+    n_win = sum(1 for g, _, _, _ in gains if g > 0)
+    tA = table(['Path (real 2026 dollars, after tax, in 2076)', 'Lump sum into stocks at once',
+                'Park 24 months, then 12 monthly tranches', 'Park 36 months, then 12 monthly tranches',
+                'Best of the three', 'Net proceeds parked', 'Official basis'], rowsA, cls='num',
+               caption='Phased entry on the stress paths: parking the proceeds for 24 or 36 months, then phasing into stocks over 12 months',
+               note=('Built by the same engine as the rest of this page: the proceeds are parked in the 3-month Treasury bill series of that '
+                     'path (not a 2-year note, %s), then moved into stocks in 12 equal monthly tranches; tax is paid on the interest each '
+                     'month, on dividends as they arrive and on the gain at the end. Read the result off the table rather than from a rule of '
+                     'thumb: parking is the best of the three on <strong>%d of the %d stress paths</strong>. It helps most on %s, where waiting '
+                     'lifts the result from %s to %s (%s), and it hurts most on %s, where waiting cuts it from %s to %s (%s). The split is not '
+                     'simply crash or no crash: %s opened with a fall of %s in its first year and still rewards investing at once, because the '
+                     'recovery arrived while the parked cash was still sitting in bills. What parking buys is time outside the market in the '
+                     'years that turn out to be bad; it pays for that with every year that turns out to be good.')
+                    % (flag('A14'), n_win, len(gains), e(lab_best), m(d_best['lump']), m(max(d_best['park24'], d_best['park36'])),
+                       pc(g_best, 0), e(lab_worst), m(d_worst['lump']), m(max(d_worst['park24'], d_worst['park36'])), pc(g_worst, 0),
+                       e(lab_worst), pc(s1_worst, 0)))
+    # ---- 2. the same arm across all fifty replays -------------------------------------------------
+    R = PHM['replays']
+    rowsB = []
+    for k, lab, short in ARM:
+        v = sorted(x[k] for x in R)
+        if k == 'lump':
+            gap = '&mdash;'
+        else:
+            g = PHM['replay_gap24'] if k == 'park24' else PHM['replay_gap36']
+            gap = '%s / %s / %s' % (m(g['median']), m(g['worst']), m(g['best']))
+        rowsB.append([lab, m(v[len(v) // 2]), m(v[0]), m(v[-1]),
+                      '%d of %d' % (PHM['replay_wins'][k], len(R)), gap, PHSRC])
+    tB = table(['Arm', 'Middle of the fifty replays', 'Worst of the fifty', 'Best of the fifty',
+                'Best of the three in how many replays', 'Gap against the lump sum, middle / worst / best',
+                'Official basis'], rowsB, cls='num',
+               caption='The phased arm across all fifty real starting years (real 2026 dollars, after tax, in 2076)',
+               note='The fifty replays are the 1976-2025 record, a period in which United States stocks did unusually well; that is why the lump sum wins the count. The gap column reads the other way: in the worst replay for parking, waiting 36 months left the household %s behind the lump sum, and in the best it was %s ahead.' % (
+                   m(-PHM['replay_gap36']['worst']), m(PHM["replay_gap36"]["best"])))
+    # ---- 3. the historical crash-entry test: 1929 and 2008 ----------------------------------------
+    EP = PHJ['episodes']
+    PH = [('lump', 'Lump sum into stocks on day one'),
+          ('park2_phase2', 'Park 24 months, then 2 yearly tranches'),
+          ('park2_phase3', 'Park 24 months, then 3 yearly tranches'),
+          ('park3_phase2', 'Park 36 months, then 2 yearly tranches'),
+          ('park3_phase3', 'Park 36 months, then 3 yearly tranches')]
+    proc = PHJ['proceeds']
+    rowsC = []
+    for k, lab in PH:
+        a, b = EP['1929']['paths'][k], EP['2008']['paths'][k]
+        rowsC.append([lab, '%.2f times' % a['end'], pc(a['mdd'], 0), '%.2f times' % b['end'], pc(b['mdd'], 0),
+                      '%s / %s' % (m(proc * a['end']), m(proc * b['end'])), PHSRC])
+    tC = table(['Path', '1929 entry: value after 10 years, per dollar parked', '1929 entry: worst fall from a peak',
+                '2008 entry: value after 10 years, per dollar parked', '2008 entry: worst fall from a peak',
+                'Value after 10 years in dollars, 1929 / 2008 entry', 'Official basis'], rowsC, cls='num',
+               caption='The crash-entry test on real annual history: 10 years after entry, per dollar of proceeds, gross of tax, costs and inflation',
+               note=('The dollar column starts from the baseline net sale proceeds of %s and is gross: no tax, no inflation adjustment, no '
+                     'carrying costs. It is there to give the multiples a size, not to forecast a result. Annual resolution: each calendar year '
+                     'is one step, so the October 1929 crash appears only inside the full-year 1929 return and an intra-year fall is understated. '
+                     '%s') % (m(proc), flag('S-PHASE')))
+    # ---- 4. reinvestment risk, the cost of the wait, and the 2-year sleeve check ------------------
+    bs = PHJ['bill_stats']
+    oc = PHJ['official_check']
+    sl = oc['sleeve_2y']
+    moves = [v['change_pct_of_proceeds'] for s_ in ('2007', '2008') for k_, v in sl[s_].items() if k_.startswith('park')]
+
+    def _order(d, key_):
+        return [k_ for k_, _ in sorted(((k_, v[key_]) for k_, v in d.items() if k_.startswith('park')),
+                                       key=lambda t_: -t_[1])]
+    same = all(_order(sl[s_], 'bill_proxy_end') == _order(sl[s_], 'two_year_sleeve_end') for s_ in ('2007', '2008'))
+    g08 = [oc['gs2_minus_tb3ms_pts'][str(y)] for y in (2008, 2009, 2010)]
+    nyu = max(abs(oc['nyu_bill_minus_tb3ms_pts'][str(y)]) for y in (2008, 2009, 2010))
+    s24 = PHJ['summary']['park2_phase2']
+    s36 = PHJ['summary']['park3_phase3']
+    reinv = """
+<h2>Reinvestment risk on the parked cash, beside the headline</h2>
+<p>Parked cash earns whatever bills pay in those years, and that is the whole point of the risk: the wait is only free if the crash it avoids is bigger than the growth it skips. In the 2008 entry the parked cash earned <strong>%s</strong> a year over the two years it waited and <strong>%s</strong> a year over three, because bill yields were cut to almost nothing in the crisis; had the money simply stayed in bills for the ten years it would have ended at <strong>%s</strong> the amount parked. It still finished ahead of the lump sum, because the fall it missed (%s) was far larger than the growth it skipped. In the 1929 entry the parked cash earned <strong>%s</strong> a year over two years and <strong>%s</strong> a year over three, and ten years in bills would have ended at <strong>%s</strong> the amount parked. The average 3-month bill return was <strong>%s</strong> a year over 1928 to 2025, <strong>%s</strong> over 1929 to 1931 and <strong>%s</strong> over 2009 to 2015. %s</p>
+<p><strong>What the wait costs when there is no crash.</strong> Across all %d entry years from %d to %d, the parked path ended higher than the lump sum in %s of them (24-month park, 2 tranches) and %s of them (36-month park, 3 tranches). The middle result was %s against the lump sum for the 24-month park and %s for the 36-month park; the worst was %s and %s. The worst fall was never deeper than the lump sum&rsquo;s in any entry year, and was strictly shallower in %d of %d (24-month park) and %d of %d (36-month park).</p>
+<p><strong>The 2-year sleeve the brief names, checked against official data.</strong> The test parks cash in the 3-month bill because that is the series with a record back to 1928. On 2026-11-16 the bill return used here was checked against the official 3-month average: within %s points for 2008 to 2010. The 2-year Treasury, which the brief names, paid %s to %s points more a year over those same years on the official annual averages. Re-running the 2007 and 2008 entries with the 2-year yield in place of the bill raises the parked results by %s to %s percent of the proceeds and %s the order of the parked paths, so the finding does not turn on the bill proxy. Yields are not total returns, and no ladder return was computed. %s %s</p>
+""" % (pc(EP['2008']['bill_avg_parked_24'], 1), pc(EP['2008']['bill_avg_parked_36'], 1), '%.2f times' % EP['2008']['all_cash_end'],
+       pc(EP['2008']['stock_1yr'], 0), pc(EP['1929']['bill_avg_parked_24'], 1), pc(EP['1929']['bill_avg_parked_36'], 1),
+       '%.2f times' % EP['1929']['all_cash_end'], pc(bs['all_1928_2025'], 1), pc(bs['y1929_1931'], 1), pc(bs['y2009_2015'], 2), PHSRC,
+       s24['starts'], PHJ['first_start'], PHJ['last_start'], pc(s24['share_phased_ends_higher'], 0), pc(s36['share_phased_ends_higher'], 0),
+       pc(s24['median_end_vs_lump'], 0), pc(s36['median_end_vs_lump'], 0), pc(s24['worst_end_vs_lump'], 0), pc(s36['worst_end_vs_lump'], 0),
+       s24['years_drop_strictly_shallower'], s24['starts'], s36['years_drop_strictly_shallower'], s36['starts'],
+       '%.2f' % nyu, '%.2f' % min(g08), '%.2f' % max(g08), '%.1f' % min(moves), '%.1f' % max(moves),
+       'does not change' if same else '<strong>changes</strong>', src('FRED-GS2', 'FRED-TB3MS'), flag('A14'))
+    head = """
+<h2>Phased entry into stocks: the crash-entry test</h2>
+<p class="callout">The one failure mode that makes selling lose on this page is a crash in the years just after the inheritance. This section tests the obvious answer to it: instead of putting the whole net proceeds into stocks on the day of the sale, park them in 3-month to 2-year Treasuries for 24 or 36 months and move into stocks in tranches afterwards. Two tests follow. The first two tables are the model&rsquo;s own phased arm: after tax, after inflation, in 2026 dollars, monthly steps, run over the same fifty replays and the same named stress paths as the rest of this page. The third is a separate historical test on real annual returns from 1928 to 2025, gross of tax and inflation, which isolates the entry year the way the 1929 and 2008 crashes did. They are two different measurements, and the page keeps them apart.</p>
+"""
+    tail = """
+<h2>How to read the phased result, and its limits</h2>
+<ul>
+<li><strong>Parking is insurance against one entry year, not a better average.</strong> It is the best of the three on %d of the %d stress paths and on %d of the fifty replays, where the lump sum is the best of the three in the other %d; the lump sum wins every other case on the stress paths too. The count favours the lump sum in part because the 1976-2025 record was an unusually strong one for United States stocks, which is why the Depression and Japan paths are shown as well.</li>
+<li><strong>It does not prevent losses that arrive after the money is invested.</strong> In the 1929 entry the parked paths still fell about 35%% from their peak, because the tranches bought stocks in 1931 and 1932, before the rebound.</li>
+<li><strong>The 2008 test is the cleanest case.</strong> A 36-month park misses the whole fall and ends %s ahead of the lump sum on gross returns, even though the parked cash earned almost nothing.</li>
+<li><strong>The trade is a policy choice, not a forecast.</strong> Nothing here says a crash is coming. The question is how much growth the household is willing to give up in the good years to avoid one bad entry date, and that belongs in a written investing policy before the money arrives.</li>
+<li><strong>Limits.</strong> The historical test is annual, gross of tax, costs and inflation, and uses one entry date per row; stock and bill returns come from an academic table, not a government source (%s). The parked leg is the 3-month bill series, with the 2-year sleeve checked against official yields above (%s). The full test, all entry years and all four park-and-phase combinations, is on the <a href="phased.html">Phased investing</a> page.</li>
+</ul>
+""" % (n_win, len(gains), PHM['replay_wins']['park24'] + PHM['replay_wins']['park36'],
+       PHM['replay_wins']['lump'], pc(EP['2008']['paths']['park3_phase2']['end'] / EP['2008']['paths']['lump']['end'] - 1, 0),
+       flag('S02'), flag('A14'))
+    return head + tA + tB + tC + reinv + tail
+
+
 def build_blackswan():
     hist = table(['Year', 'Inflation (CPI, Dec to Dec)', 'San Jose area home prices', 'San Francisco area home prices', 'S&P 500 total return', '3-month Treasury bill', 'Official basis'], [
         [h['year'], pc(h['infl']), pc(h['g_cup']), pc(h['g_sf']), pc(h['r_stock']), pc(h['r_bill']), src('BLS-CPI', 'FHFA-SJ', 'FHFA-SF') + ' · ' + src('DAMODARAN')]
@@ -735,8 +894,7 @@ def build_blackswan():
     ], caption='Shocks that no price history captures')
     body = ("""<p class="callout">This section is kept apart from the baseline on purpose. The baseline uses constant rates so that the three choices can be compared cleanly. Here nothing is constant: every path uses real recorded years, in their real order, for inflation, local home prices, stocks, bonds and bills. Read the provenance table first: official statistics, the academic return dataset and the hypothetical constructions below are three different kinds of material.</p>"""
             + prov + rep + named + '<h2>Property A market value in 2026 dollars under six paths</h2>' + ch + stats + other + yr + yr2 + hist)
-    body += ('<h2>Phased entry into stocks</h2><p>A separate test asks whether parking the sale proceeds in short Treasuries for 24 to 36 months, then moving them into stocks in equal annual tranches, softens the crash at entry in 1929 and 2007. '
-             'The answer is on the <a href="phased.html">Phased investing</a> page: in no entry year tested is the worst fall deeper than the lump sum&rsquo;s, and the phased path ends higher than the lump sum in only a minority of entry years.</p>')
+    body += _blackswan_phased()
     page('black-swan.html', 'Black swan section: non-constant growth and inflation over 50 years',
          'What happens to the decision when inflation, home prices and markets behave the way they really have: in bursts, busts and long flat stretches.', body)
 
@@ -1610,7 +1768,7 @@ def build_suggestions():
          'Helps if the Inheritor wants a trial period in Property A before selling.',
          src('IRS-TC701', 'BOE-PUB-800-1')],
         ['IMP-06', 'Treasury-staged deployment ("sell into bills/bonds for 2 years, then equities")',
-         'High psychological &amp; sequence-risk value',
+         'High psychological &amp; sequence-risk value &mdash; <strong>approved by the owner in the brief of 2026-11-17 and built the same day</strong>: it is now the <em>Phased entry into stocks</em> section of <a href="black-swan.html">Black swan</a>, with the full test on <a href="phased.html">Phased investing</a>',
          'Add a phased-investing path in Black swan (parking sale proceeds in 3M-2Y Treasuries for 24-36 months after inheritance before phasing into stocks) to test how it softens 1929/2008 crash entry risk.',
          'Directly addresses the only black-swan failure mode where immediate all-in equity selling trails renting.',
          src('TREASURY', 'BLS-CPI')],
@@ -1813,8 +1971,12 @@ def build_requirements():
          'Law: a table of pending changes with the effect on each choice, and the November 2026 state measures with their unofficial results.',
          'Met; the results are unofficial until 2026-12-11 ' + flag('S05'), src('SOS-RESULTS', 'CONG-S587')],
         ['Black swan: growth and inflation that are not constant over a fifty-year period',
-         '<a href="black-swan.html">Black swan</a>: the real 1976-2025 record replayed from each of its fifty starting years, plus named crisis paths, kept apart from the baseline.',
+         '<a href="black-swan.html">Black swan</a>: the real 1976-2025 record replayed from each of its fifty starting years, plus named crisis paths, kept apart from the baseline, and a phased-entry crash-entry test.',
          'Met; the record is used as it happened, not smoothed', src('BLS-CPI', 'FHFA-SJ')],
+        ['A phased-investing path in Black swan: park the sale proceeds in 3-month to 2-year Treasuries for 24 to 36 months after the inheritance, then phase into stocks, to test how it softens a 1929 or 2008 crash at entry',
+         '<a href="black-swan.html">Black swan</a>, <em>Phased entry into stocks: the crash-entry test</em>: the model&rsquo;s own phased arm run over the eleven stress paths and all fifty replays (after tax, in 2026 dollars), and a separate historical test on real annual returns for the 1929 and 2008 entries, with the reinvestment risk on the parked cash beside the headline. All four park-and-phase combinations and all %d entry years are on <a href="phased.html">Phased investing</a>.'
+         % 89,
+         'Met 2026-11-17; the parked leg is the 3-month bill series, with the 2-year sleeve checked against official Treasury yields ' + flag('A14') + ' ' + flag('S-PHASE'), src('TREASURY', 'FRED-GS2', 'FRED-TB3MS')],
         ['Project repairs, utilities, insurance and tax from our own figures instead of rules of thumb',
          'Year by year: every cost line by year with the rule that drives it. Decision uses those same lines.',
          'Partly - maintenance and growth rates are assumptions ' + flag('A08') + ' ' + flag('A09'), src('BLS-OCT')],
@@ -2192,8 +2354,8 @@ NAV_CARDS = [
     ('Money and projections', [
         ('projections.html', 'Year by year, 2026-2076', 'value, assessed value, property tax, insurance, water, electricity, repairs'),
         ('what-if.html', 'What-if controls', 'change growth, stock return, rent or inflation; reinvestment risk shown beside the headline'),
-        ('phased.html', 'Phased investing', 'parking the proceeds for 24 to 36 months before stocks, tested on the 1929, 1937, 2000 and 2007 entries'),
-        ('black-swan.html', 'Black swan', '50 replays of the real 1976-2025 record and named crisis paths'),
+        ('phased.html', 'Phased investing', 'parking the proceeds for 24 to 36 months before stocks, tested on the 1929, 1937, 2000, 2007 and 2008 entries'),
+        ('black-swan.html', 'Black swan', '50 replays of the real 1976-2025 record, named crisis paths, and the phased-entry crash test'),
         ('costs.html', 'Insurance and running costs', 'what is quoted, what is assumed, and what is still unconfirmed'),
         ('estate-cash.html', 'Cash and estate tax', 'the threshold at each level, the room before tax, and projections'),
     ]),

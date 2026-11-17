@@ -20,6 +20,10 @@ M = json.load(open(os.path.join(HERE, 'out', 'model.json')))
 P, B = M['params'], M['baseline']['summary']
 SF_GAP = (P['sf_value'] - P['sf_assessed']) * P['rate_sf']
 RH = M['replay_horizons']
+PHM = M['phased']
+# how many of the named stress paths the phased arm wins: read off the model, never asserted
+PH_N = len(PHM['named'])
+PH_WIN = sum(1 for d in PHM['named'].values() if max(d['park24'], d['park36']) > d['lump'])
 T = P['T']
 SITE = 'https://wingbangboozle1-lang.github.io/Tino1'   # serves the guide without household figures
 PAGES = '.'   # the numeric pages are repository files; links below are relative to the repository root
@@ -74,7 +78,16 @@ Inflation, house prices and stock returns do not compound evenly over 50 years. 
 1976-2025 record from each of its 50 possible starting years, and adds named crisis paths (1929-1941, 1970s stagflation, \
 1990 Japan, 2000 and 2008 crashes). Selling is ahead of renting in {w10} of the 50 ten-year horizons and in {w20} of the \
 50 twenty-year horizons; the worst ten-year case is behind by {worst}. Renting ends ahead in exactly two named paths: the \
-Japan stagnation and the Depression. Staging the investment and holding a few years of spending in Treasury bills narrows that gap.
+Japan stagnation and the Depression.
+
+**Phased entry (new, 2026-11-17).** The page now tests the obvious answer to that one failure mode: instead of investing the \
+whole proceeds on the day of the sale, park them in 3-month to 2-year Treasuries for 24 or 36 months and move into stocks in \
+12 monthly tranches. Parking is the best of the three on **{ph_win} of the {ph_n} named stress paths** — including the \
+Depression, where waiting lifts the result from {dep_lump} to {dep_park} — and on {ph_wins50} of the 50 replays; the lump sum \
+wins the other {ph_lump50}. In the worst replay, a 36-month park finishes {ph_worst} behind the lump sum. On real annual \
+history, entering at the 2008 crash with a 36-month park meant no fall at all against the lump sum's -37% and finished 10% \
+ahead after ten years, gross of tax. The trade is protection against one bad entry year, bought with the growth of the good \
+years it sits out — a written investing policy decision, not a forecast.
 
 ## Before anything else
 
@@ -136,6 +149,10 @@ def main(target=None):
         savings_sell=m(M['sensitivity'][6]['real_sell']), savings_rent=m(M['sensitivity'][6]['real_rent']),
         w10=RH['10']['wins']['sell'], w20=RH['20']['wins']['sell'],
         worst=m(-RH['10']['sell_minus_rent_worst']),
+        ph_win=PH_WIN, ph_n=PH_N, ph_wins50=PHM['replay_wins']['park24'] + PHM['replay_wins']['park36'],
+        ph_lump50=PHM['replay_wins']['lump'], ph_worst=m(-PHM['replay_gap36']['worst']),
+        dep_lump=m(PHM['named']['depression_at_T']['lump']),
+        dep_park=m(max(PHM['named']['depression_at_T']['park24'], PHM['named']['depression_at_T']['park36'])),
     )
     path = target or os.path.join(ROOT, 'EXECUTIVE-SUMMARY.md')
     open(path, 'w', encoding='utf-8').write(scrub(text))
