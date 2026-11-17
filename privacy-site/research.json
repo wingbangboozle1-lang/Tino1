@@ -132,7 +132,19 @@
    "title": "BLS · Historical CPI-U",
    "url": "https://www.bls.gov/cpi/tables/historical-cpi-u-201710.pdf",
    "finding": "Historical monthly and annual CPI-U table; the annual-percent-change column is the source of the decade table on the black-swan page. Arithmetic only: not a 50-year forecast and not California's statutory indexing series.",
-   "checked": "2026-11-13"
+   "checked": "2026-11-17"
+  },
+  "fed_policy_2026": {
+   "title": "Federal Reserve · FOMC statement, October 28, 2026",
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20261028a.htm",
+   "finding": "The FOMC statement reported a federal funds target range of 3.75%–4.00%. Dated policy context only; it is not a future interest-rate forecast.",
+   "checked": "2026-11-17"
+  },
+  "fhfa_hpi_2026q2": {
+   "title": "FHFA · House Price Index report, 2026Q2",
+   "url": "https://www.fhfa.gov/document/d/hpi/fhfa-house-price-index-report-2026q2",
+   "finding": "The official 2026Q2 report gives U.S. purchase-only HPI +2.1% year over year and +0.3% quarter over quarter, California -0.2% year over year, national quarterly appreciation since 2012Q1, and 2021Q2 +17.3% / 2009Q1 -10.0% national quarterly readings. These are national/state index readings, not local property forecasts.",
+   "checked": "2026-11-17"
   },
   "pages": {
    "title": "GitHub Docs · Pages and data collection",
