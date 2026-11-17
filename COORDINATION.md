@@ -3218,6 +3218,8 @@ Branch `arena/14a50e8b-tino1`, based on `main` @ `d901b50`; merged via PR #144.
 
 **GitHub Pages:** `https://wingbangboozle1-lang.github.io/Tino1/` — status `building` immediately after the merge; confirm `built` below and record here.
 
+Deploy re-check (2026-11-17, after merge): Pages status `built` at https://wingbangboozle1-lang.github.io/Tino1/; live fetch confirmed the updated stress.html serves the new real-economic-conditions baseline and questions.html serves the decision-readiness table. Task R1 marked done — site live, no broken build.
+
 **No household figure or PII was added to the website or the repository in this session; repository visibility and history were not changed.**
 
 
